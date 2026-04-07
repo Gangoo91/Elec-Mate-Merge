@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
+import { CheckCircle2, Wrench, Clock, AlertTriangle, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, Wrench, Clock, AlertTriangle, Shield, Hammer } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 interface InstallationSuccessProps {
   results: any;
@@ -22,176 +21,120 @@ const InstallationSuccess = ({
   useEffect(() => {
     if (!open) return;
 
-    // Confetti animation - blue/yellow theme for Installation
+    // Trigger confetti celebration
     const duration = 3000;
-    const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
+    const end = Date.now() + duration;
 
-    function randomInRange(min: number, max: number) {
-      return Math.random() * (max - min) + min;
-    }
+    const frame = () => {
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#3b82f6', '#60a5fa', '#93c5fd'],
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#3b82f6', '#60a5fa', '#93c5fd'],
+      });
 
-    const interval: NodeJS.Timeout = setInterval(function () {
-      const timeLeft = animationEnd - Date.now();
-
-      if (timeLeft <= 0) {
-        return clearInterval(interval);
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
       }
+    };
+    frame();
 
-      const particleCount = 50 * (timeLeft / duration);
-
-      confetti({
-        ...defaults,
-        particleCount,
-        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-        colors: ['#3B82F6', '#60A5FA', '#FBBF24', '#F59E0B', '#10B981'], // Blue and yellow theme
-      });
-      confetti({
-        ...defaults,
-        particleCount,
-        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-        colors: ['#3B82F6', '#60A5FA', '#FBBF24', '#F59E0B', '#10B981'],
-      });
-    }, 250);
-
-    // Haptic feedback (if supported)
+    // Haptic feedback
     if ('vibrate' in navigator) {
       navigator.vibrate([100, 50, 100]);
     }
-
-    return () => clearInterval(interval);
   }, [open]);
 
   // Extract stats from results
   const totalSteps = results?.steps?.length || results?.summary?.totalSteps || 0;
   const estimatedDuration =
-    results?.summary?.estimatedDuration || results?.estimatedDuration || 'Not specified';
+    results?.summary?.estimatedDuration || results?.estimatedDuration || 'N/A';
   const riskLevel = results?.summary?.overallRiskLevel || results?.overallRiskLevel || 'medium';
   const hazardsCount =
     results?.steps?.reduce((count: number, step: any) => {
       return count + (step.linkedHazards?.length || 0);
     }, 0) || 0;
-  const toolsCount = results?.summary?.toolsRequired?.length || results?.toolsRequired?.length || 0;
 
-  const timeSaved = 180; // 3 hours vs manual method statement creation
+  if (!open) return null;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-xl sm:max-w-2xl p-4 sm:p-8 bg-gradient-to-br from-blue-500/10 via-background to-background border-blue-500/30">
-        <div className="text-center space-y-4 sm:space-y-6">
+    <div className="min-h-[400px] flex items-center justify-center p-4">
+      <div className="max-w-2xl w-full p-6 sm:p-8 animate-scale-in rounded-xl bg-white/[0.03] border border-white/[0.08]">
+        <div className="text-center space-y-6">
           {/* Success Icon */}
           <div className="flex justify-center">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-xl opacity-50 animate-pulse" />
-              <div className="relative bg-gradient-to-br from-blue-400 to-blue-600 rounded-full p-6 sm:p-6 shadow-xl shadow-blue-500/50 animate-bounce-subtle">
-                <Wrench className="h-12 w-12 sm:h-12 sm:w-12 text-foreground" />
-              </div>
+              <CheckCircle2 className="h-16 w-16 sm:h-20 sm:w-20 text-blue-400 animate-scale-in" />
+              <Wrench className="h-8 w-8 text-blue-400 absolute -bottom-2 -right-2 animate-fade-in" />
             </div>
           </div>
 
           {/* Success Message */}
           <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600">
-              Installation Method Ready! 🎉
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Installation Method Ready!
             </h2>
-            <p className="text-sm sm:text-sm text-foreground/80 max-w-md mx-auto px-2">
+            <p className="text-white">
               Your comprehensive BS 7671-compliant method statement has been generated
             </p>
           </div>
 
-          {/* Stats Grid - 2 cols on mobile, 4 on desktop */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 py-4 sm:py-6">
-            <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-blue-500/30 hover:border-blue-500/50 transition-all">
-              <div className="flex flex-col items-center gap-1">
-                <div className="text-3xl sm:text-3xl font-bold text-blue-400 mb-1">
-                  {totalSteps}
-                </div>
-                <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
-                  <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4" />
-                  Steps
-                </div>
-              </div>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-6">
+            <div className="rounded-xl border border-blue-500/20 bg-blue-500/10 px-3 py-2.5 text-center space-y-1">
+              <CheckCircle2 className="h-6 w-6 text-blue-400 mx-auto" />
+              <p className="text-2xl sm:text-3xl font-bold text-white">{totalSteps}</p>
+              <p className="text-xs text-white">Steps</p>
             </div>
-
-            <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-blue-500/30 hover:border-blue-500/50 transition-all">
-              <div className="flex flex-col items-center gap-1">
-                <div
-                  className="text-3xl sm:text-3xl font-bold text-blue-400 mb-1 truncate w-full text-center"
-                  title={estimatedDuration}
-                >
-                  {estimatedDuration?.split(' ')[0] || 'N/A'}
-                </div>
-                <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
-                  <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
-                  Duration
-                </div>
-              </div>
+            <div className="rounded-xl border border-blue-500/20 bg-blue-500/10 px-3 py-2.5 text-center space-y-1">
+              <Clock className="h-6 w-6 text-blue-400 mx-auto" />
+              <p className="text-2xl sm:text-3xl font-bold text-white truncate">
+                {typeof estimatedDuration === 'string'
+                  ? estimatedDuration.split(' ')[0]
+                  : estimatedDuration}
+              </p>
+              <p className="text-xs text-white">Duration</p>
             </div>
-
-            <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-amber-500/30 hover:border-amber-500/50 transition-all">
-              <div className="flex flex-col items-center gap-1">
-                <div className="text-3xl sm:text-3xl font-bold text-amber-400 mb-1">
-                  {hazardsCount}
-                </div>
-                <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
-                  <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4" />
-                  Hazards
-                </div>
-              </div>
+            <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 px-3 py-2.5 text-center space-y-1">
+              <AlertTriangle className="h-6 w-6 text-amber-400 mx-auto" />
+              <p className="text-2xl sm:text-3xl font-bold text-white">{hazardsCount}</p>
+              <p className="text-xs text-white">Hazards</p>
             </div>
-
-            <div className="bg-elec-dark/80 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-green-500/30 hover:border-green-500/50 transition-all">
-              <div className="flex flex-col items-center gap-1">
-                <div className="text-3xl sm:text-3xl font-bold text-green-400 mb-1 uppercase">
-                  {riskLevel}
-                </div>
-                <div className="text-xs sm:text-sm text-foreground/80 flex items-center justify-center gap-1">
-                  <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
-                  Risk Level
-                </div>
-              </div>
+            <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-2.5 text-center space-y-1">
+              <Shield className="h-6 w-6 text-emerald-400 mx-auto" />
+              <p className="text-2xl sm:text-3xl font-bold text-white uppercase">{riskLevel}</p>
+              <p className="text-xs text-white">Risk Level</p>
             </div>
           </div>
 
-          {/* Additional Stats */}
-          <div className="bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-lg p-3 sm:p-4 border border-blue-500/30">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
-              <div className="flex items-center gap-2">
-                <Hammer className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />
-                <span className="text-xs sm:text-sm font-semibold text-foreground/90">
-                  {toolsCount} tools identified
-                </span>
-              </div>
-              <span className="hidden sm:inline text-foreground/50">•</span>
-              <span className="text-xs sm:text-sm font-semibold text-foreground/90">
-                ~{timeSaved} minutes saved
-              </span>
-            </div>
-            <p className="text-xs text-foreground/80 mt-1 text-center">
-              Complete with step-by-step instructions and safety guidance
-            </p>
+          {/* Generation Info */}
+          <div className="rounded-lg bg-white/[0.03] border border-white/[0.08] p-4">
+            <p className="text-sm text-white mb-1">Generated in:</p>
+            <p className="font-medium text-white">{generationTime}s — BS 7671:2018+A3:2024 Compliant</p>
           </div>
 
-          {/* View Results Button */}
+          {/* Action Button */}
           <Button
             onClick={() => {
               onViewResults();
               onOpenChange(false);
             }}
             size="lg"
-            className="w-full bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-foreground h-12 touch-manipulation text-sm sm:text-base shadow-lg shadow-blue-500/20"
+            className="w-full h-14 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-blue-500/20 hover:from-blue-600 hover:to-cyan-600"
           >
-            <Wrench className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
             View Method Statement
           </Button>
-
-          {/* Footer */}
-          <p className="text-xs text-foreground/70">
-            Generated in {generationTime}s • BS 7671:2018+A3:2024 Compliant
-          </p>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 };
 

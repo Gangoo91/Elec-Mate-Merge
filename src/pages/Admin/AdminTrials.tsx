@@ -1176,7 +1176,7 @@ export default function AdminTrials() {
     if (!trialUsers) return { started: 0, engaged: 0, featureUsed: 0, subscribed: 0 };
     const started = trialUsers.length;
     const engaged = trialUsers.filter(
-      (u) => (u.login_count || 0) > 0 || (u.total_seconds_tracked || 0) > 60
+      (u) => (u.login_count || 0) > 0 || !!u.last_sign_in_at
     ).length;
     const featureUsed = trialUsers.filter((u) => (u.feature_use_count || 0) > 0).length;
     const subscribed = trialUsers.filter((u) => u.subscribed).length;

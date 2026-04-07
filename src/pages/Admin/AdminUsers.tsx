@@ -323,17 +323,19 @@ export default function AdminUsers() {
     await refetchEnrichment();
   };
 
-  // Engagement score data for visible users
-  const visibleUserIds = useMemo(() => users?.map((u) => u.id) || [], [users]);
+  // Engagement score data — fetch for ALL users only when sorting/filtering by
+  // engagement, otherwise fetch only for the current page to avoid large queries.
+  const needsFullEngagement = sortBy === 'engagement' || quickFilter === 'most_engaged';
+  const allUserIds = useMemo(() => users?.map((u) => u.id) || [], [users]);
   const { data: engagementData } = useQuery({
-    queryKey: ['admin-users-engagement', visibleUserIds],
-    enabled: visibleUserIds.length > 0,
+    queryKey: ['admin-users-engagement', needsFullEngagement ? allUserIds : 'deferred'],
+    enabled: needsFullEngagement && allUserIds.length > 0,
     staleTime: 60000,
     queryFn: async () => {
       const rows = await batchedInQuery(
         'user_activity_summary',
         'user_id',
-        visibleUserIds,
+        allUserIds,
         'user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited'
       );
       const scoreMap = new Map<string, number>();
@@ -415,6 +417,38 @@ export default function AdminUsers() {
     const start = (currentPage - 1) * itemsPerPage;
     return sortedUsers.slice(start, start + itemsPerPage);
   }, [sortedUsers, currentPage, itemsPerPage]);
+
+  // Page-scoped engagement query — only runs when NOT in full-engagement mode
+  const paginatedUserIds = useMemo(() => paginatedUsers.map((u) => u.id), [paginatedUsers]);
+  const { data: pageEngagementData } = useQuery({
+    queryKey: ['admin-users-engagement-page', paginatedUserIds],
+    enabled: !needsFullEngagement && paginatedUserIds.length > 0,
+    staleTime: 60000,
+    queryFn: async () => {
+      const rows = await batchedInQuery(
+        'user_activity_summary',
+        'user_id',
+        paginatedUserIds,
+        'user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited'
+      );
+      const scoreMap = new Map<string, number>();
+      const rawMap = new Map<string, { login_count: number; page_view_count: number; total_seconds_tracked: number; unique_pages_visited: number }>();
+      for (const row of rows || []) {
+        scoreMap.set(row.user_id, calculateEngagementScore(row));
+        rawMap.set(row.user_id, {
+          login_count: row.login_count || 0,
+          page_view_count: row.page_view_count || 0,
+          total_seconds_tracked: row.total_seconds_tracked || 0,
+          unique_pages_visited: row.unique_pages_visited || 0,
+        });
+      }
+      return { scoreMap, rawMap };
+    },
+  });
+
+  // Merge: full engagement data takes priority, fall back to page-scoped data
+  const effectiveEngagementMap = engagementMap || pageEngagementData?.scoreMap;
+  const effectiveEngagementRawMap = engagementRawMap || pageEngagementData?.rawMap;
 
   useEffect(() => {
     setCurrentPage(1);
@@ -1232,8 +1266,8 @@ export default function AdminUsers() {
                               {user.isOnline && (
                                 <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-card" />
                               )}
-                              {engagementMap?.has(user.id) && (() => {
-                                const score = engagementMap.get(user.id)!;
+                              {effectiveEngagementMap?.has(user.id) && (() => {
+                                const score = effectiveEngagementMap.get(user.id)!;
                                 const color = getScoreColor(score);
                                 const strokeColor = SCORE_COLOR_MAP[color].stroke;
                                 const circumference = Math.PI * 19;
@@ -1307,8 +1341,8 @@ export default function AdminUsers() {
                                     ? joinedDays === 0 ? 'Joined today' : `Joined ${joinedDays}d ago`
                                     : 'Joined'}
                                 </span>
-                                {engagementRawMap?.has(user.id) && (() => {
-                                  const raw = engagementRawMap.get(user.id)!;
+                                {effectiveEngagementRawMap?.has(user.id) && (() => {
+                                  const raw = effectiveEngagementRawMap.get(user.id)!;
                                   return (
                                     <>
                                       <span className="text-white">·</span>

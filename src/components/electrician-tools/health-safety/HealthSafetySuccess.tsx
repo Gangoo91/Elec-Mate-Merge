@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { CheckCircle2, Shield, HardHat, Clock } from 'lucide-react';
-import { triggerHaptic, triggerConfetti } from '@/utils/animation-helpers';
+import { Button } from '@/components/ui/button';
+import confetti from 'canvas-confetti';
 
 interface HealthSafetySuccessProps {
   hazardCount: number;
@@ -18,70 +17,98 @@ export const HealthSafetySuccess = ({
   onClose,
 }: HealthSafetySuccessProps) => {
   useEffect(() => {
-    // Trigger confetti
-    triggerConfetti();
+    // Trigger confetti celebration
+    const duration = 3000;
+    const end = Date.now() + duration;
+
+    const frame = () => {
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#10b981', '#34d399', '#6ee7b7'],
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#10b981', '#34d399', '#6ee7b7'],
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    };
+    frame();
 
     // Haptic feedback
-    triggerHaptic([100, 50, 100, 50, 200]);
+    if ('vibrate' in navigator) {
+      navigator.vibrate([100, 50, 100, 50, 200]);
+    }
   }, []);
 
   const timeSaved = Math.round((1.5 - generationTime / 3600) * 10) / 10;
+  const generationTimeSeconds = (generationTime / 60).toFixed(1);
 
   return (
-    <div className="fixed inset-0 bg-background/95 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
-      <Card className="max-w-lg w-full border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-background to-background">
-        <CardContent className="p-8 text-center space-y-6">
-          <div className="inline-flex p-4 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 animate-bounce-in">
-            <CheckCircle2 className="h-16 w-16 text-foreground" />
+    <div className="min-h-[400px] flex items-center justify-center p-4">
+      <div className="max-w-2xl w-full p-6 sm:p-8 animate-scale-in rounded-xl bg-white/[0.03] border border-white/[0.08]">
+        <div className="text-center space-y-6">
+          {/* Success Icon */}
+          <div className="flex justify-center">
+            <div className="relative">
+              <CheckCircle2 className="h-16 w-16 sm:h-20 sm:w-20 text-emerald-400 animate-scale-in" />
+              <Shield className="h-8 w-8 text-emerald-400 absolute -bottom-2 -right-2 animate-fade-in" />
+            </div>
           </div>
 
-          <div>
-            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+          {/* Success Message */}
+          <div className="space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
               Documentation Complete!
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-white">
               Your safety documentation has been generated successfully
             </p>
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 gap-4 py-4">
-            <Card className="bg-muted/50 border-orange-500/10 hover:scale-105 transition-transform">
-              <CardContent className="p-4 text-center">
-                <Shield className="h-8 w-8 text-orange-400 mx-auto mb-2" />
-                <div className="text-2xl font-bold">{hazardCount}</div>
-                <div className="text-xs text-muted-foreground">Hazards Identified</div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-muted/50 border-orange-500/10 hover:scale-105 transition-transform">
-              <CardContent className="p-4 text-center">
-                <HardHat className="h-8 w-8 text-orange-400 mx-auto mb-2" />
-                <div className="text-2xl font-bold">{ppeCount}</div>
-                <div className="text-xs text-muted-foreground">PPE Items</div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Time Saved Highlight */}
-          <div className="bg-gradient-to-r from-orange-500/10 to-orange-600/10 border border-orange-500/20 rounded-lg p-4">
-            <div className="flex items-center justify-center gap-2 text-orange-400">
-              <Clock className="h-5 w-5" />
-              <span className="font-semibold">Time Saved: ~{timeSaved} hours</span>
+          <div className="grid grid-cols-3 gap-4 py-6">
+            <div className="space-y-1">
+              <Shield className="h-6 w-6 text-emerald-400 mx-auto" />
+              <p className="text-2xl sm:text-3xl font-bold text-white">{hazardCount}</p>
+              <p className="text-xs text-white">Hazards Identified</p>
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Compared to manual risk assessment creation
-            </p>
+            <div className="space-y-1">
+              <HardHat className="h-6 w-6 text-emerald-400 mx-auto" />
+              <p className="text-2xl sm:text-3xl font-bold text-white">{ppeCount}</p>
+              <p className="text-xs text-white">PPE Items</p>
+            </div>
+            <div className="space-y-1">
+              <Clock className="h-6 w-6 text-emerald-400 mx-auto" />
+              <p className="text-2xl sm:text-3xl font-bold text-white">~{timeSaved}h</p>
+              <p className="text-xs text-white">Time Saved</p>
+            </div>
           </div>
 
+          {/* Generation Info */}
+          <div className="rounded-lg bg-white/[0.03] border border-white/[0.08] p-4">
+            <p className="text-sm text-white mb-1">Generated in:</p>
+            <p className="font-medium text-white">{generationTimeSeconds} minutes</p>
+          </div>
+
+          {/* Action Button */}
           <Button
             onClick={onClose}
-            className="w-full bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-foreground h-12 touch-manipulation"
+            size="lg"
+            className="w-full h-14 rounded-xl bg-gradient-to-r from-emerald-500 to-green-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-emerald-500/20 hover:from-emerald-600 hover:to-green-600"
           >
             View Results
           </Button>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
