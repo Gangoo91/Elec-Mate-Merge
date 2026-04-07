@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, Minus, Plus, X } from 'lucide-react';
+import { ChevronDown, Minus, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   InventoryCategory,
@@ -30,9 +30,17 @@ interface InventoryAddSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSave: (input: CreateInventoryInput) => Promise<unknown>;
+  existingItems?: { id: string; name: string; quantity: number; unit: string; location: string }[];
+  onUpdateExisting?: (id: string, addQuantity: number) => void;
 }
 
-export function InventoryAddSheet({ open, onOpenChange, onSave }: InventoryAddSheetProps) {
+export function InventoryAddSheet({
+  open,
+  onOpenChange,
+  onSave,
+  existingItems = [],
+  onUpdateExisting,
+}: InventoryAddSheetProps) {
   const [name, setName] = useState('');
   const [category, setCategory] = useState<InventoryCategory>('cable');
   const [quantity, setQuantity] = useState(1);
@@ -60,9 +68,26 @@ export function InventoryAddSheet({ open, onOpenChange, onSave }: InventoryAddSh
     setShowMore(false);
   };
 
+  // Check for duplicate
+  const duplicate = name.trim()
+    ? existingItems.find((i) => i.name.toLowerCase() === name.trim().toLowerCase())
+    : null;
+
   const handleSave = async () => {
     if (!name.trim()) {
       toast({ title: 'Enter an item name', variant: 'destructive' });
+      return;
+    }
+
+    // If duplicate found, offer to merge
+    if (duplicate && onUpdateExisting) {
+      onUpdateExisting(duplicate.id, quantity);
+      toast({
+        title: 'Updated existing item',
+        description: `Added ${quantity} to ${duplicate.name} (now ${duplicate.quantity + quantity} ${duplicate.unit})`,
+      });
+      reset();
+      onOpenChange(false);
       return;
     }
 
@@ -92,16 +117,11 @@ export function InventoryAddSheet({ open, onOpenChange, onSave }: InventoryAddSh
       <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+          <div className="px-4 pt-6 pb-3 border-b border-white/[0.06]">
             <h2 className="text-lg font-semibold text-white">Add Item</h2>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-9 w-9"
-              onClick={() => onOpenChange(false)}
-            >
-              <X className="h-5 w-5" />
-            </Button>
+            <p className="text-[12px] text-white/40 mt-0.5">
+              Add materials, tools or equipment to your stock
+            </p>
           </div>
 
           {/* Form */}
@@ -116,6 +136,14 @@ export function InventoryAddSheet({ open, onOpenChange, onSave }: InventoryAddSh
                 className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 autoFocus
               />
+              {duplicate && (
+                <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2">
+                  <p className="text-[12px] text-amber-300">
+                    "{duplicate.name}" already exists ({duplicate.quantity} {duplicate.unit} in{' '}
+                    {duplicate.location}). Saving will add your quantity to the existing item.
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* Category pills */}

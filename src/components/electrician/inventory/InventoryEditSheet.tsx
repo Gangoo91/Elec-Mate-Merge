@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Minus, Plus, Trash2, X } from 'lucide-react';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   InventoryItem,
@@ -32,6 +32,7 @@ interface InventoryEditSheetProps {
   onSave: (input: UpdateInventoryInput) => Promise<boolean>;
   onDelete: (id: string) => void;
   onAdjust: (id: string, delta: number) => void;
+  onMove?: (id: string, location: InventoryLocation) => Promise<boolean>;
 }
 
 export function InventoryEditSheet({
@@ -40,6 +41,7 @@ export function InventoryEditSheet({
   onSave,
   onDelete,
   onAdjust,
+  onMove,
 }: InventoryEditSheetProps) {
   const [name, setName] = useState('');
   const [category, setCategory] = useState<InventoryCategory>('cable');
@@ -98,56 +100,55 @@ export function InventoryEditSheet({
       <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+          <div className="px-4 pt-6 pb-3 border-b border-white/[0.06]">
             <h2 className="text-lg font-semibold text-white">Edit Item</h2>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-9 w-9"
-              onClick={() => onOpenChange(false)}
-            >
-              <X className="h-5 w-5" />
-            </Button>
+            <p className="text-[12px] text-white/40 mt-0.5">Update quantity, location or details</p>
           </div>
 
           {/* Form */}
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
-            {/* Quick quantity adjuster (prominent) */}
-            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
-              <p className="text-[12px] text-white/50 text-center mb-2">Quick Adjust</p>
-              <div className="flex items-center justify-center gap-4">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-12 w-12 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white touch-manipulation"
+            {/* Quantity adjuster — hero section */}
+            <div className="rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] p-5">
+              <p className="text-[11px] text-white/40 text-center uppercase tracking-wider mb-3">
+                Quantity
+              </p>
+              <div className="flex items-center justify-center gap-6">
+                <button
+                  type="button"
+                  className="w-14 h-14 rounded-2xl bg-white/[0.06] border border-white/[0.1] flex items-center justify-center touch-manipulation active:bg-white/[0.12] active:scale-95 transition-all"
                   onClick={() => {
                     const newQty = Math.max(0, Math.round((quantity - step) * 100) / 100);
                     setQuantity(newQty);
                     onAdjust(item.id, -step);
                   }}
                 >
-                  <Minus className="h-5 w-5" />
-                </Button>
-                <div className="text-center min-w-[80px]">
-                  <p className="text-[28px] font-bold text-white">{quantity}</p>
-                  <p className="text-[12px] text-white/50">{unit !== 'each' ? unit : ''}</p>
+                  <Minus className="h-6 w-6 text-white" />
+                </button>
+                <div className="text-center min-w-[90px]">
+                  <p className="text-[36px] font-bold text-white leading-none">{quantity}</p>
+                  <p className="text-[13px] text-white/40 mt-1">
+                    {unit !== 'each' ? unit : 'items'}
+                  </p>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-12 w-12 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white touch-manipulation"
+                <button
+                  type="button"
+                  className="w-14 h-14 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center touch-manipulation active:bg-elec-yellow/20 active:scale-95 transition-all"
                   onClick={() => {
                     const newQty = Math.round((quantity + step) * 100) / 100;
                     setQuantity(newQty);
                     onAdjust(item.id, step);
                   }}
                 >
-                  <Plus className="h-5 w-5" />
-                </Button>
+                  <Plus className="h-6 w-6 text-elec-yellow" />
+                </button>
               </div>
               {item.last_used_date && (
-                <p className="text-[11px] text-white/40 text-center mt-2">
-                  Last used: {new Date(item.last_used_date).toLocaleDateString('en-GB')}
+                <p className="text-[11px] text-white/30 text-center mt-3">
+                  Last used{' '}
+                  {new Date(item.last_used_date).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                  })}
                 </p>
               )}
             </div>
@@ -201,15 +202,25 @@ export function InventoryEditSheet({
               </Select>
             </div>
 
-            {/* Location pills */}
+            {/* Location — with instant move */}
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-white">Location</Label>
+              <Label className="text-sm font-medium text-white">
+                Location{' '}
+                {location !== item.location && (
+                  <span className="text-teal-400 text-[11px] ml-1">changed</span>
+                )}
+              </Label>
               <div className="flex flex-wrap gap-2">
                 {INVENTORY_LOCATIONS.map((loc) => (
                   <button
                     key={loc.id}
                     type="button"
-                    onClick={() => setLocation(loc.id)}
+                    onClick={() => {
+                      setLocation(loc.id);
+                      if (onMove && item && loc.id !== item.location) {
+                        onMove(item.id, loc.id);
+                      }
+                    }}
                     className={cn(
                       'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-all',
                       location === loc.id
@@ -281,14 +292,16 @@ export function InventoryEditSheet({
             </div>
 
             {/* Delete */}
-            <Button
-              variant="ghost"
-              className="w-full h-11 text-red-400 hover:text-red-300 hover:bg-red-500/10 touch-manipulation"
-              onClick={() => onDelete(item.id)}
-            >
-              <Trash2 className="h-4 w-4 mr-2" />
-              Delete Item
-            </Button>
+            <div className="pt-2 border-t border-white/[0.06]">
+              <button
+                type="button"
+                onClick={() => onDelete(item.id)}
+                className="w-full flex items-center justify-center gap-2 h-12 rounded-xl border border-red-500/20 bg-red-500/5 text-red-400 text-[14px] font-medium touch-manipulation active:bg-red-500/15 transition-colors"
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete Item
+              </button>
+            </div>
           </div>
 
           {/* Save button */}

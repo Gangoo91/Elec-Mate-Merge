@@ -9,9 +9,13 @@ import {
   InventoryFilters,
   InventoryCategory,
   InventoryLocation,
+  INVENTORY_LOCATIONS,
+  formatQuantity,
 } from '@/types/inventory';
 
 const TABLE = 'personal_inventory';
+
+export type InventorySort = 'name' | 'quantity_asc' | 'last_used' | 'recent';
 
 export function useInventoryStorage() {
   const [items, setItems] = useState<InventoryItem[]>([]);
@@ -22,6 +26,7 @@ export function useInventoryStorage() {
     lowStockOnly: false,
     searchQuery: '',
   });
+  const [sortBy, setSortBy] = useState<InventorySort>('name');
 
   // Fetch all items on mount
   const fetchItems = useCallback(async () => {
@@ -63,7 +68,34 @@ export function useInventoryStorage() {
     };
   }, [fetchItems]);
 
-  // Filtered items
+  // Sort function
+  const sortItems = useCallback(
+    (list: InventoryItem[]): InventoryItem[] => {
+      const sorted = [...list];
+      switch (sortBy) {
+        case 'name':
+          return sorted.sort((a, b) => a.name.localeCompare(b.name));
+        case 'quantity_asc':
+          return sorted.sort((a, b) => a.quantity - b.quantity);
+        case 'last_used':
+          return sorted.sort((a, b) => {
+            if (!a.last_used_date && !b.last_used_date) return 0;
+            if (!a.last_used_date) return 1;
+            if (!b.last_used_date) return -1;
+            return new Date(b.last_used_date).getTime() - new Date(a.last_used_date).getTime();
+          });
+        case 'recent':
+          return sorted.sort(
+            (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+        default:
+          return sorted;
+      }
+    },
+    [sortBy]
+  );
+
+  // Filtered + sorted items
   const filteredItems = useMemo(() => {
     let result = items;
 
@@ -91,14 +123,37 @@ export function useInventoryStorage() {
       );
     }
 
-    return result;
-  }, [items, filters]);
+    return sortItems(result);
+  }, [items, filters, sortItems]);
 
   // Low stock items
   const lowStockItems = useMemo(
     () => items.filter((i) => i.low_stock_threshold != null && i.quantity <= i.low_stock_threshold),
     [items]
   );
+
+  // Recently used items (last 7 days)
+  const recentlyUsedItems = useMemo(() => {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    return items
+      .filter((i) => i.last_used_date && new Date(i.last_used_date) >= sevenDaysAgo)
+      .sort(
+        (a, b) => new Date(b.last_used_date!).getTime() - new Date(a.last_used_date!).getTime()
+      );
+  }, [items]);
+
+  // Group items by location
+  const groupedByLocation = useMemo(() => {
+    const groups: { location: (typeof INVENTORY_LOCATIONS)[number]; items: InventoryItem[] }[] = [];
+    for (const loc of INVENTORY_LOCATIONS) {
+      const locItems = filteredItems.filter((i) => i.location === loc.id);
+      if (locItems.length > 0) {
+        groups.push({ location: loc, items: locItems });
+      }
+    }
+    return groups;
+  }, [filteredItems]);
 
   // Stats
   const stats: InventoryStats = useMemo(() => {
@@ -139,7 +194,11 @@ export function useInventoryStorage() {
 
       if (error) {
         console.error('[useInventoryStorage] Create error:', error);
-        toast({ title: 'Failed to add item', description: error.message, variant: 'destructive' });
+        toast({
+          title: 'Failed to add item',
+          description: error.message,
+          variant: 'destructive',
+        });
         return null;
       }
 
@@ -158,7 +217,11 @@ export function useInventoryStorage() {
 
     if (error) {
       console.error('[useInventoryStorage] Update error:', error);
-      toast({ title: 'Failed to update item', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Failed to update item',
+        description: error.message,
+        variant: 'destructive',
+      });
       return false;
     }
 
@@ -176,7 +239,11 @@ export function useInventoryStorage() {
 
     if (error) {
       console.error('[useInventoryStorage] Delete error:', error);
-      toast({ title: 'Failed to delete item', description: error.message, variant: 'destructive' });
+      toast({
+        title: 'Failed to delete item',
+        description: error.message,
+        variant: 'destructive',
+      });
       return false;
     }
 
@@ -184,12 +251,13 @@ export function useInventoryStorage() {
     return true;
   }, []);
 
-  // Quick quantity adjustment (+/- buttons)
+  // Quick quantity adjustment (+/- buttons) with undo support
   const adjustQuantity = useCallback(
-    async (id: string, delta: number): Promise<boolean> => {
+    async (id: string, delta: number): Promise<{ success: boolean; previousQuantity?: number }> => {
       const item = items.find((i) => i.id === id);
-      if (!item) return false;
+      if (!item) return { success: false };
 
+      const previousQuantity = item.quantity;
       const newQty = Math.max(0, Math.round((item.quantity + delta) * 100) / 100);
 
       // Optimistic update
@@ -215,16 +283,58 @@ export function useInventoryStorage() {
 
       if (error) {
         console.error('[useInventoryStorage] Adjust error:', error);
-        // Revert optimistic update
         setItems((prev) => prev.map((i) => (i.id === id ? item : i)));
         toast({ title: 'Failed to update quantity', variant: 'destructive' });
-        return false;
+        return { success: false };
       }
 
-      return true;
+      return { success: true, previousQuantity };
     },
     [items]
   );
+
+  // Move item to different location
+  const moveItem = useCallback(
+    async (id: string, newLocation: InventoryLocation): Promise<boolean> => {
+      const { error } = await supabase.from(TABLE).update({ location: newLocation }).eq('id', id);
+
+      if (error) {
+        toast({ title: 'Failed to move item', variant: 'destructive' });
+        return false;
+      }
+
+      setItems((prev) => prev.map((i) => (i.id === id ? { ...i, location: newLocation } : i)));
+      return true;
+    },
+    []
+  );
+
+  // Generate reorder list text from low stock items, grouped by supplier
+  const generateReorderList = useCallback((): string => {
+    if (lowStockItems.length === 0) return '';
+
+    // Group by supplier
+    const grouped = new Map<string, InventoryItem[]>();
+    for (const item of lowStockItems) {
+      const key = item.supplier?.trim() || 'No supplier';
+      const group = grouped.get(key) || [];
+      group.push(item);
+      grouped.set(key, group);
+    }
+
+    const sections: string[] = [];
+    for (const [supplier, supplierItems] of grouped) {
+      const lines = supplierItems.map((item) => {
+        const needed = item.low_stock_threshold
+          ? Math.ceil(item.low_stock_threshold * 2 - item.quantity)
+          : 0;
+        return `  • ${item.name} — have ${formatQuantity(item.quantity, item.unit)}, need ~${needed} ${item.unit}`;
+      });
+      sections.push(`${supplier}:\n${lines.join('\n')}`);
+    }
+
+    return `Reorder List — ${new Date().toLocaleDateString('en-GB')}\n\n${sections.join('\n\n')}`;
+  }, [lowStockItems]);
 
   const refreshItems = useCallback(async () => {
     setLoading(true);
@@ -236,14 +346,20 @@ export function useInventoryStorage() {
     items,
     filteredItems,
     lowStockItems,
+    recentlyUsedItems,
+    groupedByLocation,
     stats,
     loading,
     filters,
     setFilters,
+    sortBy,
+    setSortBy,
     createItem,
     updateItem,
     deleteItem,
     adjustQuantity,
+    moveItem,
+    generateReorderList,
     refreshItems,
   };
 }
