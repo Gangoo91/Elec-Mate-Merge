@@ -58,7 +58,7 @@ const hubsConfig: HubConfig[] = [
     accentGradient: 'from-blue-500 via-blue-400 to-cyan-400',
     iconColor: 'text-blue-400',
     iconBg: 'bg-blue-500/10 border border-blue-500/20',
-    roles: ['apprentice', 'electrician', 'college', 'admin'],
+    roles: ['apprentice', 'electrician', 'employer', 'college', 'admin'],
     getStat: (data) => ({
       label: 'Study streak',
       value: `${data.learning.currentStreak} days`,
@@ -298,19 +298,23 @@ export function PremiumHubGrid() {
   const { profile, user, isLoading } = useAuth();
   const { isHubVisible } = useDashboardPreferences();
   const userRole = profile?.role || '';
+  const isAdmin = profile?.admin_role === 'super_admin' || profile?.admin_role === 'admin';
   const userEmail = user?.email?.toLowerCase() || '';
 
   // Filter hubs based on user role, allowed emails, and user preferences
   const filteredHubs = hubsConfig.filter((hub) => {
-    // Check email restriction first
-    if (hub.allowedEmails && hub.allowedEmails.length > 0) {
-      if (!userEmail || !hub.allowedEmails.includes(userEmail)) {
+    // Admins bypass email and role restrictions
+    if (!isAdmin) {
+      // Check email restriction
+      if (hub.allowedEmails && hub.allowedEmails.length > 0) {
+        if (!userEmail || !hub.allowedEmails.includes(userEmail)) {
+          return false;
+        }
+      }
+      // Check role
+      if (userRole && !isLoading && !hub.roles.includes(userRole)) {
         return false;
       }
-    }
-    // Then check role
-    if (userRole && !isLoading && !hub.roles.includes(userRole)) {
-      return false;
     }
     // Then check user preference (Electrical Hub always visible)
     if (hub.id !== 'electrician' && !isHubVisible(hub.id)) {

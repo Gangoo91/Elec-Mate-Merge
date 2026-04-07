@@ -315,23 +315,41 @@ const PreferencesTab = () => {
         variants={itemVariants}
         className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden mb-6"
       >
-        <div className="px-4 py-3 border-b border-white/[0.06]">
-          <p className="text-[13px] text-white">Choose which hubs appear on your dashboard.</p>
+        <div className="px-4 py-4 border-b border-white/[0.06]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+              <span className="text-base">🏠</span>
+            </div>
+            <div>
+              <p className="text-[14px] font-semibold text-white">Your Dashboard</p>
+              <p className="text-[12px] text-white">Show or hide hubs on your home screen</p>
+            </div>
+          </div>
         </div>
         {dashboardHubs.map((hub, index) => (
           <React.Fragment key={hub.id}>
             {index > 0 && <Divider />}
-            <ToggleRow
-              icon={hub.icon}
-              iconBg={hub.iconBg}
-              label={hub.label}
-              checked={hub.locked || isHubVisible(hub.id)}
-              onCheckedChange={(v) => {
-                toggleHub({ hubId: hub.id, visible: v });
-                toast(v ? `${hub.label} added to dashboard` : `${hub.label} hidden from dashboard`);
-              }}
-              disabled={hub.locked}
-            />
+            <div className="flex items-center min-h-[52px] px-4 touch-manipulation">
+              <div
+                className={`w-8 h-8 rounded-lg ${hub.iconBg} flex items-center justify-center flex-shrink-0 text-base`}
+              >
+                {hub.icon}
+              </div>
+              <div className="ml-3 flex-1">
+                <span className="text-[15px] font-medium text-white">{hub.label}</span>
+                {hub.locked && <p className="text-[11px] text-white">Always visible</p>}
+              </div>
+              <Switch
+                checked={hub.locked || isHubVisible(hub.id)}
+                onCheckedChange={(v) => {
+                  toggleHub({ hubId: hub.id, visible: v });
+                  toast(
+                    v ? `${hub.label} added to dashboard` : `${hub.label} hidden from dashboard`
+                  );
+                }}
+                disabled={hub.locked}
+              />
+            </div>
           </React.Fragment>
         ))}
       </motion.div>
