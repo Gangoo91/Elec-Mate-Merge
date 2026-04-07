@@ -369,14 +369,12 @@ export function PremiumHubGrid() {
         className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
       >
         {filteredHubs.map((hub, index) => {
-          // First hub = hero (spans 2 cols on mobile), last odd hub also spans 2 cols
-          const isHero = index === 0;
+          // Last card spans full width if odd count, so no orphan half-card
           const isLastOdd = filteredHubs.length % 2 === 1 && index === filteredHubs.length - 1;
-          const shouldSpan = isHero || isLastOdd;
 
           return (
-            <div key={hub.id} className={shouldSpan ? 'col-span-2 lg:col-span-1' : undefined}>
-              <PremiumHubCard hub={hub} data={dashboardData} isPrimary={shouldSpan} />
+            <div key={hub.id} className={isLastOdd ? 'col-span-2 lg:col-span-1' : undefined}>
+              <PremiumHubCard hub={hub} data={dashboardData} />
             </div>
           );
         })}
