@@ -75,7 +75,7 @@ interface EmptyStateProps {
 export function EmptyState({ icon, title, description, action }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[200px] p-6 text-center">
-      {icon && <div className="mb-4 text-white/60/60">{icon}</div>}
+      {icon && <div className="mb-4 text-white">{icon}</div>}
 
       <h3 className="text-lg font-medium text-foreground mb-1">{title}</h3>
 

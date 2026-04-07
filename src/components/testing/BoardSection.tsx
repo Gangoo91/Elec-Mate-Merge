@@ -219,7 +219,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   value={board.reference}
                   onChange={(value) => onUpdateBoard(board.id, 'reference', value)}
                   placeholder="e.g. Main CU"
-                  className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg"
+                  className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg"
                 />
               </div>
 
@@ -232,7 +232,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   value={board.location || ''}
                   onChange={(value) => onUpdateBoard(board.id, 'location', value)}
                   placeholder="e.g. Garage, Kitchen"
-                  className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg"
+                  className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg"
                 />
               </div>
 
@@ -248,7 +248,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     value={board.zdb}
                     onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
                     placeholder="0.00"
-                    className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg pr-10"
+                    className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg pr-10"
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm font-medium">
                     Ω
@@ -268,7 +268,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     value={board.ipf}
                     onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
                     placeholder="0.0"
-                    className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg pr-10"
+                    className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg pr-10"
                   />
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm font-medium">
                     kA

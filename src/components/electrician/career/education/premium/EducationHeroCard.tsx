@@ -140,7 +140,7 @@ const EducationHeroCard = ({
                 </span>
                 <span className="text-white text-xs">programmes</span>
               </div>
-              <span className="text-white/20">•</span>
+              <span className="text-white">•</span>
               <div className="flex items-center gap-1.5 text-sm">
                 <Users className="h-3.5 w-3.5 text-emerald-400" />
                 <span className="font-semibold text-white">
@@ -148,7 +148,7 @@ const EducationHeroCard = ({
                 </span>
                 <span className="text-white text-xs">providers</span>
               </div>
-              <span className="text-white/20">•</span>
+              <span className="text-white">•</span>
               <div className="flex items-center gap-1.5 text-sm">
                 <Star className="h-3.5 w-3.5 text-amber-400" />
                 <span className="font-semibold text-white">
@@ -158,7 +158,7 @@ const EducationHeroCard = ({
               </div>
               {analytics.averageEmploymentRate && analytics.averageEmploymentRate > 0 && (
                 <>
-                  <span className="text-white/20 hidden sm:inline">•</span>
+                  <span className="text-white hidden sm:inline">•</span>
                   <div className="hidden sm:flex items-center gap-1.5 text-sm">
                     <TrendingUp className="h-3.5 w-3.5 text-blue-400" />
                     <span className="font-semibold text-white">

@@ -503,7 +503,7 @@ const CheckoutTrial = () => {
           <div className="mt-10 text-center">
             <button
               onClick={handleSignOut}
-              className="inline-flex items-center gap-1.5 text-[12px] text-white/40 hover:text-white/60 transition-colors touch-manipulation py-2 px-4 rounded-xl"
+              className="inline-flex items-center gap-1.5 text-[12px] text-white hover:text-white/60 transition-colors touch-manipulation py-2 px-4 rounded-xl"
             >
               <LogOut className="h-3 w-3" /> Sign out
             </button>

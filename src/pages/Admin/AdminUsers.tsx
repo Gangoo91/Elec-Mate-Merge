@@ -903,7 +903,7 @@ export default function AdminUsers() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or email..."
-              className="h-13 pl-12 pr-4 text-base rounded-2xl bg-card/80 border-border/30 focus:border-yellow-500 focus:ring-yellow-500/20 focus:ring-2 touch-manipulation placeholder:text-white/40"
+              className="h-13 pl-12 pr-4 text-base rounded-2xl bg-card/80 border-border/30 focus:border-yellow-500 focus:ring-yellow-500/20 focus:ring-2 touch-manipulation placeholder:text-white"
             />
             {search && (
               <Button
@@ -1311,11 +1311,11 @@ export default function AdminUsers() {
                                   const raw = engagementRawMap.get(user.id)!;
                                   return (
                                     <>
-                                      <span className="text-white/30">·</span>
+                                      <span className="text-white">·</span>
                                       <span>{formatTimeShort(raw.total_seconds_tracked)}</span>
-                                      <span className="text-white/30">·</span>
+                                      <span className="text-white">·</span>
                                       <span>{raw.unique_pages_visited} pages</span>
-                                      <span className="text-white/30">·</span>
+                                      <span className="text-white">·</span>
                                       <span>{raw.login_count} logins</span>
                                     </>
                                   );

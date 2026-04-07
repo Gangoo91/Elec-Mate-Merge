@@ -202,7 +202,7 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
               value={editedCircuit.label}
               onChange={(e) => handleChange('label', e.target.value)}
               placeholder="e.g., Kitchen Sockets"
-              className="h-12 text-base touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white/30"
+              className="h-12 text-base touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white"
             />
           </div>
 
@@ -307,7 +307,7 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
               value={editedCircuit.notes || ''}
               onChange={(e) => handleChange('notes', e.target.value)}
               placeholder="Any additional notes..."
-              className="min-h-[72px] text-base touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white/30 resize-none"
+              className="min-h-[72px] text-base touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white resize-none"
             />
           </div>
 

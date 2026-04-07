@@ -361,7 +361,7 @@ export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSect
                     placeholder="e.g. Site visit — 42 Oak Lane"
                     value={newAssessment.location}
                     onChange={(e) => setNewAssessment((p) => ({ ...p, location: e.target.value }))}
-                    className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
+                    className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
                   />
                 </div>
 
@@ -374,7 +374,7 @@ export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSect
                       'flex-1 h-11 rounded-lg text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all',
                       newAssessment.studentId
                         ? 'bg-elec-yellow text-black'
-                        : 'bg-white/[0.04] text-white/40 border border-white/[0.06]'
+                        : 'bg-white/[0.04] text-white border border-white/[0.06]'
                     )}
                   >
                     Schedule

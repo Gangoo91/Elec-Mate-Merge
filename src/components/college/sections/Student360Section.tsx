@@ -177,7 +177,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
   if (!student) {
     return (
       <div className="flex flex-col items-center justify-center py-20 space-y-4">
-        <User className="h-12 w-12 text-white/30" />
+        <User className="h-12 w-12 text-white" />
         <p className="text-white text-sm">Student not found</p>
         <button
           onClick={onBack}
@@ -512,7 +512,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
                         <CheckCircle2
                           className={cn(
                             'h-4 w-4 mt-0.5 flex-shrink-0',
-                            target.status === 'Achieved' ? 'text-emerald-400' : 'text-white/20'
+                            target.status === 'Achieved' ? 'text-emerald-400' : 'text-white'
                           )}
                         />
                         <div className="flex-1 min-w-0">

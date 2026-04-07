@@ -591,7 +591,7 @@ input::-webkit-caps-lock-indicator {
   /* iOS input base style */
   .ios-input-base {
     @apply w-full h-[50px] px-4 py-3;
-    @apply text-ios-body text-white placeholder:text-white/40;
+    @apply text-ios-body text-white placeholder:text-white;
     @apply bg-white/5 rounded-xl border-2 border-white/10;
     @apply focus:outline-none focus:border-elec-yellow/60 focus:bg-white/10;
     @apply transition-all duration-250 ease-ios-ease;
@@ -1183,7 +1183,7 @@ input::-webkit-caps-lock-indicator {
   .agent-input {
     @apply bg-white/5 border border-white/10 rounded-xl text-base min-h-[120px]
            focus:border-white/30 focus:ring-2 focus:ring-white/10 focus:ring-offset-0
-           placeholder:text-white/30 resize-none;
+           placeholder:text-white resize-none;
     font-size: 16px !important; /* Prevent iOS zoom */
   }
 
@@ -1359,7 +1359,7 @@ input::-webkit-caps-lock-indicator {
 
   /* Character counter colors */
   .char-count-low {
-    @apply text-white/40;
+    @apply text-white;
   }
 
   .char-count-medium {
@@ -1385,7 +1385,7 @@ input::-webkit-caps-lock-indicator {
   .calculator-input {
     @apply bg-white/5 border border-white/10 rounded-xl text-white
            focus:border-white/30 focus:ring-2 focus:ring-white/5 focus:ring-offset-0
-           placeholder:text-white/30;
+           placeholder:text-white;
     font-size: 16px !important; /* Prevent iOS zoom */
     -webkit-appearance: none; /* iOS Safari consistency */
   }
@@ -2183,7 +2183,7 @@ input::-webkit-caps-lock-indicator {
 
   /* Section label style (iOS-inspired) */
   .eicr-section-label {
-    @apply text-[11px] text-white/40 uppercase tracking-wider font-medium mb-2 block;
+    @apply text-[11px] text-white uppercase tracking-wider font-medium mb-2 block;
   }
 
   /* Native-feeling outcome chip (44px touch target) */
@@ -2536,7 +2536,7 @@ input::-webkit-caps-lock-indicator {
   }
 
   .sot-cell-input::placeholder {
-    @apply text-white/20;
+    @apply text-white;
   }
 
   /* Circuit number cell - special styling */

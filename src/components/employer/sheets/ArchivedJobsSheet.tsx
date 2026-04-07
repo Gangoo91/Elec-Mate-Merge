@@ -102,9 +102,9 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
           </div>
         ) : archivedJobs.length === 0 ? (
           <div className="text-center py-12">
-            <Archive className="h-12 w-12 mx-auto mb-3 text-white/60/30" />
+            <Archive className="h-12 w-12 mx-auto mb-3 text-white" />
             <p className="text-white/60">No archived jobs</p>
-            <p className="text-sm text-white/60/70 mt-1">Archived jobs will appear here</p>
+            <p className="text-sm text-white mt-1">Archived jobs will appear here</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -119,7 +119,7 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
                         <MapPin className="h-3 w-3" />
                         <span className="truncate">{job.location}</span>
                       </div>
-                      <p className="text-xs text-white/60/70 mt-2">
+                      <p className="text-xs text-white mt-2">
                         Archived {format(new Date(job.archived_at), 'd MMM yyyy')}
                       </p>
                     </div>

@@ -196,7 +196,7 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
                   {/* Value */}
                   <div className="flex items-center gap-1">
                     <span
-                      className={cn('text-2xl font-bold', value ? 'text-white' : 'text-white/30')}
+                      className={cn('text-2xl font-bold', value ? 'text-white' : 'text-white')}
                     >
                       {value || tile.placeholder}
                     </span>
@@ -221,13 +221,13 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
       {/* Additional test fields in a row */}
       <div className="grid grid-cols-3 gap-2 pt-2">
         <div className="space-y-1">
-          <Label className="text-xs text-white/40">Max Zs</Label>
+          <Label className="text-xs text-white">Max Zs</Label>
           <div className="h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-sm text-white/70">
             {circuit.maxZs || '-'} Ω
           </div>
         </div>
         <div className="space-y-1">
-          <Label className="text-xs text-white/40">L-N (MΩ)</Label>
+          <Label className="text-xs text-white">L-N (MΩ)</Label>
           <button
             onClick={() => handleTileClick('insulationLiveNeutral')}
             className="w-full h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-sm text-white hover:bg-white/10 touch-manipulation"
@@ -236,7 +236,7 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
           </button>
         </div>
         <div className="space-y-1">
-          <Label className="text-xs text-white/40">N-E (MΩ)</Label>
+          <Label className="text-xs text-white">N-E (MΩ)</Label>
           <button
             onClick={() => handleTileClick('insulationNeutralEarth')}
             className="w-full h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-sm text-white hover:bg-white/10 touch-manipulation"

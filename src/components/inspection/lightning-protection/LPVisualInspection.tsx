@@ -78,7 +78,7 @@ export default function LPVisualInspection({ formData, onUpdate }: Props) {
                   <button type="button" onClick={() => { setPhotoTargetId(item.id); photoInputRef.current?.click(); }}
                     className={cn('w-8 h-8 rounded-lg flex items-center justify-center touch-manipulation flex-shrink-0',
                       item.photo ? 'bg-cyan-500/20 border border-cyan-500/30' : 'bg-white/[0.04] border border-white/[0.08]')}>
-                    <Camera className={cn('h-3.5 w-3.5', item.photo ? 'text-cyan-400' : 'text-white/40')} />
+                    <Camera className={cn('h-3.5 w-3.5', item.photo ? 'text-cyan-400' : 'text-white')} />
                   </button>
                 </div>
 

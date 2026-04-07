@@ -317,7 +317,7 @@ export function ChecklistForm({
                             }`}
                             aria-label="Pass"
                           >
-                            <CheckCircle2 className={`w-4.5 h-4.5 ${item.result === 'pass' ? 'text-green-400' : 'text-white/40'}`} />
+                            <CheckCircle2 className={`w-4.5 h-4.5 ${item.result === 'pass' ? 'text-green-400' : 'text-white opacity-30'}`} />
                           </button>
                           <button
                             onClick={() => updateItemResult(item.id, 'fail')}
@@ -328,7 +328,7 @@ export function ChecklistForm({
                             }`}
                             aria-label="Fail"
                           >
-                            <XCircle className={`w-4.5 h-4.5 ${item.result === 'fail' ? 'text-red-400' : 'text-white/40'}`} />
+                            <XCircle className={`w-4.5 h-4.5 ${item.result === 'fail' ? 'text-red-400' : 'text-white opacity-30'}`} />
                           </button>
                           <button
                             onClick={() => updateItemResult(item.id, 'na')}
@@ -339,7 +339,7 @@ export function ChecklistForm({
                             }`}
                             aria-label="N/A"
                           >
-                            <MinusCircle className={`w-4.5 h-4.5 ${item.result === 'na' ? 'text-white' : 'text-white/40'}`} />
+                            <MinusCircle className={`w-4.5 h-4.5 ${item.result === 'na' ? 'text-white' : 'text-white opacity-30'}`} />
                           </button>
                         </div>
                       </div>

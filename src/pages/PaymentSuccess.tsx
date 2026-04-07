@@ -368,7 +368,7 @@ const PaymentSuccess = () => {
                 Taking longer than usual — you can still proceed
               </p>
             )}
-            <p className="text-[11px] text-white/40">
+            <p className="text-[11px] text-white">
               Cancel anytime in Settings. Need help?{' '}
               <a href="mailto:support@elec-mate.com" className="text-white/50 underline">
                 support@elec-mate.com

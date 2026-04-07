@@ -130,19 +130,19 @@ function ImportItemRow({
         <div className="flex-1 min-w-0">
           <p className="text-[14px] text-white truncate">{item.name}</p>
           <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-[11px] text-white/40">
+            <span className="text-[11px] text-white">
               {item.quantity} {item.unit}
             </span>
-            <span className="text-[11px] text-white/30">·</span>
-            <span className="text-[11px] text-white/40 flex items-center gap-0.5">
+            <span className="text-[11px] text-white">·</span>
+            <span className="text-[11px] text-white flex items-center gap-0.5">
               <MapPin className="h-2.5 w-2.5" />
               {loc?.label}
             </span>
-            <span className="text-[11px] text-white/30">·</span>
-            <span className="text-[11px] text-white/40">{cat?.label}</span>
+            <span className="text-[11px] text-white">·</span>
+            <span className="text-[11px] text-white">{cat?.label}</span>
           </div>
         </div>
-        <Pencil className="h-3.5 w-3.5 text-white/30 flex-shrink-0" />
+        <Pencil className="h-3.5 w-3.5 text-white flex-shrink-0" />
       </button>
 
       {/* Expanded edit area */}
@@ -189,7 +189,7 @@ function ImportItemRow({
                   'px-2.5 py-1 rounded-full text-[11px] font-medium touch-manipulation transition-all',
                   item.location === l.id
                     ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
-                    : 'bg-white/[0.04] text-white/40 border border-transparent'
+                    : 'bg-white/[0.04] text-white border border-transparent'
                 )}
               >
                 {l.label}
@@ -208,7 +208,7 @@ function ImportItemRow({
                   'px-2.5 py-1 rounded-full text-[11px] font-medium touch-manipulation transition-all',
                   item.category === c.id
                     ? c.pillActiveClass
-                    : 'bg-white/[0.04] text-white/40 border border-transparent'
+                    : 'bg-white/[0.04] text-white border border-transparent'
                 )}
               >
                 {c.label}
@@ -410,7 +410,7 @@ export function InventoryImportSheet({
   /** Location selector bar — reused in paste + pricebook tabs */
   const LocationBar = () => (
     <div className="space-y-1.5">
-      <p className="text-[11px] text-white/40 uppercase tracking-wider">Default location</p>
+      <p className="text-[11px] text-white uppercase tracking-wider">Default location</p>
       <div className="flex gap-1.5">
         {INVENTORY_LOCATIONS.map((loc) => (
           <button
@@ -421,7 +421,7 @@ export function InventoryImportSheet({
               'flex-1 py-2 rounded-xl text-[12px] font-medium touch-manipulation transition-all text-center',
               defaultLocation === loc.id
                 ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
-                : 'bg-white/[0.04] text-white/40 border border-transparent'
+                : 'bg-white/[0.04] text-white border border-transparent'
             )}
           >
             {loc.label}
@@ -438,7 +438,7 @@ export function InventoryImportSheet({
           {/* Header */}
           <div className="px-4 pt-6 pb-3">
             <h2 className="text-lg font-semibold text-white">Import / Export</h2>
-            <p className="text-[12px] text-white/40 mt-0.5">Bring in lists or back up your stock</p>
+            <p className="text-[12px] text-white mt-0.5">Bring in lists or back up your stock</p>
           </div>
 
           {/* Tab bar */}
@@ -454,7 +454,7 @@ export function InventoryImportSheet({
                 onClick={() => setTab(t.id)}
                 className={cn(
                   'flex-1 flex items-center justify-center gap-1.5 py-3 text-[13px] font-medium touch-manipulation transition-colors',
-                  tab === t.id ? 'text-elec-yellow border-b-2 border-elec-yellow' : 'text-white/40'
+                  tab === t.id ? 'text-elec-yellow border-b-2 border-elec-yellow' : 'text-white'
                 )}
               >
                 <t.icon className="h-4 w-4" />
@@ -478,7 +478,7 @@ export function InventoryImportSheet({
                       value={pasteText}
                       onChange={(e) => setPasteText(e.target.value)}
                       placeholder={`e.g.\n50m 2.5mm T&E\n20m 6mm T&E\n10x 32A MCB Type B\nBox of red plugs\n2x double socket outlets`}
-                      className="touch-manipulation text-base min-h-[140px] border-white/30 focus:border-yellow-500 placeholder:text-white/20"
+                      className="touch-manipulation text-base min-h-[140px] border-white/30 focus:border-yellow-500 placeholder:text-white"
                     />
                     <Button
                       onClick={handleParse}
@@ -504,7 +504,7 @@ export function InventoryImportSheet({
                       </p>
                       <button
                         type="button"
-                        className="text-[12px] text-white/40 touch-manipulation"
+                        className="text-[12px] text-white touch-manipulation"
                         onClick={() => setParsedItems([])}
                       >
                         Start over
@@ -539,13 +539,13 @@ export function InventoryImportSheet({
 
                 {priceBookItems.length === 0 ? (
                   <div className="text-center py-8">
-                    <Package className="h-10 w-10 text-white/20 mx-auto mb-2" />
-                    <p className="text-sm text-white/40">No materials in your Price Book yet</p>
+                    <Package className="h-10 w-10 text-white mx-auto mb-2" />
+                    <p className="text-sm text-white">No materials in your Price Book yet</p>
                   </div>
                 ) : (
                   <>
                     <div className="flex items-center justify-between">
-                      <p className="text-[12px] text-white/40">{selectedPBItems.size} selected</p>
+                      <p className="text-[12px] text-white">{selectedPBItems.size} selected</p>
                       <Button
                         size="sm"
                         variant="ghost"
@@ -590,7 +590,7 @@ export function InventoryImportSheet({
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="text-[14px] text-white truncate">{item.name}</p>
-                            <p className="text-[11px] text-white/40">
+                            <p className="text-[11px] text-white">
                               {item.quantity || 0} {item.unit}
                               {item.estimated_price ? ` · £${item.estimated_price.toFixed(2)}` : ''}
                               {item.supplier ? ` · ${item.supplier}` : ''}
@@ -619,7 +619,7 @@ export function InventoryImportSheet({
                   </div>
                   <div className="text-left">
                     <p className="text-[14px] text-white font-medium">Download CSV</p>
-                    <p className="text-[12px] text-white/40">
+                    <p className="text-[12px] text-white">
                       {items.length} items · Opens in Excel, Google Sheets
                     </p>
                   </div>
@@ -634,7 +634,7 @@ export function InventoryImportSheet({
                   </div>
                   <div className="text-left">
                     <p className="text-[14px] text-white font-medium">Copy as Text</p>
-                    <p className="text-[12px] text-white/40">
+                    <p className="text-[12px] text-white">
                       Paste into WhatsApp, email, or Notes
                     </p>
                   </div>

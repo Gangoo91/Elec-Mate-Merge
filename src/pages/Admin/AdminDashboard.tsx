@@ -1146,7 +1146,7 @@ export default function AdminDashboard() {
         {/* ── Section divider ───────────────────────────────── */}
         <div className="flex items-center gap-3 pt-2">
           <div className="h-px flex-1 bg-white/[0.06]" />
-          <span className="text-[10px] text-white/40 font-semibold uppercase tracking-[0.2em]">
+          <span className="text-[10px] text-white font-semibold uppercase tracking-[0.2em]">
             Activity
           </span>
           <div className="h-px flex-1 bg-white/[0.06]" />
@@ -1379,7 +1379,7 @@ export default function AdminDashboard() {
           <>
             <div className="flex items-center gap-3 pt-2">
               <div className="h-px flex-1 bg-white/[0.06]" />
-              <span className="text-[10px] text-white/40 font-semibold uppercase tracking-[0.2em]">
+              <span className="text-[10px] text-white font-semibold uppercase tracking-[0.2em]">
                 Messages
               </span>
               <div className="h-px flex-1 bg-white/[0.06]" />

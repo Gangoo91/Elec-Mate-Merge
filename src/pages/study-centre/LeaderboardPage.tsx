@@ -254,7 +254,7 @@ export default function LeaderboardPage() {
           {/* Rankings */}
           <div className="rounded-2xl overflow-hidden" style={{ background: 'hsl(0 0% 12%)', border: '1px solid rgba(255,255,255,0.06)' }}>
             {loading ? (
-              <div className="py-12 text-center text-sm text-white/40">Loading...</div>
+              <div className="py-12 text-center text-sm text-white">Loading...</div>
             ) : sortedEntries.length === 0 ? (
               <div className="py-12 text-center text-sm text-white">
                 No learners yet. Start studying to be first!
@@ -388,7 +388,7 @@ export default function LeaderboardPage() {
                     >
                       <div className={cn(
                         'w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0',
-                        unlocked ? 'bg-elec-yellow/15 text-elec-yellow' : 'bg-white/[0.04] text-white/30'
+                        unlocked ? 'bg-elec-yellow/15 text-elec-yellow' : 'bg-white/[0.04] text-white'
                       )}>
                         {unlocked ? '✓' : '?'}
                       </div>

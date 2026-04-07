@@ -609,7 +609,7 @@ export default function AdminFailedPayments() {
                       </span>
                     </div>
                     {idx < arr.length - 1 && (
-                      <ArrowRight className="h-3 w-3 text-white/30 shrink-0" />
+                      <ArrowRight className="h-3 w-3 text-white shrink-0" />
                     )}
                   </div>
                 ))}

@@ -471,7 +471,7 @@ export function EmployeesSection() {
         {/* Empty State */}
         {filteredEmployees.length === 0 && (
           <div className="text-center py-16">
-            <Users className="h-12 w-12 text-white/60/30 mx-auto mb-3" />
+            <Users className="h-12 w-12 text-white mx-auto mb-3" />
             <h3 className="font-medium text-foreground mb-1">No team members found</h3>
             <p className="text-sm text-white/60 mb-4">
               Try adjusting your filters or search

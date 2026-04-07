@@ -165,7 +165,7 @@ export function StudyLeaderboard() {
 
       {/* Entries */}
       {loading ? (
-        <div className="px-4 py-8 text-center text-sm text-white/40">Loading...</div>
+        <div className="px-4 py-8 text-center text-sm text-white">Loading...</div>
       ) : entries.length === 0 ? (
         <div className="px-4 py-8 text-center text-sm text-white">
           No learners on the board yet. Start studying to be first!

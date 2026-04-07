@@ -253,7 +253,7 @@ export function LiveLessonSection({ lessonId, onNavigate, onBack }: LiveLessonSe
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Key observations, differentiation notes, student engagement..."
-          className="min-h-[100px] text-sm touch-manipulation bg-[hsl(0,0%,12%)] border-white/[0.06] text-white placeholder:text-white/30"
+          className="min-h-[100px] text-sm touch-manipulation bg-[hsl(0,0%,12%)] border-white/[0.06] text-white placeholder:text-white"
         />
       </motion.section>
 

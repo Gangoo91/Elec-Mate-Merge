@@ -293,7 +293,7 @@ export function ViewCandidateDialog({
                     className={`h-6 w-6 ${
                       star <= rating
                         ? 'fill-yellow-400 text-yellow-400'
-                        : 'text-white/60/30'
+                        : 'text-white'
                     }`}
                   />
                 </button>

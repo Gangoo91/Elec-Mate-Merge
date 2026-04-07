@@ -417,7 +417,7 @@ export function PhotoViewer({
 
           {/* Swipe hint - Mobile */}
           {isMobile && scale === 1 && photos.length > 1 && showControls && (
-            <div className="absolute bottom-32 left-1/2 -translate-x-1/2 text-xs text-white/60/60 flex items-center gap-2">
+            <div className="absolute bottom-32 left-1/2 -translate-x-1/2 text-xs text-white flex items-center gap-2">
               <ChevronLeft className="h-3 w-3" />
               Swipe to navigate
               <ChevronRight className="h-3 w-3" />

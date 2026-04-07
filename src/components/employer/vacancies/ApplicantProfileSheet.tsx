@@ -474,7 +474,7 @@ export function ApplicantProfileSheet({
                   ))
                 ) : (
                   <div className="text-center py-8">
-                    <GraduationCap className="h-12 w-12 mx-auto text-white/60/50 mb-3" />
+                    <GraduationCap className="h-12 w-12 mx-auto text-white mb-3" />
                     <p className="text-white/60">No qualifications added</p>
                   </div>
                 )}
@@ -549,7 +549,7 @@ export function ApplicantProfileSheet({
                   ))
                 ) : (
                   <div className="text-center py-8">
-                    <Building2 className="h-12 w-12 mx-auto text-white/60/50 mb-3" />
+                    <Building2 className="h-12 w-12 mx-auto text-white mb-3" />
                     <p className="text-white/60">No work history added</p>
                   </div>
                 )}
@@ -579,7 +579,7 @@ export function ApplicantProfileSheet({
                   ))
                 ) : (
                   <div className="text-center py-8">
-                    <Wrench className="h-12 w-12 mx-auto text-white/60/50 mb-3" />
+                    <Wrench className="h-12 w-12 mx-auto text-white mb-3" />
                     <p className="text-white/60">No skills added</p>
                   </div>
                 )}

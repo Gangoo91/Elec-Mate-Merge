@@ -523,7 +523,7 @@ const QuoteViewPage = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate('/electrician/quotes')}
-            className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
+            className="h-11 w-11 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>

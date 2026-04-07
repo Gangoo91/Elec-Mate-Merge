@@ -676,7 +676,7 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-4 text-ios-caption-1">
             <a href="/privacy" className="text-white hover:text-white underline">Privacy Policy</a>
-            <span className="text-white/20">|</span>
+            <span className="text-white">|</span>
             <a href="/terms" className="text-white hover:text-white underline">Terms of Service</a>
           </div>
           <p className="text-ios-caption-1 text-white">

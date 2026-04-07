@@ -154,7 +154,7 @@ export function FiveWhysAnalysis({
                       {whys.length > 1 && (
                         <button
                           onClick={() => removeWhy(index)}
-                          className="h-6 w-6 flex items-center justify-center rounded text-white/40 hover:text-red-400 touch-manipulation"
+                          className="h-6 w-6 flex items-center justify-center rounded text-white hover:text-red-400 touch-manipulation"
                         >
                           <X className="h-3 w-3" />
                         </button>

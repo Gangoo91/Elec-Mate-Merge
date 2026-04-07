@@ -155,7 +155,7 @@ export function MobileSearchSheet({
                           {result.type}
                         </span>
                       )}
-                      <ArrowRight className="h-4 w-4 text-white/60/50 shrink-0" />
+                      <ArrowRight className="h-4 w-4 text-white shrink-0" />
                     </button>
                   ))}
                 </div>
@@ -165,7 +165,7 @@ export function MobileSearchSheet({
             {/* No results */}
             {!isLoading && query && results.length === 0 && (
               <div className="flex flex-col items-center justify-center py-12 px-4">
-                <Search className="h-12 w-12 text-white/60/30 mb-4" />
+                <Search className="h-12 w-12 text-white mb-4" />
                 <p className="text-sm font-medium text-foreground">No results found</p>
                 <p className="text-xs text-white/60 mt-1">
                   Try searching for something else
@@ -210,7 +210,7 @@ export function MobileSearchSheet({
             {/* Empty state (no query, no recent) */}
             {!query && recentSearches.length === 0 && (
               <div className="flex flex-col items-center justify-center py-12 px-4">
-                <Search className="h-12 w-12 text-white/60/30 mb-4" />
+                <Search className="h-12 w-12 text-white mb-4" />
                 <p className="text-sm text-white/60">
                   Search for jobs, employees, invoices...
                 </p>

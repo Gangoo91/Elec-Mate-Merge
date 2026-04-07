@@ -766,7 +766,7 @@ export function SettingsSection() {
                 </div>
               ) : teamMembers.length === 0 ? (
                 <div className="text-center py-8">
-                  <Users className="h-12 w-12 text-white/60/30 mx-auto mb-3" />
+                  <Users className="h-12 w-12 text-white mx-auto mb-3" />
                   <p className="text-white/60 mb-4">No team members yet</p>
                   <Button onClick={() => setShowInviteDialog(true)}>
                     <Plus className="h-4 w-4 mr-2" />

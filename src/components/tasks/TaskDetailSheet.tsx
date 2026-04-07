@@ -323,7 +323,7 @@ export function TaskDetailSheet({
 
                 {photosLoading ? (
                   <div className="flex items-center justify-center py-6">
-                    <Loader2 className="h-5 w-5 text-white/40 animate-spin" />
+                    <Loader2 className="h-5 w-5 text-white animate-spin" />
                   </div>
                 ) : photos.length > 0 ? (
                   <div className="grid grid-cols-3 gap-2">
@@ -338,7 +338,7 @@ export function TaskDetailSheet({
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
-                            <Camera className="h-5 w-5 text-white/30" />
+                            <Camera className="h-5 w-5 text-white" />
                           </div>
                         )}
                         {/* Delete overlay */}
@@ -361,8 +361,8 @@ export function TaskDetailSheet({
                         }
                         className="aspect-square rounded-xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-1 touch-manipulation active:scale-95"
                       >
-                        <ImagePlus className="h-5 w-5 text-white/40" />
-                        <span className="text-[10px] text-white/40">Add</span>
+                        <ImagePlus className="h-5 w-5 text-white" />
+                        <span className="text-[10px] text-white">Add</span>
                       </button>
                     )}
                   </div>
@@ -375,8 +375,8 @@ export function TaskDetailSheet({
                     }
                     className="w-full h-20 rounded-2xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-transform"
                   >
-                    <Camera className="h-5 w-5 text-white/40" />
-                    <span className="text-sm text-white/40">Attach a photo</span>
+                    <Camera className="h-5 w-5 text-white" />
+                    <span className="text-sm text-white">Attach a photo</span>
                   </button>
                 )}
               </div>

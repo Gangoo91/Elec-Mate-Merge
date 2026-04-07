@@ -529,7 +529,7 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by name, email, or ULN..."
-              className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 touch-manipulation"
+              className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 touch-manipulation"
             />
           </div>
 

@@ -593,7 +593,7 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
       <span
         className={cn(
           'text-base font-bold',
-          validation === 'empty' && 'text-white/40',
+          validation === 'empty' && 'text-white',
           isStatus && value === '✓' && 'text-green-400',
           isStatus && value === '✗' && 'text-red-400'
         )}
@@ -902,7 +902,7 @@ const PhaseBalanceDisplay: React.FC<{ l1: string; l2: string; l3: string }> = ({
 
   if (l1v === 0 && l2v === 0 && l3v === 0) {
     return (
-      <div className="h-11 flex items-center justify-center text-sm text-white/40 bg-white/[0.04] rounded-md border border-white/10">
+      <div className="h-11 flex items-center justify-center text-sm text-white bg-white/[0.04] rounded-md border border-white/10">
         Enter loads
       </div>
     );

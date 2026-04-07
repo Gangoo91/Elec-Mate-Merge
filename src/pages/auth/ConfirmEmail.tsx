@@ -150,7 +150,7 @@ const ConfirmEmail = () => {
               })
               .eq('id', userId);
 
-            console.log('Profile updated with onboarding data');
+            // Profile updated with onboarding data
             storageRemoveSync('elec-mate-onboarding');
           } catch (updateError) {
             console.error('Error updating profile:', updateError);
@@ -178,7 +178,7 @@ const ConfirmEmail = () => {
             });
             if (elecIdResult?.elec_id_number) {
               setGeneratedElecId(elecIdResult.elec_id_number);
-              console.log('Elec-ID generated:', elecIdResult.elec_id_number);
+              // Elec-ID generated successfully
             }
           } catch (elecIdError) {
             console.error('Error generating Elec-ID:', elecIdError);
@@ -196,11 +196,8 @@ const ConfirmEmail = () => {
             fullName: fullName,
           },
         })
-        .then(() => {
-          console.log('Welcome email sent');
-        })
-        .catch((emailErr) => {
-          console.warn('Welcome email failed (non-critical):', emailErr);
+        .catch(() => {
+          // Welcome email failed — non-critical
         });
     } catch (error) {
       console.error('Error in post-confirmation tasks:', error);

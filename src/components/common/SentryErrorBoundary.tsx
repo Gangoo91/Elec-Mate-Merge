@@ -82,7 +82,7 @@ function ErrorFallback({
                 value={feedbackText}
                 onChange={(e) => setFeedbackText(e.target.value)}
                 placeholder="What were you doing when this happened?"
-                className="w-full h-20 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 resize-none touch-manipulation focus:outline-none focus:border-elec-yellow/40"
+                className="w-full h-20 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white resize-none touch-manipulation focus:outline-none focus:border-elec-yellow/40"
               />
               <div className="flex gap-2">
                 <Button

@@ -263,12 +263,12 @@ export default function InventoryPage() {
             className="fixed inset-0 z-50 bg-background flex flex-col"
           >
             <div className="flex items-center gap-2 px-4 py-3 h-14 border-b border-white/[0.06]">
-              <Search className="h-5 w-5 text-white/40 flex-shrink-0" />
+              <Search className="h-5 w-5 text-white flex-shrink-0" />
               <Input
                 value={filters.searchQuery}
                 onChange={(e) => setFilters({ ...filters, searchQuery: e.target.value })}
                 placeholder="Search your stock..."
-                className="h-10 flex-1 text-base bg-transparent border-0 focus:ring-0 focus:border-0 placeholder:text-white/30 touch-manipulation"
+                className="h-10 flex-1 text-base bg-transparent border-0 focus:ring-0 focus:border-0 placeholder:text-white touch-manipulation"
                 autoFocus
               />
               <Button
@@ -309,7 +309,7 @@ export default function InventoryPage() {
               ) : (
                 <div className="text-center py-12">
                   <Search className="h-10 w-10 text-white/10 mx-auto mb-3" />
-                  <p className="text-white/40 text-sm">Search by name, supplier or description</p>
+                  <p className="text-white text-sm">Search by name, supplier or description</p>
                 </div>
               )}
             </div>
@@ -333,7 +333,7 @@ export default function InventoryPage() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9"
+              className="h-11 w-11 touch-manipulation"
               onClick={() => setShowSearch(true)}
             >
               <Search className="h-5 w-5" />
@@ -341,7 +341,7 @@ export default function InventoryPage() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9"
+              className="h-11 w-11 touch-manipulation"
               onClick={() => setShowImportSheet(true)}
             >
               <Import className="h-5 w-5" />
@@ -349,7 +349,7 @@ export default function InventoryPage() {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9"
+              className="h-11 w-11 touch-manipulation"
               onClick={() => setViewMode(viewMode === 'flat' ? 'grouped' : 'flat')}
             >
               {viewMode === 'flat' ? (
@@ -396,7 +396,7 @@ export default function InventoryPage() {
                   'px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap touch-manipulation transition-all flex-shrink-0',
                   filters.location === loc.id
                     ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
-                    : 'bg-white/[0.04] text-white/40'
+                    : 'bg-white/[0.04] text-white'
                 )}
               >
                 {loc.label}
@@ -420,7 +420,7 @@ export default function InventoryPage() {
                   'px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap touch-manipulation transition-all flex-shrink-0',
                   filters.category === cat.id
                     ? cat.filterActiveClass
-                    : 'bg-white/[0.04] text-white/40'
+                    : 'bg-white/[0.04] text-white'
                 )}
               >
                 {cat.label}
@@ -505,8 +505,8 @@ export default function InventoryPage() {
                   !filters.lowStockOnly && (
                     <motion.div variants={itemVariants}>
                       <div className="flex items-center gap-2 mb-2">
-                        <Clock className="h-3.5 w-3.5 text-white/40" />
-                        <p className="text-[12px] text-white/40 font-medium uppercase tracking-wider">
+                        <Clock className="h-3.5 w-3.5 text-white" />
+                        <p className="text-[12px] text-white font-medium uppercase tracking-wider">
                           Recently Used
                         </p>
                       </div>
@@ -523,7 +523,7 @@ export default function InventoryPage() {
                       </div>
                       {filteredItems.length > 0 && (
                         <div className="mt-4 mb-2 border-t border-white/[0.06] pt-4">
-                          <p className="text-[12px] text-white/40 font-medium uppercase tracking-wider">
+                          <p className="text-[12px] text-white font-medium uppercase tracking-wider">
                             All Items
                           </p>
                         </div>
@@ -535,7 +535,7 @@ export default function InventoryPage() {
                 {filteredItems.length === 0 ? (
                   <motion.div variants={itemVariants} className="text-center py-8">
                     <div className="max-w-sm mx-auto space-y-4">
-                      <Package className="h-12 w-12 text-white/20 mx-auto" />
+                      <Package className="h-12 w-12 text-white mx-auto" />
                       <p className="text-base font-semibold text-white">
                         {filters.searchQuery
                           ? 'No matching items'
@@ -562,7 +562,7 @@ export default function InventoryPage() {
 
                           {/* Suggested common items */}
                           <div className="pt-4 border-t border-white/[0.06]">
-                            <p className="text-[12px] text-white/40 font-medium mb-3">
+                            <p className="text-[12px] text-white font-medium mb-3">
                               Quick Add Common Materials
                             </p>
                             <div className="grid grid-cols-1 gap-2">
@@ -575,7 +575,7 @@ export default function InventoryPage() {
                                 >
                                   <Plus className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                                   <span className="text-[14px] text-white">{suggested.name}</span>
-                                  <span className="text-[11px] text-white/40 ml-auto flex-shrink-0">
+                                  <span className="text-[11px] text-white ml-auto flex-shrink-0">
                                     {suggested.unit}
                                   </span>
                                 </button>
@@ -596,7 +596,7 @@ export default function InventoryPage() {
                           <p className="text-[13px] text-white font-semibold">
                             {group.location.label}
                           </p>
-                          <span className="text-[11px] text-white/40">
+                          <span className="text-[11px] text-white">
                             {group.items.length} item{group.items.length !== 1 ? 's' : ''}
                           </span>
                         </div>

@@ -81,7 +81,7 @@ const MiniResultCard = ({
           <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
           {programme.rating?.toFixed(1)}
         </span>
-        <span className="text-white/20">•</span>
+        <span className="text-white">•</span>
         <span>{programme.studyMode}</span>
       </div>
     </div>

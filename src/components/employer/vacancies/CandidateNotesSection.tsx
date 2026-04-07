@@ -129,7 +129,7 @@ export function CandidateNotesSection({
       ) : (
         <Card className="bg-muted/30 border-dashed border-muted-foreground/20">
           <CardContent className="p-6 text-center">
-            <StickyNote className="h-10 w-10 mx-auto text-white/60/40 mb-3" />
+            <StickyNote className="h-10 w-10 mx-auto text-white mb-3" />
             <p className="text-sm text-white/60 mb-3">
               No notes yet. Add private notes about this candidate.
             </p>

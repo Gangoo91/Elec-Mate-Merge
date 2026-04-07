@@ -140,7 +140,7 @@ export function DiaryCalendarView({ entries, onDayTap, onEmptyDayTap, selectedDa
               disabled={isFuture}
               className={`aspect-square min-h-[44px] flex flex-col items-center justify-center rounded-lg text-xs touch-manipulation transition-colors ${
                 isFuture
-                  ? 'text-white/20 cursor-default'
+                  ? 'text-white cursor-default'
                   : isSelected
                     ? 'bg-elec-yellow/25 text-elec-yellow font-bold ring-2 ring-elec-yellow/40'
                     : isToday

@@ -292,7 +292,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
                 placeholder="Assessor name"
                 value={newFinding.assessorName}
                 onChange={(e) => setNewFinding((p) => ({ ...p, assessorName: e.target.value }))}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
+                className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
               />
               <select
                 value={newFinding.findingType}
@@ -308,7 +308,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
                 value={newFinding.description}
                 onChange={(e) => setNewFinding((p) => ({ ...p, description: e.target.value }))}
                 rows={3}
-                className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation resize-none"
+                className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation resize-none"
               />
               <div className="flex gap-2">
                 <button
@@ -416,21 +416,21 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
                 placeholder="Meeting topic"
                 value={newMeeting.topic}
                 onChange={(e) => setNewMeeting((p) => ({ ...p, topic: e.target.value }))}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
+                className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
               />
               <input
                 type="number"
                 placeholder="Number of attendees"
                 value={newMeeting.attendeesCount || ''}
                 onChange={(e) => setNewMeeting((p) => ({ ...p, attendeesCount: parseInt(e.target.value) || 0 }))}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
+                className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
               />
               <textarea
                 placeholder="Outcome summary..."
                 value={newMeeting.outcomeSummary}
                 onChange={(e) => setNewMeeting((p) => ({ ...p, outcomeSummary: e.target.value }))}
                 rows={3}
-                className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation resize-none"
+                className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation resize-none"
               />
               <div className="flex gap-2">
                 <button

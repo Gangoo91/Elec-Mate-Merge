@@ -141,7 +141,7 @@ export const PhotoMapView = ({
   if (!apiKey) {
     return (
       <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-muted/20 rounded-lg border border-border/30">
-        <MapPin className="h-12 w-12 text-white/60/30 mb-4" />
+        <MapPin className="h-12 w-12 text-white mb-4" />
         <h3 className="text-lg font-medium mb-2">Google Maps API Key Required</h3>
         <p className="text-sm text-white/60 text-center max-w-md px-4">
           Add your Google Maps API key in Settings to view photos on the map.
@@ -211,7 +211,7 @@ export const PhotoMapView = ({
               <div className="space-y-2">
                 {/* Photo thumbnail */}
                 <div className="w-full h-20 rounded-md overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
-                  <Camera className="h-6 w-6 text-white/60/40" />
+                  <Camera className="h-6 w-6 text-white" />
                 </div>
 
                 {/* Info */}
@@ -274,7 +274,7 @@ export const PhotoMapView = ({
       {photosWithLocation.length === 0 && (
         <div className="absolute inset-0 flex items-center justify-center bg-background/80">
           <div className="text-center px-4">
-            <MapPin className="h-12 w-12 text-white/60/30 mx-auto mb-4" />
+            <MapPin className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="text-lg font-medium">No geotagged photos</h3>
             <p className="text-sm text-white/60">
               Photos with location data will appear on the map

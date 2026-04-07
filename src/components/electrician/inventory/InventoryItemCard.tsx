@@ -164,7 +164,7 @@ export const InventoryItemCard = memo(function InventoryItemCard({
                 {category.label}
               </span>
               {item.supplier && (
-                <span className="text-[11px] text-white/40 truncate">
+                <span className="text-[11px] text-white truncate">
                   <HighlightText text={item.supplier} query={searchQuery} />
                 </span>
               )}
@@ -204,7 +204,7 @@ export const InventoryItemCard = memo(function InventoryItemCard({
                   <p className={cn('text-[17px] font-bold leading-tight', quantityColour)}>
                     {item.quantity}
                   </p>
-                  <p className="text-[10px] text-white/40 leading-tight">
+                  <p className="text-[10px] text-white leading-tight">
                     {item.unit === 'each' ? '' : item.unit}
                   </p>
                 </button>

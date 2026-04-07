@@ -311,7 +311,7 @@ export function TeamMemberSheet({
                       className="p-1"
                     >
                       <Star
-                        className={`h-7 w-7 transition-colors ${star <= employee.rating ? 'text-warning fill-warning' : 'text-white/60/30 hover:text-warning/50'}`}
+                        className={`h-7 w-7 transition-colors ${star <= employee.rating ? 'text-warning fill-warning' : 'text-white hover:text-warning/50'}`}
                       />
                     </button>
                   ))}
@@ -362,7 +362,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Briefcase className="h-10 w-10 text-white/60/30 mx-auto mb-2" />
+                  <Briefcase className="h-10 w-10 text-white mx-auto mb-2" />
                   <p className="text-sm text-white/60">No active assignments</p>
                 </div>
               )}
@@ -415,9 +415,9 @@ export function TeamMemberSheet({
                     onClick={() => setCreateElecIdOpen(true)}
                     className="w-full p-4 rounded-xl border-2 border-dashed border-muted-foreground/30 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-colors text-center"
                   >
-                    <IdCard className="h-8 w-8 text-white/60/50 mx-auto mb-2" />
+                    <IdCard className="h-8 w-8 text-white mx-auto mb-2" />
                     <p className="text-sm font-medium text-white/60">No Elec-ID Profile</p>
-                    <p className="text-xs text-white/60/70">Click to set up digital ID</p>
+                    <p className="text-xs text-white">Click to set up digital ID</p>
                   </button>
                 )}
               </div>
@@ -453,7 +453,7 @@ export function TeamMemberSheet({
                   </div>
                 ) : (
                   <div className="text-center py-6">
-                    <Award className="h-8 w-8 text-white/60/30 mx-auto mb-2" />
+                    <Award className="h-8 w-8 text-white mx-auto mb-2" />
                     <p className="text-sm text-white/60">No certifications on file</p>
                   </div>
                 )}
@@ -495,7 +495,7 @@ export function TeamMemberSheet({
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <StickyNote className="h-10 w-10 text-white/60/30 mx-auto mb-2" />
+                  <StickyNote className="h-10 w-10 text-white mx-auto mb-2" />
                   <p className="text-sm text-white/60">No notes yet</p>
                 </div>
               )}

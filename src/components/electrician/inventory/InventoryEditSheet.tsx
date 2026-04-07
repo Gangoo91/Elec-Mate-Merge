@@ -102,14 +102,14 @@ export function InventoryEditSheet({
           {/* Header */}
           <div className="px-4 pt-6 pb-3 border-b border-white/[0.06]">
             <h2 className="text-lg font-semibold text-white">Edit Item</h2>
-            <p className="text-[12px] text-white/40 mt-0.5">Update quantity, location or details</p>
+            <p className="text-[12px] text-white mt-0.5">Update quantity, location or details</p>
           </div>
 
           {/* Form */}
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
             {/* Quantity adjuster — hero section */}
             <div className="rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.01] border border-white/[0.08] p-5">
-              <p className="text-[11px] text-white/40 text-center uppercase tracking-wider mb-3">
+              <p className="text-[11px] text-white text-center uppercase tracking-wider mb-3">
                 Quantity
               </p>
               <div className="flex items-center justify-center gap-6">
@@ -126,7 +126,7 @@ export function InventoryEditSheet({
                 </button>
                 <div className="text-center min-w-[90px]">
                   <p className="text-[36px] font-bold text-white leading-none">{quantity}</p>
-                  <p className="text-[13px] text-white/40 mt-1">
+                  <p className="text-[13px] text-white mt-1">
                     {unit !== 'each' ? unit : 'items'}
                   </p>
                 </div>
@@ -143,7 +143,7 @@ export function InventoryEditSheet({
                 </button>
               </div>
               {item.last_used_date && (
-                <p className="text-[11px] text-white/30 text-center mt-3">
+                <p className="text-[11px] text-white text-center mt-3">
                   Last used{' '}
                   {new Date(item.last_used_date).toLocaleDateString('en-GB', {
                     day: 'numeric',

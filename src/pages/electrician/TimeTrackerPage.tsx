@@ -725,7 +725,7 @@ const TimeTrackerPage = () => {
 
               <button
                 onClick={() => setDiscardOpen(true)}
-                className="w-full text-center text-sm text-white/40 hover:text-red-400 transition-colors py-2 touch-manipulation"
+                className="w-full text-center text-sm text-white hover:text-red-400 transition-colors py-2 touch-manipulation"
               >
                 Discard session
               </button>
@@ -767,7 +767,7 @@ const TimeTrackerPage = () => {
                 value={jobLabel}
                 onChange={(e) => setJobLabel(e.target.value)}
                 placeholder="What's the job? (optional)"
-                className="h-12 text-base touch-manipulation border-white/[0.12] focus:border-elec-yellow focus:ring-elec-yellow bg-white/[0.04] text-white placeholder:text-white/40 rounded-xl"
+                className="h-12 text-base touch-manipulation border-white/[0.12] focus:border-elec-yellow focus:ring-elec-yellow bg-white/[0.04] text-white placeholder:text-white rounded-xl"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') handleStart();
                 }}
@@ -790,7 +790,7 @@ const TimeTrackerPage = () => {
               </motion.div>
 
               {/* Rate hint */}
-              <p className="text-center text-xs text-white/40">
+              <p className="text-center text-xs text-white">
                 Your hourly rate: {formatCurrency(hourlyRate)}/hr
                 {' \u00B7 '}
                 <button
@@ -818,7 +818,7 @@ const TimeTrackerPage = () => {
 
             {sessions.length === 0 ? (
               <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-8 text-center">
-                <Clock className="h-10 w-10 text-white/20 mx-auto mb-3" />
+                <Clock className="h-10 w-10 text-white mx-auto mb-3" />
                 <p className="text-white/50 text-sm">
                   No sessions yet — tap Start when you arrive on site
                 </p>
@@ -863,7 +863,7 @@ const TimeTrackerPage = () => {
                         </p>
                         <p className="text-amber-400 text-xs">{formatCurrency(value)}</p>
                       </div>
-                      <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+                      <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                     </button>
                   );
                 })}
@@ -894,12 +894,12 @@ const TimeTrackerPage = () => {
                 <p className="text-white font-semibold text-sm">New Invoice</p>
                 <p className="text-white/50 text-xs">Create with labour line item</p>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/30 ml-auto" />
+              <ChevronRight className="h-4 w-4 text-white ml-auto" />
             </button>
 
             {draftInvoices.length > 0 && (
               <>
-                <p className="text-xs text-white/40 uppercase tracking-wider pt-2">
+                <p className="text-xs text-white uppercase tracking-wider pt-2">
                   Existing Drafts
                 </p>
                 {draftInvoices.map((inv) => (
@@ -919,7 +919,7 @@ const TimeTrackerPage = () => {
                         {inv.client?.name || 'No client'} · {formatCurrency(inv.total)}
                       </p>
                     </div>
-                    <ChevronRight className="h-4 w-4 text-white/30" />
+                    <ChevronRight className="h-4 w-4 text-white" />
                   </button>
                 ))}
               </>
@@ -1021,14 +1021,14 @@ const TimeTrackerPage = () => {
                       </span>
                       {detailProjectId ? (
                         <X
-                          className="h-3.5 w-3.5 text-white/40"
+                          className="h-3.5 w-3.5 text-white"
                           onClick={(e) => {
                             e.stopPropagation();
                             setDetailProjectId(null);
                           }}
                         />
                       ) : (
-                        <ChevronDown className="h-3.5 w-3.5 text-white/30" />
+                        <ChevronDown className="h-3.5 w-3.5 text-white" />
                       )}
                     </button>
 
@@ -1107,7 +1107,7 @@ const TimeTrackerPage = () => {
                   </p>
                 </div>
                 {isCreatingFromDetail && (
-                  <Loader2 className="h-4 w-4 text-white/40 animate-spin flex-shrink-0" />
+                  <Loader2 className="h-4 w-4 text-white animate-spin flex-shrink-0" />
                 )}
               </button>
             ))}

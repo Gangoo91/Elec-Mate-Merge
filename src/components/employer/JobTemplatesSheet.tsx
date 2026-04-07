@@ -119,9 +119,9 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
           </div>
         ) : templates.length === 0 ? (
           <div className="text-center py-12">
-            <LayoutTemplate className="h-12 w-12 mx-auto mb-3 text-white/60/30" />
+            <LayoutTemplate className="h-12 w-12 mx-auto mb-3 text-white" />
             <p className="text-white/60">No templates yet</p>
-            <p className="text-sm text-white/60/70 mt-1">
+            <p className="text-sm text-white mt-1">
               Right-click a job and select "Save as Template"
             </p>
           </div>

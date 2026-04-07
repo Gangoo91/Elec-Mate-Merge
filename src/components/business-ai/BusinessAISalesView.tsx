@@ -309,7 +309,7 @@ export function BusinessAISalesView() {
               style={{ background: '#111c14' }}
             >
               <div className="flex-1 h-8 rounded-full bg-white/[0.05] flex items-center px-3">
-                <span className="text-[11px] text-white/30">Message Mate...</span>
+                <span className="text-[11px] text-white">Message Mate...</span>
               </div>
               <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center shrink-0">
                 <Zap className="h-3.5 w-3.5 text-black" />

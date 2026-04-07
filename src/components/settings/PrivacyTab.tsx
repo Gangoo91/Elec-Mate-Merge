@@ -407,7 +407,7 @@ const PrivacyTab = () => {
           </p>
           <p className="text-xs text-white mt-0.5">Full GDPR data export (Art. 15)</p>
         </div>
-        <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+        <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
       </motion.button>
 
       {/* Delete Account */}
@@ -442,9 +442,9 @@ const PrivacyTab = () => {
             </p>
           </div>
           {showRights ? (
-            <ChevronUp className="h-4 w-4 text-white/30 flex-shrink-0" />
+            <ChevronUp className="h-4 w-4 text-white flex-shrink-0" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-white/30 flex-shrink-0" />
+            <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
           )}
         </button>
 
@@ -489,7 +489,7 @@ const PrivacyTab = () => {
 
                 {/* ICO complaint info */}
                 <div className="flex items-start gap-3 pl-[52px] pr-1 pt-2">
-                  <Info className="h-4 w-4 text-white/30 flex-shrink-0 mt-0.5" />
+                  <Info className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
                   <p className="text-xs text-white leading-relaxed">
                     To exercise any right, contact{' '}
                     <button
@@ -611,14 +611,14 @@ const PrivacyTab = () => {
               <Icon className={`h-4 w-4 ${colour}`} />
             </div>
             <span className="text-sm font-medium text-white flex-1">{label}</span>
-            <ExternalLink className="h-3.5 w-3.5 text-white/30 flex-shrink-0" />
+            <ExternalLink className="h-3.5 w-3.5 text-white flex-shrink-0" />
           </Link>
         </motion.div>
       ))}
 
       {/* ICO registration */}
       <motion.div variants={itemVariants} className="flex items-center gap-2 pt-4 px-1 pb-2">
-        <BadgeCheck className="h-3.5 w-3.5 text-white/30 flex-shrink-0" />
+        <BadgeCheck className="h-3.5 w-3.5 text-white flex-shrink-0" />
         <p className="text-xs text-white">
           Registered with the Information Commissioner's Office &middot; ICO Reg: ZB935897
         </p>
@@ -699,7 +699,7 @@ const PrivacyTab = () => {
                 value={deleteConfirmText}
                 onChange={(e) => setDeleteConfirmText(e.target.value)}
                 placeholder="Type DELETE to confirm"
-                className="font-mono bg-white/5 border-white/10 focus:border-red-500/50 text-white placeholder:text-white/30 h-11 touch-manipulation"
+                className="font-mono bg-white/5 border-white/10 focus:border-red-500/50 text-white placeholder:text-white h-11 touch-manipulation"
                 autoCapitalize="none"
                 autoCorrect="off"
               />

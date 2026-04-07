@@ -279,7 +279,7 @@ export function BatchOperationsSection({ onNavigate }: BatchOperationsSectionPro
                   placeholder="e.g. Unit 201 — Health and Safety"
                   value={unitName}
                   onChange={(e) => setUnitName(e.target.value)}
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
+                  className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
                 />
               </div>
 
@@ -355,7 +355,7 @@ export function BatchOperationsSection({ onNavigate }: BatchOperationsSectionPro
                   value={batchFeedback}
                   onChange={(e) => setBatchFeedback(e.target.value)}
                   rows={3}
-                  className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation resize-none"
+                  className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation resize-none"
                 />
               </div>
 
@@ -367,7 +367,7 @@ export function BatchOperationsSection({ onNavigate }: BatchOperationsSectionPro
                   'w-full h-11 rounded-lg text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2',
                   selectedStudentIds.size > 0 && unitName.trim()
                     ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.04] text-white/40 border border-white/[0.06]'
+                    : 'bg-white/[0.04] text-white border border-white/[0.06]'
                 )}
               >
                 {gradeSubmitting ? (
@@ -480,7 +480,7 @@ export function BatchOperationsSection({ onNavigate }: BatchOperationsSectionPro
                   value={notifMessage}
                   onChange={(e) => setNotifMessage(e.target.value)}
                   rows={4}
-                  className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow/40 focus:outline-none touch-manipulation resize-none"
+                  className="w-full px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation resize-none"
                 />
               </div>
 
@@ -554,7 +554,7 @@ export function BatchOperationsSection({ onNavigate }: BatchOperationsSectionPro
                   'w-full h-11 rounded-lg text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2',
                   notifMessage.trim() && notifRecipientCount > 0
                     ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.04] text-white/40 border border-white/[0.06]'
+                    : 'bg-white/[0.04] text-white border border-white/[0.06]'
                 )}
               >
                 {notifSending ? (

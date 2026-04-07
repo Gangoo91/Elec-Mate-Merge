@@ -78,7 +78,10 @@ export const PDFGenerationModal: React.FC<PDFGenerationModalProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md" onPointerDownOutside={(e) => e.preventDefault()}>
+      <DialogContent className="sm:max-w-md" onPointerDownOutside={(e) => {
+        // Only block dismissal during the first 15 seconds of generation
+        if (elapsedTime < 15000) e.preventDefault();
+      }}>
         <div className="flex flex-col items-center justify-center py-8 px-4 space-y-6">
           <div className="relative">
             <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse" />

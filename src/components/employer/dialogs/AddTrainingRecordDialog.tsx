@@ -1011,7 +1011,7 @@ export const AddTrainingRecordDialog = ({
                 </div>
                 <p className="font-medium text-foreground mb-1">Upload Certificate</p>
                 <p className="text-sm text-white/60">Drag and drop or click to browse</p>
-                <p className="text-xs text-white/60/70 mt-2">PDF, JPG, PNG up to 10MB</p>
+                <p className="text-xs text-white mt-2">PDF, JPG, PNG up to 10MB</p>
               </div>
             </div>
           </div>

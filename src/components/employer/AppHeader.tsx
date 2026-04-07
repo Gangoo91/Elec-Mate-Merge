@@ -89,7 +89,7 @@ export function AppHeader({
             </Button>
           )}
           <NotificationBell />
-          <button className="h-10 w-10 rounded-full bg-elec-yellow flex items-center justify-center active:scale-95 hover:bg-elec-yellow/90 transition-all">
+          <button className="h-11 w-11 rounded-full bg-elec-yellow flex items-center justify-center active:scale-95 hover:bg-elec-yellow/90 transition-all touch-manipulation">
             <span className="text-elec-dark font-semibold text-sm">JW</span>
           </button>
         </div>

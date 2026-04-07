@@ -668,7 +668,7 @@ export const CommunicationsSection = () => {
                   Sign
                 </Button>
               ) : (
-                <ChevronRight className="h-5 w-5 text-white/60/50" />
+                <ChevronRight className="h-5 w-5 text-white" />
               )}
             </div>
           </div>
@@ -1469,7 +1469,7 @@ export const CommunicationsSection = () => {
                   <div className="flex items-center gap-2 text-xs text-white/60">
                     <Clock className="h-3 w-3" />
                     <span className="font-medium">{group.label}</span>
-                    <span className="text-white/60/50">({group.messages.length})</span>
+                    <span className="text-white">({group.messages.length})</span>
                   </div>
                 </div>
                 <div className="space-y-2">

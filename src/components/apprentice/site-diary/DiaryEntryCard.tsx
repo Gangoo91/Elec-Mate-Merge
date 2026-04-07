@@ -156,7 +156,7 @@ export function DiaryEntryCard({
               <div className="flex items-center gap-2">
                 <span className="text-[13px] font-semibold text-white">{formattedDate}</span>
                 {entry.mood_rating && <span className="text-sm">{moodEmojis[entry.mood_rating]}</span>}
-                <span className="text-white/30">·</span>
+                <span className="text-white">·</span>
                 <div className="flex items-center gap-1 min-w-0 flex-1">
                   <MapPin className="h-3 w-3 text-elec-yellow flex-shrink-0" />
                   <span className="text-xs text-white truncate">{entry.site_name}</span>
@@ -166,7 +166,7 @@ export function DiaryEntryCard({
                     <Camera className="h-3 w-3" /><span className="text-[10px]">{entry.photos.length}</span>
                   </span>
                 )}
-                <ChevronRight className="h-3.5 w-3.5 text-white/40 flex-shrink-0" />
+                <ChevronRight className="h-3.5 w-3.5 text-white flex-shrink-0" />
               </div>
 
               {/* Tasks */}

@@ -192,7 +192,7 @@ export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: Invo
                 )
               )}
             </div>
-            <div className="flex items-center gap-1 text-white/60/60">
+            <div className="flex items-center gap-1 text-white">
               <span className="text-xs">View</span>
               <ChevronRight className="h-4 w-4" />
             </div>

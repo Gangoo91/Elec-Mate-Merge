@@ -621,9 +621,9 @@ const Subscriptions = () => {
                     {plan.notIncluded.map((feature, i) => (
                       <div key={i} className="flex items-start gap-2.5">
                         <div className="w-5 h-5 rounded-full bg-white/[0.04] flex items-center justify-center shrink-0 mt-px">
-                          <X className="h-3 w-3 text-white/40" />
+                          <X className="h-3 w-3 text-white" />
                         </div>
-                        <span className="text-sm text-white/40 line-through decoration-white/20 leading-snug">
+                        <span className="text-sm text-white line-through decoration-white/20 leading-snug">
                           {feature}
                         </span>
                       </div>

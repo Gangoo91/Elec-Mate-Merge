@@ -389,7 +389,7 @@ export function PhotoGallerySection() {
               onClick={() => handlePhotoClick(index)}
             >
               <div className="relative aspect-square bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
-                <Camera className="h-8 w-8 text-white/60/40" />
+                <Camera className="h-8 w-8 text-white" />
 
                 {/* Category dot indicator - subtle */}
                 <div
@@ -441,7 +441,7 @@ export function PhotoGallerySection() {
             >
               <CardContent className="p-3 flex items-center gap-3">
                 <div className="h-14 w-14 rounded-lg bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center flex-shrink-0 relative">
-                  <Camera className="h-6 w-6 text-white/60/40" />
+                  <Camera className="h-6 w-6 text-white" />
                   <div
                     className={cn(
                       'absolute top-1 left-1 h-2 w-2 rounded-full',
@@ -501,9 +501,9 @@ export function PhotoGallerySection() {
       {filteredPhotos.length === 0 && (viewMode === 'grid' || viewMode === 'list') && (
         <Card className="bg-elec-gray/50 border-border/30">
           <CardContent className="p-12 text-center">
-            <Camera className="h-12 w-12 mx-auto text-white/60/30 mb-4" />
+            <Camera className="h-12 w-12 mx-auto text-white mb-4" />
             <p className="text-white/60 font-medium">No photos found</p>
-            <p className="text-xs text-white/60/60 mt-1">Try adjusting your filters</p>
+            <p className="text-xs text-white mt-1">Try adjusting your filters</p>
           </CardContent>
         </Card>
       )}

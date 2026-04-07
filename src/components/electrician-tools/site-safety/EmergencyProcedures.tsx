@@ -244,7 +244,7 @@ const EmergencyProcedures = () => {
                   <span className={cn('text-base font-bold', contact.colour)}>
                     {contact.number}
                   </span>
-                  <Phone className="h-4 w-4 text-white/40" />
+                  <Phone className="h-4 w-4 text-white" />
                 </div>
               </a>
             );
@@ -280,9 +280,9 @@ const EmergencyProcedures = () => {
                     {proc.steps.length} steps
                   </span>
                   {isExpanded ? (
-                    <ChevronUp className="h-4 w-4 text-white/40" />
+                    <ChevronUp className="h-4 w-4 text-white" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white/40" />
+                    <ChevronDown className="h-4 w-4 text-white" />
                   )}
                 </button>
 
@@ -358,7 +358,7 @@ const EmergencyProcedures = () => {
             >
               <FileText className="h-4 w-4 text-blue-400 flex-shrink-0" />
               <span className="text-sm text-white flex-1">{link.title}</span>
-              <ExternalLink className="h-3.5 w-3.5 text-white/30" />
+              <ExternalLink className="h-3.5 w-3.5 text-white" />
             </a>
           ))}
         </div>

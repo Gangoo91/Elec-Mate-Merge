@@ -210,9 +210,9 @@ export function ProjectDocumentSheet({
               ) : items.length === 0 ? (
                 <div className="flex flex-col items-center py-8 text-center">
                   {docType === 'photo' ? (
-                    <Camera className="h-8 w-8 text-white/20 mb-3" />
+                    <Camera className="h-8 w-8 text-white mb-3" />
                   ) : (
-                    <FileText className="h-8 w-8 text-white/20 mb-3" />
+                    <FileText className="h-8 w-8 text-white mb-3" />
                   )}
                   <p className="text-sm text-white">No {title.toLowerCase()} yet.</p>
                   <p className="text-xs text-white mt-1">

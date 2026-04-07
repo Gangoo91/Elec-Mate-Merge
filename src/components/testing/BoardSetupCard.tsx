@@ -118,7 +118,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
             value={board.reference}
             onChange={(e) => onUpdate('reference', e.target.value)}
             placeholder="e.g. Main Consumer Unit, Garage DB"
-            className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
           />
         </div>
 
@@ -258,26 +258,26 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         {/* Model Number (Optional) */}
         <div className="space-y-1.5">
           <Label className="text-xs font-medium text-white/60">
-            Model Number <span className="text-white/40">(optional)</span>
+            Model Number <span className="text-white">(optional)</span>
           </Label>
           <Input
             value={board.model || ''}
             onChange={(e) => onUpdate('model', e.target.value)}
             placeholder="e.g. VML110"
-            className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
           />
         </div>
 
         {/* Supplied From */}
         <div className="space-y-1.5">
           <Label className="text-xs font-medium text-white/60">
-            Supplied From <span className="text-white/40">(optional)</span>
+            Supplied From <span className="text-white">(optional)</span>
           </Label>
           <Input
             value={board.suppliedFrom || ''}
             onChange={(e) => onUpdate('suppliedFrom', e.target.value)}
             placeholder={isMainBoard ? 'e.g. DNO Supply' : 'e.g. Main CU'}
-            className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+            className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
           />
         </div>
 
@@ -289,7 +289,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               value={board.incomingDeviceBsEn || ''}
               onChange={(e) => onUpdate('incomingDeviceBsEn', e.target.value)}
               placeholder="e.g. 60898"
-              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
             />
           </div>
           <div className="space-y-1.5">
@@ -298,7 +298,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               value={board.incomingDeviceType || ''}
               onChange={(e) => onUpdate('incomingDeviceType', e.target.value)}
               placeholder="e.g. MCB"
-              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
             />
           </div>
           <div className="space-y-1.5">
@@ -307,7 +307,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               value={board.incomingDeviceRating || ''}
               onChange={(e) => onUpdate('incomingDeviceRating', e.target.value)}
               placeholder="e.g. 63"
-              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
             />
           </div>
         </div>
@@ -320,7 +320,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               value={board.mainSwitchBsEn || ''}
               onChange={(e) => onUpdate('mainSwitchBsEn', e.target.value)}
               placeholder="e.g. 61008"
-              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
             />
           </div>
           <div className="space-y-1.5">
@@ -329,7 +329,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               value={board.mainSwitchType || ''}
               onChange={(e) => onUpdate('mainSwitchType', e.target.value)}
               placeholder="e.g. Isolator"
-              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
             />
           </div>
           <div className="space-y-1.5">
@@ -338,7 +338,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               value={board.mainSwitchRating || ''}
               onChange={(e) => onUpdate('mainSwitchRating', e.target.value)}
               placeholder="e.g. 100"
-              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white/30 focus:border-elec-yellow/50"
+              className="h-11 touch-manipulation bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50"
             />
           </div>
           <div className="space-y-1.5">

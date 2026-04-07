@@ -7,8 +7,7 @@ const RegulationSearchPage = () => {
   const navigate = useNavigate();
 
   const handleRegulationSelect = (regulation: string) => {
-    // Could navigate to a detail page or show inline
-    console.log('Selected regulation:', regulation);
+    // Regulation selected — detail view handled by component
   };
 
   return (

@@ -90,7 +90,7 @@ export function NotificationBell() {
             <div className="p-4 text-center text-white/60 text-sm">Loading...</div>
           ) : notifications.length === 0 ? (
             <div className="p-8 text-center">
-              <Bell className="h-8 w-8 mx-auto mb-2 text-white/60/50" />
+              <Bell className="h-8 w-8 mx-auto mb-2 text-white" />
               <p className="text-sm text-white/60">No notifications yet</p>
             </div>
           ) : (
@@ -127,7 +127,7 @@ export function NotificationBell() {
                       <p className="text-xs text-white/60 mt-1 line-clamp-2">
                         {notification.message}
                       </p>
-                      <p className="text-xs text-white/60/70 mt-1.5">
+                      <p className="text-xs text-white mt-1.5">
                         {formatDistanceToNow(new Date(notification.created_at), {
                           addSuffix: true,
                         })}

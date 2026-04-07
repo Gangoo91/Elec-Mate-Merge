@@ -321,7 +321,7 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
         {filteredDocuments.length === 0 ? (
           <Card className="border-dashed">
             <CardContent className="p-8 text-center">
-              <FileText className="h-12 w-12 text-white/60/40 mx-auto mb-4" />
+              <FileText className="h-12 w-12 text-white mx-auto mb-4" />
               <p className="text-white/60">No RAMS documents found</p>
               <Button variant="outline" className="mt-4" onClick={() => setShowCreateSheet(true)}>
                 <Plus className="h-4 w-4 mr-2" />

@@ -314,9 +314,9 @@ export function PriceBookSection() {
       {/* Results */}
       {search.length < 2 ? (
         <div className="text-center py-12">
-          <Search className="h-12 w-12 mx-auto text-white/60/30 mb-4" />
+          <Search className="h-12 w-12 mx-auto text-white mb-4" />
           <p className="text-white/60">Type at least 2 characters to search</p>
-          <p className="text-sm text-white/60/70 mt-1">
+          <p className="text-sm text-white mt-1">
             Or ask your voice assistant for a price lookup
           </p>
         </div>
@@ -328,7 +328,7 @@ export function PriceBookSection() {
         </div>
       ) : items.length === 0 ? (
         <div className="text-center py-12">
-          <Package className="h-12 w-12 mx-auto text-white/60/30 mb-4" />
+          <Package className="h-12 w-12 mx-auto text-white mb-4" />
           <p className="text-white/60">No items found</p>
           <Button variant="link" onClick={() => setShowQuickAdd(true)} className="mt-2">
             Add new item

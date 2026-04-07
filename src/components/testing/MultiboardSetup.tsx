@@ -147,7 +147,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
 
       {/* Max boards message */}
       {currentBoards.length >= maxBoards && (
-        <p className="text-xs text-white/40 text-center">Maximum of {maxBoards} boards reached</p>
+        <p className="text-xs text-white text-center">Maximum of {maxBoards} boards reached</p>
       )}
     </div>
   );

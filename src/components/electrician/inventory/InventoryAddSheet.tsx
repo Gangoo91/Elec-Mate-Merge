@@ -119,7 +119,7 @@ export function InventoryAddSheet({
           {/* Header */}
           <div className="px-4 pt-6 pb-3 border-b border-white/[0.06]">
             <h2 className="text-lg font-semibold text-white">Add Item</h2>
-            <p className="text-[12px] text-white/40 mt-0.5">
+            <p className="text-[12px] text-white mt-0.5">
               Add materials, tools or equipment to your stock
             </p>
           </div>

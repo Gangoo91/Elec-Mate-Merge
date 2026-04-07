@@ -47,6 +47,7 @@ import CertificateGenerationDialog from '@/components/inspection/CertificateGene
 import { useReportSync } from '@/hooks/useReportSync';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
 import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
+import { generateCertificateNumber } from '@/utils/certificateNumbering';
 
 const REPORT_TYPE = 'fire-alarm' as const;
 
@@ -107,6 +108,14 @@ export default function FireAlarmCertificate() {
 
   // Company profile for email
   const { companyProfile } = useCompanyProfile();
+
+  // Auto-generate certificate number for new certs
+  useEffect(() => {
+    if (!isNew || formData.certificateNumber) return;
+    generateCertificateNumber('fire-alarm').then((num) => {
+      setFormData((prev) => ({ ...prev, certificateNumber: num }));
+    });
+  }, [isNew]);
 
   // Track certificate opened
   useEffect(() => {
@@ -438,80 +447,31 @@ export default function FireAlarmCertificate() {
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Mobile-First Header */}
-      <div className="bg-[#242428] border-b border-elec-yellow/20 sticky top-0 z-10">
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="px-4 py-3">
-          {/* Top Row - Back & Actions */}
-          <div className="flex items-center justify-between mb-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white hover:text-white hover:bg-white/10 -ml-2 h-11 px-3 touch-manipulation active:scale-[0.98] transition-transform"
-              onClick={() => navigate('/electrician/inspection-testing')}
-            >
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              Back
-            </Button>
-
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <button onClick={() => navigate(-1)} className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95">
+                <ArrowLeft className="h-5 w-5" />
+              </button>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-lg font-bold text-white">Fire Alarm</h1>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">G2</span>
+                </div>
+                <p className="text-[10px] text-white uppercase tracking-wider mt-0.5">Installation Certificate</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5">
               <SyncStatusBadge status={syncStatus} />
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleSaveDraft}
-                disabled={isSaving}
-                aria-label="Save draft"
-                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
-              >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowEmailDialog(true)}
-                disabled={!savedReportId}
-                aria-label="Email certificate"
-                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
-              >
-                <Mail className="h-4 w-4" />
-              </Button>
-
-              <Button
-                size="sm"
-                onClick={handleGenerateCertificate}
-                disabled={isGenerating}
-                aria-label="Generate certificate PDF"
-                className="bg-red-500 hover:bg-red-600 text-white h-11 px-3 font-semibold rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
-              >
-                {isGenerating ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Download className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-red-500/15 flex items-center justify-center">
-              <Bell className="h-5 w-5 text-red-400" />
-            </div>
-            <div>
-              <h1 className="text-base font-bold text-white">
-                {isNew ? 'New Fire Alarm' : 'Fire Alarm'}
-              </h1>
-              <h1 className="text-base font-bold text-white -mt-0.5">Certificate</h1>
-              <p className="text-[11px] text-white">BS 5839 Compliance</p>
+              <button onClick={handleSaveDraft} disabled={isSaving} className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-95 disabled:opacity-50">
+                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              </button>
             </div>
           </div>
         </div>
+        <div className="h-[1px] bg-gradient-to-r from-red-500/40 via-red-500/20 to-transparent" />
       </div>
 
       {/* Main Content - Edge-to-edge on mobile, padded on desktop */}

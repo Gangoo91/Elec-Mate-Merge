@@ -130,7 +130,7 @@ const SiteVisitsHubPage = () => {
           <button
             onClick={() => navigate('/electrician/business')}
             aria-label="Go back"
-            className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
+            className="h-11 w-11 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
@@ -141,7 +141,7 @@ const SiteVisitsHubPage = () => {
           <button
             onClick={() => navigate('/electrician/site-visit/new')}
             aria-label="New site visit"
-            className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
+            className="h-11 w-11 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
           >
             <Plus className="h-5 w-5 text-black" />
           </button>

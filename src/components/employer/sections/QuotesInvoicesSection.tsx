@@ -508,7 +508,7 @@ export function QuotesInvoicesSection() {
               </div>
             ) : (
               <Card className="p-8 text-center">
-                <FileText className="h-12 w-12 mx-auto text-white/60/50 mb-3" />
+                <FileText className="h-12 w-12 mx-auto text-white mb-3" />
                 <p className="text-white/60 font-medium">No quotes found</p>
                 <p className="text-sm text-white/60 mt-1">
                   Create your first quote to get started
@@ -540,7 +540,7 @@ export function QuotesInvoicesSection() {
               </div>
             ) : (
               <Card className="p-8 text-center">
-                <Receipt className="h-12 w-12 mx-auto text-white/60/50 mb-3" />
+                <Receipt className="h-12 w-12 mx-auto text-white mb-3" />
                 <p className="text-white/60 font-medium">No invoices found</p>
                 <p className="text-sm text-white/60 mt-1">
                   Create your first invoice to get started

@@ -566,7 +566,7 @@ export function WorkerTrackingSection() {
               <Card className="bg-elec-gray border-dashed">
                 <CardContent className="p-12 text-center">
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-                    <Users className="h-8 w-8 text-white/60/50" />
+                    <Users className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="font-medium text-foreground mb-1">No workers found</h3>
                   <p className="text-sm text-white/60 mb-4">

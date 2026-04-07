@@ -75,13 +75,49 @@ const specialistCerts: CertDef[] = [
     accentColor: 'from-orange-500 via-red-400 to-rose-400',
     category: 'renewables',
   },
-  // Fire & Life Safety
+  // Fire Alarm Suite (BS 5839-1:2025)
+  {
+    id: 'fire-alarm-design',
+    title: 'FA Design (G1)',
+    description: 'System design certificate',
+    standard: 'BS 5839-1',
+    accentColor: 'from-red-500 via-rose-400 to-pink-400',
+    comingSoon: true,
+    category: 'fire-safety',
+  },
   {
     id: 'fire-alarm',
-    title: 'Fire Alarm',
-    description: 'Detection & warning systems',
-    standard: 'BS 5839',
+    title: 'FA Install (G2)',
+    description: 'Installation certificate',
+    standard: 'BS 5839-1',
     accentColor: 'from-red-500 via-rose-400 to-pink-400',
+    category: 'fire-safety',
+  },
+  {
+    id: 'fire-alarm-commissioning',
+    title: 'FA Commission (G3)',
+    description: 'Commissioning certificate',
+    standard: 'BS 5839-1',
+    accentColor: 'from-red-500 via-red-400 to-orange-400',
+    comingSoon: true,
+    category: 'fire-safety',
+  },
+  {
+    id: 'fire-alarm-inspection',
+    title: 'FA Inspection (G6)',
+    description: 'Periodic test & service',
+    standard: 'BS 5839-1',
+    accentColor: 'from-rose-500 via-pink-400 to-red-400',
+    comingSoon: true,
+    category: 'fire-safety',
+  },
+  {
+    id: 'fire-alarm-modification',
+    title: 'FA Modification (G7)',
+    description: 'Extension & alteration',
+    standard: 'BS 5839-1',
+    accentColor: 'from-pink-500 via-rose-400 to-red-400',
+    comingSoon: true,
     category: 'fire-safety',
   },
   {
@@ -197,7 +233,7 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
                           <div className="flex-grow min-h-[12px]" />
                           <div className="flex items-center justify-between">
                             {cert.comingSoon ? (
-                              <span className="text-[11px] font-medium text-white/40">Coming Soon</span>
+                              <span className="text-[11px] font-medium text-white">Coming Soon</span>
                             ) : (
                               <span className="text-[11px] font-medium text-elec-yellow">Open</span>
                             )}

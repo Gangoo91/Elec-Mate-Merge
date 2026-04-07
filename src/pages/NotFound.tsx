@@ -8,19 +8,7 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error('404 Error: User attempted to access non-existent route:', location.pathname);
-    console.log('Full location object:', location);
-
-    // Provide suggestions for common misrouted paths
-    if (location.pathname.includes('/rights-and-pay')) {
-      console.log('Suggestion: This should probably be /apprentice/rights-and-pay');
-    }
-    if (location.pathname.startsWith('/materials')) {
-      console.log('Suggestion: This should probably be /electrician/materials…');
-    }
-    if (location.pathname.startsWith('/electrical-hub')) {
-      console.log('Suggestion: This should probably be /electrician…');
-    }
+    // 404 — route not found
   }, [location.pathname, location]);
 
   // Check if this looks like an apprentice route that's missing the prefix

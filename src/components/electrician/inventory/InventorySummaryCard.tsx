@@ -36,7 +36,7 @@ export function InventorySummaryCard({ stats, items = [] }: InventorySummaryCard
         </div>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-3 text-center">
           <AlertTriangle
-            className={`h-5 w-5 mx-auto mb-1 ${stats.lowStockCount > 0 ? 'text-amber-400' : 'text-white/30'}`}
+            className={`h-5 w-5 mx-auto mb-1 ${stats.lowStockCount > 0 ? 'text-amber-400' : 'text-white'}`}
           />
           <p
             className={`text-[20px] font-bold ${stats.lowStockCount > 0 ? 'text-amber-400' : 'text-white'}`}

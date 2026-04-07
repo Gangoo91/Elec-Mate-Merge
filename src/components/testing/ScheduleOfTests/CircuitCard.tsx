@@ -398,7 +398,7 @@ const ValueTile: React.FC<ValueTileProps> = ({
     pass: 'text-green-400',
     fail: 'text-red-400',
     warning: 'text-amber-400',
-    empty: 'text-white/40',
+    empty: 'text-white',
   };
 
   // Handle status display

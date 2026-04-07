@@ -280,10 +280,10 @@ export default function CustomersPage() {
               ))}
             </div>
             <div className="flex items-center gap-1 shrink-0 ml-2">
-              <button onClick={() => setShowImportDialog(true)} className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] touch-manipulation" aria-label="Import">
+              <button onClick={() => setShowImportDialog(true)} className="h-11 w-11 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] touch-manipulation" aria-label="Import">
                 <Upload className="h-4 w-4 text-white" />
               </button>
-              <button onClick={exportCustomers} disabled={customers.length === 0} className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] touch-manipulation disabled:opacity-40" aria-label="Export">
+              <button onClick={exportCustomers} disabled={customers.length === 0} className="h-11 w-11 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] touch-manipulation disabled:opacity-40" aria-label="Export">
                 <Download className="h-4 w-4 text-white" />
               </button>
             </div>

@@ -292,7 +292,7 @@ export const CustomerDetailAnalytics = ({ customerId }: CustomerDetailAnalyticsP
       {/* Empty state */}
       {certTypes.length === 0 && activityFrequency.length === 0 && totalValue === 0 && (
         <div className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-8 text-center">
-          <TrendingUp className="h-8 w-8 text-white/40 mx-auto mb-2" />
+          <TrendingUp className="h-8 w-8 text-white mx-auto mb-2" />
           <p className="text-sm text-white">
             Analytics will appear once this customer has certificates or activity
           </p>

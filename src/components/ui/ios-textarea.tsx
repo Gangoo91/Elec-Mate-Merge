@@ -22,7 +22,7 @@ const IOSTextarea = React.forwardRef<HTMLTextAreaElement, IOSTextareaProps>(
       if (maxChars && charCount > maxChars) return 'text-red-400';
       if (minChars && charCount >= minChars) return 'text-emerald-400';
       if (charCount > 0) return 'text-white/60';
-      return 'text-white/40';
+      return 'text-white';
     };
 
     return (
@@ -50,7 +50,7 @@ const IOSTextarea = React.forwardRef<HTMLTextAreaElement, IOSTextareaProps>(
             >
               {charCount}
               {minChars > 0 && charCount >= minChars && <span className="ml-1">✓</span>}
-              {maxChars && <span className="text-white/30">/{maxChars}</span>}
+              {maxChars && <span className="text-white">/{maxChars}</span>}
             </span>
           )}
         </div>

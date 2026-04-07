@@ -202,7 +202,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
                   {item.count > 1 ? `${item.count} ${item.label}` : item.label}
                 </span>
               </div>
-              <ChevronRight className="h-3.5 w-3.5 text-white/30 group-hover:text-amber-400 transition-colors" />
+              <ChevronRight className="h-3.5 w-3.5 text-white group-hover:text-amber-400 transition-colors" />
             </button>
           ))}
         </div>

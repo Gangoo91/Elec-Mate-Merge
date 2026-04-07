@@ -156,7 +156,7 @@ export function SyncStatusIndicator({
         <div className="flex flex-col min-w-0">
           <span className={cn('text-sm font-medium', config.color)}>{config.label}</span>
           {showLastSaved && timeSince && state === 'synced' && (
-            <span className="text-[10px] text-white/40 truncate">{timeSince}</span>
+            <span className="text-[10px] text-white truncate">{timeSince}</span>
           )}
           {errorMessage && state === 'error' && (
             <span className="text-[10px] text-red-300/70 truncate">{errorMessage}</span>
@@ -218,7 +218,7 @@ export function StickyFormSyncBar({
         <div className="flex flex-col">
           <span className={cn('text-xs font-medium', config.color)}>{config.label}</span>
           {timeSince && effectiveState === 'synced' && (
-            <span className="text-[10px] text-white/40">Last saved {timeSince}</span>
+            <span className="text-[10px] text-white">Last saved {timeSince}</span>
           )}
         </div>
       </div>

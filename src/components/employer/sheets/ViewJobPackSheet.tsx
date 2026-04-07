@@ -797,7 +797,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
               </>
             ) : (
               <div className="text-center py-8">
-                <Award className="h-12 w-12 mx-auto text-white/60/50 mb-3" />
+                <Award className="h-12 w-12 mx-auto text-white mb-3" />
                 <p className="text-sm text-white/60">
                   No certifications required for this job pack
                 </p>

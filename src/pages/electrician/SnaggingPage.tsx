@@ -491,7 +491,7 @@ const SnaggingPage = () => {
                 onChange={(e) => setFormTitle(e.target.value)}
                 placeholder="e.g. Damaged socket faceplate in lounge"
                 autoCapitalize="sentences"
-                className="h-12 text-base touch-manipulation border-white/20 bg-white/[0.04] focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white/30"
+                className="h-12 text-base touch-manipulation border-white/20 bg-white/[0.04] focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white"
               />
             </div>
 
@@ -529,7 +529,7 @@ const SnaggingPage = () => {
                 onChange={(e) => setFormLocation(e.target.value)}
                 placeholder="e.g. Kitchen, 1st floor"
                 autoCapitalize="sentences"
-                className="h-12 text-base touch-manipulation border-white/20 bg-white/[0.04] focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white/30"
+                className="h-12 text-base touch-manipulation border-white/20 bg-white/[0.04] focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white"
               />
             </div>
 
@@ -568,7 +568,7 @@ const SnaggingPage = () => {
                 placeholder="Any extra details about the snag..."
                 autoCapitalize="sentences"
                 rows={3}
-                className="touch-manipulation text-base min-h-[80px] bg-white/[0.04] border-white/20 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white/30 resize-none"
+                className="touch-manipulation text-base min-h-[80px] bg-white/[0.04] border-white/20 focus:border-orange-500 focus:ring-1 focus:ring-orange-500/40 rounded-xl placeholder:text-white resize-none"
               />
             </div>
           </div>

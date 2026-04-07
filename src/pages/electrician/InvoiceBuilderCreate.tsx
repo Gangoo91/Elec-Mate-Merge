@@ -128,7 +128,7 @@ const InvoiceBuilderCreate = () => {
             {/* Close Button */}
             <button
               onClick={handleBack}
-              className="h-10 w-10 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all -ml-1"
+              className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all touch-manipulation -ml-1"
             >
               <X className="h-5 w-5" />
             </button>

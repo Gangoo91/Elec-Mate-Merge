@@ -205,7 +205,7 @@ export function SafetyRecordCard({
               transition={{ duration: 0.2 }}
               className="flex-shrink-0 mt-1"
             >
-              <ChevronDown className="h-4 w-4 text-white/40" />
+              <ChevronDown className="h-4 w-4 text-white" />
             </motion.div>
           )}
         </div>

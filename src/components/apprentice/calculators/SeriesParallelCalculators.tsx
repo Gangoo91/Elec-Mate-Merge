@@ -75,7 +75,7 @@ const ResistorRow = ({
           placeholder="Value"
           value={value}
           onChange={(e) => onValueChange(e.target.value)}
-          className="flex-1 h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-base placeholder:text-white/30 focus:outline-none focus:border-amber-400/50"
+          className="flex-1 h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-base placeholder:text-white focus:outline-none focus:border-amber-400/50"
         />
         <select
           value={unit}

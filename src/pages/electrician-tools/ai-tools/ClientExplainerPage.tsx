@@ -225,7 +225,7 @@ const ClientExplainerPage = () => {
             placeholder="Describe your electrical findings, test results, work completed, or safety concerns..."
             value={technicalNotes}
             onChange={(e) => setTechnicalNotes(e.target.value)}
-            className="min-h-[120px] resize-none text-base rounded-xl border-white/[0.08] focus:border-pink-500 focus:ring-pink-500 bg-white/[0.03] text-white placeholder:text-white/30"
+            className="min-h-[120px] resize-none text-base rounded-xl border-white/[0.08] focus:border-pink-500 focus:ring-pink-500 bg-white/[0.03] text-white placeholder:text-white"
             style={{ fontSize: '16px' }}
           />
           <p className="text-[11px] text-white px-0.5">

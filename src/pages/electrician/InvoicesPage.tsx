@@ -71,20 +71,45 @@ const InvoicesPage = () => {
     setTimeout(() => setIsRefreshing(false), 500);
   }, [fetchInvoices]);
 
-  // Poll PDF Monkey status
+  // Poll PDF Monkey status with progress feedback
   const pollPdfDownloadUrl = async (
     documentId: string,
     accessToken: string
   ): Promise<string | null> => {
-    for (let i = 0; i < 45; i++) {
-      const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
-        body: { documentId, mode: 'status' },
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      if (data?.downloadUrl) return data.downloadUrl;
+    const maxAttempts = 45;
+    for (let i = 0; i < maxAttempts; i++) {
+      try {
+        const { data } = await supabase.functions.invoke('generate-pdf-monkey', {
+          body: { documentId, mode: 'status' },
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        if (data?.downloadUrl) return data.downloadUrl;
+      } catch {
+        // Network error — retry silently
+      }
+      if (i === 15) {
+        toast({
+          title: 'Still generating',
+          description: 'Large documents can take up to 60 seconds...',
+          duration: 5000,
+        });
+      }
       await new Promise((res) => setTimeout(res, 2000));
     }
     return null;
+  };
+
+  // Retry helper for sharing functions
+  const retryAsync = async <T,>(fn: () => Promise<T>, attempts = 3, delayMs = 2000): Promise<T> => {
+    for (let i = 0; i < attempts; i++) {
+      try {
+        return await fn();
+      } catch (err) {
+        if (i === attempts - 1) throw err;
+        await new Promise((res) => setTimeout(res, delayMs * (i + 1)));
+      }
+    }
+    throw new Error('All retry attempts failed');
   };
 
   const formatCurrency = (amount: number) => {
@@ -197,7 +222,7 @@ const InvoicesPage = () => {
         duration: 3000,
       });
     } catch (error) {
-      console.error('Error generating invoice PDF:', error);
+      // PDF generation failed
       setGenerationError(error instanceof Error ? error.message : 'Failed to generate invoice PDF');
       toast({
         title: 'Error',
@@ -228,7 +253,7 @@ const InvoicesPage = () => {
       recordPositiveAction();
       await fetchInvoices();
     } catch (error) {
-      console.error('Error marking invoice as paid:', error);
+      // Mark as paid failed
       toast({
         title: 'Error',
         description: 'Failed to mark invoice as paid. Please try again.',
@@ -259,16 +284,17 @@ const InvoicesPage = () => {
       } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
-      const { data: linkData, error: linkError } = await supabase.functions.invoke(
-        'generate-temporary-pdf-link',
-        {
-          body: { documentId: invoice.id, documentType: 'invoice' },
-          headers: { Authorization: `Bearer ${session.access_token}` },
-        }
-      );
-
-      if (linkError || !linkData?.publicUrl)
-        throw new Error('Failed to generate shareable PDF link');
+      const linkData = await retryAsync(async () => {
+        const { data, error } = await supabase.functions.invoke(
+          'generate-temporary-pdf-link',
+          {
+            body: { documentId: invoice.id, documentType: 'invoice' },
+            headers: { Authorization: `Bearer ${session.access_token}` },
+          }
+        );
+        if (error || !data?.publicUrl) throw new Error('Failed to generate shareable PDF link');
+        return data;
+      });
 
       const clientData =
         typeof (invoice as any).client_data === 'string'
@@ -280,7 +306,6 @@ const InvoicesPage = () => {
       await openExternalUrl(`https://wa.me/?text=${encodeURIComponent(message)}`);
       toast({ title: 'Opening WhatsApp', description: 'Invoice ready to share via WhatsApp' });
     } catch (error) {
-      console.error('Error sharing via WhatsApp:', error);
       toast({
         title: 'Error',
         description: 'Failed to prepare invoice for WhatsApp. Please try again.',
@@ -304,16 +329,17 @@ const InvoicesPage = () => {
       } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
-      const { data: linkData, error: linkError } = await supabase.functions.invoke(
-        'generate-temporary-pdf-link',
-        {
-          body: { documentId: invoice.id, documentType: 'invoice' },
-          headers: { Authorization: `Bearer ${session.access_token}` },
-        }
-      );
-
-      if (linkError || !linkData?.publicUrl)
-        throw new Error('Failed to generate shareable PDF link');
+      const linkData = await retryAsync(async () => {
+        const { data, error } = await supabase.functions.invoke(
+          'generate-temporary-pdf-link',
+          {
+            body: { documentId: invoice.id, documentType: 'invoice' },
+            headers: { Authorization: `Bearer ${session.access_token}` },
+          }
+        );
+        if (error || !data?.publicUrl) throw new Error('Failed to generate shareable PDF link');
+        return data;
+      });
 
       const { data: freshInvoice, error: fetchError } = await supabase
         .from('quotes')
@@ -333,7 +359,7 @@ const InvoicesPage = () => {
       window.location.href = `mailto:${clientData?.email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       toast({ title: 'Opening Email', description: 'Invoice ready to send via email' });
     } catch (error) {
-      console.error('Error sharing via email:', error);
+      // Email sharing failed after retries
       toast({
         title: 'Error',
         description: 'Failed to prepare invoice for email. Please try again.',
@@ -545,7 +571,7 @@ const InvoicesPage = () => {
               <button
                 onClick={() => navigate('/electrician/business')}
                 aria-label="Go back"
-                className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
+                className="h-11 w-11 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
@@ -553,14 +579,14 @@ const InvoicesPage = () => {
               <button
                 onClick={() => setIsSearchOpen(true)}
                 aria-label="Search invoices"
-                className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
+                className="h-11 w-11 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Search className="h-5 w-5 text-white" />
               </button>
               <button
                 onClick={() => navigate('/electrician/invoice-builder/create')}
                 aria-label="Create invoice"
-                className="h-10 w-10 flex items-center justify-center rounded-xl bg-elec-yellow active:scale-[0.98] transition-all touch-manipulation"
+                className="h-11 w-11 flex items-center justify-center rounded-xl bg-elec-yellow active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Plus className="h-5 w-5 text-black" />
               </button>

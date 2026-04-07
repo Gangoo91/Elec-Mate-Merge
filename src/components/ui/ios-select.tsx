@@ -82,7 +82,7 @@ const IOSSelect = React.forwardRef<HTMLButtonElement, IOSSelectProps>(
                 className={cn(
                   'absolute left-4 top-1/2 -translate-y-1/2',
                   'transition-colors duration-ios-fast',
-                  isOpen ? 'text-elec-yellow' : 'text-white/40'
+                  isOpen ? 'text-elec-yellow' : 'text-white'
                 )}
               >
                 {icon}

@@ -151,7 +151,7 @@ export function JobCard({
                 <span>{startDate}</span>
                 {endDate !== startDate && (
                   <>
-                    <span className="text-white/60/50">→</span>
+                    <span className="text-white">→</span>
                     <span>{endDate}</span>
                   </>
                 )}
@@ -184,7 +184,7 @@ export function JobCard({
                 </div>
               ) : (
                 <>
-                  <Users className="h-3.5 w-3.5 text-white/60/70" />
+                  <Users className="h-3.5 w-3.5 text-white" />
                   <span className="text-white/60">0</span>
                 </>
               )}

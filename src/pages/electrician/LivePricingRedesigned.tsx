@@ -177,8 +177,7 @@ const LivePricingRedesigned = () => {
       });
       return;
     }
-    // Search functionality would be implemented here
-    console.log('Searching for:', searchQuery);
+    // Search handled by the pricing components below
   };
 
   return (

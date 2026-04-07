@@ -162,7 +162,7 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                     <div className="flex items-center gap-1">
                       <button onClick={() => { setPhotoTarget({ type: 'earth', id: test.id }); testPhotoRef.current?.click(); }}
                         className={cn('w-8 h-8 rounded-lg flex items-center justify-center touch-manipulation', test.photo ? 'bg-cyan-500/20 border border-cyan-500/30' : 'bg-white/[0.04] border border-white/[0.08]')}>
-                        <Camera className={cn('h-3.5 w-3.5', test.photo ? 'text-cyan-400' : 'text-white/40')} />
+                        <Camera className={cn('h-3.5 w-3.5', test.photo ? 'text-cyan-400' : 'text-white')} />
                       </button>
                       {earthTests.length > 1 && <button onClick={() => removeEarthTest(test.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 touch-manipulation"><Trash2 className="h-4 w-4" /></button>}
                     </div>
@@ -212,7 +212,7 @@ export default function LPTestSchedule({ formData, onUpdate }: Props) {
                     <div className="flex items-center gap-1">
                       <button onClick={() => { setPhotoTarget({ type: 'dc', id: test.id }); testPhotoRef.current?.click(); }}
                         className={cn('w-8 h-8 rounded-lg flex items-center justify-center touch-manipulation', test.photo ? 'bg-cyan-500/20 border border-cyan-500/30' : 'bg-white/[0.04] border border-white/[0.08]')}>
-                        <Camera className={cn('h-3.5 w-3.5', test.photo ? 'text-cyan-400' : 'text-white/40')} />
+                        <Camera className={cn('h-3.5 w-3.5', test.photo ? 'text-cyan-400' : 'text-white')} />
                       </button>
                       {dcTests.length > 1 && <button onClick={() => removeDcTest(test.id)} className="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:text-red-400 touch-manipulation"><Trash2 className="h-4 w-4" /></button>}
                     </div>

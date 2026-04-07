@@ -144,12 +144,12 @@ const PremiumCourseCard = ({ course, onClick, index = 0 }: PremiumCourseCardProp
             <Clock className="h-3 w-3 text-blue-400" />
             <span>{course.duration}</span>
           </div>
-          <span className="text-white/20">|</span>
+          <span className="text-white">|</span>
           <div className="flex items-center gap-1 text-[11px] text-white">
             <GraduationCap className="h-3 w-3 text-purple-400" />
             <span>{course.level}</span>
           </div>
-          <span className="text-white/20">|</span>
+          <span className="text-white">|</span>
           <div className="flex items-center gap-1 text-[11px] text-white">
             <Monitor className="h-3 w-3 text-green-400" />
             <span>{course.format || 'Classroom'}</span>

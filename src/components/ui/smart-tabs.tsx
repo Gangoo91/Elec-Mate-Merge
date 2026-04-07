@@ -110,8 +110,8 @@ export const SmartTabs = ({
         <div
           ref={scrollRef}
           className={cn(
-            'flex overflow-x-auto scrollbar-hide',
-            isMobile ? 'gap-1 px-4 pb-2' : 'gap-2'
+            'flex',
+            isMobile ? 'gap-1 px-3 pb-2' : 'gap-2 overflow-x-auto scrollbar-hide'
           )}
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
@@ -126,7 +126,7 @@ export const SmartTabs = ({
                 ref={isActive ? activeTabRef : null}
                 onClick={() => handleValueChange(tab.value)}
                 className={cn(
-                  'flex items-center gap-1.5 rounded-lg font-medium touch-manipulation whitespace-nowrap shrink-0',
+                  'flex items-center justify-center gap-1 rounded-lg font-medium touch-manipulation whitespace-nowrap',
                   'active:scale-95 transition-[background-color,color,transform] duration-150',
                   isActive
                     ? 'bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20'
@@ -134,14 +134,15 @@ export const SmartTabs = ({
                       ? 'bg-green-500/10 text-green-400 border border-green-500/30'
                       : 'bg-card/50 text-muted-foreground hover:text-foreground hover:bg-card border border-transparent',
                   isMobile
-                    ? 'text-[13px] h-10 px-2.5 py-2 min-w-[58px]'
-                    : 'text-sm h-10 px-3 py-2.5'
+                    ? 'text-[12px] h-9 px-1.5 py-1.5 flex-1 min-w-0'
+                    : 'text-sm h-10 px-3 py-2.5 shrink-0'
                 )}
               >
                 {/* Step number badge */}
                 <span
                   className={cn(
-                    'flex items-center justify-center h-[18px] w-[18px] rounded-full text-[11px] font-bold shrink-0',
+                    'flex items-center justify-center rounded-full font-bold shrink-0',
+                    isMobile ? 'h-[16px] w-[16px] text-[10px]' : 'h-[18px] w-[18px] text-[11px]',
                     isActive
                       ? 'bg-black/20 text-black'
                       : tabComplete
@@ -151,7 +152,7 @@ export const SmartTabs = ({
                 >
                   {tabComplete && !isActive ? <CheckCircle className="h-2.5 w-2.5" /> : index + 1}
                 </span>
-                <span>{displayLabel}</span>
+                <span className={cn(isMobile && 'truncate')}>{displayLabel}</span>
               </button>
             );
           })}

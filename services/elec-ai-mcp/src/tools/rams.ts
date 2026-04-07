@@ -20,7 +20,7 @@ export async function readRams(args: Record<string, unknown>, user: UserContext)
 
   let query = supabase
     .from('rams_generation_jobs')
-    .select('id, status, progress, project_info, error_message, created_at, updated_at')
+    .select('id, status, progress, project_info, error_message, created_at')
     .eq('user_id', user.userId);
 
   if (typeof args.status === 'string' && args.status.length > 0) {

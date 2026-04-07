@@ -121,14 +121,14 @@ export const MaintenanceMethodProcessingView = ({
                       'w-8 h-8 rounded-lg flex items-center justify-center transition-all',
                       isComplete ? 'bg-emerald-500/20 text-emerald-400' :
                       isCurrent ? 'bg-emerald-500/15 text-emerald-400 ring-1 ring-emerald-500/30' :
-                      'bg-white/[0.04] text-white/30'
+                      'bg-white/[0.04] text-white'
                     )}
                   >
                     <StageIcon className="h-3.5 w-3.5" />
                   </div>
                   <span className={cn(
                     'text-[9px] font-medium',
-                    isComplete || isCurrent ? 'text-white' : 'text-white/30'
+                    isComplete || isCurrent ? 'text-white' : 'text-white'
                   )}>
                     {stage.label}
                   </span>

@@ -62,7 +62,7 @@ const IOSStepIndicatorNumbered: React.FC<IOSStepIndicatorNumberedProps> = ({
                   'transition-all duration-ios-normal ease-ios-ease',
                   isActive && 'bg-elec-yellow text-black',
                   isCompleted && 'bg-elec-yellow/20 text-elec-yellow',
-                  !isActive && !isCompleted && 'bg-white/10 text-white/40'
+                  !isActive && !isCompleted && 'bg-white/10 text-white'
                 )}
               >
                 {isCompleted ? (

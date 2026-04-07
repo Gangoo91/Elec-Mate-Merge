@@ -450,7 +450,7 @@ export const StartCertificateDialog = ({
               </div>
               <ChevronRight
                 className={cn(
-                  'h-5 w-5 text-white/40 flex-shrink-0 transition-transform duration-200',
+                  'h-5 w-5 text-white flex-shrink-0 transition-transform duration-200',
                   projectExpanded && 'rotate-90'
                 )}
               />
@@ -466,7 +466,7 @@ export const StartCertificateDialog = ({
                     value={projectTitle}
                     onChange={(e) => setProjectTitle(e.target.value)}
                     placeholder="e.g. Full Rewire — Smith House"
-                    className="bg-white/[0.06] border-white/[0.1] text-white placeholder:text-white/30 rounded-xl h-11 text-sm"
+                    className="bg-white/[0.06] border-white/[0.1] text-white placeholder:text-white rounded-xl h-11 text-sm"
                   />
                 </div>
 
@@ -517,7 +517,7 @@ export const StartCertificateDialog = ({
           {/* ── DIVIDER ── */}
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-white/[0.07]" />
-            <span className="text-xs text-white/40 font-medium uppercase tracking-widest">Or quick action</span>
+            <span className="text-xs text-white font-medium uppercase tracking-widest">Or quick action</span>
             <div className="flex-1 h-px bg-white/[0.07]" />
           </div>
 
@@ -571,7 +571,7 @@ export const StartCertificateDialog = ({
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <p className="text-xs font-semibold text-white/50 uppercase tracking-widest">AI Agents</p>
-              <Sparkles className="h-3 w-3 text-white/30" />
+              <Sparkles className="h-3 w-3 text-white" />
             </div>
             <div className="grid grid-cols-2 gap-2">
               {aiActions.map((type) => (
@@ -678,7 +678,7 @@ const ActionCard = ({ action, selected, onSelect, fullWidth }: ActionCardProps) 
           {action.label}
         </p>
         {fullWidth && (
-          <p className={cn('text-xs mt-0.5', selected ? 'text-white/70' : 'text-white/45')}>
+          <p className={cn('text-xs mt-0.5', selected ? 'text-white/70' : 'text-white')}>
             {action.description}
           </p>
         )}
