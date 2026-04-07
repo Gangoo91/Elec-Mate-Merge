@@ -230,7 +230,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
       </div>
 
       {/* Main Content - matches EIC structure */}
-      <main className="px-4 py-6 sm:px-6 lg:px-8 pb-20 sm:pb-6">
+      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
         <EICRFormContent
           formData={formData}
           onUpdate={updateFormData}

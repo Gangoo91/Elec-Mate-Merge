@@ -111,7 +111,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
       onClick={() => handleSelect(opt.value)}
       className={cn(
         'w-full text-left flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-all',
-        forMobile ? 'mx-3 my-1 px-3.5 py-3 rounded-xl border' : 'px-4 py-3',
+        forMobile ? 'my-1 px-3 py-3 rounded-xl border' : 'px-4 py-3',
         value === opt.value
           ? forMobile ? 'bg-elec-yellow/10 border-elec-yellow/20' : 'bg-elec-yellow/10'
           : forMobile ? 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04]' : 'hover:bg-white/[0.04]'
@@ -168,7 +168,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
             </div>
             {/* Custom value button — shown when typing something not in the list */}
             {allowCustom && search.trim() && !options.some((o) => o.value.toLowerCase() === search.toLowerCase()) && (
-              <div className="mx-3 mb-2">
+              <div className="mx-4 mb-2">
                 <button
                   type="button"
                   onClick={() => handleSelect(search.trim())}
@@ -179,7 +179,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
               </div>
             )}
             {/* Options */}
-            <div className="flex-1 overflow-y-auto overscroll-contain momentum-scroll-y pb-6">
+            <div className="flex-1 overflow-y-auto overscroll-contain momentum-scroll-y pb-6 px-4">
               {filtered.map((opt) => renderOption(opt, true))}
               {filtered.length === 0 && search.trim() && !allowCustom && (
                 <p className="text-sm text-white px-4 py-4 text-center">No matches found</p>

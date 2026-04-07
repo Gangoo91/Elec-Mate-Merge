@@ -31,7 +31,7 @@ const EICRFormContent: React.FC<EICRFormContentProps> = ({
   onConfirmDuplicate,
 }) => {
   return (
-    <div className="px-2 md:px-4">
+    <div>
       <DraftHeaderActions
         hasDraft={hasDraft}
         draftTimestamp={draftTimestamp}
