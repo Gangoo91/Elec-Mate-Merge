@@ -432,13 +432,19 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
         <Select
-          value={result.insulationLiveNeutral || ''}
-          onValueChange={(value) => onUpdate(result.id, 'insulationLiveNeutral', value)}
+          value={
+            ['>200', '>999', 'N/A', 'LIM'].includes(result.insulationLiveNeutral || '')
+              ? result.insulationLiveNeutral || ''
+              : 'custom'
+          }
+          onValueChange={(value) => {
+            if (value !== 'custom') onUpdate(result.id, 'insulationLiveNeutral', value);
+          }}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="MΩ" />
+            <SelectValue placeholder="MΩ">{result.insulationLiveNeutral || 'MΩ'}</SelectValue>
           </SelectTrigger>
-          <SelectContent className="z-[100] min-w-[140px]">
+          <SelectContent className="z-[100] min-w-[160px]">
             <SelectItem value=">200" className="py-3 text-base touch-manipulation">
               &gt;200 MΩ
             </SelectItem>
@@ -451,18 +457,40 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectItem value="LIM" className="py-3 text-base touch-manipulation">
               LIM
             </SelectItem>
+            <SelectItem
+              value="custom"
+              className="py-3 text-base touch-manipulation text-elec-yellow"
+            >
+              Other (type value)
+            </SelectItem>
           </SelectContent>
         </Select>
+        {!['>200', '>999', 'N/A', 'LIM', ''].includes(result.insulationLiveNeutral || '') && (
+          <input
+            type="text"
+            inputMode="decimal"
+            value={result.insulationLiveNeutral || ''}
+            onChange={(e) => onUpdate(result.id, 'insulationLiveNeutral', e.target.value)}
+            className="w-full h-8 text-sm text-center bg-transparent border-0 text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow/30 mt-0.5"
+            placeholder="MΩ"
+          />
+        )}
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-elec-gray w-[96px] min-w-[96px] max-w-[96px]">
         <Select
-          value={result.insulationLiveEarth || ''}
-          onValueChange={(value) => onUpdate(result.id, 'insulationLiveEarth', value)}
+          value={
+            ['>200', '>999', 'N/A', 'LIM'].includes(result.insulationLiveEarth || '')
+              ? result.insulationLiveEarth || ''
+              : 'custom'
+          }
+          onValueChange={(value) => {
+            if (value !== 'custom') onUpdate(result.id, 'insulationLiveEarth', value);
+          }}
         >
           <SelectTrigger className={selectTriggerClassName}>
-            <SelectValue placeholder="MΩ" />
+            <SelectValue placeholder="MΩ">{result.insulationLiveEarth || 'MΩ'}</SelectValue>
           </SelectTrigger>
-          <SelectContent className="z-[100] min-w-[140px]">
+          <SelectContent className="z-[100] min-w-[160px]">
             <SelectItem value=">200" className="py-3 text-base touch-manipulation">
               &gt;200 MΩ
             </SelectItem>
@@ -475,8 +503,24 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
             <SelectItem value="LIM" className="py-3 text-base touch-manipulation">
               LIM
             </SelectItem>
+            <SelectItem
+              value="custom"
+              className="py-3 text-base touch-manipulation text-elec-yellow"
+            >
+              Other (type value)
+            </SelectItem>
           </SelectContent>
         </Select>
+        {!['>200', '>999', 'N/A', 'LIM', ''].includes(result.insulationLiveEarth || '') && (
+          <input
+            type="text"
+            inputMode="decimal"
+            value={result.insulationLiveEarth || ''}
+            onChange={(e) => onUpdate(result.id, 'insulationLiveEarth', e.target.value)}
+            className="w-full h-8 text-sm text-center bg-transparent border-0 text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow/30 mt-0.5"
+            placeholder="MΩ"
+          />
+        )}
       </TableCell>
 
       {/* Earth Fault Tests Group */}
