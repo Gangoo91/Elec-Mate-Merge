@@ -509,6 +509,197 @@ export function useSolarPVSmartForm(
     [calculateArrayValues]
   );
 
+  // ============================================================================
+  // Design Warnings — fire alarm-style intelligence
+  // ============================================================================
+
+  const getDesignWarnings = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (formData: Record<string, any>): { field: string; message: string; severity: 'warning' | 'error' }[] => {
+      const warnings: { field: string; message: string; severity: 'warning' | 'error' }[] = [];
+      const arrays = formData.arrays || [];
+      const inverters = formData.inverters || [];
+
+      // Total capacity
+      const totalKwp = arrays.reduce(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (sum: number, a: any) => sum + (a.panelWattage * a.panelCount) / 1000,
+        0
+      );
+
+      // Inverter sizing
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const totalInverterAc = inverters.reduce((sum: number, inv: any) => sum + (inv.ratedPowerAc || 0), 0);
+      if (totalInverterAc > 0 && totalKwp > 0) {
+        if (totalInverterAc < totalKwp * 0.8) {
+          warnings.push({
+            field: 'inverters',
+            message: `Inverter may be undersized (${totalInverterAc}kW AC for ${totalKwp.toFixed(1)}kWp array)`,
+            severity: 'warning',
+          });
+        }
+        if (totalInverterAc > totalKwp * 1.3) {
+          warnings.push({
+            field: 'inverters',
+            message: `Inverter significantly oversized (${totalInverterAc}kW AC for ${totalKwp.toFixed(1)}kWp array)`,
+            severity: 'warning',
+          });
+        }
+      }
+
+      // Battery without Type B RCD
+      const hasBattery = formData.batteryInstalled || formData.battery?.installed;
+      const systemType = formData.systemType;
+      const rcdType = formData.acTests?.rcdType || formData.testResults?.acTests?.rcdType;
+      if ((hasBattery || systemType === 'hybrid') && rcdType && rcdType !== 'Type B') {
+        warnings.push({
+          field: 'acTests.rcdType',
+          message: 'Type B RCD required for battery/hybrid systems per MIS 3002',
+          severity: 'error',
+        });
+      }
+
+      // G98/G99 threshold
+      const phases = formData.gridConnection?.supplyPhases || 'single';
+      const threshold = phases === 'three' ? 11.04 : 3.68;
+      const appType = formData.gridConnection?.applicationType;
+      if (totalKwp > threshold && appType === 'G98') {
+        warnings.push({
+          field: 'gridConnection.applicationType',
+          message: `System (${totalKwp.toFixed(1)}kWp) exceeds G98 threshold (${threshold}kW) — G99 application required`,
+          severity: 'error',
+        });
+      }
+
+      // Export limiting without value
+      if (formData.gridConnection?.exportLimited && !formData.gridConnection?.exportLimit) {
+        warnings.push({
+          field: 'gridConnection.exportLimit',
+          message: 'Export limit value required when export limiting is enabled',
+          severity: 'warning',
+        });
+      }
+
+      // Bidirectional device for hybrid
+      if (
+        (hasBattery || systemType === 'hybrid') &&
+        !formData.acTests?.bidirectionalDeviceInstalled &&
+        !formData.testResults?.acTests?.bidirectionalDeviceInstalled
+      ) {
+        warnings.push({
+          field: 'acTests.bidirectionalDeviceInstalled',
+          message: 'Bidirectional protection required per BS 7671:2018+A3:2024 Reg. 530.3.201',
+          severity: 'error',
+        });
+      }
+
+      // High shading
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      arrays.forEach((a: any, i: number) => {
+        if (a.shadingFactor && a.shadingFactor < 0.8) {
+          warnings.push({
+            field: `arrays[${i}].shadingFactor`,
+            message: `Array ${i + 1}: High shading (${Math.round((1 - a.shadingFactor) * 100)}%) — consider micro-inverters or optimisers`,
+            severity: 'warning',
+          });
+        }
+      });
+
+      // String voltage exceeds inverter max
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      arrays.forEach((a: any, i: number) => {
+        if (a.stringVoc && inverters[0]?.maxInputVoltage) {
+          if (a.stringVoc > inverters[0].maxInputVoltage) {
+            warnings.push({
+              field: `arrays[${i}].stringVoc`,
+              message: `Array ${i + 1}: String Voc (${a.stringVoc}V) exceeds inverter max input (${inverters[0].maxInputVoltage}V)`,
+              severity: 'error',
+            });
+          }
+        }
+      });
+
+      // Missing MCS number
+      if (!formData.mcsDetails?.installerNumber) {
+        warnings.push({
+          field: 'mcsDetails.installerNumber',
+          message: 'MCS installer number required for certification',
+          severity: 'warning',
+        });
+      }
+
+      // RCD Type AC selected (not suitable for PV)
+      if (rcdType === 'Type AC') {
+        warnings.push({
+          field: 'acTests.rcdType',
+          message: 'Type AC RCD is NOT suitable for PV installations — use Type A minimum',
+          severity: 'error',
+        });
+      }
+
+      return warnings;
+    },
+    []
+  );
+
+  // Suggest RCD type based on system configuration
+  const suggestRCDType = useCallback(
+    (systemType: string, hasBattery: boolean): { type: string; reason: string } => {
+      if (hasBattery || systemType === 'hybrid') {
+        return {
+          type: 'Type B',
+          reason: 'Required for battery/hybrid systems to detect DC fault currents (MIS 3002)',
+        };
+      }
+      return {
+        type: 'Type A',
+        reason: 'Standard for grid-tied PV (detects pulsating DC + sinusoidal AC)',
+      };
+    },
+    []
+  );
+
+  // Suggest bidirectional device requirement
+  const suggestBidirectionalDevice = useCallback(
+    (systemType: string, hasBattery: boolean): { required: boolean; reason: string } => {
+      if (hasBattery || systemType === 'hybrid') {
+        return {
+          required: true,
+          reason: 'BS 7671:2018+A3:2024 Reg. 530.3.201 requires bidirectional protection for systems that can export',
+        };
+      }
+      return {
+        required: false,
+        reason: 'Not mandatory for grid-tied systems without battery, but recommended',
+      };
+    },
+    []
+  );
+
+  // Validate test conditions per BS EN 62446
+  const validateTestConditions = useCallback(
+    (irradiance: number, temperature: number): { valid: boolean; warnings: string[] } => {
+      const w: string[] = [];
+      if (irradiance > 0 && irradiance < 400) {
+        w.push(
+          `Low irradiance (${irradiance} W/m²) — results may be unreliable per BS EN 62446. Minimum 400 W/m² recommended.`
+        );
+      }
+      if (temperature > 40) {
+        w.push(
+          `High module temperature (${temperature}°C) — Voc will be significantly reduced. Apply temperature compensation.`
+        );
+      }
+      if (temperature < 0) {
+        w.push(
+          `Sub-zero temperature (${temperature}°C) — Voc will be higher than STC. Check string voltage doesn't exceed inverter max.`
+        );
+      }
+      return { valid: w.length === 0, warnings: w };
+    },
+    []
+  );
+
   return {
     calculateTotalCapacity,
     calculateEstimatedYield,
@@ -523,5 +714,9 @@ export function useSolarPVSmartForm(
     updateArrayWithPanelSelection,
     updateInverterWithSelection,
     recalculateAllValues,
+    getDesignWarnings,
+    suggestRCDType,
+    suggestBidirectionalDevice,
+    validateTestConditions,
   };
 }

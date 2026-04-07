@@ -8,8 +8,6 @@ import SolarPVTestSchedule from './SolarPVTestSchedule';
 import SolarPVDeclarations from './SolarPVDeclarations';
 import SolarPVTabNavigation from './SolarPVTabNavigation';
 import { Building2, Cpu, Zap, TestTube, FileText } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
 import { SolarPVFormData } from '@/types/solar-pv';
 
 interface SolarPVFormTabsProps {
@@ -56,12 +54,7 @@ const SolarPVFormTabs: React.FC<SolarPVFormTabsProps> = ({
   onSaveDraft,
   canGenerateCertificate = true,
 }) => {
-  const isMobile = useIsMobile();
-
-  // Mobile: no max-width, no horizontal spacing - edge-to-edge
-  // Desktop: constrained width with spacing
-  // pb-24 on mobile ensures content isn't hidden behind sticky nav
-  const contentWrapperClass = cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6');
+  const contentWrapperClass = 'pb-24 sm:pb-8';
 
   const smartTabs: SmartTab[] = [
     {

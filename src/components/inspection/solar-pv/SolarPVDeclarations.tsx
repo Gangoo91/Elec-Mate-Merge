@@ -1,241 +1,68 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
- * Solar PV Declarations Tab
- * Defects, handover checklist, installer and electrician declarations
+ * Solar PV Declarations Tab — Best-in-Class Mobile
+ * Defects, handover, installer/electrician declarations, photos
  */
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  AlertTriangle,
-  FileCheck,
-  PenLine,
-  ChevronDown,
-  ChevronUp,
-  Plus,
-  Trash2,
-  RotateCcw,
-  Camera,
-  Upload,
-} from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import {
-  SolarPVFormData,
-  Defect,
-  DefectSeverity,
-  CertificatePhoto,
-  PhotoCategory,
-} from '@/types/solar-pv';
-import { supabase } from '@/integrations/supabase/client';
+import { SolarPVFormData, Defect, COMPETENCE_SCHEMES } from '@/types/solar-pv';
+import { useHaptic } from '@/hooks/useHaptic';
+import { toast } from 'sonner';
+import ComboboxCell from '@/components/table-cells/ComboboxCell';
+import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
+import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
+import SignatureInput from '@/components/signature/SignatureInput';
+import { Section, Field, inputCn, textareaCn, CheckboxCard } from './SolarPVSection';
 
-interface SolarPVDeclarationsProps {
+interface Props {
   formData: SolarPVFormData;
   onUpdate: (field: string, value: unknown) => void;
 }
 
-interface SectionHeaderProps {
-  title: string;
-  icon: React.ElementType;
-  isOpen: boolean;
-  color?: string;
-  badge?: string;
-}
+const severityOptions = [
+  { value: 'critical', label: 'Critical (C1)' },
+  { value: 'non-critical', label: 'Non-Critical (C2)' },
+  { value: 'recommendation', label: 'Recommendation (C3)' },
+];
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({
-  title,
-  icon: Icon,
-  isOpen,
-  color = 'amber-500',
-  badge,
-}) => (
-  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 sm:p-5 hover:bg-white/5 transition-colors rounded-t-xl">
-    <div className="flex items-center gap-3">
-      <div
-        className={cn('w-10 h-11 rounded-xl flex items-center justify-center', `bg-${color}/15`)}
-      >
-        <Icon className={cn('h-5 w-5', `text-${color}`)} />
-      </div>
-      <div className="text-left">
-        <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-          {title}
-          {badge && (
-            <Badge
-              variant="outline"
-              className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-amber-500/30"
-            >
-              {badge}
-            </Badge>
-          )}
-        </h3>
-      </div>
-    </div>
-    {isOpen ? (
-      <ChevronUp className="h-5 w-5 text-white" />
-    ) : (
-      <ChevronDown className="h-5 w-5 text-white" />
-    )}
-  </CollapsibleTrigger>
-);
+// ============================================================================
+// Main Component
+// ============================================================================
 
-// Signature Canvas Component
-interface SignatureCanvasProps {
-  value: string;
-  onChange: (signature: string) => void;
-  label: string;
-}
+const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
+  const { id } = useParams<{ id: string }>();
+  const haptic = useHaptic();
 
-const SignatureCanvas: React.FC<SignatureCanvasProps> = ({ value, onChange, label }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * 2;
-    canvas.height = rect.height * 2;
-    ctx.scale(2, 2);
-
-    // Set drawing style
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    // Load existing signature if present
-    if (value) {
-      const img = new Image();
-      img.onload = () => {
-        ctx.drawImage(img, 0, 0, rect.width, rect.height);
-      };
-      img.src = value;
-    }
-  }, []);
-
-  const getCoordinates = (e: React.TouchEvent | React.MouseEvent) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return { x: 0, y: 0 };
-
-    const rect = canvas.getBoundingClientRect();
-    if ('touches' in e) {
-      return {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top,
-      };
-    }
-    return {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
-    };
-  };
-
-  const startDrawing = (e: React.TouchEvent | React.MouseEvent) => {
-    e.preventDefault();
-    setIsDrawing(true);
-    const ctx = canvasRef.current?.getContext('2d');
-    if (!ctx) return;
-    const { x, y } = getCoordinates(e);
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-  };
-
-  const draw = (e: React.TouchEvent | React.MouseEvent) => {
-    if (!isDrawing) return;
-    e.preventDefault();
-    const ctx = canvasRef.current?.getContext('2d');
-    if (!ctx) return;
-    const { x, y } = getCoordinates(e);
-    ctx.lineTo(x, y);
-    ctx.stroke();
-  };
-
-  const stopDrawing = () => {
-    if (isDrawing) {
-      setIsDrawing(false);
-      const canvas = canvasRef.current;
-      if (canvas) {
-        onChange(canvas.toDataURL('image/png'));
-      }
-    }
-  };
-
-  const clearSignature = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    onChange('');
-  };
-
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <Label className="text-sm font-medium text-foreground">{label}</Label>
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          onClick={clearSignature}
-          className="text-xs text-white hover:text-foreground"
-        >
-          <RotateCcw className="h-3 w-3 mr-1" />
-          Clear
-        </Button>
-      </div>
-      <div className="border border-white/20 rounded-lg bg-elec-gray/50 overflow-hidden">
-        <canvas
-          ref={canvasRef}
-          className="w-full h-40 cursor-crosshair touch-none"
-          onMouseDown={startDrawing}
-          onMouseMove={draw}
-          onMouseUp={stopDrawing}
-          onMouseLeave={stopDrawing}
-          onTouchStart={startDrawing}
-          onTouchMove={draw}
-          onTouchEnd={stopDrawing}
-        />
-      </div>
-      <p className="text-xs text-white">Draw signature above</p>
-    </div>
-  );
-};
-
-const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onUpdate }) => {
-  const [openSections, setOpenSections] = useState({
-    defects: true,
-    handover: true,
-    installer: true,
-    electrician: true,
-    photos: true,
+  const { photos: uploadedPhotos, isUploading, uploadPhoto, deletePhoto } = useInspectionPhotos({
+    reportId: id || 'new',
+    reportType: 'solar-pv',
+    itemId: 'general-photos',
   });
 
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
+  // Critical defects check — blocks "Satisfactory"
+  const hasCriticalDefects = (formData.defects || []).some(
+    (d: any) => d.severity === 'critical' && !d.rectified
+  );
 
-  // Add defect
+  // Auto-calculate next service date (12 months from commissioning)
+  const autoNextService = (() => {
+    if ((formData as any).nextServiceDue) return (formData as any).nextServiceDue;
+    const commDate = formData.commissioningDate || formData.installationDate;
+    if (!commDate) return '';
+    const d = new Date(commDate);
+    d.setFullYear(d.getFullYear() + 1);
+    return d.toISOString().split('T')[0];
+  })();
+
   const addDefect = useCallback(() => {
+    haptic.light();
     const newDefect: Defect = {
-      id: `defect-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      id: crypto.randomUUID(),
       description: '',
       severity: 'non-critical',
       location: '',
@@ -244,460 +71,348 @@ const SolarPVDeclarations: React.FC<SolarPVDeclarationsProps> = ({ formData, onU
     onUpdate('defects', [...(formData.defects || []), newDefect]);
   }, [formData.defects, onUpdate]);
 
-  // Update defect
   const updateDefect = useCallback(
     (id: string, field: string, value: unknown) => {
-      const updatedDefects = (formData.defects || []).map((defect) => {
-        if (defect.id === id) {
-          return { ...defect, [field]: value };
-        }
-        return defect;
-      });
-      onUpdate('defects', updatedDefects);
+      onUpdate('defects', (formData.defects || []).map((d: any) => (d.id === id ? { ...d, [field]: value } : d)));
     },
     [formData.defects, onUpdate]
   );
 
-  // Remove defect
   const removeDefect = useCallback(
     (id: string) => {
-      const updatedDefects = (formData.defects || []).filter((d) => d.id !== id);
-      onUpdate('defects', updatedDefects);
+      haptic.medium();
+      onUpdate('defects', (formData.defects || []).filter((d: any) => d.id !== id));
     },
     [formData.defects, onUpdate]
   );
 
-  // Update installer declaration
   const updateInstaller = useCallback(
-    (field: string, value: unknown) => {
-      onUpdate('installerDeclaration', {
-        ...formData.installerDeclaration,
-        [field]: value,
-      });
-    },
+    (field: string, value: unknown) => onUpdate('installerDeclaration', { ...formData.installerDeclaration, [field]: value }),
     [formData.installerDeclaration, onUpdate]
   );
 
-  // Update electrician declaration
   const updateElectrician = useCallback(
-    (field: string, value: unknown) => {
-      onUpdate('electricianDeclaration', {
-        ...formData.electricianDeclaration,
-        [field]: value,
-      });
-    },
+    (field: string, value: unknown) => onUpdate('electricianDeclaration', { ...formData.electricianDeclaration, [field]: value }),
     [formData.electricianDeclaration, onUpdate]
   );
 
-  // Update handover
   const updateHandover = useCallback(
-    (field: string, value: unknown) => {
-      onUpdate('handover', {
-        ...formData.handover,
-        [field]: value,
-      });
-    },
+    (field: string, value: unknown) => onUpdate('handover', { ...formData.handover, [field]: value }),
     [formData.handover, onUpdate]
   );
 
-  // Get severity badge color
-  const getSeverityColor = (severity: DefectSeverity) => {
-    switch (severity) {
-      case 'critical':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
-      case 'non-critical':
-        return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-      case 'recommendation':
-        return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-      default:
-        return 'bg-white/20 text-white border-white/30';
-    }
-  };
-
   return (
-    <div className="space-y-4 px-4 sm:px-0">
-      {/* Defects & Observations */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.defects} onOpenChange={() => toggleSection('defects')}>
-          <SectionHeader
-            title="Defects & Observations"
-            icon={AlertTriangle}
-            isOpen={openSections.defects}
-            color="orange-500"
-          />
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-4 border-t border-white/10">
-              {(formData.defects || []).length === 0 && (
-                <div className="p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-center">
-                  <p className="text-green-400 text-sm">No defects recorded</p>
-                </div>
-              )}
+    <div className="space-y-6">
+      {/* Defects */}
+      <Section title="Defects & Observations" accentColor="from-orange-500/40 to-red-400/20" count={(formData.defects || []).length}>
+        {(formData.defects || []).length === 0 && (
+          <div className="rounded-xl bg-green-500/10 border border-green-500/30 p-4 text-center">
+            <p className="text-sm font-medium text-green-400">No defects recorded</p>
+          </div>
+        )}
 
-              {(formData.defects || []).map((defect, index) => (
-                <div
-                  key={defect.id}
-                  className="p-4 bg-muted/30 rounded-xl border border-white/10 space-y-3"
-                >
-                  <div className="flex items-center justify-between">
-                    <Badge className={getSeverityColor(defect.severity)}>{defect.severity}</Badge>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeDefect(defect.id)}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="space-y-1 sm:col-span-2">
-                      <Label className="text-xs text-white">Description</Label>
-                      <Textarea
-                        value={defect.description}
-                        onChange={(e) => updateDefect(defect.id, 'description', e.target.value)}
-                        placeholder="Describe the defect..."
-                        className="min-h-[120px] touch-manipulation text-base border-white/30"
-                      />
-                    </div>
-
-                    <div className="space-y-1">
-                      <Label className="text-xs text-white">Severity</Label>
-                      <Select
-                        value={defect.severity}
-                        onValueChange={(value) =>
-                          updateDefect(defect.id, 'severity', value as DefectSeverity)
-                        }
-                      >
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value="critical">Critical (C1)</SelectItem>
-                          <SelectItem value="non-critical">Non-Critical (C2)</SelectItem>
-                          <SelectItem value="recommendation">Recommendation (C3)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-1">
-                      <Label className="text-xs text-white">Location</Label>
-                      <Input
-                        value={defect.location}
-                        onChange={(e) => updateDefect(defect.id, 'location', e.target.value)}
-                        placeholder="Where is the defect?"
-                        className="h-11 text-base touch-manipulation border-white/30"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-3 bg-background/50 rounded-lg">
-                    <Checkbox
-                      checked={defect.rectified}
-                      onCheckedChange={(checked) => {
-                        updateDefect(defect.id, 'rectified', checked);
-                        if (checked) {
-                          updateDefect(
-                            defect.id,
-                            'rectificationDate',
-                            new Date().toISOString().split('T')[0]
-                          );
-                        }
-                      }}
-                      className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <Label className="text-sm text-foreground cursor-pointer">Rectified</Label>
-                    {defect.rectified && (
-                      <Input
-                        type="date"
-                        value={defect.rectificationDate || ''}
-                        onChange={(e) =>
-                          updateDefect(defect.id, 'rectificationDate', e.target.value)
-                        }
-                        className="h-11 w-40 text-sm border-white/30"
-                      />
-                    )}
-                  </div>
-                </div>
-              ))}
-
-              <Button
-                variant="outline"
-                onClick={addDefect}
-                className="w-full h-12 border-dashed border-white/30 hover:border-orange-500/50 hover:bg-orange-500/5"
+        {(formData.defects || []).map((defect: any, idx: number) => (
+          <div key={defect.id} className="rounded-xl border border-white/[0.06] overflow-hidden">
+            <div className="flex items-center justify-between px-3.5 py-2 bg-white/[0.04] border-b border-white/[0.06]">
+              <span className={cn(
+                'text-xs font-bold',
+                defect.severity === 'critical' ? 'text-red-400' : defect.severity === 'recommendation' ? 'text-blue-400' : 'text-orange-400'
+              )}>
+                Defect {idx + 1}
+              </span>
+              <button
+                onClick={() => removeDefect(defect.id)}
+                className="w-9 h-9 rounded-xl flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-90"
               >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Defect / Observation
-              </Button>
+                <Trash2 className="h-4 w-4" />
+              </button>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+            <div className="p-3.5 space-y-3 bg-white/[0.02]">
+              <Field label="Description">
+                <Textarea value={defect.description || ''} onChange={(e) => updateDefect(defect.id, 'description', e.target.value)} placeholder="Describe the defect..." className={textareaCn} />
+              </Field>
+              <div className="grid grid-cols-2 gap-2.5">
+                <Field label="Severity">
+                  <ComboboxCell value={defect.severity || 'non-critical'} onChange={(v) => updateDefect(defect.id, 'severity', v)} options={severityOptions} className="h-10 text-sm" allowCustom />
+                </Field>
+                <Field label="Location">
+                  <Input value={defect.location || ''} onChange={(e) => updateDefect(defect.id, 'location', e.target.value)} placeholder="Where?" className={inputSmCn} />
+                </Field>
+              </div>
+              <CheckboxCard
+                label="Rectified"
+                checked={!!defect.rectified}
+                onChange={(v) => {
+                  updateDefect(defect.id, 'rectified', v);
+                  if (v) updateDefect(defect.id, 'rectificationDate', new Date().toISOString().split('T')[0]);
+                }}
+                accentColor="green"
+              />
+              {defect.rectified && (
+                <Field label="Rectification Date">
+                  <Input type="date" value={defect.rectificationDate || ''} onChange={(e) => updateDefect(defect.id, 'rectificationDate', e.target.value)} className={cn(inputSmCn, '[color-scheme:dark]')} />
+                </Field>
+              )}
+            </div>
+          </div>
+        ))}
+
+        <button
+          onClick={addDefect}
+          className="w-full h-12 rounded-xl border-2 border-dashed border-orange-500/20 flex items-center justify-center gap-2 text-sm font-medium text-orange-400 touch-manipulation active:scale-[0.98]"
+        >
+          <Plus className="h-4 w-4" /> Add Defect
+        </button>
+      </Section>
 
       {/* Handover Documentation */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.handover} onOpenChange={() => toggleSection('handover')}>
-          <SectionHeader
-            title="Handover Documentation"
-            icon={FileCheck}
-            isOpen={openSections.handover}
-            color="green-500"
-            badge="MCS Required"
-          />
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-3 border-t border-white/10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {[
-                  { field: 'userManualProvided', label: 'User Manual Provided' },
-                  { field: 'warrantyDocsProvided', label: 'Warranty Documents Provided' },
-                  { field: 'mcsDocumentProvided', label: 'MCS Certificate Provided' },
-                  { field: 'maintenanceScheduleProvided', label: 'Maintenance Schedule Provided' },
-                  { field: 'systemDesignProvided', label: 'System Design Documents' },
-                  { field: 'g98g99ConfirmationProvided', label: 'G98/G99 Confirmation' },
-                  { field: 'performanceEstimateProvided', label: 'Performance Estimate' },
-                  { field: 'dnoNotificationCopyProvided', label: 'DNO Notification Copy' },
-                  { field: 'emergencyShutdownExplained', label: 'Emergency Shutdown Explained' },
-                ].map((item) => (
-                  <div
-                    key={item.field}
-                    className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg min-h-[48px]"
-                  >
-                    <Checkbox
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      checked={(formData.handover as any)?.[item.field] || false}
-                      onCheckedChange={(checked) => updateHandover(item.field, checked)}
-                      className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <Label className="text-sm text-foreground cursor-pointer">{item.label}</Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+      <Section title="Handover Documentation" accentColor="from-green-500/40 to-emerald-400/20">
+        <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <p className="text-[10px] text-white/60"><strong className="text-white/80">MCS Required:</strong> All items must be provided to the customer</p>
+        </div>
+        <div className="space-y-2">
+          {[
+            { field: 'userManualProvided', label: 'User Manual Provided' },
+            { field: 'warrantyDocsProvided', label: 'Warranty Documents Provided' },
+            { field: 'mcsDocumentProvided', label: 'MCS Certificate Provided' },
+            { field: 'maintenanceScheduleProvided', label: 'Maintenance Schedule Provided' },
+            { field: 'emergencyShutdownExplained', label: 'Emergency Shutdown Explained' },
+            { field: 'systemDesignProvided', label: 'System Design Documents' },
+            { field: 'g98g99ConfirmationProvided', label: 'G98/G99 Confirmation' },
+            { field: 'performanceEstimateProvided', label: 'Performance Estimate' },
+            { field: 'dnoNotificationCopyProvided', label: 'DNO Notification Copy' },
+          ].map((item) => (
+            <CheckboxCard
+              key={item.field}
+              label={item.label}
+              checked={!!(formData.handover as any)?.[item.field]}
+              onChange={(v) => updateHandover(item.field, v)}
+              accentColor="green"
+            />
+          ))}
+        </div>
+      </Section>
 
       {/* Installer Declaration */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.installer} onOpenChange={() => toggleSection('installer')}>
-          <SectionHeader
-            title="Installer Declaration"
-            icon={PenLine}
-            isOpen={openSections.installer}
-            color="amber-500"
-            badge="Required"
+      <Section title="Installer Declaration" accentColor="from-amber-500/40 to-yellow-400/20">
+        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <p className="text-xs text-white/60">
+            I certify that this Solar PV system has been designed, installed and commissioned in accordance with BS 7671, BS EN 62446, and MCS MIS-3002.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Field label="Installer Name *">
+            <Input value={formData.installerDeclaration?.installerName || ''} onChange={(e) => updateInstaller('installerName', e.target.value)} placeholder="Full name" className={inputCn} />
+          </Field>
+          <Field label="Company">
+            <Input value={formData.installerDeclaration?.installerCompany || ''} onChange={(e) => updateInstaller('installerCompany', e.target.value)} placeholder="Company name" className={inputCn} />
+          </Field>
+          <Field label="MCS Number *">
+            <Input value={formData.installerDeclaration?.installerMcsNumber || ''} onChange={(e) => updateInstaller('installerMcsNumber', e.target.value)} placeholder="e.g., NAP-12345" className={inputCn} />
+          </Field>
+          <Field label="Phone">
+            <Input value={formData.installerDeclaration?.installerPhone || ''} onChange={(e) => updateInstaller('installerPhone', e.target.value)} placeholder="Contact number" className={inputCn} />
+          </Field>
+          <div className="sm:col-span-2">
+            <Field label="Email">
+              <Input type="email" value={formData.installerDeclaration?.installerEmail || ''} onChange={(e) => updateInstaller('installerEmail', e.target.value)} placeholder="email@company.com" className={inputCn} />
+            </Field>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <SignatureInput
+            label="Installer Signature *"
+            value={formData.installerDeclaration?.installerSignature || ''}
+            onChange={(sig) => updateInstaller('installerSignature', sig || '')}
           />
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-4 border-t border-white/10">
-              {/* Declaration text */}
-              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg text-sm text-amber-200">
-                I certify that this Solar PV system has been designed, installed and commissioned in
-                accordance with BS 7671, BS EN 62446, and MCS Installation Standard MIS-3002. The
-                system is safe to use and appropriate documentation has been provided to the
-                customer.
-              </div>
+          <Field label="Date *">
+            <Input type="date" value={formData.installerDeclaration?.installerDate || ''} onChange={(e) => updateInstaller('installerDate', e.target.value)} className={inputCn} />
+          </Field>
+        </div>
+      </Section>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Installer Name *</Label>
-                  <Input
-                    value={formData.installerDeclaration?.installerName || ''}
-                    onChange={(e) => updateInstaller('installerName', e.target.value)}
-                    placeholder="Full name"
-                    className="h-11 text-base touch-manipulation border-white/30"
-                  />
-                </div>
+      {/* Electrician Declaration */}
+      <Section title="Electrician Declaration" accentColor="from-blue-500/40 to-cyan-400/20">
+        <CheckboxCard
+          label="AC Electrical Work by Different Person"
+          description="If a separate electrician carried out the AC installation"
+          checked={!!formData.electricianDeclaration?.required}
+          onChange={(v) => updateElectrician('required', v)}
+          accentColor="blue"
+        />
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Company</Label>
-                  <Input
-                    value={formData.installerDeclaration?.installerCompany || ''}
-                    onChange={(e) => updateInstaller('installerCompany', e.target.value)}
-                    placeholder="Company name"
-                    className="h-11 text-base touch-manipulation border-white/30"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">MCS Number *</Label>
-                  <Input
-                    value={formData.installerDeclaration?.installerMcsNumber || ''}
-                    onChange={(e) => updateInstaller('installerMcsNumber', e.target.value)}
-                    placeholder="e.g., NAP-12345"
-                    className="h-11 text-base touch-manipulation border-white/30"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Phone</Label>
-                  <Input
-                    value={formData.installerDeclaration?.installerPhone || ''}
-                    onChange={(e) => updateInstaller('installerPhone', e.target.value)}
-                    placeholder="Contact number"
-                    className="h-11 text-base touch-manipulation border-white/30"
-                  />
-                </div>
-
-                <div className="space-y-2 sm:col-span-2">
-                  <Label className="text-sm font-medium text-foreground">Email</Label>
-                  <Input
-                    type="email"
-                    value={formData.installerDeclaration?.installerEmail || ''}
-                    onChange={(e) => updateInstaller('installerEmail', e.target.value)}
-                    placeholder="email@company.com"
-                    className="h-11 text-base touch-manipulation border-white/30"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <SignatureCanvas
-                  value={formData.installerDeclaration?.installerSignature || ''}
-                  onChange={(sig) => updateInstaller('installerSignature', sig)}
-                  label="Installer Signature *"
-                />
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Date *</Label>
-                  <Input
-                    type="date"
-                    value={formData.installerDeclaration?.installerDate || ''}
-                    onChange={(e) => updateInstaller('installerDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30"
-                  />
-                </div>
-              </div>
+        {formData.electricianDeclaration?.required && (
+          <>
+            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+              <p className="text-xs text-white/60">
+                I certify the AC electrical installation has been designed, installed and tested in accordance with BS 7671.
+              </p>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
 
-      {/* Electrician Declaration (if different) */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible
-          open={openSections.electrician}
-          onOpenChange={() => toggleSection('electrician')}
-        >
-          <SectionHeader
-            title="Electrician Declaration"
-            icon={PenLine}
-            isOpen={openSections.electrician}
-            color="blue-500"
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Field label="Electrician Name">
+                <Input value={formData.electricianDeclaration?.electricianName || ''} onChange={(e) => updateElectrician('electricianName', e.target.value)} placeholder="Full name" className={inputCn} />
+              </Field>
+              <Field label="Company">
+                <Input value={formData.electricianDeclaration?.electricianCompany || ''} onChange={(e) => updateElectrician('electricianCompany', e.target.value)} placeholder="Company name" className={inputCn} />
+              </Field>
+              <Field label="Registration Number">
+                <Input value={formData.electricianDeclaration?.electricianRegistration || ''} onChange={(e) => updateElectrician('electricianRegistration', e.target.value)} placeholder="e.g., NICEIC number" className={inputCn} />
+              </Field>
+              <Field label="Scheme">
+                <ComboboxCell
+                  value={formData.electricianDeclaration?.electricianScheme || ''}
+                  onChange={(v) => updateElectrician('electricianScheme', v)}
+                  options={COMPETENCE_SCHEMES.map((s) => ({ value: s.value, label: s.label }))}
+                  placeholder="Select scheme..."
+                  className="h-12 text-base"
+                  allowCustom
+                />
+              </Field>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <SignatureInput
+                label="Electrician Signature"
+                value={formData.electricianDeclaration?.electricianSignature || ''}
+                onChange={(sig) => updateElectrician('electricianSignature', sig || '')}
+              />
+              <Field label="Date">
+                <Input type="date" value={formData.electricianDeclaration?.electricianDate || ''} onChange={(e) => updateElectrician('electricianDate', e.target.value)} className={inputCn} />
+              </Field>
+            </div>
+          </>
+        )}
+      </Section>
+
+      {/* Customer / Responsible Person */}
+      <Section title="Customer / Responsible Person" accentColor="from-green-500/40 to-emerald-400/20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Field label="Customer Name *">
+            <Input value={(formData as any).customerName || ''} onChange={(e) => onUpdate('customerName', e.target.value)} placeholder="Full name" className={inputCn} />
+          </Field>
+          <Field label="Position">
+            <Input value={(formData as any).customerPosition || ''} onChange={(e) => onUpdate('customerPosition', e.target.value)} placeholder="e.g., Homeowner" className={inputCn} />
+          </Field>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <SignatureInput
+            label="Customer Signature *"
+            value={(formData as any).customerSignature || ''}
+            onChange={(sig) => onUpdate('customerSignature', sig || '')}
           />
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-4 border-t border-white/10">
-              <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg min-h-[48px]">
-                <Checkbox
-                  checked={formData.electricianDeclaration?.required || false}
-                  onCheckedChange={(checked) => updateElectrician('required', checked)}
-                  className="h-5 w-5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label className="text-sm text-foreground cursor-pointer">
-                  AC electrical work carried out by different person
-                </Label>
-              </div>
+          <Field label="Date *">
+            <Input type="date" value={(formData as any).customerDate || ''} onChange={(e) => onUpdate('customerDate', e.target.value)} className={inputCn} />
+          </Field>
+        </div>
+      </Section>
 
-              {formData.electricianDeclaration?.required && (
-                <>
-                  <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg text-sm text-blue-200">
-                    I certify that the AC electrical installation has been designed, installed and
-                    tested in accordance with BS 7671. The installation is safe to be connected to
-                    the electricity supply.
-                  </div>
+      {/* Overall Assessment */}
+      <Section title="Overall Assessment" accentColor="from-amber-500/40 to-yellow-400/20">
+        {/* Block satisfactory if critical defects not rectified */}
+        {hasCriticalDefects && (
+          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+            <p className="text-xs text-red-300">
+              <strong>⚠ Critical defects not rectified</strong> — cannot mark as Satisfactory until all C1 defects are resolved.
+            </p>
+          </div>
+        )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium text-foreground">
-                        Electrician Name
-                      </Label>
-                      <Input
-                        value={formData.electricianDeclaration?.electricianName || ''}
-                        onChange={(e) => updateElectrician('electricianName', e.target.value)}
-                        placeholder="Full name"
-                        className="h-11 text-base touch-manipulation border-white/30"
-                      />
-                    </div>
+        {/* Signature warnings */}
+        {!formData.installerDeclaration?.installerSignature && (
+          <div className="p-2.5 rounded-xl bg-yellow-500/5 border border-yellow-500/15">
+            <p className="text-[10px] text-yellow-200/80">⚡ Installer signature required before completion</p>
+          </div>
+        )}
+        {!(formData as any).customerSignature && (
+          <div className="p-2.5 rounded-xl bg-yellow-500/5 border border-yellow-500/15">
+            <p className="text-[10px] text-yellow-200/80">⚡ Customer signature required before completion</p>
+          </div>
+        )}
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium text-foreground">Company</Label>
-                      <Input
-                        value={formData.electricianDeclaration?.electricianCompany || ''}
-                        onChange={(e) => updateElectrician('electricianCompany', e.target.value)}
-                        placeholder="Company name"
-                        className="h-11 text-base touch-manipulation border-white/30"
-                      />
-                    </div>
+        <Field label="Assessment Result *">
+          <div className="flex gap-2">
+            {[
+              { val: true, label: 'Satisfactory', color: 'green' },
+              { val: false, label: 'Unsatisfactory', color: 'red' },
+            ].map((opt) => (
+              <button
+                key={String(opt.val)}
+                type="button"
+                onClick={() => {
+                  if (opt.val === true && hasCriticalDefects) {
+                    toast.error('Cannot mark as Satisfactory — critical defects not rectified');
+                    return;
+                  }
+                  onUpdate('overallSatisfactory', opt.val);
+                }}
+                className={cn(
+                  'flex-1 h-14 rounded-xl border text-sm font-bold touch-manipulation active:scale-[0.98] transition-all',
+                  formData.overallSatisfactory === opt.val
+                    ? opt.color === 'green'
+                      ? 'bg-green-500/15 border-green-500/30 text-green-400'
+                      : 'bg-red-500/15 border-red-500/30 text-red-400'
+                    : 'bg-white/[0.03] border-white/[0.06] text-white/50',
+                  opt.val === true && hasCriticalDefects && 'opacity-40 cursor-not-allowed'
+                )}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </Field>
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium text-foreground">
-                        Registration Number
-                      </Label>
-                      <Input
-                        value={formData.electricianDeclaration?.electricianRegistration || ''}
-                        onChange={(e) =>
-                          updateElectrician('electricianRegistration', e.target.value)
-                        }
-                        placeholder="e.g., NICEIC/NAPIT number"
-                        className="h-11 text-base touch-manipulation border-white/30"
-                      />
-                    </div>
+        <Field label="Next Service / Inspection Due">
+          <Input type="date" value={(formData as any).nextServiceDue || autoNextService} onChange={(e) => onUpdate('nextServiceDue', e.target.value)} className={inputCn} />
+        </Field>
+      </Section>
 
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium text-foreground">Scheme</Label>
-                      <Select
-                        value={formData.electricianDeclaration?.electricianScheme || ''}
-                        onValueChange={(value) => updateElectrician('electricianScheme', value)}
-                      >
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray">
-                          <SelectValue placeholder="Select scheme" />
-                        </SelectTrigger>
-                        <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                          <SelectItem value="NICEIC">NICEIC</SelectItem>
-                          <SelectItem value="NAPIT">NAPIT</SelectItem>
-                          <SelectItem value="ELECSA">ELECSA</SelectItem>
-                          <SelectItem value="STROMA">STROMA</SelectItem>
-                          <SelectItem value="Other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <SignatureCanvas
-                      value={formData.electricianDeclaration?.electricianSignature || ''}
-                      onChange={(sig) => updateElectrician('electricianSignature', sig)}
-                      label="Electrician Signature"
-                    />
-
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium text-foreground">Date</Label>
-                      <Input
-                        type="date"
-                        value={formData.electricianDeclaration?.electricianDate || ''}
-                        onChange={(e) => updateElectrician('electricianDate', e.target.value)}
-                        className="h-11 text-base touch-manipulation border-white/30"
-                      />
-                    </div>
-                  </div>
-                </>
-              )}
+      {/* Photos — same pattern as EICR, uploads to Supabase Storage */}
+      <Section title="Installation Photos" accentColor="from-cyan-500/40 to-blue-400/20">
+        <InspectionPhotoUpload
+          onPhotoCapture={async (file) => { await uploadPhoto(file); }}
+          isUploading={isUploading}
+        />
+        {uploadedPhotos.length > 0 && (
+          <div className="space-y-2">
+            <p className="text-xs text-white/60">{uploadedPhotos.length} photo{uploadedPhotos.length !== 1 ? 's' : ''} uploaded</p>
+            <div className="grid grid-cols-3 gap-2">
+              {uploadedPhotos.map((photo) => (
+                <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-square">
+                  <img src={photo.url || photo.thumbnailUrl} alt="Photo" className="w-full h-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => deletePhoto(photo.id)}
+                    className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90"
+                  >
+                    <Trash2 className="h-3.5 w-3.5 text-white" />
+                  </button>
+                </div>
+              ))}
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+          </div>
+        )}
+        {uploadedPhotos.length === 0 && !isUploading && (
+          <div className="rounded-xl bg-white/[0.02] border border-dashed border-white/[0.08] p-6 text-center">
+            <p className="text-xs text-white/40">No photos yet</p>
+            <p className="text-[10px] text-white/30 mt-0.5">Take a photo or upload from gallery</p>
+          </div>
+        )}
+      </Section>
 
       {/* Additional Notes */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <div className="p-4 sm:p-5">
-          <Label className="text-sm font-medium text-foreground mb-2 block">Additional Notes</Label>
+      <Section title="Additional Notes" accentColor="from-white/20 to-white/5">
+        <Field label="Notes">
           <Textarea
             value={formData.additionalNotes || ''}
             onChange={(e) => onUpdate('additionalNotes', e.target.value)}
             placeholder="Any additional notes, special conditions, or comments..."
-            className="min-h-[120px] touch-manipulation text-base border-white/30 focus:border-yellow-500"
+            className={textareaCn}
           />
-        </div>
-      </Card>
+        </Field>
+      </Section>
     </div>
   );
 };

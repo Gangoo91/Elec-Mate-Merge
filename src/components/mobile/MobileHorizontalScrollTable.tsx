@@ -186,7 +186,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   };
 
   return (
-    <div className="w-screen relative left-[calc(-50vw+50%)] px-2">
+    <div className="w-screen relative left-[calc(-50vw+50%)]">
       {/* Table Container - Full bleed with slight padding */}
       <div
         ref={scrollContainerRef}

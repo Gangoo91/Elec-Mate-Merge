@@ -24,6 +24,7 @@ const TypeOfWiringCellComponent: React.FC<TypeOfWiringCellProps> = ({ result, on
         onChange={handleChange}
         options={wiringTypeOptions}
         placeholder="Type"
+        compact
       />
     </TableCell>
   );

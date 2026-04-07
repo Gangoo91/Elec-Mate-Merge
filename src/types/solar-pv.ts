@@ -18,12 +18,15 @@ export type MountingType =
   | 'roof-integrated'
   | 'roof-mounted'
   | 'ground-mounted'
-  | 'building-integrated';
+  | 'building-integrated'
+  | 'carport-mounted'
+  | 'flat-roof-ballasted'
+  | 'wall-mounted';
 export type InverterType = 'string' | 'micro' | 'hybrid' | 'central';
 export type PhaseType = 'single' | 'three';
-export type BatteryChemistry = 'lithium-ion' | 'lfp' | 'lead-acid' | 'other';
+export type BatteryChemistry = 'lithium-ion' | 'lfp' | 'lead-acid' | 'sodium-ion' | 'other';
 export type MeterType = 'smart' | 'export' | 'generation' | 'none';
-export type EarthingArrangement = 'TN-S' | 'TN-C-S' | 'TT';
+export type EarthingArrangement = 'TN-S' | 'TN-C-S' | 'TT' | 'TN-C';
 export type DefectSeverity = 'critical' | 'non-critical' | 'recommendation';
 export type PhotoCategory = 'array' | 'inverter' | 'meter' | 'isolator' | 'label' | 'general';
 
@@ -828,4 +831,266 @@ export const SHADING_FACTORS = [
   { value: 0.85, label: 'Moderate shading (85%)', description: 'Partial shading at times' },
   { value: 0.8, label: 'Significant shading (80%)', description: 'Regular partial shading' },
   { value: 0.75, label: 'Heavy shading (75%)', description: 'Frequent significant shading' },
+] as const;
+
+// ============================================================================
+// RCD Type Options — BS 7671:2018+A3:2024
+// ============================================================================
+
+export const RCD_TYPES = [
+  { value: 'Type A', label: 'Type A', description: 'Sinusoidal AC + pulsating DC (standard PV)' },
+  {
+    value: 'Type B',
+    label: 'Type B',
+    description: 'All DC fault currents — REQUIRED for battery/hybrid per MIS 3002',
+  },
+  { value: 'Type F', label: 'Type F', description: 'High-frequency protection (BS EN 62423)' },
+  {
+    value: 'Type AC',
+    label: 'Type AC',
+    description: 'Sinusoidal AC only — NOT suitable for PV installations',
+  },
+  {
+    value: 'Type S',
+    label: 'Type S',
+    description: 'Selective/time-delayed (upstream discrimination)',
+  },
+] as const;
+
+// ============================================================================
+// MCB Curve Types
+// ============================================================================
+
+export const MCB_CURVE_TYPES = [
+  { value: 'B', label: 'Type B', description: '3-5× In — general purpose, most domestic PV' },
+  { value: 'C', label: 'Type C', description: '5-10× In — motor starting, commercial' },
+  { value: 'D', label: 'Type D', description: '10-20× In — heavy inductive loads' },
+] as const;
+
+// ============================================================================
+// MCB Rating Options (A)
+// ============================================================================
+
+export const MCB_RATINGS = [
+  { value: '6', label: '6A' },
+  { value: '10', label: '10A' },
+  { value: '16', label: '16A' },
+  { value: '20', label: '20A' },
+  { value: '25', label: '25A' },
+  { value: '32', label: '32A' },
+  { value: '40', label: '40A' },
+  { value: '50', label: '50A' },
+  { value: '63', label: '63A' },
+] as const;
+
+// ============================================================================
+// RCD Rating Options (mA)
+// ============================================================================
+
+export const RCD_RATINGS = [
+  { value: '30', label: '30mA' },
+  { value: '100', label: '100mA' },
+  { value: '300', label: '300mA' },
+] as const;
+
+// ============================================================================
+// Protection Device Types (broader than MCB)
+// ============================================================================
+
+export const PROTECTION_DEVICE_TYPES = [
+  { value: 'MCB', label: 'MCB' },
+  { value: 'RCBO', label: 'RCBO' },
+  { value: 'MCCB', label: 'MCCB' },
+  { value: 'Fuse', label: 'Fuse (BS 88)' },
+  { value: 'Isolator', label: 'Isolator / Switch-disconnector' },
+] as const;
+
+// ============================================================================
+// Mounting Type Options
+// ============================================================================
+
+export const MOUNTING_TYPE_OPTIONS = [
+  { value: 'roof-mounted', label: 'Roof Mounted', description: 'On-roof rail system' },
+  { value: 'roof-integrated', label: 'Roof Integrated', description: 'In-roof / BIPV tile replacement' },
+  { value: 'ground-mounted', label: 'Ground Mounted', description: 'Free-standing ground frame' },
+  { value: 'building-integrated', label: 'Building Integrated', description: 'BIPV façade or structural' },
+  { value: 'carport-mounted', label: 'Carport Mounted', description: 'Solar carport structure' },
+  { value: 'flat-roof-ballasted', label: 'Flat Roof Ballasted', description: 'Weighted system, no penetrations' },
+  { value: 'wall-mounted', label: 'Wall Mounted', description: 'Vertical or near-vertical' },
+] as const;
+
+// ============================================================================
+// DC Cable Types
+// ============================================================================
+
+export const DC_CABLE_TYPES = [
+  { value: 'H1Z2Z2-K', label: 'H1Z2Z2-K Solar Cable', description: 'Standard UV-resistant DC solar cable' },
+  { value: 'PV1-F', label: 'PV1-F', description: 'Single-core solar cable (TÜV certified)' },
+  { value: 'H07RN-F', label: 'H07RN-F', description: 'Rubber-sheathed (temporary installations)' },
+] as const;
+
+// ============================================================================
+// Supply Fuse Ratings
+// ============================================================================
+
+export const SUPPLY_FUSE_RATINGS = [
+  { value: 60, label: '60A' },
+  { value: 80, label: '80A' },
+  { value: 100, label: '100A' },
+  { value: 125, label: '125A' },
+  { value: 160, label: '160A' },
+  { value: 200, label: '200A' },
+] as const;
+
+// ============================================================================
+// Competence Schemes — Part P Registration Bodies
+// ============================================================================
+
+export const COMPETENCE_SCHEMES = [
+  { value: 'NICEIC', label: 'NICEIC' },
+  { value: 'NAPIT', label: 'NAPIT' },
+  { value: 'ELECSA', label: 'ELECSA' },
+  { value: 'SELECT', label: 'SELECT' },
+  { value: 'STROMA', label: 'Stroma' },
+  { value: 'BRE', label: 'BRE' },
+  { value: 'Other', label: 'Other' },
+] as const;
+
+// ============================================================================
+// Anti-Islanding Methods
+// ============================================================================
+
+export const ANTI_ISLANDING_METHODS = [
+  { value: 'LoM', label: 'Loss of Mains (LoM)', description: 'RoCoF + Vector Shift detection' },
+  { value: 'frequency-shift', label: 'Frequency Shift', description: 'Active frequency perturbation' },
+  { value: 'impedance', label: 'Impedance Measurement', description: 'Grid impedance monitoring' },
+  { value: 'inverter-builtin', label: 'Inverter Built-in', description: 'Manufacturer standard protection' },
+] as const;
+
+// ============================================================================
+// Bidirectional Device Types — BS 7671:2018+A3:2024 Reg. 530.3.201
+// ============================================================================
+
+export const BIDIRECTIONAL_DEVICE_TYPES = [
+  { value: 'Type B RCBO', label: 'Type B RCBO', description: 'Integrated bidirectional protection' },
+  { value: 'Bidirectional MCB', label: 'Bidirectional MCB', description: 'Manufacturer-rated for reverse current' },
+  { value: 'Type A RCD + MCB', label: 'Type A RCD + MCB', description: 'Non-integrated alternative' },
+] as const;
+
+// ============================================================================
+// Battery Chemistry Options
+// ============================================================================
+
+export const BATTERY_CHEMISTRY_OPTIONS = [
+  { value: 'lithium-ion', label: 'Lithium-Ion (NMC)', description: 'High energy density' },
+  { value: 'lfp', label: 'Lithium Iron Phosphate (LFP)', description: 'Safer, longer cycle life' },
+  { value: 'lead-acid', label: 'Lead-Acid', description: 'Traditional, lower cost' },
+  { value: 'sodium-ion', label: 'Sodium-Ion', description: 'Emerging technology, MCS certs from 2024' },
+  { value: 'other', label: 'Other', description: 'Specify in notes' },
+] as const;
+
+// ============================================================================
+// Inverter Type Options
+// ============================================================================
+
+export const INVERTER_TYPE_OPTIONS = [
+  { value: 'string', label: 'String Inverter', description: 'Single/multi-MPPT central unit' },
+  { value: 'micro', label: 'Micro Inverter', description: 'Per-panel AC conversion' },
+  { value: 'hybrid', label: 'Hybrid Inverter', description: 'PV + battery integrated' },
+  { value: 'central', label: 'Central Inverter', description: 'Large-scale commercial' },
+] as const;
+
+// ============================================================================
+// System Type Options
+// ============================================================================
+
+export const SYSTEM_TYPE_OPTIONS = [
+  { value: 'grid-tied', label: 'Grid-Tied', description: 'Standard grid-connected system' },
+  { value: 'hybrid', label: 'Hybrid', description: 'Grid-connected with battery storage' },
+  { value: 'off-grid', label: 'Off-Grid', description: 'Standalone, no grid connection' },
+] as const;
+
+// ============================================================================
+// Certificate Type Options
+// ============================================================================
+
+export const CERTIFICATE_TYPE_OPTIONS = [
+  { value: 'installation', label: 'Installation Certificate' },
+  { value: 'commissioning', label: 'Commissioning Certificate' },
+  { value: 'design-only', label: 'Design Certificate' },
+] as const;
+
+// ============================================================================
+// Work Type Options
+// ============================================================================
+
+export const WORK_TYPE_OPTIONS = [
+  { value: 'new-installation', label: 'New Installation' },
+  { value: 'new-build', label: 'New Build Property' },
+  { value: 'retrofit', label: 'Retrofit / Addition to Existing' },
+  { value: 'extension', label: 'System Extension' },
+  { value: 'battery-add', label: 'Battery Storage Addition' },
+  { value: 'replacement', label: 'Panel / Inverter Replacement' },
+  { value: 'repowering', label: 'Repowering (Full System Upgrade)' },
+  { value: 'repair', label: 'Repair / Remedial Work' },
+  { value: 'inspection', label: 'Inspection / Health Check' },
+] as const;
+
+// ============================================================================
+// Property Type Options
+// ============================================================================
+
+export const PROPERTY_TYPE_OPTIONS = [
+  { value: 'domestic', label: 'Domestic' },
+  { value: 'commercial', label: 'Commercial' },
+  { value: 'industrial', label: 'Industrial' },
+  { value: 'agricultural', label: 'Agricultural' },
+  { value: 'mixed-use', label: 'Mixed Use' },
+] as const;
+
+// ============================================================================
+// Ownership Type Options
+// ============================================================================
+
+export const OWNERSHIP_TYPE_OPTIONS = [
+  { value: 'owner-occupied', label: 'Owner Occupied' },
+  { value: 'landlord', label: 'Landlord' },
+  { value: 'tenant', label: 'Tenant' },
+  { value: 'housing-association', label: 'Housing Association' },
+  { value: 'commercial-owner', label: 'Commercial Owner' },
+  { value: 'other', label: 'Other' },
+] as const;
+
+// ============================================================================
+// Yield Calculation Method Options
+// ============================================================================
+
+export const YIELD_CALCULATION_OPTIONS = [
+  { value: 'mcs-estimator', label: 'MCS Estimator' },
+  { value: 'sap-2012', label: 'SAP 2012' },
+  { value: 'pvgis', label: 'PVGIS' },
+  { value: 'pvsyst', label: 'PVsyst' },
+  { value: 'manufacturer', label: 'Manufacturer Data' },
+  { value: 'other', label: 'Other' },
+] as const;
+
+// ============================================================================
+// Earthing Arrangement Options
+// ============================================================================
+
+export const EARTHING_ARRANGEMENT_OPTIONS = [
+  { value: 'TN-S', label: 'TN-S', description: 'Separate neutral and earth' },
+  { value: 'TN-C-S', label: 'TN-C-S', description: 'PME — combined then separate' },
+  { value: 'TT', label: 'TT', description: 'Earth electrode at installation' },
+  { value: 'TN-C', label: 'TN-C', description: 'Combined neutral and earth throughout' },
+] as const;
+
+// ============================================================================
+// Consumer Code Options
+// ============================================================================
+
+export const CONSUMER_CODE_OPTIONS = [
+  { value: 'RECC', label: 'RECC', description: 'Renewable Energy Consumer Code' },
+  { value: 'HIES', label: 'HIES', description: 'Home Insulation & Energy Systems' },
+  { value: 'other', label: 'Other', description: 'Specify in notes' },
 ] as const;

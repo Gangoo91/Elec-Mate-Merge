@@ -4,14 +4,17 @@
  * Previous defects tracking + new defects + photos
  */
 
-import { useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Plus, Trash2, Camera, X } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
+import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
+import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
+import { useParams } from 'react-router-dom';
+import { Trash2 as TrashPhoto } from 'lucide-react';
 
 const inputSmCn =
   'h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
@@ -73,10 +76,13 @@ interface Props {
 }
 
 export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
+  const { id } = useParams<{ id: string }>();
+  const { photos: uploadedPhotos, isUploading, uploadPhoto, deletePhoto } = useInspectionPhotos({
+    reportId: id || 'new', reportType: 'fire-alarm-inspection', itemId: 'general-photos',
+  });
   const previousDefects: any[] = formData.previousDefects || [];
   const newDefects: any[] = formData.defectsFound || [];
   const haptic = useHaptic();
-  const photoInputRef = useRef<HTMLInputElement>(null);
 
   // Previous defects
   const addPreviousDefect = () => {
@@ -132,18 +138,6 @@ export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
       newDefects.map((d: any) => (d.id === id ? { ...d, [field]: value } : d))
     );
 
-  const handlePhotoCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
-    e.target.value = '';
-    for (const file of Array.from(files)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        onUpdate('photos', [...(formData.photos || []), reader.result as string]);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   return (
     <div className="space-y-5">
@@ -349,36 +343,14 @@ export default function FAG6DefectsObservations({ formData, onUpdate }: Props) {
 
       {/* Photos */}
       <Section title="Inspection Photos" accentColor="from-cyan-500/40 to-blue-400/20">
-        <input
-          ref={photoInputRef}
-          type="file"
-          accept="image/*"
-          multiple
-          className="hidden"
-          onChange={handlePhotoCapture}
-        />
-        <button
-          type="button"
-          onClick={() => photoInputRef.current?.click()}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center gap-2.5 text-sm text-white touch-manipulation active:scale-[0.98]"
-        >
-          <Camera className="h-4 w-4" /> Add Photos
-        </button>
-        {formData.photos?.length > 0 && (
+        <InspectionPhotoUpload onPhotoCapture={async (file) => { await uploadPhoto(file); }} isUploading={isUploading} />
+        {uploadedPhotos.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
-            {formData.photos.map((photo: string, i: number) => (
-              <div key={i} className="relative rounded-xl overflow-hidden aspect-square">
-                <img src={photo} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
-                <button
-                  onClick={() =>
-                    onUpdate(
-                      'photos',
-                      formData.photos.filter((_: any, j: number) => j !== i)
-                    )
-                  }
-                  className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/60 flex items-center justify-center touch-manipulation"
-                >
-                  <X className="h-3.5 w-3.5 text-white" />
+            {uploadedPhotos.map((p) => (
+              <div key={p.id} className="relative rounded-xl overflow-hidden aspect-square">
+                <img src={p.url || p.thumbnailUrl} alt="" className="w-full h-full object-cover" />
+                <button type="button" onClick={() => deletePhoto(p.id)} className="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center touch-manipulation active:scale-90">
+                  <TrashPhoto className="h-3.5 w-3.5 text-white" />
                 </button>
               </div>
             ))}

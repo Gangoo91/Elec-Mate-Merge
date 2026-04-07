@@ -33,6 +33,7 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
           onChange={handleLiveSizeChange}
           options={cableSizeOptions}
           placeholder="Live"
+          compact
         />
       </TableCell>
 
@@ -43,6 +44,7 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
           onChange={handleCpcSizeChange}
           options={cableSizeOptions}
           placeholder="CPC"
+          compact
         />
       </TableCell>
     </>

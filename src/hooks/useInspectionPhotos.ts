@@ -6,7 +6,7 @@ import { InspectionPhoto } from '@/types/inspection';
 
 interface UseInspectionPhotosProps {
   reportId: string;
-  reportType: 'eicr' | 'eic';
+  reportType: string;
   itemId?: string;
   observationId?: string;
   observationContext?: {

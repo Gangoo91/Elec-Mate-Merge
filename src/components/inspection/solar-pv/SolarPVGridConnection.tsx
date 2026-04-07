@@ -1,585 +1,585 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
- * Solar PV Grid Connection Tab
- * DNO notification, G98/G99, MPAN, and metering configuration
+ * Solar PV Grid Connection Tab — Best-in-Class Mobile
+ * DNO, G98/G99, MPAN, metering, export limiting
  */
 
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import {
-  Zap,
-  Building,
-  Gauge,
-  ChevronDown,
-  ChevronUp,
-  AlertTriangle,
-  CheckCircle,
-  Info,
-  FileText,
-} from 'lucide-react';
+import { AlertTriangle, CheckCircle, Loader2, FileText, Link2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { SolarPVFormData, UK_DNOS, PhaseType, MeterType } from '@/types/solar-pv';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { SolarPVFormData, UK_DNOS, SUPPLY_FUSE_RATINGS } from '@/types/solar-pv';
 import { useSolarPVSmartForm } from '@/hooks/inspection/useSolarPVSmartForm';
+import ComboboxCell from '@/components/table-cells/ComboboxCell';
+import { Section, Field, inputCn, inputSmCn, textareaCn, CheckboxCard } from './SolarPVSection';
 
-interface SolarPVGridConnectionProps {
+interface Props {
   formData: SolarPVFormData;
   onUpdate: (field: string, value: unknown) => void;
 }
 
-interface SectionHeaderProps {
-  title: string;
-  icon: React.ElementType;
-  isOpen: boolean;
-  color?: string;
-  badge?: string;
-}
+const meterTypeOptions = [
+  { value: 'smart', label: 'Smart Meter (SMETS2)' },
+  { value: 'export', label: 'Dedicated Export Meter' },
+  { value: 'generation', label: 'Generation Meter' },
+  { value: 'none', label: 'No Additional Meter' },
+];
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({
-  title,
-  icon: Icon,
-  isOpen,
-  color = 'amber-500',
-  badge,
-}) => (
-  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 sm:p-5 hover:bg-white/5 transition-colors rounded-t-xl">
-    <div className="flex items-center gap-3">
-      <div
-        className={cn('w-10 h-10 rounded-xl flex items-center justify-center', `bg-${color}/15`)}
-      >
-        <Icon className={cn('h-5 w-5', `text-${color}`)} />
-      </div>
-      <div className="text-left">
-        <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-          {title}
-          {badge && (
-            <Badge
-              variant="outline"
-              className="text-[10px] px-1.5 py-0 bg-amber-500/10 text-amber-400 border-amber-500/30"
-            >
-              {badge}
-            </Badge>
-          )}
-        </h3>
-      </div>
-    </div>
-    {isOpen ? (
-      <ChevronUp className="h-5 w-5 text-white" />
-    ) : (
-      <ChevronDown className="h-5 w-5 text-white" />
-    )}
-  </CollapsibleTrigger>
-);
+const approvalStatusOptions = [
+  { value: 'not-required', label: 'Not Required (G98)' },
+  { value: 'pending', label: 'Pending Approval' },
+  { value: 'approved', label: 'Approved' },
+  { value: 'conditional', label: 'Conditional Approval' },
+  { value: 'rejected', label: 'Rejected' },
+];
 
-const SolarPVGridConnection: React.FC<SolarPVGridConnectionProps> = ({ formData, onUpdate }) => {
-  const [openSections, setOpenSections] = useState({
-    dno: true,
-    application: true,
-    metering: true,
-    export: true,
-  });
-
+const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
   const smartForm = useSolarPVSmartForm(formData, onUpdate);
 
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  // Update grid connection field
   const updateGridConnection = (field: string, value: unknown) => {
-    onUpdate('gridConnection', {
-      ...formData.gridConnection,
-      [field]: value,
-    });
+    onUpdate('gridConnection', { ...formData.gridConnection, [field]: value });
   };
 
-  // Update metering field
   const updateMetering = (field: string, value: unknown) => {
-    onUpdate('metering', {
-      ...formData.metering,
-      [field]: value,
-    });
+    onUpdate('metering', { ...formData.metering, [field]: value });
   };
 
-  // Suggest G98/G99 based on capacity
   const suggestedApplication = formData.totalCapacity
-    ? smartForm.suggestG98OrG99(
-        formData.totalCapacity,
-        formData.gridConnection?.supplyPhases || 'single'
-      )
+    ? smartForm.suggestG98OrG99(formData.totalCapacity, formData.gridConnection?.supplyPhases || 'single')
     : null;
 
-  // Validate MPAN
   const mpanValidation = formData.gridConnection?.mpan
     ? smartForm.validateMPAN(formData.gridConnection.mpan)
     : null;
 
+  const dnoRegions = formData.gridConnection?.dnoName
+    ? UK_DNOS.find((d) => d.name === formData.gridConnection.dnoName)?.regions || []
+    : [];
+
+  // Auto-set supply phases from inverter selection
+  useEffect(() => {
+    const hasThreePhaseInverter = formData.inverters?.some((inv: any) => inv.phases === 'three');
+    if (hasThreePhaseInverter && formData.gridConnection?.supplyPhases !== 'three') {
+      updateGridConnection('supplyPhases', 'three');
+      updateGridConnection('supplyVoltage', 400);
+    }
+  }, [formData.inverters]);
+
   return (
-    <div className="space-y-4 px-4 sm:px-0">
-      {/* DNO Details */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.dno} onOpenChange={() => toggleSection('dno')}>
-          <SectionHeader
-            title="DNO & Supply Details"
-            icon={Building}
-            isOpen={openSections.dno}
-            color="blue-500"
+    <div className="space-y-6">
+      {/* DNO & Supply */}
+      <Section title="DNO & Supply Details" accentColor="from-blue-500/40 to-cyan-400/20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <Field label="Distribution Network Operator (DNO) *">
+            <ComboboxCell
+              value={formData.gridConnection?.dnoName || ''}
+              onChange={(v) => {
+                const dno = UK_DNOS.find((d) => d.name === v);
+                updateGridConnection('dnoName', v);
+                if (dno) updateGridConnection('dnoRegion', dno.regions[0]);
+              }}
+              options={UK_DNOS.map((d) => ({ value: d.name, label: d.name }))}
+              placeholder="Select DNO..."
+              className="h-12 text-base"
+              allowCustom
+            />
+          </Field>
+
+          <Field label="DNO Region">
+            <ComboboxCell
+              value={formData.gridConnection?.dnoRegion || ''}
+              onChange={(v) => updateGridConnection('dnoRegion', v)}
+              options={dnoRegions.map((r) => ({ value: r, label: r }))}
+              placeholder="Select region..."
+              className="h-12 text-base"
+              allowCustom
+            />
+          </Field>
+        </div>
+
+        {/* MPAN */}
+        <Field label="MPAN (Meter Point Admin Number) *">
+          <Input
+            value={formData.gridConnection?.mpan || ''}
+            onChange={(e) => updateGridConnection('mpan', e.target.value.replace(/[^0-9\s-]/g, ''))}
+            placeholder="e.g., 00 000 000 00 000"
+            className={cn(inputCn, 'font-mono')}
           />
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-4 border-t border-white/10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">
-                    Distribution Network Operator (DNO) *
-                  </Label>
-                  <Select
-                    value={formData.gridConnection?.dnoName || ''}
-                    onValueChange={(value) => {
-                      const dno = UK_DNOS.find((d) => d.name === value);
-                      updateGridConnection('dnoName', value);
-                      if (dno) {
-                        updateGridConnection('dnoRegion', dno.regions[0]);
-                      }
-                    }}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select DNO" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      {UK_DNOS.map((dno) => (
-                        <SelectItem key={dno.name} value={dno.name}>
-                          {dno.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">DNO Region</Label>
-                  <Select
-                    value={formData.gridConnection?.dnoRegion || ''}
-                    onValueChange={(value) => updateGridConnection('dnoRegion', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select region" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      {formData.gridConnection?.dnoName &&
-                        UK_DNOS.find(
-                          (d) => d.name === formData.gridConnection.dnoName
-                        )?.regions.map((region) => (
-                          <SelectItem key={region} value={region}>
-                            {region}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground flex items-center gap-2">
-                  MPAN (Meter Point Admin Number) *
-                  {mpanValidation && !mpanValidation.valid && (
-                    <AlertTriangle className="h-4 w-4 text-orange-400" />
-                  )}
-                </Label>
-                <Input
-                  value={formData.gridConnection?.mpan || ''}
-                  onChange={(e) =>
-                    updateGridConnection('mpan', e.target.value.replace(/[^0-9\s-]/g, ''))
-                  }
-                  placeholder="e.g., 00 000 000 00 000 or full 21 digits"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 font-mono"
-                />
-                {mpanValidation && !mpanValidation.valid && (
-                  <p className="text-xs text-orange-400">{mpanValidation.error}</p>
-                )}
-                <p className="text-xs text-white">
-                  Found on the electricity bill. Can be 13 or 21 digits.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Supply Voltage (V)</Label>
-                  <Select
-                    value={formData.gridConnection?.supplyVoltage?.toString() || '230'}
-                    onValueChange={(value) =>
-                      updateGridConnection('supplyVoltage', parseInt(value))
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="230">230V (Single Phase)</SelectItem>
-                      <SelectItem value="400">400V (Three Phase)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Supply Phases</Label>
-                  <Select
-                    value={formData.gridConnection?.supplyPhases || 'single'}
-                    onValueChange={(value) =>
-                      updateGridConnection('supplyPhases', value as PhaseType)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="single">Single Phase</SelectItem>
-                      <SelectItem value="three">Three Phase</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Max Supply Fuse (A)</Label>
-                  <Select
-                    value={formData.gridConnection?.maxSupplyFuse?.toString() || '100'}
-                    onValueChange={(value) =>
-                      updateGridConnection('maxSupplyFuse', parseInt(value))
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="60">60A</SelectItem>
-                      <SelectItem value="80">80A</SelectItem>
-                      <SelectItem value="100">100A</SelectItem>
-                      <SelectItem value="125">125A</SelectItem>
-                      <SelectItem value="200">200A</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">
-                  Cut-out / Meter Location
-                </Label>
-                <Input
-                  value={formData.gridConnection?.cutOutLocation || ''}
-                  onChange={(e) => updateGridConnection('cutOutLocation', e.target.value)}
-                  placeholder="e.g., Under stairs cupboard"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-              </div>
+          {mpanValidation && !mpanValidation.valid && (
+            <div className="flex items-center gap-1.5 mt-1">
+              <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />
+              <p className="text-xs text-orange-400">{mpanValidation.error}</p>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+          )}
+          <p className="text-[10px] text-white/40 mt-1">Found on the electricity bill. 13 or 21 digits.</p>
+        </Field>
 
-      {/* G98/G99 Application */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible
-          open={openSections.application}
-          onOpenChange={() => toggleSection('application')}
-        >
-          <SectionHeader
-            title="DNO Notification (G98/G99)"
-            icon={FileText}
-            isOpen={openSections.application}
-            color="purple-500"
-            badge="Required"
-          />
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-4 border-t border-white/10">
-              {/* Info Banner */}
-              <div className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-lg flex items-start gap-3">
-                <Info className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm text-purple-200">
-                    <strong>G98</strong>: Up to 16A per phase (&le;3.68kW single, &le;11.04kW three
-                    phase) - Notification only
-                  </p>
-                  <p className="text-sm text-purple-200 mt-1">
-                    <strong>G99</strong>: Above 16A per phase - Application required, may take 45+
-                    days
-                  </p>
-                </div>
-              </div>
-
-              {/* Suggestion banner */}
-              {suggestedApplication && formData.totalCapacity > 0 && (
-                <div
+        {/* Supply details */}
+        <div className="grid grid-cols-2 gap-2.5">
+          <Field label="Supply Phases">
+            <div className="flex gap-1.5">
+              {(['single', 'three'] as const).map((phase) => (
+                <button
+                  key={phase}
+                  type="button"
+                  onClick={() => {
+                    updateGridConnection('supplyPhases', phase);
+                    updateGridConnection('supplyVoltage', phase === 'single' ? 230 : 400);
+                  }}
                   className={cn(
-                    'p-3 rounded-lg flex items-center gap-2',
-                    suggestedApplication === 'G98'
-                      ? 'bg-green-500/10 border border-green-500/30'
-                      : 'bg-orange-500/10 border border-orange-500/30'
+                    'flex-1 h-12 rounded-xl border text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all',
+                    formData.gridConnection?.supplyPhases === phase
+                      ? 'bg-blue-500 border-blue-500 text-white'
+                      : 'bg-white/[0.03] border-white/[0.1] text-white/50'
                   )}
                 >
-                  <CheckCircle
-                    className={cn(
-                      'h-4 w-4',
-                      suggestedApplication === 'G98' ? 'text-green-400' : 'text-orange-400'
-                    )}
-                  />
-                  <span
-                    className={cn(
-                      'text-sm font-medium',
-                      suggestedApplication === 'G98' ? 'text-green-300' : 'text-orange-300'
-                    )}
-                  >
-                    Based on {formData.totalCapacity.toFixed(2)}kWp capacity: {suggestedApplication}{' '}
-                    recommended
-                  </span>
-                </div>
-              )}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Application Type *</Label>
-                  <Select
-                    value={formData.gridConnection?.applicationType || ''}
-                    onValueChange={(value) => updateGridConnection('applicationType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="G98">G98 (&le;16A/phase - Notification)</SelectItem>
-                      <SelectItem value="G99">G99 (&gt;16A/phase - Application)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">
-                    Application Reference
-                  </Label>
-                  <Input
-                    value={formData.gridConnection?.applicationReference || ''}
-                    onChange={(e) => updateGridConnection('applicationReference', e.target.value)}
-                    placeholder="DNO reference number"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Application Date</Label>
-                  <Input
-                    type="date"
-                    value={formData.gridConnection?.applicationDate || ''}
-                    onChange={(e) => updateGridConnection('applicationDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Approval Status</Label>
-                  <Select
-                    value={formData.gridConnection?.approvalStatus || ''}
-                    onValueChange={(value) => updateGridConnection('approvalStatus', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="not-required">Not Required (G98)</SelectItem>
-                      <SelectItem value="pending">Pending Approval</SelectItem>
-                      <SelectItem value="approved">Approved</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {formData.gridConnection?.approvalStatus === 'approved' && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-foreground">Approval Date</Label>
-                    <Input
-                      type="date"
-                      value={formData.gridConnection?.approvalDate || ''}
-                      onChange={(e) => updateGridConnection('approvalDate', e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-foreground">
-                      Approval Reference
-                    </Label>
-                    <Input
-                      value={formData.gridConnection?.approvalReference || ''}
-                      onChange={(e) => updateGridConnection('approvalReference', e.target.value)}
-                      placeholder="DNO approval reference"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                  </div>
-                </div>
-              )}
+                  {phase === 'single' ? '1Φ 230V' : '3Φ 400V'}
+                </button>
+              ))}
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+          </Field>
+
+          <Field label="Max Supply Fuse (A)">
+            <ComboboxCell
+              value={formData.gridConnection?.maxSupplyFuse?.toString() || '100'}
+              onChange={(v) => updateGridConnection('maxSupplyFuse', parseInt(v))}
+              options={SUPPLY_FUSE_RATINGS.map((f) => ({ value: f.value.toString(), label: f.label }))}
+              placeholder="Fuse..."
+              className="h-12 text-base"
+              allowCustom={true}
+            />
+          </Field>
+        </div>
+
+        <Field label="Cut-out / Meter Location">
+          <Input
+            value={formData.gridConnection?.cutOutLocation || ''}
+            onChange={(e) => updateGridConnection('cutOutLocation', e.target.value)}
+            placeholder="e.g., Under stairs cupboard"
+            className={inputCn}
+          />
+        </Field>
+      </Section>
+
+      {/* DNO Notification (G98/G99) */}
+      <Section title="DNO Notification (G98/G99)" accentColor="from-amber-500/40 to-yellow-400/20">
+        {/* G98/G99 toggle buttons */}
+        <Field label="Application Type *">
+          <div className="flex gap-1.5">
+            {[
+              { val: 'G98', label: 'G98', sub: '≤16A per phase', desc: 'Notification only' },
+              { val: 'G99', label: 'G99', sub: '>16A per phase', desc: 'Application required' },
+            ].map((opt) => (
+              <button
+                key={opt.val}
+                type="button"
+                onClick={() => updateGridConnection('applicationType', opt.val)}
+                className={cn(
+                  'flex-1 py-3 rounded-xl border flex flex-col items-center justify-center touch-manipulation active:scale-[0.98] transition-all',
+                  formData.gridConnection?.applicationType === opt.val
+                    ? 'bg-amber-500/15 border-amber-500/30'
+                    : 'bg-white/[0.03] border-white/[0.06]'
+                )}
+              >
+                <span className={cn(
+                  'text-base font-bold',
+                  formData.gridConnection?.applicationType === opt.val ? 'text-amber-400' : 'text-white/50'
+                )}>
+                  {opt.label}
+                </span>
+                <span className="text-[10px] text-white/40">{opt.sub}</span>
+                <span className="text-[9px] text-white/30 mt-0.5">{opt.desc}</span>
+              </button>
+            ))}
+          </div>
+        </Field>
+
+        {suggestedApplication && formData.totalCapacity > 0 && (
+          <div className={cn(
+            'p-2.5 rounded-xl flex items-center gap-2',
+            suggestedApplication === 'G98' ? 'bg-green-500/10 border border-green-500/20' : 'bg-orange-500/10 border border-orange-500/20'
+          )}>
+            <CheckCircle className={cn('h-3.5 w-3.5 flex-shrink-0', suggestedApplication === 'G98' ? 'text-green-400' : 'text-orange-400')} />
+            <span className={cn('text-xs', suggestedApplication === 'G98' ? 'text-green-300' : 'text-orange-300')}>
+              {formData.totalCapacity.toFixed(1)}kWp → <strong>{suggestedApplication}</strong> recommended
+            </span>
+          </div>
+        )}
+
+        {/* Create or Link G98/G99 Certificate */}
+        {formData.gridConnection?.applicationType && (
+          <G98G99CertActions
+            applicationType={formData.gridConnection.applicationType}
+            formData={formData}
+            onReferenceLinked={(ref) => updateGridConnection('applicationReference', ref)}
+          />
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <Field label="Application Reference">
+            <Input
+              value={formData.gridConnection?.applicationReference || ''}
+              onChange={(e) => updateGridConnection('applicationReference', e.target.value)}
+              placeholder="DNO reference number"
+              className={inputCn}
+            />
+          </Field>
+          <Field label="Application Date">
+            <Input
+              type="date"
+              value={formData.gridConnection?.applicationDate || ''}
+              onChange={(e) => updateGridConnection('applicationDate', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+        </div>
+
+        <Field label="Approval Status">
+          <ComboboxCell
+            value={formData.gridConnection?.approvalStatus || ''}
+            onChange={(v) => updateGridConnection('approvalStatus', v)}
+            options={approvalStatusOptions}
+            placeholder="Select status..."
+            className="h-12 text-base"
+            allowCustom
+          />
+        </Field>
+
+        {formData.gridConnection?.approvalStatus === 'approved' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Field label="Approval Date">
+              <Input
+                type="date"
+                value={formData.gridConnection?.approvalDate || ''}
+                onChange={(e) => updateGridConnection('approvalDate', e.target.value)}
+                className={inputCn}
+              />
+            </Field>
+            <Field label="Approval Reference">
+              <Input
+                value={formData.gridConnection?.approvalReference || ''}
+                onChange={(e) => updateGridConnection('approvalReference', e.target.value)}
+                placeholder="DNO approval reference"
+                className={inputCn}
+              />
+            </Field>
+          </div>
+        )}
+      </Section>
 
       {/* Export Limiting */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.export} onOpenChange={() => toggleSection('export')}>
-          <SectionHeader
-            title="Export Limiting"
-            icon={Zap}
-            isOpen={openSections.export}
-            color="orange-500"
-          />
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-4 border-t border-white/10">
-              <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg min-h-[48px]">
-                <Checkbox
-                  id="exportLimited"
-                  checked={formData.gridConnection?.exportLimited || false}
-                  onCheckedChange={(checked) => updateGridConnection('exportLimited', checked)}
-                  className="h-5 w-5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label htmlFor="exportLimited" className="text-sm text-foreground cursor-pointer">
-                  Export limiting is required/applied
-                </Label>
-              </div>
+      <Section title="Export Limiting" accentColor="from-orange-500/40 to-red-400/20">
+        <CheckboxCard
+          label="Export Limiting Required / Applied"
+          description="System export is limited to a specified value"
+          checked={!!formData.gridConnection?.exportLimited}
+          onChange={(v) => updateGridConnection('exportLimited', v)}
+          accentColor="amber"
+        />
 
-              {formData.gridConnection?.exportLimited && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-foreground">Export Limit (kW)</Label>
-                    <Input
-                      type="number"
-                      step="0.1"
-                      value={formData.gridConnection?.exportLimitKw || ''}
-                      onChange={(e) =>
-                        updateGridConnection(
-                          'exportLimitKw',
-                          e.target.value === '' ? '' : parseFloat(e.target.value) || 0
-                        )
-                      }
-                      placeholder="e.g., 3.68"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium text-foreground">Limiting Method</Label>
-                    <Input
-                      value={formData.gridConnection?.exportLimitingMethod || ''}
-                      onChange={(e) => updateGridConnection('exportLimitingMethod', e.target.value)}
-                      placeholder="e.g., Inverter setting, Export limiter device"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+        {formData.gridConnection?.exportLimited && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Field label="Export Limit (kW)">
+              <Input
+                type="number"
+                inputMode="decimal"
+                step="0.1"
+                value={formData.gridConnection?.exportLimitKw || ''}
+                onChange={(e) => updateGridConnection('exportLimitKw', e.target.value === '' ? '' : parseFloat(e.target.value) || 0)}
+                placeholder="e.g., 3.68"
+                className={inputCn}
+              />
+            </Field>
+            <Field label="Limiting Method">
+              <Input
+                value={formData.gridConnection?.exportLimitingMethod || ''}
+                onChange={(e) => updateGridConnection('exportLimitingMethod', e.target.value)}
+                placeholder="e.g., Inverter setting"
+                className={inputCn}
+              />
+            </Field>
+          </div>
+        )}
+      </Section>
 
       {/* Metering */}
-      <Card className="bg-card/50 border border-white/10 rounded-xl overflow-hidden">
-        <Collapsible open={openSections.metering} onOpenChange={() => toggleSection('metering')}>
-          <SectionHeader
-            title="Metering"
-            icon={Gauge}
-            isOpen={openSections.metering}
-            color="green-500"
+      <Section title="Metering" accentColor="from-green-500/40 to-emerald-400/20">
+        <Field label="Meter Type">
+          <ComboboxCell
+            value={formData.metering?.meterType || 'smart'}
+            onChange={(v) => updateMetering('meterType', v)}
+            options={meterTypeOptions}
+            placeholder="Select meter type..."
+            className="h-12 text-base"
+            allowCustom
           />
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 space-y-4 border-t border-white/10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Meter Type</Label>
-                  <Select
-                    value={formData.metering?.meterType || 'smart'}
-                    onValueChange={(value) => updateMetering('meterType', value as MeterType)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
-                      <SelectItem value="smart">Smart Meter (SMETS2)</SelectItem>
-                      <SelectItem value="export">Dedicated Export Meter</SelectItem>
-                      <SelectItem value="generation">Generation Meter</SelectItem>
-                      <SelectItem value="none">No Additional Meter</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+        </Field>
+        <div className="grid grid-cols-2 gap-2">
+          <Field label="Meter Make">
+            <Input
+              value={formData.metering?.meterMake || ''}
+              onChange={(e) => updateMetering('meterMake', e.target.value)}
+              placeholder="e.g., Emlite"
+              className={inputSmCn}
+            />
+          </Field>
+          <Field label="Meter Model">
+            <Input
+              value={formData.metering?.meterModel || ''}
+              onChange={(e) => updateMetering('meterModel', e.target.value)}
+              placeholder="e.g., EMP1"
+              className={inputSmCn}
+            />
+          </Field>
+        </div>
+        <Field label="Meter Serial Number">
+          <Input
+            value={formData.metering?.meterSerial || ''}
+            onChange={(e) => updateMetering('meterSerial', e.target.value)}
+            placeholder="If applicable"
+            className={inputCn}
+          />
+        </Field>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground">Meter Serial Number</Label>
-                  <Input
-                    value={formData.metering?.meterSerial || ''}
-                    onChange={(e) => updateMetering('meterSerial', e.target.value)}
-                    placeholder="If applicable"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                  />
-                </div>
-              </div>
+        <CheckboxCard
+          label="Smart Export Guarantee (SEG) Registered"
+          description="Customer receives payment for exported electricity"
+          checked={!!formData.metering?.segRegistered}
+          onChange={(v) => updateMetering('segRegistered', v)}
+          accentColor="green"
+        />
 
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-lg min-h-[48px]">
-                  <Checkbox
-                    id="segRegistered"
-                    checked={formData.metering?.segRegistered || false}
-                    onCheckedChange={(checked) => updateMetering('segRegistered', checked)}
-                    className="h-5 w-5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <div>
-                    <Label
-                      htmlFor="segRegistered"
-                      className="text-sm text-foreground cursor-pointer"
-                    >
-                      Smart Export Guarantee (SEG) registered
-                    </Label>
-                    <p className="text-xs text-white">
-                      Customer is signed up to receive payment for exported electricity
-                    </p>
-                  </div>
-                </div>
+        {formData.metering?.segRegistered && (
+          <Field label="SEG Supplier">
+            <Input
+              value={formData.metering?.segSupplier || ''}
+              onChange={(e) => updateMetering('segSupplier', e.target.value)}
+              placeholder="e.g., Octopus Energy, EDF"
+              className={inputCn}
+            />
+          </Field>
+        )}
 
-                {formData.metering?.segRegistered && (
-                  <div className="space-y-2 ml-10">
-                    <Label className="text-sm font-medium text-foreground">SEG Supplier</Label>
-                    <Input
-                      value={formData.metering?.segSupplier || ''}
-                      onChange={(e) => updateMetering('segSupplier', e.target.value)}
-                      placeholder="e.g., Octopus Energy, EDF"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground">Metering Notes</Label>
-                <Textarea
-                  value={formData.metering?.notes || ''}
-                  onChange={(e) => updateMetering('notes', e.target.value)}
-                  placeholder="Any additional metering details..."
-                  className="min-h-[80px] touch-manipulation text-base border-white/30 focus:border-yellow-500"
-                />
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </Card>
+        <Field label="Metering Notes">
+          <Textarea
+            value={formData.metering?.notes || ''}
+            onChange={(e) => updateMetering('notes', e.target.value)}
+            placeholder="Any additional metering details..."
+            className={textareaCn}
+          />
+        </Field>
+      </Section>
     </div>
   );
 };
+
+// ============================================================================
+// G98/G99 Certificate Actions — Create in background or link existing
+// ============================================================================
+
+function G98G99CertActions({
+  applicationType,
+  formData,
+  onReferenceLinked,
+}: {
+  applicationType: string;
+  formData: SolarPVFormData;
+  onReferenceLinked: (ref: string) => void;
+}) {
+  const [isCreating, setIsCreating] = useState(false);
+  const [createdRef, setCreatedRef] = useState<string | null>(null);
+  const [isLinking, setIsLinking] = useState(false);
+  const [existingCerts, setExistingCerts] = useState<any[]>([]);
+
+  const certType = applicationType === 'G99' ? 'g99-commissioning' : 'g98-commissioning';
+  const certLabel = applicationType === 'G99' ? 'G99' : 'G98';
+
+  // Load existing G98/G99 certs for linking
+  const loadExistingCerts = async () => {
+    setIsLinking(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from('reports')
+        .select('report_id, data, created_at')
+        .eq('user_id', user.id)
+        .eq('report_type', certType)
+        .order('created_at', { ascending: false })
+        .limit(10);
+      setExistingCerts(data || []);
+    } catch {
+      toast.error('Failed to load certificates');
+    }
+  };
+
+  // Create G98/G99 cert in background with pre-filled data from Solar PV
+  const createInBackground = async () => {
+    setIsCreating(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const refNumber = `${certLabel}-${Date.now().toString(36).toUpperCase()}`;
+      const inverter = formData.inverters?.[0];
+
+      // Map Solar PV data → G98/G99 fields
+      const certData: Record<string, any> = {
+        referenceNumber: refNumber,
+        commissioningDate: formData.commissioningDate || new Date().toISOString().split('T')[0],
+        notificationDate: new Date().toISOString().split('T')[0],
+        dnoName: formData.gridConnection?.dnoName || '',
+        installerName: formData.installerDeclaration?.installerName || '',
+        installerCompany: formData.installerDeclaration?.installerCompany || '',
+        installerPhone: formData.installerDeclaration?.installerPhone || '',
+        installerEmail: formData.installerDeclaration?.installerEmail || '',
+        mcsNumber: formData.mcsDetails?.installerNumber || formData.installerDeclaration?.installerMcsNumber || '',
+        installationAddress: formData.installationSameAsClient
+          ? formData.clientAddress || ''
+          : formData.installationAddress || '',
+        mpan: formData.gridConnection?.mpan || '',
+        supplyType: formData.gridConnection?.supplyPhases === 'three' ? 'three-phase' : 'single-phase',
+        earthingArrangement: formData.testResults?.acTests?.earthingArrangement || '',
+        equipmentType: 'Solar PV',
+        equipmentManufacturer: inverter?.make || '',
+        equipmentModel: inverter?.model || '',
+        equipmentSerial: inverter?.serialNumber || '',
+        ratedOutput: formData.totalCapacity ? `${formData.totalCapacity.toFixed(2)} kWp` : '',
+        numberOfPhases: formData.gridConnection?.supplyPhases === 'three' ? '3' : '1',
+        inverterManufacturer: inverter?.make || '',
+        inverterModel: inverter?.model || '',
+        exportCapable: true,
+        exportLimited: !!formData.gridConnection?.exportLimited,
+        exportLimit: formData.gridConnection?.exportLimitKw?.toString() || '',
+        segSupplier: formData.metering?.segSupplier || '',
+        notes: `Auto-created from Solar PV certificate. System: ${formData.totalCapacity?.toFixed(1) || '?'}kWp.`,
+      };
+
+      const reportId = crypto.randomUUID();
+      const { error } = await supabase.from('reports').insert({
+        report_id: reportId,
+        user_id: user.id,
+        report_type: certType,
+        certificate_number: refNumber,
+        data: certData,
+        status: 'draft',
+      });
+
+      if (error) throw error;
+
+      setCreatedRef(refNumber);
+      onReferenceLinked(refNumber);
+      toast.success(`${certLabel} certificate created and saved`, {
+        description: 'Available in your saved certificates',
+      });
+    } catch (err: any) {
+      toast.error(`Failed to create ${certLabel} certificate`);
+      console.error(err);
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  // Reset when application type changes
+  React.useEffect(() => {
+    setCreatedRef(null);
+    setIsLinking(false);
+    setExistingCerts([]);
+  }, [applicationType]);
+
+  if (createdRef) {
+    return (
+      <div className="space-y-2">
+        <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center gap-3">
+          <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-medium text-green-400">{certLabel} Certificate Created</p>
+            <p className="text-xs text-white/50 truncate">Ref: {createdRef} — saved to your certificates</p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => { setCreatedRef(null); onReferenceLinked(''); }}
+            className="flex-1 h-10 rounded-xl border border-white/[0.06] bg-white/[0.03] text-xs text-white/50 touch-manipulation active:scale-[0.98]"
+          >
+            Undo — Link Different Cert Instead
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLinking) {
+    return (
+      <div className="space-y-2">
+        <p className="text-[10px] text-white/40 uppercase tracking-wider">Select existing {certLabel} certificate</p>
+        {existingCerts.length === 0 ? (
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
+            <p className="text-sm text-white/50">No {certLabel} certificates found</p>
+            <p className="text-xs text-white/30 mt-1">Create one using the button below</p>
+          </div>
+        ) : (
+          existingCerts.map((cert: any) => (
+            <button
+              key={cert.report_id}
+              type="button"
+              onClick={() => {
+                const ref = cert.data?.referenceNumber || cert.report_id.slice(0, 8);
+                onReferenceLinked(ref);
+                setIsLinking(false);
+                toast.success(`Linked to ${certLabel}: ${ref}`);
+              }}
+              className="w-full text-left p-3 rounded-xl border border-white/[0.06] bg-white/[0.02] flex items-center gap-3 touch-manipulation active:scale-[0.98]"
+            >
+              <Link2 className="h-4 w-4 text-amber-400 flex-shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-white truncate">{cert.data?.referenceNumber || 'No reference'}</p>
+                <p className="text-xs text-white/40">{cert.data?.installationAddress || 'No address'} • {new Date(cert.created_at).toLocaleDateString('en-GB')}</p>
+              </div>
+            </button>
+          ))
+        )}
+        <button
+          type="button"
+          onClick={() => setIsLinking(false)}
+          className="w-full text-center text-xs text-white/40 py-2 touch-manipulation"
+        >
+          Cancel
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex gap-2">
+      <button
+        type="button"
+        onClick={createInBackground}
+        disabled={isCreating}
+        className="flex-1 h-12 rounded-xl border border-amber-500/20 bg-amber-500/10 flex items-center justify-center gap-2 text-sm font-medium text-amber-400 touch-manipulation active:scale-[0.98] disabled:opacity-50"
+      >
+        {isCreating ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <FileText className="h-4 w-4" />
+        )}
+        Create {certLabel} Cert
+      </button>
+      <button
+        type="button"
+        onClick={loadExistingCerts}
+        disabled={isLinking}
+        className="flex-1 h-12 rounded-xl border border-white/[0.06] bg-white/[0.03] flex items-center justify-center gap-2 text-sm font-medium text-white touch-manipulation active:scale-[0.98]"
+      >
+        <Link2 className="h-4 w-4" />
+        Link Existing
+      </button>
+    </div>
+  );
+}
 
 export default SolarPVGridConnection;

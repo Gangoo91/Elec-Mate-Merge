@@ -11,8 +11,6 @@
 import * as React from 'react';
 import { Check, ChevronsUpDown, Sparkles, Zap, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
@@ -103,67 +101,77 @@ export function PVPanelAutocomplete({
 
   // Trigger button shared between mobile and desktop
   const triggerButton = (
-    <Button
-      variant="outline"
+    <button
+      type="button"
       role="combobox"
       aria-expanded={open}
       disabled={disabled}
-      onClick={isMobile ? () => setOpen(true) : undefined}
+      onClick={() => setOpen(true)}
       className={cn(
-        'w-full justify-between h-11 touch-manipulation',
-        'bg-elec-gray border-white/30 text-foreground',
-        'hover:bg-white/10 hover:border-white/40',
-        'focus:border-yellow-500 focus:ring-yellow-500',
-        'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
+        'w-full h-12 text-sm px-3 rounded-xl',
+        'bg-white/[0.06] border border-white/[0.08] text-white',
+        'flex items-center justify-between gap-2',
+        'focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 touch-manipulation',
+        'hover:bg-white/[0.08] active:scale-[0.98] transition-all',
+        !selectedPanel && 'text-white/40',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className={cn('truncate', !selectedPanel && 'text-white')}>{displayValue}</span>
-      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-    </Button>
+      <span className="truncate text-left flex-1">{displayValue}</span>
+      <ChevronsUpDown className="h-3.5 w-3.5 opacity-40 flex-shrink-0" />
+    </button>
   );
 
-  // Render panel item (shared renderer for mobile and desktop)
+  // Render panel item — card-style for mobile, compact for desktop
   const renderPanelItem = (panel: SolarPanel, showMake = false, forMobile = false) => {
     const isSelected = selectedPanel?.id === panel.id;
     return (
-      <div
+      <button
         key={panel.id}
+        type="button"
         onClick={() => handleSelect(panel)}
         className={cn(
-          'rounded-lg cursor-pointer transition-colors flex items-center',
-          forMobile ? 'px-4 py-4 min-h-[56px]' : 'px-2 py-2',
-          'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
-          isSelected && 'bg-elec-yellow/20'
+          'w-full text-left flex items-center gap-2.5 touch-manipulation active:scale-[0.98] transition-all',
+          forMobile
+            ? 'my-1 px-3 py-3 rounded-xl border'
+            : 'px-2 py-2 rounded-lg',
+          isSelected
+            ? forMobile
+              ? 'bg-elec-yellow/10 border-elec-yellow/20'
+              : 'bg-elec-yellow/10'
+            : forMobile
+              ? 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04]'
+              : 'hover:bg-white/[0.04]'
         )}
       >
-        <Check
+        <div
           className={cn(
-            'shrink-0',
-            forMobile ? 'mr-3 h-5 w-5' : 'mr-2 h-4 w-4',
-            isSelected ? 'opacity-100 text-elec-yellow' : 'opacity-0'
+            'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
+            isSelected ? 'bg-elec-yellow border-elec-yellow' : 'border-white/20'
           )}
-        />
+        >
+          {isSelected && <Check className="h-3 w-3 text-black" />}
+        </div>
         <div className="flex flex-col flex-1 min-w-0">
-          <span className={cn('font-medium truncate', forMobile && 'text-base')}>
+          <span className={cn('font-medium truncate', isSelected ? 'text-elec-yellow' : 'text-white', forMobile && 'text-sm')}>
             {showMake ? `${panel.make} ${panel.model}` : panel.model}
           </span>
-          <span className={cn('text-white truncate', forMobile ? 'text-sm' : 'text-xs')}>
-            {panel.wattage}W • {panel.efficiency}%{showMake ? ` • ${panel.cellType}` : ''}
+          <span className="text-xs text-white/50 truncate">
+            {panel.wattage}W • {panel.efficiency}% • {panel.cellType}
           </span>
         </div>
-        {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-          <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-elec-yellow/20 text-elec-yellow rounded">
-            NEW
-          </span>
+        {(panel.mcsCertified || (panel.yearIntroduced && panel.yearIntroduced >= 2024)) && (
+          <div className="flex items-center gap-1 flex-shrink-0 ml-1">
+            {panel.mcsCertified && (
+              <span className="text-[8px] text-green-400 bg-green-500/15 px-1 py-0.5 rounded font-bold">MCS</span>
+            )}
+            {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
+              <span className="text-[8px] text-elec-yellow bg-elec-yellow/15 px-1 py-0.5 rounded font-bold">NEW</span>
+            )}
+          </div>
         )}
-        {showMake && (
-          <span className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-amber-500/20 text-amber-400 rounded">
-            {panel.wattage}W
-          </span>
-        )}
-      </div>
+      </button>
     );
   };
 
@@ -176,68 +184,64 @@ export function PVPanelAutocomplete({
         <SwipeableBottomSheet
           open={open}
           onOpenChange={setOpen}
-          title="Select Solar Panel"
           contentClassName="p-0"
         >
-          <div className="flex flex-col max-h-[70vh]">
-            {/* Search input */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
-              <Search className="h-5 w-5 text-white shrink-0" />
-              <Input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search panels..."
-                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
-                autoFocus
-              />
-              {search && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSearch('')}
-                  className="h-9 w-9 p-0"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              )}
+          <div className="flex flex-col max-h-[65vh]">
+            {/* Header */}
+            <div className="px-4 pt-1 pb-3 sticky top-0 bg-background z-10">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-[10px] font-bold text-white uppercase tracking-wider">
+                  {filteredPanels ? `${filteredPanels.length} results` : `${getPanelCount()} panels`}
+                </p>
+                {selectedPanel && (
+                  <button
+                    onClick={() => { onPanelSelect?.(null); onValueChange?.(''); setOpen(false); }}
+                    className="text-[10px] text-red-400 font-medium touch-manipulation"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+              <div className="flex items-center gap-2.5 h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08]">
+                <Search className="h-4 w-4 text-white flex-shrink-0" />
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search by make, model, wattage..."
+                  className="flex-1 bg-transparent text-base text-white placeholder:text-white/40 outline-none"
+                  autoFocus
+                />
+                {search && (
+                  <button onClick={() => setSearch('')} className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation">
+                    <X className="h-3 w-3 text-white" />
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Panel list */}
-            <div className="flex-1 overflow-y-auto momentum-scroll-y">
+            <div className="flex-1 overflow-y-auto overscroll-contain momentum-scroll-y pb-6 px-4">
               {filteredPanels && filteredPanels.length > 0 ? (
-                <div className="px-2 py-2">
-                  <p className="px-4 py-2 text-sm text-white font-medium">Search Results</p>
-                  <div className="space-y-1">
-                    {filteredPanels.map((panel) => renderPanelItem(panel, true, true))}
-                  </div>
+                <div className="space-y-1">
+                  {filteredPanels.map((panel) => renderPanelItem(panel, true, true))}
                 </div>
               ) : search.trim() ? (
-                <div className="py-12 text-center text-white">
-                  <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
-                  <p className="text-base">No panels found</p>
-                  <p className="text-sm mt-1">Try a different search term</p>
+                <div className="py-12 text-center">
+                  <Zap className="h-8 w-8 mx-auto mb-2 text-white/20" />
+                  <p className="text-sm text-white/40">No panels found</p>
                 </div>
               ) : (
-                <div className="px-2 py-2">
-                  {Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
-                    <div key={manufacturer} className="mb-4">
-                      <p className="px-4 py-2 text-sm text-white font-medium sticky top-0 bg-background">
-                        {manufacturer}
-                      </p>
-                      <div className="space-y-1">
-                        {panels.map((panel) => renderPanelItem(panel, false, true))}
-                      </div>
+                Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
+                  <div key={manufacturer} className="mb-3">
+                    <p className="py-2 text-[10px] font-bold text-white/50 uppercase tracking-wider sticky top-0 bg-background">
+                      {manufacturer}
+                    </p>
+                    <div className="space-y-1">
+                      {panels.map((panel) => renderPanelItem(panel, false, true))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))
               )}
-            </div>
-
-            {/* Footer */}
-            <div className="border-t border-border/50 px-4 py-3 bg-card/30">
-              <p className="text-xs text-white text-center">
-                {getPanelCount()} MCS-certified panels
-              </p>
             </div>
           </div>
         </SwipeableBottomSheet>
@@ -259,29 +263,29 @@ export function PVPanelAutocomplete({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent
-          className="w-[var(--radix-popover-trigger-width)] p-0 bg-elec-gray border border-white/20 shadow-lg z-[100]"
+          className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border border-white/20 shadow-lg z-[100]"
           align="start"
           sideOffset={4}
         >
-          <Command className="bg-elec-gray" shouldFilter={false}>
+          <Command className="bg-background" shouldFilter={false}>
             <CommandInput
               placeholder="Search panels..."
               value={search}
               onValueChange={setSearch}
-              className="border-none bg-elec-gray text-foreground placeholder:text-white"
+              className="border-none bg-background text-white placeholder:text-white"
             />
-            <CommandList className="bg-elec-gray max-h-[300px]">
+            <CommandList className="bg-background max-h-[300px]">
               <CommandEmpty className="p-4 text-sm text-white">No panels found.</CommandEmpty>
 
               {/* Show search results if searching */}
               {filteredPanels && filteredPanels.length > 0 ? (
-                <CommandGroup heading="Search Results" className="bg-elec-gray">
+                <CommandGroup heading="Search Results" className="bg-background">
                   {filteredPanels.map((panel) => (
                     <CommandItem
                       key={panel.id}
                       value={panel.id}
                       onSelect={() => handleSelect(panel)}
-                      className="bg-elec-gray hover:bg-white/10 cursor-pointer text-foreground py-2"
+                      className="bg-background hover:bg-white/10 cursor-pointer text-white py-2"
                     >
                       <Check
                         className={cn(
@@ -308,13 +312,13 @@ export function PVPanelAutocomplete({
               ) : (
                 /* Show grouped by manufacturer when not searching */
                 Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
-                  <CommandGroup key={manufacturer} heading={manufacturer} className="bg-elec-gray">
+                  <CommandGroup key={manufacturer} heading={manufacturer} className="bg-background">
                     {panels.map((panel) => (
                       <CommandItem
                         key={panel.id}
                         value={panel.id}
                         onSelect={() => handleSelect(panel)}
-                        className="bg-elec-gray hover:bg-white/10 cursor-pointer text-foreground py-2"
+                        className="bg-background hover:bg-white/10 cursor-pointer text-white py-2"
                       >
                         <Check
                           className={cn(
@@ -379,10 +383,10 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
   if (!panel) return null;
 
   return (
-    <div className={cn('p-3 bg-elec-gray/50 border border-white/10 rounded-lg text-sm', className)}>
+    <div className={cn('p-3 bg-background/50 border border-white/10 rounded-lg text-sm', className)}>
       <div className="flex items-start justify-between gap-2">
         <div>
-          <p className="font-medium text-foreground">
+          <p className="font-medium text-white">
             {panel.make} {panel.model}
           </p>
           <p className="text-xs text-white mt-0.5">
@@ -397,19 +401,19 @@ export function PanelInfoDisplay({ panelId, className }: PanelInfoDisplayProps) 
       <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
         <div>
           <span className="text-white">Efficiency:</span>{' '}
-          <span className="text-foreground">{panel.efficiency}%</span>
+          <span className="text-white">{panel.efficiency}%</span>
         </div>
         <div>
           <span className="text-white">Voc:</span>{' '}
-          <span className="text-foreground">{panel.voc}V</span>
+          <span className="text-white">{panel.voc}V</span>
         </div>
         <div>
           <span className="text-white">Isc:</span>{' '}
-          <span className="text-foreground">{panel.isc}A</span>
+          <span className="text-white">{panel.isc}A</span>
         </div>
         <div>
           <span className="text-white">Vmp:</span>{' '}
-          <span className="text-foreground">{panel.vmp}V</span>
+          <span className="text-white">{panel.vmp}V</span>
         </div>
       </div>
 

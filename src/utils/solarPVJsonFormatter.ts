@@ -295,14 +295,23 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       panel_count: arr.panelCount || 0,
       array_capacity: (((arr.panelWattage || 0) * (arr.panelCount || 0)) / 1000).toFixed(2),
       mcs_certified: arr.mcsCertified || false,
+      voc_rated: arr.vocRated || '',
+      isc_rated: arr.iscRated || '',
+      vmp_rated: arr.vmpRated || '',
+      imp_rated: arr.impRated || '',
+      panels_per_string: arr.panelsPerString || arr.panelCount || 0,
+      strings_in_parallel: arr.stringsInParallel || 1,
       orientation: arr.orientation || '',
       tilt_angle: arr.tiltAngle || 0,
       shading_factor: arr.shadingFactor || 1,
       shading_percentage: ((1 - (arr.shadingFactor || 1)) * 100).toFixed(0),
-      string_voc: arr.stringVoltage || '',
-      string_isc: arr.stringCurrent || '',
+      string_voc: arr.stringVoltageVoc || arr.stringVoltage || '',
+      string_isc: arr.stringCurrentIsc || arr.stringCurrent || '',
       mounting_type: arr.mountingType || '',
       mounting_type_display: formatMountingType(arr.mountingType || ''),
+      dc_cable_type: arr.dcCableType || '',
+      dc_cable_size: arr.dcCableSize || '',
+      notes: arr.notes || '',
     }));
   };
 
@@ -314,14 +323,22 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       make: inv.make || '',
       model: inv.model || '',
       serial_number: inv.serialNumber || '',
-      rated_power: inv.ratedPower || 0,
+      rated_power: inv.ratedPowerAc || inv.ratedPower || 0,
+      rated_power_ac: inv.ratedPowerAc || 0,
+      rated_power_dc: inv.ratedPowerDc || 0,
       mcs_certified: inv.mcsCertified || false,
       type: inv.type || '',
       type_display: formatInverterType(inv.type || ''),
       mppt_count: inv.mpptCount || 1,
+      max_input_voltage: inv.maxInputVoltage || '',
+      max_input_current: inv.maxInputCurrent || '',
+      efficiency: inv.efficiency || '',
       phases: inv.phases || 'single',
       phases_display: formatPhaseType(inv.phases || 'single'),
       location: inv.location || '',
+      g98g99_compliant: inv.g98g99Compliant || false,
+      battery_compatible: inv.batteryCompatible || false,
+      notes: inv.notes || '',
     }));
   };
 
@@ -336,13 +353,39 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       return {
         array_number: index + 1,
         array_name: array ? `${array.panelMake} ${array.panelModel}` : `Array ${index + 1}`,
+        voc_expected: test.vocExpected || '',
         voc_measured: test.vocMeasured || '',
+        voc_within_tolerance: test.vocWithinTolerance,
+        voc_result: formatTestResult(test.vocWithinTolerance),
+        voc_class: getTestResultClass(test.vocWithinTolerance),
+        isc_expected: test.iscExpected || '',
         isc_measured: test.iscMeasured || '',
-        insulation_resistance: test.insulationResistance || '',
+        isc_within_tolerance: test.iscWithinTolerance,
+        isc_result: formatTestResult(test.iscWithinTolerance),
+        isc_class: getTestResultClass(test.iscWithinTolerance),
+        ir_positive_to_earth: test.irPositiveToEarth || '',
+        ir_negative_to_earth: test.irNegativeToEarth || '',
+        ir_minimum_required: test.irMinimumRequired || 1,
+        ir_test_voltage: test.irTestVoltage || 1000,
+        insulation_resistance: `${test.irPositiveToEarth || '—'} / ${test.irNegativeToEarth || '—'}`,
+        ir_result: formatTestResult(
+          test.irPositiveToEarth >= (test.irMinimumRequired || 1) &&
+          test.irNegativeToEarth >= (test.irMinimumRequired || 1)
+            ? true : test.irPositiveToEarth > 0 ? false : undefined
+        ),
+        ir_class: getTestResultClass(
+          test.irPositiveToEarth >= (test.irMinimumRequired || 1) &&
+          test.irNegativeToEarth >= (test.irMinimumRequired || 1)
+            ? true : test.irPositiveToEarth > 0 ? false : undefined
+        ),
         polarity_result: formatTestResult(test.polarityCorrect),
         polarity_class: getTestResultClass(test.polarityCorrect),
         continuity_result: formatTestResult(test.stringContinuity),
         continuity_class: getTestResultClass(test.stringContinuity),
+        irradiance: test.irradiance || '',
+        ambient_temp: test.ambientTemp || '',
+        module_temp: test.moduleTemp || '',
+        notes: test.notes || '',
       };
     });
   };
@@ -360,12 +403,26 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
         inverter_name: inverter ? `${inverter.make} ${inverter.model}` : `Inverter ${index + 1}`,
         dc_isolator_result: formatTestResult(test.dcIsolatorOperational),
         dc_isolator_class: getTestResultClass(test.dcIsolatorOperational),
+        dc_isolator_location: test.dcIsolatorLocation || '',
         ac_isolator_result: formatTestResult(test.acIsolatorOperational),
         ac_isolator_class: getTestResultClass(test.acIsolatorOperational),
+        ac_isolator_location: test.acIsolatorLocation || '',
         anti_islanding_result: formatTestResult(test.antiIslandingTest),
         anti_islanding_class: getTestResultClass(test.antiIslandingTest),
+        anti_islanding_method: test.antiIslandingMethod || '',
         protection_result: formatTestResult(test.earthFaultProtection),
         protection_class: getTestResultClass(test.earthFaultProtection),
+        overvoltage_result: formatTestResult(test.overvoltageProtection),
+        overvoltage_class: getTestResultClass(test.overvoltageProtection),
+        power_on_result: formatTestResult(test.commissioning?.powerOnTest),
+        power_on_class: getTestResultClass(test.commissioning?.powerOnTest),
+        grid_sync_result: formatTestResult(test.commissioning?.gridSyncTest),
+        grid_sync_class: getTestResultClass(test.commissioning?.gridSyncTest),
+        display_result: formatTestResult(test.commissioning?.displayFunctional),
+        display_class: getTestResultClass(test.commissioning?.displayFunctional),
+        comms_result: formatTestResult(test.commissioning?.communicationsTest),
+        comms_class: getTestResultClass(test.commissioning?.communicationsTest),
+        firmware_version: test.firmwareVersion || '',
       };
     });
   };
@@ -380,12 +437,21 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       earthing_arrangement_display: formatEarthingArrangement(acTests.earthingArrangement || ''),
       ze_value: acTests.zeValue || '',
       zs_value: acTests.zsValue || '',
+      r1_r2_value: acTests.r1r2Value || '',
       rcd_type: acTests.rcdType || '',
       rcd_rating: acTests.rcdRating || '',
       rcd_trip_time: acTests.rcdTripTime || '',
+      rcd_bs_standard: acTests.rcdBsStandard || '',
       insulation_resistance: acTests.insulationResistance || '',
+      ir_test_voltage: acTests.irTestVoltage || 500,
       polarity_result: formatTestResult(acTests.polarityCorrect),
       polarity_class: getTestResultClass(acTests.polarityCorrect),
+      // Protection device
+      protection_device_type: acTests.protectionDeviceType || '',
+      mcb_rating: acTests.mcbRating || '',
+      mcb_type: acTests.mcbType || '',
+      mcb_location: acTests.mcbLocation || '',
+      pfc: acTests.pfc || '',
       // BS 7671:2018+A3:2024 Reg. 530.3.201 - Bidirectional protective devices
       bidirectional_device_installed: acTests.bidirectionalDeviceInstalled || false,
       bidirectional_device_type: acTests.bidirectionalDeviceType || '',
@@ -405,8 +471,17 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       system_operational: commissioning.systemOperational || false,
       export_verified: commissioning.exportVerified || false,
       generation_meter_reading: commissioning.generationMeterReading || '',
+      export_meter_reading: commissioning.exportMeterReading || '',
+      initial_power_output: commissioning.initialPowerOutput || '',
+      weather_conditions: commissioning.weatherConditions || '',
       customer_briefed: commissioning.customerBriefed || false,
+      shutdown_procedure_explained: commissioning.shutdownProcedureExplained || false,
+      system_performance_explained: commissioning.systemPerformanceExplained || false,
+      maintenance_requirements_explained: commissioning.maintenanceRequirementsExplained || false,
+      warranty_details_explained: commissioning.warrantyDetailsExplained || false,
       documentation_provided: commissioning.documentationProvided || false,
+      emergency_contact_provided: commissioning.emergencyContactProvided || false,
+      notes: commissioning.notes || '',
     };
   };
 
@@ -418,6 +493,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       description: d.description || '',
       severity: formatSeverity(d.severity),
       severity_class: getSeverityClass(d.severity),
+      location: d.location || '',
       rectified: d.rectified || false,
       rectification_date: formatDateUK(d.rectificationDate || ''),
     }));
@@ -444,6 +520,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       capacity: battery.capacity || 0,
       chemistry: battery.chemistry || '',
       chemistry_display: formatBatteryChemistry(battery.chemistry || ''),
+      location: battery.location || '',
     };
   };
 
@@ -452,16 +529,24 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     const grid = formData.gridConnection || {};
     return {
       dno_name: grid.dnoName || '',
+      dno_region: grid.dnoRegion || '',
       mpan: grid.mpan || '',
+      supply_phases: grid.supplyPhases || 'single',
+      supply_phases_display: formatPhaseType(grid.supplyPhases || 'single'),
+      supply_voltage: grid.supplyVoltage || 230,
+      max_supply_fuse: grid.maxSupplyFuse || '',
+      cut_out_location: grid.cutOutLocation || '',
       application_reference: grid.applicationReference || '',
       application_type: grid.applicationType || '',
       application_type_display:
         grid.applicationType === 'G98' ? 'G98 (≤16A per phase)' : 'G99 (>16A per phase)',
       application_date: formatDateUK(grid.applicationDate || ''),
+      approval_status: grid.approvalStatus || '',
       approval_date: formatDateUK(grid.approvalDate || ''),
       approval_reference: grid.approvalReference || '',
       export_limited: grid.exportLimited || false,
       export_limit_kw: grid.exportLimitKw || '',
+      export_limiting_method: grid.exportLimitingMethod || '',
     };
   };
 
@@ -475,6 +560,9 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       meter_model: metering.meterModel || '',
       meter_serial: metering.meterSerial || '',
       ct_ratio: metering.ctRatio || '',
+      seg_registered: metering.segRegistered || false,
+      seg_supplier: metering.segSupplier || '',
+      notes: metering.notes || '',
     };
   };
 
@@ -487,6 +575,10 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
       mcs_document_provided: handover.mcsDocumentProvided || false,
       maintenance_schedule_provided: handover.maintenanceScheduleProvided || false,
       emergency_shutdown_explained: handover.emergencyShutdownExplained || false,
+      system_design_provided: handover.systemDesignProvided || false,
+      g98g99_confirmation_provided: handover.g98g99ConfirmationProvided || false,
+      performance_estimate_provided: handover.performanceEstimateProvided || false,
+      dno_notification_copy_provided: handover.dnoNotificationCopyProvided || false,
     };
   };
 
@@ -550,6 +642,7 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     property_type: get('propertyType') || 'domestic',
     property_type_display: formatPropertyType(get('propertyType')),
     ownership_type: get('ownershipType') || 'owner-occupied',
+    ownership_other: get('ownershipOther'),
     property_age: get('propertyAge'),
     roof_age: get('roofAge'),
 
@@ -671,6 +764,34 @@ export const formatSolarPVJson = (formData: Partial<SolarPVFormData>): SolarPVPa
     overall_satisfactory: getBool('overallSatisfactory'),
     overall_assessment_display: getBool('overallSatisfactory') ? 'SATISFACTORY' : 'UNSATISFACTORY',
     overall_assessment_class: getBool('overallSatisfactory') ? 'pass' : 'fail',
+
+    // ============================================
+    // CUSTOMER / RESPONSIBLE PERSON
+    // ============================================
+    customer_name: get('customerName'),
+    customer_position: get('customerPosition'),
+    customer_signature: get('customerSignature'),
+    customer_date: formatDateUK(get('customerDate')),
+    has_customer_signature: !!get('customerSignature'),
+
+    // ============================================
+    // NEXT SERVICE DUE
+    // ============================================
+    next_service_due: formatDateUK(get('nextServiceDue')),
+    has_next_service: !!get('nextServiceDue'),
+
+    // ============================================
+    // TEST EQUIPMENT
+    // ============================================
+    test_equipment: ((formData.testResults || {} as any).testEquipment || []).map((eq: any, i: number) => ({
+      number: i + 1,
+      type: eq.type || '',
+      make_model: eq.makeModel || '',
+      serial_number: eq.serialNumber || '',
+      calibration_date: formatDateUK(eq.calibrationDate || ''),
+      calibration_due: formatDateUK(eq.calibrationDue || ''),
+    })),
+    has_test_equipment: ((formData.testResults || {} as any).testEquipment || []).length > 0,
 
     // ============================================
     // ADDITIONAL NOTES

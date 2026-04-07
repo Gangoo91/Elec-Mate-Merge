@@ -136,6 +136,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           onChange={handleBsStandardChange}
           options={bsStandardOptions}
           placeholder="BS EN"
+          compact
         />
       </TableCell>
 
@@ -176,6 +177,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           onChange={handleRatingChange}
           options={protectiveDeviceRatingOptions}
           placeholder="A"
+          compact
         />
       </TableCell>
 

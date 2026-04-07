@@ -5,7 +5,7 @@
  * Allows selecting from presets AND typing custom values.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ChevronsUpDown, Check, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -24,6 +24,7 @@ interface ComboboxCellProps {
   placeholder?: string;
   className?: string;
   allowCustom?: boolean;
+  compact?: boolean;
 }
 
 const ComboboxCell: React.FC<ComboboxCellProps> = ({
@@ -33,10 +34,13 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
   placeholder = '',
   className,
   allowCustom = true,
+  compact = false,
 }) => {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const isMobile = useIsMobile();
+  const scrollPosRef = useRef(0);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const selectedOption = options.find((opt) => opt.value === value);
   const displayValue = selectedOption ? selectedOption.label : value;
@@ -44,6 +48,23 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
   useEffect(() => {
     if (open) setSearch('');
   }, [open]);
+
+  // Restore scroll position after closing
+  useEffect(() => {
+    if (!open && scrollPosRef.current > 0) {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollPosRef.current);
+      });
+    }
+  }, [open]);
+
+  // Delayed focus on mobile — let sheet animate in first
+  useEffect(() => {
+    if (open && isMobile) {
+      const timer = setTimeout(() => searchInputRef.current?.focus(), 400);
+      return () => clearTimeout(timer);
+    }
+  }, [open, isMobile]);
 
   const filtered = options.filter((opt) => {
     if (!search) return true;
@@ -56,17 +77,23 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
     setOpen(false);
   };
 
+  const handleOpen = () => {
+    scrollPosRef.current = window.scrollY;
+    setOpen(true);
+  };
+
+  const isTableCell = compact;
+
   // Shared trigger button
   const trigger = (
     <button
       type="button"
-      onClick={() => setOpen(true)}
+      onClick={handleOpen}
       className={cn(
-        'w-full h-12 text-sm px-3 rounded-xl',
-        'bg-white/[0.06] border border-white/[0.08] text-white',
-        'flex items-center justify-between gap-2',
-        'focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 touch-manipulation',
-        'hover:bg-white/[0.08] active:scale-[0.98] transition-all',
+        'w-full text-sm flex items-center justify-between gap-2 touch-manipulation transition-all',
+        isTableCell
+          ? 'h-8 px-2 bg-transparent border-0 rounded-none text-white text-center hover:bg-muted/20 focus-visible:ring-1 focus-visible:ring-elec-yellow/30'
+          : 'h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 hover:bg-white/[0.08] active:scale-[0.98]',
         !value && 'text-white/40',
         className
       )}
@@ -123,11 +150,11 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
               <div className="flex items-center gap-2.5 h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08]">
                 <Search className="h-4 w-4 text-white flex-shrink-0" />
                 <input
+                  ref={searchInputRef}
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder={allowCustom ? "Filter or type your own..." : "Type to filter..."}
                   className="flex-1 bg-transparent text-base text-white placeholder:text-white/40 outline-none"
-                  autoFocus
                 />
                 {search && (
                   <button onClick={() => setSearch('')} className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation">

@@ -54,6 +54,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           onChange={handleRcdBsStandardChange}
           options={rcdBsStandardOptions}
           placeholder="BS EN"
+          compact
         />
       </TableCell>
 
@@ -64,6 +65,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           onChange={handleRcdTypeChange}
           options={rcdTypeOptions}
           placeholder="Type"
+          compact
         />
       </TableCell>
 

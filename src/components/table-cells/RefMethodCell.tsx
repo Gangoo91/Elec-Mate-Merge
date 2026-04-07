@@ -24,6 +24,7 @@ const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate
         onChange={handleChange}
         options={referenceMethodOptions}
         placeholder="Ref"
+        compact
       />
     </TableCell>
   );
