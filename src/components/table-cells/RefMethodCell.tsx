@@ -1,14 +1,8 @@
 import React, { useCallback } from 'react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { referenceMethodOptions } from '@/types/cableTypes';
+import ComboboxCell from './ComboboxCell';
 
 interface RefMethodCellProps {
   result: TestResult;
@@ -25,29 +19,12 @@ const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate
 
   return (
     <TableCell className="p-0 h-8 align-middle min-w-[100px] max-w-[100px]">
-      <Select
-        name={`referenceMethod-${result.id}`}
+      <ComboboxCell
         value={result.referenceMethod || ''}
-        onValueChange={handleChange}
-      >
-        <SelectTrigger className="h-8 text-sm w-full px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 text-white bg-transparent border border-transparent rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
-          <SelectValue placeholder="Ref" />
-        </SelectTrigger>
-        <SelectContent
-          key={`referenceMethod-content-${result.id}`}
-          className="max-h-60 w-[360px] bg-background border border-border rounded-md z-[9999]"
-        >
-          {referenceMethodOptions.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-              className="text-xs text-neutral-100"
-            >
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        onChange={handleChange}
+        options={referenceMethodOptions}
+        placeholder="Ref"
+      />
     </TableCell>
   );
 };

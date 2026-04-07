@@ -21,6 +21,5 @@ export const rcdTypeOptions = [
   { value: 'A', label: 'A' },
   { value: 'F', label: 'F' },
   { value: 'B', label: 'B' },
-  { value: 'S', label: 'S (Selective)' },
-  { value: 'G', label: 'G (General use)' },
+  { value: 'S', label: 'S (Selective/Delayed)' },
 ];

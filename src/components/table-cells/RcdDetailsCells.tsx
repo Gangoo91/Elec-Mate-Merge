@@ -11,6 +11,7 @@ import { TestResult } from '@/types/testResult';
 import { rcdTypeOptions } from '@/types/wiringTypes';
 import { rcdBsStandardOptions } from '@/types/protectiveDeviceTypes';
 import ValidatedInput from '../ValidatedInput';
+import ComboboxCell from './ComboboxCell';
 
 interface RcdDetailsCellsProps {
   result: TestResult;
@@ -48,70 +49,32 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
     <>
       {/* Column 13: BS (EN) - RCD */}
       <TableCell className="p-0 h-8 align-middle w-40 min-w-[140px] max-w-[140px]">
-        <Select
-          name={`rcdBsStandard-${result.id}`}
+        <ComboboxCell
           value={result.rcdBsStandard || ''}
-          onValueChange={handleRcdBsStandardChange}
-        >
-          <SelectTrigger className="h-8 text-sm px-0 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
-            <SelectValue placeholder="BS EN" />
-          </SelectTrigger>
-          <SelectContent
-            key={`rcdBsStandard-content-${result.id}`}
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {rcdBsStandardOptions.map((option) => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                className="text-xs text-neutral-100"
-              >
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onChange={handleRcdBsStandardChange}
+          options={rcdBsStandardOptions}
+          placeholder="BS EN"
+        />
       </TableCell>
 
       {/* Column 14: Type - RCD */}
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[105px] max-w-[105px]">
-        <Select
-          name={`rcdType-${result.id}`}
+        <ComboboxCell
           value={result.rcdType || ''}
-          onValueChange={handleRcdTypeChange}
-        >
-          <SelectTrigger className="h-8 text-sm px-0 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
-            <SelectValue placeholder="Type" />
-          </SelectTrigger>
-          <SelectContent
-            key={`rcdType-content-${result.id}`}
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {rcdTypeOptions.map((option) => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                className="text-xs text-neutral-100"
-              >
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onChange={handleRcdTypeChange}
+          options={rcdTypeOptions}
+          placeholder="Type"
+        />
       </TableCell>
 
-      {/* Column 15: IΔn (mA) */}
+      {/* Column 15: IΔn (mA) — keep as Select (only 6 standard values) */}
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[100px] max-w-[100px]">
         <Select
           name={`rcdRating-${result.id}`}
           value={result.rcdRating || ''}
           onValueChange={handleRcdRatingChange}
         >
-          <SelectTrigger className="h-8 text-sm px-0 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
+          <SelectTrigger className="h-8 text-sm px-0 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="mA" />
           </SelectTrigger>
           <SelectContent

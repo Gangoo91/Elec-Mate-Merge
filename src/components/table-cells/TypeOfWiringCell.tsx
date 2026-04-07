@@ -1,14 +1,8 @@
 import React, { useCallback } from 'react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import { wiringTypeOptions } from '@/types/wiringTypes';
+import ComboboxCell from './ComboboxCell';
 
 interface TypeOfWiringCellProps {
   result: TestResult;
@@ -25,29 +19,12 @@ const TypeOfWiringCellComponent: React.FC<TypeOfWiringCellProps> = ({ result, on
 
   return (
     <TableCell className="p-0 h-8 align-middle min-w-[120px] max-w-[120px]">
-      <Select
-        name={`typeOfWiring-${result.id}`}
+      <ComboboxCell
         value={result.typeOfWiring || ''}
-        onValueChange={handleChange}
-      >
-        <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 text-white bg-transparent border border-transparent rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
-          <SelectValue placeholder="Type" />
-        </SelectTrigger>
-        <SelectContent
-          key={`typeOfWiring-content-${result.id}`}
-          className="max-h-60 max-w-[calc(100vw-2rem)] w-auto bg-background border border-border rounded-md z-[9999]"
-        >
-          {wiringTypeOptions.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-              className="text-xs text-neutral-100 whitespace-normal break-words"
-            >
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        onChange={handleChange}
+        options={wiringTypeOptions}
+        placeholder="Type"
+      />
     </TableCell>
   );
 };

@@ -9,7 +9,6 @@ import {
 import { TableCell } from '@/components/ui/table';
 import { TestResult } from '@/types/testResult';
 import {
-  protectiveDeviceTypeOptions,
   protectiveDeviceRatingOptions,
   protectiveDeviceCurveOptions,
   bsStandardOptions,
@@ -18,6 +17,7 @@ import {
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 import { FieldTooltip } from '@/components/ui/field-tooltip';
+import ComboboxCell from './ComboboxCell';
 
 interface ProtectiveDeviceCellsProps {
   result: TestResult;
@@ -131,31 +131,12 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
     <>
       {/* Column 8: BS (EN) */}
       <TableCell className="p-0 h-8 align-middle w-36 min-w-[140px] max-w-[140px]">
-        <Select
-          name={`bsStandard-${result.id}`}
+        <ComboboxCell
           value={result.bsStandard || ''}
-          onValueChange={handleBsStandardChange}
-        >
-          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
-            <SelectValue placeholder="BS EN" className="truncate" />
-          </SelectTrigger>
-          <SelectContent
-            key={`bsStandard-content-${result.id}`}
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {bsStandardOptions.map((option) => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                className="text-xs text-neutral-100"
-              >
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onChange={handleBsStandardChange}
+          options={bsStandardOptions}
+          placeholder="BS EN"
+        />
       </TableCell>
 
       {/* Column 9: Type (Curve) */}
@@ -190,31 +171,12 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
 
       {/* Column 10: Rating (A) */}
       <TableCell className="p-0 h-8 align-middle w-28 min-w-[95px] max-w-[95px]">
-        <Select
-          name={`protectiveDeviceRating-${result.id}`}
+        <ComboboxCell
           value={result.protectiveDeviceRating || ''}
-          onValueChange={handleRatingChange}
-        >
-          <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
-            <SelectValue placeholder="A" className="truncate" />
-          </SelectTrigger>
-          <SelectContent
-            key={`protectiveDeviceRating-content-${result.id}`}
-            position="popper"
-            sideOffset={5}
-            className="bg-background border border-border rounded-md z-[9999]"
-          >
-            {protectiveDeviceRatingOptions.map((option) => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                className="text-xs text-neutral-100"
-              >
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onChange={handleRatingChange}
+          options={protectiveDeviceRatingOptions}
+          placeholder="A"
+        />
       </TableCell>
 
       {/* Column 11: Breaking capacity (kA) */}

@@ -7,20 +7,30 @@ export const protectiveDeviceTypeOptions = [
   { value: 'Other', label: 'Other' },
 ];
 
-// Protective device ratings
+// Protective device ratings — BS EN 60898 standard preferred values
 export const protectiveDeviceRatingOptions = [
   { value: 'N/A', label: 'N/A' },
+  { value: '2', label: '2A' },
+  { value: '3', label: '3A' },
+  { value: '4', label: '4A' },
+  { value: '5', label: '5A' },
   { value: '6', label: '6A' },
   { value: '10', label: '10A' },
+  { value: '13', label: '13A' },
+  { value: '15', label: '15A' },
   { value: '16', label: '16A' },
   { value: '20', label: '20A' },
   { value: '25', label: '25A' },
+  { value: '30', label: '30A' },
   { value: '32', label: '32A' },
   { value: '40', label: '40A' },
+  { value: '45', label: '45A' },
   { value: '50', label: '50A' },
   { value: '63', label: '63A' },
   { value: '80', label: '80A' },
   { value: '100', label: '100A' },
+  { value: '125', label: '125A' },
+  { value: '160', label: '160A' },
   { value: 'LIM', label: 'LIM' },
 ];
 
@@ -33,6 +43,7 @@ export const bsStandardOptions = [
   { value: 'Fuse (BS 88)', label: 'Fuse (BS 88)' },
   { value: 'Fuse (BS 1361)', label: 'Fuse (BS 1361)' },
   { value: 'Fuse (BS 3036)', label: 'Fuse (BS 3036)' },
+  { value: 'MCCB (BS EN 60947)', label: 'MCCB (BS EN 60947)' },
   { value: 'Other', label: 'Other' },
 ];
 
@@ -41,7 +52,8 @@ export const rcdBsStandardOptions = [
   { value: 'N/A', label: 'N/A' },
   { value: 'RCD (BS EN 61008)', label: 'RCD (BS EN 61008)' },
   { value: 'RCBO (BS EN 61009)', label: 'RCBO (BS EN 61009)' },
-  { value: 'RCD (BS 7288)', label: 'RCD (BS 7288)' },
+  { value: 'Type F (BS EN 62423)', label: 'Type F (BS EN 62423)' },
+  { value: 'RCCB (BS EN 60947-2)', label: 'RCCB (BS EN 60947-2)' },
   { value: 'Other', label: 'Other' },
 ];
 
@@ -89,7 +101,11 @@ export const getDefaultKaRating = (deviceType: string, rating: string): string =
 
 // Check if a BS standard requires a curve (MCB/RCBO only)
 export const bsStandardRequiresCurve = (bsStandard: string): boolean => {
-  return bsStandard === 'MCB (BS EN 60898)' || bsStandard === 'RCBO (BS EN 61009)';
+  return (
+    bsStandard === 'MCB (BS EN 60898)' ||
+    bsStandard === 'RCBO (BS EN 61009)' ||
+    bsStandard === 'MCCB (BS EN 60947)'
+  );
 };
 
 // Protective device options with Zs limits for validation
