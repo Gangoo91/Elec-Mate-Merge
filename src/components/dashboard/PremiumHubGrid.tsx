@@ -187,14 +187,13 @@ function PremiumHubCard({
       onClick={() => navigate(hub.path)}
       className={cn(
         // Base
-        'group relative cursor-pointer',
+        'group relative cursor-pointer h-full',
         // Solid surface
         'card-surface-interactive',
         // Touch optimization
         'touch-manipulation',
         // Overflow for gradient line
         'overflow-hidden'
-        // All cards same size in 2x2 grid
       )}
     >
       {/* Gradient accent line at top */}
