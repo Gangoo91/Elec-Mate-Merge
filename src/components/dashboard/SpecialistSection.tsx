@@ -106,7 +106,6 @@ const specialistCerts: CertDef[] = [
     description: 'Periodic test & service',
     standard: 'BS 5839-1',
     accentColor: 'from-rose-500 via-pink-400 to-red-400',
-    comingSoon: true,
     category: 'fire-safety',
   },
   {
@@ -115,7 +114,6 @@ const specialistCerts: CertDef[] = [
     description: 'Extension & alteration',
     standard: 'BS 5839-1',
     accentColor: 'from-pink-500 via-rose-400 to-red-400',
-    comingSoon: true,
     category: 'fire-safety',
   },
   {
@@ -198,7 +196,10 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
                   <motion.div key={cert.id} variants={itemVariants} className="h-full">
                     <button
                       type="button"
-                      onClick={() => !cert.comingSoon && navigate(`/electrician/inspection-testing/${cert.id}/new`)}
+                      onClick={() =>
+                        !cert.comingSoon &&
+                        navigate(`/electrician/inspection-testing/${cert.id}/new`)
+                      }
                       className={cn(
                         'block w-full h-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation',
                         cert.comingSoon && 'cursor-default'
@@ -227,11 +228,15 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
                           <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
                             {cert.title}
                           </h3>
-                          <p className="mt-1 text-[12px] text-white leading-tight">{cert.description}</p>
+                          <p className="mt-1 text-[12px] text-white leading-tight">
+                            {cert.description}
+                          </p>
                           <div className="flex-grow min-h-[12px]" />
                           <div className="flex items-center justify-between">
                             {cert.comingSoon ? (
-                              <span className="text-[11px] font-medium text-white">Coming Soon</span>
+                              <span className="text-[11px] font-medium text-white">
+                                Coming Soon
+                              </span>
                             ) : (
                               <span className="text-[11px] font-medium text-elec-yellow">Open</span>
                             )}

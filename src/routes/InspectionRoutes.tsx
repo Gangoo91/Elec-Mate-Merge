@@ -9,8 +9,18 @@ const NewCertificate = lazy(() => import('@/pages/inspection/NewCertificate'));
 
 // New certificate types
 const FireAlarmCertificate = lazy(() => import('@/pages/inspection/FireAlarmCertificate'));
-const FireAlarmDesignCertificate = lazy(() => import('@/pages/inspection/FireAlarmDesignCertificate'));
-const FireAlarmCommissioningCertificate = lazy(() => import('@/pages/inspection/FireAlarmCommissioningCertificate'));
+const FireAlarmDesignCertificate = lazy(
+  () => import('@/pages/inspection/FireAlarmDesignCertificate')
+);
+const FireAlarmCommissioningCertificate = lazy(
+  () => import('@/pages/inspection/FireAlarmCommissioningCertificate')
+);
+const FireAlarmInspectionCertificate = lazy(
+  () => import('@/pages/inspection/FireAlarmInspectionCertificate')
+);
+const FireAlarmModificationCertificate = lazy(
+  () => import('@/pages/inspection/FireAlarmModificationCertificate')
+);
 const EVChargingCertificate = lazy(() => import('@/pages/inspection/EVChargingCertificate'));
 const EmergencyLightingCertificate = lazy(
   () => import('@/pages/inspection/EmergencyLightingCertificate')
@@ -21,12 +31,18 @@ const PATTestingCertificate = lazy(() => import('@/pages/inspection/PATTestingCe
 // BESS Certificate
 const BESSCertificate = lazy(() => import('@/pages/inspection/BESSCertificate'));
 // Lightning Protection Certificate
-const LightningProtectionCertificate = lazy(() => import('@/pages/inspection/LightningProtectionCertificate'));
+const LightningProtectionCertificate = lazy(
+  () => import('@/pages/inspection/LightningProtectionCertificate')
+);
 // Smoke & CO Alarm
 const SmokeCOAlarmCertificate = lazy(() => import('@/pages/inspection/SmokeCOAlarmCertificate'));
 // G98/G99 Commissioning
-const G98CommissioningCertificate = lazy(() => import('@/pages/inspection/G98CommissioningCertificate'));
-const G99CommissioningCertificate = lazy(() => import('@/pages/inspection/G99CommissioningCertificate'));
+const G98CommissioningCertificate = lazy(
+  () => import('@/pages/inspection/G98CommissioningCertificate')
+);
+const G99CommissioningCertificate = lazy(
+  () => import('@/pages/inspection/G99CommissioningCertificate')
+);
 
 // Labels & Warnings
 const DangerNoticePage = lazy(() => import('@/pages/inspection/DangerNoticePage'));
@@ -57,8 +73,18 @@ export default function InspectionRoutes() {
         <Route path="fire-alarm/:id" element={<FireAlarmCertificate />} />
         <Route path="fire-alarm-design/new" element={<FireAlarmDesignCertificate />} />
         <Route path="fire-alarm-design/:id" element={<FireAlarmDesignCertificate />} />
-        <Route path="fire-alarm-commissioning/new" element={<FireAlarmCommissioningCertificate />} />
-        <Route path="fire-alarm-commissioning/:id" element={<FireAlarmCommissioningCertificate />} />
+        <Route
+          path="fire-alarm-commissioning/new"
+          element={<FireAlarmCommissioningCertificate />}
+        />
+        <Route
+          path="fire-alarm-commissioning/:id"
+          element={<FireAlarmCommissioningCertificate />}
+        />
+        <Route path="fire-alarm-inspection/new" element={<FireAlarmInspectionCertificate />} />
+        <Route path="fire-alarm-inspection/:id" element={<FireAlarmInspectionCertificate />} />
+        <Route path="fire-alarm-modification/new" element={<FireAlarmModificationCertificate />} />
+        <Route path="fire-alarm-modification/:id" element={<FireAlarmModificationCertificate />} />
 
         {/* EV Charging Certificate (IET CoP) */}
         <Route path="ev-charging/new" element={<EVChargingCertificate />} />

@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fire Alarm Inspection Certificate (G6) - BS 5839-1:2025</title>
+    <style>
+      :root { --accent: {{ company_accent_color | default: "#dc2626" }}; }
+      @page { size: A4; margin: 3mm; }
+      @page landscape { size: A4 landscape; margin: 3mm; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 8.5px; line-height: 1.4; color: #1a1a1a; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      .header { background: linear-gradient(180deg, #0a1628, #152238); color: #fff; padding: 10px 12px; border-radius: 2px; position: relative; margin-bottom: 2px; }
+      .header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+      .header-content { display: flex; justify-content: space-between; align-items: center; }
+      .header-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+      .header-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+      .header-company { font-size: 11px; font-weight: 700; }
+      .header-title { flex: 1; }
+      .header-title h1 { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+      .header-title p { font-size: 7.5px; opacity: 0.85; }
+      .header-meta { text-align: right; }
+      .header-cert-no { font-size: 11px; font-weight: 700; color: var(--accent); }
+      .header-page { font-size: 8px; opacity: 0.7; margin-top: 2px; }
+
+      .section { margin-bottom: 4px; }
+      .section-title { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; padding: 4px 8px; margin-bottom: 3px; border-left: 3px solid var(--accent); }
+      .grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 2px; }
+      .row { display: table-row; }
+      .lbl { display: table-cell; font-size: 7.5px; font-weight: 600; color: #475569; padding: 5px 6px; width: 120px; vertical-align: middle; background: #f8fafc; border: 1px solid #e2e8f0; }
+      .val { display: table-cell; font-size: 9.5px; color: #1e293b; padding: 5px 6px; vertical-align: middle; border: 1px solid #e2e8f0; background: #fff; }
+      .inline { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 6px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; }
+      .inline-group { display: flex; align-items: center; gap: 3px; }
+      .inline-lbl { font-size: 7.5px; font-weight: 600; color: #64748b; white-space: nowrap; }
+      .inline-val { font-size: 9px; color: #1e293b; padding: 4px 6px; background: #fff; border: 1px solid #cbd5e1; border-radius: 2px; min-width: 50px; min-height: 20px; }
+      .tbl { width: 100%; border-collapse: collapse; font-size: 8.5px; margin-bottom: 3px; }
+      .tbl th { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; font-weight: 600; font-size: 7.5px; padding: 5px 6px; text-align: left; border: 1px solid #0f172a; }
+      .tbl td { padding: 5px 6px; border: 1px solid #e2e8f0; background: #fff; }
+      .tbl .pass { background: #dcfce7; color: #166534; font-weight: 600; }
+      .tbl .fail { background: #fee2e2; color: #991b1b; font-weight: 600; }
+      .tbl .na { background: #f1f5f9; color: #64748b; }
+      .eq-grid { display: flex; gap: 4px; margin-bottom: 4px; }
+      .eq-box { flex: 1; background: linear-gradient(135deg, #f8fafc, #e2e8f0); border: 1px solid #cbd5e1; border-radius: 3px; padding: 6px; text-align: center; }
+      .eq-box .count { font-size: 16px; font-weight: 700; color: var(--accent); line-height: 1; }
+      .eq-box .label { font-size: 7px; color: #64748b; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
+      .chk { width: 12px; height: 12px; border: 1.5px solid #64748b; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; border-radius: 1px; }
+      .chk.on { background: #0f172a; color: #fff; border-color: #0f172a; }
+      .chk.green { background: #22c55e; color: #fff; border-color: #22c55e; }
+      .no-defects { background: #dcfce7; border: 1px solid #86efac; border-left: 3px solid #22c55e; border-radius: 2px; padding: 8px 12px; text-align: center; }
+      .no-defects .text { font-size: 9px; font-weight: 600; color: #166534; }
+      .defect-card { background: #fff; border: 1px solid #e2e8f0; border-left: 3px solid #f59e0b; border-radius: 3px; padding: 6px; margin-bottom: 4px; }
+      .defect-card.critical { border-left-color: #dc2626; }
+      .defect-card.outstanding { border-left-color: #dc2626; }
+      .defect-card.rectified { border-left-color: #22c55e; }
+      .declaration { background: #f0fdf4; border: 1px solid #86efac; border-left: 3px solid var(--accent); border-radius: 2px; padding: 6px 10px; margin-bottom: 4px; }
+      .declaration p { font-size: 7.5px; color: #166534; line-height: 1.5; text-align: justify; }
+      .sig-grid { display: flex; gap: 6px; margin-top: 2px; }
+      .sig-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+      .sig-box-hdr { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px; border-bottom: 2px solid var(--accent); }
+      .sig-box-body { padding: 4px 6px; background: #fafbfc; }
+      .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+      .sig-field:last-child { margin-bottom: 0; }
+      .sig-lbl { font-size: 7px; font-weight: 600; color: #64748b; min-width: 70px; flex-shrink: 0; }
+      .sig-val { flex: 1; font-size: 9px; color: #1e293b; padding: 4px 6px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 20px; }
+      .sig-val.sig { min-height: 35px; display: flex; align-items: center; }
+      .sig-val img { max-height: 30px; }
+      .assessment { display: flex; align-items: center; gap: 16px; padding: 8px 12px; background: #f8fafc; border: 2px solid #1e293b; border-radius: 3px; }
+      .assessment-label { font-size: 9px; font-weight: 600; color: #334155; }
+      .assessment-options { display: flex; gap: 12px; }
+      .assessment-opt { display: flex; align-items: center; gap: 6px; padding: 6px 16px; border: 2px solid #cbd5e1; border-radius: 3px; background: #fff; }
+      .assessment-opt.pass-on { background: #22c55e; border-color: #22c55e; }
+      .assessment-opt.fail-on { background: #dc2626; border-color: #dc2626; }
+      .assessment-opt .opt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+      .assessment-opt.pass-on .opt-label, .assessment-opt.fail-on .opt-label { color: #fff; }
+      .service { display: flex; gap: 12px; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; }
+      .service-item { flex: 1; }
+      .service-lbl { font-size: 7px; color: #64748b; margin-bottom: 2px; }
+      .service-date { font-size: 10px; font-weight: 600; color: #1e293b; }
+      .photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .photo-item { border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden; }
+      .photo-item img { width: 100%; height: 120px; object-fit: cover; }
+      .photo-caption { font-size: 7px; color: #64748b; padding: 4px 6px; background: #f8fafc; text-align: center; }
+      .avoid-break { page-break-inside: avoid; }
+      .page-break { page-break-before: always; }
+      .landscape-page { page: landscape; }
+      .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-content">
+        <div class="header-brand">
+          {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+          {% if registration_scheme_logo %}<div class="header-logo" style="margin-left: 8px;"><img src="{{ registration_scheme_logo }}" alt="Scheme" /></div>{% endif %}
+          <div><div class="header-company">{{ company_name }}</div></div>
+        </div>
+        <div class="header-title">
+          <h1>FIRE ALARM INSPECTION & SERVICING CERTIFICATE (G6)</h1>
+          <p>In accordance with {{ standard_edition | default: "BS 5839-1:2025" }} — Periodic Inspection and Servicing</p>
+        </div>
+        <div class="header-meta">
+          <div class="header-cert-no">{{ certificate_number }}</div>
+          <div class="header-page">Page 1{% if has_sound_readings or has_test_equipment %} of {% if has_photos %}3{% else %}2{% endif %}{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certificate & Previous -->
+    <div class="section">
+      <div class="section-title">Certificate & Previous Visit</div>
+      <div class="inline">
+        <div class="inline-group"><span class="inline-lbl">Certificate No:</span><span class="inline-val" style="font-weight: 600;">{{ certificate_number }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Inspection Date:</span><span class="inline-val">{{ inspection_date }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Standard:</span><span class="inline-val">{{ standard_edition | default: "BS 5839-1:2025" }}</span></div>
+      </div>
+      {% if previous_cert_ref %}
+      <div class="inline" style="margin-top: 2px;">
+        <div class="inline-group"><span class="inline-lbl">Previous Cert:</span><span class="inline-val">{{ previous_cert_ref }}</span></div>
+        {% if previous_cert_date %}<div class="inline-group"><span class="inline-lbl">Date:</span><span class="inline-val">{{ previous_cert_date }}</span></div>{% endif %}
+        {% if previous_inspector %}<div class="inline-group"><span class="inline-lbl">Inspector:</span><span class="inline-val">{{ previous_inspector }}</span></div>{% endif %}
+        {% if previous_inspector_company %}<div class="inline-group"><span class="inline-lbl">Company:</span><span class="inline-val">{{ previous_inspector_company }}</span></div>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Client & Premises -->
+    <div class="section">
+      <div class="section-title">Client & Premises</div>
+      <div class="grid">
+        <div class="row"><div class="lbl">Client Name</div><div class="val">{{ client_name }}</div><div class="lbl">Telephone</div><div class="val">{{ client_telephone }}</div></div>
+        <div class="row"><div class="lbl">Client Address</div><div class="val" colspan="3">{{ client_address }}</div></div>
+        <div class="row"><div class="lbl">Premises Address</div><div class="val" colspan="3">{{ premises_address }}</div></div>
+      </div>
+      <div class="inline" style="margin-top: 2px;">
+        <div class="inline-group"><span class="inline-lbl">Category:</span><span class="inline-val" style="font-weight: 600;">{{ system_category }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Panel:</span><span class="inline-val">{{ panel_make }}</span></div>
+        {% if panel_location %}<div class="inline-group"><span class="inline-lbl">Location:</span><span class="inline-val">{{ panel_location }}</span></div>{% endif %}
+      </div>
+    </div>
+
+    <!-- Extent of Inspection -->
+    <div class="section">
+      <div class="section-title">Extent of Inspection</div>
+      <div class="inline">
+        <div class="inline-group"><span class="inline-lbl">Scope:</span><span class="inline-val" style="font-weight: 600;">{% if is_full_inspection %}Full System{% else %}Partial{% endif %}</span></div>
+        {% if logbook_reviewed %}<div class="inline-group"><span class="chk green">&#10003;</span><span style="font-size: 8px; margin-left: 4px;">Logbook reviewed</span></div>{% endif %}
+        {% if weekly_testing_confirmed %}<div class="inline-group"><span class="chk green">&#10003;</span><span style="font-size: 8px; margin-left: 4px;">Weekly testing confirmed</span></div>{% endif %}
+        {% if weekly_records_reviewed %}<div class="inline-group"><span class="chk green">&#10003;</span><span style="font-size: 8px; margin-left: 4px;">Weekly records reviewed</span></div>{% endif %}
+      </div>
+      {% if logbook_notes %}<div class="grid" style="margin-top: 2px;"><div class="row"><div class="lbl">Logbook Notes</div><div class="val">{{ logbook_notes }}</div></div></div>{% endif %}
+      {% if is_partial_inspection and agreed_scope %}
+      <div class="grid" style="margin-top: 2px;"><div class="row"><div class="lbl">Agreed Scope</div><div class="val">{{ agreed_scope }}</div></div></div>
+      {% endif %}
+      {% if inspection_limitations %}<div class="grid" style="margin-top: 2px;"><div class="row"><div class="lbl">Limitations</div><div class="val">{{ inspection_limitations }}</div></div></div>{% endif %}
+    </div>
+
+    <!-- Building Changes -->
+    {% if has_building_changes %}
+    <div class="section">
+      <div class="section-title">Building Changes Since Last Visit</div>
+      <div class="inline">
+        {% if changes_structural %}<div class="inline-group"><span class="chk on">&#10003;</span><span style="font-size: 8px; margin-left: 4px;">Structural changes</span></div>{% endif %}
+        {% if changes_occupancy %}<div class="inline-group"><span class="chk on">&#10003;</span><span style="font-size: 8px; margin-left: 4px;">Occupancy changes</span></div>{% endif %}
+        {% if changes_escape_routes %}<div class="inline-group"><span class="chk on">&#10003;</span><span style="font-size: 8px; margin-left: 4px;">Escape route changes</span></div>{% endif %}
+        {% if changes_environmental %}<div class="inline-group"><span class="chk on">&#10003;</span><span style="font-size: 8px; margin-left: 4px;">Environmental changes</span></div>{% endif %}
+      </div>
+      {% if building_change_notes %}<div class="grid" style="margin-top: 2px;"><div class="row"><div class="lbl">Details</div><div class="val">{{ building_change_notes }}</div></div></div>{% endif %}
+    </div>
+    {% endif %}
+
+    <!-- False Alarms -->
+    {% if has_false_alarms %}
+    <div class="section">
+      <div class="section-title">False Alarm Records</div>
+      <div class="inline">
+        <div class="inline-group"><span class="inline-lbl">Count:</span><span class="inline-val" style="font-weight: 600;">{{ false_alarm_count }}</span></div>
+        {% if false_alarm_cause %}<div class="inline-group"><span class="inline-lbl">Cause:</span><span class="inline-val">{{ false_alarm_cause }}</span></div>{% endif %}
+      </div>
+      {% if false_alarm_action %}<div class="grid" style="margin-top: 2px;"><div class="row"><div class="lbl">Action Taken</div><div class="val">{{ false_alarm_action }}</div></div></div>{% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Panel & Power & Fault Tests (same as G3) -->
+    <div class="section">
+      <div class="section-title">Control Panel Tests</div>
+      <table class="tbl">
+        <thead><tr><th style="width: 50%;">Test</th><th style="width: 50%; text-align: center;">Result</th></tr></thead>
+        <tbody>
+          <tr><td>Power-on Test</td><td class="{{ panel_tests.power_on_class }}" style="text-align: center;">{{ panel_tests.power_on }}</td></tr>
+          <tr><td>Zone Indicators</td><td class="{{ panel_tests.zone_indicators_class }}" style="text-align: center;">{{ panel_tests.zone_indicators }}</td></tr>
+          <tr><td>Fault Indicators</td><td class="{{ panel_tests.fault_indicators_class }}" style="text-align: center;">{{ panel_tests.fault_indicators }}</td></tr>
+          <tr><td>Silence Facility</td><td class="{{ panel_tests.silence_class }}" style="text-align: center;">{{ panel_tests.silence }}</td></tr>
+          <tr><td>Reset Function</td><td class="{{ panel_tests.reset_class }}" style="text-align: center;">{{ panel_tests.reset }}</td></tr>
+          <tr><td>Event Log</td><td class="{{ panel_tests.event_log_class }}" style="text-align: center;">{{ panel_tests.event_log }}</td></tr>
+          <tr><td>Remote Signalling</td><td class="{{ panel_tests.remote_signalling_class }}" style="text-align: center;">{{ panel_tests.remote_signalling }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Power & Fault Tests</div>
+      <table class="tbl">
+        <thead><tr><th style="width: 50%;">Test</th><th style="width: 50%; text-align: center;">Result</th></tr></thead>
+        <tbody>
+          <tr><td>Mains Supply</td><td class="{{ power_tests.mains_class }}" style="text-align: center;">{{ power_tests.mains }}</td></tr>
+          <tr><td>Battery Voltage</td><td style="text-align: center;">{{ power_tests.battery_voltage }}V</td></tr>
+          <tr><td>Battery Condition</td><td class="{{ power_tests.battery_condition_class }}" style="text-align: center;">{{ power_tests.battery_condition }}</td></tr>
+          <tr><td>Charger Operation</td><td class="{{ power_tests.charger_class }}" style="text-align: center;">{{ power_tests.charger }}</td></tr>
+          <tr><td>Standby Duration</td><td class="{{ power_tests.standby_class }}" style="text-align: center;">{{ power_tests.standby }}</td></tr>
+          <tr><td>Open Circuit Fault</td><td class="{{ fault_tests.open_circuit_class }}" style="text-align: center;">{{ fault_tests.open_circuit }}</td></tr>
+          <tr><td>Short Circuit Fault</td><td class="{{ fault_tests.short_circuit_class }}" style="text-align: center;">{{ fault_tests.short_circuit }}</td></tr>
+          <tr><td>Earth Fault</td><td class="{{ fault_tests.earth_fault_class }}" style="text-align: center;">{{ fault_tests.earth_fault }}</td></tr>
+          <tr><td>Power Fail</td><td class="{{ fault_tests.power_fail_class }}" style="text-align: center;">{{ fault_tests.power_fail }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Cause & Effect Verification -->
+    {% if cause_effect_verified or cause_effect_ref %}
+    <div class="section">
+      <div class="section-title">Cause & Effect Verification</div>
+      <div class="inline">
+        <div class="inline-group"><span class="chk {% if cause_effect_verified %}on{% endif %}">{% if cause_effect_verified %}&#10003;{% endif %}</span><span style="font-size: 8px; margin-left: 4px;">Matrix verified</span></div>
+        {% if cause_effect_ref %}<div class="inline-group"><span class="inline-lbl">Reference:</span><span class="inline-val">{{ cause_effect_ref }}</span></div>{% endif %}
+        {% if cause_effect_date %}<div class="inline-group"><span class="inline-lbl">Date:</span><span class="inline-val">{{ cause_effect_date }}</span></div>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Device Sampling -->
+    {% if has_device_testing %}
+    <div class="section">
+      <div class="section-title">Device Sampling (This Visit)</div>
+      <div class="eq-grid">
+        <div class="eq-box"><div class="count">{{ detectors_tested }}/{{ detectors_total }}</div><div class="label">Detectors ({{ detector_coverage }}%)</div></div>
+        <div class="eq-box"><div class="count">{{ call_points_tested }}/{{ call_points_total }}</div><div class="label">Call Points ({{ call_point_coverage }}%)</div></div>
+        <div class="eq-box"><div class="count">{{ sounders_tested }}/{{ sounders_total }}</div><div class="label">Sounders ({{ sounder_coverage }}%)</div></div>
+        <div class="eq-box"><div class="count">{{ interfaces_tested }}/{{ interfaces_total }}</div><div class="label">Interfaces ({{ interface_coverage }}%)</div></div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Previous Defects -->
+    {% if has_previous_defects %}
+    <div class="section">
+      <div class="section-title">Previous Defects Status</div>
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Description</th><th>Original Date</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          {% for d in previous_defects %}
+          <tr>
+            <td style="text-align: center;">{{ d.number }}</td><td>{{ d.description }}</td><td>{{ d.original_date }}</td>
+            <td class="{% if d.status == 'outstanding' %}fail{% elsif d.status == 'rectified' %}pass{% endif %}" style="text-align: center;">{{ d.status }}</td>
+            <td>{{ d.notes }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- New Defects -->
+    <div class="section">
+      <div class="section-title">Defects Found This Visit</div>
+      {% if no_defects %}
+      <div class="no-defects"><div class="text">&#10003; No defects found during inspection</div></div>
+      {% else %}
+      {% for defect in defects %}
+      <div class="defect-card {% if defect.severity_class == 'critical' %}critical{% endif %}">
+        <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 3px;">
+          <span style="background: #0f172a; color: #fff; font-size: 7px; font-weight: 600; padding: 2px 6px; border-radius: 2px;">#{{ defect.number }}</span>
+          <span style="font-size: 7px; font-weight: 600;">{{ defect.severity }}</span>
+          {% if defect.rectified %}<span style="background: #dcfce7; color: #166534; font-size: 7px; font-weight: 600; padding: 2px 6px; border-radius: 2px;">RECTIFIED {{ defect.rectification_date }}</span>{% endif %}
+        </div>
+        <div style="font-size: 8px;">{{ defect.description }}</div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Declaration -->
+    <div class="section avoid-break">
+      <div class="section-title">Inspector Declaration</div>
+      <div class="declaration">
+        <p><strong>I hereby certify</strong> that the fire detection and fire alarm system described in this certificate has been inspected and serviced in accordance with {{ standard_edition | default: "BS 5839-1:2025" }}. The system has been inspected and serviced. All tests on the planned sample have been carried out, subject to any observations recorded.</p>
+      </div>
+    </div>
+
+    <!-- Signatures -->
+    <div class="section avoid-break">
+      <div class="section-title">Signatures</div>
+      <div class="sig-grid">
+        <div class="sig-box">
+          <div class="sig-box-hdr">Inspector</div>
+          <div class="sig-box-body">
+            <div class="sig-field"><span class="sig-lbl">Name</span><span class="sig-val">{{ inspector_name }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Company</span><span class="sig-val">{{ inspector_company }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Qualifications</span><span class="sig-val">{{ inspector_qualifications }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Date</span><span class="sig-val">{{ inspector_date }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Signature</span><span class="sig-val sig">{% if inspector_signature %}<img src="{{ inspector_signature }}" />{% endif %}</span></div>
+          </div>
+        </div>
+        {% if responsible_person.name %}
+        <div class="sig-box">
+          <div class="sig-box-hdr">Responsible Person</div>
+          <div class="sig-box-body">
+            <div class="sig-field"><span class="sig-lbl">Name</span><span class="sig-val">{{ responsible_person.name }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Position</span><span class="sig-val">{{ responsible_person.position }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Date</span><span class="sig-val">{{ responsible_person.date }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Signature</span><span class="sig-val sig">{% if responsible_person.signature %}<img src="{{ responsible_person.signature }}" />{% endif %}</span></div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Overall Assessment -->
+    <div class="section avoid-break">
+      <div class="section-title">Overall Assessment</div>
+      <div class="assessment">
+        <span class="assessment-label">Inspection Assessment:</span>
+        <div class="assessment-options">
+          <div class="assessment-opt {% if overall_result == 'satisfactory' %}pass-on{% endif %}">
+            <span class="chk {% if overall_result == 'satisfactory' %}on{% endif %}" style="{% if overall_result == 'satisfactory' %}background: #fff; color: #22c55e;{% endif %}">{% if overall_result == 'satisfactory' %}&#10003;{% endif %}</span>
+            <span class="opt-label">SATISFACTORY</span>
+          </div>
+          <div class="assessment-opt {% if overall_result == 'unsatisfactory' %}fail-on{% endif %}">
+            <span class="chk {% if overall_result == 'unsatisfactory' %}on{% endif %}" style="{% if overall_result == 'unsatisfactory' %}background: #fff; color: #dc2626;{% endif %}">{% if overall_result == 'unsatisfactory' %}&#10003;{% endif %}</span>
+            <span class="opt-label">UNSATISFACTORY</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Schedule -->
+    <div class="section avoid-break">
+      <div class="section-title">Service Schedule</div>
+      <div class="service">
+        <div class="service-item"><div class="service-lbl">Next 6-Monthly Service Due:</div><div class="service-date">{{ next_service_due }}</div></div>
+        <div class="service-item"><div class="service-lbl">Next Annual Inspection Due:</div><div class="service-date">{{ next_inspection_due }}</div></div>
+      </div>
+    </div>
+
+    {% if has_additional_notes %}
+    <div class="section"><div class="section-title">Additional Notes</div><div class="inline" style="min-height: 30px;">{{ additional_notes }}</div></div>
+    {% endif %}
+
+    <div class="footer">
+      <div><strong>{{ company_name }}</strong><br />{{ company_address }}<br />{% if company_phone %}Tel: {{ company_phone }}{% endif %}{% if company_email %} | {{ company_email }}{% endif %}</div>
+      <div style="text-align: right;"><span style="color: #94a3b8;">{{ standard_edition | default: "BS 5839-1:2025" }} | Fire Alarm Inspection Certificate (G6)</span></div>
+    </div>
+
+    <!-- PAGE 2: SOUND READINGS (if any) -->
+    {% if has_sound_readings or has_test_equipment %}
+    <div class="page-break landscape-page"></div>
+    <div class="header">
+      <div class="header-content">
+        <div class="header-brand">{% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}<div><div class="header-company">{{ company_name }}</div></div></div>
+        <div class="header-title"><h1>SOUND LEVEL READINGS & TEST EQUIPMENT</h1><p>{{ certificate_number }} — {{ premises_name }}</p></div>
+        <div class="header-meta"><div class="header-cert-no">{{ certificate_number }}</div><div class="header-page">Page 2{% if has_photos %} of 3{% else %} of 2{% endif %}</div></div>
+      </div>
+    </div>
+    {% if has_sound_readings %}
+    <div class="section">
+      <div class="section-title">Sound Level Readings</div>
+      <table class="tbl">
+        <thead><tr><th style="width: 5%; text-align: center;">#</th><th style="width: 12%;">Zone</th><th style="width: 25%;">Location</th><th style="width: 15%;">Area Type</th><th style="width: 13%; text-align: center;">Measured (dB)</th><th style="width: 13%; text-align: center;">Min Required</th><th style="width: 12%; text-align: center;">Result</th></tr></thead>
+        <tbody>
+          {% for r in sound_readings %}
+          <tr><td style="text-align: center;">{{ r.number }}</td><td>{{ r.zone }}</td><td>{{ r.location }}</td><td>{{ r.area_type }}</td><td style="text-align: center;">{{ r.db_reading }}</td><td style="text-align: center;">&ge; {{ r.min_required }}</td><td class="{{ r.result_class }}" style="text-align: center;">{{ r.result }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+    {% if has_environment %}
+    <div class="section">
+      <div class="section-title">Environmental Conditions</div>
+      <div class="inline">
+        {% if ambient_temperature %}<div class="inline-group"><span class="inline-lbl">Temperature:</span><span class="inline-val">{{ ambient_temperature }}&deg;C</span></div>{% endif %}
+        {% if ambient_noise_level %}<div class="inline-group"><span class="inline-lbl">Ambient Noise:</span><span class="inline-val">{{ ambient_noise_level }} dB</span></div>{% endif %}
+        {% if weather_conditions %}<div class="inline-group"><span class="inline-lbl">Weather:</span><span class="inline-val">{{ weather_conditions }}</span></div>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if has_test_equipment %}
+    <div class="section">
+      <div class="section-title">Test Equipment Used</div>
+      <table class="tbl">
+        <thead><tr><th>Type</th><th>Make / Model</th><th>Serial No.</th><th>Calibration Date</th><th>Calibration Due</th></tr></thead>
+        <tbody>
+          {% for eq in test_equipment %}
+          <tr><td>{{ eq.type }}</td><td>{{ eq.make_model }}</td><td>{{ eq.serial_number }}</td><td>{{ eq.calibration_date }}</td><td>{{ eq.calibration_due }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+    <div class="footer">
+      <div><strong>{{ company_name }}</strong> | {{ company_phone }}</div>
+      <div style="text-align: right;"><span style="color: #94a3b8;">{{ standard_edition | default: "BS 5839-1:2025" }} | Fire Alarm Inspection Certificate (G6)</span></div>
+    </div>
+    {% endif %}
+
+    <!-- PAGE 3: PHOTOS -->
+    {% if has_photos %}
+    <div class="page-break"></div>
+    <div class="header">
+      <div class="header-content">
+        <div class="header-brand">{% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}<div><div class="header-company">{{ company_name }}</div></div></div>
+        <div class="header-title"><h1>APPENDIX — PHOTOGRAPHIC EVIDENCE</h1><p>{{ certificate_number }} — {{ premises_name }}</p></div>
+        <div class="header-meta"><div class="header-cert-no">{{ certificate_number }}</div><div class="header-page">Page 3 of 3</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Inspection Photos ({{ photo_count }})</div>
+      <div class="photos-grid">
+        {% for photo in photos %}
+        <div class="photo-item"><img src="{{ photo }}" alt="Photo {{ forloop.index }}" /><div class="photo-caption">Photo {{ forloop.index }}</div></div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="footer">
+      <div><strong>{{ company_name }}</strong> | {{ company_phone }}</div>
+      <div style="text-align: right;"><span style="color: #94a3b8;">{{ standard_edition | default: "BS 5839-1:2025" }} | Fire Alarm Inspection Certificate (G6)</span></div>
+    </div>
+    {% endif %}
+  </body>
+</html>

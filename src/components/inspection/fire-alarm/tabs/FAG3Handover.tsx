@@ -278,18 +278,16 @@ export default function FAG3Handover({ formData, onUpdate }: Props) {
           type="file"
           accept="image/*"
           multiple
-          className="sr-only"
+          className="hidden"
           onChange={handlePhotoCapture}
         />
-        <label
-          onClick={(e) => {
-            e.preventDefault();
-            photoInputRef.current?.click();
-          }}
-          className="w-full h-12 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center gap-2.5 text-sm text-white touch-manipulation active:scale-[0.98] cursor-pointer"
+        <button
+          type="button"
+          onClick={() => photoInputRef.current?.click()}
+          className="w-full h-12 rounded-xl border-2 border-dashed border-white/[0.15] flex items-center justify-center gap-2.5 text-sm text-white touch-manipulation active:scale-[0.98]"
         >
           <Camera className="h-4 w-4" /> Add Photos
-        </label>
+        </button>
         {formData.photos?.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
             {formData.photos.map((photo: string, i: number) => (

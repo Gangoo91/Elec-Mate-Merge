@@ -7,10 +7,18 @@ import { supabase } from '@/integrations/supabase/client';
  * Example: EICR-2025-0001, EIC-2025-0042, MW-2025-0123
  */
 export const generateCertificateNumber = async (
-  reportType: 'eicr' | 'eic' | 'minor-works' | 'fire-alarm' | 'fire-alarm-design' | 'fire-alarm-commissioning'
+  reportType:
+    | 'eicr'
+    | 'eic'
+    | 'minor-works'
+    | 'fire-alarm'
+    | 'fire-alarm-design'
+    | 'fire-alarm-commissioning'
+    | 'fire-alarm-inspection'
+    | 'fire-alarm-modification'
 ): Promise<string> => {
   // Fire alarm types use fallback directly — RPC doesn't support hyphenated types
-  if (reportType === 'fire-alarm' || reportType === 'fire-alarm-design' || reportType === 'fire-alarm-commissioning') {
+  if (reportType.startsWith('fire-alarm')) {
     return generateFallbackCertificateNumber(reportType);
   }
 
@@ -36,9 +44,19 @@ export const generateCertificateNumber = async (
  * Fallback method using crypto.randomUUID() for guaranteed uniqueness
  * Only used if database function fails
  */
-const generateFallbackCertificateNumber = (reportType: 'eicr' | 'eic' | 'minor-works' | 'fire-alarm' | 'fire-alarm-design' | 'fire-alarm-commissioning'): string => {
+const generateFallbackCertificateNumber = (reportType: string): string => {
   const year = new Date().getFullYear();
-  const prefix = reportType === 'eicr' ? 'EICR' : reportType === 'eic' ? 'EIC' : reportType === 'fire-alarm' ? 'FA/G2' : reportType === 'fire-alarm-design' ? 'FA/G1' : reportType === 'fire-alarm-commissioning' ? 'FA/G3' : 'MW';
+  const prefixMap: Record<string, string> = {
+    eicr: 'EICR',
+    eic: 'EIC',
+    'minor-works': 'MW',
+    'fire-alarm': 'FA/G2',
+    'fire-alarm-design': 'FA/G1',
+    'fire-alarm-commissioning': 'FA/G3',
+    'fire-alarm-inspection': 'FA/G6',
+    'fire-alarm-modification': 'FA/G7',
+  };
+  const prefix = prefixMap[reportType] || reportType.toUpperCase();
 
   // Use crypto.randomUUID() and take first 6 characters for guaranteed uniqueness
   const uniqueId = crypto.randomUUID().replace(/-/g, '').substring(0, 6).toUpperCase();

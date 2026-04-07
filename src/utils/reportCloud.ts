@@ -9,6 +9,8 @@ export type ReportType =
   | 'fire-alarm'
   | 'fire-alarm-design'
   | 'fire-alarm-commissioning'
+  | 'fire-alarm-inspection'
+  | 'fire-alarm-modification'
   | 'emergency-lighting'
   | 'pat-testing'
   | 'solar-pv'
@@ -156,7 +158,25 @@ export const reportCloud = {
         if (reportType === 'fire-alarm-design' && data.designerSignature && data.designerDate)
           return 'completed';
         // Fire Alarm Commissioning (G3)
-        if (reportType === 'fire-alarm-commissioning' && data.commissionerSignature && data.commissioningDate)
+        if (
+          reportType === 'fire-alarm-commissioning' &&
+          data.commissionerSignature &&
+          data.commissioningDate
+        )
+          return 'completed';
+        // Fire Alarm Inspection (G6)
+        if (
+          reportType === 'fire-alarm-inspection' &&
+          data.inspectorSignature &&
+          data.inspectionDate
+        )
+          return 'completed';
+        // Fire Alarm Modification (G7)
+        if (
+          reportType === 'fire-alarm-modification' &&
+          data.modifierSignature &&
+          data.modificationDate
+        )
           return 'completed';
         // Emergency Lighting specific
         if (reportType === 'emergency-lighting' && data.engineerSignature && data.testDate)
@@ -171,11 +191,13 @@ export const reportCloud = {
         if (reportType === 'lightning-protection' && data.inspectorSignature && data.overallResult)
           return 'completed';
         // G98/G99 commissioning
-        if ((reportType === 'g98-commissioning' || reportType === 'g99-commissioning') && data.installerSignature)
+        if (
+          (reportType === 'g98-commissioning' || reportType === 'g99-commissioning') &&
+          data.installerSignature
+        )
           return 'completed';
         // Smoke & CO Alarm
-        if (reportType === 'smoke-co-alarm' && data.installerSignature)
-          return 'completed';
+        if (reportType === 'smoke-co-alarm' && data.installerSignature) return 'completed';
         // Labels & Warnings types
         if (reportType === 'danger-notice' && data.contractorSignature) return 'completed';
         if (reportType === 'isolation-cert' && data.personIsolatingSignature) return 'completed';
@@ -213,7 +235,8 @@ export const reportCloud = {
         status,
         customer_id: customerId || null,
         client_name: data.clientName || null,
-        installation_address: data.installationAddress || data.propertyAddress || data.premisesAddress || null,
+        installation_address:
+          data.installationAddress || data.propertyAddress || data.premisesAddress || null,
         inspection_date: data.inspectionDate || data.workDate || null,
         inspector_name: data.inspectorName || data.contractorName || null,
         data: data,
@@ -274,25 +297,47 @@ export const reportCloud = {
     try {
       // Determine report type from reportId prefix
       const lc = reportId.toLowerCase();
-      const reportType = lc.startsWith('fire-alarm-commissioning') ? 'fire-alarm-commissioning'
-        : lc.startsWith('fire-alarm-design') ? 'fire-alarm-design'
-        : lc.startsWith('fire-alarm') ? 'fire-alarm'
-        : lc.startsWith('emergency-lighting') ? 'emergency-lighting'
-        : lc.startsWith('ev-charging') ? 'ev-charging'
-        : lc.startsWith('bess') ? 'bess'
-        : lc.startsWith('pat-testing') ? 'pat-testing'
-        : lc.startsWith('lightning-protection') ? 'lightning-protection'
-        : lc.startsWith('g98') ? 'g98-commissioning'
-        : lc.startsWith('g99') ? 'g99-commissioning'
-        : lc.startsWith('smoke-co') ? 'smoke-co-alarm'
-        : lc.startsWith('danger-notice') ? 'danger-notice'
-        : lc.startsWith('isolation-cert') ? 'isolation-cert'
-        : lc.startsWith('permit-to-work') ? 'permit-to-work'
-        : lc.startsWith('safe-isolation') ? 'safe-isolation'
-        : lc.startsWith('warning-labels') ? 'warning-labels'
-        : lc.startsWith('minor-works') ? 'minor-works'
-        : lc.startsWith('eic-') ? 'eic'
-        : 'eicr';
+      const reportType = lc.startsWith('fire-alarm-modification')
+        ? 'fire-alarm-modification'
+        : lc.startsWith('fire-alarm-inspection')
+          ? 'fire-alarm-inspection'
+          : lc.startsWith('fire-alarm-commissioning')
+            ? 'fire-alarm-commissioning'
+            : lc.startsWith('fire-alarm-design')
+              ? 'fire-alarm-design'
+              : lc.startsWith('fire-alarm')
+                ? 'fire-alarm'
+                : lc.startsWith('emergency-lighting')
+                  ? 'emergency-lighting'
+                  : lc.startsWith('ev-charging')
+                    ? 'ev-charging'
+                    : lc.startsWith('bess')
+                      ? 'bess'
+                      : lc.startsWith('pat-testing')
+                        ? 'pat-testing'
+                        : lc.startsWith('lightning-protection')
+                          ? 'lightning-protection'
+                          : lc.startsWith('g98')
+                            ? 'g98-commissioning'
+                            : lc.startsWith('g99')
+                              ? 'g99-commissioning'
+                              : lc.startsWith('smoke-co')
+                                ? 'smoke-co-alarm'
+                                : lc.startsWith('danger-notice')
+                                  ? 'danger-notice'
+                                  : lc.startsWith('isolation-cert')
+                                    ? 'isolation-cert'
+                                    : lc.startsWith('permit-to-work')
+                                      ? 'permit-to-work'
+                                      : lc.startsWith('safe-isolation')
+                                        ? 'safe-isolation'
+                                        : lc.startsWith('warning-labels')
+                                          ? 'warning-labels'
+                                          : lc.startsWith('minor-works')
+                                            ? 'minor-works'
+                                            : lc.startsWith('eic-')
+                                              ? 'eic'
+                                              : 'eicr';
 
       // Get current status to check if it's an auto-draft
       const { data: currentReport } = await supabase
@@ -336,7 +381,8 @@ export const reportCloud = {
       const updateData: Record<string, unknown> = {
         status,
         client_name: data.clientName || null,
-        installation_address: data.installationAddress || data.propertyAddress || data.premisesAddress || null,
+        installation_address:
+          data.installationAddress || data.propertyAddress || data.premisesAddress || null,
         inspection_date: data.inspectionDate || data.workDate || null,
         inspector_name: data.inspectorName || data.contractorName || null,
         data: data,
@@ -638,7 +684,8 @@ export const reportCloud = {
       const updateData: Record<string, unknown> = {
         status: calculateStatus(),
         client_name: data.clientName || null,
-        installation_address: data.installationAddress || data.propertyAddress || data.premisesAddress || null,
+        installation_address:
+          data.installationAddress || data.propertyAddress || data.premisesAddress || null,
         inspection_date: data.inspectionDate || data.workDate || null,
         inspector_name: data.inspectorName || data.contractorName || null,
         data: data,

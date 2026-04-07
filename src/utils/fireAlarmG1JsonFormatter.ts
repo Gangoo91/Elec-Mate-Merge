@@ -263,6 +263,7 @@ export const formatFireAlarmG1Json = (formData: Record<string, any>) => {
       date: formatDateUK(d.date || ''),
     })),
     has_drawings: (formData.drawings || []).length > 0,
+    drawing_numbers: get('drawingNumbers'),
 
     // Cable Route
     cable_route_notes: get('cableRouteNotes'),

@@ -95,6 +95,8 @@ function hasMinimumDataForCloud(reportType: string, data: any): boolean {
     case 'fire-alarm':
     case 'fire-alarm-design':
     case 'fire-alarm-commissioning':
+    case 'fire-alarm-inspection':
+    case 'fire-alarm-modification':
       return !!(data.premisesAddress || data.systemType || data.systemCategory);
     case 'ev-charging':
       return !!(data.chargerMake || data.chargePointLocation);
@@ -441,7 +443,6 @@ export const useReportSync = ({
     }
 
     return () => debouncedCloudSync.cancel();
-     
   }, [formData, enabled, debouncedCloudSync, isOnline, isAuthenticated, userId, reportType]);
 
   // === AUTO-SYNC TO CLOUD (every 30 seconds as backup) ===
@@ -733,7 +734,10 @@ export const useReportSync = ({
             title: 'Saved',
             description: 'Your report has been saved.',
           });
-          trackFeatureUse(userId || '', 'certificate_saved', { reportType, reportId: savedReportId });
+          trackFeatureUse(userId || '', 'certificate_saved', {
+            reportType,
+            reportId: savedReportId,
+          });
         }
 
         isSyncingRef.current = false;
