@@ -47,13 +47,32 @@ const ROLE_COLOURS: Record<string, { bg: string; text: string }> = {
 /* ------------------------------------------------------------------ */
 /*  Sparkline mini-chart                                              */
 /* ------------------------------------------------------------------ */
-const Sparkline = ({ data, color, height = 24, width = 80 }: { data: number[]; color: string; height?: number; width?: number }) => {
-  if (!data.length || data.every(d => d === 0)) return null;
+const Sparkline = ({
+  data,
+  color,
+  height = 24,
+  width = 80,
+}: {
+  data: number[];
+  color: string;
+  height?: number;
+  width?: number;
+}) => {
+  if (!data.length || data.every((d) => d === 0)) return null;
   const max = Math.max(...data, 1);
-  const points = data.map((v, i) => `${(i / (data.length - 1)) * width},${height - (v / max) * height}`).join(' ');
+  const points = data
+    .map((v, i) => `${(i / (data.length - 1)) * width},${height - (v / max) * height}`)
+    .join(' ');
   return (
     <svg width={width} height={height} className="shrink-0">
-      <polyline points={points} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <polyline
+        points={points}
+        fill="none"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };
@@ -89,10 +108,30 @@ interface FunnelStep {
 
 function FunnelViz({ analytics }: { analytics: Record<string, number> }) {
   const steps: FunnelStep[] = [
-    { label: 'Signed Up', count: analytics.funnelSignedUp, colour: 'text-blue-400', bgColour: 'bg-blue-500' },
-    { label: 'Logged In', count: analytics.funnelLoggedIn, colour: 'text-green-400', bgColour: 'bg-green-500' },
-    { label: 'Used Feature', count: analytics.funnelUsedFeature, colour: 'text-amber-400', bgColour: 'bg-amber-500' },
-    { label: 'Subscribed', count: analytics.funnelSubscribed, colour: 'text-emerald-400', bgColour: 'bg-emerald-500' },
+    {
+      label: 'Signed Up',
+      count: analytics.funnelSignedUp,
+      colour: 'text-blue-400',
+      bgColour: 'bg-blue-500',
+    },
+    {
+      label: 'Logged In',
+      count: analytics.funnelLoggedIn,
+      colour: 'text-green-400',
+      bgColour: 'bg-green-500',
+    },
+    {
+      label: 'Used Feature',
+      count: analytics.funnelUsedFeature,
+      colour: 'text-amber-400',
+      bgColour: 'bg-amber-500',
+    },
+    {
+      label: 'Subscribed',
+      count: analytics.funnelSubscribed,
+      colour: 'text-emerald-400',
+      bgColour: 'bg-emerald-500',
+    },
   ];
 
   const maxCount = steps[0].count || 1;
@@ -120,9 +159,7 @@ function FunnelViz({ analytics }: { analytics: Record<string, number> }) {
               </div>
               <div className="w-24 flex-shrink-0 text-right">
                 <p className="text-xs font-medium text-white">{step.label}</p>
-                {i > 0 && (
-                  <p className="text-[10px] text-white">{dropPct}% of prev</p>
-                )}
+                {i > 0 && <p className="text-[10px] text-white">{dropPct}% of prev</p>}
               </div>
             </div>
           );
@@ -162,9 +199,7 @@ function RoleStackedBar({
               style={{ width: `${pct}%` }}
               title={`${role}: ${count}`}
             >
-              {pct > 8 && (
-                <span className="text-[10px] font-bold text-black">{count}</span>
-              )}
+              {pct > 8 && <span className="text-[10px] font-bold text-black">{count}</span>}
             </div>
           );
         })}
@@ -191,6 +226,59 @@ function RoleStackedBar({
 export default function AdminAnalytics() {
   const [chartPeriod, setChartPeriod] = useState<'7d' | '30d'>('7d');
   const [dateRange, setDateRange] = useState<DateRangeKey>('30d');
+
+  // Revenue forecast data
+  const { data: forecastData } = useQuery({
+    queryKey: ['admin-revenue-forecast'],
+    queryFn: async () => {
+      const { count: trialCount } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .eq('is_trial', true)
+        .not('trial_end', 'is', null);
+
+      const { count: paidCount } = await supabase
+        .from('profiles')
+        .select('*', { count: 'exact', head: true })
+        .eq('subscribed', true)
+        .eq('is_trial', false);
+
+      // Fetch tier breakdown for weighted average revenue
+      const { data: tierData } = await supabase
+        .from('profiles')
+        .select('subscription_tier')
+        .eq('subscribed', true)
+        .eq('is_trial', false);
+
+      const tierPricing: Record<string, number> = {
+        apprentice: 4.99,
+        electrician: 9.99,
+        employer: 29.99,
+      };
+
+      const tiers = tierData || [];
+      const totalRevenue = tiers.reduce(
+        (sum, t) => sum + (tierPricing[t.subscription_tier?.toLowerCase() || ''] || 9.99),
+        0
+      );
+      const avgRevenue = tiers.length > 0 ? totalRevenue / tiers.length : 9.99;
+      const currentMRR = totalRevenue;
+      const conversionRate = 0.3;
+      const projectedConversions = (trialCount || 0) * conversionRate;
+      const projectedMRR = currentMRR + projectedConversions * avgRevenue;
+
+      return {
+        currentMRR,
+        projectedMRR,
+        trialCount: trialCount || 0,
+        paidCount: paidCount || 0,
+        conversionRate,
+        projectedConversions,
+        avgRevenue,
+      };
+    },
+    staleTime: 60000,
+  });
 
   // Fetch analytics data
   const {
@@ -329,7 +417,9 @@ export default function AdminAnalytics() {
       // Bucket unique users per day (oldest first)
       const dailyActiveBuckets: Set<string>[] = Array.from({ length: 7 }, () => new Set());
       presenceRows?.forEach((row) => {
-        const daysDiff = Math.floor((now.getTime() - new Date(row.last_seen).getTime()) / (1000 * 60 * 60 * 24));
+        const daysDiff = Math.floor(
+          (now.getTime() - new Date(row.last_seen).getTime()) / (1000 * 60 * 60 * 24)
+        );
         const idx = 6 - daysDiff;
         if (idx >= 0 && idx < 7) {
           dailyActiveBuckets[idx].add(row.user_id);
@@ -421,7 +511,10 @@ export default function AdminAnalytics() {
         {isLoading && (
           <div className="space-y-3 animate-pulse">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
+              <div
+                key={i}
+                className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3"
+              >
                 <div className="flex items-center gap-3">
                   <Skeleton className="w-9 h-9 rounded-lg" />
                   <div className="space-y-1.5 flex-1">
@@ -434,281 +527,387 @@ export default function AdminAnalytics() {
           </div>
         )}
 
-        {!isLoading && <>
-        {/* Date Range Picker */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0.5}>
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
-            <Filter className="h-4 w-4 text-amber-400 flex-shrink-0" />
-            {DATE_RANGES.map((r) => (
-              <button
-                key={r.key}
-                onClick={() => setDateRange(r.key)}
-                className={`h-11 px-3 rounded-full text-xs font-medium touch-manipulation transition-all flex-shrink-0 ${
-                  dateRange === r.key
-                    ? 'bg-amber-500/20 text-amber-400 ring-1 ring-amber-500/30'
-                    : 'bg-white/[0.04] text-white ring-1 ring-white/[0.06]'
-                }`}
-              >
-                {r.label}
-              </button>
-            ))}
-            {analytics && (
-              <span className="text-xs text-white ml-auto flex-shrink-0">
-                {analytics.rangeSignups} signup{analytics.rangeSignups !== 1 ? 's' : ''} in range
-              </span>
-            )}
-          </div>
-        </motion.section>
-
-        {/* User Journey Funnel */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0.8}>
-          <div className="glass-premium rounded-2xl overflow-hidden">
-            <div className="h-1 bg-gradient-to-r from-blue-500 via-green-500 via-amber-500 to-emerald-500" />
-            <div className="p-4">
-              <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-                <TrendingUp className="h-4 w-4 text-blue-400" />
-                User Journey Funnel
-              </h3>
-              {analytics && <FunnelViz analytics={analytics} />}
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Key Metrics */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-2 sm:grid-cols-4 gap-2"
-          >
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+        {!isLoading && (
+          <>
+            {/* Date Range Picker */}
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={0.5}
             >
-              <Users className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-blue-400">
-                <AnimatedCounter value={analytics?.totalUsers || 0} />
-              </p>
-              <p className="text-xs text-white">Users</p>
-            </motion.div>
-
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
-            >
-              <UserPlus className="h-5 w-5 text-green-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-green-400">
-                <AnimatedCounter value={analytics?.todaySignups || 0} />
-              </p>
-              <div className="flex items-center justify-center gap-1">
-                <p className="text-xs text-white">Today</p>
-                {getTrendIcon(analytics?.todaySignups || 0, analytics?.yesterdaySignups || 0)}
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
-            >
-              <Calendar className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-yellow-400">
-                <AnimatedCounter value={analytics?.weekSignups || 0} />
-              </p>
-              <div className="flex items-center justify-center gap-1">
-                <p className="text-xs text-white">This Week</p>
-                <Badge
-                  className={`text-[9px] px-1 py-0 ${(analytics?.weekGrowth || 0) >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}
-                >
-                  {(analytics?.weekGrowth || 0) >= 0 ? '+' : ''}
-                  {(analytics?.weekGrowth || 0).toFixed(0)}%
-                </Badge>
-              </div>
-              {analytics?.sparklineSignups && (
-                <div className="flex justify-center mt-1.5">
-                  <Sparkline data={analytics.sparklineSignups} color="#f59e0b" />
-                </div>
-              )}
-            </motion.div>
-
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
-            >
-              <Activity className="h-5 w-5 text-amber-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-amber-400">
-                <AnimatedCounter value={analytics?.activeUsers || 0} />
-              </p>
-              <p className="text-xs text-white">Active 24h</p>
-              {analytics?.sparklineActive && (
-                <div className="flex justify-center mt-1.5">
-                  <Sparkline data={analytics.sparklineActive} color="#22c55e" />
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        </motion.section>
-
-        {/* Daily Signups Chart */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
-          <div className="glass-premium rounded-2xl overflow-hidden">
-            <div className="h-1 bg-gradient-to-r from-green-500 to-emerald-400" />
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-4">
-                <span className="flex items-center gap-2 text-sm font-semibold !text-white">
-                  <TrendingUp className="h-4 w-4 text-green-400" />
-                  Daily Signups
-                </span>
-                <div className="flex gap-1">
-                  <Button
-                    variant={chartPeriod === '7d' ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => setChartPeriod('7d')}
-                    className={`h-11 px-3 text-xs touch-manipulation ${chartPeriod === '7d' ? 'bg-green-500 text-black hover:bg-green-600' : 'bg-white/[0.06] !text-white'}`}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                <Filter className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                {DATE_RANGES.map((r) => (
+                  <button
+                    key={r.key}
+                    onClick={() => setDateRange(r.key)}
+                    className={`h-11 px-3 rounded-full text-xs font-medium touch-manipulation transition-all flex-shrink-0 ${
+                      dateRange === r.key
+                        ? 'bg-amber-500/20 text-amber-400 ring-1 ring-amber-500/30'
+                        : 'bg-white/[0.04] text-white ring-1 ring-white/[0.06]'
+                    }`}
                   >
-                    7d
-                  </Button>
-                  <Button
-                    variant={chartPeriod === '30d' ? 'default' : 'ghost'}
-                    size="sm"
-                    onClick={() => setChartPeriod('30d')}
-                    className={`h-11 px-3 text-xs touch-manipulation ${chartPeriod === '30d' ? 'bg-green-500 text-black hover:bg-green-600' : 'bg-white/[0.06] !text-white'}`}
-                  >
-                    30d
-                  </Button>
-                </div>
-              </div>
-              <div className="flex items-end justify-between gap-[2px] h-32">
-                {chartData?.map(
-                  (day: { date: string; dateShort?: string; count: number }, i: number) => (
-                    <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
-                      <div
-                        className="w-full bg-gradient-to-t from-green-500/30 to-green-500/10 rounded-t-lg transition-all"
-                        style={{ height: `${Math.max((day.count / maxDailySignup) * 100, 5)}%` }}
-                      />
-                      {chartPeriod === '7d' ? (
-                        <>
-                          <span className="text-xs !text-white">{day.date}</span>
-                          <span className="text-xs font-medium">{day.count}</span>
-                        </>
-                      ) : i % 5 === 0 ? (
-                        <span className="text-[9px] !text-white">{day.date}</span>
-                      ) : null}
-                    </div>
-                  )
+                    {r.label}
+                  </button>
+                ))}
+                {analytics && (
+                  <span className="text-xs text-white ml-auto flex-shrink-0">
+                    {analytics.rangeSignups} signup{analytics.rangeSignups !== 1 ? 's' : ''} in
+                    range
+                  </span>
                 )}
               </div>
-              {chartPeriod === '30d' && (
-                <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.04]">
-                  <div className="text-center flex-1">
-                    <p className="text-lg font-bold">{analytics?.monthSignups || 0}</p>
-                    <p className="text-[10px] !text-white">This 30d</p>
+            </motion.section>
+
+            {/* User Journey Funnel */}
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={0.8}
+            >
+              <div className="glass-premium rounded-2xl overflow-hidden">
+                <div className="h-1 bg-gradient-to-r from-blue-500 via-green-500 via-amber-500 to-emerald-500" />
+                <div className="p-4">
+                  <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
+                    <TrendingUp className="h-4 w-4 text-blue-400" />
+                    User Journey Funnel
+                  </h3>
+                  {analytics && <FunnelViz analytics={analytics} />}
+                </div>
+              </div>
+            </motion.section>
+
+            {/* Key Metrics */}
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={1}
+            >
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="grid grid-cols-2 sm:grid-cols-4 gap-2"
+              >
+                <motion.div
+                  variants={listItemVariants}
+                  whileTap={{ scale: 0.97 }}
+                  className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+                >
+                  <Users className="h-5 w-5 text-blue-400 mx-auto mb-1" />
+                  <p className="text-2xl sm:text-xl font-bold text-blue-400">
+                    <AnimatedCounter value={analytics?.totalUsers || 0} />
+                  </p>
+                  <p className="text-xs text-white">Users</p>
+                </motion.div>
+
+                <motion.div
+                  variants={listItemVariants}
+                  whileTap={{ scale: 0.97 }}
+                  className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+                >
+                  <UserPlus className="h-5 w-5 text-green-400 mx-auto mb-1" />
+                  <p className="text-2xl sm:text-xl font-bold text-green-400">
+                    <AnimatedCounter value={analytics?.todaySignups || 0} />
+                  </p>
+                  <div className="flex items-center justify-center gap-1">
+                    <p className="text-xs text-white">Today</p>
+                    {getTrendIcon(analytics?.todaySignups || 0, analytics?.yesterdaySignups || 0)}
                   </div>
-                  <div className="text-center flex-1">
-                    <p className="text-lg font-bold">{analytics?.prevMonthSignups || 0}</p>
-                    <p className="text-[10px] !text-white">Prev 30d</p>
-                  </div>
-                  <div className="text-center flex-1">
+                </motion.div>
+
+                <motion.div
+                  variants={listItemVariants}
+                  whileTap={{ scale: 0.97 }}
+                  className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+                >
+                  <Calendar className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
+                  <p className="text-2xl sm:text-xl font-bold text-yellow-400">
+                    <AnimatedCounter value={analytics?.weekSignups || 0} />
+                  </p>
+                  <div className="flex items-center justify-center gap-1">
+                    <p className="text-xs text-white">This Week</p>
                     <Badge
-                      className={`text-xs ${(analytics?.monthGrowth || 0) >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}
+                      className={`text-[9px] px-1 py-0 ${(analytics?.weekGrowth || 0) >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}
                     >
-                      {(analytics?.monthGrowth || 0) >= 0 ? '+' : ''}
-                      {(analytics?.monthGrowth || 0).toFixed(0)}%
+                      {(analytics?.weekGrowth || 0) >= 0 ? '+' : ''}
+                      {(analytics?.weekGrowth || 0).toFixed(0)}%
                     </Badge>
-                    <p className="text-[10px] !text-white mt-1">MoM Growth</p>
+                  </div>
+                  {analytics?.sparklineSignups && (
+                    <div className="flex justify-center mt-1.5">
+                      <Sparkline data={analytics.sparklineSignups} color="#f59e0b" />
+                    </div>
+                  )}
+                </motion.div>
+
+                <motion.div
+                  variants={listItemVariants}
+                  whileTap={{ scale: 0.97 }}
+                  className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
+                >
+                  <Activity className="h-5 w-5 text-amber-400 mx-auto mb-1" />
+                  <p className="text-2xl sm:text-xl font-bold text-amber-400">
+                    <AnimatedCounter value={analytics?.activeUsers || 0} />
+                  </p>
+                  <p className="text-xs text-white">Active 24h</p>
+                  {analytics?.sparklineActive && (
+                    <div className="flex justify-center mt-1.5">
+                      <Sparkline data={analytics.sparklineActive} color="#22c55e" />
+                    </div>
+                  )}
+                </motion.div>
+              </motion.div>
+            </motion.section>
+
+            {/* Daily Signups Chart */}
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={2}
+            >
+              <div className="glass-premium rounded-2xl overflow-hidden">
+                <div className="h-1 bg-gradient-to-r from-green-500 to-emerald-400" />
+                <div className="p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="flex items-center gap-2 text-sm font-semibold !text-white">
+                      <TrendingUp className="h-4 w-4 text-green-400" />
+                      Daily Signups
+                    </span>
+                    <div className="flex gap-1">
+                      <Button
+                        variant={chartPeriod === '7d' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setChartPeriod('7d')}
+                        className={`h-11 px-3 text-xs touch-manipulation ${chartPeriod === '7d' ? 'bg-green-500 text-black hover:bg-green-600' : 'bg-white/[0.06] !text-white'}`}
+                      >
+                        7d
+                      </Button>
+                      <Button
+                        variant={chartPeriod === '30d' ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setChartPeriod('30d')}
+                        className={`h-11 px-3 text-xs touch-manipulation ${chartPeriod === '30d' ? 'bg-green-500 text-black hover:bg-green-600' : 'bg-white/[0.06] !text-white'}`}
+                      >
+                        30d
+                      </Button>
+                    </div>
+                  </div>
+                  <div className="flex items-end justify-between gap-[2px] h-32">
+                    {chartData?.map(
+                      (day: { date: string; dateShort?: string; count: number }, i: number) => (
+                        <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
+                          <div
+                            className="w-full bg-gradient-to-t from-green-500/30 to-green-500/10 rounded-t-lg transition-all"
+                            style={{
+                              height: `${Math.max((day.count / maxDailySignup) * 100, 5)}%`,
+                            }}
+                          />
+                          {chartPeriod === '7d' ? (
+                            <>
+                              <span className="text-xs !text-white">{day.date}</span>
+                              <span className="text-xs font-medium">{day.count}</span>
+                            </>
+                          ) : i % 5 === 0 ? (
+                            <span className="text-[9px] !text-white">{day.date}</span>
+                          ) : null}
+                        </div>
+                      )
+                    )}
+                  </div>
+                  {chartPeriod === '30d' && (
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.04]">
+                      <div className="text-center flex-1">
+                        <p className="text-lg font-bold">{analytics?.monthSignups || 0}</p>
+                        <p className="text-[10px] !text-white">This 30d</p>
+                      </div>
+                      <div className="text-center flex-1">
+                        <p className="text-lg font-bold">{analytics?.prevMonthSignups || 0}</p>
+                        <p className="text-[10px] !text-white">Prev 30d</p>
+                      </div>
+                      <div className="text-center flex-1">
+                        <Badge
+                          className={`text-xs ${(analytics?.monthGrowth || 0) >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}
+                        >
+                          {(analytics?.monthGrowth || 0) >= 0 ? '+' : ''}
+                          {(analytics?.monthGrowth || 0).toFixed(0)}%
+                        </Badge>
+                        <p className="text-[10px] !text-white mt-1">MoM Growth</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.section>
+
+            {/* Role Breakdown & Conversion */}
+            <div className="grid md:grid-cols-2 gap-4">
+              <motion.section
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+                custom={3}
+              >
+                <div className="glass-premium rounded-2xl overflow-hidden">
+                  <div className="h-1 bg-gradient-to-r from-purple-500 to-violet-400" />
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
+                      <Users className="h-4 w-4 text-blue-400" />
+                      User Breakdown
+                    </h3>
+                    <RoleStackedBar
+                      roleBreakdown={analytics?.roleBreakdown || {}}
+                      total={analytics?.totalUsers || 0}
+                    />
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
-        </motion.section>
+              </motion.section>
 
-        {/* Role Breakdown & Conversion */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={3}>
-            <div className="glass-premium rounded-2xl overflow-hidden">
-              <div className="h-1 bg-gradient-to-r from-purple-500 to-violet-400" />
-              <div className="p-4">
-                <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-                  <Users className="h-4 w-4 text-blue-400" />
-                  User Breakdown
-                </h3>
-                <RoleStackedBar roleBreakdown={analytics?.roleBreakdown || {}} total={analytics?.totalUsers || 0} />
-              </div>
-            </div>
-          </motion.section>
-
-          <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={3}>
-            <div className="glass-premium rounded-2xl overflow-hidden">
-              <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-400" />
-              <div className="p-4">
-                <h3 className="text-sm font-semibold !text-white flex items-center gap-2 mb-4">
-                  <CreditCard className="h-4 w-4 text-green-400" />
-                  Conversion Metrics
-                </h3>
-                <div className="text-center py-4">
-                  <p className="text-4xl font-bold text-green-400">
-                    {(analytics?.conversionRate || 0).toFixed(1)}%
-                  </p>
-                  <p className="text-sm !text-white mt-1">Conversion Rate</p>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="text-center p-3 rounded-lg bg-white/5">
-                    <p className="text-lg font-bold">
-                      <AnimatedCounter value={analytics?.subscribedUsers || 0} />
-                    </p>
-                    <p className="text-xs !text-white">Subscribed</p>
-                  </div>
-                  <div className="text-center p-3 rounded-lg bg-white/5">
-                    <p className="text-lg font-bold">
-                      <AnimatedCounter value={analytics?.monthSignups || 0} />
-                    </p>
-                    <p className="text-xs !text-white">30d Signups</p>
+              <motion.section
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+                custom={3}
+              >
+                <div className="glass-premium rounded-2xl overflow-hidden">
+                  <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-400" />
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold !text-white flex items-center gap-2 mb-4">
+                      <CreditCard className="h-4 w-4 text-green-400" />
+                      Conversion Metrics
+                    </h3>
+                    <div className="text-center py-4">
+                      <p className="text-4xl font-bold text-green-400">
+                        {(analytics?.conversionRate || 0).toFixed(1)}%
+                      </p>
+                      <p className="text-sm !text-white mt-1">Conversion Rate</p>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="text-center p-3 rounded-lg bg-white/5">
+                        <p className="text-lg font-bold">
+                          <AnimatedCounter value={analytics?.subscribedUsers || 0} />
+                        </p>
+                        <p className="text-xs !text-white">Subscribed</p>
+                      </div>
+                      <div className="text-center p-3 rounded-lg bg-white/5">
+                        <p className="text-lg font-bold">
+                          <AnimatedCounter value={analytics?.monthSignups || 0} />
+                        </p>
+                        <p className="text-xs !text-white">30d Signups</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </motion.section>
             </div>
-          </motion.section>
-        </div>
 
-        {/* Platform Activity — new section */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={4}>
-          <div className="glass-premium rounded-2xl overflow-hidden">
-            <div className="h-1 bg-gradient-to-r from-teal-500 to-cyan-400" />
-            <div className="p-4">
-              <h3 className="text-sm font-semibold !text-white flex items-center gap-2 mb-4">
-                <Activity className="h-4 w-4 text-teal-400" />
-                Platform Activity
-              </h3>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="text-center p-3 rounded-lg bg-white/5">
-                  <FileCheck className="h-5 w-5 text-teal-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold">
-                    <AnimatedCounter value={analytics?.certificates || 0} />
-                  </p>
-                  <p className="text-xs !text-white">Certificates</p>
-                </div>
-                <div className="text-center p-3 rounded-lg bg-white/5">
-                  <Cpu className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold">
-                    <AnimatedCounter value={analytics?.aiUsers || 0} />
-                  </p>
-                  <p className="text-xs !text-white">AI Users</p>
-                </div>
-                <div className="text-center p-3 rounded-lg bg-white/5">
-                  <TrendingUp className="h-5 w-5 text-green-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold">{(analytics?.retention || 0).toFixed(1)}%</p>
-                  <p className="text-xs !text-white">Retention</p>
+            {/* Platform Activity — new section */}
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={4}
+            >
+              <div className="glass-premium rounded-2xl overflow-hidden">
+                <div className="h-1 bg-gradient-to-r from-teal-500 to-cyan-400" />
+                <div className="p-4">
+                  <h3 className="text-sm font-semibold !text-white flex items-center gap-2 mb-4">
+                    <Activity className="h-4 w-4 text-teal-400" />
+                    Platform Activity
+                  </h3>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="text-center p-3 rounded-lg bg-white/5">
+                      <FileCheck className="h-5 w-5 text-teal-400 mx-auto mb-1" />
+                      <p className="text-lg font-bold">
+                        <AnimatedCounter value={analytics?.certificates || 0} />
+                      </p>
+                      <p className="text-xs !text-white">Certificates</p>
+                    </div>
+                    <div className="text-center p-3 rounded-lg bg-white/5">
+                      <Cpu className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
+                      <p className="text-lg font-bold">
+                        <AnimatedCounter value={analytics?.aiUsers || 0} />
+                      </p>
+                      <p className="text-xs !text-white">AI Users</p>
+                    </div>
+                    <div className="text-center p-3 rounded-lg bg-white/5">
+                      <TrendingUp className="h-5 w-5 text-green-400 mx-auto mb-1" />
+                      <p className="text-lg font-bold">{(analytics?.retention || 0).toFixed(1)}%</p>
+                      <p className="text-xs !text-white">Retention</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </motion.section>
-        </>}
+            </motion.section>
+
+            {/* Revenue Forecast */}
+            <motion.section
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+              custom={5}
+            >
+              <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+                <div className="h-1 bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 opacity-40" />
+                <div className="p-4">
+                  <p className="text-xs font-medium text-white uppercase tracking-wider mb-4">
+                    Revenue Forecast
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <p className="text-xs text-white mb-1">Current MRR</p>
+                      <p className="text-2xl font-bold text-white">
+                        £{(forecastData?.currentMRR ?? 0).toFixed(2)}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-white mb-1">Projected MRR (30d)</p>
+                      <p className="text-2xl font-bold text-emerald-400">
+                        £{(forecastData?.projectedMRR ?? 0).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="p-2 rounded-lg bg-white/5">
+                      <p className="text-xs text-white">Active Trials</p>
+                      <p className="text-sm font-semibold text-white">
+                        {forecastData?.trialCount ?? 0}
+                      </p>
+                    </div>
+                    <div className="p-2 rounded-lg bg-white/5">
+                      <p className="text-xs text-white">Est. Conversions</p>
+                      <p className="text-sm font-semibold text-white">
+                        {(forecastData?.projectedConversions ?? 0).toFixed(1)}
+                      </p>
+                    </div>
+                    <div className="p-2 rounded-lg bg-white/5">
+                      <p className="text-xs text-white">Conv. Rate</p>
+                      <p className="text-sm font-semibold text-white">
+                        {((forecastData?.conversionRate ?? 0) * 100).toFixed(0)}%
+                      </p>
+                    </div>
+                    <div className="p-2 rounded-lg bg-white/5">
+                      <p className="text-xs text-white">Projected Increase</p>
+                      <p className="text-sm font-semibold text-white">
+                        +£
+                        {(
+                          (forecastData?.projectedConversions ?? 0) *
+                          (forecastData?.avgRevenue ?? 9.99)
+                        ).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.section>
+          </>
+        )}
       </div>
     </PullToRefresh>
   );

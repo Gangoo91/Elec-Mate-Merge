@@ -40,6 +40,8 @@ import {
   GraduationCap,
   UserPlus,
   AlertTriangle,
+  Send,
+  Tag,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -52,19 +54,30 @@ const primaryNavItems = [
   { name: 'Messages', path: '/admin/user-messages', icon: Inbox },
 ];
 
-// Secondary navigation items - in expandable section (More)
-const secondaryNavItems = [
+// Campaigns - outreach & growth
+const campaignNavItems = [
   { name: 'Incomplete Signup', path: '/admin/incomplete-signup', icon: UserPlus },
   { name: 'Win-Back', path: '/admin/winback', icon: Gift },
   { name: 'Apprentice Campaigns', path: '/admin/apprentice-campaigns', icon: GraduationCap },
-  { name: 'Outreach', path: '/admin/outreach', icon: Megaphone },
+  { name: 'Outreach', path: '/admin/outreach', icon: Send },
   { name: 'Founders', path: '/admin/founders', icon: Crown },
   { name: 'Early Access', path: '/admin/early-access', icon: Rocket },
+];
+
+// Moderation - content & employer review
+const moderationNavItems = [
   { name: 'Elec-IDs', path: '/admin/elec-ids', icon: IdCard },
   { name: 'Verification', path: '/admin/verification', icon: CheckSquare },
   { name: 'Doc Review', path: '/admin/document-review', icon: FileCheck },
+  { name: 'Employer Moderation', path: '/admin/vacancies', icon: Briefcase },
+  { name: 'Pricing Moderation', path: '/admin/pricing', icon: PoundSterling },
+];
+
+// Billing - subscriptions & payments
+const billingNavItems = [
   { name: 'Subscriptions', path: '/admin/subscriptions', icon: CreditCard },
   { name: 'Failed Payments', path: '/admin/failed-payments', icon: AlertTriangle },
+  { name: 'Offers', path: '/admin/offers', icon: Tag },
 ];
 
 // Admin tools - in expandable section (rarely used)
@@ -86,7 +99,9 @@ export default function AdminPanel() {
   const location = useLocation();
   const queryClient = useQueryClient();
   const { handlePrefetch } = useAdminPrefetch(queryClient);
-  const [showMore, setShowMore] = useState(false);
+  const [showCampaigns, setShowCampaigns] = useState(false);
+  const [showModeration, setShowModeration] = useState(false);
+  const [showBilling, setShowBilling] = useState(false);
   const [showTools, setShowTools] = useState(false);
 
   // Protect admin routes
@@ -98,14 +113,14 @@ export default function AdminPanel() {
 
   // Auto-expand sections based on current path
   useEffect(() => {
-    const isInSecondary = secondaryNavItems.some(
-      (item) => location.pathname === item.path || location.pathname.startsWith(item.path + '/')
-    );
-    const isInTools = adminToolItems.some(
-      (item) => location.pathname === item.path || location.pathname.startsWith(item.path + '/')
-    );
-    if (isInSecondary) setShowMore(true);
-    if (isInTools) setShowTools(true);
+    const matchesGroup = (items: typeof campaignNavItems) =>
+      items.some(
+        (item) => location.pathname === item.path || location.pathname.startsWith(item.path + '/')
+      );
+    if (matchesGroup(campaignNavItems)) setShowCampaigns(true);
+    if (matchesGroup(moderationNavItems)) setShowModeration(true);
+    if (matchesGroup(billingNavItems)) setShowBilling(true);
+    if (matchesGroup(adminToolItems)) setShowTools(true);
   }, [location.pathname]);
 
   // Swipe between primary nav pages
@@ -225,15 +240,49 @@ export default function AdminPanel() {
           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
             {primaryNavItems.map(renderNavItem)}
 
-            {/* More Button */}
+            {/* Campaigns Button */}
             <Button
-              variant={showMore ? 'secondary' : 'ghost'}
+              variant={showCampaigns ? 'secondary' : 'ghost'}
               size="sm"
-              onClick={() => setShowMore(!showMore)}
+              onClick={() => setShowCampaigns(!showCampaigns)}
               className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
             >
-              More
-              {showMore ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+              Campaigns
+              {showCampaigns ? (
+                <ChevronUp className="h-3 w-3" />
+              ) : (
+                <ChevronDown className="h-3 w-3" />
+              )}
+            </Button>
+
+            {/* Moderation Button */}
+            <Button
+              variant={showModeration ? 'secondary' : 'ghost'}
+              size="sm"
+              onClick={() => setShowModeration(!showModeration)}
+              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
+            >
+              Moderation
+              {showModeration ? (
+                <ChevronUp className="h-3 w-3" />
+              ) : (
+                <ChevronDown className="h-3 w-3" />
+              )}
+            </Button>
+
+            {/* Billing Button */}
+            <Button
+              variant={showBilling ? 'secondary' : 'ghost'}
+              size="sm"
+              onClick={() => setShowBilling(!showBilling)}
+              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
+            >
+              Billing
+              {showBilling ? (
+                <ChevronUp className="h-3 w-3" />
+              ) : (
+                <ChevronDown className="h-3 w-3" />
+              )}
             </Button>
 
             {/* Tools Button */}
@@ -249,11 +298,29 @@ export default function AdminPanel() {
           </div>
         </div>
 
-        {/* Secondary Navigation - Expandable */}
-        {showMore && (
+        {/* Campaigns Navigation - Expandable */}
+        {showCampaigns && (
           <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
             <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-              {secondaryNavItems.map(renderNavItem)}
+              {campaignNavItems.map(renderNavItem)}
+            </div>
+          </div>
+        )}
+
+        {/* Moderation Navigation - Expandable */}
+        {showModeration && (
+          <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+              {moderationNavItems.map(renderNavItem)}
+            </div>
+          </div>
+        )}
+
+        {/* Billing Navigation - Expandable */}
+        {showBilling && (
+          <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
+              {billingNavItems.map(renderNavItem)}
             </div>
           </div>
         )}

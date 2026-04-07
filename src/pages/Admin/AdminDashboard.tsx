@@ -20,8 +20,10 @@ import {
   Timer,
   XCircle,
   ChevronDown,
+  UserX,
 } from 'lucide-react';
 import { formatDistanceToNow, differenceInDays, parseISO } from 'date-fns';
+import { toast } from '@/hooks/use-toast';
 import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -169,6 +171,7 @@ export default function AdminDashboard() {
       queryClient.invalidateQueries({ queryKey: ['admin-online-users'] }),
       queryClient.invalidateQueries({ queryKey: ['admin-users-base'] }),
       queryClient.invalidateQueries({ queryKey: ['admin-pending-counts'] }),
+      queryClient.invalidateQueries({ queryKey: ['admin-churned-users'] }),
     ]);
     setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
@@ -198,6 +201,8 @@ export default function AdminDashboard() {
   const [showPaid, setShowPaid] = useState(true);
   const [showTrials, setShowTrials] = useState(true);
   const [showCancelled, setShowCancelled] = useState(false);
+  const [showChurned, setShowChurned] = useState(false);
+  const [syncing, setSyncing] = useState(false);
 
   // Fetch RevenueCat stats (App Store + Play Store data)
   const { data: rcStats } = useQuery<{
@@ -234,6 +239,52 @@ export default function AdminDashboard() {
       return data;
     },
   });
+
+  // Fetch recently churned users (cancelled trials from mobile stores)
+  const { data: churnedUsers } = useQuery({
+    queryKey: ['admin-churned-users'],
+    queryFn: async () => {
+      const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+      const { data } = await supabase
+        .from('profiles' as any)
+        .select('id, full_name, subscription_tier, trial_end, role')
+        .eq('is_trial_cancelled', true)
+        .gte('trial_end', sevenDaysAgo)
+        .in('subscription_source', ['app_store', 'play_store'])
+        .order('trial_end', { ascending: false });
+      return (data || []) as Array<{
+        id: string;
+        full_name: string | null;
+        subscription_tier: string | null;
+        trial_end: string | null;
+        role: string | null;
+      }>;
+    },
+    staleTime: 60000,
+  });
+
+  // Sync RevenueCat data
+  const syncRC = async () => {
+    setSyncing(true);
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      const { data, error } = await supabase.functions.invoke('admin-sync-revenuecat', {
+        headers: { Authorization: `Bearer ${session?.access_token}` },
+      });
+      if (error) throw error;
+      toast({
+        title: 'RevenueCat Synced',
+        description: (data as any)?.message || 'Subscription data updated',
+      });
+      queryClient.invalidateQueries({ queryKey: ['admin-revenuecat-stats'] });
+    } catch (e) {
+      toast({ title: 'Sync Failed', description: (e as Error).message, variant: 'destructive' });
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   // Fetch dashboard stats
   const {
@@ -860,6 +911,17 @@ export default function AdminDashboard() {
                         {rcCancelledTrials}
                       </span>
                     )}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        syncRC();
+                      }}
+                      disabled={syncing}
+                      className="h-7 px-2 rounded-lg bg-white/[0.06] text-white ring-1 ring-white/[0.08] text-[10px] font-medium flex items-center gap-1 touch-manipulation active:scale-[0.97] transition-transform disabled:opacity-50"
+                    >
+                      <RefreshCw className={cn('h-3 w-3', syncing && 'animate-spin')} />
+                      Sync RC
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1094,6 +1156,90 @@ export default function AdminDashboard() {
             </div>
           </motion.section>
         ) : null}
+
+        {/* ── Recently Churned ─────────────────────────────── */}
+        {churnedUsers && churnedUsers.length > 0 && (
+          <motion.section
+            custom={2.7}
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+              <div className="relative">
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-red-500 via-rose-400 to-red-500" />
+                <div className="p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
+                      <UserX className="h-4 w-4 text-red-400" />
+                    </div>
+                    <span className="font-semibold text-sm text-white">Recently Churned</span>
+                  </div>
+                  <span className="inline-flex items-center h-5 px-1.5 rounded-md bg-red-500/15 text-red-400 text-[10px] font-bold">
+                    {churnedUsers.length}
+                  </span>
+                </div>
+              </div>
+              <div className="px-2 pb-2 space-y-2">
+                <button
+                  onClick={() => setShowChurned(!showChurned)}
+                  className="w-full flex items-center justify-between px-3 py-2 touch-manipulation"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-red-400" />
+                    <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                      Cancelled Trials
+                    </span>
+                    <span className="text-[11px] font-bold text-red-400">
+                      {churnedUsers.length}
+                    </span>
+                  </div>
+                  <motion.div
+                    animate={{ rotate: showChurned ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown className="h-3.5 w-3.5 text-white" />
+                  </motion.div>
+                </button>
+                {showChurned &&
+                  churnedUsers.map((u) => {
+                    const matched = baseUsers?.find((bu) => bu.id === u.id);
+                    const engagement = matched ? calculateEngagementScore(null) : 0;
+                    return (
+                      <motion.button
+                        key={u.id}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-red-500/[0.03] ring-1 ring-red-500/10 active:bg-red-500/[0.08] transition-colors touch-manipulation min-h-[44px]"
+                        onClick={() => {
+                          if (matched) setSelectedUser(matched);
+                        }}
+                      >
+                        <EngagementRing score={engagement} />
+                        <div className="flex-1 min-w-0 text-left">
+                          <p className="text-[13px] font-semibold text-white truncate">
+                            {u.full_name || 'Unknown'}
+                          </p>
+                          <p className="text-[11px] text-white capitalize">
+                            {u.subscription_tier?.replace('_', ' ') || u.role || 'User'}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <span className="inline-flex items-center h-5 px-2 rounded-md bg-red-500/15 text-red-400 text-[10px] font-bold">
+                            {u.trial_end
+                              ? formatDistanceToNow(parseISO(u.trial_end), {
+                                  addSuffix: true,
+                                }).replace('about ', '')
+                              : 'Churned'}
+                          </span>
+                          <ChevronRight className="h-3.5 w-3.5 text-white" />
+                        </div>
+                      </motion.button>
+                    );
+                  })}
+              </div>
+            </div>
+          </motion.section>
+        )}
 
         {/* ── Growth Row ────────────────────────────────────── */}
         <motion.section custom={3} variants={sectionVariants} initial="hidden" animate="visible">
