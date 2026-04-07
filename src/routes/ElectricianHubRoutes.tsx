@@ -33,7 +33,9 @@ const LivePricingHub = lazy(() => import('@/pages/electrician/LivePricingHub'));
 const ElectricalHub = lazy(() => import('@/pages/ElectricalHub'));
 const CareerProgression = lazy(() => import('@/pages/electrician/CareerProgression'));
 const BusinessHub = lazy(() => import('@/pages/electrician/BusinessHub'));
-const DiagramBuilderPage = lazy(() => import('@/pages/electrician-tools/ai-tools/DiagramBuilderPage'));
+const DiagramBuilderPage = lazy(
+  () => import('@/pages/electrician-tools/ai-tools/DiagramBuilderPage')
+);
 const BusinessDevelopment = lazy(() => import('@/pages/electrician/BusinessDevelopment'));
 const BusinessCustomers = lazy(
   () => import('@/pages/electrician/business-development/BusinessCustomers')
@@ -121,6 +123,7 @@ const PhotoDocsPage = lazy(() => import('@/pages/electrician/PhotoDocsPage'));
 const QuotesPage = lazy(() => import('@/pages/electrician/QuotesPage'));
 const InvoicesPage = lazy(() => import('@/pages/electrician/InvoicesPage'));
 const ExpensesPage = lazy(() => import('@/pages/electrician/ExpensesPage'));
+const InventoryPage = lazy(() => import('@/pages/electrician/InventoryPage'));
 const InvoiceBuilderCreate = lazy(() => import('@/pages/electrician/InvoiceBuilderCreate'));
 const QuoteInvoiceDashboard = lazy(() => import('@/pages/electrician/QuoteInvoiceDashboard'));
 const Calculations = lazy(() => import('@/pages/electrician-tools/Calculations'));
@@ -562,6 +565,14 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <ExpensesPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="inventory"
+      element={
+        <LazyRoute>
+          <InventoryPage />
         </LazyRoute>
       }
     />

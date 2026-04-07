@@ -355,6 +355,16 @@ const BusinessHub = () => {
               iconColor="text-violet-400"
               iconBg="bg-violet-500/10 border border-violet-500/20"
             />
+            <BusinessCard
+              title="Stock Tracker"
+              description="Van & garage stock"
+              icon={ClipboardList}
+              href="/electrician/inventory"
+              variant="compact"
+              accentColor="from-teal-500 via-cyan-400 to-blue-400"
+              iconColor="text-teal-400"
+              iconBg="bg-teal-500/10 border border-teal-500/20"
+            />
           </div>
         </motion.section>
 
