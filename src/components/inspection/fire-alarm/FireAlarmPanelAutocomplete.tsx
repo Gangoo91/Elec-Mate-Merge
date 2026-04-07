@@ -120,19 +120,19 @@ export function FireAlarmPanelAutocomplete({
       disabled={disabled}
       onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        'w-full justify-between h-11 touch-manipulation',
-        'bg-elec-gray border-white/30 text-foreground',
-        'hover:bg-gray-700 hover:border-white/40',
+        'w-full justify-between h-12 touch-manipulation text-base',
+        'bg-white/[0.06] border-white/[0.08] text-white',
+        'hover:bg-white/[0.08] hover:border-white/[0.12]',
         'focus:border-yellow-500 focus:ring-yellow-500',
         'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className={cn('truncate', !selectedPanel && 'text-white')}>
+      <span className={cn('truncate', !selectedPanel && 'text-white/40')}>
         {displayValue}
       </span>
-      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-40" />
     </Button>
   );
 
@@ -144,37 +144,44 @@ export function FireAlarmPanelAutocomplete({
         key={panel.id}
         onClick={() => handleSelect(panel.id)}
         className={cn(
-          'rounded-lg cursor-pointer transition-colors flex items-center',
-          forMobile ? 'px-4 py-4 min-h-[56px]' : 'px-2 py-2',
-          'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
-          isSelected && 'bg-elec-yellow/20'
+          'rounded-xl cursor-pointer transition-all flex items-center gap-3 border',
+          forMobile ? 'px-4 py-3.5 min-h-[60px]' : 'px-3 py-2.5',
+          'active:scale-[0.98] touch-manipulation',
+          isSelected
+            ? 'bg-elec-yellow/10 border-elec-yellow/30'
+            : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
         )}
       >
-        <Check
-          className={cn(
-            'shrink-0',
-            forMobile ? 'mr-3 h-5 w-5' : 'mr-2 h-4 w-4',
-            isSelected ? 'opacity-100 text-elec-yellow' : 'opacity-0'
-          )}
-        />
-        <div className="flex flex-col flex-1 min-w-0">
-          <span className={cn('font-medium truncate', forMobile && 'text-base')}>
+        <div className={cn(
+          'w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-all',
+          isSelected ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'
+        )}>
+          {isSelected && <Check className="h-3 w-3 text-black" />}
+        </div>
+        <div className="flex flex-col flex-1 min-w-0 gap-1">
+          <span className={cn('font-semibold truncate text-white', forMobile ? 'text-base' : 'text-sm')}>
             {showManufacturer ? `${panel.manufacturer} ${panel.model}` : panel.model}
           </span>
-          <span className={cn('text-white truncate', forMobile ? 'text-sm' : 'text-xs')}>
-            {panel.type} • {panel.protocol || 'Conventional'}
-            {panel.loops && ` • ${panel.loops} loops`}
-            {panel.zones && ` • ${panel.zones} zones`}
-          </span>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[10px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded bg-white/[0.08] text-white">
+              {panel.type || 'Conventional'}
+            </span>
+            {panel.protocol && (
+              <span className="text-[10px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded bg-red-500/10 text-red-400">
+                {panel.protocol}
+              </span>
+            )}
+            {panel.loops && (
+              <span className="text-[10px] text-white">{panel.loops} loops</span>
+            )}
+            {panel.zones && (
+              <span className="text-[10px] text-white">{panel.zones} zones</span>
+            )}
+          </div>
         </div>
         {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
-          <span
-            className={cn(
-              'ml-2 px-1.5 py-0.5 font-medium bg-elec-yellow/20 text-elec-yellow rounded',
-              forMobile ? 'text-xs' : 'text-xs'
-            )}
-          >
-            NEW
+          <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide bg-green-500/20 text-green-400 rounded-full flex-shrink-0">
+            New
           </span>
         )}
       </div>
@@ -195,65 +202,59 @@ export function FireAlarmPanelAutocomplete({
         >
           <div className="flex flex-col max-h-[70vh]">
             {/* Search input */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
-              <Search className="h-5 w-5 text-white shrink-0" />
-              <Input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search panels..."
-                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
-                autoFocus
-              />
-              {search && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSearch('')}
-                  className="h-9 w-9 p-0"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              )}
+            <div className="px-4 py-3 border-b border-white/[0.06] bg-background sticky top-0 z-10">
+              <div className="flex items-center gap-2.5 h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08]">
+                <Search className="h-4 w-4 text-white flex-shrink-0" />
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search by make, model, or protocol..."
+                  className="flex-1 bg-transparent text-base text-white placeholder:text-white/40 outline-none"
+                  autoFocus
+                />
+                {search && (
+                  <button onClick={() => setSearch('')} className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation">
+                    <X className="h-3 w-3 text-white" />
+                  </button>
+                )}
+              </div>
+              <p className="text-[10px] text-white mt-2 text-center uppercase tracking-wider">
+                <Sparkles className="h-3 w-3 inline mr-1 text-elec-yellow" />
+                Select a panel to auto-fill make, model, network type & zones
+              </p>
             </div>
 
             {/* Panel list */}
-            <div className="flex-1 overflow-y-auto momentum-scroll-y">
+            <div className="flex-1 overflow-y-auto momentum-scroll-y px-3 py-3">
               {filteredPanels && filteredPanels.length > 0 ? (
-                <div className="px-2 py-2">
-                  <p className="px-4 py-2 text-sm text-white font-medium">
-                    Search Results
+                <div className="space-y-2">
+                  <p className="text-[10px] font-medium text-white uppercase tracking-wider px-1 mb-2">
+                    Search Results ({filteredPanels.length})
                   </p>
-                  <div className="space-y-1">
-                    {filteredPanels.map((panel) => renderPanelItem(panel, true, true))}
-                  </div>
+                  {filteredPanels.map((panel) => renderPanelItem(panel, true, true))}
                 </div>
               ) : search.trim() ? (
-                <div className="py-12 text-center text-white">
-                  <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
-                  <p className="text-base">No panels found</p>
-                  <p className="text-sm mt-1">Try a different search term</p>
+                <div className="py-12 text-center">
+                  <Zap className="h-10 w-10 mx-auto mb-3 text-white/20" />
+                  <p className="text-sm font-medium text-white">No panels found</p>
+                  <p className="text-xs text-white mt-1">Try a different search term</p>
                 </div>
               ) : (
-                <div className="px-2 py-2">
+                <div className="space-y-5">
                   {Object.entries(panelsGrouped).map(([manufacturer, panels]) => (
-                    <div key={manufacturer} className="mb-4">
-                      <p className="px-4 py-2 text-sm text-white font-medium sticky top-0 bg-background">
-                        {manufacturer}
-                      </p>
-                      <div className="space-y-1">
+                    <div key={manufacturer}>
+                      <div className="flex items-center gap-2 mb-2 px-1">
+                        <div className="h-[2px] w-4 rounded-full bg-red-500/40" />
+                        <p className="text-[10px] font-bold text-white uppercase tracking-wider">{manufacturer}</p>
+                        <span className="text-[10px] text-white bg-white/[0.08] px-1.5 py-0.5 rounded">{panels.length}</span>
+                      </div>
+                      <div className="space-y-2">
                         {panels.map((panel) => renderPanelItem(panel, false, true))}
                       </div>
                     </div>
                   ))}
                 </div>
               )}
-            </div>
-
-            {/* Footer */}
-            <div className="border-t border-border/50 px-4 py-3 bg-card/30">
-              <p className="text-xs text-white text-center">
-                Select a panel to auto-fill specifications
-              </p>
             </div>
           </div>
         </SwipeableBottomSheet>

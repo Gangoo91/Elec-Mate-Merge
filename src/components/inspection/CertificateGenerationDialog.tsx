@@ -16,6 +16,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 
@@ -65,6 +66,7 @@ export default function CertificateGenerationDialog({
                 ? 'Generation Failed'
                 : `${documentLabel} Ready`}
           </DialogTitle>
+          <DialogDescription className="sr-only">Certificate generation progress and download</DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col items-center gap-4 py-4">

@@ -490,7 +490,7 @@ export default function PATTestingCertificate() {
               variant="ghost"
               size="sm"
               className="text-white hover:text-white hover:bg-white/10 -ml-2 h-9 px-2 touch-manipulation"
-              onClick={() => navigate('/electrician/inspection-testing')}
+              onClick={() => navigate('/electrician/inspection-testing?section=specialist')}
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
               Back

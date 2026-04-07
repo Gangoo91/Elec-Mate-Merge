@@ -412,7 +412,7 @@ export default function EVChargingCertificate() {
                 variant="ghost"
                 size="icon"
                 className="text-white hover:text-white hover:bg-white/10 h-9 w-9 shrink-0 touch-manipulation active:scale-[0.98] transition-transform"
-                onClick={() => navigate('/electrician/inspection-testing')}
+                onClick={() => navigate('/electrician/inspection-testing?section=specialist')}
               >
                 <ArrowLeft className="w-4 h-4" />
               </Button>
@@ -466,7 +466,7 @@ export default function EVChargingCertificate() {
                 variant="ghost"
                 size="sm"
                 className="text-white hover:text-white hover:bg-white/10 -ml-2 h-11 px-3 touch-manipulation active:scale-[0.98] transition-transform"
-                onClick={() => navigate('/electrician/inspection-testing')}
+                onClick={() => navigate('/electrician/inspection-testing?section=specialist')}
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back

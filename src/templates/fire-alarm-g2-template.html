@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fire Alarm Installation Certificate (G2) - BS 5839-1:2025</title>
+    <style>
+      :root {
+        --accent: {{ company_accent_color | default: "#dc2626" }};
+        --accent-light: {{ company_accent_color | default: "#dc2626" }}22;
+      }
+
+      @page { size: A4; margin: 3mm; }
+      @page landscape { size: A4 landscape; margin: 3mm; }
+
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 8.5px;
+        line-height: 1.4;
+        color: #1a1a1a;
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* ── Header ── */
+      .header {
+        background: linear-gradient(180deg, #0a1628, #152238);
+        color: #fff;
+        padding: 10px 12px;
+        border-radius: 2px;
+        position: relative;
+        margin-bottom: 2px;
+      }
+      .header::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: var(--accent);
+      }
+      .header-content { display: flex; justify-content: space-between; align-items: center; }
+      .header-brand { display: flex; align-items: center; gap: 10px; margin-right: 12px; }
+      .header-logo img { max-height: 45px; max-width: 120px; object-fit: contain; }
+      .header-company { font-size: 11px; font-weight: 700; }
+      .header-scheme { font-size: 7px; color: var(--accent); margin-top: 1px; }
+      .header-title { flex: 1; }
+      .header-title h1 { font-size: 15px; font-weight: 700; letter-spacing: 0.5px; }
+      .header-title p { font-size: 7.5px; opacity: 0.85; letter-spacing: 0.3px; }
+      .header-meta { text-align: right; }
+      .header-cert-no { font-size: 11px; font-weight: 700; color: var(--accent); }
+      .header-page { font-size: 8px; opacity: 0.7; margin-top: 2px; }
+
+      /* ── Sections ── */
+      .section { margin-bottom: 4px; }
+      .section-title {
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        color: #fff;
+        font-size: 9px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        padding: 4px 8px;
+        margin-bottom: 3px;
+        border-left: 3px solid var(--accent);
+      }
+
+      /* ── Form Grid ── */
+      .grid { display: table; width: 100%; border-collapse: collapse; margin-bottom: 2px; }
+      .row { display: table-row; }
+      .lbl {
+        display: table-cell;
+        font-size: 7.5px; font-weight: 600; color: #475569;
+        padding: 4px 6px; width: 120px;
+        vertical-align: middle;
+        background: #f8fafc; border: 1px solid #e2e8f0;
+      }
+      .val {
+        display: table-cell;
+        font-size: 9.5px; color: #1e293b;
+        padding: 5px 6px;
+        vertical-align: middle;
+        border: 1px solid #e2e8f0; background: #fff;
+      }
+
+      /* ── Inline Form ── */
+      .inline { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px 6px; background: #fafbfc; border: 1px solid #e2e8f0; border-radius: 2px; }
+      .inline-group { display: flex; align-items: center; gap: 3px; }
+      .inline-lbl { font-size: 7.5px; font-weight: 600; color: #64748b; white-space: nowrap; }
+      .inline-val { font-size: 9px; color: #1e293b; padding: 4px 6px; background: #fff; border: 1px solid #cbd5e1; border-radius: 2px; min-width: 50px; min-height: 20px; }
+      .inline-val.wide { min-width: 100px; flex: 1; }
+
+      /* ── Checkbox ── */
+      .chk { width: 12px; height: 12px; border: 1.5px solid #64748b; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: bold; border-radius: 1px; }
+      .chk.on { background: #0f172a; color: #fff; border-color: #0f172a; }
+      .chk.green { background: #22c55e; color: #fff; border-color: #22c55e; }
+      .chk-item { display: flex; align-items: center; gap: 4px; }
+      .chk-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+      /* ── Layout ── */
+      .two-col { display: flex; gap: 4px; }
+      .two-col > .col { flex: 1; }
+      .three-col { display: flex; gap: 4px; }
+      .three-col > .col { flex: 1; }
+
+      /* ── Tables ── */
+      .tbl { width: 100%; border-collapse: collapse; font-size: 8.5px; margin-bottom: 3px; }
+      .tbl th { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; font-weight: 600; font-size: 7.5px; padding: 4px 6px; text-align: left; border: 1px solid #0f172a; }
+      .tbl td { padding: 4px 6px; border: 1px solid #e2e8f0; vertical-align: top; background: #fff; }
+      .tbl .pass { background: #dcfce7; color: #166534; font-weight: 600; }
+      .tbl .fail { background: #fee2e2; color: #991b1b; font-weight: 600; }
+
+      /* ── Equipment Summary ── */
+      .eq-grid { display: flex; gap: 4px; margin-bottom: 4px; }
+      .eq-box { flex: 1; background: linear-gradient(135deg, #f8fafc, #e2e8f0); border: 1px solid #cbd5e1; border-radius: 3px; padding: 6px; text-align: center; }
+      .eq-box .count { font-size: 18px; font-weight: 700; color: var(--accent); line-height: 1; }
+      .eq-box .label { font-size: 7px; color: #64748b; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
+
+      /* ── Handover Grid ── */
+      .handover-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+      .handover-item { display: flex; align-items: center; gap: 6px; padding: 6px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; font-size: 8px; }
+
+      /* ── Defects ── */
+      .no-defects { background: #dcfce7; border: 1px solid #86efac; border-left: 3px solid #22c55e; border-radius: 2px; padding: 8px 12px; text-align: center; }
+      .no-defects .text { font-size: 9px; font-weight: 600; color: #166534; }
+      .defect-card { background: #fff; border: 1px solid #e2e8f0; border-left: 3px solid #f59e0b; border-radius: 3px; padding: 6px; margin-bottom: 4px; }
+      .defect-card.critical { border-left-color: #dc2626; }
+
+      /* ── Signatures ── */
+      .sig-grid { display: flex; gap: 6px; margin-top: 2px; }
+      .sig-box { flex: 1; border: 1px solid #cbd5e1; border-radius: 2px; overflow: hidden; }
+      .sig-box-hdr { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; font-size: 7.5px; font-weight: 600; padding: 3px 8px; border-bottom: 2px solid var(--accent); }
+      .sig-box-body { padding: 4px 6px; background: #fafbfc; }
+      .sig-field { display: flex; align-items: center; margin-bottom: 3px; gap: 4px; }
+      .sig-field:last-child { margin-bottom: 0; }
+      .sig-lbl { font-size: 7px; font-weight: 600; color: #64748b; min-width: 70px; flex-shrink: 0; }
+      .sig-val { flex: 1; font-size: 9px; color: #1e293b; padding: 4px 6px; background: #fff; border: 1px solid #e2e8f0; border-radius: 1px; min-height: 20px; }
+      .sig-val.sig { min-height: 35px; display: flex; align-items: center; }
+      .sig-val img { max-height: 30px; }
+
+      /* ── Declaration ── */
+      .declaration { background: #f0fdf4; border: 1px solid #86efac; border-left: 3px solid var(--accent); border-radius: 2px; padding: 6px 10px; margin-bottom: 4px; }
+      .declaration p { font-size: 7.5px; color: #166534; line-height: 1.5; text-align: justify; }
+
+      /* ── Assessment ── */
+      .assessment { display: flex; align-items: center; gap: 16px; padding: 8px 12px; background: #f8fafc; border: 2px solid #1e293b; border-radius: 3px; }
+      .assessment-label { font-size: 9px; font-weight: 600; color: #334155; }
+      .assessment-options { display: flex; gap: 12px; }
+      .assessment-opt { display: flex; align-items: center; gap: 6px; padding: 6px 16px; border: 2px solid #cbd5e1; border-radius: 3px; background: #fff; }
+      .assessment-opt.pass-on { background: #22c55e; border-color: #22c55e; }
+      .assessment-opt.fail-on { background: #dc2626; border-color: #dc2626; }
+      .assessment-opt .opt-label { font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+      .assessment-opt.pass-on .opt-label, .assessment-opt.fail-on .opt-label { color: #fff; }
+
+      /* ── Service Schedule ── */
+      .service { display: flex; gap: 12px; padding: 8px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; }
+      .service-item { flex: 1; }
+      .service-lbl { font-size: 7px; color: #64748b; margin-bottom: 2px; }
+      .service-date { font-size: 10px; font-weight: 600; color: #1e293b; }
+
+      /* ── Accreditation Banner ── */
+      .accred { background: linear-gradient(135deg, #f8fafc, #e2e8f0); border: 1px solid #cbd5e1; border-left: 3px solid var(--accent); border-radius: 2px; padding: 4px 8px; margin-bottom: 4px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+      .accred span { font-size: 7.5px; font-weight: 600; color: #334155; padding: 2px 6px; background: #fff; border: 1px solid #e2e8f0; border-radius: 2px; }
+      .accred .bafe { color: var(--accent); border-color: var(--accent); }
+
+      /* ── Photos ── */
+      .photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .photo-item { border: 1px solid #e2e8f0; border-radius: 3px; overflow: hidden; }
+      .photo-item img { width: 100%; height: 120px; object-fit: cover; }
+      .photo-caption { font-size: 7px; color: #64748b; padding: 4px 6px; background: #f8fafc; text-align: center; }
+
+      /* ── Utilities ── */
+      .page-break { page-break-before: always; }
+      .avoid-break { page-break-inside: avoid; }
+      .landscape-page { page: landscape; }
+      .text-center { text-align: center; }
+      .footer { margin-top: 8px; padding-top: 6px; border-top: 2px solid var(--accent); display: flex; justify-content: space-between; font-size: 7px; color: #64748b; }
+    </style>
+  </head>
+  <body>
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- PAGE 1: FIRE ALARM INSTALLATION CERTIFICATE (G2)   -->
+    <!-- ═══════════════════════════════════════════════════ -->
+
+    <div class="header">
+      <div class="header-content">
+        <div class="header-brand">
+          {% if company_logo %}
+          <div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>
+          {% endif %}
+          {% if registration_scheme_logo %}
+          <div class="header-logo" style="margin-left: 8px;"><img src="{{ registration_scheme_logo }}" alt="Scheme" /></div>
+          {% endif %}
+          <div>
+            <div class="header-company">{{ company_name }}</div>
+            {% if installer_registration_scheme %}
+            <div class="header-scheme">{{ installer_registration_scheme }}{% if installer_registration_number %}: {{ installer_registration_number }}{% endif %}</div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="header-title">
+          <h1>FIRE ALARM INSTALLATION CERTIFICATE (G2)</h1>
+          <p>In accordance with {{ standard_edition | default: "BS 5839-1:2025" }} — Fire Detection and Fire Alarm Systems for Buildings</p>
+        </div>
+        <div class="header-meta">
+          <div class="header-cert-no">{{ certificate_number }}</div>
+          <div class="header-page">Page 1{% if has_zones %} of {% if has_photos %}3{% else %}2{% endif %}{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accreditation Banner -->
+    {% if bafe_registration or fia_membership or nsi_ssaib_certification %}
+    <div class="accred">
+      <span style="color: #334155; background: none; border: none; padding: 0; font-weight: 400;">Third-Party Certification:</span>
+      {% if bafe_registration %}<span class="bafe">BAFE SP203-1: {{ bafe_registration }}</span>{% endif %}
+      {% if fia_membership %}<span>FIA: {{ fia_membership }}</span>{% endif %}
+      {% if nsi_ssaib_certification %}<span>NSI/SSAIB: {{ nsi_ssaib_certification }}</span>{% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Certificate Details -->
+    <div class="section">
+      <div class="section-title">Certificate Details</div>
+      <div class="inline">
+        <div class="inline-group">
+          <span class="inline-lbl">Certificate No:</span>
+          <span class="inline-val" style="font-weight: 600;">{{ certificate_number }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-lbl">Installation Date:</span>
+          <span class="inline-val">{{ installation_date }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-lbl">Standard:</span>
+          <span class="inline-val">{{ standard_edition | default: "BS 5839-1:2025" }}</span>
+        </div>
+        {% if commissioning_date %}
+        <div class="inline-group">
+          <span class="inline-lbl">Completion Date:</span>
+          <span class="inline-val">{{ commissioning_date }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Client Details -->
+    <div class="section">
+      <div class="section-title">Client Details</div>
+      <div class="grid">
+        <div class="row">
+          <div class="lbl">Client Name</div>
+          <div class="val">{{ client_name }}</div>
+          <div class="lbl">Position</div>
+          <div class="val">{{ client_position }}</div>
+        </div>
+        <div class="row">
+          <div class="lbl">Address</div>
+          <div class="val" colspan="3">{{ client_address }}</div>
+        </div>
+        <div class="row">
+          <div class="lbl">Telephone</div>
+          <div class="val">{{ client_telephone }}</div>
+          <div class="lbl">Email</div>
+          <div class="val">{{ client_email }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Premises Details -->
+    <div class="section">
+      <div class="section-title">Premises Details</div>
+      <div class="grid">
+        <div class="row">
+          <div class="lbl">Premises Name</div>
+          <div class="val">{{ premises_name }}</div>
+          <div class="lbl">Premises Type</div>
+          <div class="val">{{ premises_type_display }}</div>
+        </div>
+        <div class="row">
+          <div class="lbl">Address</div>
+          <div class="val" colspan="3">{{ premises_address }}</div>
+        </div>
+      </div>
+      <div class="inline" style="margin-top: 2px;">
+        <div class="inline-group"><span class="inline-lbl">Occupancy:</span><span class="inline-val">{{ occupancy_type_display }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Floors:</span><span class="inline-val">{{ floors_count }}</span></div>
+        {% if floor_area %}<div class="inline-group"><span class="inline-lbl">Floor Area:</span><span class="inline-val">{{ floor_area }} m²</span></div>{% endif %}
+      </div>
+    </div>
+
+    <!-- FRA Reference -->
+    {% if fra_reference %}
+    <div class="section">
+      <div class="section-title">Fire Risk Assessment Reference</div>
+      <div class="inline">
+        <div class="inline-group"><span class="inline-lbl">Reference:</span><span class="inline-val">{{ fra_reference }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Date:</span><span class="inline-val">{{ fra_date }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Author:</span><span class="inline-val">{{ fra_author }}</span></div>
+        {% if fra_company %}<div class="inline-group"><span class="inline-lbl">Company:</span><span class="inline-val">{{ fra_company }}</span></div>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Installer Details -->
+    <div class="section">
+      <div class="section-title">Installer Details</div>
+      <div class="grid">
+        <div class="row">
+          <div class="lbl">Name</div>
+          <div class="val">{{ installer_name }}</div>
+          <div class="lbl">Company</div>
+          <div class="val">{{ installer_company }}</div>
+        </div>
+        {% if installer_company_address %}
+        <div class="row">
+          <div class="lbl">Address</div>
+          <div class="val" colspan="3">{{ installer_company_address }}</div>
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="lbl">Telephone</div>
+          <div class="val">{{ installer_phone }}</div>
+          <div class="lbl">Email</div>
+          <div class="val">{{ installer_email }}</div>
+        </div>
+      </div>
+      <div class="inline" style="margin-top: 2px;">
+        {% if installer_registration_scheme %}<div class="inline-group"><span class="inline-lbl">Scheme:</span><span class="inline-val">{{ installer_registration_scheme }}</span></div>{% endif %}
+        {% if installer_registration_number %}<div class="inline-group"><span class="inline-lbl">Reg No:</span><span class="inline-val">{{ installer_registration_number }}</span></div>{% endif %}
+        {% if installer_competency_scheme %}<div class="inline-group"><span class="inline-lbl">Competency:</span><span class="inline-val">{{ installer_competency_scheme }}</span></div>{% endif %}
+      </div>
+    </div>
+
+    <!-- Design Certificate Reference -->
+    {% if design_cert_reference %}
+    <div class="section">
+      <div class="section-title">Design Certificate Reference (G1)</div>
+      <div class="inline">
+        <div class="inline-group"><span class="inline-lbl">G1 Reference:</span><span class="inline-val">{{ design_cert_reference }}</span></div>
+        {% if design_cert_date %}<div class="inline-group"><span class="inline-lbl">Date:</span><span class="inline-val">{{ design_cert_date }}</span></div>{% endif %}
+        {% if designer_name_company %}<div class="inline-group"><span class="inline-lbl">Designer:</span><span class="inline-val">{{ designer_name_company }}</span></div>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- System Details -->
+    <div class="section">
+      <div class="section-title">System Classification</div>
+      <!-- Category row -->
+      <div class="inline">
+        <div class="inline-group">
+          <span class="inline-lbl">Category:</span>
+          <div class="chk-row">
+            {% assign categories = "L1,L2,L3,L4,L5,M,P1,P2" | split: "," %}
+            {% for cat in categories %}
+            <div class="chk-item">
+              <span class="chk {% if system_category == cat %}on{% endif %}">{% if system_category == cat %}&#10003;{% endif %}</span>
+              <label>{{ cat }}</label>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <!-- Description -->
+      <div class="grid" style="margin-top: 2px;">
+        <div class="row">
+          <div class="lbl">Description</div>
+          <div class="val">{{ system_category_description }}</div>
+        </div>
+        {% if category_justification %}
+        <div class="row">
+          <div class="lbl">Justification</div>
+          <div class="val">{{ category_justification }}</div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Control Panel</div>
+      <div class="grid">
+        <div class="row">
+          <div class="lbl">Make</div>
+          <div class="val" style="font-weight: 600;">{{ panel_make }}</div>
+          <div class="lbl">Model</div>
+          <div class="val" style="font-weight: 600;">{{ panel_model }}</div>
+        </div>
+        <div class="row">
+          <div class="lbl">Location</div>
+          <div class="val">{{ panel_location }}</div>
+          <div class="lbl">Serial No.</div>
+          <div class="val">{{ panel_serial }}</div>
+        </div>
+        <div class="row">
+          <div class="lbl">Network Type</div>
+          <div class="val">{{ network_type_display }}</div>
+          <div class="lbl">Zones</div>
+          <div class="val">{{ zones_count }}</div>
+        </div>
+        {% if loop_count > 0 %}
+        <div class="row">
+          <div class="lbl">Loops</div>
+          <div class="val">{{ loop_count }}</div>
+          <div class="lbl">Firmware</div>
+          <div class="val">{{ panel_firmware_version }}</div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Power Supply -->
+    <div class="section">
+      <div class="section-title">Power Supply</div>
+      <div class="inline">
+        {% if mains_supply_details %}<div class="inline-group"><span class="inline-lbl">Mains:</span><span class="inline-val">{{ mains_supply_details }}</span></div>{% endif %}
+        <div class="inline-group"><span class="inline-lbl">Battery Type:</span><span class="inline-val">{{ battery_type_display }}</span></div>
+        {% if battery_capacity %}<div class="inline-group"><span class="inline-lbl">Capacity:</span><span class="inline-val">{{ battery_capacity }} Ah</span></div>{% endif %}
+        {% if standby_duration %}<div class="inline-group"><span class="inline-lbl">Standby:</span><span class="inline-val">{{ standby_duration }} hrs</span></div>{% endif %}
+        {% if charger_type %}<div class="inline-group"><span class="inline-lbl">Charger:</span><span class="inline-val">{{ charger_type }}</span></div>{% endif %}
+        {% if battery_install_date %}<div class="inline-group"><span class="inline-lbl">Battery Installed:</span><span class="inline-val">{{ battery_install_date }}</span></div>{% endif %}
+      </div>
+    </div>
+
+    <!-- Cable & Wiring -->
+    {% if cable_type %}
+    <div class="section">
+      <div class="section-title">Cable & Wiring</div>
+      <div class="inline">
+        <div class="inline-group"><span class="inline-lbl">Cable Type:</span><span class="inline-val">{{ cable_type }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Fire Rating:</span><span class="inline-val">{{ cable_fire_rating }}</span></div>
+        {% if circuit_integrity %}<div class="inline-group"><span class="inline-lbl">Integrity:</span><span class="inline-val">{{ circuit_integrity }}</span></div>{% endif %}
+        {% if red_cable_for_mains %}
+        <div class="chk-item"><span class="chk on">&#10003;</span><label>Red cable for mains ({{ standard_edition | default: "BS 5839-1:2025" }})</label></div>
+        {% endif %}
+      </div>
+      {% if wiring_notes %}
+      <div class="inline" style="margin-top: 2px;">{{ wiring_notes }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Cause & Effect -->
+    <div class="section">
+      <div class="section-title">Cause & Effect</div>
+      <div class="inline">
+        {% if evacuation_strategy %}<div class="inline-group"><span class="inline-lbl">Evacuation:</span><span class="inline-val">{{ evacuation_strategy }}</span></div>{% endif %}
+        {% if cause_effect_ref %}<div class="inline-group"><span class="inline-lbl">C&E Ref:</span><span class="inline-val">{{ cause_effect_ref }}</span></div>{% endif %}
+      </div>
+      {% if false_alarm_strategy_text %}
+      <div class="inline" style="margin-top: 2px;">
+        <div class="inline-group" style="flex: 1;"><span class="inline-lbl">False Alarm Strategy:</span><span class="inline-val wide">{{ false_alarm_strategy_text }}</span></div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Monitoring / ARC -->
+    {% if monitoring.is_monitored %}
+    <div class="section">
+      <div class="section-title">Monitoring / ARC</div>
+      <div class="inline">
+        <div class="inline-group"><span class="inline-lbl">ARC Name:</span><span class="inline-val" style="font-weight: 600;">{{ monitoring.arc_name }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Account:</span><span class="inline-val">{{ monitoring.arc_account_number }}</span></div>
+        <div class="inline-group"><span class="inline-lbl">Signalling:</span><span class="inline-val">{{ monitoring.signalling_route_display }}</span></div>
+        {% if monitoring.arc_contact_number %}<div class="inline-group"><span class="inline-lbl">Contact:</span><span class="inline-val">{{ monitoring.arc_contact_number }}</span></div>{% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Equipment Summary -->
+    <div class="section">
+      <div class="section-title">Equipment Summary</div>
+      <div class="eq-grid">
+        <div class="eq-box"><div class="count">{{ zones_count }}</div><div class="label">Zones</div></div>
+        <div class="eq-box"><div class="count">{{ total_detectors }}</div><div class="label">Detectors</div></div>
+        <div class="eq-box"><div class="count">{{ call_point_count }}</div><div class="label">Call Points</div></div>
+        <div class="eq-box"><div class="count">{{ sounder_count }}</div><div class="label">Sounders</div></div>
+        <div class="eq-box"><div class="count">{{ visual_alarm_count }}</div><div class="label">VADs</div></div>
+      </div>
+    </div>
+
+    <!-- Interface Equipment -->
+    {% if has_interface_equipment %}
+    <div class="section">
+      <div class="section-title">Interface Equipment</div>
+      <table class="tbl">
+        <thead><tr><th>Type</th><th>Location</th><th>Method</th><th>Details</th><th style="text-align: center;">Tested</th></tr></thead>
+        <tbody>
+          {% for item in interface_equipment %}
+          <tr>
+            <td>{{ item.type }}</td><td>{{ item.location }}</td><td>{{ item.interface_method }}</td><td>{{ item.details }}</td>
+            <td class="{% if item.tested %}pass{% endif %}" style="text-align: center;">{% if item.tested %}YES{% else %}—{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- Repeater Panels -->
+    {% if has_repeater_panels %}
+    <div class="section">
+      <div class="section-title">Repeater Panels</div>
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Location</th><th>Make</th><th>Model</th></tr></thead>
+        <tbody>
+          {% for rep in repeater_panels %}
+          <tr><td style="text-align: center;">{{ rep.number }}</td><td>{{ rep.location }}</td><td>{{ rep.make }}</td><td>{{ rep.model }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- Aspirating Detection -->
+    {% if has_aspirating_units %}
+    <div class="section">
+      <div class="section-title">Aspirating Detection System</div>
+      <table class="tbl">
+        <thead><tr><th>Make</th><th>Model</th><th style="text-align: center;">Sampling Pts</th><th>Pipe Length</th><th>Transport Time</th><th>Sensitivity</th></tr></thead>
+        <tbody>
+          {% for unit in aspirating_units %}
+          <tr><td>{{ unit.make }}</td><td>{{ unit.model }}</td><td style="text-align: center;">{{ unit.sampling_points }}</td><td>{{ unit.pipe_length }}</td><td>{{ unit.transport_time }}</td><td>{{ unit.sensitivity_level }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- Documentation & Handover -->
+    <div class="section">
+      <div class="section-title">Documentation & Handover</div>
+      <div class="handover-grid">
+        <div class="handover-item"><span class="chk {% if as_fitted_drawings_provided %}green{% endif %}">{% if as_fitted_drawings_provided %}&#10003;{% endif %}</span><label>As-fitted drawings</label></div>
+        <div class="handover-item"><span class="chk {% if zone_plan_provided %}green{% endif %}">{% if zone_plan_provided %}&#10003;{% endif %}</span><label>Zone plan / chart</label></div>
+        <div class="handover-item"><span class="chk {% if handover_as_built_drawings %}green{% endif %}">{% if handover_as_built_drawings %}&#10003;{% endif %}</span><label>As-built drawings</label></div>
+        <div class="handover-item"><span class="chk {% if handover_operating_instructions %}green{% endif %}">{% if handover_operating_instructions %}&#10003;{% endif %}</span><label>Operating instructions</label></div>
+        <div class="handover-item"><span class="chk {% if handover_log_book %}green{% endif %}">{% if handover_log_book %}&#10003;{% endif %}</span><label>Log book</label></div>
+        <div class="handover-item"><span class="chk {% if handover_spares %}green{% endif %}">{% if handover_spares %}&#10003;{% endif %}</span><label>Spares provided</label></div>
+        <div class="handover-item"><span class="chk {% if handover_training %}green{% endif %}">{% if handover_training %}&#10003;{% endif %}</span><label>Training provided</label></div>
+      </div>
+      {% if variations_from_design %}
+      <div class="inline" style="margin-top: 4px;">
+        <div class="inline-group" style="flex: 1;"><span class="inline-lbl">Variations:</span><span class="inline-val wide">{{ variations_from_design }}</span></div>
+      </div>
+      {% endif %}
+      {% if design_doc_reference %}
+      <div class="inline" style="margin-top: 2px;">
+        <div class="inline-group"><span class="inline-lbl">Design Doc Ref:</span><span class="inline-val">{{ design_doc_reference }}</span></div>
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Defects -->
+    <div class="section">
+      <div class="section-title">Defects and Observations</div>
+      {% if no_defects %}
+      <div class="no-defects"><div class="text">&#10003; No defects found during installation</div></div>
+      {% else %}
+      {% for defect in defects %}
+      <div class="defect-card {% if defect.severity_class == 'critical' %}critical{% endif %}">
+        <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 3px;">
+          <span style="background: #0f172a; color: #fff; font-size: 7px; font-weight: 600; padding: 2px 6px; border-radius: 2px;">#{{ defect.number }}</span>
+          <span style="font-size: 7px; font-weight: 600;">{{ defect.severity }}</span>
+          {% if defect.rectified %}<span style="background: #dcfce7; color: #166534; font-size: 7px; font-weight: 600; padding: 2px 6px; border-radius: 2px;">RECTIFIED</span>{% endif %}
+        </div>
+        <div style="font-size: 8px;">{{ defect.description }}</div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Declaration -->
+    <div class="section avoid-break">
+      <div class="section-title">Declaration</div>
+      <div class="declaration">
+        <p><strong>I/We hereby certify</strong> that the fire detection and fire alarm system installation described in this certificate has been carried out in accordance with {{ standard_edition | default: "BS 5839-1:2025" }} and the design specification referenced above, except for any variations stated. The installation is complete and ready for commissioning.</p>
+      </div>
+    </div>
+
+    <!-- Signatures -->
+    <div class="section avoid-break">
+      <div class="section-title">Signatures</div>
+      <div class="sig-grid">
+        <div class="sig-box">
+          <div class="sig-box-hdr">Installer</div>
+          <div class="sig-box-body">
+            <div class="sig-field"><span class="sig-lbl">Name</span><span class="sig-val">{{ installer_name }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Company</span><span class="sig-val">{{ installer_company }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Qualifications</span><span class="sig-val">{{ installer_qualifications }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Date</span><span class="sig-val">{{ installer_date }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Signature</span><span class="sig-val sig">{% if installer_signature %}<img src="{{ installer_signature }}" />{% endif %}</span></div>
+          </div>
+        </div>
+        {% if responsible_person.name %}
+        <div class="sig-box">
+          <div class="sig-box-hdr">Responsible Person</div>
+          <div class="sig-box-body">
+            <div class="sig-field"><span class="sig-lbl">Name</span><span class="sig-val">{{ responsible_person.name }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Position</span><span class="sig-val">{{ responsible_person.position }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Date</span><span class="sig-val">{{ responsible_person.date }}</span></div>
+            <div class="sig-field"><span class="sig-lbl">Signature</span><span class="sig-val sig">{% if responsible_person.signature %}<img src="{{ responsible_person.signature }}" />{% endif %}</span></div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Overall Assessment -->
+    <div class="section avoid-break">
+      <div class="section-title">Overall Assessment</div>
+      <div class="assessment">
+        <span class="assessment-label">Installation Assessment:</span>
+        <div class="assessment-options">
+          <div class="assessment-opt {% if overall_result == 'satisfactory' %}pass-on{% endif %}">
+            <span class="chk {% if overall_result == 'satisfactory' %}on{% endif %}" style="{% if overall_result == 'satisfactory' %}background: #fff; color: #22c55e;{% endif %}">{% if overall_result == 'satisfactory' %}&#10003;{% endif %}</span>
+            <span class="opt-label">SATISFACTORY</span>
+          </div>
+          <div class="assessment-opt {% if overall_result == 'unsatisfactory' %}fail-on{% endif %}">
+            <span class="chk {% if overall_result == 'unsatisfactory' %}on{% endif %}" style="{% if overall_result == 'unsatisfactory' %}background: #fff; color: #dc2626;{% endif %}">{% if overall_result == 'unsatisfactory' %}&#10003;{% endif %}</span>
+            <span class="opt-label">UNSATISFACTORY</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service Schedule -->
+    <div class="section avoid-break">
+      <div class="section-title">Service Schedule</div>
+      <div class="service">
+        <div class="service-item"><div class="service-lbl">Next 6-Monthly Service Due:</div><div class="service-date">{{ next_service_due }}</div></div>
+        <div class="service-item"><div class="service-lbl">Next Annual Inspection Due:</div><div class="service-date">{{ next_inspection_due }}</div></div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    {% if has_additional_notes %}
+    <div class="section">
+      <div class="section-title">Additional Notes</div>
+      <div class="inline" style="min-height: 30px;">{{ additional_notes }}</div>
+    </div>
+    {% endif %}
+
+    <!-- Footer -->
+    <div class="footer">
+      <div>
+        <strong>{{ company_name }}</strong><br />
+        {{ company_address }}<br />
+        {% if company_phone %}Tel: {{ company_phone }}{% endif %}{% if company_email %} | {{ company_email }}{% endif %}
+      </div>
+      <div style="text-align: right;">
+        <span style="color: #94a3b8;">{{ standard_edition | default: "BS 5839-1:2025" }} | Fire Detection and Fire Alarm Systems</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- PAGE 2: ZONE & DEVICE SCHEDULES (Landscape)        -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    {% if has_zones or has_detectors or has_sounders or has_call_points %}
+    <div class="page-break landscape-page"></div>
+
+    <div class="header">
+      <div class="header-content">
+        <div class="header-brand">
+          {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+          <div><div class="header-company">{{ company_name }}</div></div>
+        </div>
+        <div class="header-title">
+          <h1>ZONE & DEVICE SCHEDULES</h1>
+          <p>{{ certificate_number }} — {{ premises_name }}</p>
+        </div>
+        <div class="header-meta">
+          <div class="header-cert-no">{{ certificate_number }}</div>
+          <div class="header-page">Page 2{% if has_photos %} of 3{% else %} of 2{% endif %}</div>
+        </div>
+      </div>
+    </div>
+
+    {% if has_zones %}
+    <div class="section">
+      <div class="section-title">Zone Schedule</div>
+      <table class="tbl">
+        <thead><tr><th style="width: 8%; text-align: center;">Zone</th><th style="width: 22%;">Zone Name</th><th style="width: 30%;">Location</th><th style="width: 13%; text-align: center;">Detectors</th><th style="width: 13%; text-align: center;">Call Points</th><th style="width: 14%; text-align: center;">Sounders</th></tr></thead>
+        <tbody>
+          {% for zone in zones %}
+          <tr>
+            <td style="text-align: center; font-weight: 600;">{{ zone.zone_number }}</td>
+            <td>{{ zone.zone_name }}</td><td>{{ zone.location }}</td>
+            <td style="text-align: center;">{{ zone.detector_count }}</td>
+            <td style="text-align: center;">{{ zone.call_point_count }}</td>
+            <td style="text-align: center;">{{ zone.sounder_count }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    {% if has_detectors %}
+    <div class="section">
+      <div class="section-title">Detector Schedule</div>
+      <table class="tbl">
+        <thead><tr><th style="width: 5%; text-align: center;">#</th><th style="width: 25%;">Location</th><th style="width: 15%;">Type</th><th style="width: 12%;">Make</th><th style="width: 13%;">Model</th><th style="width: 15%;">Serial No.</th><th style="width: 15%;">Install Date</th></tr></thead>
+        <tbody>
+          {% for det in detectors %}
+          <tr>
+            <td style="text-align: center;">{{ det.number }}</td>
+            <td>{{ det.location }}</td><td>{{ det.type }}</td><td>{{ det.make }}</td><td>{{ det.model }}</td>
+            <td>{{ det.serial_number }}</td><td>{{ det.install_date }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    {% if has_sounders %}
+    <div class="section">
+      <div class="section-title">Sounder Schedule</div>
+      <table class="tbl">
+        <thead><tr><th style="width: 5%; text-align: center;">#</th><th style="width: 30%;">Location</th><th style="width: 17%;">Type</th><th style="width: 15%;">Make</th><th style="width: 15%;">Model</th><th style="width: 18%; text-align: center;">dB Reading</th></tr></thead>
+        <tbody>
+          {% for snd in sounders %}
+          <tr>
+            <td style="text-align: center;">{{ snd.number }}</td>
+            <td>{{ snd.location }}</td><td>{{ snd.type }}</td><td>{{ snd.make }}</td><td>{{ snd.model }}</td>
+            <td style="text-align: center;">{{ snd.db_reading }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    {% if has_call_points %}
+    <div class="section">
+      <div class="section-title">Call Point Schedule</div>
+      <table class="tbl">
+        <thead><tr><th style="width: 5%; text-align: center;">#</th><th style="width: 35%;">Location</th><th style="width: 20%;">Type</th><th style="width: 20%;">Make</th><th style="width: 20%;">Model</th></tr></thead>
+        <tbody>
+          {% for cp in call_points %}
+          <tr>
+            <td style="text-align: center;">{{ cp.number }}</td>
+            <td>{{ cp.location }}</td><td>{{ cp.type }}</td><td>{{ cp.make }}</td><td>{{ cp.model }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <div class="footer">
+      <div><strong>{{ company_name }}</strong> | {{ company_phone }}</div>
+      <div style="text-align: right;"><span style="color: #94a3b8;">{{ standard_edition | default: "BS 5839-1:2025" }} | Fire Alarm Installation Certificate (G2)</span></div>
+    </div>
+    {% endif %}
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- PAGE 3: PHOTOS (if any)                            -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    {% if has_photos %}
+    <div class="page-break"></div>
+
+    <div class="header">
+      <div class="header-content">
+        <div class="header-brand">
+          {% if company_logo %}<div class="header-logo"><img src="{{ company_logo }}" alt="Logo" /></div>{% endif %}
+          <div><div class="header-company">{{ company_name }}</div></div>
+        </div>
+        <div class="header-title">
+          <h1>APPENDIX — PHOTOGRAPHIC EVIDENCE</h1>
+          <p>{{ certificate_number }} — {{ premises_name }}</p>
+        </div>
+        <div class="header-meta">
+          <div class="header-cert-no">{{ certificate_number }}</div>
+          <div class="header-page">Page 3 of 3</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Appendix — Photographic Evidence ({{ photo_count }} photos)</div>
+      <div class="photos-grid">
+        {% for photo in photos %}
+        <div class="photo-item">
+          <img src="{{ photo }}" alt="Photo {{ forloop.index }}" />
+          <div class="photo-caption">Photo {{ forloop.index }}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="footer">
+      <div><strong>{{ company_name }}</strong> | {{ company_phone }}</div>
+      <div style="text-align: right;"><span style="color: #94a3b8;">{{ standard_edition | default: "BS 5839-1:2025" }} | Fire Alarm Installation Certificate (G2)</span></div>
+    </div>
+    {% endif %}
+  </body>
+</html>

@@ -93,7 +93,9 @@ function hasMinimumDataForCloud(reportType: string, data: any): boolean {
     case 'emergency-lighting':
       return !!(data.premisesAddress || data.luminaires?.length > 0);
     case 'fire-alarm':
-      return !!(data.premisesAddress || data.systemType);
+    case 'fire-alarm-design':
+    case 'fire-alarm-commissioning':
+      return !!(data.premisesAddress || data.systemType || data.systemCategory);
     case 'ev-charging':
       return !!(data.chargerMake || data.chargePointLocation);
     case 'solar-pv':

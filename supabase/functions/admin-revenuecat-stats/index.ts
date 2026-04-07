@@ -145,7 +145,7 @@ Deno.serve(async (req) => {
       const tier = sub.subscription_tier || 'unknown';
       const engagement = engagementMap[sub.id] || null;
 
-      // Check trial status: explicit is_trial flag OR trial_end in the future
+      // Check trial status: is_trial flag OR trial_end in the future
       const trialEnd = sub.trial_end || null;
       const isOnTrial =
         sub.is_trial === true || (trialEnd && new Date(trialEnd).getTime() > Date.now());

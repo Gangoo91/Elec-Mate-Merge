@@ -24,10 +24,13 @@ export type DetectorType =
   | 'beam'
   | 'aspirating'
   | 'flame'
-  | 'co';
+  | 'co'
+  | 'linear-heat'
+  | 'duct'
+  | 'video';
 
 // Sounder types
-export type SounderType = 'bell' | 'electronic-sounder' | 'voice-alarm' | 'visual-beacon';
+export type SounderType = 'bell' | 'electronic-sounder' | 'voice-alarm' | 'visual-beacon' | 'sounder-beacon' | 'wall-sounder' | 'ceiling-sounder';
 
 export interface FireAlarmZone {
   id: string;
@@ -50,6 +53,7 @@ export interface FireAlarmDetector {
   installDate: string;
   testResult: 'pass' | 'fail' | 'na' | '';
   notes: string;
+  photo?: string;
 }
 
 export interface FireAlarmSounder {
@@ -61,6 +65,7 @@ export interface FireAlarmSounder {
   model: string;
   dBReading: string;
   testResult: 'pass' | 'fail' | 'na' | '';
+  photo?: string;
 }
 
 export interface FireAlarmCallPoint {
@@ -71,6 +76,7 @@ export interface FireAlarmCallPoint {
   make: string;
   model: string;
   testResult: 'pass' | 'fail' | 'na' | '';
+  photo?: string;
 }
 
 export interface FireAlarmTestResult {
@@ -572,7 +578,7 @@ export const getDefaultFireAlarmFormData = (): FireAlarmFormData => ({
 
   additionalNotes: '',
 
-  standardEdition: 'BS 5839-1:2017+A1:2024',
+  standardEdition: 'BS 5839-1:2025',
   panelFirmwareVersion: '',
 
   interfaceEquipment: [],

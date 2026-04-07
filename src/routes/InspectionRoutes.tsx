@@ -9,6 +9,8 @@ const NewCertificate = lazy(() => import('@/pages/inspection/NewCertificate'));
 
 // New certificate types
 const FireAlarmCertificate = lazy(() => import('@/pages/inspection/FireAlarmCertificate'));
+const FireAlarmDesignCertificate = lazy(() => import('@/pages/inspection/FireAlarmDesignCertificate'));
+const FireAlarmCommissioningCertificate = lazy(() => import('@/pages/inspection/FireAlarmCommissioningCertificate'));
 const EVChargingCertificate = lazy(() => import('@/pages/inspection/EVChargingCertificate'));
 const EmergencyLightingCertificate = lazy(
   () => import('@/pages/inspection/EmergencyLightingCertificate')
@@ -50,9 +52,13 @@ export default function InspectionRoutes() {
         {/* New certificate selector */}
         <Route path="new" element={<NewCertificate />} />
 
-        {/* Fire Alarm Certificate (BS 5839) */}
+        {/* Fire Alarm Certificates (BS 5839) */}
         <Route path="fire-alarm/new" element={<FireAlarmCertificate />} />
         <Route path="fire-alarm/:id" element={<FireAlarmCertificate />} />
+        <Route path="fire-alarm-design/new" element={<FireAlarmDesignCertificate />} />
+        <Route path="fire-alarm-design/:id" element={<FireAlarmDesignCertificate />} />
+        <Route path="fire-alarm-commissioning/new" element={<FireAlarmCommissioningCertificate />} />
+        <Route path="fire-alarm-commissioning/:id" element={<FireAlarmCommissioningCertificate />} />
 
         {/* EV Charging Certificate (IET CoP) */}
         <Route path="ev-charging/new" element={<EVChargingCertificate />} />

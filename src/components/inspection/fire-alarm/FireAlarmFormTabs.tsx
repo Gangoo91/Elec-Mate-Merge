@@ -1,105 +1,85 @@
-import React from 'react';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
-import { FireAlarmTabValue } from '@/hooks/useFireAlarmTabs';
-import FireAlarmInstallationDetails from './FireAlarmInstallationDetails';
-import FireAlarmSystemDesign from './FireAlarmSystemDesign';
-import FireAlarmTestSchedule from './FireAlarmTestSchedule';
-import FireAlarmDeclarations from './FireAlarmDeclarations';
+import { Building2, Cpu, Grid3X3, Link2, FileCheck } from 'lucide-react';
+import FAClientPremises from './tabs/FAClientPremises';
+import FASystemPanel from './tabs/FASystemPanel';
+import FAZonesDevices from './tabs/FAZonesDevices';
+import FAEquipmentInterfaces from './tabs/FAEquipmentInterfaces';
+import FADeclarations from './tabs/FADeclarations';
 import FireAlarmTabNavigation from './FireAlarmTabNavigation';
-import { Building2, Settings, TestTube, FileText } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
 
 interface FireAlarmFormTabsProps {
-  currentTab: FireAlarmTabValue;
+  currentTab: string;
   onTabChange: (value: string) => void;
-  canAccessTab: (tabId: FireAlarmTabValue) => boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: Record<string, any>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
-  tabNavigationProps: {
-    currentTab: FireAlarmTabValue;
-    currentTabIndex: number;
-    totalTabs: number;
-    canNavigateNext: boolean;
-    canNavigatePrevious: boolean;
-    navigateNext: () => void;
-    navigatePrevious: () => void;
-    getProgressPercentage: () => number;
-    isCurrentTabComplete: boolean;
-    onGenerateCertificate?: () => void;
-    canGenerateCertificate?: boolean;
-    whatsApp?: {
-      type: string;
-      id: string;
-      recipientPhone: string;
-      recipientName: string;
-      documentLabel: string;
-    };
-  };
+  tabNavigationProps: any;
   onGenerateCertificate: () => void;
   onCreateInvoice?: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
   onOpenEmailDialog?: () => void;
   canEmail?: boolean;
+  // Keep unused props for backwards compat
+  canAccessTab?: (tabId: any) => boolean;
 }
 
 const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
   currentTab,
   onTabChange,
-  canAccessTab,
   formData,
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
   onCreateInvoice,
-  onSaveDraft,
   canGenerateCertificate = true,
   onOpenEmailDialog,
   canEmail = false,
 }) => {
-  const isMobile = useIsMobile();
-
-  // Mobile: no max-width, no horizontal spacing - edge-to-edge
-  // Desktop: constrained width with spacing
-  // pb-24 on mobile ensures content isn't hidden behind sticky nav
-  const contentWrapperClass = cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6');
-
   const smartTabs: SmartTab[] = [
     {
-      value: 'installation',
-      label: 'Installation',
-      shortLabel: 'Install',
+      value: 'client',
+      label: 'Client & Premises',
+      shortLabel: 'Client',
       icon: <Building2 className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
-          <FireAlarmInstallationDetails formData={formData} onUpdate={onUpdate} />
+        <div className="space-y-4">
+          <FAClientPremises formData={formData} onUpdate={onUpdate} />
           <FireAlarmTabNavigation {...tabNavigationProps} />
         </div>
       ),
     },
     {
       value: 'system',
-      label: 'System Design',
+      label: 'System & Panel',
       shortLabel: 'System',
-      icon: <Settings className="h-4 w-4" />,
+      icon: <Cpu className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
-          <FireAlarmSystemDesign formData={formData} onUpdate={onUpdate} />
+        <div className="space-y-4">
+          <FASystemPanel formData={formData} onUpdate={onUpdate} />
           <FireAlarmTabNavigation {...tabNavigationProps} />
         </div>
       ),
     },
     {
-      value: 'testing',
-      label: 'Testing',
-      shortLabel: 'Test',
-      icon: <TestTube className="h-4 w-4" />,
+      value: 'zones',
+      label: 'Zones & Devices',
+      shortLabel: 'Zones',
+      icon: <Grid3X3 className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
-          <FireAlarmTestSchedule formData={formData} onUpdate={onUpdate} />
+        <div className="space-y-4">
+          <FAZonesDevices formData={formData} onUpdate={onUpdate} />
+          <FireAlarmTabNavigation {...tabNavigationProps} />
+        </div>
+      ),
+    },
+    {
+      value: 'equipment',
+      label: 'Equipment',
+      shortLabel: 'Equip',
+      icon: <Link2 className="h-4 w-4" />,
+      content: (
+        <div className="space-y-4">
+          <FAEquipmentInterfaces formData={formData} onUpdate={onUpdate} />
           <FireAlarmTabNavigation {...tabNavigationProps} />
         </div>
       ),
@@ -108,10 +88,10 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
       value: 'declarations',
       label: 'Declarations',
       shortLabel: 'Sign',
-      icon: <FileText className="h-4 w-4" />,
+      icon: <FileCheck className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
-          <FireAlarmDeclarations formData={formData} onUpdate={onUpdate} />
+        <div className="space-y-4">
+          <FADeclarations formData={formData} onUpdate={onUpdate} />
           <FireAlarmTabNavigation
             {...tabNavigationProps}
             onGenerateCertificate={onGenerateCertificate}
@@ -125,16 +105,23 @@ const FireAlarmFormTabs: React.FC<FireAlarmFormTabsProps> = ({
     },
   ];
 
+  // Calculate tab completion
+  const completedTabs: Record<string, boolean> = {
+    client: !!(formData.clientName && formData.premisesAddress),
+    system: !!(formData.systemCategory && formData.systemMake),
+    zones: !!((formData.zones?.length > 0) && (formData.detectors?.length > 0 || formData.sounders?.length > 0)),
+    equipment: !!(formData.asFittedDrawingsProvided),
+    declarations: !!(formData.installerSignature && formData.overallResult),
+  };
+
   return (
-    <div className="space-y-2 sm:space-y-4">
-      <SmartTabs
-        tabs={smartTabs}
-        value={currentTab}
-        onValueChange={onTabChange}
-        className="space-y-4"
-        breakpoint={3}
-      />
-    </div>
+    <SmartTabs
+      tabs={smartTabs}
+      value={currentTab}
+      onValueChange={onTabChange}
+      className="space-y-4"
+      completedTabs={completedTabs}
+    />
   );
 };
 

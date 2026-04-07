@@ -744,6 +744,34 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     additional_notes: get('additionalNotes'),
     has_additional_notes: !!(get('additionalNotes') && get('additionalNotes').trim()),
 
+    // G1 Design-specific
+    design_basis: get('designBasis'),
+    coverage_rationale: get('coverageRationale'),
+    design_coverage_category: get('designCoverageCategory'),
+    ceiling_type: get('ceilingType'),
+    beam_spacing: get('beamSpacing'),
+    ventilation_notes: get('ventilationNotes'),
+    building_construction_notes: get('buildingConstructionNotes'),
+    ceiling_height: get('ceilingHeight'),
+    detector_spacing: get('detectorSpacing'),
+    coverage_per_detector: get('coveragePerDetector'),
+    spacing_calculations: get('spacingCalculations'),
+    design_doc_ref: get('designDocRef'),
+    design_doc_date: getDate('designDocDate'),
+    drawing_numbers: get('drawingNumbers'),
+    design_deviations: get('designDeviations'),
+    design_date: getDate('designDate'),
+    planned_optical_smoke: getNum('plannedOpticalSmoke'),
+    planned_heat: getNum('plannedHeat'),
+    planned_multi_sensor: getNum('plannedMultiSensor'),
+    planned_beam: getNum('plannedBeam'),
+    planned_aspirating: getNum('plannedAspirating'),
+    planned_flame: getNum('plannedFlame'),
+    planned_co: getNum('plannedCO'),
+    planned_call_points: getNum('plannedCallPoints'),
+    planned_sounders: getNum('plannedSounders'),
+    planned_vads: getNum('plannedVADs'),
+
     // G2 Installation-specific
     design_cert_reference: get('designCertReference'),
     design_cert_date: getDate('designCertDate'),
@@ -945,9 +973,8 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     occupancy_basis: get('occupancyBasis'),
 
     // ============================================
-    // CONTACT DETAILS
+    // CONTACT DETAILS (legacy — G2 maps these earlier)
     // ============================================
-    installer_company_address: get('installerCompanyAddress'),
     installer_company_phone: get('installerCompanyPhone'),
     commissioner_company_address: get('commissionerCompanyAddress'),
     commissioner_company_phone: get('commissionerCompanyPhone'),
@@ -957,12 +984,6 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     // ============================================
     related_standards: formData.relatedStandards || [],
     has_related_standards: (formData.relatedStandards || []).length > 0,
-
-    // ============================================
-    // PHOTOS (for PDF page 3)
-    // ============================================
-    photos: [] as { url: string; caption: string }[],
-    has_photos: false,
 
     // ============================================
     // COMPANY BRANDING (from profile)

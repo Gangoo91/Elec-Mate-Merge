@@ -34,7 +34,7 @@ import {
 } from '@/utils/certificateToQuote';
 import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
-import { formatFireAlarmJson } from '@/utils/fireAlarmJsonFormatter';
+import { formatFireAlarmJson } from '@/utils/fireAlarmG2JsonFormatter';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
@@ -46,7 +46,6 @@ import { useFireAlarmSmartForm } from '@/hooks/inspection/useFireAlarmSmartForm'
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { useReportSync } from '@/hooks/useReportSync';
 import { SyncStatusBadge } from '@/components/inspection/SyncStatusBadge';
-import { ConflictResolutionDialog } from '@/components/inspection/ConflictResolutionDialog';
 import { generateCertificateNumber } from '@/utils/certificateNumbering';
 
 const REPORT_TYPE = 'fire-alarm' as const;
@@ -245,8 +244,30 @@ export default function FireAlarmCertificate() {
     }
   };
 
+  // Pre-generation validation
+  const getMissingFields = () => {
+    const missing: { field: string; tab: string }[] = [];
+    if (!formData.clientName) missing.push({ field: 'Client Name', tab: 'client' });
+    if (!formData.premisesAddress) missing.push({ field: 'Premises Address', tab: 'client' });
+    if (!formData.systemCategory) missing.push({ field: 'System Category', tab: 'system' });
+    if (!formData.systemMake) missing.push({ field: 'Panel Make', tab: 'system' });
+    if (!formData.installerSignature) missing.push({ field: 'Installer Signature', tab: 'declarations' });
+    if (!formData.overallResult) missing.push({ field: 'Overall Result', tab: 'declarations' });
+    return missing;
+  };
+
   // Generate certificate PDF
   const handleGenerateCertificate = async () => {
+    const missing = getMissingFields();
+    if (missing.length > 0) {
+      const fieldList = missing.map((m) => m.field).join(', ');
+      toast.error(`Missing required fields: ${fieldList}`);
+      // Navigate to the first tab with missing fields
+      const firstTab = missing[0].tab;
+      tabProps.setCurrentTab(firstTab);
+      return;
+    }
+
     setIsGenerating(true);
     setGeneratedPdfUrl(null);
     setGenerationError(null);
@@ -448,7 +469,7 @@ export default function FireAlarmCertificate() {
       </AlertDialog>
 
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
+      <div className="bg-background">
         <div className="px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -475,7 +496,7 @@ export default function FireAlarmCertificate() {
       </div>
 
       {/* Main Content - Edge-to-edge on mobile, padded on desktop */}
-      <main className="py-4 pb-4 sm:px-4 sm:pb-8">
+      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
         <FireAlarmFormTabs
           currentTab={tabProps.currentTab}
           onTabChange={(tab) => {
@@ -539,7 +560,6 @@ export default function FireAlarmCertificate() {
         documentLabel="Certificate"
       />
 
-      <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
     </div>
   );
 }

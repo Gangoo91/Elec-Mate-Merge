@@ -93,31 +93,29 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
   return (
     <div className="space-y-3">
       {/* Toggle: New Client / Existing Client */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
         <button
           type="button"
           onClick={handleSwitchToNew}
           className={cn(
-            'flex-1 flex items-center justify-center gap-2 h-11 rounded-lg border-2 text-sm font-medium transition-all touch-manipulation',
+            'flex-1 flex items-center justify-center h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98]',
             mode === 'new'
-              ? accentColor || 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
-              : 'bg-black/30 border-white/10 text-gray-400 hover:border-white/20'
+              ? 'bg-white/[0.1] text-white shadow-sm'
+              : 'text-white'
           )}
         >
-          <User className="h-4 w-4" />
           New Client
         </button>
         <button
           type="button"
           onClick={handleSwitchToExisting}
           className={cn(
-            'flex-1 flex items-center justify-center gap-2 h-11 rounded-lg border-2 text-sm font-medium transition-all touch-manipulation',
+            'flex-1 flex items-center justify-center h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98]',
             mode === 'existing'
-              ? accentColor || 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
-              : 'bg-black/30 border-white/10 text-gray-400 hover:border-white/20'
+              ? 'bg-blue-500/20 text-blue-400 shadow-sm'
+              : 'text-white'
           )}
         >
-          <Users className="h-4 w-4" />
           Existing Client
         </button>
       </div>

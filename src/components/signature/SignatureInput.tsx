@@ -78,31 +78,31 @@ const SignatureInput = ({
           onValueChange={(value) => setActiveTab(value as any)}
           className="w-full"
         >
-          <MobileTabsList className="bg-muted">
+          <MobileTabsList className="bg-muted w-full justify-center">
             <MobileTabsTrigger
               value="text"
-              className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]"
+              className="gap-1.5 text-sm px-4 py-2.5 min-h-[40px] flex-1 touch-manipulation"
             >
-              <Type className="h-3 w-3" />
+              <Type className="h-4 w-4" />
               Text
             </MobileTabsTrigger>
             <MobileTabsTrigger
               value="draw"
-              className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]"
+              className="gap-1.5 text-sm px-4 py-2.5 min-h-[40px] flex-1 touch-manipulation"
             >
-              <PenTool className="h-3 w-3" />
+              <PenTool className="h-4 w-4" />
               Draw
             </MobileTabsTrigger>
             <MobileTabsTrigger
               value="saved"
-              className="gap-1 text-xs px-3 py-2 min-h-[36px] min-w-[80px]"
+              className="gap-1.5 text-sm px-4 py-2.5 min-h-[40px] flex-1 touch-manipulation"
             >
-              <Upload className="h-3 w-3" />
+              <Upload className="h-4 w-4" />
               Saved
             </MobileTabsTrigger>
           </MobileTabsList>
 
-          <div className="p-2 sm:p-3">
+          <div className="p-3 sm:p-4">
             <MobileTabsContent value="text" className="mt-0">
               <Input
                 value={textSignature}
@@ -137,12 +137,14 @@ const SignatureInput = ({
                   </div>
                 </div>
               ) : (
+                <div className="w-full flex justify-center">
                 <SignaturePad
                   ref={signaturePadRef}
-                  width={280}
-                  height={100}
+                  width={300}
+                  height={120}
                   onSignatureChange={handleDigitalSignatureChange}
                 />
+              </div>
               )}
             </MobileTabsContent>
 

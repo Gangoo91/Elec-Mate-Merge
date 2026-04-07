@@ -317,7 +317,7 @@ const Dashboard = ({
               />
               <HubCard
                 title="Specialist"
-                description="10 certificate types"
+                description="14 certificate types"
                 accentColor="from-red-500 via-rose-400 to-pink-400"
                 onClick={() => onNavigate('specialist')}
               />

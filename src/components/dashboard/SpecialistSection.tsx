@@ -82,7 +82,6 @@ const specialistCerts: CertDef[] = [
     description: 'System design certificate',
     standard: 'BS 5839-1',
     accentColor: 'from-red-500 via-rose-400 to-pink-400',
-    comingSoon: true,
     category: 'fire-safety',
   },
   {
@@ -99,7 +98,6 @@ const specialistCerts: CertDef[] = [
     description: 'Commissioning certificate',
     standard: 'BS 5839-1',
     accentColor: 'from-red-500 via-red-400 to-orange-400',
-    comingSoon: true,
     category: 'fire-safety',
   },
   {
