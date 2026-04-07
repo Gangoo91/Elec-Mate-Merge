@@ -156,7 +156,7 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({ formData, onUp
           </div>
         )
       ) : (
-        <div className="w-full space-y-6 py-6 lg:py-8 px-4 lg:px-6 bg-elec-gray border border-primary/30 rounded-xl shadow-lg shadow-black/10">
+        <div className="w-full space-y-6 py-4 sm:py-6 lg:py-8 sm:px-4 lg:px-6 bg-background sm:bg-elec-gray sm:border sm:border-primary/30 sm:rounded-xl sm:shadow-lg sm:shadow-black/10">
           <div data-autofill-section>
             <EnhancedTestResultDesktopTable
               testResults={circuitState.testResults}

@@ -108,7 +108,7 @@ const SelectContent = React.forwardRef<
         'text-foreground',
         'shadow-2xl shadow-black/70',
         // Width constraints
-        'min-w-[260px] w-[var(--radix-select-trigger-width)]',
+        'min-w-[8rem] w-[var(--radix-select-trigger-width)]',
         // Max height for scrolling
         'max-h-[min(70vh,420px)]',
         // Animations - iOS-style spring
