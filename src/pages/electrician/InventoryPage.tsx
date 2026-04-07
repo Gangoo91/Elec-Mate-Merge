@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -151,25 +151,53 @@ export default function InventoryPage() {
       if (result.success && result.previousQuantity != null) {
         const item = items.find((i) => i.id === id);
         const name = item?.name || 'Item';
-        const action = delta < 0 ? 'Removed' : 'Added';
+        const newQty = Math.max(
+          0,
+          Math.round(((result.previousQuantity ?? 0) + delta) * 100) / 100
+        );
         const absDelta = Math.abs(delta);
-        toast({
-          title: `${action} ${absDelta} × ${name}`,
-          description: 'Tap to undo',
-          action: (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-elec-yellow font-semibold"
-              onClick={() => adjustQuantity(id, -delta)}
-            >
-              Undo
-            </Button>
-          ),
-        });
+
+        if (newQty <= 0 && delta < 0) {
+          // Zero quantity — prompt to reorder
+          haptic.warning();
+          toast({
+            title: `${name} — out of stock`,
+            description: 'Add to reorder list?',
+            action: (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-amber-400 font-semibold"
+                onClick={() => {
+                  const text = generateReorderList();
+                  if (text) navigator.clipboard.writeText(text);
+                  toast({ title: 'Reorder list copied' });
+                }}
+              >
+                Copy List
+              </Button>
+            ),
+          });
+        } else {
+          const action = delta < 0 ? 'Removed' : 'Added';
+          toast({
+            title: `${action} ${absDelta} × ${name}`,
+            description: 'Tap to undo',
+            action: (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-elec-yellow font-semibold"
+                onClick={() => adjustQuantity(id, -delta)}
+              >
+                Undo
+              </Button>
+            ),
+          });
+        }
       }
     },
-    [adjustQuantity, haptic, items]
+    [adjustQuantity, haptic, items, generateReorderList]
   );
 
   const handleDelete = useCallback(async () => {
@@ -219,6 +247,21 @@ export default function InventoryPage() {
     },
     [createItem, haptic]
   );
+
+  // Whether the recently used section is showing
+  const showRecentlyUsed =
+    recentlyUsedItems.length > 0 &&
+    !filters.searchQuery &&
+    filters.category === 'all' &&
+    filters.location === 'all' &&
+    !filters.lowStockOnly;
+
+  // Deduplicate: remove recently used items from the main list when the section is visible
+  const mainListItems = useMemo(() => {
+    if (!showRecentlyUsed) return filteredItems;
+    const recentIds = new Set(recentlyUsedItems.slice(0, 3).map((i) => i.id));
+    return filteredItems.filter((i) => !recentIds.has(i.id));
+  }, [filteredItems, recentlyUsedItems, showRecentlyUsed]);
 
   const renderItemList = (itemList: InventoryItem[]) => (
     <AnimatePresence mode="popLayout">
@@ -301,9 +344,7 @@ export default function InventoryPage() {
                   ))
                 ) : (
                   <div className="text-center py-12">
-                    <p className="text-white text-sm">
-                      No items matching "{filters.searchQuery}"
-                    </p>
+                    <p className="text-white text-sm">No items matching "{filters.searchQuery}"</p>
                   </div>
                 )
               ) : (
@@ -418,9 +459,7 @@ export default function InventoryPage() {
                 }
                 className={cn(
                   'px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap touch-manipulation transition-all flex-shrink-0',
-                  filters.category === cat.id
-                    ? cat.filterActiveClass
-                    : 'bg-white/[0.04] text-white'
+                  filters.category === cat.id ? cat.filterActiveClass : 'bg-white/[0.04] text-white'
                 )}
               >
                 {cat.label}
@@ -498,38 +537,34 @@ export default function InventoryPage() {
                 )}
 
                 {/* Recently used section */}
-                {recentlyUsedItems.length > 0 &&
-                  !filters.searchQuery &&
-                  filters.category === 'all' &&
-                  filters.location === 'all' &&
-                  !filters.lowStockOnly && (
-                    <motion.div variants={itemVariants}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Clock className="h-3.5 w-3.5 text-white" />
+                {showRecentlyUsed && (
+                  <motion.div variants={itemVariants}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Clock className="h-3.5 w-3.5 text-white" />
+                      <p className="text-[12px] text-white font-medium uppercase tracking-wider">
+                        Recently Used
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      {recentlyUsedItems.slice(0, 3).map((item) => (
+                        <InventoryItemCard
+                          key={`recent-${item.id}`}
+                          item={item}
+                          onAdjust={handleAdjust}
+                          onTap={setEditItem}
+                          onDelete={(id) => setDeleteId(id)}
+                        />
+                      ))}
+                    </div>
+                    {mainListItems.length > 0 && (
+                      <div className="mt-4 mb-2 border-t border-white/[0.06] pt-4">
                         <p className="text-[12px] text-white font-medium uppercase tracking-wider">
-                          Recently Used
+                          All Items ({mainListItems.length})
                         </p>
                       </div>
-                      <div className="space-y-2">
-                        {recentlyUsedItems.slice(0, 3).map((item) => (
-                          <InventoryItemCard
-                            key={`recent-${item.id}`}
-                            item={item}
-                            onAdjust={handleAdjust}
-                            onTap={setEditItem}
-                            onDelete={(id) => setDeleteId(id)}
-                          />
-                        ))}
-                      </div>
-                      {filteredItems.length > 0 && (
-                        <div className="mt-4 mb-2 border-t border-white/[0.06] pt-4">
-                          <p className="text-[12px] text-white font-medium uppercase tracking-wider">
-                            All Items
-                          </p>
-                        </div>
-                      )}
-                    </motion.div>
-                  )}
+                    )}
+                  </motion.div>
+                )}
 
                 {/* Items */}
                 {filteredItems.length === 0 ? (
@@ -605,8 +640,8 @@ export default function InventoryPage() {
                     ))}
                   </div>
                 ) : (
-                  // Flat list view
-                  renderItemList(filteredItems)
+                  // Flat list view (deduplicated when recently used section is visible)
+                  renderItemList(mainListItems)
                 )}
               </motion.div>
             )}

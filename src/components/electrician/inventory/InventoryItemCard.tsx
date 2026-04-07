@@ -173,19 +173,19 @@ export const InventoryItemCard = memo(function InventoryItemCard({
 
           {/* Right: quantity + stepper */}
           <div
-            className="flex items-center gap-1.5 flex-shrink-0"
+            className="flex items-center gap-2 flex-shrink-0"
             onClick={(e) => e.stopPropagation()}
           >
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white touch-manipulation"
+              className="rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white"
               onClick={() => onAdjust(item.id, -step)}
               disabled={item.quantity <= 0}
             >
-              <Minus className="h-4 w-4" />
+              <Minus className="h-5 w-5" />
             </Button>
-            <div className="min-w-[60px] text-center">
+            <div className="min-w-[56px] text-center">
               {isEditingQty ? (
                 <Input
                   ref={qtyInputRef}
@@ -194,16 +194,26 @@ export const InventoryItemCard = memo(function InventoryItemCard({
                   onChange={(e) => setEditQty(e.target.value)}
                   onBlur={handleQtySubmit}
                   onKeyDown={(e) => e.key === 'Enter' && handleQtySubmit()}
-                  className="h-8 w-16 text-center text-[15px] font-bold p-0 border-elec-yellow/50 bg-transparent"
+                  className="h-11 w-16 text-center text-[15px] font-bold p-0 border-elec-yellow/50 bg-transparent touch-manipulation"
                   min={0}
                   step={step}
                   autoFocus
                 />
               ) : (
-                <button type="button" onClick={handleQtyTap} className="touch-manipulation">
-                  <p className={cn('text-[17px] font-bold leading-tight', quantityColour)}>
+                <button
+                  type="button"
+                  onClick={handleQtyTap}
+                  className="min-h-[44px] min-w-[44px] flex flex-col items-center justify-center touch-manipulation"
+                >
+                  <motion.p
+                    key={item.quantity}
+                    initial={{ scale: 1.3, opacity: 0.5 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                    className={cn('text-[17px] font-bold leading-tight', quantityColour)}
+                  >
                     {item.quantity}
-                  </p>
+                  </motion.p>
                   <p className="text-[10px] text-white leading-tight">
                     {item.unit === 'each' ? '' : item.unit}
                   </p>
@@ -213,10 +223,10 @@ export const InventoryItemCard = memo(function InventoryItemCard({
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white touch-manipulation"
+              className="rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-white"
               onClick={() => onAdjust(item.id, step)}
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-5 w-5" />
             </Button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer, useState, useMemo } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,6 +26,48 @@ import {
 } from '@/types/inventory';
 import { toast } from '@/hooks/use-toast';
 
+// Form state reducer
+interface AddFormState {
+  name: string;
+  category: InventoryCategory;
+  quantity: number;
+  unit: InventoryUnit;
+  location: InventoryLocation;
+  lowStockThreshold: string;
+  unitCost: string;
+  supplier: string;
+  notes: string;
+  showMore: boolean;
+}
+
+type AddFormAction =
+  | { type: 'SET'; field: keyof AddFormState; value: string | number | boolean }
+  | { type: 'RESET' };
+
+const INITIAL_STATE: AddFormState = {
+  name: '',
+  category: 'cable',
+  quantity: 1,
+  unit: 'each',
+  location: 'van',
+  lowStockThreshold: '',
+  unitCost: '',
+  supplier: '',
+  notes: '',
+  showMore: false,
+};
+
+function formReducer(state: AddFormState, action: AddFormAction): AddFormState {
+  switch (action.type) {
+    case 'SET':
+      return { ...state, [action.field]: action.value };
+    case 'RESET':
+      return INITIAL_STATE;
+    default:
+      return state;
+  }
+}
+
 interface InventoryAddSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -41,73 +83,55 @@ export function InventoryAddSheet({
   existingItems = [],
   onUpdateExisting,
 }: InventoryAddSheetProps) {
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState<InventoryCategory>('cable');
-  const [quantity, setQuantity] = useState(1);
-  const [unit, setUnit] = useState<InventoryUnit>('each');
-  const [location, setLocation] = useState<InventoryLocation>('van');
-  const [lowStockThreshold, setLowStockThreshold] = useState('');
-  const [unitCost, setUnitCost] = useState('');
-  const [supplier, setSupplier] = useState('');
-  const [notes, setNotes] = useState('');
-  const [showMore, setShowMore] = useState(false);
+  const [form, dispatch] = useReducer(formReducer, INITIAL_STATE);
   const [saving, setSaving] = useState(false);
 
-  const step = UNIT_STEP[unit] || 1;
+  const step = UNIT_STEP[form.unit] || 1;
 
-  const reset = () => {
-    setName('');
-    setCategory('cable');
-    setQuantity(1);
-    setUnit('each');
-    setLocation('van');
-    setLowStockThreshold('');
-    setUnitCost('');
-    setSupplier('');
-    setNotes('');
-    setShowMore(false);
-  };
-
-  // Check for duplicate
-  const duplicate = name.trim()
-    ? existingItems.find((i) => i.name.toLowerCase() === name.trim().toLowerCase())
-    : null;
+  // Memoized duplicate check
+  const duplicate = useMemo(
+    () =>
+      form.name.trim()
+        ? existingItems.find((i) => i.name.toLowerCase() === form.name.trim().toLowerCase())
+        : null,
+    [form.name, existingItems]
+  );
 
   const handleSave = async () => {
-    if (!name.trim()) {
+    if (!form.name.trim()) {
       toast({ title: 'Enter an item name', variant: 'destructive' });
       return;
     }
 
     // If duplicate found, offer to merge
     if (duplicate && onUpdateExisting) {
-      onUpdateExisting(duplicate.id, quantity);
+      onUpdateExisting(duplicate.id, form.quantity);
       toast({
         title: 'Updated existing item',
-        description: `Added ${quantity} to ${duplicate.name} (now ${duplicate.quantity + quantity} ${duplicate.unit})`,
+        description: `Added ${form.quantity} to ${duplicate.name} (now ${duplicate.quantity + form.quantity} ${duplicate.unit})`,
       });
-      reset();
+      dispatch({ type: 'RESET' });
       onOpenChange(false);
       return;
     }
 
     setSaving(true);
     const result = await onSave({
-      name: name.trim(),
-      category,
-      quantity,
-      unit,
-      location,
-      low_stock_threshold: lowStockThreshold ? parseFloat(lowStockThreshold) : null,
-      unit_cost: unitCost ? parseFloat(unitCost) : null,
-      supplier: supplier.trim() || null,
-      notes: notes.trim() || null,
+      name: form.name.trim(),
+      category: form.category,
+      quantity: form.quantity,
+      unit: form.unit,
+      location: form.location,
+      low_stock_threshold: form.lowStockThreshold ? parseFloat(form.lowStockThreshold) : null,
+      unit_cost: form.unitCost ? parseFloat(form.unitCost) : null,
+      supplier: form.supplier.trim() || null,
+      notes: form.notes.trim() || null,
     });
     setSaving(false);
 
     if (result) {
-      toast({ title: 'Item added', description: name });
-      reset();
+      toast({ title: 'Item added', description: form.name });
+      dispatch({ type: 'RESET' });
       onOpenChange(false);
     }
   };
@@ -125,13 +149,18 @@ export function InventoryAddSheet({
           </div>
 
           {/* Form */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
+          <div
+            className={cn(
+              'flex-1 overflow-y-auto px-4 py-4 space-y-6 transition-opacity',
+              saving && 'pointer-events-none opacity-60'
+            )}
+          >
             {/* Name */}
             <div className="space-y-2">
               <Label className="text-sm font-medium text-white">Item Name *</Label>
               <Input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={form.name}
+                onChange={(e) => dispatch({ type: 'SET', field: 'name', value: e.target.value })}
                 placeholder="e.g. 6mm T&E Twin & Earth"
                 className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                 autoFocus
@@ -154,10 +183,10 @@ export function InventoryAddSheet({
                   <button
                     key={cat.id}
                     type="button"
-                    onClick={() => setCategory(cat.id)}
+                    onClick={() => dispatch({ type: 'SET', field: 'category', value: cat.id })}
                     className={cn(
-                      'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-all',
-                      category === cat.id
+                      'px-4 py-2.5 rounded-full text-[13px] font-medium touch-manipulation transition-all min-h-[44px]',
+                      form.category === cat.id
                         ? cat.pillActiveClass
                         : 'bg-white/[0.04] text-white border border-white/[0.06]'
                     )}
@@ -176,17 +205,27 @@ export function InventoryAddSheet({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-11 w-11 rounded-xl bg-white/[0.06] text-white touch-manipulation"
+                    className="rounded-xl bg-white/[0.06] text-white"
                     onClick={() =>
-                      setQuantity(Math.max(0, Math.round((quantity - step) * 100) / 100))
+                      dispatch({
+                        type: 'SET',
+                        field: 'quantity',
+                        value: Math.max(0, Math.round((form.quantity - step) * 100) / 100),
+                      })
                     }
                   >
-                    <Minus className="h-4 w-4" />
+                    <Minus className="h-5 w-5" />
                   </Button>
                   <Input
                     type="number"
-                    value={quantity}
-                    onChange={(e) => setQuantity(parseFloat(e.target.value) || 0)}
+                    value={form.quantity}
+                    onChange={(e) =>
+                      dispatch({
+                        type: 'SET',
+                        field: 'quantity',
+                        value: parseFloat(e.target.value) || 0,
+                      })
+                    }
                     className="h-11 text-center text-base font-bold touch-manipulation border-white/30 focus:border-yellow-500"
                     min={0}
                     step={step}
@@ -194,16 +233,25 @@ export function InventoryAddSheet({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-11 w-11 rounded-xl bg-white/[0.06] text-white touch-manipulation"
-                    onClick={() => setQuantity(Math.round((quantity + step) * 100) / 100)}
+                    className="rounded-xl bg-white/[0.06] text-white"
+                    onClick={() =>
+                      dispatch({
+                        type: 'SET',
+                        field: 'quantity',
+                        value: Math.round((form.quantity + step) * 100) / 100,
+                      })
+                    }
                   >
-                    <Plus className="h-4 w-4" />
+                    <Plus className="h-5 w-5" />
                   </Button>
                 </div>
               </div>
               <div className="space-y-2">
                 <Label className="text-sm font-medium text-white">Unit</Label>
-                <Select value={unit} onValueChange={(v) => setUnit(v as InventoryUnit)}>
+                <Select
+                  value={form.unit}
+                  onValueChange={(v) => dispatch({ type: 'SET', field: 'unit', value: v })}
+                >
                   <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
                     <SelectValue />
                   </SelectTrigger>
@@ -226,10 +274,10 @@ export function InventoryAddSheet({
                   <button
                     key={loc.id}
                     type="button"
-                    onClick={() => setLocation(loc.id)}
+                    onClick={() => dispatch({ type: 'SET', field: 'location', value: loc.id })}
                     className={cn(
-                      'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-all',
-                      location === loc.id
+                      'px-4 py-2.5 rounded-full text-[13px] font-medium touch-manipulation transition-all min-h-[44px]',
+                      form.location === loc.id
                         ? 'bg-teal-500/20 text-white border border-teal-500/40'
                         : 'bg-white/[0.04] text-white border border-white/[0.06]'
                     )}
@@ -241,10 +289,13 @@ export function InventoryAddSheet({
             </div>
 
             {/* More details (collapsible) */}
-            <Collapsible open={showMore} onOpenChange={setShowMore}>
-              <CollapsibleTrigger className="flex items-center gap-2 text-[13px] text-white font-medium touch-manipulation py-1">
+            <Collapsible
+              open={form.showMore}
+              onOpenChange={(v) => dispatch({ type: 'SET', field: 'showMore', value: v })}
+            >
+              <CollapsibleTrigger className="flex items-center gap-2 text-[13px] text-white font-medium touch-manipulation py-3 min-h-[44px]">
                 <ChevronDown
-                  className={cn('h-4 w-4 transition-transform', showMore && 'rotate-180')}
+                  className={cn('h-4 w-4 transition-transform', form.showMore && 'rotate-180')}
                 />
                 More details
               </CollapsibleTrigger>
@@ -253,8 +304,10 @@ export function InventoryAddSheet({
                   <Label className="text-sm font-medium text-white">Low Stock Alert</Label>
                   <Input
                     type="number"
-                    value={lowStockThreshold}
-                    onChange={(e) => setLowStockThreshold(e.target.value)}
+                    value={form.lowStockThreshold}
+                    onChange={(e) =>
+                      dispatch({ type: 'SET', field: 'lowStockThreshold', value: e.target.value })
+                    }
                     placeholder="Alert when quantity drops below..."
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
                     min={0}
@@ -265,8 +318,10 @@ export function InventoryAddSheet({
                   <Label className="text-sm font-medium text-white">Unit Cost (£)</Label>
                   <Input
                     type="number"
-                    value={unitCost}
-                    onChange={(e) => setUnitCost(e.target.value)}
+                    value={form.unitCost}
+                    onChange={(e) =>
+                      dispatch({ type: 'SET', field: 'unitCost', value: e.target.value })
+                    }
                     placeholder="Cost per unit"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
                     min={0}
@@ -276,8 +331,10 @@ export function InventoryAddSheet({
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-white">Supplier</Label>
                   <Input
-                    value={supplier}
-                    onChange={(e) => setSupplier(e.target.value)}
+                    value={form.supplier}
+                    onChange={(e) =>
+                      dispatch({ type: 'SET', field: 'supplier', value: e.target.value })
+                    }
                     list="supplier-suggestions"
                     placeholder="e.g. CEF, Edmundson, Screwfix"
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500"
@@ -296,8 +353,10 @@ export function InventoryAddSheet({
                 <div className="space-y-2">
                   <Label className="text-sm font-medium text-white">Notes</Label>
                   <Textarea
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                    value={form.notes}
+                    onChange={(e) =>
+                      dispatch({ type: 'SET', field: 'notes', value: e.target.value })
+                    }
                     placeholder="Any extra details..."
                     className="touch-manipulation text-base min-h-[80px] border-white/30 focus:border-yellow-500"
                   />
@@ -310,10 +369,10 @@ export function InventoryAddSheet({
           <div className="p-4 border-t border-white/[0.06]">
             <Button
               onClick={handleSave}
-              disabled={saving || !name.trim()}
+              disabled={saving || !form.name.trim()}
               className="w-full h-12 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-xl touch-manipulation"
             >
-              {saving ? 'Adding...' : 'Add Item'}
+              {saving ? 'Adding...' : duplicate ? 'Add to Existing' : 'Add Item'}
             </Button>
           </div>
         </div>
