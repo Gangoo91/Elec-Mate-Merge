@@ -21,6 +21,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
 import { Loader2, Lock, Eye, EyeOff } from 'lucide-react';
 import { useBiometricAuth } from '@/hooks/useBiometricAuth';
+import { useDashboardPreferences } from '@/hooks/useDashboardPreferences';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
@@ -95,7 +96,7 @@ const ToggleRow = ({
 );
 
 const PreferencesTab = () => {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const { addNotification } = useNotifications();
   const [isTestingSend, setIsTestingSend] = useState(false);
 
@@ -116,6 +117,26 @@ const PreferencesTab = () => {
   } = useNotificationPreferences();
   const { quietHours, updateQuietHours } = useQuietHours();
   const [allMuted, setAllMuted] = useState(false);
+
+  // Dashboard hub preferences
+  const { isHubVisible, toggleHub } = useDashboardPreferences();
+  const userRole = profile?.role || '';
+
+  const dashboardHubs = [
+    { id: 'apprentice', label: 'Apprentice Hub', icon: '🎓', iconBg: 'bg-blue-500/20' },
+    {
+      id: 'electrician',
+      label: 'Electrical Hub',
+      icon: '⚡',
+      iconBg: 'bg-yellow-500/20',
+      locked: true,
+    },
+    { id: 'study-centre', label: 'Study Centre', icon: '📚', iconBg: 'bg-purple-500/20' },
+    ...(userRole === 'admin' || userRole === 'college'
+      ? [{ id: 'college', label: 'College Hub', icon: '🏫', iconBg: 'bg-emerald-500/20' }]
+      : []),
+    { id: 'wellbeing', label: 'Wellbeing Hub', icon: '💗', iconBg: 'bg-pink-500/20' },
+  ];
 
   // Certificate preferences
   const [defaultCertType, setDefaultCertType] = useState('eicr');
@@ -288,6 +309,33 @@ const PreferencesTab = () => {
 
   return (
     <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="pb-8">
+      {/* ─── Dashboard Hubs ─── */}
+      <SectionLabel>Dashboard</SectionLabel>
+      <motion.div
+        variants={itemVariants}
+        className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden mb-6"
+      >
+        <div className="px-4 py-3 border-b border-white/[0.06]">
+          <p className="text-[13px] text-white">Choose which hubs appear on your dashboard.</p>
+        </div>
+        {dashboardHubs.map((hub, index) => (
+          <React.Fragment key={hub.id}>
+            {index > 0 && <Divider />}
+            <ToggleRow
+              icon={hub.icon}
+              iconBg={hub.iconBg}
+              label={hub.label}
+              checked={hub.locked || isHubVisible(hub.id)}
+              onCheckedChange={(v) => {
+                toggleHub({ hubId: hub.id, visible: v });
+                toast(v ? `${hub.label} added to dashboard` : `${hub.label} hidden from dashboard`);
+              }}
+              disabled={hub.locked}
+            />
+          </React.Fragment>
+        ))}
+      </motion.div>
+
       {/* ─── Notification summary row ─── */}
       <motion.div variants={itemVariants} className="flex items-center justify-between px-4 pb-4">
         <div className="flex items-center gap-2">

@@ -293,6 +293,7 @@ function PremiumHubCard({
 }
 
 export function PremiumHubGrid() {
+  const navigate = useNavigate();
   const dashboardData = useDashboardData();
   const { profile, user, isLoading } = useAuth();
   const { isHubVisible } = useDashboardPreferences();
@@ -347,9 +348,7 @@ export function PremiumHubGrid() {
     <div>
       {/* Section header with customise gear */}
       <div className="flex items-center justify-between mb-3 px-0.5">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider">
-          Your Hubs
-        </h2>
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider">Your Hubs</h2>
         <button
           onClick={() => navigate('/settings?tab=preferences')}
           className="h-11 w-11 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] transition-all touch-manipulation -mr-2"
