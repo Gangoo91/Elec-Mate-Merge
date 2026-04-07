@@ -164,7 +164,7 @@ const InteractiveToolsTab = () => {
                 </div>
                 <div className="text-2xl font-bold text-elec-yellow mb-1">{metric.value}</div>
                 <div className="text-sm text-green-300 mb-2">{metric.change}</div>
-                <div className="text-xs text-muted-foreground">{metric.detail}</div>
+                <div className="text-xs text-white">{metric.detail}</div>
               </div>
             ))}
           </div>

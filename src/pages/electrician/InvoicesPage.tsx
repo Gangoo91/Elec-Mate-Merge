@@ -550,7 +550,7 @@ const InvoicesPage = () => {
                   aria-label="Clear search"
                   className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center"
                 >
-                  <X className="h-4 w-4 text-muted-foreground" />
+                  <X className="h-4 w-4 text-white" />
                 </button>
               )}
             </div>
@@ -559,7 +559,7 @@ const InvoicesPage = () => {
                 setIsSearchOpen(false);
                 setSearchQuery('');
               }}
-              className="text-sm text-muted-foreground font-medium px-2"
+              className="text-sm text-white font-medium px-2"
             >
               Cancel
             </button>
@@ -600,7 +600,7 @@ const InvoicesPage = () => {
                     'h-9 w-9 flex items-center justify-center rounded-md transition-all',
                     viewMode === 'card'
                       ? 'bg-elec-yellow/20 text-elec-yellow'
-                      : 'text-muted-foreground hover:text-foreground'
+                      : 'text-white hover:text-foreground'
                   )}
                 >
                   <LayoutGrid className="h-4 w-4" />
@@ -612,7 +612,7 @@ const InvoicesPage = () => {
                     'h-9 w-9 flex items-center justify-center rounded-md transition-all',
                     viewMode === 'table'
                       ? 'bg-elec-yellow/20 text-elec-yellow'
-                      : 'text-muted-foreground hover:text-foreground'
+                      : 'text-white hover:text-foreground'
                   )}
                 >
                   <List className="h-4 w-4" />
@@ -792,12 +792,12 @@ const InvoicesPage = () => {
         {/* Invoices List */}
         <section>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+            <h2 className="text-sm font-semibold text-white uppercase tracking-wide">
               {activeFilter === 'all'
                 ? 'All Invoices'
                 : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Invoices`}
             </h2>
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-white">
               {filteredInvoices.length} {filteredInvoices.length === 1 ? 'invoice' : 'invoices'}
             </span>
           </div>
@@ -812,9 +812,9 @@ const InvoicesPage = () => {
             searchQuery ? (
               <Card className="bg-elec-gray/20 border-dashed">
                 <CardContent className="py-10 text-center">
-                  <Search className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                  <Search className="h-10 w-10 mx-auto text-white mb-3" />
                   <p className="font-medium">No results found</p>
-                  <p className="text-sm text-muted-foreground mt-1">Try a different search term</p>
+                  <p className="text-sm text-white mt-1">Try a different search term</p>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -833,9 +833,9 @@ const InvoicesPage = () => {
             ) : (
               <Card className="bg-elec-gray/20 border-dashed">
                 <CardContent className="py-10 text-center">
-                  <FileText className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                  <FileText className="h-10 w-10 mx-auto text-white mb-3" />
                   <p className="font-medium">No {activeFilter} invoices</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-white mt-1">
                     Invoices will appear here when {activeFilter}
                   </p>
                 </CardContent>

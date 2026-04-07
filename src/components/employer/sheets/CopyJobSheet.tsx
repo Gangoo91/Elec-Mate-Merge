@@ -156,7 +156,7 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
           </div>
 
           <div className="space-y-3">
-            <Label className="text-white/60">Copy Options</Label>
+            <Label className="text-white">Copy Options</Label>
 
             <div className="flex items-center gap-3">
               <Checkbox

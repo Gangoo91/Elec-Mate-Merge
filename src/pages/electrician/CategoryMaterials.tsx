@@ -206,7 +206,7 @@ const CategoryMaterials = () => {
                 <Loader2 className="h-5 w-5 animate-spin text-primary" />
                 <p className="text-primary font-medium">Loading {meta.title.toLowerCase()}...</p>
               </div>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-white text-sm">
                 Fetching data from comprehensive materials database
               </p>
             </CardContent>

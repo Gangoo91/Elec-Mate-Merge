@@ -268,7 +268,7 @@ export function AddJobPackDialog({
                   'w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200',
                   isComplete && 'bg-success text-success-foreground',
                   isActive && 'bg-elec-yellow text-elec-dark ring-2 ring-elec-yellow/25',
-                  !isComplete && !isActive && 'bg-muted text-white/60'
+                  !isComplete && !isActive && 'bg-muted text-white'
                 )}
               >
                 {isComplete ? (
@@ -282,7 +282,7 @@ export function AddJobPackDialog({
                   'text-[10px] sm:text-xs mt-1 font-medium transition-colors',
                   isActive && 'text-elec-yellow',
                   isComplete && 'text-success',
-                  !isComplete && !isActive && 'text-white/60'
+                  !isComplete && !isActive && 'text-white'
                 )}
               >
                 {step.title}
@@ -319,7 +319,7 @@ export function AddJobPackDialog({
         <Button
           type="button"
           variant="ghost"
-          className="flex-1 h-14 text-base text-white/60"
+          className="flex-1 h-14 text-base text-white"
           onClick={() => {
             resetForm();
             setOpen(false);
@@ -366,7 +366,7 @@ export function AddJobPackDialog({
           <div className="space-y-4">
             <div className="text-center mb-5">
               <h2 className="text-lg font-semibold text-foreground">Create Job Pack</h2>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Start from scratch or import from an existing job
               </p>
             </div>
@@ -407,7 +407,7 @@ export function AddJobPackDialog({
                   </div>
                   <div className="flex-1">
                     <p className="font-semibold text-foreground">New Job Pack</p>
-                    <p className="text-sm text-white/60">Create from scratch</p>
+                    <p className="text-sm text-white">Create from scratch</p>
                   </div>
                   {sourceType === 'new' && <CheckCircle2 className="h-6 w-6 text-elec-yellow" />}
                 </div>
@@ -433,7 +433,7 @@ export function AddJobPackDialog({
                   </div>
                   <div className="flex-1">
                     <p className="font-semibold text-foreground">From Existing Job</p>
-                    <p className="text-sm text-white/60">Import job details</p>
+                    <p className="text-sm text-white">Import job details</p>
                   </div>
                   {sourceType === 'existing' && (
                     <CheckCircle2 className="h-6 w-6 text-elec-yellow" />
@@ -444,11 +444,11 @@ export function AddJobPackDialog({
 
             {sourceType === 'existing' && (
               <div className="mt-4 space-y-2">
-                <Label className="text-sm font-medium text-white/60">Select Job</Label>
+                <Label className="text-sm font-medium text-white">Select Job</Label>
                 <ScrollArea className="h-48 rounded-xl border border-border">
                   <div className="p-2 space-y-2">
                     {activeJobs.length === 0 ? (
-                      <p className="text-center py-6 text-white/60 text-sm">
+                      <p className="text-center py-6 text-white text-sm">
                         No active jobs found
                       </p>
                     ) : (
@@ -466,7 +466,7 @@ export function AddJobPackDialog({
                           <div className="flex items-center justify-between">
                             <div className="min-w-0 flex-1">
                               <p className="font-medium text-foreground truncate">{job.title}</p>
-                              <p className="text-xs text-white/60 truncate">
+                              <p className="text-xs text-white truncate">
                                 {job.client} • {job.location}
                               </p>
                             </div>
@@ -603,7 +603,7 @@ export function AddJobPackDialog({
                 <Award className="h-5 w-5 text-info" />
                 <Label className="font-semibold text-foreground">Required Certifications</Label>
               </div>
-              <p className="text-xs text-white/60 mb-3">Auto-suggested based on hazards</p>
+              <p className="text-xs text-white mb-3">Auto-suggested based on hazards</p>
               <div className="flex flex-wrap gap-2">
                 {COMMON_CERTIFICATIONS.map((cert) => (
                   <Badge
@@ -678,7 +678,7 @@ export function AddJobPackDialog({
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-foreground truncate">{employee.name}</p>
-                    <p className="text-sm text-white/60 truncate">{employee.team_role}</p>
+                    <p className="text-sm text-white truncate">{employee.team_role}</p>
                   </div>
                   <Checkbox
                     checked={formData.assignedWorkers.includes(employee.id)}
@@ -700,16 +700,16 @@ export function AddJobPackDialog({
                 <CheckCircle2 className="h-8 w-8 text-success" />
               </div>
               <h2 className="text-lg font-semibold text-foreground">Ready to Create</h2>
-              <p className="text-sm text-white/60">Review the details below</p>
+              <p className="text-sm text-white">Review the details below</p>
             </div>
 
             <div className="space-y-3">
               <div className="p-4 rounded-xl bg-muted/30 border border-border/50">
-                <p className="text-xs text-white/60 uppercase mb-1">Job Pack</p>
+                <p className="text-xs text-white uppercase mb-1">Job Pack</p>
                 <p className="font-semibold text-foreground text-lg">
                   {formData.title || 'Untitled'}
                 </p>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   {formData.client} • {formData.location}
                 </p>
               </div>
@@ -737,7 +737,7 @@ export function AddJobPackDialog({
                       Team ({assignedEmployeeNames.length})
                     </span>
                   </div>
-                  <p className="text-sm text-white/60">
+                  <p className="text-sm text-white">
                     {assignedEmployeeNames.join(', ')}
                   </p>
                 </div>
@@ -745,7 +745,7 @@ export function AddJobPackDialog({
 
               {formData.estimatedValue && (
                 <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30">
-                  <span className="text-sm text-white/60">Estimated Value</span>
+                  <span className="text-sm text-white">Estimated Value</span>
                   <span className="font-semibold text-foreground">
                     £{parseFloat(formData.estimatedValue).toLocaleString()}
                   </span>

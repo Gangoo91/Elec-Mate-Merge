@@ -252,7 +252,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                     </Badge>
                   </div>
                   <Progress value={progress} className="h-2" />
-                  <p className="text-sm text-white/60">{currentStep}</p>
+                  <p className="text-sm text-white">{currentStep}</p>
                 </div>
               </CardContent>
             </Card>
@@ -265,7 +265,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                   <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
                   <div>
                     <h3 className="font-medium text-foreground">Generation Failed</h3>
-                    <p className="text-sm text-white/60 mt-1">{error}</p>
+                    <p className="text-sm text-white mt-1">{error}</p>
                     <Button variant="outline" size="sm" className="mt-3" onClick={handleReset}>
                       <RefreshCw className="h-4 w-4 mr-2" />
                       Try Again
@@ -286,7 +286,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                     </div>
                     <div>
                       <h3 className="font-medium text-foreground">Design Spec Generated!</h3>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         Circuit design created successfully
                       </p>
                     </div>
@@ -296,13 +296,13 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                     <div className="p-3 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         <div>
-                          <span className="text-white/60">Circuits: </span>
+                          <span className="text-white">Circuits: </span>
                           <span className="text-foreground font-medium">
                             {result.circuits?.length || 0}
                           </span>
                         </div>
                         <div>
-                          <span className="text-white/60">Property: </span>
+                          <span className="text-white">Property: </span>
                           <span className="text-foreground font-medium capitalize">
                             {propertyType}
                           </span>
@@ -342,11 +342,11 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground mb-1">AI Circuit Designer</h3>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Get BS 7671 compliant circuit designs with cable sizing, protective devices,
                       and installation guidance.
                     </p>
-                    <ul className="mt-3 space-y-1 text-sm text-white/60">
+                    <ul className="mt-3 space-y-1 text-sm text-white">
                       <li>• Circuit schedules and specifications</li>
                       <li>• Cable sizing calculations</li>
                       <li>• MCB/RCBO recommendations</li>

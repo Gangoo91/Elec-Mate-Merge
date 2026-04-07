@@ -643,7 +643,7 @@ export const EnhancedQuoteItemsStep = ({
                 placeholder="Search materials by name or code..."
                 value={materialSearch}
                 onChange={(e) => setMaterialSearch(e.target.value)}
-                className="h-12 pl-11 pr-4 bg-input border-white/[0.08] text-[15px] text-white placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
+                className="h-12 pl-11 pr-4 bg-input border-white/[0.08] text-[15px] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
               />
             </div>
 
@@ -1117,12 +1117,12 @@ export const EnhancedQuoteItemsStep = ({
             </div>
             <div className="text-left">
               <p className="text-[14px] font-medium text-white">My Price Book</p>
-              <p className="text-[12px] text-gray-400">
+              <p className="text-[12px] text-white">
                 {pricedBookItems.length} saved {pricedBookItems.length === 1 ? 'item' : 'items'}
               </p>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-gray-400" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
       ) : (
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
@@ -1141,7 +1141,7 @@ export const EnhancedQuoteItemsStep = ({
           </div>
           <div className="p-3">
             <div className="relative mb-3">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <input
                 type="text"
                 placeholder="Search price book..."
@@ -1186,7 +1186,7 @@ export const EnhancedQuoteItemsStep = ({
                       </p>
                     </div>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[12px] text-gray-400">
+                      <span className="text-[12px] text-white">
                         per {p.item.unit || 'each'}
                       </span>
                       {p.item.supplier && (
@@ -1216,12 +1216,12 @@ export const EnhancedQuoteItemsStep = ({
               </div>
               <div className="text-left">
                 <p className="text-[14px] font-medium text-white">My Rate Card</p>
-                <p className="text-[12px] text-gray-400">
+                <p className="text-[12px] text-white">
                   {rateCardItems.length} saved {rateCardItems.length === 1 ? 'rate' : 'rates'}
                 </p>
               </div>
             </div>
-            <ChevronRight className="h-5 w-5 text-gray-400" />
+            <ChevronRight className="h-5 w-5 text-white" />
           </button>
         ) : (
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
@@ -1240,7 +1240,7 @@ export const EnhancedQuoteItemsStep = ({
             </div>
             <div className="p-3">
               <div className="relative mb-3">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <input
                   type="text"
                   placeholder="Search rates..."
@@ -1314,12 +1314,12 @@ export const EnhancedQuoteItemsStep = ({
               </div>
               <div className="text-left">
                 <p className="text-[14px] font-medium text-white">My Bundles</p>
-                <p className="text-[12px] text-gray-400">
+                <p className="text-[12px] text-white">
                   {bundles.length} saved {bundles.length === 1 ? 'assembly' : 'assemblies'}
                 </p>
               </div>
             </div>
-            <ChevronRight className="h-5 w-5 text-gray-400" />
+            <ChevronRight className="h-5 w-5 text-white" />
           </button>
         ) : (
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
@@ -1371,7 +1371,7 @@ export const EnhancedQuoteItemsStep = ({
                         <div className="space-y-1 mt-2 mb-3">
                           {bundle.items.map((item) => (
                             <div key={item.id} className="flex items-center justify-between text-[12px]">
-                              <span className="text-gray-300 flex-1 min-w-0 line-clamp-1">{item.name}</span>
+                              <span className="text-white flex-1 min-w-0 line-clamp-1">{item.name}</span>
                               <span className="text-gray-500 ml-2 flex-shrink-0">
                                 {item.quantity} × £{item.unitPrice.toFixed(2)}
                               </span>

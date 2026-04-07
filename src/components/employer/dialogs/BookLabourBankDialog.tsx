@@ -236,7 +236,7 @@ export function BookLabourBankDialog({
               </div>
               <div>
                 <p className="font-semibold text-foreground">{electrician.name}</p>
-                <div className="flex items-center gap-2 text-sm text-white/60">
+                <div className="flex items-center gap-2 text-sm text-white">
                   <Award className="h-3 w-3" />
                   <span>{electrician.ecsCardType}</span>
                 </div>
@@ -251,7 +251,7 @@ export function BookLabourBankDialog({
               ) : (
                 <div>
                   <p className="font-bold text-foreground">£{electrician.dayRate}</p>
-                  <p className="text-xs text-white/60">per day</p>
+                  <p className="text-xs text-white">per day</p>
                 </div>
               )}
             </div>
@@ -323,7 +323,7 @@ export function BookLabourBankDialog({
                     <SelectItem key={opt.value} value={opt.value}>
                       <div className="flex items-center gap-2">
                         <span>{opt.label}</span>
-                        <span className="text-white/60 text-xs">({opt.hours})</span>
+                        <span className="text-white text-xs">({opt.hours})</span>
                       </div>
                     </SelectItem>
                   ))}
@@ -353,7 +353,7 @@ export function BookLabourBankDialog({
                     <SelectItem key={job.id} value={job.id}>
                       <div className="flex flex-col">
                         <span>{job.title}</span>
-                        <span className="text-white/60 text-xs">{job.client}</span>
+                        <span className="text-white text-xs">{job.client}</span>
                       </div>
                     </SelectItem>
                   ))}
@@ -364,7 +364,7 @@ export function BookLabourBankDialog({
             <div className="space-y-2">
               <Label htmlFor="siteAddress">Site Address</Label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   id="siteAddress"
                   value={siteAddress}
@@ -390,7 +390,7 @@ export function BookLabourBankDialog({
                 <AlertTriangle className="h-4 w-4 text-warning" />
                 <div>
                   <p className="text-sm font-medium">Urgency Premium</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Add extra for short notice bookings
                   </p>
                 </div>
@@ -417,7 +417,7 @@ export function BookLabourBankDialog({
             {/* Cost Breakdown */}
             <div className="p-4 bg-surface-elevated rounded-xl space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Base Rate</span>
+                <span className="text-white">Base Rate</span>
                 <span>£{calculations.baseRate}/day</span>
               </div>
               {urgencyEnabled && calculations.premiumAmount > 0 && (
@@ -427,12 +427,12 @@ export function BookLabourBankDialog({
                 </div>
               )}
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Adjusted Day Rate</span>
+                <span className="text-white">Adjusted Day Rate</span>
                 <span className="font-medium">£{calculations.adjustedDayRate}/day</span>
               </div>
               <Separator className="my-2" />
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Estimated Days</span>
+                <span className="text-white">Estimated Days</span>
                 <span>
                   {calculations.estimatedDays} {calculations.estimatedDays === 1 ? 'day' : 'days'}
                 </span>
@@ -466,17 +466,17 @@ export function BookLabourBankDialog({
             </h4>
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div>
-                <span className="text-white/60">Worker:</span>
+                <span className="text-white">Worker:</span>
                 <p className="font-medium">{electrician.name}</p>
               </div>
               <div>
-                <span className="text-white/60">Shift:</span>
+                <span className="text-white">Shift:</span>
                 <p className="font-medium">
                   {SHIFT_OPTIONS.find((s) => s.value === shiftPattern)?.label}
                 </p>
               </div>
               <div>
-                <span className="text-white/60">Dates:</span>
+                <span className="text-white">Dates:</span>
                 <p className="font-medium">
                   {new Date(startDate).toLocaleDateString('en-GB', {
                     day: 'numeric',
@@ -487,7 +487,7 @@ export function BookLabourBankDialog({
                 </p>
               </div>
               <div>
-                <span className="text-white/60">Total:</span>
+                <span className="text-white">Total:</span>
                 <p className="font-bold text-elec-yellow">
                   £{calculations.totalCost.toLocaleString()}
                 </p>

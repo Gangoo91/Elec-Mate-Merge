@@ -77,7 +77,7 @@ export function MobileSearchSheet({
           <div className="flex items-center gap-2 p-3 border-b border-border bg-elec-gray pt-safe">
             <div className="relative flex-1">
               {!query && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 ref={inputRef}
@@ -96,7 +96,7 @@ export function MobileSearchSheet({
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white/60 hover:text-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white hover:text-foreground"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -105,7 +105,7 @@ export function MobileSearchSheet({
             <Button
               variant="ghost"
               onClick={handleClose}
-              className="shrink-0 text-white/60"
+              className="shrink-0 text-white"
             >
               Cancel
             </Button>
@@ -123,7 +123,7 @@ export function MobileSearchSheet({
             {/* Results */}
             {!isLoading && query && results.length > 0 && (
               <div className="py-2">
-                <p className="px-4 py-2 text-xs font-medium text-white/60 uppercase tracking-wider">
+                <p className="px-4 py-2 text-xs font-medium text-white uppercase tracking-wider">
                   Results
                 </p>
                 <div className="space-y-1">
@@ -145,13 +145,13 @@ export function MobileSearchSheet({
                           {result.title}
                         </p>
                         {result.subtitle && (
-                          <p className="text-xs text-white/60 truncate">
+                          <p className="text-xs text-white truncate">
                             {result.subtitle}
                           </p>
                         )}
                       </div>
                       {result.type && (
-                        <span className="text-xs text-white/60 shrink-0">
+                        <span className="text-xs text-white shrink-0">
                           {result.type}
                         </span>
                       )}
@@ -167,7 +167,7 @@ export function MobileSearchSheet({
               <div className="flex flex-col items-center justify-center py-12 px-4">
                 <Search className="h-12 w-12 text-white mb-4" />
                 <p className="text-sm font-medium text-foreground">No results found</p>
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white mt-1">
                   Try searching for something else
                 </p>
               </div>
@@ -177,7 +177,7 @@ export function MobileSearchSheet({
             {!query && recentSearches.length > 0 && (
               <div className="py-2">
                 <div className="flex items-center justify-between px-4 py-2">
-                  <p className="text-xs font-medium text-white/60 uppercase tracking-wider">
+                  <p className="text-xs font-medium text-white uppercase tracking-wider">
                     Recent Searches
                   </p>
                   {onClearRecent && (
@@ -199,7 +199,7 @@ export function MobileSearchSheet({
                         'hover:bg-muted/50 active:bg-muted transition-colors text-left'
                       )}
                     >
-                      <Clock className="h-4 w-4 text-white/60 shrink-0" />
+                      <Clock className="h-4 w-4 text-white shrink-0" />
                       <span className="text-sm text-foreground flex-1 truncate">{term}</span>
                     </button>
                   ))}
@@ -211,7 +211,7 @@ export function MobileSearchSheet({
             {!query && recentSearches.length === 0 && (
               <div className="flex flex-col items-center justify-center py-12 px-4">
                 <Search className="h-12 w-12 text-white mb-4" />
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   Search for jobs, employees, invoices...
                 </p>
               </div>

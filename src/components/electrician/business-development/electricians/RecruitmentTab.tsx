@@ -277,7 +277,7 @@ const RecruitmentTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -308,7 +308,7 @@ const RecruitmentTab = () => {
                         {strategy.timeline}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {strategy.description}
                     </p>
                   </div>
@@ -398,7 +398,7 @@ const RecruitmentTab = () => {
                           {platform.cost}
                         </Badge>
                       </div>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                         {platform.description}
                       </p>
 
@@ -456,7 +456,7 @@ const RecruitmentTab = () => {
                         {stage.timing}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {stage.description}
                     </p>
                   </div>
@@ -628,7 +628,7 @@ const RecruitmentTab = () => {
                       ElectricalJobs.com
                     </div>
                     <div
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}
+                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-white break-words`}
                     >
                       Specialist electrical recruitment platform
                     </div>
@@ -648,7 +648,7 @@ const RecruitmentTab = () => {
                       ECA Member Network
                     </div>
                     <div
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}
+                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-white break-words`}
                     >
                       Access to qualified electrical contractors
                     </div>
@@ -668,7 +668,7 @@ const RecruitmentTab = () => {
                       LinkedIn Talent Solutions
                     </div>
                     <div
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}
+                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-white break-words`}
                     >
                       Professional recruitment tools
                     </div>

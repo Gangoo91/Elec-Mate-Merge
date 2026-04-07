@@ -762,11 +762,11 @@ ${companyName}`;
           <div className="text-center py-12 space-y-6">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full blur-2xl"></div>
-              <FileText className="relative h-16 w-16 text-muted-foreground mx-auto" />
+              <FileText className="relative h-16 w-16 text-white mx-auto" />
             </div>
             <div className="space-y-2">
               <h3 className="text-xl font-semibold">No quotes created yet</h3>
-              <p className="text-muted-foreground max-w-md mx-auto">
+              <p className="text-white max-w-md mx-auto">
                 Start building professional quotes for your electrical projects. Generated quotes
                 will appear here.
               </p>
@@ -805,7 +805,7 @@ ${companyName}`;
       {!showAll && quotes.length > 10 && (
         <Card className="border-elec-yellow/20 bg-elec-gray/50">
           <CardContent className="p-4 text-center">
-            <p className="text-sm text-muted-foreground">Showing 10 of {quotes.length} quotes</p>
+            <p className="text-sm text-white">Showing 10 of {quotes.length} quotes</p>
             <Button variant="outline" size="sm" className="mt-2">
               View All Quotes
             </Button>

@@ -78,7 +78,7 @@ export function DueDateBadge({ endDate, isCompleted, className }: DueDateBadgePr
   return (
     <Badge
       variant="outline"
-      className={cn('gap-1 text-xs bg-muted text-white/60 border-border', className)}
+      className={cn('gap-1 text-xs bg-muted text-white border-border', className)}
     >
       <Calendar className="h-3 w-3" />
       {format(date, 'd MMM')}

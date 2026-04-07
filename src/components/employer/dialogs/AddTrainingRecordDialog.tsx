@@ -482,7 +482,7 @@ export const AddTrainingRecordDialog = ({
               </div>
               <div>
                 <DialogTitle className="text-xl">Add Training Record</DialogTitle>
-                <DialogDescription className="text-white/60">
+                <DialogDescription className="text-white">
                   Adding to <span className="font-medium text-foreground">{workerName}</span>'s
                   Elec-ID
                 </DialogDescription>
@@ -501,7 +501,7 @@ export const AddTrainingRecordDialog = ({
                   />
                 ))}
               </div>
-              <span className="text-xs text-white/60">
+              <span className="text-xs text-white">
                 {completedFields}/4 fields completed
               </span>
             </div>
@@ -536,7 +536,7 @@ export const AddTrainingRecordDialog = ({
           {/* Category Quick Filter - only show in quick select mode */}
           {!isManualMode && (
             <div className="space-y-3">
-              <Label className="text-sm font-medium text-white/60">
+              <Label className="text-sm font-medium text-white">
                 Quick Filter by Category
               </Label>
               <div className="flex flex-wrap gap-2">
@@ -571,7 +571,7 @@ export const AddTrainingRecordDialog = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border/50">
               <Award className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60">
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
                 Course Details
               </h3>
             </div>
@@ -586,7 +586,7 @@ export const AddTrainingRecordDialog = ({
                       <span className="text-destructive">*</span>
                     </Label>
                     <div className="relative">
-                      <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                      <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                       <Input
                         placeholder="e.g. Manual Handling, Fire Warden, SMSTS"
                         value={formData.courseName}
@@ -601,7 +601,7 @@ export const AddTrainingRecordDialog = ({
                       Training Provider
                     </Label>
                     <div className="relative">
-                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                       <Input
                         placeholder="e.g. CITB, City & Guilds, In-house"
                         value={formData.provider}
@@ -656,7 +656,7 @@ export const AddTrainingRecordDialog = ({
                         >
                           {formData.courseName ? (
                             <div className="flex items-center gap-2 truncate">
-                              <GraduationCap className="h-4 w-4 text-white/60 flex-shrink-0" />
+                              <GraduationCap className="h-4 w-4 text-white flex-shrink-0" />
                               <span className="truncate">{formData.courseName}</span>
                               {selectedCourse?.mandatory && (
                                 <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
@@ -673,7 +673,7 @@ export const AddTrainingRecordDialog = ({
                               )}
                             </div>
                           ) : (
-                            <span className="text-white/60 flex items-center gap-2">
+                            <span className="text-white flex items-center gap-2">
                               <GraduationCap className="h-4 w-4" />
                               Search or select a course...
                             </span>
@@ -695,7 +695,7 @@ export const AddTrainingRecordDialog = ({
                           <CommandList className="max-h-[300px]">
                             <CommandEmpty>
                               <div className="p-4 text-center">
-                                <p className="text-sm text-white/60 mb-2">
+                                <p className="text-sm text-white mb-2">
                                   No course found for "{searchQuery}"
                                 </p>
                                 <Button
@@ -774,7 +774,7 @@ export const AddTrainingRecordDialog = ({
                     {/* Custom course indicator with expiry selector */}
                     {formData.courseName && !selectedCourse && (
                       <div className="space-y-3 p-3 bg-muted/30 rounded-lg border border-border/50">
-                        <div className="flex items-center gap-2 text-xs text-white/60">
+                        <div className="flex items-center gap-2 text-xs text-white">
                           <span>Custom course:</span>
                           <Badge variant="outline" className="text-[10px]">
                             {formData.courseName}
@@ -792,7 +792,7 @@ export const AddTrainingRecordDialog = ({
 
                         {/* Expiry selector for custom courses */}
                         <div className="space-y-2">
-                          <Label className="text-xs font-medium text-white/60">
+                          <Label className="text-xs font-medium text-white">
                             Expires after:
                           </Label>
                           <div className="flex flex-wrap gap-1.5">
@@ -829,11 +829,11 @@ export const AddTrainingRecordDialog = ({
                           >
                             {formData.provider ? (
                               <span className="flex items-center gap-2">
-                                <Building2 className="h-4 w-4 text-white/60" />
+                                <Building2 className="h-4 w-4 text-white" />
                                 {formData.provider}
                               </span>
                             ) : (
-                              <span className="text-white/60 flex items-center gap-2">
+                              <span className="text-white flex items-center gap-2">
                                 <Building2 className="h-4 w-4" />
                                 Select provider...
                               </span>
@@ -877,7 +877,7 @@ export const AddTrainingRecordDialog = ({
                                     setFormData((prev) => ({ ...prev, provider: '' }));
                                     setProviderOpen(false);
                                   }}
-                                  className="cursor-pointer text-white/60"
+                                  className="cursor-pointer text-white"
                                 >
                                   <Building2 className="mr-2 h-4 w-4" />
                                   Enter custom provider...
@@ -889,7 +889,7 @@ export const AddTrainingRecordDialog = ({
                       </Popover>
                     ) : (
                       <div className="relative">
-                        <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                        <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                         <Input
                           placeholder="e.g. City & Guilds, CITB, IOSH"
                           value={formData.provider}
@@ -914,7 +914,7 @@ export const AddTrainingRecordDialog = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border/50">
               <Clock className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60">
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
                 Dates & Certificate
               </h3>
             </div>
@@ -929,7 +929,7 @@ export const AddTrainingRecordDialog = ({
                   <span className="text-destructive">*</span>
                 </Label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     id="completionDate"
                     type="date"
@@ -959,7 +959,7 @@ export const AddTrainingRecordDialog = ({
                   )}
                 </Label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     id="expiryDate"
                     type="date"
@@ -981,7 +981,7 @@ export const AddTrainingRecordDialog = ({
                 Certificate Number
               </Label>
               <div className="relative">
-                <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   id="certificateNumber"
                   placeholder="e.g. CERT-2024-12345"
@@ -997,7 +997,7 @@ export const AddTrainingRecordDialog = ({
           <div className="space-y-4">
             <div className="flex items-center gap-2 pb-2 border-b border-border/50">
               <FileCheck className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60">
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
                 Documentation
               </h3>
             </div>
@@ -1007,10 +1007,10 @@ export const AddTrainingRecordDialog = ({
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
               <div className="relative">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center mx-auto mb-4 group-hover:from-primary/20 group-hover:to-primary/10 transition-colors">
-                  <Upload className="h-7 w-7 text-white/60 group-hover:text-elec-yellow transition-colors" />
+                  <Upload className="h-7 w-7 text-white group-hover:text-elec-yellow transition-colors" />
                 </div>
                 <p className="font-medium text-foreground mb-1">Upload Certificate</p>
-                <p className="text-sm text-white/60">Drag and drop or click to browse</p>
+                <p className="text-sm text-white">Drag and drop or click to browse</p>
                 <p className="text-xs text-white mt-2">PDF, JPG, PNG up to 10MB</p>
               </div>
             </div>
@@ -1020,7 +1020,7 @@ export const AddTrainingRecordDialog = ({
           <div className="bg-gradient-to-br from-muted/50 to-muted/20 rounded-xl p-5 border border-border/30">
             <div className="flex items-center gap-2 mb-4">
               <PoundSterling className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60">
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
                 Funding Information
               </h3>
               <Badge variant="outline" className="ml-auto text-[10px]">
@@ -1052,7 +1052,7 @@ export const AddTrainingRecordDialog = ({
                   Cost (£)
                 </Label>
                 <div className="relative">
-                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     id="cost"
                     type="number"
@@ -1083,7 +1083,7 @@ export const AddTrainingRecordDialog = ({
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Bell className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white/60">
+              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
                 Worker Notification Preview
               </h3>
             </div>

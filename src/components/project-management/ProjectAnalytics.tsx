@@ -149,7 +149,7 @@ export const ProjectAnalytics = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{analytics.totalProjects}</div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-white mt-1">
               {analytics.activeProjects} currently active
             </p>
           </CardContent>
@@ -162,7 +162,7 @@ export const ProjectAnalytics = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{analytics.completedThisMonth}</div>
-            <p className="text-xs text-muted-foreground mt-1">this month</p>
+            <p className="text-xs text-white mt-1">this month</p>
           </CardContent>
         </Card>
 
@@ -175,7 +175,7 @@ export const ProjectAnalytics = () => {
             <div className="text-2xl font-bold">
               £{analytics.totalBudget.toLocaleString('en-GB', { maximumFractionDigits: 0 })}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">across all projects</p>
+            <p className="text-xs text-white mt-1">across all projects</p>
           </CardContent>
         </Card>
 
@@ -188,7 +188,7 @@ export const ProjectAnalytics = () => {
             <div className="text-2xl font-bold">
               {analytics.totalHours.toLocaleString('en-GB', { maximumFractionDigits: 1 })}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">total tracked hours</p>
+            <p className="text-xs text-white mt-1">total tracked hours</p>
           </CardContent>
         </Card>
       </div>

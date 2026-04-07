@@ -131,7 +131,7 @@ const ProfessionalBodySelector: React.FC<ProfessionalBodySelectorProps> = ({ onC
     <div className="space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold">Select Your Professional Bodies</h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Choose the professional bodies you're registered with to track their specific CPD
           requirements.
         </p>

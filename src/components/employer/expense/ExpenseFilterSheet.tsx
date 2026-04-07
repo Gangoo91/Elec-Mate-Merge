@@ -164,7 +164,7 @@ export function ExpenseFilterSheet({
               variant="ghost"
               size="sm"
               onClick={handleReset}
-              className="text-white/60 hover:text-foreground"
+              className="text-white hover:text-foreground"
             >
               <RotateCcw className="h-4 w-4 mr-1" />
               Reset

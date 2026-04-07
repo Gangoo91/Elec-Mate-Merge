@@ -92,7 +92,7 @@ export function VacancyDetailsSheet({
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <SheetTitle className="text-xl">{vacancy.title}</SheetTitle>
-                  <p className="text-muted-foreground flex items-center gap-1.5 mt-1">
+                  <p className="text-white flex items-center gap-1.5 mt-1">
                     <Building2 className="h-4 w-4" />
                     {vacancy.employer?.company_name || 'Unknown Company'}
                   </p>
@@ -109,16 +109,16 @@ export function VacancyDetailsSheet({
             {/* Key Details */}
             <div className="grid grid-cols-2 gap-3">
               <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
+                <MapPin className="h-4 w-4 text-white" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Location</p>
+                  <p className="text-xs text-white">Location</p>
                   <p className="text-sm font-medium">{vacancy.location}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
-                <Briefcase className="h-4 w-4 text-muted-foreground" />
+                <Briefcase className="h-4 w-4 text-white" />
                 <div>
-                  <p className="text-xs text-muted-foreground">Type</p>
+                  <p className="text-xs text-white">Type</p>
                   <p className="text-sm font-medium">{vacancy.type}</p>
                 </div>
               </div>
@@ -126,7 +126,7 @@ export function VacancyDetailsSheet({
                 <div className="flex items-center gap-2 p-3 bg-muted rounded-lg col-span-2">
                   <PoundSterling className="h-4 w-4 text-green-500" />
                   <div>
-                    <p className="text-xs text-muted-foreground">Salary</p>
+                    <p className="text-xs text-white">Salary</p>
                     <p className="text-sm font-medium text-green-600 dark:text-green-400">
                       {salaryDisplay}
                     </p>
@@ -136,7 +136,7 @@ export function VacancyDetailsSheet({
             </div>
 
             {/* Meta Info */}
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-wrap gap-4 text-sm text-white">
               <span className="flex items-center gap-1.5">
                 <Clock className="h-4 w-4" />
                 Posted {postedAgo}
@@ -158,7 +158,7 @@ export function VacancyDetailsSheet({
             {/* Description */}
             <div>
               <h3 className="font-semibold mb-3">About the Role</h3>
-              <p className="text-muted-foreground whitespace-pre-wrap">
+              <p className="text-white whitespace-pre-wrap">
                 {vacancy.description || 'No description provided.'}
               </p>
             </div>
@@ -169,7 +169,7 @@ export function VacancyDetailsSheet({
                 <h3 className="font-semibold mb-3">Requirements</h3>
                 <ul className="space-y-2">
                   {vacancy.requirements.map((req, index) => (
-                    <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                    <li key={index} className="flex items-start gap-2 text-white">
                       <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                       <span>{req}</span>
                     </li>
@@ -184,7 +184,7 @@ export function VacancyDetailsSheet({
                 <h3 className="font-semibold mb-3">Benefits</h3>
                 <ul className="space-y-2">
                   {vacancy.benefits.map((benefit, index) => (
-                    <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                    <li key={index} className="flex items-start gap-2 text-white">
                       <Star className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                       <span>{benefit}</span>
                     </li>

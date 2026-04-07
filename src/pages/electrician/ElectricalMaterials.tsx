@@ -126,7 +126,7 @@ const ElectricalMaterials = () => {
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-white">
               Materials
             </h1>
-            <p className="text-muted-foreground text-sm md:text-base">
+            <p className="text-white text-sm md:text-base">
               Browse electrical materials for your projects
             </p>
           </div>
@@ -182,7 +182,7 @@ const ElectricalMaterials = () => {
       {/* Search Bar */}
       <div className="relative max-w-xl">
         {!searchTerm && (
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground pointer-events-none" />
+          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search material categories..."
@@ -216,10 +216,10 @@ const ElectricalMaterials = () => {
       {filteredMaterials.length === 0 && (
         <div className="text-center py-12">
           <div className="p-4 rounded-2xl bg-white/5 border border-white/10 inline-block mb-4">
-            <Search className="h-12 w-12 text-muted-foreground" />
+            <Search className="h-12 w-12 text-white" />
           </div>
           <h3 className="text-lg font-medium mb-2 text-white">No materials found</h3>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Try adjusting your search terms or browse all available categories.
           </p>
         </div>
@@ -228,7 +228,7 @@ const ElectricalMaterials = () => {
       {/* Info Card */}
       <Card className="border-white/10 bg-white/5 backdrop-blur-sm rounded-xl">
         <CardContent className="p-6 text-center">
-          <p className="text-muted-foreground text-sm">
+          <p className="text-white text-sm">
             Materials are automatically updated weekly. Real-time pricing from major UK suppliers.
           </p>
         </CardContent>

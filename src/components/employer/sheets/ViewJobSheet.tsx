@@ -376,7 +376,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                       </Badge>
                     )}
                   </div>
-                  <p className="text-white/60 mt-1">{job.client}</p>
+                  <p className="text-white mt-1">{job.client}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <DueDateBadge endDate={job.end_date} isCompleted={job.status === 'Completed'} />
@@ -449,7 +449,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
             <Card className="border-elec-yellow/20 bg-elec-yellow/5">
               <CardContent className="p-4 space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-white/60">Job Progress</span>
+                  <span className="text-sm font-medium text-white">Job Progress</span>
                   <span className="text-2xl font-bold text-elec-yellow">{progress}%</span>
                 </div>
                 <Slider
@@ -459,7 +459,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   step={5}
                   className="w-full"
                 />
-                <div className="flex justify-between text-xs text-white/60">
+                <div className="flex justify-between text-xs text-white">
                   <span>Start</span>
                   <span>Complete</span>
                 </div>
@@ -474,7 +474,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <MapPin className="h-4 w-4 text-elec-yellow" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-white/60">Location</p>
+                    <p className="text-xs text-white">Location</p>
                     <p className="text-sm font-medium text-foreground truncate">{job.location}</p>
                   </div>
                 </CardContent>
@@ -486,7 +486,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <PoundSterling className="h-4 w-4 text-success" />
                   </div>
                   <div>
-                    <p className="text-xs text-white/60">Value</p>
+                    <p className="text-xs text-white">Value</p>
                     <p className="text-sm font-bold text-success">
                       £{(job.value || 0).toLocaleString()}
                     </p>
@@ -500,7 +500,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <Calendar className="h-4 w-4 text-info" />
                   </div>
                   <div>
-                    <p className="text-xs text-white/60">Duration</p>
+                    <p className="text-xs text-white">Duration</p>
                     <p className="text-sm font-medium text-foreground">
                       {calculateDuration() || '-'}
                     </p>
@@ -514,7 +514,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <Users className="h-4 w-4 text-warning" />
                   </div>
                   <div>
-                    <p className="text-xs text-white/60">Workers</p>
+                    <p className="text-xs text-white">Workers</p>
                     <p className="text-sm font-medium text-foreground">
                       {assignments.length} assigned
                     </p>
@@ -527,19 +527,19 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
             <Card className="bg-elec-gray/50">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <Clock className="h-4 w-4 text-white/60" />
-                  <span className="text-sm font-medium text-white/60">Schedule</span>
+                  <Clock className="h-4 w-4 text-white" />
+                  <span className="text-sm font-medium text-white">Schedule</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="text-xs text-white/60">Start Date</p>
+                    <p className="text-xs text-white">Start Date</p>
                     <p className="text-sm font-medium text-foreground">
                       {formatDate(job.start_date)}
                     </p>
                   </div>
                   <div className="h-px w-8 bg-border" />
                   <div className="text-right">
-                    <p className="text-xs text-white/60">End Date</p>
+                    <p className="text-xs text-white">End Date</p>
                     <p className="text-sm font-medium text-foreground">
                       {formatDate(job.end_date)}
                     </p>
@@ -552,7 +552,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
             {job.description && (
               <Card className="bg-elec-gray/50">
                 <CardContent className="p-4">
-                  <p className="text-xs text-white/60 uppercase tracking-wide mb-2">
+                  <p className="text-xs text-white uppercase tracking-wide mb-2">
                     Description
                   </p>
                   <p className="text-sm text-foreground leading-relaxed">{job.description}</p>
@@ -567,7 +567,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <CardContent className="p-4 cursor-pointer">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Users className="h-4 w-4 text-white/60" />
+                        <Users className="h-4 w-4 text-white" />
                         <span className="text-sm font-medium text-foreground">
                           Assigned Workers
                         </span>
@@ -590,7 +590,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         </Button>
                         <ChevronDown
                           className={cn(
-                            'h-4 w-4 text-white/60 transition-transform',
+                            'h-4 w-4 text-white transition-transform',
                             workersOpen && 'rotate-180'
                           )}
                         />
@@ -602,11 +602,11 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <CardContent className="p-4 pt-0 space-y-2">
                     {loadingAssignments ? (
                       <div className="flex items-center justify-center py-4">
-                        <Loader2 className="h-5 w-5 animate-spin text-white/60" />
+                        <Loader2 className="h-5 w-5 animate-spin text-white" />
                       </div>
                     ) : assignments.length === 0 ? (
                       <div className="text-center py-4">
-                        <p className="text-sm text-white/60">No workers assigned yet</p>
+                        <p className="text-sm text-white">No workers assigned yet</p>
                       </div>
                     ) : (
                       assignments.map((assignment) => (
@@ -623,7 +623,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                             <p className="font-medium text-sm text-foreground truncate">
                               {assignment.employee?.name || 'Unknown'}
                             </p>
-                            <p className="text-xs text-white/60">
+                            <p className="text-xs text-white">
                               {assignment.role_on_job || assignment.employee?.role || 'Worker'}
                             </p>
                           </div>
@@ -632,7 +632,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-7 w-7 text-white/60 hover:text-destructive"
+                                className="h-7 w-7 text-white hover:text-destructive"
                               >
                                 <X className="h-3.5 w-3.5" />
                               </Button>
@@ -676,12 +676,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <CardContent className="p-4 cursor-pointer">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <ListChecks className="h-4 w-4 text-white/60" />
+                        <ListChecks className="h-4 w-4 text-white" />
                         <span className="text-sm font-medium text-foreground">Checklist</span>
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-white/60 transition-transform',
+                          'h-4 w-4 text-white transition-transform',
                           checklistOpen && 'rotate-180'
                         )}
                       />
@@ -703,12 +703,12 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <CardContent className="p-4 cursor-pointer">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Activity className="h-4 w-4 text-white/60" />
+                        <Activity className="h-4 w-4 text-white" />
                         <span className="text-sm font-medium text-foreground">Activity</span>
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-white/60 transition-transform',
+                          'h-4 w-4 text-white transition-transform',
                           activityOpen && 'rotate-180'
                         )}
                       />
@@ -725,7 +725,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
 
             {/* Quick Links */}
             <div className="space-y-2">
-              <p className="text-xs text-white/60 uppercase tracking-wide px-1">
+              <p className="text-xs text-white uppercase tracking-wide px-1">
                 Quick Links
               </p>
               <div className="grid grid-cols-2 gap-2">
@@ -826,7 +826,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <div className="space-y-2">
                       <Label
                         htmlFor="title"
-                        className="text-xs font-medium text-white/60 uppercase tracking-wide"
+                        className="text-xs font-medium text-white uppercase tracking-wide"
                       >
                         Job Title
                       </Label>
@@ -841,7 +841,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <div className="space-y-2">
                       <Label
                         htmlFor="client"
-                        className="text-xs font-medium text-white/60 uppercase tracking-wide"
+                        className="text-xs font-medium text-white uppercase tracking-wide"
                       >
                         Client
                       </Label>
@@ -856,7 +856,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <div className="space-y-2">
                       <Label
                         htmlFor="location"
-                        className="text-xs font-medium text-white/60 uppercase tracking-wide flex items-center gap-1.5"
+                        className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5"
                       >
                         <MapPin className="h-3.5 w-3.5" />
                         Location
@@ -872,7 +872,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <div className="space-y-2">
                       <Label
                         htmlFor="description"
-                        className="text-xs font-medium text-white/60 uppercase tracking-wide"
+                        className="text-xs font-medium text-white uppercase tracking-wide"
                       >
                         Description
                       </Label>
@@ -889,7 +889,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <div className="space-y-2">
                       <Label
                         htmlFor="status"
-                        className="text-xs font-medium text-white/60 uppercase tracking-wide"
+                        className="text-xs font-medium text-white uppercase tracking-wide"
                       >
                         Status
                       </Label>
@@ -910,7 +910,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <div className="space-y-2">
                       <Label
                         htmlFor="value"
-                        className="text-xs font-medium text-white/60 uppercase tracking-wide flex items-center gap-1.5"
+                        className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5"
                       >
                         <PoundSterling className="h-3.5 w-3.5" />
                         Value (£)

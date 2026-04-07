@@ -216,7 +216,7 @@ const AssessmentProgressTab = () => {
             <div className="text-center space-y-2">
               {metric.icon}
               <div className="text-xs font-medium text-foreground">{metric.metric}</div>
-              <div className="text-xs text-muted-foreground">{metric.data}</div>
+              <div className="text-xs text-white">{metric.data}</div>
             </div>
           </Card>
         ))}
@@ -238,7 +238,7 @@ const AssessmentProgressTab = () => {
                         {phase.timing}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">{phase.description}</p>
+                    <p className="text-xs text-white">{phase.description}</p>
                   </div>
 
                   <div>
@@ -310,7 +310,7 @@ const AssessmentProgressTab = () => {
                           {tool.cost}
                         </Badge>
                       </div>
-                      <p className="text-xs text-muted-foreground">{tool.description}</p>
+                      <p className="text-xs text-white">{tool.description}</p>
 
                       <div>
                         <h6 className="font-medium text-purple-300 mb-1 text-xs">Features</h6>
@@ -460,7 +460,7 @@ const AssessmentProgressTab = () => {
                     <div className="text-sm text-foreground truncate">
                       Institute for Apprenticeships
                     </div>
-                    <div className="text-xs text-muted-foreground break-words">
+                    <div className="text-xs text-white break-words">
                       Official standards and EPA guidance
                     </div>
                   </div>
@@ -474,7 +474,7 @@ const AssessmentProgressTab = () => {
                   <Shield className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
                     <div className="text-sm text-foreground truncate">CITB Apprenticeship Hub</div>
-                    <div className="text-xs text-muted-foreground break-words">
+                    <div className="text-xs text-white break-words">
                       Industry-specific guidance and support
                     </div>
                   </div>
@@ -488,7 +488,7 @@ const AssessmentProgressTab = () => {
                   <Brain className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
                     <div className="text-sm text-foreground truncate">Apprenticeships.gov.uk</div>
-                    <div className="text-xs text-muted-foreground break-words">
+                    <div className="text-xs text-white break-words">
                       Government support and funding information
                     </div>
                   </div>

@@ -125,7 +125,7 @@ export function BriefingQRCode({ open, onOpenChange, briefing }: BriefingQRCodeP
                 </div>
                 <div>
                   <SheetTitle className="text-left">QR Attendance</SheetTitle>
-                  <p className="text-xs text-white/60 mt-0.5">Scan to sign off</p>
+                  <p className="text-xs text-white mt-0.5">Scan to sign off</p>
                 </div>
               </div>
               <Button
@@ -144,7 +144,7 @@ export function BriefingQRCode({ open, onOpenChange, briefing }: BriefingQRCodeP
             {/* Briefing Info */}
             <div className="p-4 rounded-xl bg-muted/50 mb-6">
               <h3 className="font-semibold text-foreground mb-2 line-clamp-2">{briefing.title}</h3>
-              <div className="flex flex-wrap gap-2 text-xs text-white/60">
+              <div className="flex flex-wrap gap-2 text-xs text-white">
                 {briefing.date && (
                   <span className="flex items-center gap-1">
                     <Calendar className="h-3 w-3" />
@@ -179,7 +179,7 @@ export function BriefingQRCode({ open, onOpenChange, briefing }: BriefingQRCodeP
                   fgColor="#000000"
                 />
               </div>
-              <p className="text-sm text-white/60 mt-4 text-center">
+              <p className="text-sm text-white mt-4 text-center">
                 Team members can scan this code to sign off
               </p>
             </div>
@@ -187,7 +187,7 @@ export function BriefingQRCode({ open, onOpenChange, briefing }: BriefingQRCodeP
             {/* Instructions */}
             <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 mb-6">
               <h4 className="font-medium text-foreground mb-2">How to use</h4>
-              <ol className="text-sm text-white/60 space-y-1.5">
+              <ol className="text-sm text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="shrink-0 w-5 h-5 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-medium">
                     1
@@ -211,7 +211,7 @@ export function BriefingQRCode({ open, onOpenChange, briefing }: BriefingQRCodeP
 
             {/* Link Display */}
             <div className="p-3 rounded-lg bg-muted/50 border border-border">
-              <p className="text-xs text-white/60 mb-1">Sign-off Link</p>
+              <p className="text-xs text-white mb-1">Sign-off Link</p>
               <p className="text-sm text-foreground font-mono break-all">{signOffUrl}</p>
             </div>
           </div>

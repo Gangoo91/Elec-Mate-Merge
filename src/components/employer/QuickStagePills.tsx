@@ -16,7 +16,7 @@ interface QuickStagePillsProps {
 
 // Get stage-specific colours
 const getStageColor = (stageId: string, isActive: boolean): string => {
-  if (!isActive) return 'bg-elec-gray text-white/60 hover:bg-muted border-border';
+  if (!isActive) return 'bg-elec-gray text-white hover:bg-muted border-border';
 
   switch (stageId) {
     case 'Quoted':

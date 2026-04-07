@@ -242,7 +242,7 @@ export function SwipeableQuoteCard({
               )}
             </div>
             {quote.jobDetails?.title && (
-              <div className="text-xs text-muted-foreground">{quote.jobDetails.title}</div>
+              <div className="text-xs text-white">{quote.jobDetails.title}</div>
             )}
           </div>
           <Button
@@ -261,22 +261,22 @@ export function SwipeableQuoteCard({
         {/* Client Information */}
         <div className="flex items-center gap-2 px-4 py-3">
           <div className="w-12 h-12 flex items-center justify-center flex-shrink-0">
-            <User className="h-12 w-12 text-muted-foreground/40" strokeWidth={1.5} />
+            <User className="h-12 w-12 text-white" strokeWidth={1.5} />
           </div>
           <div className="min-w-0 flex-1">
-            <div className="text-xs text-muted-foreground mb-0.5">Client</div>
+            <div className="text-xs text-white mb-0.5">Client</div>
             <div className="text-base font-medium truncate">
               {quote.client?.name || 'Unknown Client'}
             </div>
             {quote.client?.email && (
-              <div className="text-xs text-muted-foreground truncate">{quote.client.email}</div>
+              <div className="text-xs text-white truncate">{quote.client.email}</div>
             )}
           </div>
         </div>
 
         {/* Amount Display - Centered */}
         <div className="text-center mx-4 mb-4 py-4 bg-background/40 rounded-lg border border-primary/10">
-          <div className="text-sm text-muted-foreground mb-1">Quote Value</div>
+          <div className="text-sm text-white mb-1">Quote Value</div>
           <div className="text-3xl sm:text-4xl font-bold text-elec-yellow">
             £
             {(quote.total || 0).toLocaleString('en-GB', {
@@ -289,14 +289,14 @@ export function SwipeableQuoteCard({
         {/* Date Grid - 2 columns */}
         <div className="grid grid-cols-2 gap-4 px-4 mb-4 text-sm">
           <div>
-            <div className="text-xs text-muted-foreground mb-1">Created</div>
+            <div className="text-xs text-white mb-1">Created</div>
             <div className="text-foreground font-medium flex items-center gap-1">
               <Calendar className="h-3 w-3" />
               {quote.createdAt ? format(new Date(quote.createdAt), 'dd MMM yyyy') : 'N/A'}
             </div>
           </div>
           <div>
-            <div className="text-xs text-muted-foreground mb-1">Expires</div>
+            <div className="text-xs text-white mb-1">Expires</div>
             <div className="text-foreground font-medium flex items-center gap-1">
               <Calendar className="h-3 w-3" />
               {quote.expiryDate ? format(new Date(quote.expiryDate), 'dd MMM yyyy') : 'N/A'}

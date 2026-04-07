@@ -33,7 +33,7 @@ export function SectionHeader({
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-tight">
             {title}
           </h1>
-          {description && <p className="text-xs sm:text-sm text-white/60">{description}</p>}
+          {description && <p className="text-xs sm:text-sm text-white">{description}</p>}
         </div>
       </div>
       {action && <div className="shrink-0 self-start">{action}</div>}

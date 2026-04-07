@@ -73,7 +73,7 @@ const SafetyAlertsCard = () => {
       case 'low':
         return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -97,7 +97,7 @@ const SafetyAlertsCard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Latest Safety Alerts</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Critical safety warnings and updates from industry bodies
           </p>
         </div>
@@ -125,14 +125,14 @@ const SafetyAlertsCard = () => {
                     </Badge>
                   </div>
                   <CardTitle className="text-foreground text-lg mb-2">{alert.title}</CardTitle>
-                  <p className="text-gray-300 text-sm mb-3">{alert.description}</p>
+                  <p className="text-white text-sm mb-3">{alert.description}</p>
                 </div>
               </div>
             </CardHeader>
 
             <CardContent className="pt-0">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-4 text-sm text-white">
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
                     <span>{alert.location}</span>

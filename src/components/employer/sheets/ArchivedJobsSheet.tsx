@@ -98,12 +98,12 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
 
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-6 w-6 animate-spin text-white/60" />
+            <Loader2 className="h-6 w-6 animate-spin text-white" />
           </div>
         ) : archivedJobs.length === 0 ? (
           <div className="text-center py-12">
             <Archive className="h-12 w-12 mx-auto mb-3 text-white" />
-            <p className="text-white/60">No archived jobs</p>
+            <p className="text-white">No archived jobs</p>
             <p className="text-sm text-white mt-1">Archived jobs will appear here</p>
           </div>
         ) : (
@@ -114,8 +114,8 @@ export function ArchivedJobsSheet({ open, onOpenChange }: ArchivedJobsSheetProps
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <h4 className="font-medium text-foreground truncate">{job.title}</h4>
-                      <p className="text-sm text-white/60">{job.client}</p>
-                      <div className="flex items-center gap-1.5 mt-1 text-xs text-white/60">
+                      <p className="text-sm text-white">{job.client}</p>
+                      <div className="flex items-center gap-1.5 mt-1 text-xs text-white">
                         <MapPin className="h-3 w-3" />
                         <span className="truncate">{job.location}</span>
                       </div>

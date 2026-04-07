@@ -192,23 +192,23 @@ export const PartialPaymentDialog = ({
                   <PoundSterling className="h-5 w-5" />
                   <span className="font-medium">Payment Progress</span>
                 </div>
-                <span className="text-sm text-muted-foreground">{paidPercentage.toFixed(0)}%</span>
+                <span className="text-sm text-white">{paidPercentage.toFixed(0)}%</span>
               </div>
               <Progress value={paidPercentage} className="h-3 bg-emerald-500/20" />
               <div className="flex justify-between text-sm">
                 <div>
-                  <span className="text-muted-foreground">Paid: </span>
+                  <span className="text-white">Paid: </span>
                   <span className="font-semibold text-emerald-400">
                     {formatCurrency(totalPaid)}
                   </span>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">Remaining: </span>
+                  <span className="text-white">Remaining: </span>
                   <span className="font-semibold">{formatCurrency(remainingBalance)}</span>
                 </div>
               </div>
               <div className="text-center pt-2 border-t border-emerald-500/20">
-                <span className="text-xs text-muted-foreground">Invoice Total: </span>
+                <span className="text-xs text-white">Invoice Total: </span>
                 <span className="text-lg font-bold">{formatCurrency(invoice.total)}</span>
               </div>
             </div>
@@ -216,7 +216,7 @@ export const PartialPaymentDialog = ({
             {/* Payment History */}
             {existingPayments.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-sm font-medium text-muted-foreground">Payment History</h4>
+                <h4 className="text-sm font-medium text-white">Payment History</h4>
                 <div className="space-y-2">
                   {existingPayments.map((payment: PartialPayment) => (
                     <div
@@ -229,7 +229,7 @@ export const PartialPaymentDialog = ({
                         </div>
                         <div>
                           <p className="font-medium text-sm">{formatCurrency(payment.amount)}</p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-white">
                             {format(new Date(payment.date), 'dd MMM yyyy')} -{' '}
                             {payment.method.replace('_', ' ')}
                           </p>
@@ -243,7 +243,7 @@ export const PartialPaymentDialog = ({
 
             {/* New Payment Form */}
             <div className="space-y-4">
-              <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <h4 className="text-sm font-medium text-white flex items-center gap-2">
                 <CreditCard className="h-4 w-4" />
                 New Payment
               </h4>
@@ -252,7 +252,7 @@ export const PartialPaymentDialog = ({
               <div className="space-y-2">
                 <Label htmlFor="amount">Payment Amount</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
                     £
                   </span>
                   <Input
@@ -333,7 +333,7 @@ export const PartialPaymentDialog = ({
               {/* Payment Reference */}
               <div className="space-y-2">
                 <Label htmlFor="payment-reference">
-                  Reference <span className="text-muted-foreground text-xs">(Optional)</span>
+                  Reference <span className="text-white text-xs">(Optional)</span>
                 </Label>
                 <Input
                   id="payment-reference"
@@ -347,7 +347,7 @@ export const PartialPaymentDialog = ({
               {/* Notes */}
               <div className="space-y-2">
                 <Label htmlFor="notes">
-                  Notes <span className="text-muted-foreground text-xs">(Optional)</span>
+                  Notes <span className="text-white text-xs">(Optional)</span>
                 </Label>
                 <Textarea
                   id="notes"

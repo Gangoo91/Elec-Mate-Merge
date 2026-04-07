@@ -42,10 +42,10 @@ export function ElectricianConversationList({
     return (
       <div className="flex flex-col items-center justify-center p-8 text-center">
         <div className="p-4 rounded-full bg-muted/50 mb-4">
-          <Inbox className="h-10 w-10 text-muted-foreground" />
+          <Inbox className="h-10 w-10 text-white" />
         </div>
         <h3 className="font-semibold text-foreground mb-2">No Messages Yet</h3>
-        <p className="text-sm text-muted-foreground mb-4 max-w-xs">{emptyMessage}</p>
+        <p className="text-sm text-white mb-4 max-w-xs">{emptyMessage}</p>
         {onBrowseJobs && (
           <Button onClick={onBrowseJobs} className="gap-2">
             <Briefcase className="h-4 w-4" />

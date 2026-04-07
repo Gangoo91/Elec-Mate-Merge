@@ -174,7 +174,7 @@ export function ClientPortalSection() {
         {/* Client Header */}
         <div className="border-b border-border pb-3">
           <h2 className="text-lg font-bold text-foreground">{selectedJob.title}</h2>
-          <p className="text-sm text-white/60">{selectedJob.client}</p>
+          <p className="text-sm text-white">{selectedJob.client}</p>
         </div>
 
         {/* Progress */}
@@ -194,7 +194,7 @@ export function ClientPortalSection() {
         {portalSettings.showTimeline && (
           <div className="grid grid-cols-2 gap-3">
             <div className="p-3 bg-muted/50 rounded-lg">
-              <p className="text-xs text-white/60 flex items-center gap-1">
+              <p className="text-xs text-white flex items-center gap-1">
                 <Calendar className="h-3 w-3" /> Start
               </p>
               <p className="text-sm font-semibold text-foreground">
@@ -204,7 +204,7 @@ export function ClientPortalSection() {
               </p>
             </div>
             <div className="p-3 bg-muted/50 rounded-lg">
-              <p className="text-xs text-white/60 flex items-center gap-1">
+              <p className="text-xs text-white flex items-center gap-1">
                 <Calendar className="h-3 w-3" /> Expected
               </p>
               <p className="text-sm font-semibold text-foreground">
@@ -234,7 +234,7 @@ export function ClientPortalSection() {
                       </Badge>
                     )}
                   </div>
-                  <p className="text-xs text-white/60 line-clamp-2">{log.summary}</p>
+                  <p className="text-xs text-white line-clamp-2">{log.summary}</p>
                 </div>
               ))}
             </div>
@@ -251,7 +251,7 @@ export function ClientPortalSection() {
                   key={i}
                   className="w-16 h-16 bg-muted/50 rounded-lg flex items-center justify-center"
                 >
-                  <Camera className="h-5 w-5 text-white/60" />
+                  <Camera className="h-5 w-5 text-white" />
                 </div>
               ))}
             </div>
@@ -264,7 +264,7 @@ export function ClientPortalSection() {
             <Users className="h-4 w-4 text-info" />
             Upcoming Visit
           </h3>
-          <p className="text-xs text-white/60">
+          <p className="text-xs text-white">
             Next visit: <strong className="text-foreground">To be scheduled</strong>
           </p>
         </div>
@@ -352,8 +352,8 @@ export function ClientPortalSection() {
           {activeJobs.length === 0 ? (
             <Card className="bg-elec-gray border-border">
               <CardContent className="p-6 text-center">
-                <FileText className="h-10 w-10 text-white/60 mx-auto mb-3" />
-                <p className="text-white/60 text-sm">No active jobs</p>
+                <FileText className="h-10 w-10 text-white mx-auto mb-3" />
+                <p className="text-white text-sm">No active jobs</p>
               </CardContent>
             </Card>
           ) : (
@@ -378,7 +378,7 @@ export function ClientPortalSection() {
                           <h4 className="font-medium text-foreground text-sm truncate">
                             {job.title}
                           </h4>
-                          <p className="text-xs text-white/60 truncate">{job.client}</p>
+                          <p className="text-xs text-white truncate">{job.client}</p>
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
                           {hasLink && (
@@ -393,7 +393,7 @@ export function ClientPortalSection() {
                           >
                             {job.progress || 0}%
                           </Badge>
-                          {isMobile && <ChevronRight className="h-4 w-4 text-white/60" />}
+                          {isMobile && <ChevronRight className="h-4 w-4 text-white" />}
                         </div>
                       </div>
                     </CardContent>
@@ -421,7 +421,7 @@ export function ClientPortalSection() {
                         className={
                           portalLink.is_active
                             ? 'bg-green-500/20 text-green-400'
-                            : 'bg-gray-500/20 text-gray-400'
+                            : 'bg-gray-500/20 text-white'
                         }
                       >
                         {portalLink.is_active ? 'Active' : 'Inactive'}
@@ -513,7 +513,7 @@ export function ClientPortalSection() {
                         )}
                       </div>
                       {portalLink.views_count > 0 && (
-                        <div className="flex items-center gap-4 text-xs text-white/60 pt-2 border-t border-border">
+                        <div className="flex items-center gap-4 text-xs text-white pt-2 border-t border-border">
                           <span className="flex items-center gap-1">
                             <Eye className="h-3 w-3" />
                             {portalLink.views_count} views
@@ -529,7 +529,7 @@ export function ClientPortalSection() {
                     </>
                   ) : (
                     <div className="text-center py-4">
-                      <p className="text-sm text-white/60 mb-3">
+                      <p className="text-sm text-white mb-3">
                         No portal link for this job
                       </p>
                       <Button

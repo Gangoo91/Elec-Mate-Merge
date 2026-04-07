@@ -171,12 +171,12 @@ export const PaymentReminderButton = ({
         className="w-64 bg-card/95 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl z-50 p-2"
         sideOffset={8}
       >
-        <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-2 uppercase tracking-wider">
+        <DropdownMenuLabel className="text-[10px] font-semibold text-white px-3 py-2 uppercase tracking-wider">
           Send Payment Reminder
         </DropdownMenuLabel>
 
         {lastReminderSent && (
-          <div className="px-3 py-2 text-xs text-muted-foreground bg-muted/50 rounded-lg mx-1 mb-2">
+          <div className="px-3 py-2 text-xs text-white bg-muted/50 rounded-lg mx-1 mb-2">
             Last sent: {format(new Date(lastReminderSent), 'dd MMM yyyy')}
           </div>
         )}
@@ -195,7 +195,7 @@ export const PaymentReminderButton = ({
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Gentle Reminder</span>
-            <span className="text-xs text-muted-foreground">Friendly first notice</span>
+            <span className="text-xs text-white">Friendly first notice</span>
           </div>
         </DropdownMenuItem>
 
@@ -213,7 +213,7 @@ export const PaymentReminderButton = ({
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Firm Reminder</span>
-            <span className="text-xs text-muted-foreground">Second notice, 7 days</span>
+            <span className="text-xs text-white">Second notice, 7 days</span>
           </div>
         </DropdownMenuItem>
 
@@ -231,7 +231,7 @@ export const PaymentReminderButton = ({
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Final Notice</span>
-            <span className="text-xs text-muted-foreground">Urgent, 48 hours</span>
+            <span className="text-xs text-white">Urgent, 48 hours</span>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

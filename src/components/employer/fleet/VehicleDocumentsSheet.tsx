@@ -132,7 +132,7 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                 </div>
                 <div>
                   <SheetTitle className="text-left">Vehicle Documents</SheetTitle>
-                  <p className="text-xs text-white/60 mt-0.5">
+                  <p className="text-xs text-white mt-0.5">
                     {vehicle.registration} - {vehicle.make} {vehicle.model}
                   </p>
                 </div>
@@ -191,8 +191,8 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                       </>
                     ) : (
                       <>
-                        <Upload className="h-8 w-8 text-white/60" />
-                        <span className="text-sm text-white/60">Tap to select file</span>
+                        <Upload className="h-8 w-8 text-white" />
+                        <span className="text-sm text-white">Tap to select file</span>
                       </>
                     )}
                   </Button>
@@ -302,13 +302,13 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                 {/* Document List */}
                 {isLoading ? (
                   <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-white/60" />
+                    <Loader2 className="h-8 w-8 animate-spin text-white" />
                   </div>
                 ) : documents.length === 0 ? (
                   <div className="text-center py-12">
-                    <FileText className="h-16 w-16 text-white/60 mx-auto mb-4 opacity-50" />
-                    <p className="text-sm text-white/60">No documents uploaded</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <FileText className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
+                    <p className="text-sm text-white">No documents uploaded</p>
+                    <p className="text-xs text-white mt-1">
                       Upload MOT, insurance, V5 and more
                     </p>
                   </div>
@@ -333,7 +333,7 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                               <h4 className="font-semibold text-foreground text-base truncate">
                                 {doc.name}
                               </h4>
-                              <p className="text-sm text-white/60">
+                              <p className="text-sm text-white">
                                 {DOCUMENT_TYPES.find((t) => t.value === doc.document_type)?.label}
                               </p>
                             </div>
@@ -373,14 +373,14 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
 
                           {doc.expiry_date && (
                             <div className="flex items-center gap-2 mt-3 text-sm">
-                              <Calendar className="h-4 w-4 text-white/60" />
+                              <Calendar className="h-4 w-4 text-white" />
                               <span
                                 className={cn(
                                   expiryStatus === 'expired'
                                     ? 'text-red-400'
                                     : expiryStatus === 'expiring-soon'
                                       ? 'text-orange-400'
-                                      : 'text-white/60'
+                                      : 'text-white'
                                 )}
                               >
                                 Expires: {new Date(doc.expiry_date).toLocaleDateString('en-GB')}

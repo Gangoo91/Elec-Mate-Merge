@@ -122,7 +122,7 @@ export function MessageEmployerDialog({
             </div>
             <div>
               <span className="block">Message Employer</span>
-              <span className="text-sm font-normal text-muted-foreground">
+              <span className="text-sm font-normal text-white">
                 Reach out about this opportunity
               </span>
             </div>
@@ -143,7 +143,7 @@ export function MessageEmployerDialog({
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-foreground text-base">{vacancy.title}</p>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                  <p className="text-sm text-white flex items-center gap-1.5 mt-0.5">
                     <Building2 className="h-4 w-4" />
                     {vacancy.employer?.company_name || 'Employer'}
                   </p>
@@ -167,7 +167,7 @@ export function MessageEmployerDialog({
             <Info className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
             <div>
               <p className="font-medium text-foreground">Tip for better responses</p>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-white mt-1">
                 Introduce yourself briefly and explain why you're interested in this role. Employers
                 respond better to personalised messages.
               </p>

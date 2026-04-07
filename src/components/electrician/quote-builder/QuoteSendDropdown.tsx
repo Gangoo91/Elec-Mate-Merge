@@ -441,7 +441,7 @@ ${companyName}`;
         className="w-64 bg-card/95 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl z-50 p-2"
         sideOffset={8}
       >
-        <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-2 uppercase tracking-wider">
+        <DropdownMenuLabel className="text-[10px] font-semibold text-white px-3 py-2 uppercase tracking-wider">
           {isResendVariant ? 'Resend Quote' : 'Send Quote'}
         </DropdownMenuLabel>
         <DropdownMenuItem
@@ -458,7 +458,7 @@ ${companyName}`;
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Send via Email</span>
-            <span className="text-xs text-muted-foreground">Sends with PDF attachment</span>
+            <span className="text-xs text-white">Sends with PDF attachment</span>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -475,7 +475,7 @@ ${companyName}`;
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Share via WhatsApp</span>
-            <span className="text-xs text-muted-foreground">Send with PDF link</span>
+            <span className="text-xs text-white">Send with PDF link</span>
           </div>
         </DropdownMenuItem>
       </DropdownMenuContent>

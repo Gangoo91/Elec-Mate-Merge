@@ -332,7 +332,7 @@ const PreventionTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -355,7 +355,7 @@ const PreventionTab = () => {
                     >
                       {tool.tool}
                     </h4>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {tool.description}
                     </p>
                   </div>
@@ -638,7 +638,7 @@ const PreventionTab = () => {
                         {strategy.title}
                       </h4>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {strategy.description}
                     </p>
                   </div>

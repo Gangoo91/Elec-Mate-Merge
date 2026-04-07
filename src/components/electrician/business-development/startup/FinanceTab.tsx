@@ -92,19 +92,19 @@ const FinanceTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
               <div className="text-2xl font-bold text-blue-400">£3K-8K</div>
-              <div className="text-sm text-muted-foreground">Initial Investment</div>
+              <div className="text-sm text-white">Initial Investment</div>
             </div>
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
               <div className="text-2xl font-bold text-green-400">£2K-4K</div>
-              <div className="text-sm text-muted-foreground">Monthly Expenses</div>
+              <div className="text-sm text-white">Monthly Expenses</div>
             </div>
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
               <div className="text-2xl font-bold text-purple-400">£35-65</div>
-              <div className="text-sm text-muted-foreground">Hourly Rate Target</div>
+              <div className="text-sm text-white">Hourly Rate Target</div>
             </div>
             <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
               <div className="text-2xl font-bold text-amber-400">6-12</div>
-              <div className="text-sm text-muted-foreground">Months to Profit</div>
+              <div className="text-sm text-white">Months to Profit</div>
             </div>
           </div>
         </CardContent>
@@ -163,7 +163,7 @@ const FinanceTab = () => {
                   <h4 className="font-semibold text-foreground">{option.type}</h4>
                   <Badge className="bg-blue-500/20 text-blue-400">{option.rate}</Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{option.description}</p>
+                <p className="text-sm text-white mb-3">{option.description}</p>
                 <div className="text-xs text-blue-400 mb-2">Term: {option.term}</div>
 
                 <div className="grid grid-cols-2 gap-3 mt-3">
@@ -236,15 +236,15 @@ const FinanceTab = () => {
               <h4 className="font-medium text-blue-400 mb-2">Break-even Analysis</h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <span className="text-muted-foreground">Fixed Costs/Month: </span>
+                  <span className="text-white">Fixed Costs/Month: </span>
                   <span className="text-blue-400 font-medium">£2,500</span>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">Average Job Value: </span>
+                  <span className="text-white">Average Job Value: </span>
                   <span className="text-blue-400 font-medium">£350</span>
                 </div>
                 <div>
-                  <span className="text-muted-foreground">Jobs Needed/Month: </span>
+                  <span className="text-white">Jobs Needed/Month: </span>
                   <span className="text-blue-400 font-medium">8-10</span>
                 </div>
               </div>

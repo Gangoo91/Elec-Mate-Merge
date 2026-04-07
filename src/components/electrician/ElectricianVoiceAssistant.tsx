@@ -923,13 +923,13 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
               <X
                 className={cn(
                   'h-6 w-6',
-                  isInDismissZone ? 'text-red-500' : 'text-muted-foreground/50'
+                  isInDismissZone ? 'text-red-500' : 'text-white'
                 )}
               />
               <span
                 className={cn(
                   'text-[10px] font-medium',
-                  isInDismissZone ? 'text-red-500' : 'text-muted-foreground/50'
+                  isInDismissZone ? 'text-red-500' : 'text-white'
                 )}
               >
                 Hide
@@ -946,13 +946,13 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
               <Minimize2
                 className={cn(
                   'h-6 w-6',
-                  isInDockZone ? 'text-elec-yellow' : 'text-muted-foreground/50'
+                  isInDockZone ? 'text-elec-yellow' : 'text-white'
                 )}
               />
               <span
                 className={cn(
                   'text-[10px] font-medium',
-                  isInDockZone ? 'text-elec-yellow' : 'text-muted-foreground/50'
+                  isInDockZone ? 'text-elec-yellow' : 'text-white'
                 )}
               >
                 Dock
@@ -1022,13 +1022,13 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
             <X
               className={cn(
                 'h-6 w-6',
-                isInDismissZone ? 'text-red-500' : 'text-muted-foreground/50'
+                isInDismissZone ? 'text-red-500' : 'text-white'
               )}
             />
             <span
               className={cn(
                 'text-[10px] font-medium',
-                isInDismissZone ? 'text-red-500' : 'text-muted-foreground/50'
+                isInDismissZone ? 'text-red-500' : 'text-white'
               )}
             >
               Hide
@@ -1045,13 +1045,13 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
             <Minimize2
               className={cn(
                 'h-6 w-6',
-                isInDockZone ? 'text-elec-yellow' : 'text-muted-foreground/50'
+                isInDockZone ? 'text-elec-yellow' : 'text-white'
               )}
             />
             <span
               className={cn(
                 'text-[10px] font-medium',
-                isInDockZone ? 'text-elec-yellow' : 'text-muted-foreground/50'
+                isInDockZone ? 'text-elec-yellow' : 'text-white'
               )}
             >
               Dock
@@ -1122,7 +1122,7 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
                       {connectionStep === 'token' && 'Getting authorisation...'}
                       {connectionStep === 'connecting' && 'Connecting...'}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       {connectionStep === 'mic' && 'Please allow microphone access'}
                       {connectionStep === 'token' && 'Authenticating with voice service'}
                       {connectionStep === 'connecting' && 'Almost ready...'}
@@ -1136,7 +1136,7 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
                   <AlertCircle className="h-8 w-8 text-destructive" />
                   <div className="text-center">
                     <p className="text-sm font-medium text-foreground">Connection Failed</p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-white mt-1">
                       {connectionError || 'Please try again'}
                     </p>
                   </div>
@@ -1173,7 +1173,7 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
                   </div>
 
                   {!conversation.isSpeaking && !transcript && (
-                    <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground py-1">
+                    <div className="flex items-center justify-center gap-2 text-xs text-white py-1">
                       <Lightbulb className="h-3 w-3 text-amber-500" />
                       <span>Try: "{ROTATING_TIPS[currentTipIndex]}"</span>
                     </div>
@@ -1181,7 +1181,7 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
 
                   {transcript && (
                     <div className="text-sm bg-muted/50 rounded-lg p-2">
-                      <span className="text-xs text-muted-foreground block mb-1">You said:</span>
+                      <span className="text-xs text-white block mb-1">You said:</span>
                       <p className="text-foreground">{transcript}</p>
                     </div>
                   )}
@@ -1194,7 +1194,7 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
 
                   {!conversation.isSpeaking && !lastAgentMessage && (
                     <div className="space-y-2 pt-2">
-                      <p className="text-xs text-muted-foreground text-center">Quick prompts:</p>
+                      <p className="text-xs text-white text-center">Quick prompts:</p>
                       <div className="grid grid-cols-2 gap-1.5">
                         {QUICK_PROMPTS.map((prompt) => (
                           <button
@@ -1221,8 +1221,8 @@ export const ElectricianVoiceAssistant: React.FC<ElectricianVoiceAssistantProps>
 
               {!isConnected && !isConnecting && connectionStep !== 'error' && (
                 <div className="flex flex-col items-center justify-center py-6 gap-2">
-                  <Mic className="h-8 w-8 text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground text-center">Tap Start to begin</p>
+                  <Mic className="h-8 w-8 text-white" />
+                  <p className="text-sm text-white text-center">Tap Start to begin</p>
                 </div>
               )}
             </div>

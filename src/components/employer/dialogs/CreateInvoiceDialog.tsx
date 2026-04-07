@@ -289,13 +289,13 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                 </Button>
                 <div>
                   <SheetTitle className="text-lg font-semibold">New Invoice</SheetTitle>
-                  <SheetDescription className="text-xs font-mono text-white/60">
+                  <SheetDescription className="text-xs font-mono text-white">
                     {invoiceNumber}
                   </SheetDescription>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-medium text-white/60">
+                <span className="text-sm font-medium text-white">
                   {currentStepLabel}
                 </span>
                 <IOSStepIndicator steps={3} currentStep={step - 1} className="mt-1" />
@@ -418,8 +418,8 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                                     }}
                                     className="w-20 h-12 text-base text-center"
                                   />
-                                  <span className="text-sm text-white/60">{item.unit}</span>
-                                  <span className="text-sm text-white/60">
+                                  <span className="text-sm text-white">{item.unit}</span>
+                                  <span className="text-sm text-white">
                                     × £{item.unitPrice.toFixed(2)}
                                   </span>
                                 </div>
@@ -457,7 +457,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                       />
                       <div className="grid grid-cols-3 gap-3">
                         <div className="space-y-2">
-                          <Label className="text-xs text-white/60">Qty</Label>
+                          <Label className="text-xs text-white">Qty</Label>
                           <Input
                             type="text"
                             inputMode="decimal"
@@ -468,7 +468,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                           />
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-xs text-white/60">Unit</Label>
+                          <Label className="text-xs text-white">Unit</Label>
                           <Select
                             value={newItem.unit}
                             onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
@@ -487,7 +487,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                           </Select>
                         </div>
                         <div className="space-y-2">
-                          <Label className="text-xs text-white/60">Price £</Label>
+                          <Label className="text-xs text-white">Price £</Label>
                           <Input
                             type="text"
                             inputMode="decimal"
@@ -511,7 +511,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                   </Card>
 
                   {lineItems.length === 0 && (
-                    <p className="text-sm text-white/60 text-center py-2">
+                    <p className="text-sm text-white text-center py-2">
                       Add at least one line item to continue.
                     </p>
                   )}
@@ -524,28 +524,28 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                   <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-elec-yellow/20">
                     <CardContent className="p-4 space-y-4">
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-white/60">Client</span>
+                        <span className="text-sm text-white">Client</span>
                         <span className="font-medium">{client}</span>
                       </div>
                       {project && (
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-white/60">Project</span>
+                          <span className="text-sm text-white">Project</span>
                           <span className="font-medium text-sm">{project}</span>
                         </div>
                       )}
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-white/60">Payment Terms</span>
+                        <span className="text-sm text-white">Payment Terms</span>
                         <span className="font-medium">
                           {paymentTerms === '0' ? 'Due on Receipt' : `Net ${paymentTerms}`}
                         </span>
                       </div>
                       <div className="border-t border-border pt-4 space-y-2">
                         <div className="flex justify-between">
-                          <span className="text-sm text-white/60">Subtotal</span>
+                          <span className="text-sm text-white">Subtotal</span>
                           <span className="text-sm">£{subtotal.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-sm text-white/60">VAT ({vatRate}%)</span>
+                          <span className="text-sm text-white">VAT ({vatRate}%)</span>
                           <span className="text-sm">£{vatAmount.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between pt-2 border-t border-border">
@@ -579,9 +579,9 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                           className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg"
                         >
                           <div className="flex-1 min-w-0">
-                            <span className="text-sm text-white/60 mr-2">{idx + 1}.</span>
+                            <span className="text-sm text-white mr-2">{idx + 1}.</span>
                             <span className="text-sm">{item.description}</span>
-                            <span className="text-xs text-white/60 ml-2">
+                            <span className="text-xs text-white ml-2">
                               × {item.quantity}
                             </span>
                           </div>
@@ -601,8 +601,8 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
             <div className="px-4 py-3 border-b border-border/50">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Calculator className="h-4 w-4 text-white/60" />
-                  <span className="text-sm text-white/60">Total Due</span>
+                  <Calculator className="h-4 w-4 text-white" />
+                  <span className="text-sm text-white">Total Due</span>
                 </div>
                 <span className="text-xl font-bold text-elec-yellow tabular-nums">
                   £{total.toFixed(2)}

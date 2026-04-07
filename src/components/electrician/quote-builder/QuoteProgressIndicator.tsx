@@ -20,7 +20,7 @@ export const QuoteProgressIndicator = ({
         <span className="text-sm font-medium">
           Step {currentStep + 1} of {totalSteps}: {stepLabels[currentStep]}
         </span>
-        <span className="text-xs text-muted-foreground">{Math.round(progressPercentage)}%</span>
+        <span className="text-xs text-white">{Math.round(progressPercentage)}%</span>
       </div>
       <Progress value={progressPercentage} className="h-1" />
     </div>

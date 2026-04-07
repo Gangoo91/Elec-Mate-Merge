@@ -56,7 +56,7 @@ const CourseCompareMode = ({
       case 'Medium':
         return 'text-yellow-400';
       default:
-        return 'text-gray-400';
+        return 'text-white';
     }
   };
 
@@ -196,7 +196,7 @@ const CourseCompareMode = ({
                       <MapPin className="h-3 w-3 text-elec-yellow" />
                       <span className="truncate">{course.locations.slice(0, 2).join(', ')}</span>
                       {course.locations.length > 2 && (
-                        <span className="text-muted-foreground">
+                        <span className="text-white">
                           +{course.locations.length - 2}
                         </span>
                       )}
@@ -263,7 +263,7 @@ const CourseCompareMode = ({
         <CardContent>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Select up to 3 courses to compare side by side
               </p>
               <Badge
@@ -312,7 +312,7 @@ const CourseCompareMode = ({
             )}
 
             {selectedCourseData.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
+              <div className="text-center py-8 text-white">
                 <Scale className="h-12 w-12 mx-auto mb-3 text-elec-yellow/50" />
                 <p>Click the compare button on course cards to add them here</p>
               </div>

@@ -80,7 +80,7 @@ const LiveEducationAnalyticsDashboard = ({
           </CardTitle>
           <div className="flex items-center gap-2">
             {lastUpdated && (
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+              <div className="flex items-center gap-1 text-xs text-white">
                 <Clock className="h-3 w-3" />
                 {new Date(lastUpdated).toLocaleTimeString()}
                 {isFromCache && (
@@ -118,26 +118,26 @@ const LiveEducationAnalyticsDashboard = ({
             <div className="text-2xl font-bold text-elec-yellow">
               {displayAnalytics.totalCourses}
             </div>
-            <div className="text-xs text-muted-foreground">Available Programmes</div>
+            <div className="text-xs text-white">Available Programmes</div>
           </div>
           <div className="text-center space-y-1">
             <div className="text-2xl font-bold text-elec-yellow">
               {displayAnalytics.totalProviders}
             </div>
-            <div className="text-xs text-muted-foreground">Education Providers</div>
+            <div className="text-xs text-white">Education Providers</div>
           </div>
           <div className="text-center space-y-1">
             <div className="text-2xl font-bold text-elec-yellow flex items-center justify-center gap-1">
               <Star className="h-4 w-4 fill-elec-yellow" />
               <span>{displayAnalytics.averageRating}</span>
             </div>
-            <div className="text-xs text-muted-foreground">Average Rating</div>
+            <div className="text-xs text-white">Average Rating</div>
           </div>
           <div className="text-center space-y-1">
             <div className="text-2xl font-bold text-elec-yellow">
               {displayAnalytics.averageEmploymentRate}%
             </div>
-            <div className="text-xs text-muted-foreground">Employment Rate</div>
+            <div className="text-xs text-white">Employment Rate</div>
           </div>
         </div>
 
@@ -152,7 +152,7 @@ const LiveEducationAnalyticsDashboard = ({
               <div className="text-2xl font-bold text-foreground mb-1">
                 {displayAnalytics.highDemandPrograms}
               </div>
-              <div className="text-xs text-muted-foreground">programmes in high demand</div>
+              <div className="text-xs text-white">programmes in high demand</div>
               <div className="mt-2 text-xs text-green-400">Excellent career prospects</div>
             </CardContent>
           </Card>
@@ -166,7 +166,7 @@ const LiveEducationAnalyticsDashboard = ({
               <div className="text-2xl font-bold text-foreground mb-1">
                 {displayAnalytics.fundingOptionsAvailable}
               </div>
-              <div className="text-xs text-muted-foreground">different funding options</div>
+              <div className="text-xs text-white">different funding options</div>
               <div className="mt-2 text-xs text-blue-400">Multiple pathways to finance</div>
             </CardContent>
           </Card>
@@ -180,7 +180,7 @@ const LiveEducationAnalyticsDashboard = ({
               <div className="text-lg font-bold text-foreground mb-1">
                 {displayAnalytics.averageStartingSalary}
               </div>
-              <div className="text-xs text-muted-foreground">average graduate salary</div>
+              <div className="text-xs text-white">average graduate salary</div>
               <div className="mt-2 text-xs text-amber-400">Strong return on investment</div>
             </CardContent>
           </Card>
@@ -220,7 +220,7 @@ const LiveEducationAnalyticsDashboard = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="font-medium mb-2 text-green-400">Growth Areas:</h5>
-                <ul className="space-y-1 text-xs text-muted-foreground">
+                <ul className="space-y-1 text-xs text-white">
                   {displayAnalytics.trends.growthAreas.map((item, idx) => (
                     <li key={idx}>• {item}</li>
                   ))}
@@ -228,7 +228,7 @@ const LiveEducationAnalyticsDashboard = ({
               </div>
               <div>
                 <h5 className="font-medium mb-2 text-blue-400">Industry Partnerships:</h5>
-                <ul className="space-y-1 text-xs text-muted-foreground">
+                <ul className="space-y-1 text-xs text-white">
                   {displayAnalytics.trends.industryPartnerships.map((item, idx) => (
                     <li key={idx}>• {item}</li>
                   ))}

@@ -87,7 +87,7 @@ const DigitalMarketingTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -102,7 +102,7 @@ const DigitalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Your website is your digital shopfront - it needs to look professional, load
                 quickly, and convert visitors into customers.
               </div>
@@ -189,7 +189,7 @@ const DigitalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Facebook and Instagram advertising offers precise local targeting for electrical
                 contractors with excellent ROI potential.
               </div>
@@ -271,7 +271,7 @@ const DigitalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Google Local Services Ads appear at the top of search results with the Google
                 Guarantee badge, providing premium visibility.
               </div>
@@ -354,7 +354,7 @@ const DigitalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Online directories and review platforms are crucial for local SEO and building
                 customer trust in the UK market.
               </div>
@@ -439,7 +439,7 @@ const DigitalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Educational content positions you as the local electrical expert while improving SEO
                 and building customer trust.
               </div>
@@ -524,7 +524,7 @@ const DigitalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Proper tracking and analytics are essential for measuring ROI and optimising your
                 digital marketing investments.
               </div>

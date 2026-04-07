@@ -259,7 +259,7 @@ export const FinancialInsights = ({
           <div className="grid gap-4 md:grid-cols-2">
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
               <h4 className="font-medium text-green-400 mb-2">Revenue Optimization</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
+              <ul className="text-sm space-y-1 text-white">
                 <li>• Consider premium service packages</li>
                 <li>• Implement value-based pricing</li>
                 <li>• Expand into renewable energy installations</li>
@@ -269,7 +269,7 @@ export const FinancialInsights = ({
 
             <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <h4 className="font-medium text-blue-400 mb-2">Cost Management</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
+              <ul className="text-sm space-y-1 text-white">
                 <li>• Negotiate bulk supplier discounts</li>
                 <li>• Optimize vehicle routes and fuel costs</li>
                 <li>• Review insurance policies annually</li>
@@ -279,7 +279,7 @@ export const FinancialInsights = ({
 
             <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
               <h4 className="font-medium text-purple-400 mb-2">Cash Flow Improvement</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
+              <ul className="text-sm space-y-1 text-white">
                 <li>• Implement progress billing</li>
                 <li>• Offer payment incentives for early settlement</li>
                 <li>• Use invoice factoring for large jobs</li>
@@ -289,7 +289,7 @@ export const FinancialInsights = ({
 
             <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
               <h4 className="font-medium text-yellow-400 mb-2">Risk Mitigation</h4>
-              <ul className="text-sm space-y-1 text-muted-foreground">
+              <ul className="text-sm space-y-1 text-white">
                 <li>• Diversify customer base</li>
                 <li>• Build relationships with multiple suppliers</li>
                 <li>• Maintain comprehensive insurance</li>

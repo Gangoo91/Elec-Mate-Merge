@@ -184,7 +184,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-medium text-white/60">
+                <span className="text-sm font-medium text-white">
                   {stepLabels[step - 1]}
                 </span>
                 <IOSStepIndicator steps={3} currentStep={step - 1} className="mt-1" />
@@ -276,7 +276,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                               </div>
                               <div>
                                 <p className="font-medium">{trigger.label}</p>
-                                <p className="text-sm text-white/60">
+                                <p className="text-sm text-white">
                                   {trigger.description}
                                 </p>
                               </div>
@@ -308,7 +308,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                   {triggerType === 'field_change' && (
                     <Card className="bg-muted/30 border-dashed">
                       <CardContent className="p-4 text-center">
-                        <p className="text-sm text-white/60">
+                        <p className="text-sm text-white">
                           Field change triggers require advanced configuration. Please contact
                           support for custom setups.
                         </p>
@@ -319,7 +319,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                   {triggerType === 'record_created' && (
                     <Card className="bg-muted/30 border-dashed">
                       <CardContent className="p-4 text-center">
-                        <p className="text-sm text-white/60">
+                        <p className="text-sm text-white">
                           Record triggers require advanced configuration. Please contact support for
                           custom setups.
                         </p>
@@ -333,7 +333,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                 <div className="space-y-5">
                   <div className="space-y-2">
                     <Label>Actions *</Label>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       What should happen when this automation runs?
                     </p>
                   </div>
@@ -370,7 +370,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
 
                   {/* Add Action Buttons */}
                   <div className="space-y-2">
-                    <Label className="text-sm text-white/60">Add Action</Label>
+                    <Label className="text-sm text-white">Add Action</Label>
                     <div className="grid grid-cols-1 gap-2">
                       {ACTION_TYPES.map((actionType) => {
                         const Icon = actionType.icon;
@@ -399,24 +399,24 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                         <h4 className="font-medium">Summary</h4>
                         <div className="text-sm space-y-1">
                           <p>
-                            <span className="text-white/60">Name:</span> {name}
+                            <span className="text-white">Name:</span> {name}
                           </p>
                           <p>
-                            <span className="text-white/60">Category:</span>{' '}
+                            <span className="text-white">Category:</span>{' '}
                             {CATEGORIES.find((c) => c.value === category)?.label}
                           </p>
                           <p>
-                            <span className="text-white/60">Trigger:</span>{' '}
+                            <span className="text-white">Trigger:</span>{' '}
                             {TRIGGER_TYPES.find((t) => t.value === triggerType)?.label}
                           </p>
                           {schedule && (
                             <p>
-                              <span className="text-white/60">Schedule:</span>{' '}
+                              <span className="text-white">Schedule:</span>{' '}
                               {SCHEDULE_OPTIONS.find((s) => s.value === schedule)?.label}
                             </p>
                           )}
                           <p>
-                            <span className="text-white/60">Actions:</span> {actions.length}
+                            <span className="text-white">Actions:</span> {actions.length}
                           </p>
                         </div>
                       </CardContent>

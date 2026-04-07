@@ -131,7 +131,7 @@ const SupplierMaterials = () => {
         </div>
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-6 text-center">
-            <p className="text-muted-foreground">
+            <p className="text-white">
               We couldn't find this supplier. Please choose from our curated list of suppliers.
             </p>
           </CardContent>
@@ -157,7 +157,7 @@ const SupplierMaterials = () => {
             <Package className="h-8 w-8 text-elec-yellow" />
             {supplier} Deals
           </h1>
-          <p className="text-muted-foreground mt-1">{supplierInfo.description}</p>
+          <p className="text-white mt-1">{supplierInfo.description}</p>
         </div>
         <div className="flex items-center gap-2">
           <Button
@@ -209,7 +209,7 @@ const SupplierMaterials = () => {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
               <h3 className="text-lg font-semibold">Need the full catalog?</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 This is a curated selection of popular products. Visit the official website for the
                 complete range.
               </p>
@@ -233,7 +233,7 @@ const SupplierMaterials = () => {
           <Star className="h-5 w-5 text-elec-yellow" />
           Today's Best Deals
         </h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           These are today's best deals from {supplier}. Updated daily.
         </p>
       </div>

@@ -448,7 +448,7 @@ const TaxPlanningTab = () => {
             <div className="text-center space-y-2">
               {metric.icon}
               <div className="text-sm font-medium text-foreground">{metric.metric}</div>
-              <div className="text-sm text-muted-foreground">{metric.data}</div>
+              <div className="text-sm text-white">{metric.data}</div>
             </div>
           </Card>
         ))}
@@ -460,7 +460,7 @@ const TaxPlanningTab = () => {
             <MobileAccordionTrigger icon={section.icon}>{section.title}</MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-white">
                   {section.title} guidance for UK electrical contractors covering compliance
                   requirements and best practices.
                 </div>

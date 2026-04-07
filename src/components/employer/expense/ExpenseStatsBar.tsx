@@ -94,13 +94,13 @@ export function ExpenseStatsBar({
                 <div className={cn('p-1.5 rounded-lg', iconBg)}>
                   <Icon className="h-4 w-4" />
                 </div>
-                <span className="text-xs font-medium text-white/60">{label}</span>
+                <span className="text-xs font-medium text-white">{label}</span>
               </div>
               <div className="space-y-0.5">
                 <p className="text-xl md:text-2xl font-bold text-foreground">
                   {formatCompactCurrency(data.total)}
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   {data.count} {data.count === 1 ? 'claim' : 'claims'}
                 </p>
               </div>
@@ -170,13 +170,13 @@ export function MyExpenseStatsBar({
                 <div className={cn('p-1.5 rounded-lg', iconBg)}>
                   <Icon className="h-4 w-4" />
                 </div>
-                <span className="text-xs font-medium text-white/60">{label}</span>
+                <span className="text-xs font-medium text-white">{label}</span>
               </div>
               <div className="space-y-0.5">
                 <p className="text-xl md:text-2xl font-bold text-foreground">
                   {formatCompactCurrency(data.total)}
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   {data.count} {data.count === 1 ? 'claim' : 'claims'}
                 </p>
               </div>

@@ -262,7 +262,7 @@ export function InvoiceScanResults({
             {/* Save to Price Book (secondary action) */}
             <Button
               variant="ghost"
-              className="w-full h-10 mt-2 text-gray-400 hover:text-white hover:bg-white/[0.05] rounded-xl text-sm gap-2"
+              className="w-full h-10 mt-2 text-white hover:text-white hover:bg-white/[0.05] rounded-xl text-sm gap-2"
               onClick={handleSaveToPriceBook}
               disabled={savingToPriceBook || selectedCount === 0}
             >

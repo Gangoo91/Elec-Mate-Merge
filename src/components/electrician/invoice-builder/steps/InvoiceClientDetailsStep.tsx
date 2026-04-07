@@ -171,14 +171,14 @@ export const InvoiceClientDetailsStep = ({
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[15px] font-medium text-white truncate">{selectedCustomer.name}</p>
-                <p className="text-[12px] text-white/50 truncate">{selectedCustomer.email || selectedCustomer.phone || 'No contact details'}</p>
+                <p className="text-[12px] text-white truncate">{selectedCustomer.email || selectedCustomer.phone || 'No contact details'}</p>
               </div>
               <button
                 type="button"
                 onClick={handleClearCustomer}
                 className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"
               >
-                <X className="h-4 w-4 text-white/60" />
+                <X className="h-4 w-4 text-white" />
               </button>
             </div>
           ) : (

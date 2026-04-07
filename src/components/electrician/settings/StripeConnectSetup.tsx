@@ -247,8 +247,8 @@ const StripeConnectSetup: React.FC = () => {
     return (
       <div className="rounded-xl bg-elec-gray/50 border border-white/10 p-6">
         <div className="flex items-center justify-center gap-3 py-4">
-          <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-          <span className="text-sm text-muted-foreground">Checking payment setup...</span>
+          <Loader2 className="h-5 w-5 animate-spin text-white" />
+          <span className="text-sm text-white">Checking payment setup...</span>
         </div>
       </div>
     );
@@ -270,19 +270,19 @@ const StripeConnectSetup: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-foreground">Accept Card Payments</h3>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-white mt-1">
                   Let your clients pay invoices online with secure card payments via Stripe.
                 </p>
                 <div className="flex flex-wrap gap-2 mt-3">
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-xs text-white">
                     <CheckCircle className="h-3 w-3 text-green-400" />
                     Direct to your bank
                   </span>
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-xs text-white">
                     <Shield className="h-3 w-3 text-blue-400" />
                     Secure payments
                   </span>
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/5 text-xs text-white">
                     <CreditCard className="h-3 w-3 text-purple-400" />
                     All major cards
                   </span>
@@ -309,7 +309,7 @@ const StripeConnectSetup: React.FC = () => {
               <button
                 onClick={handleConnectExpress}
                 disabled={connecting}
-                className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-2"
+                className="text-xs text-white hover:text-foreground underline underline-offset-2"
               >
                 Don't have Stripe? Create free account
               </button>
@@ -318,16 +318,16 @@ const StripeConnectSetup: React.FC = () => {
 
           <div className="mt-4 pt-4 border-t border-white/10">
             <div className="space-y-2">
-              <p className="text-xs font-medium text-muted-foreground">Payment Processing Fees</p>
+              <p className="text-xs font-medium text-white">Payment Processing Fees</p>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
-                <span className="text-muted-foreground">Stripe (UK cards)</span>
+                <span className="text-white">Stripe (UK cards)</span>
                 <span className="text-foreground">1.5% + 20p</span>
-                <span className="text-muted-foreground">Elec-Mate</span>
+                <span className="text-white">Elec-Mate</span>
                 <span className="text-foreground">1%</span>
-                <span className="text-muted-foreground font-medium">Total</span>
+                <span className="text-white font-medium">Total</span>
                 <span className="text-foreground font-semibold">2.5% + 20p</span>
               </div>
-              <p className="text-[10px] text-muted-foreground/70 mt-1">
+              <p className="text-[10px] text-white mt-1">
                 EU cards: 3.5% + 20p • International: 4.25% + 20p • Payouts within 2-7 days
               </p>
             </div>
@@ -353,7 +353,7 @@ const StripeConnectSetup: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-foreground">Stripe Setup In Progress</h3>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-white mt-1">
                   Complete your Stripe onboarding to start accepting card payments.
                 </p>
                 {status.requirements && status.requirements.length > 0 && (
@@ -385,7 +385,7 @@ const StripeConnectSetup: React.FC = () => {
                     variant="ghost"
                     size="icon"
                     disabled={disconnecting}
-                    className="text-muted-foreground hover:text-red-400 hover:bg-red-500/10"
+                    className="text-white hover:text-red-400 hover:bg-red-500/10"
                   >
                     {disconnecting ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -436,7 +436,7 @@ const StripeConnectSetup: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-foreground">Stripe Account Restricted</h3>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-white mt-1">
                   Your Stripe account needs attention. Please update your information to continue
                   accepting payments.
                 </p>
@@ -467,7 +467,7 @@ const StripeConnectSetup: React.FC = () => {
                     variant="ghost"
                     size="icon"
                     disabled={disconnecting}
-                    className="text-muted-foreground hover:text-red-400 hover:bg-red-500/10"
+                    className="text-white hover:text-red-400 hover:bg-red-500/10"
                   >
                     {disconnecting ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -517,7 +517,7 @@ const StripeConnectSetup: React.FC = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-foreground">Card Payments Active</h3>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-white mt-1">
                 Your Stripe account is fully set up. Clients can pay invoices with card payments.
               </p>
               <div className="flex flex-wrap gap-2 mt-3">
@@ -554,7 +554,7 @@ const StripeConnectSetup: React.FC = () => {
                   variant="ghost"
                   size="icon"
                   disabled={disconnecting}
-                  className="text-muted-foreground hover:text-red-400 hover:bg-red-500/10"
+                  className="text-white hover:text-red-400 hover:bg-red-500/10"
                 >
                   {disconnecting ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

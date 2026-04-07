@@ -356,7 +356,7 @@ const TrainingDevelopmentTab = () => {
             <div className="text-center space-y-2">
               {metric.icon}
               <div className="text-xs font-medium text-foreground">{metric.metric}</div>
-              <div className="text-xs text-muted-foreground">{metric.data}</div>
+              <div className="text-xs text-white">{metric.data}</div>
             </div>
           </Card>
         ))}
@@ -378,7 +378,7 @@ const TrainingDevelopmentTab = () => {
                         {phase.timing}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">{phase.description}</p>
+                    <p className="text-xs text-white">{phase.description}</p>
                   </div>
 
                   <div>
@@ -446,7 +446,7 @@ const TrainingDevelopmentTab = () => {
                           {provider.cost}
                         </Badge>
                       </div>
-                      <p className="text-xs text-muted-foreground">{provider.description}</p>
+                      <p className="text-xs text-white">{provider.description}</p>
 
                       <div>
                         <h6 className="font-medium text-green-300 mb-1 text-xs">Key Features</h6>
@@ -535,7 +535,7 @@ const TrainingDevelopmentTab = () => {
               {modernMentoringApproach.map((approach, index) => (
                 <div key={index} className="border border-amber-500/20 rounded-lg p-3 space-y-3">
                   <h4 className="font-medium text-foreground text-sm">{approach.approach}</h4>
-                  <p className="text-xs text-muted-foreground">{approach.description}</p>
+                  <p className="text-xs text-white">{approach.description}</p>
 
                   <div>
                     <h5 className="font-medium text-amber-300 mb-2 text-xs">Key Features</h5>
@@ -594,7 +594,7 @@ const TrainingDevelopmentTab = () => {
                       </div>
 
                       <div className="flex justify-between text-xs">
-                        <span className="text-muted-foreground">Period: {cost.period}</span>
+                        <span className="text-white">Period: {cost.period}</span>
                         <span className="text-yellow-200">Funding: {cost.funding}</span>
                       </div>
                     </div>

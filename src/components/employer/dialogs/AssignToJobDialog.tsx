@@ -102,7 +102,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
             </div>
             <div className="min-w-0">
               <p className="font-medium truncate">{employee.name}</p>
-              <p className="text-sm text-white/60">{employee.role}</p>
+              <p className="text-sm text-white">{employee.role}</p>
             </div>
           </div>
         </div>
@@ -113,7 +113,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
             {/* Search */}
             <div className="relative">
               {!searchQuery && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search jobs..."
@@ -147,8 +147,8 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
                                 <Check className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                               )}
                             </div>
-                            <p className="text-xs text-white/60">{job.client}</p>
-                            <p className="text-xs text-white/60 flex items-center gap-1 mt-1">
+                            <p className="text-xs text-white">{job.client}</p>
+                            <p className="text-xs text-white flex items-center gap-1 mt-1">
                               <MapPin className="h-3 w-3" />
                               {job.location}
                             </p>
@@ -162,7 +162,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
                             {job.status}
                           </Badge>
                         </div>
-                        <div className="flex items-center gap-3 mt-2 text-xs text-white/60">
+                        <div className="flex items-center gap-3 mt-2 text-xs text-white">
                           <span>
                             {job.assignedWorkers}/{job.totalWorkers} assigned
                           </span>
@@ -173,8 +173,8 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
                   ))
                 ) : (
                   <div className="text-center py-8">
-                    <Briefcase className="h-8 w-8 text-white/60 mx-auto mb-2" />
-                    <p className="text-sm text-white/60">No jobs found</p>
+                    <Briefcase className="h-8 w-8 text-white mx-auto mb-2" />
+                    <p className="text-sm text-white">No jobs found</p>
                   </div>
                 )}
               </div>
@@ -184,7 +184,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
             <div className="space-y-2">
               <Label htmlFor="startDate">Start Date</Label>
               <div className="relative">
-                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   id="startDate"
                   type="date"

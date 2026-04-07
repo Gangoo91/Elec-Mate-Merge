@@ -286,7 +286,7 @@ const LegalRequirementsTab = () => {
             <div className="text-center space-y-2">
               {metric.icon}
               <div className="text-xs font-medium text-foreground">{metric.metric}</div>
-              <div className="text-xs text-muted-foreground">{metric.data}</div>
+              <div className="text-xs text-white">{metric.data}</div>
             </div>
           </Card>
         ))}
@@ -308,7 +308,7 @@ const LegalRequirementsTab = () => {
                         {framework.timing}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">{framework.description}</p>
+                    <p className="text-xs text-white">{framework.description}</p>
                   </div>
 
                   <div>
@@ -368,7 +368,7 @@ const LegalRequirementsTab = () => {
                       className="border border-blue-500/20 rounded-lg p-3 space-y-2"
                     >
                       <h5 className="font-medium text-foreground text-sm">{req.item}</h5>
-                      <p className="text-xs text-muted-foreground">{req.description}</p>
+                      <p className="text-xs text-white">{req.description}</p>
 
                       <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
                         <h6 className="font-medium text-red-300 mb-1 text-xs">Penalty Risk</h6>
@@ -412,7 +412,7 @@ const LegalRequirementsTab = () => {
                           {detail.cost}
                         </Badge>
                       </div>
-                      <p className="text-xs text-muted-foreground">{detail.description}</p>
+                      <p className="text-xs text-white">{detail.description}</p>
 
                       <div className="bg-blue-500/10 border border-blue-500/30 rounded p-2">
                         <h6 className="font-medium text-blue-300 mb-1 text-xs">How to Access</h6>

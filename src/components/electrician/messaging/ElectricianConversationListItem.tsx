@@ -84,16 +84,16 @@ export function ElectricianConversationListItem({
                   >
                     {employer?.company_name || 'Unknown Company'}
                   </h3>
-                  {!canReply && <Lock className="h-3.5 w-3.5 text-muted-foreground shrink-0" />}
+                  {!canReply && <Lock className="h-3.5 w-3.5 text-white shrink-0" />}
                 </div>
                 {employer?.contact_name && (
-                  <p className="text-xs text-muted-foreground truncate">{employer.contact_name}</p>
+                  <p className="text-xs text-white truncate">{employer.contact_name}</p>
                 )}
               </div>
 
               {/* Time */}
               {timeAgo && (
-                <div className="flex items-center gap-1 text-xs text-muted-foreground shrink-0">
+                <div className="flex items-center gap-1 text-xs text-white shrink-0">
                   <Clock className="h-3 w-3" />
                   <span>{timeAgo}</span>
                 </div>
@@ -111,7 +111,7 @@ export function ElectricianConversationListItem({
                   {vacancy.title}
                 </Badge>
                 {vacancy.location && (
-                  <span className="text-xs text-muted-foreground flex items-center gap-1">
+                  <span className="text-xs text-white flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
                     {vacancy.location}
                   </span>
@@ -127,7 +127,7 @@ export function ElectricianConversationListItem({
               <p
                 className={cn(
                   'text-sm line-clamp-1',
-                  hasUnread ? 'text-foreground font-medium' : 'text-muted-foreground'
+                  hasUnread ? 'text-foreground font-medium' : 'text-white'
                 )}
               >
                 {conversation.last_message_preview}
@@ -157,7 +157,7 @@ export function ElectricianConversationListItem({
               </button>
             )}
             <MessageSquare
-              className={cn('h-5 w-5', hasUnread ? 'text-elec-yellow' : 'text-muted-foreground')}
+              className={cn('h-5 w-5', hasUnread ? 'text-elec-yellow' : 'text-white')}
             />
           </div>
         </div>

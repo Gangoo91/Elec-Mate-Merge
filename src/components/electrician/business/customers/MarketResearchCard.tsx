@@ -38,21 +38,21 @@ const MarketResearchCard = () => {
           <CardContent className="p-4 text-center">
             <Target className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
             <h3 className="font-semibold text-lg">3-5 Customer Types</h3>
-            <p className="text-sm text-muted-foreground">Focus on specific segments</p>
+            <p className="text-sm text-white">Focus on specific segments</p>
           </CardContent>
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardContent className="p-4 text-center">
             <MapPin className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
             <h3 className="font-semibold text-lg">5-10 Mile Radius</h3>
-            <p className="text-sm text-muted-foreground">Optimal service area</p>
+            <p className="text-sm text-white">Optimal service area</p>
           </CardContent>
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-card">
           <CardContent className="p-4 text-center">
             <TrendingUp className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
             <h3 className="font-semibold text-lg">£45-85/hour</h3>
-            <p className="text-sm text-muted-foreground">UK market rate range</p>
+            <p className="text-sm text-white">UK market rate range</p>
           </CardContent>
         </Card>
       </div>
@@ -70,7 +70,7 @@ const MarketResearchCard = () => {
           <MobileAccordionContent>
             <Card className="border-t-0 rounded-t-none border-elec-yellow/20 bg-elec-card">
               <CardContent className="p-6 space-y-4">
-                <p className="text-muted-foreground">
+                <p className="text-white">
                   Understanding your local electrical services market is crucial for positioning
                   your business effectively.
                 </p>
@@ -78,7 +78,7 @@ const MarketResearchCard = () => {
                 <div className="space-y-3">
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold mb-2">Demographic Research</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Use ONS data to identify household income levels in your area</li>
                       <li>• Research new housing developments and renovation activity</li>
                       <li>• Identify commercial and industrial growth areas</li>
@@ -90,7 +90,7 @@ const MarketResearchCard = () => {
 
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold mb-2">Seasonal Patterns</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Spring/Summer: Outdoor lighting, garden electrical work</li>
                       <li>• Autumn: Heating system preparations, safety checks</li>
                       <li>• Winter: Emergency callouts, indoor renovations</li>
@@ -114,7 +114,7 @@ const MarketResearchCard = () => {
           <MobileAccordionContent>
             <Card className="border-t-0 rounded-t-none border-elec-yellow/20 bg-elec-card">
               <CardContent className="p-6 space-y-4">
-                <p className="text-muted-foreground">
+                <p className="text-white">
                   Develop detailed profiles of your ideal customers to focus your marketing efforts
                   effectively.
                 </p>
@@ -125,7 +125,7 @@ const MarketResearchCard = () => {
                       <Badge variant="gold">Primary</Badge>
                       <h4 className="font-semibold">Homeowners (25-55 years)</h4>
                     </div>
-                    <ul className="text-sm text-muted-foreground space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>• Income: £35,000-£80,000</li>
                       <li>• Property: Own their home, value: £200k-£600k</li>
                       <li>• Needs: Renovations, upgrades, safety improvements</li>
@@ -138,7 +138,7 @@ const MarketResearchCard = () => {
                       <Badge variant="yellow">Secondary</Badge>
                       <h4 className="font-semibold">Landlords & Property Managers</h4>
                     </div>
-                    <ul className="text-sm text-muted-foreground space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>• Portfolio: 2-20+ properties</li>
                       <li>• Needs: Maintenance, safety certificates, quick response</li>
                       <li>• Decision factors: Cost efficiency, availability, compliance</li>
@@ -151,7 +151,7 @@ const MarketResearchCard = () => {
                       <Badge variant="success">Tertiary</Badge>
                       <h4 className="font-semibold">Small Businesses</h4>
                     </div>
-                    <ul className="text-sm text-muted-foreground space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>• Size: 1-50 employees</li>
                       <li>• Needs: Installation, maintenance, emergency response</li>
                       <li>• Decision factors: Minimal downtime, competitive pricing</li>
@@ -175,7 +175,7 @@ const MarketResearchCard = () => {
           <MobileAccordionContent>
             <Card className="border-t-0 rounded-t-none border-elec-yellow/20 bg-elec-card">
               <CardContent className="p-6 space-y-4">
-                <p className="text-muted-foreground">
+                <p className="text-white">
                   Understand your competition to identify opportunities and differentiate your
                   services.
                 </p>
@@ -183,7 +183,7 @@ const MarketResearchCard = () => {
                 <div className="space-y-4">
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold mb-2">Research Methods</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Google Maps search for "electrician near me"</li>
                       <li>• Check their websites, services offered, and pricing</li>
                       <li>• Read Google, Trustpilot, and Checkatrade reviews</li>
@@ -197,7 +197,7 @@ const MarketResearchCard = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                       <div>
                         <h5 className="font-medium text-elec-yellow mb-1">Service Offerings</h5>
-                        <ul className="text-muted-foreground space-y-1">
+                        <ul className="text-white space-y-1">
                           <li>• Domestic vs commercial focus</li>
                           <li>• Emergency response times</li>
                           <li>• Speciality services offered</li>
@@ -205,7 +205,7 @@ const MarketResearchCard = () => {
                       </div>
                       <div>
                         <h5 className="font-medium text-elec-yellow mb-1">Market Position</h5>
-                        <ul className="text-muted-foreground space-y-1">
+                        <ul className="text-white space-y-1">
                           <li>• Pricing structure (hourly/fixed)</li>
                           <li>• Geographic coverage area</li>
                           <li>• Brand reputation and reviews</li>
@@ -230,7 +230,7 @@ const MarketResearchCard = () => {
           <MobileAccordionContent>
             <Card className="border-t-0 rounded-t-none border-elec-yellow/20 bg-elec-card">
               <CardContent className="p-6 space-y-4">
-                <p className="text-muted-foreground">
+                <p className="text-white">
                   Identify and target underserved market segments to establish a competitive
                   advantage.
                 </p>
@@ -243,20 +243,20 @@ const MarketResearchCard = () => {
                     <div className="grid gap-3">
                       <div className="border-l-2 border-green-500 pl-3">
                         <h5 className="font-medium">Smart Home Technology</h5>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-white">
                           Growing demand for home automation, smart lighting, and integrated
                           systems.
                         </p>
                       </div>
                       <div className="border-l-2 border-blue-500 pl-3">
                         <h5 className="font-medium">EV Charging Installations</h5>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-white">
                           Rapidly expanding market as electric vehicle adoption increases.
                         </p>
                       </div>
                       <div className="border-l-2 border-purple-500 pl-3">
                         <h5 className="font-medium">Energy Efficiency Upgrades</h5>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-white">
                           LED conversions, efficient heating systems, and renewable energy
                           integration.
                         </p>
@@ -266,7 +266,7 @@ const MarketResearchCard = () => {
 
                   <div className="border-l-4 border-elec-yellow pl-4">
                     <h4 className="font-semibold mb-2">Market Gap Analysis</h4>
-                    <ul className="space-y-1 text-sm text-muted-foreground">
+                    <ul className="space-y-1 text-sm text-white">
                       <li>• Look for services no local competitors offer</li>
                       <li>• Identify complaints in competitor reviews as opportunities</li>
                       <li>• Consider 24/7 emergency services if not widely available</li>

@@ -28,7 +28,7 @@ export function ExpenseSummaryCard({
     >
       {/* Row 1: Label + Amount */}
       <div className="flex items-center justify-between">
-        <span className="text-xs text-muted-foreground uppercase tracking-wider">This Month</span>
+        <span className="text-xs text-white uppercase tracking-wider">This Month</span>
         <span className="text-2xl font-bold text-elec-yellow">
           £
           {stats.monthlyAmount.toLocaleString('en-GB', {
@@ -40,7 +40,7 @@ export function ExpenseSummaryCard({
 
       {/* Row 2: Inline pills */}
       <div className="flex items-center gap-2 mt-2.5 flex-wrap">
-        <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] text-muted-foreground">
+        <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] text-white">
           YTD £
           {stats.yearToDateAmount.toLocaleString('en-GB', {
             minimumFractionDigits: 0,
@@ -55,7 +55,7 @@ export function ExpenseSummaryCard({
           })}{' '}
           deductible
         </span>
-        <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] text-muted-foreground flex items-center gap-1">
+        <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.06] text-white flex items-center gap-1">
           <Receipt className="h-2.5 w-2.5" />
           {stats.count} {stats.count === 1 ? 'expense' : 'expenses'}
         </span>

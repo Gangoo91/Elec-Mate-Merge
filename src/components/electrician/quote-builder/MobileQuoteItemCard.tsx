@@ -47,7 +47,7 @@ export const MobileQuoteItemCard = ({
       case 'equipment':
         return 'bg-purple-500/20 text-purple-300 border-purple-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -60,7 +60,7 @@ export const MobileQuoteItemCard = ({
             {getCategoryIcon(item.category)}
           </div>
           <div>
-            <p className="text-xs text-muted-foreground">Total</p>
+            <p className="text-xs text-white">Total</p>
             <p className="font-bold text-primary text-lg">£{item.totalPrice.toFixed(2)}</p>
           </div>
         </div>
@@ -122,7 +122,7 @@ export const MobileQuoteItemCard = ({
 
       {/* Notes if any */}
       {item.notes && (
-        <div className="text-xs text-muted-foreground pt-2 border-t border-border/50">
+        <div className="text-xs text-white pt-2 border-t border-border/50">
           <span className="font-medium">Notes:</span> {item.notes}
         </div>
       )}

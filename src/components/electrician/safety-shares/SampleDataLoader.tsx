@@ -289,23 +289,23 @@ const SampleDataLoader = () => {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm">
           <div className="text-center">
             <div className="text-2xl font-bold text-elec-yellow">{dataStatus.alerts}</div>
-            <div className="text-gray-400">Safety Alerts</div>
+            <div className="text-white">Safety Alerts</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-elec-yellow">{dataStatus.news}</div>
-            <div className="text-gray-400">Industry News</div>
+            <div className="text-white">Industry News</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-elec-yellow">{dataStatus.resources}</div>
-            <div className="text-gray-400">Resources</div>
+            <div className="text-white">Resources</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-elec-yellow">{dataStatus.projects}</div>
-            <div className="text-gray-400">Major Projects</div>
+            <div className="text-white">Major Projects</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-elec-yellow">{dataStatus.lfe}</div>
-            <div className="text-gray-400">LFE Reports</div>
+            <div className="text-white">LFE Reports</div>
           </div>
         </div>
 
@@ -315,7 +315,7 @@ const SampleDataLoader = () => {
           </div>
 
           {totalRecords === 0 && (
-            <div className="text-gray-400 mb-4">
+            <div className="text-white mb-4">
               No data found in the database. Load sample data to test the components.
             </div>
           )}

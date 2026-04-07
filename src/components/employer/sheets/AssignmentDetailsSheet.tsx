@@ -119,7 +119,7 @@ export function AssignmentDetailsSheet({
                         onClick={() => onRemoveWorker(worker.id)}
                         className="h-5 w-5 rounded-full hover:bg-background flex items-center justify-center"
                       >
-                        <X className="h-3 w-3 text-white/60" />
+                        <X className="h-3 w-3 text-white" />
                       </button>
                     </div>
                   );
@@ -134,7 +134,7 @@ export function AssignmentDetailsSheet({
                   <AlertTriangle className="h-5 w-5 text-warning shrink-0" />
                   <div>
                     <p className="font-medium text-warning text-sm">Schedule conflicts detected</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Some workers have overlapping job assignments
                     </p>
                   </div>
@@ -149,7 +149,7 @@ export function AssignmentDetailsSheet({
                   htmlFor="start-date"
                   className="text-sm font-medium flex items-center gap-1.5"
                 >
-                  <Clock className="h-4 w-4 text-white/60" />
+                  <Clock className="h-4 w-4 text-white" />
                   Start Date
                 </Label>
                 <Input
@@ -162,7 +162,7 @@ export function AssignmentDetailsSheet({
               </div>
               <div className="space-y-2">
                 <Label htmlFor="end-date" className="text-sm font-medium flex items-center gap-1.5">
-                  <Clock className="h-4 w-4 text-white/60" />
+                  <Clock className="h-4 w-4 text-white" />
                   End Date
                 </Label>
                 <Input
@@ -179,8 +179,8 @@ export function AssignmentDetailsSheet({
             {/* Notes */}
             <div className="space-y-2">
               <Label htmlFor="notes" className="text-sm font-medium flex items-center gap-1.5">
-                <FileText className="h-4 w-4 text-white/60" />
-                Notes <span className="text-white/60 font-normal">(Optional)</span>
+                <FileText className="h-4 w-4 text-white" />
+                Notes <span className="text-white font-normal">(Optional)</span>
               </Label>
               <Textarea
                 id="notes"
@@ -206,10 +206,10 @@ export function AssignmentDetailsSheet({
               </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-white/60" />
+                  <Mail className="h-4 w-4 text-white" />
                   Send Email Notification
                 </p>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   Workers will receive job details and a calendar invite
                 </p>
               </div>

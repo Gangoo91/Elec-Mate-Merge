@@ -272,7 +272,7 @@ const RecruitmentTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -303,7 +303,7 @@ const RecruitmentTab = () => {
                         {strategy.timeline}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {strategy.description}
                     </p>
                   </div>
@@ -393,7 +393,7 @@ const RecruitmentTab = () => {
                           {platform.cost}
                         </Badge>
                       </div>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                         {platform.description}
                       </p>
 
@@ -451,7 +451,7 @@ const RecruitmentTab = () => {
                         {stage.timing}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {stage.description}
                     </p>
                   </div>
@@ -625,7 +625,7 @@ const RecruitmentTab = () => {
                       Find an Apprenticeship
                     </div>
                     <div
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}
+                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-white break-words`}
                     >
                       Post vacancies and find candidates
                     </div>
@@ -645,7 +645,7 @@ const RecruitmentTab = () => {
                       CITB Support & Funding
                     </div>
                     <div
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}
+                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-white break-words`}
                     >
                       Training grants and apprentice support
                     </div>
@@ -667,7 +667,7 @@ const RecruitmentTab = () => {
                       Employer Apprenticeship Service
                     </div>
                     <div
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}
+                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-white break-words`}
                     >
                       Manage vacancies and funding
                     </div>

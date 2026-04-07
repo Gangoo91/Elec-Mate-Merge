@@ -509,7 +509,7 @@ const SnaggingPage = () => {
                     className={`h-11 rounded-xl text-xs font-bold border touch-manipulation transition-all ${
                       formPriority === p.value
                         ? `${p.activeClass} scale-[1.03] shadow-lg`
-                        : 'bg-white/[0.04] text-white/60 border-white/10 active:bg-white/[0.08]'
+                        : 'bg-white/[0.04] text-white border-white/10 active:bg-white/[0.08]'
                     }`}
                   >
                     {p.label}

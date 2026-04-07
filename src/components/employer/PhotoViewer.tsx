@@ -273,7 +273,7 @@ export function PhotoViewer({
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Badge className={categoryColors[photo.category]}>{photo.category}</Badge>
-              <span className="text-sm text-white/60">
+              <span className="text-sm text-white">
                 {currentIndex + 1} of {photos.length}
               </span>
             </div>
@@ -397,7 +397,7 @@ export function PhotoViewer({
 
               {/* Photo info */}
               <p className="text-foreground font-semibold text-lg mb-1">{photo.filename}</p>
-              <p className="text-white/60 text-sm">{photo.jobTitle}</p>
+              <p className="text-white text-sm">{photo.jobTitle}</p>
 
               {/* Category indicator at bottom */}
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
@@ -466,7 +466,7 @@ export function PhotoViewer({
             {/* Metadata */}
             <div
               className={cn(
-                'flex flex-wrap items-center gap-4 text-xs text-white/60',
+                'flex flex-wrap items-center gap-4 text-xs text-white',
                 isMobile && 'gap-2'
               )}
             >

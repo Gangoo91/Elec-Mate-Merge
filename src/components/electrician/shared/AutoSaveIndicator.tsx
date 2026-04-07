@@ -43,7 +43,7 @@ export const AutoSaveIndicator: React.FC<AutoSaveIndicatorProps> = ({
   return (
     <div
       className={cn(
-        'flex items-center gap-2 text-sm text-muted-foreground px-3 py-1.5 rounded-lg bg-card/50 border border-border/50',
+        'flex items-center gap-2 text-sm text-white px-3 py-1.5 rounded-lg bg-card/50 border border-border/50',
         className
       )}
     >

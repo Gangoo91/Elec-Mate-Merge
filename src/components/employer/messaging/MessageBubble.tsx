@@ -122,7 +122,7 @@ export function MessageBubble({
           {/* Message content */}
           <div className="text-sm whitespace-pre-wrap break-words">
             {isDeleted ? (
-              <span className="text-white/60">This message was deleted</span>
+              <span className="text-white">This message was deleted</span>
             ) : (
               <TextWithLinks text={message.content} />
             )}
@@ -136,11 +136,11 @@ export function MessageBubble({
             className={`flex items-center gap-1 mt-1 ${isOwn ? 'justify-end' : 'justify-start'}`}
           >
             {isEdited && !isDeleted && (
-              <span className={`text-xs ${isOwn ? 'text-black/50' : 'text-white/60'}`}>
+              <span className={`text-xs ${isOwn ? 'text-black/50' : 'text-white'}`}>
                 edited
               </span>
             )}
-            <span className={`text-xs ${isOwn ? 'text-black/60' : 'text-white/60'}`}>
+            <span className={`text-xs ${isOwn ? 'text-black/60' : 'text-white'}`}>
               {formattedTime}
             </span>
             {isOwn && !isDeleted && (
@@ -214,7 +214,7 @@ export function MessageBubble({
 export function SystemMessage({ content }: { content: string }) {
   return (
     <div className="flex justify-center my-4">
-      <span className="text-xs text-white/60 bg-muted px-3 py-1 rounded-full">
+      <span className="text-xs text-white bg-muted px-3 py-1 rounded-full">
         {content}
       </span>
     </div>

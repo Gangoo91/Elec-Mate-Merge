@@ -50,7 +50,7 @@ export const DeleteInvoiceDialog = ({
                 ⚠️ Warning: This invoice is marked as PAID. Are you sure you want to delete it?
               </p>
             )}
-            <p className="text-muted-foreground text-sm">
+            <p className="text-white text-sm">
               The original quote will remain untouched.
             </p>
           </AlertDialogDescription>

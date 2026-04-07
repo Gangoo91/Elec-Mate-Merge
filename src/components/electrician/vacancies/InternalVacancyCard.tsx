@@ -172,7 +172,7 @@ export function InternalVacancyCard({
             </div>
 
             {/* Description Preview */}
-            <p className="text-sm text-muted-foreground line-clamp-2 mb-3">{vacancy.description}</p>
+            <p className="text-sm text-white line-clamp-2 mb-3">{vacancy.description}</p>
 
             {/* Actions - Mobile-first touch targets */}
             <div className="flex items-center gap-2 flex-wrap">

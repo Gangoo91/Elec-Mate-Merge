@@ -84,7 +84,7 @@ const ProfileStatusCard = () => {
                 >
                   {defaultProfile.name}
                 </h3>
-                <p className="text-sm text-muted-foreground">{defaultProfile.companyName}</p>
+                <p className="text-sm text-white">{defaultProfile.companyName}</p>
               </div>
 
               {/* Qualifications and Contact in horizontal layout */}
@@ -111,7 +111,7 @@ const ProfileStatusCard = () => {
 
                 {/* Contact Details */}
                 {(defaultProfile.companyEmail || defaultProfile.companyPhone) && (
-                  <div className="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start text-xs text-muted-foreground">
+                  <div className="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start text-xs text-white">
                     {defaultProfile.companyEmail && (
                       <div className="flex items-center gap-1.5">
                         <Mail className="w-3.5 h-3.5 text-primary flex-shrink-0" />
@@ -162,7 +162,7 @@ const ProfileStatusCard = () => {
             </div>
             <div className="flex-grow text-center sm:text-left">
               <p
-                className={cn('text-muted-foreground', isMobile ? 'text-sm mb-2' : 'text-sm mb-3')}
+                className={cn('text-white', isMobile ? 'text-sm mb-2' : 'text-sm mb-3')}
               >
                 Complete your inspector profile to auto-fill certificates and maintain professional
                 records.

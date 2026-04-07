@@ -375,7 +375,7 @@ export const ServiceDiversificationTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -448,7 +448,7 @@ export const ServiceDiversificationTab = () => {
                         {strategy.timeline}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {strategy.description}
                     </p>
                   </div>
@@ -457,19 +457,19 @@ export const ServiceDiversificationTab = () => {
                     className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}
                   >
                     <div className="flex items-center gap-2">
-                      <Calculator className="h-4 w-4 text-muted-foreground" />
+                      <Calculator className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                         {strategy.investment}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                      <TrendingUp className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                         {strategy.roi}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-muted-foreground" />
+                      <Shield className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                         {strategy.riskLevel}
                       </span>
@@ -498,7 +498,7 @@ export const ServiceDiversificationTab = () => {
                       {strategy.components.map((component, compIndex) => (
                         <li
                           key={compIndex}
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}
+                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-white flex items-center gap-2`}
                         >
                           <CheckCircle className="h-3 w-3 text-green-400" />
                           {component}
@@ -553,7 +553,7 @@ export const ServiceDiversificationTab = () => {
                               {phase.tasks.map((task, taskIndex) => (
                                 <p
                                   key={taskIndex}
-                                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                                  className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                                 >
                                   • {task}
                                 </p>
@@ -587,7 +587,7 @@ export const ServiceDiversificationTab = () => {
                       {strategy.ukSpecific2025.map((consideration, consIndex) => (
                         <li
                           key={consIndex}
-                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}
+                          className={`${isMobile ? 'text-xs' : 'text-sm'} text-white flex items-center gap-2`}
                         >
                           <AlertTriangle className="h-3 w-3 text-orange-400" />
                           {consideration}
@@ -604,7 +604,7 @@ export const ServiceDiversificationTab = () => {
 
       <div className="bg-elec-yellow/10 rounded-lg p-3">
         <p
-          className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground text-center font-medium`}
+          className={`${isMobile ? 'text-xs' : 'text-sm'} text-white text-center font-medium`}
         >
           <strong className="text-elec-yellow">Key Success Factor:</strong> Focus on quality and
           compliance over speed of expansion. Building reputation in one area often leads to natural

@@ -23,7 +23,7 @@ export const InvoiceProgressIndicator = ({ currentStep, steps }: InvoiceProgress
                     ? 'bg-elec-yellow border-elec-yellow text-black'
                     : index === currentStep
                       ? 'border-elec-yellow bg-elec-yellow text-black'
-                      : 'border-muted bg-background text-muted-foreground'
+                      : 'border-muted bg-background text-white'
                 )}
               >
                 {index < currentStep ? (
@@ -41,12 +41,12 @@ export const InvoiceProgressIndicator = ({ currentStep, steps }: InvoiceProgress
                 <p
                   className={cn(
                     'text-xs sm:text-sm font-medium transition-colors line-clamp-2',
-                    index <= currentStep ? 'text-foreground' : 'text-muted-foreground'
+                    index <= currentStep ? 'text-foreground' : 'text-white'
                   )}
                 >
                   {step.title}
                 </p>
-                <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 line-clamp-2 hidden sm:block">
+                <p className="text-[10px] sm:text-xs text-white mt-0.5 line-clamp-2 hidden sm:block">
                   {step.description}
                 </p>
               </div>

@@ -128,7 +128,7 @@ const EnhancedSafetyResourcesCard = () => {
       case 'toolbox-talk':
         return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -176,7 +176,7 @@ const EnhancedSafetyResourcesCard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Enhanced Safety Resources</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Interactive safety resources with ratings, bookmarks, and download tracking
           </p>
         </div>
@@ -192,7 +192,7 @@ const EnhancedSafetyResourcesCard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
               {!searchQuery && (
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search resources..."
@@ -253,13 +253,13 @@ const EnhancedSafetyResourcesCard = () => {
                       </Badge>
                       <div className="flex items-center gap-1">
                         {renderStars(resource.rating)}
-                        <span className="text-xs text-muted-foreground ml-1">
+                        <span className="text-xs text-white ml-1">
                           ({resource.rating})
                         </span>
                       </div>
                     </div>
                     <CardTitle className="text-foreground text-lg mb-2">{resource.title}</CardTitle>
-                    <p className="text-gray-300 text-sm">{resource.description}</p>
+                    <p className="text-white text-sm">{resource.description}</p>
                   </div>
                 </div>
               </div>
@@ -267,7 +267,7 @@ const EnhancedSafetyResourcesCard = () => {
 
             <CardContent className="pt-0">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-4 text-sm text-white">
                   <div className="flex items-center gap-1">
                     <Download className="h-4 w-4" />
                     <span>{resource.downloadCount.toLocaleString()}</span>
@@ -280,7 +280,7 @@ const EnhancedSafetyResourcesCard = () => {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleLike(resource.id)}
-                    className="flex items-center gap-1 text-muted-foreground hover:text-elec-yellow p-0 h-auto"
+                    className="flex items-center gap-1 text-white hover:text-elec-yellow p-0 h-auto"
                   >
                     <ThumbsUp className="h-4 w-4" />
                     <span>{resource.likes}</span>
@@ -307,7 +307,7 @@ const EnhancedSafetyResourcesCard = () => {
       </div>
 
       {filteredResources.length === 0 && (
-        <div className="text-center py-8 text-muted-foreground">
+        <div className="text-center py-8 text-white">
           No resources found matching your search criteria.
         </div>
       )}

@@ -33,7 +33,7 @@ const severityColors: Record<string, string> = {
 };
 
 const statusColors: Record<string, string> = {
-  draft: 'bg-gray-500/20 text-gray-400',
+  draft: 'bg-gray-500/20 text-white',
   submitted: 'bg-blue-500/20 text-blue-400',
   under_review: 'bg-yellow-500/20 text-yellow-400',
   investigating: 'bg-orange-500/20 text-orange-400',
@@ -94,7 +94,7 @@ export function SafetyHRSection() {
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-white/60">Failed to load safety data</p>
+        <p className="text-white">Failed to load safety data</p>
         <Button
           onClick={() => {
             refetchIncidents();
@@ -116,7 +116,7 @@ export function SafetyHRSection() {
       <div className="flex flex-col sm:flex-row gap-4 justify-between">
         <div className="relative flex-1 max-w-md">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             placeholder="Search incidents and RAMS..."
@@ -141,7 +141,7 @@ export function SafetyHRSection() {
                 ) : (
                   <p className="text-2xl font-bold text-success">{safetyScore}%</p>
                 )}
-                <p className="text-sm text-white/60">Safety Score</p>
+                <p className="text-sm text-white">Safety Score</p>
               </div>
             </div>
           </CardContent>
@@ -158,7 +158,7 @@ export function SafetyHRSection() {
                 ) : (
                   <p className="text-2xl font-bold text-warning">{incidentStats?.total || 0}</p>
                 )}
-                <p className="text-sm text-white/60">Total Incidents</p>
+                <p className="text-sm text-white">Total Incidents</p>
               </div>
             </div>
           </CardContent>
@@ -175,7 +175,7 @@ export function SafetyHRSection() {
                 ) : (
                   <p className="text-2xl font-bold text-elec-yellow">{ramsStats?.total || 0}</p>
                 )}
-                <p className="text-sm text-white/60">Total RAMS</p>
+                <p className="text-sm text-white">Total RAMS</p>
               </div>
             </div>
           </CardContent>
@@ -192,7 +192,7 @@ export function SafetyHRSection() {
                 ) : (
                   <p className="text-2xl font-bold text-foreground">{ramsStats?.approved || 0}</p>
                 )}
-                <p className="text-sm text-white/60">Approved RAMS</p>
+                <p className="text-sm text-white">Approved RAMS</p>
               </div>
             </div>
           </CardContent>
@@ -228,7 +228,7 @@ export function SafetyHRSection() {
               <CardContent className="p-8 text-center">
                 <Shield className="h-12 w-12 text-success mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-foreground mb-2">No Incidents</h3>
-                <p className="text-white/60">
+                <p className="text-white">
                   No incidents recorded. Keep up the safe work!
                 </p>
               </CardContent>
@@ -245,7 +245,7 @@ export function SafetyHRSection() {
                           {incident.severity}
                         </Badge>
                       </div>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         {incidentTypeLabels[incident.incident_type] || incident.incident_type}
                       </p>
                     </div>
@@ -255,12 +255,12 @@ export function SafetyHRSection() {
                   </div>
 
                   {incident.description && (
-                    <p className="text-sm text-white/60 bg-surface p-3 rounded-lg mb-3">
+                    <p className="text-sm text-white bg-surface p-3 rounded-lg mb-3">
                       {incident.description}
                     </p>
                   )}
 
-                  <div className="flex items-center justify-between text-xs text-white/60">
+                  <div className="flex items-center justify-between text-xs text-white">
                     <span>{incident.location}</span>
                     <span>{new Date(incident.date_occurred).toLocaleDateString('en-GB')}</span>
                   </div>
@@ -286,8 +286,8 @@ export function SafetyHRSection() {
           ) : filteredRams.length === 0 ? (
             <Card className="bg-elec-gray border-border">
               <CardContent className="p-8 text-center">
-                <FileText className="h-12 w-12 text-white/60 mx-auto mb-4" />
-                <p className="text-white/60">No RAMS documents found.</p>
+                <FileText className="h-12 w-12 text-white mx-auto mb-4" />
+                <p className="text-white">No RAMS documents found.</p>
               </CardContent>
             </Card>
           ) : (
@@ -297,22 +297,22 @@ export function SafetyHRSection() {
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <h3 className="font-semibold text-foreground mb-1">{rams.project_name}</h3>
-                      <p className="text-sm text-white/60">{rams.location}</p>
+                      <p className="text-sm text-white">{rams.location}</p>
                     </div>
                     <div className="flex flex-col items-end gap-1">
                       <Badge className={statusColors[rams.status] || ''}>{rams.status}</Badge>
-                      <span className="text-xs text-white/60">v{rams.version}</span>
+                      <span className="text-xs text-white">v{rams.version}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-white/60">
+                  <div className="flex items-center justify-between text-xs text-white">
                     <span>Assessor: {rams.assessor}</span>
                     <span>Updated: {new Date(rams.updated_at).toLocaleDateString('en-GB')}</span>
                   </div>
 
                   {rams.risks && rams.risks.length > 0 && (
                     <div className="mt-3 flex items-center gap-2">
-                      <span className="text-xs text-white/60">Risks:</span>
+                      <span className="text-xs text-white">Risks:</span>
                       <Badge variant="outline" className="text-xs">
                         {rams.risks.filter((r) => r.risk_level === 'high').length} High
                       </Badge>

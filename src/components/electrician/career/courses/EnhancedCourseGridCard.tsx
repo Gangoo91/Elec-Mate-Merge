@@ -19,7 +19,7 @@ const EnhancedCourseGridCard = ({ course, onClick }: EnhancedCourseGridCardProps
       case 'Low':
         return 'bg-red-500/20 text-red-400 border-red-500/30';
       default:
-        return 'bg-muted/20 text-muted-foreground border-muted/30';
+        return 'bg-muted/20 text-white border-muted/30';
     }
   };
 

@@ -213,8 +213,8 @@ export const ProjectSubmissionDialog = ({
             <DialogTitle>Authentication Required</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col items-center gap-4 py-8">
-            <LogIn className="h-12 w-12 text-muted-foreground" />
-            <p className="text-center text-muted-foreground">
+            <LogIn className="h-12 w-12 text-white" />
+            <p className="text-center text-white">
               You need to be logged in to submit projects.
             </p>
             <Button onClick={() => onOpenChange(false)} className="w-full">
@@ -353,7 +353,7 @@ export const ProjectSubmissionDialog = ({
                     variant="outline"
                     className={cn(
                       'w-full justify-start text-left font-normal',
-                      !dateAwarded && 'text-muted-foreground'
+                      !dateAwarded && 'text-white'
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />
@@ -380,7 +380,7 @@ export const ProjectSubmissionDialog = ({
                     variant="outline"
                     className={cn(
                       'w-full justify-start text-left font-normal',
-                      !tenderDeadline && 'text-muted-foreground'
+                      !tenderDeadline && 'text-white'
                     )}
                   >
                     <CalendarIcon className="mr-2 h-4 w-4" />

@@ -118,8 +118,8 @@ export function CandidateNotesSection({
             <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{notes}</p>
             {updatedAt && (
               <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-amber-500/10">
-                <Clock className="h-3 w-3 text-white/60" />
-                <span className="text-xs text-white/60">
+                <Clock className="h-3 w-3 text-white" />
+                <span className="text-xs text-white">
                   Last updated: {formatDate(updatedAt)}
                 </span>
               </div>
@@ -130,7 +130,7 @@ export function CandidateNotesSection({
         <Card className="bg-muted/30 border-dashed border-muted-foreground/20">
           <CardContent className="p-6 text-center">
             <StickyNote className="h-10 w-10 mx-auto text-white mb-3" />
-            <p className="text-sm text-white/60 mb-3">
+            <p className="text-sm text-white mb-3">
               No notes yet. Add private notes about this candidate.
             </p>
             <Button variant="outline" size="sm" className="h-9" onClick={() => setIsEditing(true)}>
@@ -142,7 +142,7 @@ export function CandidateNotesSection({
       )}
 
       {/* Privacy notice */}
-      <p className="text-xs text-white/60 text-center">
+      <p className="text-xs text-white text-center">
         Notes are private and only visible to your organisation
       </p>
     </div>

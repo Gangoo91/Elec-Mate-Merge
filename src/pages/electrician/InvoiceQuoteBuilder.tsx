@@ -179,7 +179,7 @@ export default function InvoiceQuoteBuilder() {
           <h1 className="text-2xl md:text-3xl font-bold mb-2">
             {quote?.invoice_raised ? 'Edit Invoice' : 'Create Invoice'}
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             {quote?.invoice_raised
               ? `Editing ${quote.invoice_number}`
               : 'Review and modify the quote items before generating the final invoice'}

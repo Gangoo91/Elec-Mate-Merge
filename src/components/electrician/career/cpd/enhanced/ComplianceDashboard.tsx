@@ -111,7 +111,7 @@ const ComplianceDashboard = ({
       case 'non-compliant':
         return 'bg-red-500/10 text-red-400 border-red-500/30';
       default:
-        return 'bg-gray-500/10 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/10 text-white border-gray-500/30';
     }
   };
 
@@ -164,17 +164,17 @@ const ComplianceDashboard = ({
             <div className="text-center p-4 bg-muted/10 rounded-lg">
               <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
               <p className="text-sm font-medium text-foreground">18th Edition</p>
-              <p className="text-xs text-muted-foreground">Current Standard</p>
+              <p className="text-xs text-white">Current Standard</p>
             </div>
             <div className="text-center p-4 bg-muted/10 rounded-lg">
               <Award className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
               <p className="text-sm font-medium text-foreground">Regulation Updates</p>
-              <p className="text-xs text-muted-foreground">Amendment 2</p>
+              <p className="text-xs text-white">Amendment 2</p>
             </div>
             <div className="text-center p-4 bg-muted/10 rounded-lg">
               <Bell className="h-8 w-8 text-amber-400 mx-auto mb-2" />
               <p className="text-sm font-medium text-foreground">Next Review</p>
-              <p className="text-xs text-muted-foreground">2025 Expected</p>
+              <p className="text-xs text-white">2025 Expected</p>
             </div>
           </div>
         </CardContent>
@@ -205,7 +205,7 @@ const ComplianceDashboard = ({
             <Badge className={getStatusColor(compliance.overallStatus)}>
               {compliance.overallStatus.replace('-', ' ').toUpperCase()}
             </Badge>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-white">
               {compliance.hoursCompleted} / {compliance.hoursRequired} hours completed
             </span>
           </div>
@@ -214,7 +214,7 @@ const ComplianceDashboard = ({
 
           <div className="text-center">
             <span className="text-2xl font-bold text-foreground">{progressPercentage}%</span>
-            <p className="text-sm text-muted-foreground">of annual target achieved</p>
+            <p className="text-sm text-white">of annual target achieved</p>
           </div>
         </CardContent>
       </Card>
@@ -232,19 +232,19 @@ const ComplianceDashboard = ({
                   {body.complianceStatus}
                 </Badge>
                 {body.membershipNumber && (
-                  <span className="text-xs text-muted-foreground">#{body.membershipNumber}</span>
+                  <span className="text-xs text-white">#{body.membershipNumber}</span>
                 )}
               </div>
 
               {body.renewalDate && (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-sm text-white">
                   <Calendar className="h-4 w-4" />
                   Renewal: {new Date(body.renewalDate).toLocaleDateString()}
                 </div>
               )}
 
               {body.nextAssessment && (
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                <div className="flex items-center gap-2 text-sm text-white mt-1">
                   <Award className="h-4 w-4" />
                   Assessment: {new Date(body.nextAssessment).toLocaleDateString()}
                 </div>
@@ -280,7 +280,7 @@ const ComplianceDashboard = ({
                     >
                       {gap.status}
                     </Badge>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-white">
                       {gap.completed}/{gap.required}h
                     </span>
                   </div>
@@ -307,7 +307,7 @@ const ComplianceDashboard = ({
           <CardContent>
             <ul className="space-y-2">
               {compliance.recommendations.map((recommendation, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                <li key={index} className="flex items-start gap-2 text-sm text-white">
                   <Target className="h-4 w-4 mt-0.5 text-blue-400 flex-shrink-0" />
                   {recommendation}
                 </li>
@@ -340,13 +340,13 @@ const ComplianceDashboard = ({
                   >
                     <div>
                       <p className="font-medium text-foreground">{deadline.description}</p>
-                      <p className="text-sm text-muted-foreground">{deadline.type}</p>
+                      <p className="text-sm text-white">{deadline.type}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-sm font-medium text-foreground">
                         {daysUntil > 0 ? `${daysUntil} days` : 'Overdue'}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white">
                         {new Date(deadline.date).toLocaleDateString()}
                       </p>
                     </div>

@@ -100,7 +100,7 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
         <CardTitle className="text-lg sm:text-xl leading-tight break-words">
           {project.name}
         </CardTitle>
-        <div className="flex items-center text-muted-foreground text-sm">
+        <div className="flex items-center text-white text-sm">
           <MapPin className="h-4 w-4 mr-1 text-elec-yellow/80 flex-shrink-0" />
           <span className="truncate">{project.clientName}</span>
         </div>
@@ -110,12 +110,12 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
           <div className="flex items-center gap-1 min-w-0">
             <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80 flex-shrink-0" />
-            <span className="text-muted-foreground flex-shrink-0">Start:</span>
+            <span className="text-white flex-shrink-0">Start:</span>
             <span className="ml-1 truncate text-xs sm:text-sm">{startDate}</span>
           </div>
           <div className="flex items-center gap-1 min-w-0">
             <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80 flex-shrink-0" />
-            <span className="text-muted-foreground flex-shrink-0">Due:</span>
+            <span className="text-white flex-shrink-0">Due:</span>
             <span className="ml-1 truncate text-xs sm:text-sm">{dueDate}</span>
           </div>
         </div>
@@ -125,7 +125,7 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
             <div className="flex items-center justify-center mb-1">
               <DollarSign className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow" />
             </div>
-            <span className="block text-xs text-muted-foreground">Budget</span>
+            <span className="block text-xs text-white">Budget</span>
             <span className="font-medium text-xs sm:text-sm">
               £{project.budget.toLocaleString()}
             </span>
@@ -135,7 +135,7 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
             <div className="flex items-center justify-center mb-1">
               <PieChart className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow" />
             </div>
-            <span className="block text-xs text-muted-foreground">Materials</span>
+            <span className="block text-xs text-white">Materials</span>
             <span className="font-medium text-xs sm:text-sm">
               £{totalMaterialsCost.toLocaleString()}
             </span>
@@ -145,7 +145,7 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
             <div className="flex items-center justify-center mb-1">
               <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-elec-yellow" />
             </div>
-            <span className="block text-xs text-muted-foreground">Labour</span>
+            <span className="block text-xs text-white">Labour</span>
             <span className="font-medium text-xs sm:text-sm">{totalHours.toFixed(1)}h</span>
           </div>
         </div>

@@ -61,7 +61,7 @@ export function AvailabilityCalendar({
                   isSameDay(day, today) ? 'bg-elec-yellow/10' : ''
                 }`}
               >
-                <p className="text-xs text-white/60">{format(day, 'EEE')}</p>
+                <p className="text-xs text-white">{format(day, 'EEE')}</p>
                 <p
                   className={`text-sm font-medium ${isSameDay(day, today) ? 'text-elec-yellow' : ''}`}
                 >
@@ -109,7 +109,7 @@ export function AvailabilityCalendar({
                           <CheckCircle className="h-3.5 w-3.5 text-success shrink-0" />
                         )}
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-white/60">
+                      <div className="flex items-center gap-2 text-xs text-white">
                         <span>{electrician.ecsCardType}</span>
                         <span>•</span>
                         <span className="flex items-center gap-0.5">
@@ -121,7 +121,7 @@ export function AvailabilityCalendar({
 
                     <div className="text-right">
                       <p className="font-semibold">£{electrician.dayRate}</p>
-                      <p className="text-xs text-white/60">/day</p>
+                      <p className="text-xs text-white">/day</p>
                     </div>
                   </div>
 
@@ -175,19 +175,19 @@ export function AvailabilityCalendar({
           <div className="flex items-center justify-center gap-4 text-xs">
             <div className="flex items-center gap-1.5">
               <div className="w-3 h-3 bg-success/20 border border-success/30 rounded" />
-              <span className="text-white/60">Available</span>
+              <span className="text-white">Available</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-3 h-3 bg-destructive/10 border border-destructive/20 rounded" />
-              <span className="text-white/60">Unavailable</span>
+              <span className="text-white">Unavailable</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 bg-success rounded-full" />
-              <span className="text-white/60">Day shift</span>
+              <span className="text-white">Day shift</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-2 h-2 bg-warning rounded-full" />
-              <span className="text-white/60">Evening</span>
+              <span className="text-white">Evening</span>
             </div>
           </div>
         </CardContent>

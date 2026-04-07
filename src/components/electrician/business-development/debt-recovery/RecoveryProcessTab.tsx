@@ -255,7 +255,7 @@ const RecoveryProcessTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -350,7 +350,7 @@ const RecoveryProcessTab = () => {
                     >
                       {template.stage}
                     </h4>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       Subject: {template.subject}
                     </p>
                   </div>
@@ -454,7 +454,7 @@ const RecoveryProcessTab = () => {
                     >
                       {tip.tip}
                     </h4>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {tip.description}
                     </p>
                   </div>

@@ -102,7 +102,7 @@ export const PhotoTimeline = ({
 
   if (photos.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-white/60">
+      <div className="flex flex-col items-center justify-center py-16 text-white">
         <Camera className="h-12 w-12 mb-4 opacity-30" />
         <p className="text-lg font-medium">No photos yet</p>
         <p className="text-sm opacity-60">Photos will appear here in chronological order</p>
@@ -134,9 +134,9 @@ export const PhotoTimeline = ({
                   </Badge>
                 </div>
                 {expanded ? (
-                  <ChevronUp className="h-4 w-4 text-white/60" />
+                  <ChevronUp className="h-4 w-4 text-white" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-white/60" />
+                  <ChevronDown className="h-4 w-4 text-white" />
                 )}
               </button>
 
@@ -174,17 +174,17 @@ export const PhotoTimeline = ({
                                   <h4 className="font-medium text-foreground text-sm truncate">
                                     {photo.jobTitle}
                                   </h4>
-                                  <span className="inline-block text-[10px] px-1.5 py-0.5 rounded capitalize mt-0.5 bg-muted/50 text-white/60">
+                                  <span className="inline-block text-[10px] px-1.5 py-0.5 rounded capitalize mt-0.5 bg-muted/50 text-white">
                                     {photo.category}
                                   </span>
                                 </div>
-                                <span className="text-[10px] text-white/60 flex items-center gap-1 flex-shrink-0">
+                                <span className="text-[10px] text-white flex items-center gap-1 flex-shrink-0">
                                   <Clock className="h-3 w-3" />
                                   {formatTime(photo.timestamp)}
                                 </span>
                               </div>
 
-                              <div className="mt-1.5 flex items-center gap-3 text-[10px] text-white/60">
+                              <div className="mt-1.5 flex items-center gap-3 text-[10px] text-white">
                                 <span className="flex items-center gap-1">
                                   <Avatar className="h-3.5 w-3.5">
                                     <AvatarFallback className="text-[6px] bg-elec-yellow/20 text-elec-yellow">

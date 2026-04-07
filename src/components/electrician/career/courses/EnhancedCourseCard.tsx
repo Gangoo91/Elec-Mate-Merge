@@ -26,7 +26,7 @@ const EnhancedCourseCard = ({
       case 'Low':
         return 'bg-red-500/10 text-red-400 border-red-500/20';
       default:
-        return 'bg-muted text-muted-foreground';
+        return 'bg-muted text-white';
     }
   };
 
@@ -39,7 +39,7 @@ const EnhancedCourseCard = ({
       case 'hybrid':
         return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
       default:
-        return 'bg-muted text-muted-foreground';
+        return 'bg-muted text-white';
     }
   };
 

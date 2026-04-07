@@ -73,7 +73,7 @@ export function ViewCandidateDialog({
       'Offer Made': 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
       Rejected: 'bg-destructive/10 text-destructive border-destructive/20',
     };
-    return variants[status] || 'bg-muted text-white/60';
+    return variants[status] || 'bg-muted text-white';
   };
 
   const getCardBadge = (cardType?: string) => {
@@ -83,7 +83,7 @@ export function ViewCandidateDialog({
       'Blue Card': 'bg-blue-500/10 text-blue-500 border-blue-500/20',
       Apprentice: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
     };
-    return variants[cardType] || 'bg-muted text-white/60';
+    return variants[cardType] || 'bg-muted text-white';
   };
 
   const handleSaveNotes = () => {
@@ -131,8 +131,8 @@ export function ViewCandidateDialog({
           {vacancyTitle && (
             <div className="bg-muted/50 rounded-lg p-3">
               <div className="flex items-center gap-2 text-sm">
-                <Briefcase className="h-4 w-4 text-white/60" />
-                <span className="text-white/60">Applied for:</span>
+                <Briefcase className="h-4 w-4 text-white" />
+                <span className="text-white">Applied for:</span>
                 <span className="font-medium text-foreground">{vacancyTitle}</span>
               </div>
             </div>
@@ -142,7 +142,7 @@ export function ViewCandidateDialog({
 
           {/* Contact Details */}
           <div className="space-y-3">
-            <h3 className="text-sm font-medium text-white/60 uppercase tracking-wider">
+            <h3 className="text-sm font-medium text-white uppercase tracking-wider">
               Contact
             </h3>
             <div className="space-y-2">
@@ -173,36 +173,36 @@ export function ViewCandidateDialog({
           <div className="grid grid-cols-2 gap-4">
             {application.currentLocation && (
               <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-white/60 shrink-0" />
+                <MapPin className="h-4 w-4 text-white shrink-0" />
                 <div>
-                  <p className="text-xs text-white/60">Location</p>
+                  <p className="text-xs text-white">Location</p>
                   <p className="text-sm font-medium">{application.currentLocation}</p>
                 </div>
               </div>
             )}
             {application.yearsExperience !== undefined && (
               <div className="flex items-center gap-2">
-                <Briefcase className="h-4 w-4 text-white/60 shrink-0" />
+                <Briefcase className="h-4 w-4 text-white shrink-0" />
                 <div>
-                  <p className="text-xs text-white/60">Experience</p>
+                  <p className="text-xs text-white">Experience</p>
                   <p className="text-sm font-medium">{application.yearsExperience} years</p>
                 </div>
               </div>
             )}
             {application.noticePeriod && (
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-white/60 shrink-0" />
+                <Clock className="h-4 w-4 text-white shrink-0" />
                 <div>
-                  <p className="text-xs text-white/60">Notice Period</p>
+                  <p className="text-xs text-white">Notice Period</p>
                   <p className="text-sm font-medium">{application.noticePeriod}</p>
                 </div>
               </div>
             )}
             {application.expectedSalary !== undefined && (
               <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-white/60 shrink-0" />
+                <FileText className="h-4 w-4 text-white shrink-0" />
                 <div>
-                  <p className="text-xs text-white/60">Expected</p>
+                  <p className="text-xs text-white">Expected</p>
                   <p className="text-sm font-medium">
                     £{application.expectedSalary.toLocaleString()}
                     {application.expectedSalary < 1000 ? '/day' : '/yr'}
@@ -211,9 +211,9 @@ export function ViewCandidateDialog({
               </div>
             )}
             <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-white/60 shrink-0" />
+              <Calendar className="h-4 w-4 text-white shrink-0" />
               <div>
-                <p className="text-xs text-white/60">Applied</p>
+                <p className="text-xs text-white">Applied</p>
                 <p className="text-sm font-medium">
                   {new Date(application.appliedDate).toLocaleDateString('en-GB', {
                     day: 'numeric',
@@ -236,7 +236,7 @@ export function ViewCandidateDialog({
                 </h3>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-white/60" />
+                    <Calendar className="h-4 w-4 text-white" />
                     <span>
                       {new Date(application.interviewDate).toLocaleDateString('en-GB', {
                         weekday: 'long',
@@ -248,25 +248,25 @@ export function ViewCandidateDialog({
                   </div>
                   {application.interviewTime && (
                     <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-white/60" />
+                      <Clock className="h-4 w-4 text-white" />
                       <span>{application.interviewTime}</span>
                     </div>
                   )}
                   {application.interviewType && (
                     <div className="flex items-center gap-2">
                       {application.interviewType === 'Video' ? (
-                        <Video className="h-4 w-4 text-white/60" />
+                        <Video className="h-4 w-4 text-white" />
                       ) : application.interviewType === 'Phone' ? (
-                        <Phone className="h-4 w-4 text-white/60" />
+                        <Phone className="h-4 w-4 text-white" />
                       ) : (
-                        <Building className="h-4 w-4 text-white/60" />
+                        <Building className="h-4 w-4 text-white" />
                       )}
                       <span>{application.interviewType}</span>
                     </div>
                   )}
                   {application.interviewLocation && (
                     <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-white/60" />
+                      <MapPin className="h-4 w-4 text-white" />
                       <span>{application.interviewLocation}</span>
                     </div>
                   )}
@@ -279,7 +279,7 @@ export function ViewCandidateDialog({
 
           {/* Rating */}
           <div className="space-y-2">
-            <h3 className="text-sm font-medium text-white/60 uppercase tracking-wider">
+            <h3 className="text-sm font-medium text-white uppercase tracking-wider">
               Your Rating
             </h3>
             <div className="flex items-center gap-1">
@@ -298,13 +298,13 @@ export function ViewCandidateDialog({
                   />
                 </button>
               ))}
-              {rating > 0 && <span className="ml-2 text-sm text-white/60">{rating}/5</span>}
+              {rating > 0 && <span className="ml-2 text-sm text-white">{rating}/5</span>}
             </div>
           </div>
 
           {/* Notes */}
           <div className="space-y-2">
-            <h3 className="text-sm font-medium text-white/60 uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-medium text-white uppercase tracking-wider flex items-center gap-2">
               <MessageSquare className="h-4 w-4" />
               Notes
             </h3>

@@ -131,14 +131,14 @@ export const TimeSlotPickerSheet = ({
                 <span className="font-semibold text-foreground">{electrician.name}</span>
                 {electrician.verified && <Verified className="h-4 w-4 text-elec-yellow" />}
               </div>
-              <div className="text-sm text-white/60">{electrician.qualifications[0]}</div>
+              <div className="text-sm text-white">{electrician.qualifications[0]}</div>
             </div>
             <Badge variant="outline">£{electrician.dayRate}/day</Badge>
           </div>
 
           {/* Date Display */}
           <div className="text-center p-3 bg-elec-yellow/5 rounded-lg border border-elec-yellow/20">
-            <div className="text-sm text-white/60">Booking for</div>
+            <div className="text-sm text-white">Booking for</div>
             <div className="text-lg font-semibold text-foreground">
               {format(date, 'EEEE, d MMMM yyyy')}
             </div>
@@ -170,7 +170,7 @@ export const TimeSlotPickerSheet = ({
 
           {/* Time Slots */}
           <div className="space-y-3">
-            <div className="text-sm font-medium text-white/60">Available Slots</div>
+            <div className="text-sm font-medium text-white">Available Slots</div>
             {(['morning', 'afternoon', 'evening'] as TimeSlot[]).map((slot) => {
               const config = SLOT_CONFIG[slot];
               const Icon = config.icon;
@@ -200,14 +200,14 @@ export const TimeSlotPickerSheet = ({
                     <Icon
                       className={cn(
                         'h-6 w-6',
-                        isAvailable ? config.color : 'text-white/60'
+                        isAvailable ? config.color : 'text-white'
                       )}
                     />
                   </div>
 
                   <div className="flex-1">
                     <div className="font-medium text-foreground">{config.label}</div>
-                    <div className="flex items-center gap-1 text-sm text-white/60">
+                    <div className="flex items-center gap-1 text-sm text-white">
                       <Clock className="h-3.5 w-3.5" />
                       {config.time}
                     </div>
@@ -232,8 +232,8 @@ export const TimeSlotPickerSheet = ({
           {selectedSlots.length > 0 && (
             <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
               <div>
-                <div className="text-sm text-white/60">Estimated Cost</div>
-                <div className="text-xs text-white/60">
+                <div className="text-sm text-white">Estimated Cost</div>
+                <div className="text-xs text-white">
                   {selectedSlots.reduce((acc, s) => acc + SLOT_CONFIG[s].hours, 0)} hours
                 </div>
               </div>

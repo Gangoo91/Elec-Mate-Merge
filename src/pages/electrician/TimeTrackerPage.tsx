@@ -497,7 +497,7 @@ const TimeTrackerPage = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-white">Time Tracker</h1>
-              <p className="text-xs text-white/60">Log your hours on site</p>
+              <p className="text-xs text-white">Log your hours on site</p>
             </div>
           </div>
         </div>
@@ -544,7 +544,7 @@ const TimeTrackerPage = () => {
                     </p>
                   </div>
 
-                  <p className="text-white/60 text-sm mt-2">
+                  <p className="text-white text-sm mt-2">
                     Started at {formatStartTime(activeSession.started_at)}
                   </p>
 
@@ -578,7 +578,7 @@ const TimeTrackerPage = () => {
                           setEditLabelValue(activeSession.label || '');
                           setEditingLabel(true);
                         }}
-                        className="flex items-center gap-2 text-white/70 hover:text-white transition-colors mx-auto touch-manipulation"
+                        className="flex items-center gap-2 text-white hover:text-white transition-colors mx-auto touch-manipulation"
                       >
                         <Pencil className="h-3.5 w-3.5" />
                         <span className="text-sm">
@@ -604,14 +604,14 @@ const TimeTrackerPage = () => {
                             size="sm"
                             variant="ghost"
                             onClick={() => setShowNotes(false)}
-                            className="text-white/60 hover:text-white hover:bg-white/10 touch-manipulation h-9"
+                            className="text-white hover:text-white hover:bg-white/10 touch-manipulation h-11"
                           >
                             Cancel
                           </Button>
                           <Button
                             size="sm"
                             onClick={handleSaveNotes}
-                            className="bg-amber-500 text-black hover:bg-amber-400 touch-manipulation h-9"
+                            className="bg-amber-500 text-black hover:bg-amber-400 touch-manipulation h-11"
                           >
                             Save
                           </Button>
@@ -623,7 +623,7 @@ const TimeTrackerPage = () => {
                           setNotesValue(activeSession.notes || '');
                           setShowNotes(true);
                         }}
-                        className="flex items-center gap-2 text-white/50 hover:text-white/70 transition-colors mx-auto text-sm touch-manipulation"
+                        className="flex items-center gap-2 text-white hover:text-white transition-colors mx-auto text-sm touch-manipulation"
                       >
                         <StickyNote className="h-3.5 w-3.5" />
                         <span>{activeSession.notes ? 'Edit notes' : 'Add notes'}</span>
@@ -680,7 +680,7 @@ const TimeTrackerPage = () => {
                 <p className="text-5xl sm:text-6xl font-bold bg-gradient-to-r from-amber-300 to-yellow-200 bg-clip-text text-transparent font-mono">
                   {formatCurrency(animatedValue)}
                 </p>
-                <p className="text-white/60 text-sm mt-2">
+                <p className="text-white text-sm mt-2">
                   {(
                     Math.round(((stoppedSession.duration_seconds ?? 0) / 3600) * 100) / 100
                   ).toFixed(2)}{' '}
@@ -693,14 +693,14 @@ const TimeTrackerPage = () => {
               {/* Label + notes */}
               {stoppedSession.label && (
                 <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
-                  <p className="text-xs text-white/50 uppercase tracking-wider mb-1">Job</p>
+                  <p className="text-xs text-white uppercase tracking-wider mb-1">Job</p>
                   <p className="text-white">{stoppedSession.label}</p>
                 </div>
               )}
               {stoppedSession.notes && (
                 <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
-                  <p className="text-xs text-white/50 uppercase tracking-wider mb-1">Notes</p>
-                  <p className="text-white/80 text-sm">{stoppedSession.notes}</p>
+                  <p className="text-xs text-white uppercase tracking-wider mb-1">Notes</p>
+                  <p className="text-white text-sm">{stoppedSession.notes}</p>
                 </div>
               )}
 
@@ -748,7 +748,7 @@ const TimeTrackerPage = () => {
                   <AlertCircle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <div className="text-sm">
                     <p className="text-orange-300 font-medium">Default rate in use</p>
-                    <p className="text-white/60 mt-0.5">
+                    <p className="text-white mt-0.5">
                       Set your hourly rate in{' '}
                       <button
                         onClick={() => navigate('/settings')}
@@ -819,7 +819,7 @@ const TimeTrackerPage = () => {
             {sessions.length === 0 ? (
               <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-8 text-center">
                 <Clock className="h-10 w-10 text-white mx-auto mb-3" />
-                <p className="text-white/50 text-sm">
+                <p className="text-white text-sm">
                   No sessions yet — tap Start when you arrive on site
                 </p>
               </div>
@@ -840,7 +840,7 @@ const TimeTrackerPage = () => {
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className="text-xs text-white/50">
+                          <span className="text-xs text-white">
                             {formatSessionDate(session.started_at)}
                           </span>
                           <span
@@ -892,7 +892,7 @@ const TimeTrackerPage = () => {
               </div>
               <div className="text-left">
                 <p className="text-white font-semibold text-sm">New Invoice</p>
-                <p className="text-white/50 text-xs">Create with labour line item</p>
+                <p className="text-white text-xs">Create with labour line item</p>
               </div>
               <ChevronRight className="h-4 w-4 text-white ml-auto" />
             </button>
@@ -909,13 +909,13 @@ const TimeTrackerPage = () => {
                     className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] p-4 flex items-center gap-3 active:bg-white/[0.08] transition-colors touch-manipulation"
                   >
                     <div className="w-10 h-10 rounded-lg bg-white/[0.08] flex items-center justify-center flex-shrink-0">
-                      <FileText className="h-5 w-5 text-white/60" />
+                      <FileText className="h-5 w-5 text-white" />
                     </div>
                     <div className="text-left flex-1 min-w-0">
                       <p className="text-white font-semibold text-sm truncate">
                         {inv.invoice_number || inv.quoteNumber}
                       </p>
-                      <p className="text-white/50 text-xs truncate">
+                      <p className="text-white text-xs truncate">
                         {inv.client?.name || 'No client'} · {formatCurrency(inv.total)}
                       </p>
                     </div>
@@ -952,13 +952,13 @@ const TimeTrackerPage = () => {
               <div className="px-6 pb-8 space-y-4">
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/50 mb-1">Duration</p>
+                    <p className="text-xs text-white mb-1">Duration</p>
                     <p className="text-white font-mono font-bold">
                       {formatDuration(detailSession.duration_seconds ?? 0)}
                     </p>
                   </div>
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/50 mb-1">Value</p>
+                    <p className="text-xs text-white mb-1">Value</p>
                     <p className="text-amber-400 font-mono font-bold">
                       {formatCurrency(
                         calculateValue(
@@ -969,7 +969,7 @@ const TimeTrackerPage = () => {
                     </p>
                   </div>
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/50 mb-1">Started</p>
+                    <p className="text-xs text-white mb-1">Started</p>
                     <p className="text-white text-sm">
                       {new Date(detailSession.started_at).toLocaleString('en-GB', {
                         day: 'numeric',
@@ -980,7 +980,7 @@ const TimeTrackerPage = () => {
                     </p>
                   </div>
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/50 mb-1">Rate</p>
+                    <p className="text-xs text-white mb-1">Rate</p>
                     <p className="text-white text-sm">
                       {formatCurrency(detailSession.hourly_rate ?? hourlyRate)}/hr
                     </p>
@@ -989,8 +989,8 @@ const TimeTrackerPage = () => {
 
                 {detailSession.notes && (
                   <div className="rounded-xl bg-white/[0.04] p-3">
-                    <p className="text-xs text-white/50 mb-1">Notes</p>
-                    <p className="text-white/80 text-sm">{detailSession.notes}</p>
+                    <p className="text-xs text-white mb-1">Notes</p>
+                    <p className="text-white text-sm">{detailSession.notes}</p>
                   </div>
                 )}
 
@@ -1013,8 +1013,8 @@ const TimeTrackerPage = () => {
                       onClick={() => setProjectPickerOpen(true)}
                       className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.03] touch-manipulation active:bg-white/[0.06] transition-colors"
                     >
-                      <FolderOpen className="h-4 w-4 text-white/50 flex-shrink-0" />
-                      <span className="flex-1 text-left text-sm text-white/70">
+                      <FolderOpen className="h-4 w-4 text-white flex-shrink-0" />
+                      <span className="flex-1 text-left text-sm text-white">
                         {detailProjectId
                           ? (projects.find((p) => p.id === detailProjectId)?.title ?? 'Project')
                           : 'Tag to a project (optional)'}
@@ -1096,13 +1096,13 @@ const TimeTrackerPage = () => {
                 disabled={isCreatingFromDetail}
               >
                 <div className="w-10 h-10 rounded-lg bg-white/[0.08] flex items-center justify-center flex-shrink-0">
-                  <FileText className="h-5 w-5 text-white/60" />
+                  <FileText className="h-5 w-5 text-white" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-white font-medium text-sm truncate">
                     {inv.client?.name || inv.jobDetails?.title || 'Draft invoice'}
                   </p>
-                  <p className="text-white/50 text-xs">
+                  <p className="text-white text-xs">
                     {inv.invoice_number || 'No number'} · £{(inv.total ?? 0).toFixed(2)}
                   </p>
                 </div>
@@ -1126,7 +1126,7 @@ const TimeTrackerPage = () => {
           </SheetHeader>
           <div className="px-6 pb-8 space-y-2 max-h-80 overflow-y-auto">
             {projects.length === 0 ? (
-              <p className="text-white/50 text-sm text-center py-6">No active projects found</p>
+              <p className="text-white text-sm text-center py-6">No active projects found</p>
             ) : (
               projects.map((proj) => (
                 <button
@@ -1142,12 +1142,12 @@ const TimeTrackerPage = () => {
                   }`}
                 >
                   <div className="w-9 h-9 rounded-lg bg-white/[0.08] flex items-center justify-center flex-shrink-0">
-                    <FolderOpen className="h-4 w-4 text-white/60" />
+                    <FolderOpen className="h-4 w-4 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-white font-medium text-sm truncate">{proj.title}</p>
                     {proj.customerName && (
-                      <p className="text-white/50 text-xs truncate">{proj.customerName}</p>
+                      <p className="text-white text-xs truncate">{proj.customerName}</p>
                     )}
                   </div>
                   {detailProjectId === proj.id && (
@@ -1165,7 +1165,7 @@ const TimeTrackerPage = () => {
         <AlertDialogContent className="bg-[#111113] border border-white/[0.08]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Discard session?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60">
+            <AlertDialogDescription className="text-white">
               This will permanently delete this time session. This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>

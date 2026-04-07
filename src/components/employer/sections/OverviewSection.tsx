@@ -139,7 +139,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
         expiringCerts > 0
           ? 'border-warning/50 hover:border-warning/80'
           : 'border-muted/30 hover:border-muted/50',
-      textClass: expiringCerts > 0 ? 'text-warning' : 'text-white/60',
+      textClass: expiringCerts > 0 ? 'text-warning' : 'text-white',
       section: 'elecid' as Section,
       pulse: expiringCerts > 0,
     },
@@ -172,7 +172,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
               )}
               <Icon className={`h-4 w-4 ${stat.textClass}`} />
               <span className={`text-lg font-bold ${stat.textClass} tabular-nums`}>{stat.value}</span>
-              <span className="text-[9px] text-white/50 font-medium">{stat.label}</span>
+              <span className="text-[9px] text-white font-medium">{stat.label}</span>
             </button>
           );
         })}
@@ -210,7 +210,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
 
       {/* Quick Actions — clean row */}
       <div>
-        <h2 className="text-xs font-medium text-white/50 uppercase tracking-wider mb-3">Quick Actions</h2>
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider mb-3">Quick Actions</h2>
         <div className="grid grid-cols-4 gap-2">
           {[
             { icon: Plus, label: 'New Job', color: 'text-elec-yellow', bg: 'bg-elec-yellow/10 border-elec-yellow/20', section: 'jobs' as Section },
@@ -237,7 +237,7 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-xs font-medium text-white uppercase tracking-wider">Your Hubs</h2>
-          <TrendingUp className="h-4 w-4 text-white/60" />
+          <TrendingUp className="h-4 w-4 text-white" />
         </div>
         <div className="grid grid-cols-2 gap-3">
           <BusinessCard
@@ -307,18 +307,18 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
                   AI Powered
                 </Badge>
               </h3>
-              <p className="text-sm text-white/60 mt-0.5">
+              <p className="text-sm text-white mt-0.5">
                 Generate RAMS, designs & quotes instantly
               </p>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/60 group-hover:text-purple-400 group-hover:translate-x-1 transition-all duration-300" />
+          <ChevronRight className="h-5 w-5 text-white group-hover:text-purple-400 group-hover:translate-x-1 transition-all duration-300" />
         </CardContent>
       </Card>
 
       {/* Loading indicator - subtle, non-blocking */}
       {isLoading && (
-        <div className="flex items-center justify-center gap-2 py-2 text-white/60">
+        <div className="flex items-center justify-center gap-2 py-2 text-white">
           <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
           <span className="text-xs">Syncing...</span>
         </div>

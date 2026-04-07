@@ -80,7 +80,7 @@ const FieldWrapper = ({
         </div>
       )}
       {hint && !error && (
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 text-sm text-white">
           <Info className="h-3 w-3" />
           {hint}
         </div>

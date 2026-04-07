@@ -84,7 +84,7 @@ const TraditionalMarketingTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -99,7 +99,7 @@ const TraditionalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Professional vehicle livery turns every journey into a marketing opportunity,
                 providing continuous exposure in your service area.
               </div>
@@ -185,7 +185,7 @@ const TraditionalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Word-of-mouth referrals remain the highest converting lead source, with 90% of
                 satisfied customers willing to refer when asked.
               </div>
@@ -270,7 +270,7 @@ const TraditionalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Strategic networking builds valuable business relationships that generate
                 consistent, high-quality referrals from other professionals.
               </div>
@@ -356,7 +356,7 @@ const TraditionalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Community involvement builds local brand recognition and positions your business as
                 a trusted community partner.
               </div>
@@ -442,7 +442,7 @@ const TraditionalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Local print media remains effective for reaching older demographics and establishing
                 credibility in traditional communities.
               </div>
@@ -528,7 +528,7 @@ const TraditionalMarketingTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Targeted direct mail and leaflet distribution can effectively reach specific
                 postcode areas with tailored messaging for electrical services.
               </div>

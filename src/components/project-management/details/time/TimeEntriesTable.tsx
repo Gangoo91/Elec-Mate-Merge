@@ -40,7 +40,7 @@ export const TimeEntriesTable = ({
   if (timeEntries.length === 0) {
     return (
       <div className="text-center py-10">
-        <p className="text-muted-foreground">No time entries added yet.</p>
+        <p className="text-white">No time entries added yet.</p>
       </div>
     );
   }

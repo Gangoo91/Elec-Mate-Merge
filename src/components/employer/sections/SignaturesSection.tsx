@@ -57,7 +57,7 @@ const statusColors: Record<string, string> = {
   Viewed: 'bg-purple-500/20 text-purple-400',
   Signed: 'bg-green-500/20 text-green-400',
   Declined: 'bg-red-500/20 text-red-400',
-  Expired: 'bg-gray-500/20 text-gray-400',
+  Expired: 'bg-gray-500/20 text-white',
 };
 
 const documentTypes: DocumentType[] = [
@@ -180,9 +180,9 @@ export function SignaturesSection() {
       case 'Declined':
         return <AlertCircle className="h-4 w-4 text-destructive" />;
       case 'Expired':
-        return <AlertCircle className="h-4 w-4 text-white/60" />;
+        return <AlertCircle className="h-4 w-4 text-white" />;
       default:
-        return <Clock className="h-4 w-4 text-white/60" />;
+        return <Clock className="h-4 w-4 text-white" />;
     }
   };
 
@@ -190,7 +190,7 @@ export function SignaturesSection() {
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-white/60">Failed to load signature requests</p>
+        <p className="text-white">Failed to load signature requests</p>
         <Button onClick={() => refetch()} variant="outline" className="gap-2">
           <RefreshCw className="h-4 w-4" />
           Retry
@@ -388,7 +388,7 @@ export function SignaturesSection() {
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search by document or customer..."
@@ -414,11 +414,11 @@ export function SignaturesSection() {
       ) : filteredSignatures.length === 0 ? (
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-8 text-center">
-            <PenTool className="h-12 w-12 text-white/60 mx-auto mb-4" />
+            <PenTool className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="font-semibold text-foreground mb-2">
               {searchQuery ? 'No signatures found' : 'No signature requests'}
             </h3>
-            <p className="text-sm text-white/60 mb-4">
+            <p className="text-sm text-white mb-4">
               {searchQuery
                 ? 'Try adjusting your search or filters'
                 : 'Create your first signature request to get started.'}
@@ -451,7 +451,7 @@ export function SignaturesSection() {
                             {sig.document_title}
                           </h3>
                         </div>
-                        <p className="text-sm text-white/60 mb-2">{sig.signer_name}</p>
+                        <p className="text-sm text-white mb-2">{sig.signer_name}</p>
                         <div className="flex items-center gap-2 flex-wrap">
                           {sig.document_type && (
                             <Badge variant="outline" className="text-xs">
@@ -471,7 +471,7 @@ export function SignaturesSection() {
                           {sig.status}
                         </Badge>
                         {sig.signed_at && (
-                          <p className="text-xs text-white/60 mt-1">
+                          <p className="text-xs text-white mt-1">
                             {new Date(sig.signed_at).toLocaleDateString('en-GB')}
                           </p>
                         )}
@@ -480,9 +480,9 @@ export function SignaturesSection() {
 
                     <div className="flex justify-center mt-2">
                       {isExpanded ? (
-                        <ChevronUp className="h-4 w-4 text-white/60" />
+                        <ChevronUp className="h-4 w-4 text-white" />
                       ) : (
-                        <ChevronDown className="h-4 w-4 text-white/60" />
+                        <ChevronDown className="h-4 w-4 text-white" />
                       )}
                     </div>
                   </div>
@@ -491,29 +491,29 @@ export function SignaturesSection() {
                     <div className="border-t border-border p-4 bg-muted/30 space-y-4">
                       <div className="grid grid-cols-2 gap-3 text-sm">
                         <div>
-                          <span className="text-white/60">Customer:</span>
+                          <span className="text-white">Customer:</span>
                           <p className="font-medium">{sig.signer_name}</p>
                         </div>
                         {sig.signer_email && (
                           <div>
-                            <span className="text-white/60">Email:</span>
+                            <span className="text-white">Email:</span>
                             <p className="font-medium text-xs break-all">{sig.signer_email}</p>
                           </div>
                         )}
                         {sig.signer_phone && (
                           <div>
-                            <span className="text-white/60">Phone:</span>
+                            <span className="text-white">Phone:</span>
                             <p className="font-medium">{sig.signer_phone}</p>
                           </div>
                         )}
                         {sig.linked_invoice && (
                           <div>
-                            <span className="text-white/60">Linked Invoice:</span>
+                            <span className="text-white">Linked Invoice:</span>
                             <p className="font-medium">{sig.linked_invoice}</p>
                           </div>
                         )}
                         <div className="col-span-2">
-                          <span className="text-white/60">Created:</span>
+                          <span className="text-white">Created:</span>
                           <p className="font-medium">
                             {new Date(sig.created_at).toLocaleDateString('en-GB')}
                           </p>
@@ -536,7 +536,7 @@ export function SignaturesSection() {
                             />
                           </div>
                           {sig.signed_at && (
-                            <p className="text-xs text-white/60 mt-2">
+                            <p className="text-xs text-white mt-2">
                               Signed:{' '}
                               {new Date(sig.signed_at).toLocaleDateString('en-GB', {
                                 day: 'numeric',

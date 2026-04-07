@@ -174,7 +174,7 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
 
   const getEvidenceColor = (type: EvidenceType) => {
     const evidenceType = evidenceTypes.find((t) => t.type === type);
-    return evidenceType?.color || 'bg-gray-500/10 text-gray-400';
+    return evidenceType?.color || 'bg-gray-500/10 text-white';
   };
 
   const completionPercentage = Math.min((evidenceFiles.length / 3) * 100, 100);
@@ -189,7 +189,7 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
         <CardContent>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Files uploaded</span>
+              <span className="text-white">Files uploaded</span>
               <span className="text-foreground">{evidenceFiles.length}/3 recommended</span>
             </div>
             <Progress value={completionPercentage} className="h-2" />
@@ -294,7 +294,7 @@ const EvidenceManager = ({ entryId, evidenceFiles, onEvidenceUpdate }: EvidenceM
 
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground truncate">{file.fileName}</p>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <Badge variant="outline" className="text-xs">
                         {file.type.replace('-', ' ')}
                       </Badge>
@@ -445,17 +445,17 @@ const EvidenceDetail = ({ evidence }: { evidence: EvidenceFile }) => {
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4 text-sm">
         <div>
-          <span className="text-muted-foreground">Type:</span>
+          <span className="text-white">Type:</span>
           <p className="font-medium text-foreground">{evidence.type.replace('-', ' ')}</p>
         </div>
         <div>
-          <span className="text-muted-foreground">Upload Date:</span>
+          <span className="text-white">Upload Date:</span>
           <p className="font-medium text-foreground">
             {new Date(evidence.uploadDate).toLocaleDateString()}
           </p>
         </div>
         <div>
-          <span className="text-muted-foreground">Verification:</span>
+          <span className="text-white">Verification:</span>
           <div className="flex items-center gap-2">
             {evidence.verified ? (
               <>
@@ -478,7 +478,7 @@ const EvidenceDetail = ({ evidence }: { evidence: EvidenceFile }) => {
           <div className="bg-muted/20 p-3 rounded-lg space-y-2">
             {Object.entries(evidence.extractedData).map(([key, value]) => (
               <div key={key} className="flex justify-between">
-                <span className="text-muted-foreground capitalize">
+                <span className="text-white capitalize">
                   {key.replace(/([A-Z])/g, ' $1')}:
                 </span>
                 <span className="text-foreground">{String(value)}</span>

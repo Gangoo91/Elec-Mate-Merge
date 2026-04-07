@@ -131,7 +131,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
               )}
             </div>
 
-            <p className="text-lg text-gray-300 leading-relaxed">{article.summary}</p>
+            <p className="text-lg text-white leading-relaxed">{article.summary}</p>
           </div>
         </DialogHeader>
 
@@ -151,7 +151,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
                 variant="ghost"
                 size="sm"
                 onClick={handleBookmark}
-                className={isBookmarked ? 'text-elec-yellow' : 'text-gray-400'}
+                className={isBookmarked ? 'text-elec-yellow' : 'text-white'}
               >
                 <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
                 {isBookmarked ? 'Bookmarked' : 'Bookmark'}
@@ -161,7 +161,7 @@ const NewsDetail = ({ article, isOpen, onClose }: NewsDetailProps) => {
                 variant="ghost"
                 size="sm"
                 onClick={handleShare}
-                className="text-gray-400 hover:text-foreground"
+                className="text-white hover:text-foreground"
               >
                 <Share2 className="h-4 w-4 mr-2" />
                 Share

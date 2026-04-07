@@ -27,7 +27,7 @@ interface MessageDialogProps {
 }
 
 const tierConfig: Record<VerificationTier, { label: string; color: string; bg: string }> = {
-  basic: { label: 'Basic', color: 'text-white/60', bg: 'bg-muted' },
+  basic: { label: 'Basic', color: 'text-white', bg: 'bg-muted' },
   verified: { label: 'Verified', color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30' },
   premium: {
     label: 'Premium',
@@ -122,7 +122,7 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
             </Avatar>
             <div className="flex-1">
               <p className="font-medium">{electrician.name}</p>
-              <p className="text-sm text-white/60">{electrician.location}</p>
+              <p className="text-sm text-white">{electrician.location}</p>
             </div>
             <Badge variant="outline" className={`${tier.bg} ${tier.color} border-0`}>
               {electrician.verificationTier === 'premium' ? (
@@ -137,7 +137,7 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
           {/* Info Notice */}
           <div className="flex gap-2 p-3 bg-blue-500/10 rounded-lg text-sm">
             <Info className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
-            <p className="text-white/60">
+            <p className="text-white">
               <span className="font-medium text-foreground">How it works:</span> You can message any
               electrician. They'll be able to reply once they apply to one of your job vacancies.
             </p>
@@ -154,7 +154,7 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
               rows={4}
               className="resize-none"
             />
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-white">
               Be specific about the role or project you're hiring for.
             </p>
           </div>

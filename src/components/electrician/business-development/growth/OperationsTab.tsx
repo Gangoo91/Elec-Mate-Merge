@@ -427,7 +427,7 @@ export const OperationsTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -469,7 +469,7 @@ export const OperationsTab = () => {
                       {system.timeline}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {system.description}
                   </p>
                 </div>
@@ -478,19 +478,19 @@ export const OperationsTab = () => {
                   className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}
                 >
                   <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                    <DollarSign className="h-4 w-4 text-white" />
                     <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                       {system.investment}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                    <TrendingUp className="h-4 w-4 text-white" />
                     <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                       {system.roi}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-muted-foreground" />
+                    <Shield className="h-4 w-4 text-white" />
                     <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                       {system.riskLevel}
                     </span>
@@ -507,7 +507,7 @@ export const OperationsTab = () => {
                     {system.components.map((component, compIndex) => (
                       <li
                         key={compIndex}
-                        className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                        className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                       >
                         <CheckCircle
                           className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-green-400 mt-0.5 shrink-0`}
@@ -536,7 +536,7 @@ export const OperationsTab = () => {
                           {phase.tasks.map((task, taskIndex) => (
                             <li
                               key={taskIndex}
-                              className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                              className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                             >
                               <Target
                                 className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-elec-yellow mt-0.5 shrink-0`}
@@ -560,7 +560,7 @@ export const OperationsTab = () => {
                     {system.ukSpecific2025.map((consideration, considerationIndex) => (
                       <li
                         key={considerationIndex}
-                        className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                        className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                       >
                         <MapPin
                           className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-yellow-400 mt-0.5 shrink-0`}
@@ -584,7 +584,7 @@ export const OperationsTab = () => {
               <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>
                 Performance Benchmarks
               </h4>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Industry-standard metrics to track operational improvements and business growth
               </p>
 
@@ -600,7 +600,7 @@ export const OperationsTab = () => {
                       {category.benchmarks.map((benchmark, bIndex) => (
                         <div key={bIndex} className="flex justify-between items-center">
                           <span
-                            className={`text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}
+                            className={`text-white ${isMobile ? 'text-xs' : 'text-sm'}`}
                           >
                             {benchmark.metric}
                           </span>
@@ -626,7 +626,7 @@ export const OperationsTab = () => {
               <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>
                 Growth Through Operations
               </h4>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Strategic operational advantages that enable sustainable business scaling
               </p>
 
@@ -638,7 +638,7 @@ export const OperationsTab = () => {
                     >
                       {advantage.title}
                     </h5>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {advantage.description}
                     </p>
 
@@ -652,7 +652,7 @@ export const OperationsTab = () => {
                         {advantage.advantages.map((adv, advIndex) => (
                           <li
                             key={advIndex}
-                            className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                            className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                           >
                             <CheckCircle
                               className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-green-400 mt-0.5 shrink-0`}
@@ -689,7 +689,7 @@ export const OperationsTab = () => {
               <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>
                 Key Performance Indicators
               </h4>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Essential metrics to monitor operational performance and drive continuous
                 improvement
               </p>
@@ -706,7 +706,7 @@ export const OperationsTab = () => {
                       {category.kpis.map((kpi, kpiIndex) => (
                         <li
                           key={kpiIndex}
-                          className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                          className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                         >
                           <Zap
                             className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-elec-yellow mt-0.5 shrink-0`}

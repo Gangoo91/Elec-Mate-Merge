@@ -111,7 +111,7 @@ export function TeamMemberCard({
               {isSelected ? (
                 <CheckSquare className="h-5 w-5 text-elec-yellow" />
               ) : (
-                <Square className="h-5 w-5 text-white/60" />
+                <Square className="h-5 w-5 text-white" />
               )}
             </div>
           )}
@@ -139,12 +139,12 @@ export function TeamMemberCard({
                 {teamRole}
               </Badge>
             </div>
-            <p className="text-sm text-white/60 truncate">{role}</p>
+            <p className="text-sm text-white truncate">{role}</p>
           </div>
 
           {/* Chevron */}
           {!multiSelectMode && (
-            <ChevronRight className="h-5 w-5 text-white/60 flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity" />
+            <ChevronRight className="h-5 w-5 text-white flex-shrink-0 opacity-50 group-hover:opacity-100 transition-opacity" />
           )}
         </div>
 
@@ -201,13 +201,13 @@ export function TeamMemberCard({
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-sm">
               <Award className="h-4 w-4 text-warning" />
-              <span className="text-white/60">{certificationsCount}</span>
-              <span className="text-white/60 text-xs">Certs</span>
+              <span className="text-white">{certificationsCount}</span>
+              <span className="text-white text-xs">Certs</span>
             </div>
             <div className="flex items-center gap-1.5 text-sm">
               <Briefcase className="h-4 w-4 text-info" />
-              <span className="text-white/60">{activeJobsCount}</span>
-              <span className="text-white/60 text-xs">Jobs</span>
+              <span className="text-white">{activeJobsCount}</span>
+              <span className="text-white text-xs">Jobs</span>
             </div>
           </div>
 
@@ -216,7 +216,7 @@ export function TeamMemberCard({
             {!hasElecId && (
               <Badge
                 variant="outline"
-                className="text-white/60 border-muted-foreground/30 text-[10px]"
+                className="text-white border-muted-foreground/30 text-[10px]"
               >
                 <IdCard className="h-3 w-3 mr-1" />
                 No Elec-ID

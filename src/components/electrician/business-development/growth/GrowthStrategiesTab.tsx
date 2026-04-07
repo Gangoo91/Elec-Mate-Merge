@@ -448,7 +448,7 @@ export const GrowthStrategiesTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -493,24 +493,24 @@ export const GrowthStrategiesTab = () => {
                         {strategy.timeline}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {strategy.description}
                     </p>
                   </div>
 
                   <div className="grid gap-4 md:grid-cols-3">
                     <div className="flex items-center gap-2">
-                      <Calculator className="h-4 w-4 text-muted-foreground" />
+                      <Calculator className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.investment}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                      <TrendingUp className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.roi}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-muted-foreground" />
+                      <Shield className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
                         {strategy.riskLevel}
                       </span>
@@ -557,7 +557,7 @@ export const GrowthStrategiesTab = () => {
                             {phase.tasks.map((task, taskIndex) => (
                               <li
                                 key={taskIndex}
-                                className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-start gap-1`}
+                                className={`${isMobile ? 'text-xs' : 'text-sm'} text-white flex items-start gap-1`}
                               >
                                 <div className="w-1 h-1 bg-muted-foreground rounded-full mt-2 shrink-0" />
                                 {task}
@@ -599,7 +599,7 @@ export const GrowthStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Essential prerequisites and success indicators for sustainable business growth
                 </p>
 
@@ -674,7 +674,7 @@ export const GrowthStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Compare your business performance against UK electrical industry standards
                 </p>
 
@@ -708,9 +708,9 @@ export const GrowthStrategiesTab = () => {
                               </Badge>
                             </div>
                             <div className="flex items-center gap-2">
-                              <LineChart className="h-4 w-4 text-muted-foreground" />
+                              <LineChart className="h-4 w-4 text-white" />
                               <span
-                                className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                                className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                               >
                                 {benchmark.current}
                               </span>
@@ -733,7 +733,7 @@ export const GrowthStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Differentiate your business and command premium pricing
                 </p>
 
@@ -751,7 +751,7 @@ export const GrowthStrategiesTab = () => {
                             {advantage.title}
                           </h4>
                           <p
-                            className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mt-1`}
+                            className={`${isMobile ? 'text-xs' : 'text-sm'} text-white mt-1`}
                           >
                             {advantage.description}
                           </p>
@@ -799,7 +799,7 @@ export const GrowthStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Key performance indicators to track business growth and success
                 </p>
 
@@ -850,7 +850,7 @@ export const GrowthStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Immediate steps to accelerate your business growth
                 </p>
 

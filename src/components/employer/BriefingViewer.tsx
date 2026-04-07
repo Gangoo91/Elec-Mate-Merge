@@ -100,7 +100,7 @@ export function BriefingViewer({
       ? 'bg-green-500/10 text-green-400 border-green-500/30'
       : briefing.status === 'Scheduled'
         ? 'bg-blue-500/10 text-blue-400 border-blue-500/30'
-        : 'bg-muted text-white/60';
+        : 'bg-muted text-white';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -149,31 +149,31 @@ export function BriefingViewer({
           <div className="p-4 border-b border-border bg-muted/30">
             <div className="flex flex-wrap gap-4 text-sm">
               {briefing.date && (
-                <span className="flex items-center gap-1.5 text-white/60 min-w-0">
+                <span className="flex items-center gap-1.5 text-white min-w-0">
                   <Calendar className="h-4 w-4 shrink-0" />
                   <span className="truncate">{format(new Date(briefing.date), 'dd MMM yyyy')}</span>
                 </span>
               )}
               {briefing.time && (
-                <span className="flex items-center gap-1.5 text-white/60 min-w-0">
+                <span className="flex items-center gap-1.5 text-white min-w-0">
                   <Clock className="h-4 w-4 shrink-0" />
                   <span className="truncate">{briefing.time}</span>
                 </span>
               )}
               {briefing.location && (
-                <span className="flex items-center gap-1.5 text-white/60 min-w-0">
+                <span className="flex items-center gap-1.5 text-white min-w-0">
                   <MapPin className="h-4 w-4 shrink-0" />
                   <span className="truncate">{briefing.location}</span>
                 </span>
               )}
               {briefing.presenter && (
-                <span className="flex items-center gap-1.5 text-white/60 min-w-0">
+                <span className="flex items-center gap-1.5 text-white min-w-0">
                   <User className="h-4 w-4 shrink-0" />
                   <span className="truncate">{briefing.presenter}</span>
                 </span>
               )}
               {briefing.duration_minutes && (
-                <span className="flex items-center gap-1.5 text-white/60 min-w-0">
+                <span className="flex items-center gap-1.5 text-white min-w-0">
                   <Clock className="h-4 w-4 shrink-0" />
                   <span className="truncate">{briefing.duration_minutes} min</span>
                 </span>
@@ -213,8 +213,8 @@ export function BriefingViewer({
                     />
                   ) : (
                     <div className="text-center py-8">
-                      <FileText className="h-12 w-12 text-white/60 mx-auto mb-4" />
-                      <p className="text-sm text-white/60">No content added yet</p>
+                      <FileText className="h-12 w-12 text-white mx-auto mb-4" />
+                      <p className="text-sm text-white">No content added yet</p>
                       {onEdit && (
                         <Button variant="outline" className="mt-4" onClick={() => onEdit(briefing)}>
                           <Edit3 className="h-4 w-4 mr-2" />
@@ -235,7 +235,7 @@ export function BriefingViewer({
                         alt="Presenter signature"
                         className="h-16 object-contain"
                       />
-                      <p className="text-xs text-white/60 mt-2">
+                      <p className="text-xs text-white mt-2">
                         {briefing.presenter || 'Presenter'}
                       </p>
                     </div>
@@ -252,22 +252,22 @@ export function BriefingViewer({
                   <div className="grid grid-cols-3 gap-3">
                     <div className="p-3 rounded-lg bg-muted/50 text-center">
                       <p className="text-xl font-bold text-foreground">{total}</p>
-                      <p className="text-xs text-white/60">Total</p>
+                      <p className="text-xs text-white">Total</p>
                     </div>
                     <div className="p-3 rounded-lg bg-green-500/10 text-center">
                       <p className="text-xl font-bold text-green-400">{signed}</p>
-                      <p className="text-xs text-white/60">Signed</p>
+                      <p className="text-xs text-white">Signed</p>
                     </div>
                     <div className="p-3 rounded-lg bg-amber-500/10 text-center">
                       <p className="text-xl font-bold text-amber-400">{total - signed}</p>
-                      <p className="text-xs text-white/60">Pending</p>
+                      <p className="text-xs text-white">Pending</p>
                     </div>
                   </div>
 
                   {/* Progress */}
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-white/60">Completion</span>
+                      <span className="text-white">Completion</span>
                       <span className="font-medium">{completionRate}%</span>
                     </div>
                     <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -301,14 +301,14 @@ export function BriefingViewer({
                               {attendee.acknowledged ? (
                                 <CheckCircle2 className="h-4 w-4 text-green-400" />
                               ) : (
-                                <Clock className="h-4 w-4 text-white/60" />
+                                <Clock className="h-4 w-4 text-white" />
                               )}
                             </div>
                             <div>
                               <p className="font-medium text-sm text-foreground">
                                 {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                               </p>
-                              <p className="text-xs text-white/60">
+                              <p className="text-xs text-white">
                                 {attendee.guest_company && `${attendee.guest_company} • `}
                                 {attendee.acknowledged && attendee.acknowledged_at
                                   ? `Signed ${format(new Date(attendee.acknowledged_at), 'HH:mm')} via ${attendee.signed_via || 'manual'}`
@@ -329,8 +329,8 @@ export function BriefingViewer({
 
                     {(!briefing.attendees || briefing.attendees.length === 0) && (
                       <div className="text-center py-8">
-                        <Users className="h-12 w-12 text-white/60 mx-auto mb-4" />
-                        <p className="text-sm text-white/60">No attendees added yet</p>
+                        <Users className="h-12 w-12 text-white mx-auto mb-4" />
+                        <p className="text-sm text-white">No attendees added yet</p>
                       </div>
                     )}
                   </div>
@@ -359,8 +359,8 @@ export function BriefingViewer({
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <Image className="h-12 w-12 text-white/60 mx-auto mb-4" />
-                      <p className="text-sm text-white/60">No photos added yet</p>
+                      <Image className="h-12 w-12 text-white mx-auto mb-4" />
+                      <p className="text-sm text-white">No photos added yet</p>
                     </div>
                   )}
                 </div>

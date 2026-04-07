@@ -127,7 +127,7 @@ const SafetyResourcesCard = () => {
       case 'toolbox-talk':
         return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -147,7 +147,7 @@ const SafetyResourcesCard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Safety Resources</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential safety guides, training materials, and toolbox talks
           </p>
         </div>
@@ -176,7 +176,7 @@ const SafetyResourcesCard = () => {
                       </Badge>
                     </div>
                     <CardTitle className="text-foreground text-lg mb-2">{resource.title}</CardTitle>
-                    <p className="text-gray-300 text-sm">{resource.description}</p>
+                    <p className="text-white text-sm">{resource.description}</p>
                   </div>
                 </div>
               </div>
@@ -184,7 +184,7 @@ const SafetyResourcesCard = () => {
 
             <CardContent className="pt-0">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-4 text-sm text-white">
                   <div className="flex items-center gap-1">
                     <Download className="h-4 w-4" />
                     <span>{resource.downloadCount.toLocaleString()}</span>

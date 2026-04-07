@@ -80,7 +80,7 @@ const ElectricianCPDTracker = () => {
               <Clock className="h-6 w-6 text-elec-yellow" />
               <div>
                 <h1 className="text-lg font-bold text-foreground">Electrician CPD Tracker</h1>
-                <p className="text-xs text-muted-foreground">Professional Development</p>
+                <p className="text-xs text-white">Professional Development</p>
               </div>
             </div>
             <button
@@ -190,7 +190,7 @@ const ElectricianCPDTracker = () => {
               <h2 className="text-2xl font-bold text-foreground">Professional Body Settings</h2>
               <button
                 onClick={() => setShowProfessionalBodyManager(false)}
-                className="text-muted-foreground hover:text-foreground"
+                className="text-white hover:text-foreground"
               >
                 ✕
               </button>
@@ -262,7 +262,7 @@ const ElectricianCPDTracker = () => {
           <Clock className="h-8 w-8 text-elec-yellow" />
           <h1 className="text-3xl font-bold text-foreground">Enhanced CPD Tracker</h1>
         </div>
-        <p className="text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-white max-w-3xl mx-auto">
           Professional-grade CPD tracking with compliance monitoring, evidence management, and
           industry-specific templates for UK electricians.
         </p>

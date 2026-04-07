@@ -81,11 +81,11 @@ export const PaymentHistoryDialog = ({
           {/* Summary */}
           <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
             <div>
-              <p className="text-sm text-muted-foreground">Total Paid</p>
+              <p className="text-sm text-white">Total Paid</p>
               <p className="text-2xl font-bold text-success">{formatCurrency(totalPaid)}</p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Outstanding</p>
+              <p className="text-sm text-white">Outstanding</p>
               <p className="text-2xl font-bold">
                 {formatCurrency(Math.max(0, invoice.total - totalPaid))}
               </p>
@@ -95,9 +95,9 @@ export const PaymentHistoryDialog = ({
           {/* Payment List */}
           <ScrollArea className="h-[400px] pr-4">
             {loading ? (
-              <div className="text-center py-8 text-muted-foreground">Loading payments...</div>
+              <div className="text-center py-8 text-white">Loading payments...</div>
             ) : payments.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
+              <div className="text-center py-8 text-white">
                 <PoundSterling className="h-12 w-12 mx-auto mb-2 opacity-20" />
                 <p>No payment records found</p>
               </div>
@@ -120,7 +120,7 @@ export const PaymentHistoryDialog = ({
                           {payment.payment_method.replace(/_/g, ' ')}
                         </Badge>
                       </div>
-                      <div className="text-right text-sm text-muted-foreground">
+                      <div className="text-right text-sm text-white">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
                           {format(new Date(payment.payment_date), 'dd MMM yyyy')}
@@ -130,20 +130,20 @@ export const PaymentHistoryDialog = ({
 
                     {payment.payment_reference && (
                       <div className="flex items-center gap-2 text-sm">
-                        <CreditCard className="h-3 w-3 text-muted-foreground" />
-                        <span className="text-muted-foreground">Ref:</span>
+                        <CreditCard className="h-3 w-3 text-white" />
+                        <span className="text-white">Ref:</span>
                         <span className="font-mono">{payment.payment_reference}</span>
                       </div>
                     )}
 
                     {payment.notes && (
                       <div className="flex items-start gap-2 text-sm">
-                        <FileText className="h-3 w-3 text-muted-foreground mt-0.5" />
-                        <p className="text-muted-foreground">{payment.notes}</p>
+                        <FileText className="h-3 w-3 text-white mt-0.5" />
+                        <p className="text-white">{payment.notes}</p>
                       </div>
                     )}
 
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-white">
                       Recorded {format(new Date(payment.created_at), "dd MMM yyyy 'at' HH:mm")}
                     </div>
                   </div>

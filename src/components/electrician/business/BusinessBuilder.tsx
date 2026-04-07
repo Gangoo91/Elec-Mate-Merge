@@ -8,7 +8,7 @@ const BusinessBuilder = () => {
     <div className="space-y-6">
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold">Business Builder</h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Starting your own electrical business can be a rewarding career path. Below are essential
           resources and guidance to help you establish and grow a successful electrical contracting
           business in the UK market.

@@ -233,7 +233,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
     return (
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="p-8 text-center">
-          <div className="text-muted-foreground">Loading CPD system...</div>
+          <div className="text-white">Loading CPD system...</div>
         </CardContent>
       </Card>
     );
@@ -260,7 +260,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
             Log CPD Activity
           </CardTitle>
           {activeMembership && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Recording for {activeMembership.professional_body?.name}
             </p>
           )}
@@ -290,7 +290,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                       variant="outline"
                       className={cn(
                         'w-full justify-start text-left font-normal bg-elec-dark border-elec-yellow/20',
-                        !date && 'text-muted-foreground'
+                        !date && 'text-white'
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -391,7 +391,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
             {/* Evidence Upload */}
             <div className="space-y-2">
               <Label>Evidence Files</Label>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Upload certificates, photos, or other evidence to support this CPD activity
               </p>
 
@@ -418,7 +418,7 @@ const EnhancedCPDEntryForm = ({ onSuccess }: EnhancedCPDEntryFormProps = {}) => 
                             <div className="text-sm font-medium text-foreground">
                               {evidenceFile.file.name}
                             </div>
-                            <div className="text-xs text-muted-foreground">
+                            <div className="text-xs text-white">
                               {(evidenceFile.file.size / 1024 / 1024).toFixed(2)} MB •{' '}
                               {evidenceFile.type}
                             </div>

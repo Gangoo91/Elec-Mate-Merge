@@ -76,7 +76,7 @@ export function InternalVacancyList({
         <form onSubmit={handleSearch} className="flex-1">
           <div className="relative">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               value={searchQuery}
@@ -144,7 +144,7 @@ export function InternalVacancyList({
 
       {/* Results Count */}
       {!isLoading && (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-white">
           {vacancies?.length || 0} {vacancies?.length === 1 ? 'vacancy' : 'vacancies'} found
         </p>
       )}
@@ -185,9 +185,9 @@ export function InternalVacancyList({
         ) : (
           <Card className="border-dashed">
             <CardContent className="p-8 text-center">
-              <Briefcase className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <Briefcase className="h-12 w-12 text-white mx-auto mb-4" />
               <h3 className="font-semibold text-lg mb-2">No vacancies found</h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-white mb-4">
                 {searchQuery || activeFilterCount > 0
                   ? 'Try adjusting your search or filters'
                   : 'Check back later for new opportunities'}

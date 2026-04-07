@@ -170,16 +170,16 @@ export function ProcurementSection() {
                             </h3>
                             {getOrderStatusBadge(order.status)}
                           </div>
-                          <p className="text-sm text-white/60">
+                          <p className="text-sm text-white">
                             {order.suppliers?.name || 'Unknown'}
                           </p>
-                          <p className="text-xs text-white/60">Stock Order</p>
+                          <p className="text-xs text-white">Stock Order</p>
                         </div>
                         <div className="text-right shrink-0">
                           <p className="font-bold text-foreground">
                             £{Number(order.total).toFixed(2)}
                           </p>
-                          <p className="text-xs text-white/60">
+                          <p className="text-xs text-white">
                             {new Date(order.order_date).toLocaleDateString()}
                           </p>
                         </div>
@@ -187,9 +187,9 @@ export function ProcurementSection() {
 
                       <div className="flex justify-center mt-2">
                         {isExpanded ? (
-                          <ChevronUp className="h-4 w-4 text-white/60" />
+                          <ChevronUp className="h-4 w-4 text-white" />
                         ) : (
-                          <ChevronDown className="h-4 w-4 text-white/60" />
+                          <ChevronDown className="h-4 w-4 text-white" />
                         )}
                       </div>
                     </div>
@@ -201,7 +201,7 @@ export function ProcurementSection() {
                           <div className="space-y-1">
                             {items.map((item, idx) => (
                               <div key={idx} className="flex justify-between text-sm">
-                                <span className="text-white/60">
+                                <span className="text-white">
                                   {item.qty}x {item.name}
                                 </span>
                                 <span className="font-medium">
@@ -212,7 +212,7 @@ export function ProcurementSection() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-4 text-xs text-white/60">
+                        <div className="flex items-center gap-4 text-xs text-white">
                           <span>Ordered by: {order.ordered_by || 'Unknown'}</span>
                           {order.delivery_date && (
                             <span>
@@ -251,7 +251,7 @@ export function ProcurementSection() {
         <TabsContent value="suppliers" className="mt-4 space-y-4">
           <div className="relative">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               placeholder="Search suppliers..."
@@ -285,7 +285,7 @@ export function ProcurementSection() {
                             <Badge className="bg-success text-success-foreground text-xs">
                               {Number(supplier.discount_percent)}% off
                             </Badge>
-                            <p className="text-xs text-white/60 mt-1">
+                            <p className="text-xs text-white mt-1">
                               {supplier.delivery_days === 0
                                 ? 'Same day'
                                 : `${supplier.delivery_days} day delivery`}
@@ -295,9 +295,9 @@ export function ProcurementSection() {
 
                         <div className="flex justify-center mt-2">
                           {isExpanded ? (
-                            <ChevronUp className="h-4 w-4 text-white/60" />
+                            <ChevronUp className="h-4 w-4 text-white" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-white/60" />
+                            <ChevronDown className="h-4 w-4 text-white" />
                           )}
                         </div>
                       </div>
@@ -306,25 +306,25 @@ export function ProcurementSection() {
                         <div className="border-t border-border p-4 bg-muted/30 space-y-3">
                           <div className="grid grid-cols-2 gap-3 text-sm">
                             <div>
-                              <span className="text-white/60">Account:</span>
+                              <span className="text-white">Account:</span>
                               <span className="ml-2 font-medium">
                                 {supplier.account_number || '-'}
                               </span>
                             </div>
                             <div>
-                              <span className="text-white/60">Credit Limit:</span>
+                              <span className="text-white">Credit Limit:</span>
                               <span className="ml-2 font-medium">
                                 £{Number(supplier.credit_limit).toLocaleString()}
                               </span>
                             </div>
                             <div>
-                              <span className="text-white/60">Balance:</span>
+                              <span className="text-white">Balance:</span>
                               <span className="ml-2 font-medium">
                                 £{Number(supplier.balance).toLocaleString()}
                               </span>
                             </div>
                             <div>
-                              <span className="text-white/60">Contact:</span>
+                              <span className="text-white">Contact:</span>
                               <span className="ml-2 font-medium">
                                 {supplier.contact_name || '-'}
                               </span>
@@ -366,9 +366,9 @@ export function ProcurementSection() {
           {companyTools.length === 0 ? (
             <Card className="bg-elec-gray border-border">
               <CardContent className="p-8 text-center">
-                <Wrench className="h-12 w-12 text-white/60 mx-auto mb-4" />
+                <Wrench className="h-12 w-12 text-white mx-auto mb-4" />
                 <h3 className="font-semibold text-foreground mb-2">No Equipment</h3>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   Add your first tool to track equipment inventory.
                 </p>
               </CardContent>
@@ -392,7 +392,7 @@ export function ProcurementSection() {
                               {tool.category}
                             </Badge>
                             {tool.assigned_to && (
-                              <p className="text-xs text-white/60 mt-1">
+                              <p className="text-xs text-white mt-1">
                                 {tool.assigned_to}
                               </p>
                             )}
@@ -402,9 +402,9 @@ export function ProcurementSection() {
 
                         <div className="flex justify-center mt-2">
                           {isExpanded ? (
-                            <ChevronUp className="h-4 w-4 text-white/60" />
+                            <ChevronUp className="h-4 w-4 text-white" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-white/60" />
+                            <ChevronDown className="h-4 w-4 text-white" />
                           )}
                         </div>
                       </div>
@@ -414,7 +414,7 @@ export function ProcurementSection() {
                           <div className="grid grid-cols-2 gap-2 text-sm">
                             {tool.serial_number && (
                               <div>
-                                <span className="text-white/60">Serial:</span>
+                                <span className="text-white">Serial:</span>
                                 <span className="ml-2 font-medium text-xs">
                                   {tool.serial_number}
                                 </span>
@@ -422,7 +422,7 @@ export function ProcurementSection() {
                             )}
                             {tool.purchase_price && Number(tool.purchase_price) > 0 && (
                               <div>
-                                <span className="text-white/60">Value:</span>
+                                <span className="text-white">Value:</span>
                                 <span className="ml-2 font-medium">
                                   £{Number(tool.purchase_price).toFixed(2)}
                                 </span>
@@ -430,7 +430,7 @@ export function ProcurementSection() {
                             )}
                             {tool.pat_due && (
                               <div>
-                                <span className="text-white/60">PAT Due:</span>
+                                <span className="text-white">PAT Due:</span>
                                 <span className="ml-2 font-medium">
                                   {new Date(tool.pat_due).toLocaleDateString('en-GB')}
                                 </span>
@@ -438,7 +438,7 @@ export function ProcurementSection() {
                             )}
                             {tool.next_calibration && (
                               <div>
-                                <span className="text-white/60">Calibration Due:</span>
+                                <span className="text-white">Calibration Due:</span>
                                 <span className="ml-2 font-medium">
                                   {new Date(tool.next_calibration).toLocaleDateString('en-GB')}
                                 </span>

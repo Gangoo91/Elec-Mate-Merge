@@ -176,7 +176,7 @@ export function InventoryEditSheet({
                       'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-all',
                       category === cat.id
                         ? cat.pillActiveClass
-                        : 'bg-white/[0.04] text-white/60 border border-white/[0.06]'
+                        : 'bg-white/[0.04] text-white border border-white/[0.06]'
                     )}
                   >
                     {cat.label}
@@ -225,7 +225,7 @@ export function InventoryEditSheet({
                       'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-all',
                       location === loc.id
                         ? 'bg-teal-500/20 text-white border border-teal-500/40'
-                        : 'bg-white/[0.04] text-white/60 border border-white/[0.06]'
+                        : 'bg-white/[0.04] text-white border border-white/[0.06]'
                     )}
                   >
                     {loc.label}

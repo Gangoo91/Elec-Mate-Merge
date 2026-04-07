@@ -167,7 +167,7 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
                 onClick={() => fileInputRef.current?.click()}
               >
                 <ImageIcon className="h-12 w-12 text-white mx-auto mb-3" />
-                <p className="text-sm text-white/60 mb-1">Tap to select a photo</p>
+                <p className="text-sm text-white mb-1">Tap to select a photo</p>
                 <p className="text-xs text-white">or use your camera</p>
               </div>
             )}

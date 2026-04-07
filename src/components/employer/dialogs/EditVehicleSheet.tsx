@@ -244,7 +244,7 @@ export function EditVehicleSheet({
           </div>
 
           <div className="pt-2 border-t border-border">
-            <p className="text-sm font-medium text-white/60 mb-3">Compliance Dates</p>
+            <p className="text-sm font-medium text-white mb-3">Compliance Dates</p>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label>MOT Expiry</Label>
@@ -277,7 +277,7 @@ export function EditVehicleSheet({
           </div>
 
           <div className="pt-2 border-t border-border">
-            <p className="text-sm font-medium text-white/60 mb-3">Service Dates</p>
+            <p className="text-sm font-medium text-white mb-3">Service Dates</p>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label>Last Service</Label>
@@ -303,7 +303,7 @@ export function EditVehicleSheet({
           <div className="flex items-center justify-between py-3 border-t border-border">
             <div>
               <Label htmlFor="tracker">Tracker Fitted</Label>
-              <p className="text-xs text-white/60">GPS tracking device installed</p>
+              <p className="text-xs text-white">GPS tracking device installed</p>
             </div>
             <Switch id="tracker" checked={trackerFitted} onCheckedChange={setTrackerFitted} />
           </div>

@@ -340,7 +340,7 @@ const ProjectsPage = () => {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-8 w-8 text-white/50 hover:text-white hover:bg-white/10 rounded-lg flex-shrink-0"
+                                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 rounded-lg flex-shrink-0"
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 <MoreVertical className="h-4 w-4" />
@@ -430,7 +430,7 @@ const ProjectsPage = () => {
         <AlertDialogContent className="bg-elec-gray border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete Project?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/70">
+            <AlertDialogDescription className="text-white">
               This will permanently delete "{deleteTarget?.title}". This cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>

@@ -529,7 +529,7 @@ export const QuoteWizard = ({
                 <div className="w-full border-t border-border/50" />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-background px-3 text-xs text-muted-foreground uppercase tracking-wider">
+                <span className="bg-background px-3 text-xs text-white uppercase tracking-wider">
                   Add Items
                 </span>
               </div>
@@ -554,7 +554,7 @@ export const QuoteWizard = ({
                 <div className="w-full border-t border-border/50" />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-background px-3 text-xs text-muted-foreground uppercase tracking-wider">
+                <span className="bg-background px-3 text-xs text-white uppercase tracking-wider">
                   Review & Send
                 </span>
               </div>

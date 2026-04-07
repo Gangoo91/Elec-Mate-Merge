@@ -54,7 +54,7 @@ const colorConfig = {
   },
   gray: {
     active: 'bg-gray-500 text-white border-gray-500',
-    inactive: 'bg-gray-500/10 text-gray-400 border-gray-500/30 hover:bg-gray-500/20',
+    inactive: 'bg-gray-500/10 text-white border-gray-500/30 hover:bg-gray-500/20',
     count: 'bg-white/20',
   },
   amber: {

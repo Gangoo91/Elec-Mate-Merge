@@ -56,7 +56,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
       case 'expired':
         return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 

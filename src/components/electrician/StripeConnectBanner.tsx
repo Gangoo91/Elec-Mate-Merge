@@ -196,7 +196,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
           <p className="text-sm font-medium text-foreground truncate">
             {status === 'pending' ? 'Finish Stripe setup' : 'Enable card payments'}
           </p>
-          <p className="text-xs text-muted-foreground truncate">
+          <p className="text-xs text-white truncate">
             {status === 'pending'
               ? 'Complete setup to accept payments'
               : 'Let clients pay invoices online'}
@@ -229,7 +229,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
         onClick={handleDismiss}
         className="absolute top-2 right-2 h-6 w-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
       >
-        <X className="h-3.5 w-3.5 text-muted-foreground" />
+        <X className="h-3.5 w-3.5 text-white" />
       </button>
     </div>
   );

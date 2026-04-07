@@ -82,7 +82,7 @@ const ActivityTemplates = () => {
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
           {!searchTerm && (
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white h-4 w-4 pointer-events-none" />
           )}
           <Input
             placeholder="Search activity templates..."
@@ -133,7 +133,7 @@ const ActivityTemplates = () => {
                   <CardTitle className="text-sm text-foreground">{template.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-xs text-muted-foreground line-clamp-2">
+                  <p className="text-xs text-white line-clamp-2">
                     {template.description}
                   </p>
 
@@ -188,7 +188,7 @@ const ActivityTemplates = () => {
                   <CardTitle className="text-sm text-foreground">{template.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <p className="text-xs text-muted-foreground">{template.description}</p>
+                  <p className="text-xs text-white">{template.description}</p>
 
                   <div className="flex items-center justify-between">
                     <div className="flex flex-wrap gap-1">
@@ -236,7 +236,7 @@ const ActivityTemplates = () => {
                       {template.estimatedHours}h
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground mb-3">{template.description}</p>
+                  <p className="text-xs text-white mb-3">{template.description}</p>
                   <Button size="sm" className="w-full" onClick={() => handleUseTemplate(template)}>
                     <Plus className="h-4 w-4 mr-2" />
                     Quick Add
@@ -270,7 +270,7 @@ const TemplateDetailModal = ({
         </div>
 
         {template.provider && (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             <strong>Typical Provider:</strong> {template.provider}
           </p>
         )}
@@ -278,7 +278,7 @@ const TemplateDetailModal = ({
 
       <div>
         <h4 className="font-medium text-foreground mb-2">Description</h4>
-        <p className="text-sm text-muted-foreground">{template.description}</p>
+        <p className="text-sm text-white">{template.description}</p>
       </div>
 
       {template.learningOutcomes && (
@@ -286,7 +286,7 @@ const TemplateDetailModal = ({
           <h4 className="font-medium text-foreground mb-2">Learning Outcomes</h4>
           <ul className="list-disc list-inside space-y-1">
             {template.learningOutcomes.map((outcome: string, index: number) => (
-              <li key={index} className="text-sm text-muted-foreground">
+              <li key={index} className="text-sm text-white">
                 {outcome}
               </li>
             ))}
@@ -309,7 +309,7 @@ const TemplateDetailModal = ({
 
       <div className="flex items-center gap-4 pt-4 border-t border-border">
         <div className="flex items-center gap-2">
-          <Clock className="h-4 w-4 text-muted-foreground" />
+          <Clock className="h-4 w-4 text-white" />
           <label className="text-sm font-medium text-foreground">Hours:</label>
           <Input
             type="number"

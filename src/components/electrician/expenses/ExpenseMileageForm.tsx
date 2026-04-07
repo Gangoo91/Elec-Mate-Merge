@@ -54,7 +54,7 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
         animate={{ opacity: 1, y: 0 }}
         className="bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 rounded-xl p-4 text-center"
       >
-        <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-1">
+        <div className="flex items-center justify-center gap-2 text-sm text-white mb-1">
           <Calculator className="h-4 w-4" />
           <span>Calculated at {DEFAULT_MILEAGE_RATE * 100}p per mile</span>
         </div>
@@ -65,7 +65,7 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
       <div className="space-y-2">
         <Label htmlFor="miles">Distance (miles)</Label>
         <div className="flex items-center gap-2">
-          <Car className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+          <Car className="h-5 w-5 text-white flex-shrink-0" />
           <Input
             id="miles"
             type="number"
@@ -78,7 +78,7 @@ export function ExpenseMileageForm({ onSave, isSubmitting }: ExpenseMileageFormP
             className="h-14 text-2xl font-semibold touch-manipulation flex-1"
             autoFocus
           />
-          <span className="text-muted-foreground flex-shrink-0">miles</span>
+          <span className="text-white flex-shrink-0">miles</span>
         </div>
       </div>
 

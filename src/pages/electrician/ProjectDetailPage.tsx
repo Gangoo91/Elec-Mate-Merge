@@ -495,7 +495,7 @@ const ProjectDetailPage = () => {
               <AlertDialogContent className="bg-elec-gray border-white/10">
                 <AlertDialogHeader>
                   <AlertDialogTitle className="text-white">Delete Project?</AlertDialogTitle>
-                  <AlertDialogDescription className="text-white/70">
+                  <AlertDialogDescription className="text-white">
                     This will permanently delete "{project.title}". Tasks, time entries and linked records will be removed. This cannot be undone.
                   </AlertDialogDescription>
                 </AlertDialogHeader>

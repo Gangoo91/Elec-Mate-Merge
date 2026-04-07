@@ -158,7 +158,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <div className="space-y-2">
             <Label
               htmlFor="title"
-              className="text-xs font-medium text-white/60 uppercase tracking-wide"
+              className="text-xs font-medium text-white uppercase tracking-wide"
             >
               Job Title <span className="text-destructive">*</span>
             </Label>
@@ -175,7 +175,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
             <div className="space-y-2">
               <Label
                 htmlFor="client"
-                className="text-xs font-medium text-white/60 uppercase tracking-wide"
+                className="text-xs font-medium text-white uppercase tracking-wide"
               >
                 Client <span className="text-destructive">*</span>
               </Label>
@@ -190,7 +190,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
             <div className="space-y-2">
               <Label
                 htmlFor="location"
-                className="text-xs font-medium text-white/60 uppercase tracking-wide flex items-center gap-1.5"
+                className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5"
               >
                 <MapPin className="h-3.5 w-3.5" />
                 Location <span className="text-destructive">*</span>
@@ -218,7 +218,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <div className="space-y-2">
             <Label
               htmlFor="value"
-              className="text-xs font-medium text-white/60 uppercase tracking-wide"
+              className="text-xs font-medium text-white uppercase tracking-wide"
             >
               Job Value (£)
             </Label>
@@ -234,7 +234,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <div className="space-y-2">
             <Label
               htmlFor="status"
-              className="text-xs font-medium text-white/60 uppercase tracking-wide"
+              className="text-xs font-medium text-white uppercase tracking-wide"
             >
               Status
             </Label>
@@ -268,7 +268,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <div className="space-y-2">
             <Label
               htmlFor="startDate"
-              className="text-xs font-medium text-white/60 uppercase tracking-wide"
+              className="text-xs font-medium text-white uppercase tracking-wide"
             >
               Start Date
             </Label>
@@ -283,7 +283,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           <div className="space-y-2">
             <Label
               htmlFor="endDate"
-              className="text-xs font-medium text-white/60 uppercase tracking-wide"
+              className="text-xs font-medium text-white uppercase tracking-wide"
             >
               End Date
             </Label>
@@ -302,7 +302,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
       <div className="space-y-2">
         <Label
           htmlFor="workers"
-          className="text-xs font-medium text-white/60 uppercase tracking-wide flex items-center gap-1.5"
+          className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5"
         >
           <Users className="h-3.5 w-3.5" />
           Workers Required
@@ -321,7 +321,7 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
       <div className="space-y-2">
         <Label
           htmlFor="description"
-          className="text-xs font-medium text-white/60 uppercase tracking-wide"
+          className="text-xs font-medium text-white uppercase tracking-wide"
         >
           Description
         </Label>

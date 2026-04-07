@@ -128,7 +128,7 @@ const LearningFromExperienceCard = () => {
             </Button>
           </div>
           <CardTitle className="text-xl text-foreground">{selectedReport.title}</CardTitle>
-          <div className="flex items-center gap-4 text-sm text-gray-400">
+          <div className="flex items-center gap-4 text-sm text-white">
             <div className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
               {new Date(selectedReport.date_published).toLocaleDateString('en-GB')}
@@ -141,7 +141,7 @@ const LearningFromExperienceCard = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="prose prose-invert max-w-none">
-            <p className="text-gray-300 whitespace-pre-wrap leading-relaxed">
+            <p className="text-white whitespace-pre-wrap leading-relaxed">
               {selectedReport.content}
             </p>
           </div>
@@ -154,7 +154,7 @@ const LearningFromExperienceCard = () => {
               </h3>
               <ul className="space-y-2">
                 {selectedReport.key_takeaways.map((takeaway, index) => (
-                  <li key={index} className="flex items-start gap-2 text-gray-300">
+                  <li key={index} className="flex items-start gap-2 text-white">
                     <span className="text-elec-yellow mt-1">•</span>
                     <span>{takeaway}</span>
                   </li>
@@ -178,7 +178,7 @@ const LearningFromExperienceCard = () => {
             <CardTitle className="text-xl text-foreground">
               Learning From Experience Reports
             </CardTitle>
-            <p className="text-gray-300 text-sm">
+            <p className="text-white text-sm">
               Real incidents and lessons learned from the electrical industry
             </p>
           </div>
@@ -186,7 +186,7 @@ const LearningFromExperienceCard = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         {reports.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
+          <div className="text-center py-8 text-white">
             <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <p>No LFE reports available at the moment.</p>
           </div>
@@ -208,14 +208,14 @@ const LearningFromExperienceCard = () => {
                     {report.incident_type.toUpperCase()}
                   </Badge>
                 </div>
-                <div className="flex items-center gap-1 text-xs text-gray-400">
+                <div className="flex items-center gap-1 text-xs text-white">
                   <Eye className="h-3 w-3" />
                   {report.view_count}
                 </div>
               </div>
 
               <h3 className="font-semibold text-foreground mb-2">{report.title}</h3>
-              <p className="text-sm text-gray-400 mb-3 line-clamp-2">{report.summary}</p>
+              <p className="text-sm text-white mb-3 line-clamp-2">{report.summary}</p>
 
               <div className="flex items-center justify-between text-xs text-gray-500">
                 <span>{new Date(report.date_published).toLocaleDateString('en-GB')}</span>

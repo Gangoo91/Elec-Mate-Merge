@@ -469,7 +469,7 @@ export function InventoryImportSheet({
               <div className="space-y-4">
                 {parsedItems.length === 0 ? (
                   <>
-                    <p className="text-[13px] text-white/60">
+                    <p className="text-[13px] text-white">
                       Paste a materials list from Word, Notes, WhatsApp, or a delivery note. One
                       item per line works best.
                     </p>
@@ -531,7 +531,7 @@ export function InventoryImportSheet({
 
             {tab === 'pricebook' && (
               <div className="space-y-4">
-                <p className="text-[13px] text-white/60">
+                <p className="text-[13px] text-white">
                   Import items from your existing materials lists.
                 </p>
 
@@ -606,7 +606,7 @@ export function InventoryImportSheet({
 
             {tab === 'export' && (
               <div className="space-y-4">
-                <p className="text-[13px] text-white/60">
+                <p className="text-[13px] text-white">
                   Export your stock list to share or back up.
                 </p>
                 <button

@@ -113,7 +113,7 @@ const COLOUR_CLASSES: Record<string, { bg: string; text: string; border: string 
   },
   'gray-500': {
     bg: 'bg-gray-500/15 hover:bg-gray-500/25',
-    text: 'text-gray-400',
+    text: 'text-white',
     border: 'border-gray-500/30',
   },
 };
@@ -324,7 +324,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                       <Receipt className="h-8 w-8 text-elec-yellow" />
                     </div>
                     <h3 className="text-lg font-semibold text-foreground">Add New Expense</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-white mt-1">
                       Scan a receipt or enter details manually
                     </p>
                   </div>
@@ -342,7 +342,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                         </div>
                         <div className="flex-1 text-left">
                           <p className="font-semibold text-foreground">Scan Receipt</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-white">
                             AI extracts vendor, amount & date
                           </p>
                         </div>
@@ -363,7 +363,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                         </div>
                         <div className="flex-1 text-left">
                           <p className="font-semibold text-foreground">Manual Entry</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-white">
                             Choose category and enter details
                           </p>
                         </div>
@@ -373,7 +373,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
 
                   {/* Quick category access */}
                   <div className="pt-4 border-t border-white/[0.06]">
-                    <p className="text-xs text-muted-foreground mb-4 uppercase tracking-wider font-medium">
+                    <p className="text-xs text-white mb-4 uppercase tracking-wider font-medium">
                       Quick Categories
                     </p>
                     <div className="flex flex-wrap gap-2">
@@ -428,7 +428,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                   exit={{ opacity: 0, x: 20 }}
                   className="p-4 sm:p-6"
                 >
-                  <p className="text-base text-muted-foreground mb-6 text-center">
+                  <p className="text-base text-white mb-6 text-center">
                     What type of expense is this?
                   </p>
                   <div className="space-y-2">
@@ -458,7 +458,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                           <div className="flex-1 text-left">
                             <span className="font-medium text-foreground">{category.label}</span>
                             {category.taxNote && (
-                              <span className="text-xs text-muted-foreground ml-2">
+                              <span className="text-xs text-white ml-2">
                                 ({category.taxNote})
                               </span>
                             )}
@@ -495,7 +495,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                   <div className="space-y-2">
                     <Label htmlFor="amount">Amount</Label>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-semibold text-muted-foreground">£</span>
+                      <span className="text-2xl font-semibold text-white">£</span>
                       <Input
                         id="amount"
                         type="number"
@@ -563,7 +563,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                   <div className="space-y-2">
                     <Label htmlFor="vat">VAT Amount (optional)</Label>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-medium text-muted-foreground">£</span>
+                      <span className="text-lg font-medium text-white">£</span>
                       <Input
                         id="vat"
                         type="number"
@@ -587,7 +587,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                   <div className="flex items-center justify-between py-2">
                     <div>
                       <Label>Tax Deductible</Label>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white">
                         Include in tax deduction calculations
                       </p>
                     </div>
@@ -601,7 +601,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
 
                   {/* AI Extracted Badge */}
                   {formData.ai_extracted && (
-                    <div className="text-xs text-muted-foreground bg-blue-500/10 border border-blue-500/20 rounded-lg px-3 py-2">
+                    <div className="text-xs text-white bg-blue-500/10 border border-blue-500/20 rounded-lg px-3 py-2">
                       <span className="text-blue-400">AI extracted</span> - Review the details above
                     </div>
                   )}

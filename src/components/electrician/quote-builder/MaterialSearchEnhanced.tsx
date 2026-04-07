@@ -120,7 +120,7 @@ export const MaterialSearchEnhanced = ({
       case 'low':
         return 'bg-red-500/20 text-red-300';
       default:
-        return 'bg-gray-500/20 text-gray-300';
+        return 'bg-gray-500/20 text-white';
     }
   };
 

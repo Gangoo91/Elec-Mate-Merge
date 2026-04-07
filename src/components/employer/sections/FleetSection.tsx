@@ -125,7 +125,7 @@ export function FleetSection() {
     ) || [];
 
   const getExpiryStatus = (dateStr: string | undefined) => {
-    if (!dateStr) return { status: 'unknown', color: 'text-white/60', bg: 'bg-muted' };
+    if (!dateStr) return { status: 'unknown', color: 'text-white', bg: 'bg-muted' };
     const date = new Date(dateStr);
     const now = new Date();
     const daysUntil = Math.ceil((date.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
@@ -203,7 +203,7 @@ export function FleetSection() {
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-white/60">Failed to load fleet data</p>
+        <p className="text-white">Failed to load fleet data</p>
         <Button onClick={() => refetch()} variant="outline" className="gap-2">
           <RefreshCw className="h-4 w-4" />
           Retry
@@ -498,7 +498,7 @@ export function FleetSection() {
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search..."
@@ -522,9 +522,9 @@ export function FleetSection() {
         ) : filteredVehicles.length === 0 ? (
           <Card className="bg-elec-gray border-border">
             <CardContent className="p-8 text-center">
-              <Car className="h-12 w-12 text-white/60 mx-auto mb-4" />
+              <Car className="h-12 w-12 text-white mx-auto mb-4" />
               <h3 className="font-semibold text-foreground mb-2">No vehicles</h3>
-              <p className="text-sm text-white/60 mb-4">
+              <p className="text-sm text-white mb-4">
                 Add your first vehicle to the fleet.
               </p>
               <Button onClick={() => setShowNewVehicle(true)} className="gap-2">
@@ -556,7 +556,7 @@ export function FleetSection() {
                               <AlertTriangle className="h-4 w-4 text-warning shrink-0" />
                             )}
                           </div>
-                          <p className="text-sm text-white/60 mb-2">
+                          <p className="text-sm text-white mb-2">
                             {vehicle.make} {vehicle.model} {vehicle.colour && `• ${vehicle.colour}`}
                           </p>
                           <div className="flex items-center gap-2 text-sm">
@@ -565,14 +565,14 @@ export function FleetSection() {
                                 {vehicle.assigned_to}
                               </Badge>
                             )}
-                            <span className="text-white/60">
+                            <span className="text-white">
                               {vehicle.mileage.toLocaleString()} miles
                             </span>
                           </div>
                         </div>
                         <div className="text-right shrink-0">
                           <Badge
-                            className={`${vehicle.status === 'Active' ? 'bg-success/20 text-success' : vehicle.status === 'Available' ? 'bg-info/20 text-info' : 'bg-muted text-white/60'} border-0`}
+                            className={`${vehicle.status === 'Active' ? 'bg-success/20 text-success' : vehicle.status === 'Available' ? 'bg-info/20 text-info' : 'bg-muted text-white'} border-0`}
                           >
                             {vehicle.status}
                           </Badge>
@@ -610,9 +610,9 @@ export function FleetSection() {
 
                       <div className="flex justify-center mt-2">
                         {isExpanded ? (
-                          <ChevronUp className="h-4 w-4 text-white/60" />
+                          <ChevronUp className="h-4 w-4 text-white" />
                         ) : (
-                          <ChevronDown className="h-4 w-4 text-white/60" />
+                          <ChevronDown className="h-4 w-4 text-white" />
                         )}
                       </div>
                     </div>
@@ -622,7 +622,7 @@ export function FleetSection() {
                         <div className="grid grid-cols-2 gap-3 text-sm">
                           {vehicle.mot_expiry && (
                             <div>
-                              <span className="text-white/60">MOT Expiry:</span>
+                              <span className="text-white">MOT Expiry:</span>
                               <p className={`font-medium ${motStatus.color}`}>
                                 {new Date(vehicle.mot_expiry).toLocaleDateString('en-GB')}
                               </p>
@@ -630,7 +630,7 @@ export function FleetSection() {
                           )}
                           {vehicle.tax_expiry && (
                             <div>
-                              <span className="text-white/60">Tax Expiry:</span>
+                              <span className="text-white">Tax Expiry:</span>
                               <p className={`font-medium ${taxStatus.color}`}>
                                 {new Date(vehicle.tax_expiry).toLocaleDateString('en-GB')}
                               </p>
@@ -638,7 +638,7 @@ export function FleetSection() {
                           )}
                           {vehicle.insurance_expiry && (
                             <div>
-                              <span className="text-white/60">Insurance Expiry:</span>
+                              <span className="text-white">Insurance Expiry:</span>
                               <p className="font-medium">
                                 {new Date(vehicle.insurance_expiry).toLocaleDateString('en-GB')}
                               </p>
@@ -646,7 +646,7 @@ export function FleetSection() {
                           )}
                           {vehicle.last_service && (
                             <div>
-                              <span className="text-white/60">Last Service:</span>
+                              <span className="text-white">Last Service:</span>
                               <p className="font-medium">
                                 {new Date(vehicle.last_service).toLocaleDateString('en-GB')}
                               </p>
@@ -654,14 +654,14 @@ export function FleetSection() {
                           )}
                           {vehicle.next_service && (
                             <div>
-                              <span className="text-white/60">Next Service:</span>
+                              <span className="text-white">Next Service:</span>
                               <p className="font-medium">
                                 {new Date(vehicle.next_service).toLocaleDateString('en-GB')}
                               </p>
                             </div>
                           )}
                           <div>
-                            <span className="text-white/60">Tracker:</span>
+                            <span className="text-white">Tracker:</span>
                             <p className="font-medium flex items-center gap-1">
                               {vehicle.tracker_fitted ? (
                                 <>
@@ -780,8 +780,8 @@ export function FleetSection() {
       ) : filteredFuelLogs.length === 0 ? (
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-8 text-center">
-            <Fuel className="h-12 w-12 text-white/60 mx-auto mb-4" />
-            <p className="text-sm text-white/60">No fuel logs yet.</p>
+            <Fuel className="h-12 w-12 text-white mx-auto mb-4" />
+            <p className="text-sm text-white">No fuel logs yet.</p>
           </CardContent>
         </Card>
       ) : (
@@ -798,12 +798,12 @@ export function FleetSection() {
                       </h3>
                     </div>
                     {log.location && (
-                      <p className="text-sm text-white/60 mb-2">{log.location}</p>
+                      <p className="text-sm text-white mb-2">{log.location}</p>
                     )}
                     <div className="flex items-center gap-3 text-sm">
-                      {log.litres && <span className="text-white/60">{log.litres}L</span>}
+                      {log.litres && <span className="text-white">{log.litres}L</span>}
                       {log.mileage && (
-                        <span className="text-white/60">
+                        <span className="text-white">
                           {log.mileage.toLocaleString()} miles
                         </span>
                       )}
@@ -813,7 +813,7 @@ export function FleetSection() {
                     {log.cost && (
                       <p className="font-bold text-foreground">£{log.cost.toFixed(2)}</p>
                     )}
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       {new Date(log.date).toLocaleDateString('en-GB')}
                     </p>
                   </div>

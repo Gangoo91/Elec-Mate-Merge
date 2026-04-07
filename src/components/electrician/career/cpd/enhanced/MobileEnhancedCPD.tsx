@@ -55,11 +55,11 @@ const MobileEnhancedCPD = ({
               <div className="text-xl font-bold text-foreground">
                 {compliance?.hoursCompleted || 0}
               </div>
-              <p className="text-xs text-muted-foreground">Hours Logged</p>
+              <p className="text-xs text-white">Hours Logged</p>
             </div>
             <div>
               <div className="text-xl font-bold text-foreground">{entries.length}</div>
-              <p className="text-xs text-muted-foreground">Activities</p>
+              <p className="text-xs text-white">Activities</p>
             </div>
             <div>
               <div className="text-xl font-bold text-foreground">
@@ -68,7 +68,7 @@ const MobileEnhancedCPD = ({
                   : 0}
                 %
               </div>
-              <p className="text-xs text-muted-foreground">Progress</p>
+              <p className="text-xs text-white">Progress</p>
             </div>
           </div>
 
@@ -78,7 +78,7 @@ const MobileEnhancedCPD = ({
                 value={Math.min((compliance.hoursCompleted / compliance.hoursRequired) * 100, 100)}
                 className="h-2"
               />
-              <p className="text-xs text-muted-foreground text-center mt-1">
+              <p className="text-xs text-white text-center mt-1">
                 {compliance.hoursRequired - compliance.hoursCompleted} hours to target
               </p>
             </div>
@@ -96,7 +96,7 @@ const MobileEnhancedCPD = ({
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5" />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-foreground">{reminder.title}</p>
-                    <p className="text-xs text-muted-foreground">{reminder.message}</p>
+                    <p className="text-xs text-white">{reminder.message}</p>
                   </div>
                   <Badge variant="outline" className="text-xs border-red-500/30 text-red-400">
                     Urgent
@@ -148,7 +148,7 @@ const MobileEnhancedCPD = ({
                   >
                     {compliance.overallStatus.replace('-', ' ').toUpperCase()}
                   </Badge>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-sm text-white">
                     {compliance.hoursCompleted}/{compliance.hoursRequired}h
                   </span>
                 </div>
@@ -162,7 +162,7 @@ const MobileEnhancedCPD = ({
                 />
 
                 {compliance.recommendations.length > 0 && (
-                  <div className="mt-3 p-2 bg-muted/20 rounded text-xs text-muted-foreground">
+                  <div className="mt-3 p-2 bg-muted/20 rounded text-xs text-white">
                     <strong>Tip:</strong> {compliance.recommendations[0]}
                   </div>
                 )}
@@ -197,7 +197,7 @@ const MobileEnhancedCPD = ({
                           >
                             {gap.status}
                           </Badge>
-                          <span className="text-xs text-muted-foreground">{gap.completed}h</span>
+                          <span className="text-xs text-white">{gap.completed}h</span>
                         </div>
                       </div>
                       <Progress
@@ -295,7 +295,7 @@ const MobileEnhancedCPD = ({
                   >
                     <div className="text-left">
                       <p className="text-sm font-medium">{template.title}</p>
-                      <p className="text-xs text-muted-foreground">{template.estimatedHours}h</p>
+                      <p className="text-xs text-white">{template.estimatedHours}h</p>
                     </div>
                     <Plus className="h-4 w-4" />
                   </Button>
@@ -328,7 +328,7 @@ const MobileEnhancedCPD = ({
                         <p className="text-sm font-medium text-foreground truncate">
                           {entry.activity}
                         </p>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-2 text-xs text-white">
                           <span>{new Date(entry.date).toLocaleDateString()}</span>
                           <span>•</span>
                           <span>{entry.hours}h</span>
@@ -342,8 +342,8 @@ const MobileEnhancedCPD = ({
                 </div>
               ) : (
                 <div className="text-center py-6">
-                  <Clock className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">
+                  <Clock className="h-8 w-8 text-white mx-auto mb-2" />
+                  <p className="text-sm text-white">
                     No activities logged yet. Start adding your CPD activities!
                   </p>
                 </div>
@@ -380,7 +380,7 @@ const MobileEnhancedCPD = ({
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-foreground">{reminder.title}</p>
-                          <p className="text-xs text-muted-foreground">{reminder.message}</p>
+                          <p className="text-xs text-white">{reminder.message}</p>
                           <div className="flex items-center gap-1 mt-1">
                             <Badge variant="outline" className="text-xs">
                               {reminder.type.replace('-', ' ')}
@@ -406,7 +406,7 @@ const MobileEnhancedCPD = ({
               ) : (
                 <div className="text-center py-6">
                   <CheckCircle className="h-8 w-8 text-green-400 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white">
                     All caught up! No pending reminders.
                   </p>
                 </div>

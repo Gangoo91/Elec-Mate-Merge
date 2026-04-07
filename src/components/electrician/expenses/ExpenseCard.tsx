@@ -304,7 +304,7 @@ export function ExpenseCard({
 
             {/* Row 4: Description (if exists) */}
             {expense.description && (
-              <p className="text-xs text-muted-foreground/70 mt-1.5 truncate">
+              <p className="text-xs text-white mt-1.5 truncate">
                 {expense.description}
               </p>
             )}
@@ -331,7 +331,7 @@ export function ExpenseCard({
               <CheckCircle2 className="h-5 w-5 text-green-400" />
             </div>
           ) : onClick ? (
-            <ChevronRight className="h-5 w-5 text-muted-foreground/40 flex-shrink-0" />
+            <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
           ) : null}
         </div>
       </motion.div>

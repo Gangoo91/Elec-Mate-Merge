@@ -299,7 +299,7 @@ export const InvoiceWizard = ({
                 <div className="w-full border-t border-border/50" />
               </div>
               <div className="relative flex justify-center">
-                <span className="bg-background px-3 text-xs text-muted-foreground uppercase tracking-wider">
+                <span className="bg-background px-3 text-xs text-white uppercase tracking-wider">
                   Review & Create
                 </span>
               </div>
@@ -378,7 +378,7 @@ export const InvoiceWizard = ({
                   'flex items-center gap-2 px-4 py-2.5 rounded-full transition-all active:scale-95',
                   isComplete && 'bg-emerald-500/20 text-emerald-400 cursor-pointer',
                   isActive && 'bg-elec-yellow text-elec-dark font-semibold',
-                  !isComplete && !isActive && 'bg-elec-gray/30 text-muted-foreground'
+                  !isComplete && !isActive && 'bg-elec-gray/30 text-white'
                 )}
               >
                 {isComplete ? <Check className="h-4 w-4" /> : <Icon className="h-4 w-4" />}

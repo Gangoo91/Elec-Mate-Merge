@@ -475,7 +475,7 @@ const QuotesPage = () => {
                   ? 'Invoiced Quotes'
                   : filterOptions.find((f) => f.id === filter)?.label + ' Quotes'}
             </h2>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-white">
               {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
             </span>
           </div>
@@ -488,9 +488,9 @@ const QuotesPage = () => {
             searchQuery.trim() ? (
               <Card className="bg-muted/20 border-dashed">
                 <CardContent className="py-10 text-center">
-                  <Search className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                  <Search className="h-10 w-10 mx-auto text-white mb-3" />
                   <p className="font-medium">No quotes found</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-white mt-1">
                     No quotes match "{searchQuery}"
                   </p>
                   <Button variant="outline" onClick={() => setSearchQuery('')} className="mt-4">
@@ -506,9 +506,9 @@ const QuotesPage = () => {
             ) : (
               <Card className="bg-muted/20 border-dashed">
                 <CardContent className="py-10 text-center">
-                  <FileText className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                  <FileText className="h-10 w-10 mx-auto text-white mb-3" />
                   <p className="font-medium">No {filter} quotes</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-white mt-1">
                     Quotes will appear here when {filter}
                   </p>
                 </CardContent>

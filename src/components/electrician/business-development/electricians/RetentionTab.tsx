@@ -252,7 +252,7 @@ const RetentionTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -284,7 +284,7 @@ const RetentionTab = () => {
                       </Badge>
                     </div>
                     <p
-                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground text-left`}
+                      className={`${isMobile ? 'text-xs' : 'text-sm'} text-white text-left`}
                     >
                       {framework.description}
                     </p>

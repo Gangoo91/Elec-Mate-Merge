@@ -173,7 +173,7 @@ const PracticalGuidance = () => {
                       {guide.steps.map((step, stepIndex) => (
                         <li
                           key={stepIndex}
-                          className="text-sm text-muted-foreground flex items-start gap-2"
+                          className="text-sm text-white flex items-start gap-2"
                         >
                           <span className="bg-primary/20 text-primary rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
                             {stepIndex + 1}
@@ -192,7 +192,7 @@ const PracticalGuidance = () => {
                       {guide.keyPoints.map((point, pointIndex) => (
                         <li
                           key={pointIndex}
-                          className="text-sm text-muted-foreground flex items-start gap-2"
+                          className="text-sm text-white flex items-start gap-2"
                         >
                           <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
                           {point}

@@ -224,32 +224,32 @@ export function TenderSection() {
     <div className="space-y-4 py-4">
       {estimatorTender && (
         <div className="p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
-          <p className="text-sm text-white/60">Estimating for:</p>
+          <p className="text-sm text-white">Estimating for:</p>
           <p className="font-semibold">{estimatorTender.title}</p>
-          <p className="text-sm text-white/60">{estimatorTender.client}</p>
+          <p className="text-sm text-white">{estimatorTender.client}</p>
         </div>
       )}
 
-      <p className="text-sm text-white/60">
+      <p className="text-sm text-white">
         Upload your tender documents and our AI will generate a comprehensive estimate package
         including:
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="p-3 bg-muted/50 rounded-lg">
           <p className="font-medium text-sm">Scoped RAMS</p>
-          <p className="text-xs text-white/60">Auto-generated risk assessments</p>
+          <p className="text-xs text-white">Auto-generated risk assessments</p>
         </div>
         <div className="p-3 bg-muted/50 rounded-lg">
           <p className="font-medium text-sm">Labour Hours</p>
-          <p className="text-xs text-white/60">Estimated man-hours breakdown</p>
+          <p className="text-xs text-white">Estimated man-hours breakdown</p>
         </div>
         <div className="p-3 bg-muted/50 rounded-lg">
           <p className="font-medium text-sm">Materials List</p>
-          <p className="text-xs text-white/60">Complete material requirements</p>
+          <p className="text-xs text-white">Complete material requirements</p>
         </div>
         <div className="p-3 bg-muted/50 rounded-lg">
           <p className="font-medium text-sm">Hazard Profile</p>
-          <p className="text-xs text-white/60">Identified hazards and controls</p>
+          <p className="text-xs text-white">Identified hazards and controls</p>
         </div>
       </div>
 
@@ -266,9 +266,9 @@ export function TenderSection() {
         className="border-2 border-dashed border-border rounded-lg p-6 sm:p-8 text-center cursor-pointer hover:border-elec-yellow/50 active:bg-muted/30 transition-all touch-manipulation"
         onClick={() => fileInputRef.current?.click()}
       >
-        <Brain className="h-10 w-10 sm:h-12 sm:w-12 text-white/60 mx-auto mb-3" />
+        <Brain className="h-10 w-10 sm:h-12 sm:w-12 text-white mx-auto mb-3" />
         <p className="font-medium">Upload Tender Documents</p>
-        <p className="text-sm text-white/60">Drawings, specs, BOQs, job descriptions</p>
+        <p className="text-sm text-white">Drawings, specs, BOQs, job descriptions</p>
         <Button
           variant="outline"
           className="mt-4"
@@ -293,9 +293,9 @@ export function TenderSection() {
                 className="flex items-center justify-between p-2 bg-muted/50 rounded-lg"
               >
                 <div className="flex items-center gap-2 min-w-0">
-                  <FileIcon className="h-4 w-4 text-white/60 shrink-0" />
+                  <FileIcon className="h-4 w-4 text-white shrink-0" />
                   <span className="text-sm truncate">{file.name}</span>
-                  <span className="text-xs text-white/60 shrink-0">
+                  <span className="text-xs text-white shrink-0">
                     ({(file.size / 1024).toFixed(0)} KB)
                   </span>
                 </div>
@@ -481,24 +481,24 @@ export function TenderSection() {
                     <h4 className="font-medium text-sm md:text-base">
                       {estimate.tender?.title || 'Untitled Tender'}
                     </h4>
-                    <div className="grid grid-cols-3 gap-2 mt-2 md:flex md:items-center md:gap-4 text-xs md:text-sm text-white/60">
+                    <div className="grid grid-cols-3 gap-2 mt-2 md:flex md:items-center md:gap-4 text-xs md:text-sm text-white">
                       <div className="bg-muted/50 p-2 rounded md:bg-transparent md:p-0">
-                        <p className="text-white/60 text-[10px] md:hidden">Labour</p>
-                        <p className="font-medium text-foreground md:text-white/60">
+                        <p className="text-white text-[10px] md:hidden">Labour</p>
+                        <p className="font-medium text-foreground md:text-white">
                           <span className="hidden md:inline">Labour: </span>£
                           {Number(estimate.labour_cost).toLocaleString()}
                         </p>
                       </div>
                       <div className="bg-muted/50 p-2 rounded md:bg-transparent md:p-0">
-                        <p className="text-white/60 text-[10px] md:hidden">Materials</p>
-                        <p className="font-medium text-foreground md:text-white/60">
+                        <p className="text-white text-[10px] md:hidden">Materials</p>
+                        <p className="font-medium text-foreground md:text-white">
                           <span className="hidden md:inline">Materials: </span>£
                           {Number(estimate.materials_cost).toLocaleString()}
                         </p>
                       </div>
                       <div className="bg-muted/50 p-2 rounded md:bg-transparent md:p-0">
-                        <p className="text-white/60 text-[10px] md:hidden">Programme</p>
-                        <p className="font-medium text-foreground md:text-white/60">
+                        <p className="text-white text-[10px] md:hidden">Programme</p>
+                        <p className="font-medium text-foreground md:text-white">
                           <span className="hidden md:inline">Programme: </span>
                           {estimate.programme || 'TBD'}
                         </p>
@@ -515,7 +515,7 @@ export function TenderSection() {
                           ? 'bg-success/20 text-success border-0'
                           : estimate.confidence === 'Medium'
                             ? 'bg-warning/20 text-warning border-0'
-                            : 'bg-muted text-white/60 border-0'
+                            : 'bg-muted text-white border-0'
                       }
                     >
                       {estimate.confidence}
@@ -532,9 +532,9 @@ export function TenderSection() {
       {tenders.length === 0 && (
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-8 text-center">
-            <FileSearch className="h-12 w-12 text-white/60 mx-auto mb-4" />
+            <FileSearch className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="font-semibold text-lg mb-2">No Tenders Yet</h3>
-            <p className="text-sm text-white/60 mb-4">
+            <p className="text-sm text-white mb-4">
               Start tracking your tender opportunities to manage bids and win more work.
             </p>
             <Button
@@ -580,7 +580,7 @@ export function TenderSection() {
                   {filteredTenders.length === 0 ? (
                     <Card className="bg-elec-gray border-border">
                       <CardContent className="p-6 text-center">
-                        <p className="text-sm text-white/60">No {tab} tenders</p>
+                        <p className="text-sm text-white">No {tab} tenders</p>
                       </CardContent>
                     </Card>
                   ) : (
@@ -596,11 +596,11 @@ export function TenderSection() {
                                   </h3>
                                   <StatusBadge status={getStatusBadge(tender.status)} />
                                 </div>
-                                <p className="text-sm text-white/60 mt-1">
+                                <p className="text-sm text-white mt-1">
                                   {tender.client}
                                 </p>
                                 {tender.tender_number && (
-                                  <p className="text-xs text-white/60">
+                                  <p className="text-xs text-white">
                                     {tender.tender_number}
                                   </p>
                                 )}
@@ -617,7 +617,7 @@ export function TenderSection() {
                               {tender.deadline && (
                                 <span
                                   className={cn(
-                                    'text-white/60',
+                                    'text-white',
                                     new Date(tender.deadline) < new Date() && 'text-destructive'
                                   )}
                                 >
@@ -712,7 +712,7 @@ export function TenderSection() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
               <div>
                 <h3 className="font-semibold text-base md:text-lg">Total Open Tender Value</h3>
-                <p className="text-xs md:text-sm text-white/60">
+                <p className="text-xs md:text-sm text-white">
                   Combined value of all open opportunities
                 </p>
               </div>
@@ -780,7 +780,7 @@ export function TenderSection() {
                 <MapPin className="h-5 w-5 text-elec-yellow" />
                 Discover Tender Opportunities
               </SheetTitle>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Find electrical contracts from 20+ UK sources
               </p>
             </SheetHeader>

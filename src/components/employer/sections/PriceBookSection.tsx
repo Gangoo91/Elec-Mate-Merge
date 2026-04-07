@@ -172,7 +172,7 @@ export function PriceBookSection() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
                 £
               </span>
               <Input
@@ -199,7 +199,7 @@ export function PriceBookSection() {
           </div>
 
           {newItemBuyPrice && (
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Sell price: £{(parseFloat(newItemBuyPrice) * 1.3).toFixed(2)} (30% markup)
             </p>
           )}
@@ -222,7 +222,7 @@ export function PriceBookSection() {
               <Package className="h-4 w-4 text-elec-yellow" />
             </div>
             <div>
-              <p className="text-xs text-white/60">Total Items</p>
+              <p className="text-xs text-white">Total Items</p>
               <p className="text-lg font-semibold">
                 {statsLoading ? (
                   <Skeleton className="h-6 w-12" />
@@ -240,7 +240,7 @@ export function PriceBookSection() {
               <TrendingUp className="h-4 w-4 text-green-500" />
             </div>
             <div>
-              <p className="text-xs text-white/60">Avg Markup</p>
+              <p className="text-xs text-white">Avg Markup</p>
               <p className="text-lg font-semibold">
                 {statsLoading ? <Skeleton className="h-6 w-12" /> : `${stats?.avgMarkup}%`}
               </p>
@@ -254,7 +254,7 @@ export function PriceBookSection() {
               <AlertTriangle className="h-4 w-4 text-amber-500" />
             </div>
             <div>
-              <p className="text-xs text-white/60">Low Stock</p>
+              <p className="text-xs text-white">Low Stock</p>
               <p className="text-lg font-semibold">
                 {statsLoading ? <Skeleton className="h-6 w-12" /> : stats?.lowStock}
               </p>
@@ -268,7 +268,7 @@ export function PriceBookSection() {
               <PoundSterling className="h-4 w-4 text-blue-500" />
             </div>
             <div>
-              <p className="text-xs text-white/60">Stock Value</p>
+              <p className="text-xs text-white">Stock Value</p>
               <p className="text-lg font-semibold">
                 {statsLoading ? (
                   <Skeleton className="h-6 w-12" />
@@ -284,7 +284,7 @@ export function PriceBookSection() {
       {/* Search */}
       <div className="relative">
         {!search && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/60 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search materials, SKUs..."
@@ -315,7 +315,7 @@ export function PriceBookSection() {
       {search.length < 2 ? (
         <div className="text-center py-12">
           <Search className="h-12 w-12 mx-auto text-white mb-4" />
-          <p className="text-white/60">Type at least 2 characters to search</p>
+          <p className="text-white">Type at least 2 characters to search</p>
           <p className="text-sm text-white mt-1">
             Or ask your voice assistant for a price lookup
           </p>
@@ -329,14 +329,14 @@ export function PriceBookSection() {
       ) : items.length === 0 ? (
         <div className="text-center py-12">
           <Package className="h-12 w-12 mx-auto text-white mb-4" />
-          <p className="text-white/60">No items found</p>
+          <p className="text-white">No items found</p>
           <Button variant="link" onClick={() => setShowQuickAdd(true)} className="mt-2">
             Add new item
           </Button>
         </div>
       ) : (
         <div className="space-y-2">
-          <p className="text-sm text-white/60">{totalFound.toLocaleString()} results</p>
+          <p className="text-sm text-white">{totalFound.toLocaleString()} results</p>
 
           {items.map((item) => (
             <Card
@@ -347,18 +347,18 @@ export function PriceBookSection() {
               <div className="p-3 flex items-center gap-3 cursor-pointer">
                 <div className="flex-1 min-w-0">
                   <p className="font-medium truncate">{item.name}</p>
-                  <p className="text-sm text-white/60">
+                  <p className="text-sm text-white">
                     {item.category} {item.sku && `• ${item.sku}`}
                   </p>
                 </div>
                 <div className="text-right shrink-0">
                   <p className="font-semibold text-elec-yellow">£{item.sell_price.toFixed(2)}</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Cost: £{item.buy_price.toFixed(2)}
                   </p>
                 </div>
                 <ChevronRight
-                  className={`h-4 w-4 text-white/60 transition-transform ${expandedId === item.id ? 'rotate-90' : ''}`}
+                  className={`h-4 w-4 text-white transition-transform ${expandedId === item.id ? 'rotate-90' : ''}`}
                 />
               </div>
 
@@ -366,17 +366,17 @@ export function PriceBookSection() {
                 <div className="px-3 pb-3 pt-0 border-t border-border mt-2 space-y-2">
                   <div className="grid grid-cols-2 gap-4 text-sm pt-2">
                     <div>
-                      <p className="text-white/60">Markup</p>
+                      <p className="text-white">Markup</p>
                       <p className="font-medium">
                         {item.markup ? `${item.markup.toFixed(0)}%` : 'N/A'}
                       </p>
                     </div>
                     <div>
-                      <p className="text-white/60">Unit</p>
+                      <p className="text-white">Unit</p>
                       <p className="font-medium">{item.unit}</p>
                     </div>
                     <div>
-                      <p className="text-white/60">Stock</p>
+                      <p className="text-white">Stock</p>
                       <p
                         className={`font-medium ${item.stock_level <= item.reorder_level ? 'text-amber-500' : ''}`}
                       >
@@ -384,7 +384,7 @@ export function PriceBookSection() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-white/60">Supplier</p>
+                      <p className="text-white">Supplier</p>
                       <p className="font-medium">{item.suppliers?.name || 'N/A'}</p>
                     </div>
                   </div>

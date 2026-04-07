@@ -158,7 +158,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
       <div className="text-center space-y-4 p-8">
         <AlertCircle className="h-12 w-12 text-yellow-500 mx-auto" />
         <h3 className="text-lg font-semibold">Loading CPD Dashboard</h3>
-        <p className="text-muted-foreground">Please wait while we load your compliance data...</p>
+        <p className="text-white">Please wait while we load your compliance data...</p>
       </div>
     );
   }
@@ -181,7 +181,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">CPD Tracker</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Track your professional development against {selectedMembership.professional_body?.name}{' '}
             requirements
           </p>
@@ -229,7 +229,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
         </CardHeader>
         <CardContent>
           <Progress value={complianceStats.compliance_percentage} className="w-full h-3" />
-          <div className="flex justify-between mt-2 text-sm text-muted-foreground">
+          <div className="flex justify-between mt-2 text-sm text-white">
             <span>0 hours</span>
             <span className={getComplianceColor(complianceStats.compliance_percentage)}>
               {complianceStats.total_hours} hours
@@ -257,7 +257,7 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
                 </Badge>
               </div>
               <Progress value={Math.min(category.percentage, 100)} className="w-full h-2" />
-              <div className="text-sm text-muted-foreground">{category.percentage}% complete</div>
+              <div className="text-sm text-white">{category.percentage}% complete</div>
             </div>
           ))}
         </CardContent>
@@ -268,37 +268,37 @@ const EnhancedCPDDashboard: React.FC<EnhancedCPDDashboardProps> = ({
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Entries</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
+            <FileText className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{complianceStats.entries_count}</div>
-            <p className="text-xs text-muted-foreground">CPD activities recorded</p>
+            <p className="text-xs text-white">CPD activities recorded</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Verified</CardTitle>
-            <CheckCircle className="h-4 w-4 text-muted-foreground" />
+            <CheckCircle className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">
               {complianceStats.verified_entries}
             </div>
-            <p className="text-xs text-muted-foreground">Evidence verified</p>
+            <p className="text-xs text-white">Evidence verified</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Pending</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <Clock className="h-4 w-4 text-white" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-yellow-600">
               {complianceStats.pending_verification}
             </div>
-            <p className="text-xs text-muted-foreground">Awaiting verification</p>
+            <p className="text-xs text-white">Awaiting verification</p>
           </CardContent>
         </Card>
       </div>

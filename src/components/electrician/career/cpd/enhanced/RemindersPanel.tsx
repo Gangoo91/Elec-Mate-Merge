@@ -44,7 +44,7 @@ const RemindersPanel = () => {
       case 'low':
         return 'text-blue-400 border-blue-500/30 bg-blue-500/10';
       default:
-        return 'text-gray-400 border-gray-500/30 bg-gray-500/10';
+        return 'text-white border-gray-500/30 bg-gray-500/10';
     }
   };
 
@@ -59,7 +59,7 @@ const RemindersPanel = () => {
       case 'renewal':
         return 'bg-purple-500/10 text-purple-400';
       default:
-        return 'bg-gray-500/10 text-gray-400';
+        return 'bg-gray-500/10 text-white';
     }
   };
 
@@ -89,7 +89,7 @@ const RemindersPanel = () => {
         <CardContent className="p-6 text-center">
           <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-3" />
           <h3 className="font-medium text-foreground mb-2">All caught up!</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             No pending reminders. Your CPD progress is on track.
           </p>
         </CardContent>
@@ -169,19 +169,19 @@ const RemindersPanel = () => {
                         </Badge>
                       </div>
 
-                      <p className="text-sm text-muted-foreground mb-2">{reminder.message}</p>
+                      <p className="text-sm text-white mb-2">{reminder.message}</p>
 
                       <div className="flex items-center gap-2 text-xs">
                         <div className="flex items-center gap-1">
                           <Calendar className="h-3 w-3" />
-                          <span className="text-muted-foreground">
+                          <span className="text-white">
                             {formatDaysUntil(reminder.dueDate)}
                           </span>
                         </div>
 
                         {reminder.actionRequired && (
                           <>
-                            <span className="text-muted-foreground">•</span>
+                            <span className="text-white">•</span>
                             <span className="text-foreground">{reminder.actionRequired}</span>
                           </>
                         )}
@@ -240,19 +240,19 @@ const RemindersPanel = () => {
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
               <div className="text-lg font-bold text-red-400">{highPriorityReminders.length}</div>
-              <p className="text-xs text-muted-foreground">High Priority</p>
+              <p className="text-xs text-white">High Priority</p>
             </div>
             <div>
               <div className="text-lg font-bold text-yellow-400">
                 {reminders.filter((r) => r.priority === 'medium').length}
               </div>
-              <p className="text-xs text-muted-foreground">Medium Priority</p>
+              <p className="text-xs text-white">Medium Priority</p>
             </div>
             <div>
               <div className="text-lg font-bold text-blue-400">
                 {reminders.filter((r) => r.priority === 'low').length}
               </div>
-              <p className="text-xs text-muted-foreground">Low Priority</p>
+              <p className="text-xs text-white">Low Priority</p>
             </div>
           </div>
         </CardContent>

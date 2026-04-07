@@ -76,7 +76,7 @@ const ModernCourseDetailsModal = ({
       case 'Medium':
         return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
       default:
-        return 'bg-gray-500/10 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/10 text-white border-gray-500/30';
     }
   };
 
@@ -147,7 +147,7 @@ const ModernCourseDetailsModal = ({
               </div>
 
               {/* Description */}
-              <p className="text-muted-foreground text-xs sm:text-sm lg:text-base leading-relaxed">
+              <p className="text-white text-xs sm:text-sm lg:text-base leading-relaxed">
                 {course.description}
               </p>
             </div>
@@ -161,7 +161,7 @@ const ModernCourseDetailsModal = ({
               <CardContent className="p-3 sm:p-4 text-center">
                 <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
                 <div className="font-medium text-xs sm:text-sm">{course.duration}</div>
-                <div className="text-xs text-muted-foreground">Duration</div>
+                <div className="text-xs text-white">Duration</div>
               </CardContent>
             </Card>
 
@@ -169,7 +169,7 @@ const ModernCourseDetailsModal = ({
               <CardContent className="p-3 sm:p-4 text-center">
                 <Users className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
                 <div className="font-medium text-xs sm:text-sm">{course.level}</div>
-                <div className="text-xs text-muted-foreground">Level</div>
+                <div className="text-xs text-white">Level</div>
               </CardContent>
             </Card>
 
@@ -177,7 +177,7 @@ const ModernCourseDetailsModal = ({
               <CardContent className="p-3 sm:p-4 text-center">
                 <PoundSterling className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
                 <div className="font-medium text-xs sm:text-sm">{course.price}</div>
-                <div className="text-xs text-muted-foreground">Price</div>
+                <div className="text-xs text-white">Price</div>
               </CardContent>
             </Card>
 
@@ -185,7 +185,7 @@ const ModernCourseDetailsModal = ({
               <CardContent className="p-3 sm:p-4 text-center">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow mx-auto mb-1 sm:mb-2" />
                 <div className="font-medium text-xs sm:text-sm">{course.format}</div>
-                <div className="text-xs text-muted-foreground">Format</div>
+                <div className="text-xs text-white">Format</div>
               </CardContent>
             </Card>
           </div>
@@ -212,7 +212,7 @@ const ModernCourseDetailsModal = ({
                   <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
                   <span className="text-xs sm:text-sm font-medium">Next Start</span>
                 </div>
-                <div className="text-xs sm:text-sm text-muted-foreground mt-1">
+                <div className="text-xs sm:text-sm text-white mt-1">
                   {displayNextDates[0]}
                 </div>
               </CardContent>
@@ -269,7 +269,7 @@ const ModernCourseDetailsModal = ({
                       {displayCourseOutline.map((item, idx) => (
                         <div
                           key={idx}
-                          className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2"
+                          className="text-xs sm:text-sm text-white flex items-start gap-2"
                         >
                           <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 shrink-0" />
                           <span>{item}</span>
@@ -289,7 +289,7 @@ const ModernCourseDetailsModal = ({
                       {displayCareerOutcomes.map((outcome, idx) => (
                         <div
                           key={idx}
-                          className="text-xs sm:text-sm text-muted-foreground flex items-start gap-2"
+                          className="text-xs sm:text-sm text-white flex items-start gap-2"
                         >
                           <div className="w-1 h-1 rounded-full bg-elec-yellow mt-1.5 sm:mt-2 shrink-0" />
                           <span>{outcome}</span>
@@ -321,7 +321,7 @@ const ModernCourseDetailsModal = ({
                     <Phone className="h-3 w-3 sm:h-4 sm:w-4 text-elec-yellow" />
                     <span className="font-medium text-xs sm:text-sm">Get in Touch</span>
                   </div>
-                  <p className="text-xs sm:text-sm text-muted-foreground">
+                  <p className="text-xs sm:text-sm text-white">
                     Contact {course.provider} directly for course availability, pricing details, and
                     enrollment information.
                   </p>

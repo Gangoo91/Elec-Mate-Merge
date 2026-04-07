@@ -95,7 +95,7 @@ const TrialBanner = () => {
               <h3 className={cn('font-semibold text-base sm:text-lg', colors.text)}>
                 Your Free Trial Has Ended
               </h3>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-sm text-white mt-1">
                 Subscribe now to continue accessing all features and keep your progress.
               </p>
             </div>
@@ -138,7 +138,7 @@ const TrialBanner = () => {
                   {daysRemaining} {daysRemaining === 1 ? 'day' : 'days'} left
                 </span>
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground mt-0.5">
+              <p className="text-xs sm:text-sm text-white mt-0.5">
                 {isUrgent
                   ? 'Your trial is ending soon! Upgrade to keep full access.'
                   : isWarning
@@ -167,7 +167,7 @@ const TrialBanner = () => {
           {/* Progress bar */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-muted-foreground">Trial progress</span>
+              <span className="text-white">Trial progress</span>
               <span className={cn('font-medium', colors.text)}>
                 Day {7 - daysRemaining + 1} of 7
               </span>

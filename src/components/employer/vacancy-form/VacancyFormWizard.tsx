@@ -281,7 +281,7 @@ export function VacancyFormWizard({
                       {isEditing ? 'Edit Vacancy' : 'Post Job Vacancy'}
                     </span>
                     <div className="flex items-center gap-2">
-                      <p className="text-xs text-white/60 font-normal">
+                      <p className="text-xs text-white font-normal">
                         {currentStepData.title} - {currentStepData.description}
                       </p>
                       {/* Draft save indicator */}
@@ -292,7 +292,7 @@ export function VacancyFormWizard({
                             isSavingDraft
                               ? 'text-elec-yellow animate-pulse'
                               : lastSaved
-                                ? 'text-white/60'
+                                ? 'text-white'
                                 : 'text-transparent'
                           )}
                         >
@@ -352,7 +352,7 @@ export function VacancyFormWizard({
                         ? 'text-elec-yellow font-medium'
                         : index < currentStep
                           ? 'text-elec-yellow/60 hover:text-elec-yellow/80'
-                          : 'text-white/60'
+                          : 'text-white'
                     )}
                   >
                     {step.title}

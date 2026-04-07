@@ -82,7 +82,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
         totalOverdueInvoices > 0
           ? 'border-destructive/50 hover:border-destructive/80'
           : 'border-muted/30 hover:border-muted/50',
-      textClass: totalOverdueInvoices > 0 ? 'text-destructive' : 'text-white/60',
+      textClass: totalOverdueInvoices > 0 ? 'text-destructive' : 'text-white',
       section: 'quotes' as Section,
       pulse: totalOverdueInvoices > 0,
     },
@@ -96,7 +96,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
         pendingExpenses.length > 0
           ? 'border-warning/50 hover:border-warning/80'
           : 'border-muted/30 hover:border-muted/50',
-      textClass: pendingExpenses.length > 0 ? 'text-warning' : 'text-white/60',
+      textClass: pendingExpenses.length > 0 ? 'text-warning' : 'text-white',
       section: 'expenses' as Section,
     },
   ];

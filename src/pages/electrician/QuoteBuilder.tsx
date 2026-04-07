@@ -145,7 +145,7 @@ const QuoteBuilder = () => {
                       onClick={() => setSearchQuery('')}
                       className="absolute right-3 top-1/2 -translate-y-1/2"
                     >
-                      <X className="h-4 w-4 text-muted-foreground" />
+                      <X className="h-4 w-4 text-white" />
                     </button>
                   )}
                 </div>
@@ -154,7 +154,7 @@ const QuoteBuilder = () => {
                     setIsSearchOpen(false);
                     setSearchQuery('');
                   }}
-                  className="text-sm text-muted-foreground"
+                  className="text-sm text-white"
                 >
                   Cancel
                 </button>
@@ -208,7 +208,7 @@ const QuoteBuilder = () => {
                 <span
                   className={cn(
                     'ml-1.5',
-                    activeFilter === filter.id ? 'text-elec-dark/70' : 'text-muted-foreground'
+                    activeFilter === filter.id ? 'text-elec-dark/70' : 'text-white'
                   )}
                 >
                   {filter.count}
@@ -232,13 +232,13 @@ const QuoteBuilder = () => {
                   <TrendingUp className="h-6 w-6 text-elec-yellow" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-xs text-muted-foreground font-medium">This Month</p>
+                  <p className="text-xs text-white font-medium">This Month</p>
                   <p className="text-2xl font-bold text-elec-yellow">
                     £{stats.monthlyTotal.toLocaleString()}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-muted-foreground">{stats.approved} approved</p>
+                  <p className="text-xs text-white">{stats.approved} approved</p>
                   <p className="text-xs text-emerald-400">+{stats.sent} sent</p>
                 </div>
               </CardContent>
@@ -257,7 +257,7 @@ const QuoteBuilder = () => {
                   <Clock className="h-5 w-5 text-amber-400" />
                   <span className="text-2xl font-bold">{stats.pending}</span>
                 </div>
-                <p className="text-xs text-muted-foreground">Pending</p>
+                <p className="text-xs text-white">Pending</p>
               </CardContent>
             </Card>
 
@@ -273,7 +273,7 @@ const QuoteBuilder = () => {
                   <CheckCircle className="h-5 w-5 text-emerald-400" />
                   <span className="text-2xl font-bold">{stats.approved}</span>
                 </div>
-                <p className="text-xs text-muted-foreground">Approved</p>
+                <p className="text-xs text-white">Approved</p>
               </CardContent>
             </Card>
           </div>
@@ -282,12 +282,12 @@ const QuoteBuilder = () => {
           <section>
             {/* Section Header */}
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+              <h2 className="text-sm font-semibold text-white uppercase tracking-wide">
                 {activeFilter === 'all'
                   ? 'All Quotes'
                   : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Quotes`}
               </h2>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs text-white">
                 {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
               </span>
             </div>
@@ -303,9 +303,9 @@ const QuoteBuilder = () => {
               searchQuery ? (
                 <Card className="bg-elec-gray/20 border-dashed">
                   <CardContent className="py-10 text-center">
-                    <Search className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                    <Search className="h-10 w-10 mx-auto text-white mb-3" />
                     <p className="font-medium">No results found</p>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-white mt-1">
                       Try a different search term
                     </p>
                     <Button
@@ -326,9 +326,9 @@ const QuoteBuilder = () => {
               ) : (
                 <Card className="bg-elec-gray/20 border-dashed">
                   <CardContent className="py-10 text-center">
-                    <FileText className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                    <FileText className="h-10 w-10 mx-auto text-white mb-3" />
                     <p className="font-medium">No {activeFilter} quotes</p>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-sm text-white mt-1">
                       Quotes will appear here when {activeFilter}
                     </p>
                   </CardContent>

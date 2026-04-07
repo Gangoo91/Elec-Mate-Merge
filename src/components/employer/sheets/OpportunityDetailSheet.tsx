@@ -113,7 +113,7 @@ export function OpportunityDetailSheet({
                   )}
                 </div>
                 <SheetTitle className="text-lg leading-tight">{opportunity.title}</SheetTitle>
-                <p className="text-sm text-white/60 mt-1">{opportunity.client_name}</p>
+                <p className="text-sm text-white mt-1">{opportunity.client_name}</p>
               </div>
               <div className="flex items-center gap-1">
                 <Button variant="ghost" size="icon" onClick={handleShare}>
@@ -134,7 +134,7 @@ export function OpportunityDetailSheet({
             {/* Key Info Cards */}
             <div className="grid grid-cols-2 gap-3 py-4">
               <div className="p-3 rounded-lg bg-card border border-border">
-                <div className="flex items-center gap-2 text-white/60 mb-1">
+                <div className="flex items-center gap-2 text-white mb-1">
                   <PoundSterling className="h-4 w-4" />
                   <span className="text-xs">Value</span>
                 </div>
@@ -144,7 +144,7 @@ export function OpportunityDetailSheet({
               </div>
 
               <div className="p-3 rounded-lg bg-card border border-border">
-                <div className="flex items-center gap-2 text-white/60 mb-1">
+                <div className="flex items-center gap-2 text-white mb-1">
                   <Clock className="h-4 w-4" />
                   <span className="text-xs">Deadline</span>
                 </div>
@@ -160,7 +160,7 @@ export function OpportunityDetailSheet({
               </div>
 
               <div className="p-3 rounded-lg bg-card border border-border">
-                <div className="flex items-center gap-2 text-white/60 mb-1">
+                <div className="flex items-center gap-2 text-white mb-1">
                   <MapPin className="h-4 w-4" />
                   <span className="text-xs">Location</span>
                 </div>
@@ -169,14 +169,14 @@ export function OpportunityDetailSheet({
                 </p>
                 {opportunity.distance_miles !== null &&
                   opportunity.distance_miles !== undefined && (
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       {opportunity.distance_miles} miles away
                     </p>
                   )}
               </div>
 
               <div className="p-3 rounded-lg bg-card border border-border">
-                <div className="flex items-center gap-2 text-white/60 mb-1">
+                <div className="flex items-center gap-2 text-white mb-1">
                   <Building2 className="h-4 w-4" />
                   <span className="text-xs">Sector</span>
                 </div>
@@ -213,7 +213,7 @@ export function OpportunityDetailSheet({
                     Scope of Works
                   </h4>
                   <div className="p-3 rounded-lg bg-card/50 border border-border">
-                    <p className="text-sm text-white/60 whitespace-pre-wrap">
+                    <p className="text-sm text-white whitespace-pre-wrap">
                       {opportunity.scope_of_works || opportunity.description}
                     </p>
                   </div>
@@ -299,7 +299,7 @@ export function OpportunityDetailSheet({
                           <FileText className="h-5 w-5 text-blue-400" />
                           <span className="text-sm font-medium">{doc.name}</span>
                         </div>
-                        <Download className="h-4 w-4 text-white/60" />
+                        <Download className="h-4 w-4 text-white" />
                       </a>
                     ))}
                   </div>
@@ -319,7 +319,7 @@ export function OpportunityDetailSheet({
                   <div className="space-y-2 text-sm">
                     {opportunity.contract_start && (
                       <div className="flex justify-between">
-                        <span className="text-white/60">Start Date</span>
+                        <span className="text-white">Start Date</span>
                         <span>
                           {new Date(opportunity.contract_start).toLocaleDateString('en-GB')}
                         </span>
@@ -327,7 +327,7 @@ export function OpportunityDetailSheet({
                     )}
                     {opportunity.contract_duration && (
                       <div className="flex justify-between">
-                        <span className="text-white/60">Duration</span>
+                        <span className="text-white">Duration</span>
                         <span>{opportunity.contract_duration}</span>
                       </div>
                     )}

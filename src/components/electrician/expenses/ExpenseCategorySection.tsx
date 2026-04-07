@@ -48,7 +48,7 @@ const COLOUR_CLASSES: Record<string, string> = {
   'indigo-500': 'bg-indigo-500/15 text-indigo-400',
   'pink-500': 'bg-pink-500/15 text-pink-400',
   'rose-500': 'bg-rose-500/15 text-rose-400',
-  'gray-500': 'bg-gray-500/15 text-gray-400',
+  'gray-500': 'bg-gray-500/15 text-white',
 };
 
 interface ExpenseCategorySectionProps {
@@ -69,7 +69,7 @@ export function ExpenseCategorySection({
   const [isExpanded, setIsExpanded] = useState(defaultExpanded);
 
   const CategoryIcon = CATEGORY_ICONS[group.category] || MoreHorizontal;
-  const colourClass = COLOUR_CLASSES[group.config.colour] || 'bg-gray-500/15 text-gray-400';
+  const colourClass = COLOUR_CLASSES[group.config.colour] || 'bg-gray-500/15 text-white';
 
   return (
     <div className="mb-4">
@@ -89,15 +89,15 @@ export function ExpenseCategorySection({
             <span className="font-semibold text-foreground">
               {group.config.label.toUpperCase()}
             </span>
-            <span className="text-muted-foreground ml-2 text-sm">({group.count})</span>
+            <span className="text-white ml-2 text-sm">({group.count})</span>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <span className="font-bold text-foreground">£{group.total.toFixed(2)}</span>
           {isExpanded ? (
-            <ChevronUp className="h-5 w-5 text-muted-foreground" />
+            <ChevronUp className="h-5 w-5 text-white" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-muted-foreground" />
+            <ChevronDown className="h-5 w-5 text-white" />
           )}
         </div>
       </button>

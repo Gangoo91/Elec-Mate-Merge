@@ -27,7 +27,7 @@ const STATUS_OPTIONS: {
   { value: 'Office', label: 'Office', icon: Building2, colour: 'text-purple-400' },
   { value: 'En Route', label: 'En Route', icon: Navigation, colour: 'text-amber-400' },
   { value: 'On Site', label: 'On Site', icon: MapPin, colour: 'text-green-400' },
-  { value: 'Off Duty', label: 'Off Duty', icon: Clock, colour: 'text-gray-400' },
+  { value: 'Off Duty', label: 'Off Duty', icon: Clock, colour: 'text-white' },
 ];
 
 export function WorkerStatusCard() {
@@ -44,7 +44,7 @@ export function WorkerStatusCard() {
     return (
       <Card className="bg-elec-gray border-white/10">
         <CardContent className="p-6 flex items-center justify-center">
-          <Loader2 className="h-5 w-5 animate-spin text-white/60" />
+          <Loader2 className="h-5 w-5 animate-spin text-white" />
         </CardContent>
       </Card>
     );

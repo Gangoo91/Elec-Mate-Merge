@@ -67,7 +67,7 @@ export function FeatureTile({
                 )}
               </div>
               {description && (
-                <p className="text-xs text-white/60 truncate mt-0.5">{description}</p>
+                <p className="text-xs text-white truncate mt-0.5">{description}</p>
               )}
             </div>
             {showArrow && (
@@ -106,7 +106,7 @@ export function FeatureTile({
               {title}
             </h3>
             {description && (
-              <p className="text-xs sm:text-sm text-white/60 line-clamp-2">{description}</p>
+              <p className="text-xs sm:text-sm text-white line-clamp-2">{description}</p>
             )}
           </div>
           <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-white group-hover:text-elec-yellow/60 transition-colors mt-0.5 shrink-0" />

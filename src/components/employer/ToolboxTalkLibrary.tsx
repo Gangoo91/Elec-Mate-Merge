@@ -123,7 +123,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search toolbox talks..."
@@ -173,9 +173,9 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
       {filteredTemplates.length === 0 ? (
         <Card className="border-dashed">
           <CardContent className="p-8 text-center">
-            <FileText className="h-12 w-12 text-white/60 mx-auto mb-4" />
+            <FileText className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="font-medium text-foreground mb-2">No templates found</h3>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Try adjusting your search or category filter
             </p>
           </CardContent>
@@ -221,7 +221,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                               {template.name}
                             </p>
                             {template.summary && (
-                              <p className="text-xs text-white/60 truncate mt-0.5">
+                              <p className="text-xs text-white truncate mt-0.5">
                                 {template.summary}
                               </p>
                             )}
@@ -237,13 +237,13 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                                   template.risk_level.slice(1)}{' '}
                                 Risk
                               </Badge>
-                              <span className="text-xs text-white/60 flex items-center gap-1">
+                              <span className="text-xs text-white flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {template.duration_minutes} min
                               </span>
                             </div>
                           </div>
-                          <ChevronRight className="h-4 w-4 text-white/60 shrink-0" />
+                          <ChevronRight className="h-4 w-4 text-white shrink-0" />
                         </div>
                       </CardContent>
                     </Card>
@@ -297,7 +297,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                             previewTemplate.risk_level.slice(1)}{' '}
                           Risk
                         </Badge>
-                        <span className="text-xs text-white/60 flex items-center gap-1">
+                        <span className="text-xs text-white flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           {previewTemplate.duration_minutes} min
                         </span>
@@ -334,7 +334,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                         {previewTemplate.discussion_points.map((point, i) => (
                           <li
                             key={i}
-                            className="text-sm text-white/60 flex items-start gap-2"
+                            className="text-sm text-white flex items-start gap-2"
                           >
                             <span className="text-blue-400 shrink-0">•</span>
                             {point}
@@ -366,7 +366,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                   previewTemplate.legal_references.length > 0 && (
                     <div className="mt-4 p-4 rounded-lg bg-muted/50">
                       <h4 className="font-medium text-foreground mb-2">Legal References</h4>
-                      <ul className="text-sm text-white/60 space-y-1">
+                      <ul className="text-sm text-white space-y-1">
                         {previewTemplate.legal_references.map((ref, i) => (
                           <li key={i}>• {ref}</li>
                         ))}

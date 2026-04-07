@@ -226,7 +226,7 @@ export const QuoteInvoiceDashboard = () => {
             <PoundSterling className="h-5 w-5 md:h-10 md:w-10 text-elec-yellow md:mx-auto flex-shrink-0" />
             <div className="flex-1">
               <div className="text-xl md:text-3xl font-bold text-primary">{quotesReady.length}</div>
-              <div className="text-xs md:text-sm text-muted-foreground">Ready for Invoice</div>
+              <div className="text-xs md:text-sm text-white">Ready for Invoice</div>
             </div>
           </CardContent>
         </Card>
@@ -238,7 +238,7 @@ export const QuoteInvoiceDashboard = () => {
               <div className="text-xl md:text-3xl font-bold text-primary">
                 {stats.totalInvoicesThisMonth}
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground">Invoices This Month</div>
+              <div className="text-xs md:text-sm text-white">Invoices This Month</div>
             </div>
           </CardContent>
         </Card>
@@ -250,7 +250,7 @@ export const QuoteInvoiceDashboard = () => {
               <div className="text-xl md:text-3xl font-bold text-primary">
                 {formatCurrency(stats.outstandingValue)}
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground">Outstanding</div>
+              <div className="text-xs md:text-sm text-white">Outstanding</div>
               {stats.overdueCount > 0 && (
                 <div className="text-xs text-destructive font-medium mt-1">
                   {stats.overdueCount} overdue • {formatCurrency(stats.overdueValue)}
@@ -267,7 +267,7 @@ export const QuoteInvoiceDashboard = () => {
               <div className="text-xl md:text-3xl font-bold text-primary">
                 {formatCurrency(stats.paidValue)}
               </div>
-              <div className="text-xs md:text-sm text-muted-foreground">Paid</div>
+              <div className="text-xs md:text-sm text-white">Paid</div>
             </div>
           </CardContent>
         </Card>

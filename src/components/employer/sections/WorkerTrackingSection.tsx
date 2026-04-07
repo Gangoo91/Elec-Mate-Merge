@@ -244,7 +244,7 @@ export function WorkerTrackingSection() {
       case 'Office':
         return <Building className="h-4 w-4 text-info" />;
       case 'On Leave':
-        return <Clock className="h-4 w-4 text-white/60" />;
+        return <Clock className="h-4 w-4 text-white" />;
       default:
         return <AlertTriangle className="h-4 w-4 text-destructive" />;
     }
@@ -318,7 +318,7 @@ export function WorkerTrackingSection() {
                 </span>
               </div>
             </div>
-            <p className="text-sm text-white/60 mt-0.5">
+            <p className="text-sm text-white mt-0.5">
               {totalWorkers} workers • Updated {formatLastUpdated()}
             </p>
           </div>
@@ -349,7 +349,7 @@ export function WorkerTrackingSection() {
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               placeholder="Search workers..."
@@ -406,7 +406,7 @@ export function WorkerTrackingSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl md:text-2xl font-bold text-success">{statusCounts.onSite}</p>
-                <p className="text-xs text-white/60">On Site</p>
+                <p className="text-xs text-white">On Site</p>
               </div>
               <CheckCircle className="h-6 w-6 md:h-8 md:w-8 text-success opacity-70" />
             </div>
@@ -425,7 +425,7 @@ export function WorkerTrackingSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl md:text-2xl font-bold text-warning">{statusCounts.enRoute}</p>
-                <p className="text-xs text-white/60">En Route</p>
+                <p className="text-xs text-white">En Route</p>
               </div>
               <Car className="h-6 w-6 md:h-8 md:w-8 text-warning opacity-70" />
             </div>
@@ -444,7 +444,7 @@ export function WorkerTrackingSection() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xl md:text-2xl font-bold text-info">{statusCounts.office}</p>
-                <p className="text-xs text-white/60">Office</p>
+                <p className="text-xs text-white">Office</p>
               </div>
               <Building className="h-6 w-6 md:h-8 md:w-8 text-info opacity-70" />
             </div>
@@ -462,12 +462,12 @@ export function WorkerTrackingSection() {
           <CardContent className="p-3">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xl md:text-2xl font-bold text-white/60">
+                <p className="text-xl md:text-2xl font-bold text-white">
                   {statusCounts.onLeave}
                 </p>
-                <p className="text-xs text-white/60">On Leave</p>
+                <p className="text-xs text-white">On Leave</p>
               </div>
-              <Clock className="h-6 w-6 md:h-8 md:w-8 text-white/60 opacity-70" />
+              <Clock className="h-6 w-6 md:h-8 md:w-8 text-white opacity-70" />
             </div>
           </CardContent>
         </Card>
@@ -476,7 +476,7 @@ export function WorkerTrackingSection() {
       {/* Active Filters Display */}
       {selectedStatuses.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs text-white/60">Filtering:</span>
+          <span className="text-xs text-white">Filtering:</span>
           {selectedStatuses.map((status) => (
             <Badge
               key={status}
@@ -485,7 +485,7 @@ export function WorkerTrackingSection() {
               onClick={() => toggleStatusFilter(status)}
             >
               {status}
-              <span className="ml-1 text-white/60">×</span>
+              <span className="ml-1 text-white">×</span>
             </Badge>
           ))}
           <Button
@@ -548,7 +548,7 @@ export function WorkerTrackingSection() {
                 </TabsList>
               </div>
 
-              <div className="flex items-center gap-1 text-xs text-white/60">
+              <div className="flex items-center gap-1 text-xs text-white">
                 <Signal className="h-3 w-3" />
                 <span>Auto-refresh: 30s</span>
               </div>
@@ -569,7 +569,7 @@ export function WorkerTrackingSection() {
                     <Users className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="font-medium text-foreground mb-1">No workers found</h3>
-                  <p className="text-sm text-white/60 mb-4">
+                  <p className="text-sm text-white mb-4">
                     {selectedStatuses.length > 0
                       ? 'Try clearing your filters to see all workers'
                       : 'Add employees to start tracking their locations'}
@@ -636,14 +636,14 @@ export function WorkerTrackingSection() {
                                 {checkIn.status}
                               </Badge>
                             </div>
-                            <p className="text-xs text-white/60">{checkIn.role}</p>
+                            <p className="text-xs text-white">{checkIn.role}</p>
                             <div className="flex items-center gap-3 mt-1">
-                              <div className="flex items-center gap-1 text-[10px] text-white/60">
+                              <div className="flex items-center gap-1 text-[10px] text-white">
                                 <Clock className="h-3 w-3" />
                                 <span>{formatTime(checkIn.checkInTime)}</span>
                               </div>
                               {checkIn.jobTitle && (
-                                <div className="flex items-center gap-1 text-[10px] text-white/60">
+                                <div className="flex items-center gap-1 text-[10px] text-white">
                                   <MapPin className="h-3 w-3" />
                                   <span className="truncate max-w-[120px]">{checkIn.jobTitle}</span>
                                 </div>
@@ -735,7 +735,7 @@ export function WorkerTrackingSection() {
               <Card className="bg-elec-gray border-dashed">
                 <CardContent className="p-8 text-center">
                   <CheckCircle className="h-10 w-10 mx-auto text-success/30 mb-3" />
-                  <p className="text-white/60">No workers currently on site</p>
+                  <p className="text-white">No workers currently on site</p>
                 </CardContent>
               </Card>
             ) : (
@@ -753,7 +753,7 @@ export function WorkerTrackingSection() {
                             <h4 className="font-medium text-foreground text-sm">
                               {checkIn.employeeName}
                             </h4>
-                            <p className="text-xs text-white/60 truncate">
+                            <p className="text-xs text-white truncate">
                               {checkIn.role} • Checked in {checkIn.checkInTime}
                             </p>
                           </div>
@@ -773,7 +773,7 @@ export function WorkerTrackingSection() {
               <Card className="bg-elec-gray border-dashed">
                 <CardContent className="p-8 text-center">
                   <Car className="h-10 w-10 mx-auto text-warning/30 mb-3" />
-                  <p className="text-white/60">No workers currently en route</p>
+                  <p className="text-white">No workers currently en route</p>
                 </CardContent>
               </Card>
             ) : (
@@ -791,7 +791,7 @@ export function WorkerTrackingSection() {
                             <h4 className="font-medium text-foreground text-sm">
                               {checkIn.employeeName}
                             </h4>
-                            <p className="text-xs text-white/60 truncate">
+                            <p className="text-xs text-white truncate">
                               Heading to {checkIn.jobTitle || 'assignment'}
                             </p>
                           </div>

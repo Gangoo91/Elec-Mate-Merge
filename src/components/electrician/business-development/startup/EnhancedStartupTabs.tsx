@@ -14,7 +14,7 @@ const EnhancedStartupTabs = () => {
           <TrendingUp className="h-8 w-8 text-elec-yellow" />
           Starting an Electrical Business
         </h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+        <p className="text-white text-center max-w-2xl mb-4">
           Your complete guide to establishing and growing a successful electrical contracting
           business in the UK
         </p>
@@ -57,7 +57,7 @@ const EnhancedStartupTabs = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-sm md:text-base leading-relaxed text-center md:text-left">
+          <p className="text-white text-sm md:text-base leading-relaxed text-center md:text-left">
             Starting a business is a significant step that requires careful planning and
             preparation. While the journey can be challenging, with the right guidance and
             resources, you can build a successful electrical contracting business. Take your time,

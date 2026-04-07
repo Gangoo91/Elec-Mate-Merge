@@ -536,7 +536,7 @@ const CashFlowTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -568,7 +568,7 @@ const CashFlowTab = () => {
                         {card.content.map((item, itemIndex) => (
                           <div key={itemIndex} className="flex items-start gap-2">
                             <ArrowRight className="h-3 w-3 text-foreground/60 mt-0.5 flex-shrink-0" />
-                            <span className="text-xs text-muted-foreground leading-relaxed">
+                            <span className="text-xs text-white leading-relaxed">
                               {item}
                             </span>
                           </div>

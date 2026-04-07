@@ -189,7 +189,7 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
           <div className="flex gap-2">
             <div className="flex-1 relative">
               {!searchInput && (
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 ref={inputRef}
@@ -254,7 +254,7 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
         </div>
 
         {currentLocation && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground p-2 bg-elec-yellow/5 rounded-md border border-elec-yellow/20">
+          <div className="flex items-center gap-2 text-sm text-white p-2 bg-elec-yellow/5 rounded-md border border-elec-yellow/20">
             <MapPin className="h-4 w-4 text-elec-yellow" />
             <span>Searching near: {currentLocation}</span>
           </div>
@@ -280,7 +280,7 @@ const EnhancedLocationSearch: React.FC<EnhancedLocationSearchProps> = ({
           </div>
         </div>
 
-        <div className="text-xs text-muted-foreground">
+        <div className="text-xs text-white">
           Use the search above to find training courses and providers near your location. Results
           will be filtered based on your selected radius.
         </div>

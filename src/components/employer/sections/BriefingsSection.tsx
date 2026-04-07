@@ -211,7 +211,7 @@ export function BriefingsSection() {
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-white/60">Failed to load briefings</p>
+        <p className="text-white">Failed to load briefings</p>
         <Button onClick={() => refetch()} variant="outline" className="gap-2">
           <RefreshCw className="h-4 w-4" />
           Retry
@@ -362,7 +362,7 @@ export function BriefingsSection() {
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search briefings..."
@@ -476,8 +476,8 @@ export function BriefingsSection() {
         ) : scheduledBriefings.length === 0 ? (
           <Card className="bg-elec-gray border-border">
             <CardContent className="p-6 text-center">
-              <Calendar className="h-10 w-10 text-white/60 mx-auto mb-3" />
-              <p className="text-white/60 text-sm">No upcoming briefings scheduled</p>
+              <Calendar className="h-10 w-10 text-white mx-auto mb-3" />
+              <p className="text-white text-sm">No upcoming briefings scheduled</p>
               <Button
                 variant="outline"
                 onClick={() => setShowNewBriefing(true)}
@@ -505,7 +505,7 @@ export function BriefingsSection() {
                         <p className="font-medium text-foreground text-sm md:text-base truncate">
                           {briefing.title}
                         </p>
-                        <div className="flex flex-wrap items-center gap-2 text-xs text-white/60 mt-1">
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-white mt-1">
                           {briefing.briefing_type && (
                             <Badge variant="outline" className="text-xs">
                               {briefing.briefing_type}
@@ -518,13 +518,13 @@ export function BriefingsSection() {
                           </span>
                         </div>
                         {briefing.location && (
-                          <p className="text-xs text-white/60 mt-1 flex items-center gap-1 truncate">
+                          <p className="text-xs text-white mt-1 flex items-center gap-1 truncate">
                             <MapPin className="h-3 w-3 shrink-0" />
                             <span className="truncate">{briefing.location}</span>
                           </p>
                         )}
                         {briefing.attendee_count !== undefined && briefing.attendee_count > 0 && (
-                          <p className="text-xs text-white/60 mt-1">
+                          <p className="text-xs text-white mt-1">
                             {briefing.attendee_count} team members invited
                           </p>
                         )}
@@ -611,8 +611,8 @@ export function BriefingsSection() {
         ) : completedBriefings.length === 0 ? (
           <Card className="bg-elec-gray border-border">
             <CardContent className="p-6 text-center">
-              <FileText className="h-10 w-10 text-white/60 mx-auto mb-3" />
-              <p className="text-white/60 text-sm">No completed briefings yet</p>
+              <FileText className="h-10 w-10 text-white mx-auto mb-3" />
+              <p className="text-white text-sm">No completed briefings yet</p>
             </CardContent>
           </Card>
         ) : (
@@ -635,7 +635,7 @@ export function BriefingsSection() {
                           <p className="font-medium text-foreground text-sm md:text-base truncate">
                             {briefing.title}
                           </p>
-                          <div className="flex flex-wrap items-center gap-2 text-xs text-white/60 mt-1">
+                          <div className="flex flex-wrap items-center gap-2 text-xs text-white mt-1">
                             {briefing.briefing_type && (
                               <Badge variant="outline" className="text-xs">
                                 {briefing.briefing_type}
@@ -644,7 +644,7 @@ export function BriefingsSection() {
                             <span>{new Date(briefing.date).toLocaleDateString('en-GB')}</span>
                           </div>
                           {briefing.attendee_count !== undefined && briefing.attendee_count > 0 && (
-                            <p className="text-xs text-white/60 mt-1">
+                            <p className="text-xs text-white mt-1">
                               {briefing.acknowledged_count || 0}/{briefing.attendee_count} attended
                             </p>
                           )}

@@ -199,7 +199,7 @@ const MarketingStrategyTab = () => {
                   </Badge>
                 </div>
               </div>
-              <div className="text-sm text-muted-foreground">Setup time: {strategy.setup_time}</div>
+              <div className="text-sm text-white">Setup time: {strategy.setup_time}</div>
               <div className="space-y-2">
                 <h5 className="text-sm font-medium text-blue-300">Key Benefits:</h5>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
@@ -246,15 +246,15 @@ const MarketingStrategyTab = () => {
               <div className="space-y-2">
                 <div className="text-sm">
                   <span className="text-green-300 font-medium">Channels: </span>
-                  <span className="text-muted-foreground">{method.channels.join(', ')}</span>
+                  <span className="text-white">{method.channels.join(', ')}</span>
                 </div>
                 <div className="text-sm">
                   <span className="text-green-300 font-medium">Effectiveness: </span>
-                  <span className="text-muted-foreground">{method.effectiveness}</span>
+                  <span className="text-white">{method.effectiveness}</span>
                 </div>
                 <div className="text-sm">
                   <span className="text-green-300 font-medium">Best for: </span>
-                  <span className="text-muted-foreground">{method.best_for}</span>
+                  <span className="text-white">{method.best_for}</span>
                 </div>
               </div>
             </div>
@@ -278,7 +278,7 @@ const MarketingStrategyTab = () => {
                   {opportunity.frequency}
                 </Badge>
               </div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 <strong>Examples:</strong> {opportunity.examples.join(', ')}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-1">
@@ -305,15 +305,15 @@ const MarketingStrategyTab = () => {
           {pricingStrategies.map((strategy, index) => (
             <div key={index} className="p-4 bg-elec-dark/50 rounded-lg space-y-3">
               <h4 className="font-semibold text-foreground">{strategy.strategy}</h4>
-              <p className="text-muted-foreground">{strategy.description}</p>
+              <p className="text-white">{strategy.description}</p>
               <div className="space-y-2">
                 <div className="text-sm">
                   <span className="text-elec-yellow font-medium">Tools: </span>
-                  <span className="text-muted-foreground">{strategy.tools.join(', ')}</span>
+                  <span className="text-white">{strategy.tools.join(', ')}</span>
                 </div>
                 <div className="text-sm">
                   <span className="text-elec-yellow font-medium">Implementation: </span>
-                  <span className="text-muted-foreground">{strategy.implementation}</span>
+                  <span className="text-white">{strategy.implementation}</span>
                 </div>
               </div>
             </div>
@@ -337,10 +337,10 @@ const MarketingStrategyTab = () => {
                   {retention.timeline}
                 </Badge>
               </div>
-              <p className="text-muted-foreground">{retention.purpose}</p>
+              <p className="text-white">{retention.purpose}</p>
               <div className="text-sm">
                 <span className="text-amber-300 font-medium">Method: </span>
-                <span className="text-muted-foreground">{retention.method}</span>
+                <span className="text-white">{retention.method}</span>
               </div>
             </div>
           ))}
@@ -357,17 +357,17 @@ const MarketingStrategyTab = () => {
               <div className="p-3 bg-elec-dark/30 rounded-md text-center">
                 <h4 className="font-medium text-foreground mb-1">Year 1</h4>
                 <p className="text-2xl font-bold text-elec-yellow">5-8%</p>
-                <p className="text-xs text-muted-foreground">of projected revenue</p>
+                <p className="text-xs text-white">of projected revenue</p>
               </div>
               <div className="p-3 bg-elec-dark/30 rounded-md text-center">
                 <h4 className="font-medium text-foreground mb-1">Year 2-3</h4>
                 <p className="text-2xl font-bold text-elec-yellow">3-5%</p>
-                <p className="text-xs text-muted-foreground">of actual revenue</p>
+                <p className="text-xs text-white">of actual revenue</p>
               </div>
               <div className="p-3 bg-elec-dark/30 rounded-md text-center">
                 <h4 className="font-medium text-foreground mb-1">Established</h4>
                 <p className="text-2xl font-bold text-elec-yellow">2-3%</p>
-                <p className="text-xs text-muted-foreground">maintenance level</p>
+                <p className="text-xs text-white">maintenance level</p>
               </div>
             </div>
             <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-md">

@@ -120,7 +120,7 @@ export function RecordActualCostSheet({
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
           <SheetTitle>Record Actual Cost</SheetTitle>
-          {jobTitle && <p className="text-sm text-white/60">{jobTitle}</p>}
+          {jobTitle && <p className="text-sm text-white">{jobTitle}</p>}
           {/* Progress Bar */}
           <div className="flex gap-1 mt-3">
             {[1, 2].map((i) => (
@@ -162,13 +162,13 @@ export function RecordActualCostSheet({
                           <Icon
                             className={cn(
                               'h-5 w-5',
-                              isSelected ? 'text-elec-yellow' : 'text-white/60'
+                              isSelected ? 'text-elec-yellow' : 'text-white'
                             )}
                           />
                           <span
                             className={cn(
                               'text-sm font-medium flex-1',
-                              isSelected ? 'text-foreground' : 'text-white/60'
+                              isSelected ? 'text-foreground' : 'text-white'
                             )}
                           >
                             {label}
@@ -176,7 +176,7 @@ export function RecordActualCostSheet({
                           {isSelected && <Check className="h-4 w-4 text-elec-yellow" />}
                         </div>
                         {comparison && (
-                          <div className="text-xs text-white/60">
+                          <div className="text-xs text-white">
                             <span>
                               {formatCurrency(comparison.actual)} /{' '}
                               {formatCurrency(comparison.budgeted)}
@@ -201,7 +201,7 @@ export function RecordActualCostSheet({
                 >
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         {selectedCategory?.label} Budget Status
                       </p>
                       <p className="text-sm font-medium">
@@ -226,7 +226,7 @@ export function RecordActualCostSheet({
               <div className="space-y-2">
                 <Label>Amount</Label>
                 <div className="relative">
-                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     type="number"
                     step="0.01"
@@ -244,7 +244,7 @@ export function RecordActualCostSheet({
               <div className="space-y-2">
                 <Label>Date</Label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     type="date"
                     className={cn('pl-9 h-11', errors.date && 'border-red-500')}
@@ -273,7 +273,7 @@ export function RecordActualCostSheet({
               {/* Summary Card */}
               <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
                 <div className="text-center mb-4">
-                  <p className="text-sm text-white/60">Recording</p>
+                  <p className="text-sm text-white">Recording</p>
                   <p className="text-3xl font-bold text-foreground">
                     {formatCurrency(values.amount)}
                   </p>
@@ -281,21 +281,21 @@ export function RecordActualCostSheet({
 
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between py-2 border-b border-border/50">
-                    <span className="text-white/60">Category</span>
+                    <span className="text-white">Category</span>
                     <span className="font-medium flex items-center gap-1">
                       <CategoryIcon className="h-4 w-4" />
                       {selectedCategory?.label}
                     </span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-border/50">
-                    <span className="text-white/60">Date</span>
+                    <span className="text-white">Date</span>
                     <span className="font-medium">
                       {format(new Date(values.date), 'dd MMM yyyy')}
                     </span>
                   </div>
                   {values.notes && (
                     <div className="flex justify-between py-2">
-                      <span className="text-white/60">Notes</span>
+                      <span className="text-white">Notes</span>
                       <span className="font-medium text-right max-w-[200px] truncate">
                         {values.notes}
                       </span>
@@ -307,7 +307,7 @@ export function RecordActualCostSheet({
               {/* New Budget Status Preview */}
               {categoryComparison && (
                 <Card className="p-3">
-                  <p className="text-xs text-white/60 mb-2">After Recording</p>
+                  <p className="text-xs text-white mb-2">After Recording</p>
                   <div className="flex justify-between items-center">
                     <span className="text-sm">New {selectedCategory?.label} Total</span>
                     <span className="font-medium">
@@ -315,7 +315,7 @@ export function RecordActualCostSheet({
                     </span>
                   </div>
                   <div className="flex justify-between items-center mt-1">
-                    <span className="text-sm text-white/60">Remaining</span>
+                    <span className="text-sm text-white">Remaining</span>
                     <span
                       className={cn(
                         'font-medium',

@@ -117,7 +117,7 @@ export function ContractsSection() {
       case 'HR Letters':
         return 'text-success';
       default:
-        return 'text-white/60';
+        return 'text-white';
     }
   };
 
@@ -130,7 +130,7 @@ export function ContractsSection() {
       case 'HR Letters':
         return 'bg-success/10 text-success';
       default:
-        return 'bg-muted text-white/60';
+        return 'bg-muted text-white';
     }
   };
 
@@ -138,7 +138,7 @@ export function ContractsSection() {
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-white/60">Failed to load contracts</p>
+        <p className="text-white">Failed to load contracts</p>
         <Button onClick={() => refetch()} variant="outline" className="gap-2">
           <RefreshCw className="h-4 w-4" />
           Retry
@@ -179,7 +179,7 @@ export function ContractsSection() {
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           placeholder="Search contracts and templates..."
@@ -247,7 +247,7 @@ export function ContractsSection() {
                           <p className="font-medium text-foreground text-sm truncate">
                             {contract.title}
                           </p>
-                          <div className="flex items-center gap-2 text-xs text-white/60">
+                          <div className="flex items-center gap-2 text-xs text-white">
                             {contract.party_name && <span>{contract.party_name}</span>}
                             {contract.start_date && (
                               <span className="flex items-center gap-1">
@@ -280,7 +280,7 @@ export function ContractsSection() {
                         >
                           <Trash2 className="h-3.5 w-3.5" />
                         </Button>
-                        <ChevronRight className="h-4 w-4 text-white/60" />
+                        <ChevronRight className="h-4 w-4 text-white" />
                       </div>
                     </div>
                   </CardContent>
@@ -303,7 +303,7 @@ export function ContractsSection() {
                 <h3 className="font-medium text-foreground mb-1">
                   Pre-Written Contracts & HR Documents
                 </h3>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   Browse the templates below and click <strong>Use This Template</strong> to create
                   your own customised contracts. Templates include employment contracts,
                   subcontractor agreements, and HR letters.
@@ -360,9 +360,9 @@ export function ContractsSection() {
       {filteredTemplates.length === 0 && filteredUserContracts.length === 0 && (
         <Card className="border-dashed">
           <CardContent className="p-8 text-center">
-            <FileText className="h-12 w-12 text-white/60 mx-auto mb-4" />
+            <FileText className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="font-medium text-foreground mb-2">No contracts found</h3>
-            <p className="text-sm text-white/60">Try adjusting your search query</p>
+            <p className="text-sm text-white">Try adjusting your search query</p>
           </CardContent>
         </Card>
       )}
@@ -425,7 +425,7 @@ function TemplateCategory({
                       <p className="font-medium text-foreground text-sm truncate">
                         {template.name}
                       </p>
-                      <p className="text-xs text-white/60 truncate">
+                      <p className="text-xs text-white truncate">
                         {template.summary || `v${template.version}`}
                       </p>
                     </div>
@@ -439,7 +439,7 @@ function TemplateCategory({
                     ) : (
                       <Badge variant="outline">View</Badge>
                     )}
-                    <ChevronRight className="h-4 w-4 text-white/60" />
+                    <ChevronRight className="h-4 w-4 text-white" />
                   </div>
                 </div>
               </CardContent>

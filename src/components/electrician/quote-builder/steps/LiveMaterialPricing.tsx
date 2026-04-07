@@ -22,7 +22,7 @@ export const LiveMaterialPricing = ({
     <div className="space-y-4">
       <div className="text-center space-y-2">
         <h3 className="text-xl font-semibold text-foreground">Live Material Pricing</h3>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Search 43k materials with AI or analyse your entire materials list
         </p>
       </div>

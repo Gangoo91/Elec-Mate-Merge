@@ -58,8 +58,8 @@ export const ProjectDialog = ({ open, onOpenChange, project, onSubmit }: Project
             <DialogTitle>Authentication Required</DialogTitle>
           </DialogHeader>
           <div className="flex flex-col items-center gap-4 py-8">
-            <LogIn className="h-12 w-12 text-muted-foreground" />
-            <p className="text-center text-muted-foreground">
+            <LogIn className="h-12 w-12 text-white" />
+            <p className="text-center text-white">
               You need to be logged in to create or edit projects.
             </p>
             <Button onClick={() => onOpenChange(false)} className="w-full">

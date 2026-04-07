@@ -99,15 +99,15 @@ const LegalSetupTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
               <div className="text-2xl font-bold text-green-400">4-6</div>
-              <div className="text-sm text-muted-foreground">Weeks Setup Time</div>
+              <div className="text-sm text-white">Weeks Setup Time</div>
             </div>
             <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
               <div className="text-2xl font-bold text-blue-400">£1K-3K</div>
-              <div className="text-sm text-muted-foreground">Initial Costs</div>
+              <div className="text-sm text-white">Initial Costs</div>
             </div>
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
               <div className="text-2xl font-bold text-purple-400">7</div>
-              <div className="text-sm text-muted-foreground">Key Requirements</div>
+              <div className="text-sm text-white">Key Requirements</div>
             </div>
           </div>
         </CardContent>
@@ -128,7 +128,7 @@ const LegalSetupTab = () => {
                   <h4 className="font-semibold text-foreground">{step.title}</h4>
                   <Badge className={getStatusColor(step.status)}>{step.status}</Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{step.description}</p>
+                <p className="text-sm text-white mb-3">{step.description}</p>
                 <div className="flex justify-between text-xs">
                   <span className="text-blue-400">⏱️ {step.timeframe}</span>
                   <span className="text-green-400">💰 {step.cost}</span>
@@ -152,7 +152,7 @@ const LegalSetupTab = () => {
                   <h4 className="font-semibold text-foreground">{item.title}</h4>
                   <Badge className={getPriorityColor(item.priority)}>{item.priority}</Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-2">{item.description}</p>
+                <p className="text-sm text-white mb-2">{item.description}</p>
                 <div className="text-xs text-green-400">{item.annualCost}/year</div>
               </div>
             ))}
@@ -171,7 +171,7 @@ const LegalSetupTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold mb-3 text-amber-300">Documentation Errors</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Inadequate contracts and terms of service</li>
                 <li>• Missing health and safety documentation</li>
                 <li>• Incomplete insurance coverage</li>
@@ -180,7 +180,7 @@ const LegalSetupTab = () => {
             </div>
             <div>
               <h4 className="font-semibold mb-3 text-amber-300">Regulatory Oversights</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <ul className="space-y-2 text-sm text-white">
                 <li>• Working without proper scheme membership</li>
                 <li>• Incorrect Part P notification procedures</li>
                 <li>• Missing professional qualifications</li>

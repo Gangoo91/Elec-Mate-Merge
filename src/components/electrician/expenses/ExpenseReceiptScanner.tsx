@@ -244,7 +244,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           </div>
           <div className="text-center">
             <p className="font-medium text-foreground mb-1">{progress || 'Processing...'}</p>
-            <p className="text-sm text-muted-foreground">This may take a few seconds</p>
+            <p className="text-sm text-white">This may take a few seconds</p>
           </div>
         </motion.div>
       </div>
@@ -264,7 +264,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           </div>
           <div>
             <p className="font-medium text-foreground mb-1">Failed to process receipt</p>
-            <p className="text-sm text-muted-foreground">Please try again with a clearer photo</p>
+            <p className="text-sm text-white">Please try again with a clearer photo</p>
           </div>
           <div className="flex gap-3 w-full">
             <Button
@@ -327,11 +327,11 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           <div className="flex-1 space-y-3">
             {/* Vendor */}
             <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
-              <span className="text-sm text-muted-foreground">Vendor</span>
+              <span className="text-sm text-white">Vendor</span>
               <span
                 className={cn(
                   'font-medium text-right',
-                  extractedData.vendor ? 'text-foreground' : 'text-muted-foreground/50'
+                  extractedData.vendor ? 'text-foreground' : 'text-white'
                 )}
               >
                 {extractedData.vendor || 'Not detected'}
@@ -340,11 +340,11 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
 
             {/* Amount */}
             <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
-              <span className="text-sm text-muted-foreground">Amount</span>
+              <span className="text-sm text-white">Amount</span>
               <span
                 className={cn(
                   'font-bold text-lg',
-                  extractedData.amount ? 'text-elec-yellow' : 'text-muted-foreground/50'
+                  extractedData.amount ? 'text-elec-yellow' : 'text-white'
                 )}
               >
                 {extractedData.amount ? `£${extractedData.amount.toFixed(2)}` : 'Not detected'}
@@ -353,11 +353,11 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
 
             {/* Date */}
             <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
-              <span className="text-sm text-muted-foreground">Date</span>
+              <span className="text-sm text-white">Date</span>
               <span
                 className={cn(
                   'font-medium',
-                  extractedData.date ? 'text-foreground' : 'text-muted-foreground/50'
+                  extractedData.date ? 'text-foreground' : 'text-white'
                 )}
               >
                 {extractedData.date || 'Not detected'}
@@ -366,11 +366,11 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
 
             {/* Category */}
             <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
-              <span className="text-sm text-muted-foreground">Category</span>
+              <span className="text-sm text-white">Category</span>
               <span
                 className={cn(
                   'font-medium',
-                  extractedData.category ? 'text-foreground' : 'text-muted-foreground/50'
+                  extractedData.category ? 'text-foreground' : 'text-white'
                 )}
               >
                 {extractedData.category
@@ -383,7 +383,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             {/* VAT */}
             {extractedData.vat_amount && (
               <div className="flex items-center justify-between p-3.5 bg-white/[0.03] rounded-xl border border-white/[0.06]">
-                <span className="text-sm text-muted-foreground">VAT</span>
+                <span className="text-sm text-white">VAT</span>
                 <span className="font-medium text-foreground">
                   £{extractedData.vat_amount.toFixed(2)}
                 </span>
@@ -414,7 +414,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           </Button>
         </div>
 
-        <p className="text-xs text-center text-muted-foreground">
+        <p className="text-xs text-center text-white">
           You can edit the details on the next screen
         </p>
       </div>
@@ -447,7 +447,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
           <FileImage className="h-10 w-10 text-elec-yellow" />
         </div>
         <h3 className="text-lg font-semibold text-foreground">Scan Your Receipt</h3>
-        <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">
+        <p className="text-sm text-white mt-2 max-w-xs mx-auto">
           Our AI will automatically extract the vendor, amount, and date from your receipt
         </p>
       </div>
@@ -465,7 +465,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             </div>
             <div className="flex-1 text-left">
               <p className="font-semibold text-foreground">Take Photo</p>
-              <p className="text-sm text-muted-foreground">Use your camera to capture a receipt</p>
+              <p className="text-sm text-white">Use your camera to capture a receipt</p>
             </div>
           </div>
         </button>
@@ -481,14 +481,14 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
             </div>
             <div className="flex-1 text-left">
               <p className="font-semibold text-foreground">Upload from Gallery</p>
-              <p className="text-sm text-muted-foreground">Select an existing photo or PDF</p>
+              <p className="text-sm text-white">Select an existing photo or PDF</p>
             </div>
           </div>
         </button>
       </div>
 
       {/* Supported formats */}
-      <p className="text-xs text-center text-muted-foreground">
+      <p className="text-xs text-center text-white">
         Supports JPG, PNG, HEIC, WebP, and PDF
       </p>
 

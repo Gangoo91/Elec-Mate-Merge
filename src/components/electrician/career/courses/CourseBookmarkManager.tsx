@@ -136,7 +136,7 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
       case 'low':
         return 'bg-green-500/20 text-green-400 border-green-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -157,7 +157,7 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
             className={`${
               isBookmarked(course.id)
                 ? 'text-elec-yellow hover:text-elec-yellow/80'
-                : 'text-muted-foreground hover:text-elec-yellow'
+                : 'text-white hover:text-elec-yellow'
             }`}
             title={isBookmarked(course.id) ? 'Remove from saved' : 'Save course'}
           >
@@ -236,7 +236,7 @@ const CourseBookmarkManager = ({ courses, onViewDetails }: CourseBookmarkManager
 
                       <p className="text-xs text-elec-yellow">{course.provider}</p>
 
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-4 text-xs text-white">
                         <div className="flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           {course.duration}

@@ -631,8 +631,8 @@ export function CreateQuoteDialog({
                               }}
                               className="w-20 h-12 text-base text-center"
                             />
-                            <span className="text-sm text-white/60">hrs</span>
-                            <span className="text-sm text-white/60">
+                            <span className="text-sm text-white">hrs</span>
+                            <span className="text-sm text-white">
                               × £{item.hourlyRate.toFixed(2)}/hr
                             </span>
                           </div>
@@ -697,7 +697,7 @@ export function CreateQuoteDialog({
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="space-y-2">
-                    <Label className="text-xs text-white/60">Hours</Label>
+                    <Label className="text-xs text-white">Hours</Label>
                     <Input
                       type="text"
                       inputMode="decimal"
@@ -708,7 +708,7 @@ export function CreateQuoteDialog({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-xs text-white/60">Rate £/hr</Label>
+                    <Label className="text-xs text-white">Rate £/hr</Label>
                     <Input
                       type="text"
                       inputMode="decimal"
@@ -732,7 +732,7 @@ export function CreateQuoteDialog({
             </Card>
 
             {labourItems.length === 0 && (
-              <p className="text-sm text-white/60 text-center py-2">
+              <p className="text-sm text-white text-center py-2">
                 No labour added yet. You can skip this step if not needed.
               </p>
             )}
@@ -773,8 +773,8 @@ export function CreateQuoteDialog({
                               }}
                               className="w-20 h-12 text-base text-center"
                             />
-                            <span className="text-sm text-white/60">{item.unit}</span>
-                            <span className="text-sm text-white/60">
+                            <span className="text-sm text-white">{item.unit}</span>
+                            <span className="text-sm text-white">
                               × £{item.unitPrice.toFixed(2)}
                             </span>
                           </div>
@@ -841,7 +841,7 @@ export function CreateQuoteDialog({
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <div className="space-y-2">
-                    <Label className="text-xs text-white/60">Qty</Label>
+                    <Label className="text-xs text-white">Qty</Label>
                     <Input
                       type="text"
                       inputMode="decimal"
@@ -852,7 +852,7 @@ export function CreateQuoteDialog({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-xs text-white/60">Unit</Label>
+                    <Label className="text-xs text-white">Unit</Label>
                     <Select
                       value={newItem.unit}
                       onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
@@ -871,7 +871,7 @@ export function CreateQuoteDialog({
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label className="text-xs text-white/60">Price £</Label>
+                    <Label className="text-xs text-white">Price £</Label>
                     <Input
                       type="text"
                       inputMode="decimal"
@@ -895,7 +895,7 @@ export function CreateQuoteDialog({
             </Card>
 
             {lineItems.length === 0 && (
-              <p className="text-sm text-white/60 text-center py-2">
+              <p className="text-sm text-white text-center py-2">
                 No materials added yet. You can skip this step if not needed.
               </p>
             )}
@@ -909,19 +909,19 @@ export function CreateQuoteDialog({
             <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-elec-yellow/20">
               <CardContent className="p-4 space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-white/60">Client</span>
+                  <span className="text-sm text-white">Client</span>
                   <span className="font-medium">{client}</span>
                 </div>
                 {clientEmail && (
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-white/60">Email</span>
+                    <span className="text-sm text-white">Email</span>
                     <span className="font-medium text-sm">{clientEmail}</span>
                   </div>
                 )}
                 <div className="border-t border-border pt-4 space-y-2">
                   {labourTotal > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-white/60">
+                      <span className="text-sm text-white">
                         Labour ({labourItems.length} item{labourItems.length !== 1 ? 's' : ''})
                       </span>
                       <span className="text-sm">£{labourTotal.toFixed(2)}</span>
@@ -929,18 +929,18 @@ export function CreateQuoteDialog({
                   )}
                   {materialsTotal > 0 && (
                     <div className="flex justify-between">
-                      <span className="text-sm text-white/60">
+                      <span className="text-sm text-white">
                         Materials ({lineItems.length} item{lineItems.length !== 1 ? 's' : ''})
                       </span>
                       <span className="text-sm">£{materialsTotal.toFixed(2)}</span>
                     </div>
                   )}
                   <div className="flex justify-between pt-2 border-t border-border/50">
-                    <span className="text-sm text-white/60">Subtotal</span>
+                    <span className="text-sm text-white">Subtotal</span>
                     <span className="text-sm">£{subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-white/60">VAT ({vatRate}%)</span>
+                    <span className="text-sm text-white">VAT ({vatRate}%)</span>
                     <span className="text-sm">£{vatAmount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between pt-2 border-t border-border">
@@ -976,9 +976,9 @@ export function CreateQuoteDialog({
                       className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg"
                     >
                       <div className="flex-1 min-w-0">
-                        <span className="text-sm text-white/60 mr-2">{idx + 1}.</span>
+                        <span className="text-sm text-white mr-2">{idx + 1}.</span>
                         <span className="text-sm">{item.description}</span>
-                        <span className="text-xs text-white/60 ml-2">
+                        <span className="text-xs text-white ml-2">
                           × {item.hours} hrs
                         </span>
                       </div>
@@ -1003,9 +1003,9 @@ export function CreateQuoteDialog({
                       className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg"
                     >
                       <div className="flex-1 min-w-0">
-                        <span className="text-sm text-white/60 mr-2">{idx + 1}.</span>
+                        <span className="text-sm text-white mr-2">{idx + 1}.</span>
                         <span className="text-sm">{item.description}</span>
-                        <span className="text-xs text-white/60 ml-2">
+                        <span className="text-xs text-white ml-2">
                           × {item.quantity}
                         </span>
                       </div>
@@ -1055,13 +1055,13 @@ export function CreateQuoteDialog({
                 </Button>
                 <div>
                   <SheetTitle className="text-lg font-semibold">New Quote</SheetTitle>
-                  <SheetDescription className="text-xs font-mono text-white/60">
+                  <SheetDescription className="text-xs font-mono text-white">
                     {quoteNumber}
                   </SheetDescription>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-medium text-white/60">
+                <span className="text-sm font-medium text-white">
                   {currentStepLabel}
                 </span>
                 <IOSStepIndicator steps={4} currentStep={step - 1} className="mt-1" />
@@ -1081,8 +1081,8 @@ export function CreateQuoteDialog({
           <div className="absolute bottom-0 left-0 right-0 px-4 py-4 border-t border-border bg-background/95 backdrop-blur-sm">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-xs text-white/60 block">Quote Total</span>
-                <span className="text-sm text-white/60">
+                <span className="text-xs text-white block">Quote Total</span>
+                <span className="text-sm text-white">
                   {labourItems.length + lineItems.length} item
                   {labourItems.length + lineItems.length !== 1 ? 's' : ''}
                 </span>

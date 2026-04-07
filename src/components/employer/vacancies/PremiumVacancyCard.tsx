@@ -139,13 +139,13 @@ export function PremiumVacancyCard({
     },
     Closed: {
       bg: 'bg-gray-500/10',
-      text: 'text-gray-400',
+      text: 'text-white',
       border: 'border-gray-500/30',
       dot: 'bg-gray-500',
     },
     closed: {
       bg: 'bg-gray-500/10',
-      text: 'text-gray-400',
+      text: 'text-white',
       border: 'border-gray-500/30',
       dot: 'bg-gray-500',
     },
@@ -166,7 +166,7 @@ export function PremiumVacancyCard({
   // Fallback for unknown status
   const defaultConfig = {
     bg: 'bg-gray-500/10',
-    text: 'text-gray-400',
+    text: 'text-white',
     border: 'border-gray-500/30',
     dot: 'bg-gray-500',
   };

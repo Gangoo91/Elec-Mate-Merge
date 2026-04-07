@@ -17,7 +17,7 @@ const DashboardHeader = ({ onBackClick, onSettingsClick, onHelpClick }: Dashboar
           variant="ghost"
           size="sm"
           onClick={onBackClick}
-          className="gap-1 text-muted-foreground hover:text-foreground"
+          className="gap-1 text-white hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
           <span className="hidden sm:inline">Back</span>
@@ -30,7 +30,7 @@ const DashboardHeader = ({ onBackClick, onSettingsClick, onHelpClick }: Dashboar
               size="icon"
               onClick={onHelpClick}
               aria-label="Help"
-              className="h-9 w-9 text-muted-foreground hover:text-foreground"
+              className="h-9 w-9 text-white hover:text-foreground"
             >
               <HelpCircle className="h-5 w-5" />
             </Button>
@@ -40,7 +40,7 @@ const DashboardHeader = ({ onBackClick, onSettingsClick, onHelpClick }: Dashboar
               variant="ghost"
               size="sm"
               onClick={onSettingsClick}
-              className="gap-2 text-muted-foreground hover:text-foreground"
+              className="gap-2 text-white hover:text-foreground"
             >
               <Settings className="h-4 w-4" />
               <span className="hidden sm:inline">Settings</span>
@@ -58,7 +58,7 @@ const DashboardHeader = ({ onBackClick, onSettingsClick, onHelpClick }: Dashboar
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-foreground">
             Inspection & Testing
           </h1>
-          <p className="mt-1 text-sm sm:text-base text-muted-foreground">
+          <p className="mt-1 text-sm sm:text-base text-white">
             BS7671 compliant electrical certification management
           </p>
         </div>

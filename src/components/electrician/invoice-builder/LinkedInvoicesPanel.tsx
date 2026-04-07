@@ -71,9 +71,9 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
         </CardHeader>
         <CardContent>
           <div className="text-center py-8 space-y-2">
-            <Receipt className="h-12 w-12 text-muted-foreground mx-auto opacity-50" />
-            <p className="text-muted-foreground">No invoices raised yet</p>
-            <p className="text-xs text-muted-foreground">Raised invoices will appear here</p>
+            <Receipt className="h-12 w-12 text-white mx-auto opacity-50" />
+            <p className="text-white">No invoices raised yet</p>
+            <p className="text-xs text-white">Raised invoices will appear here</p>
           </div>
         </CardContent>
       </Card>
@@ -99,7 +99,7 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
             {/* Header with Quote-Invoice Link */}
             <div className="flex items-start justify-between">
               <div className="space-y-2 flex-1">
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <Badge variant="outline" className="text-xs">
                     Quote #{invoice.quoteNumber}
                   </Badge>
@@ -116,7 +116,7 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
                 <div className="flex items-center gap-2">{getStatusBadge(invoice)}</div>
 
                 <div className="flex items-center gap-2 text-sm">
-                  <User className="h-4 w-4 text-muted-foreground" />
+                  <User className="h-4 w-4 text-white" />
                   <span className="font-medium truncate">{invoice.client.name}</span>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export const LinkedInvoicesPanel = ({ invoices }: LinkedInvoicesPanelProps) => {
             </div>
 
             {/* Meta Info */}
-            <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+            <div className="grid grid-cols-2 gap-2 text-xs text-white">
               {invoice.invoice_date && (
                 <div className="flex items-center gap-1.5">
                   <Calendar className="h-3.5 w-3.5" />

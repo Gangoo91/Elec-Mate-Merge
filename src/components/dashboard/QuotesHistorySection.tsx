@@ -276,19 +276,19 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
               <div className="text-center p-2 sm:p-2.5 md:p-3 border rounded-lg">
                 <div className="text-xl sm:text-2xl font-bold">{stats.total}</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Total</div>
+                <div className="text-xs sm:text-sm text-white">Total</div>
               </div>
               <div className="text-center p-2 sm:p-2.5 md:p-3 border rounded-lg">
                 <div className="text-xl sm:text-2xl font-bold text-green-600">{stats.accepted}</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Accepted</div>
+                <div className="text-xs sm:text-sm text-white">Accepted</div>
               </div>
               <div className="text-center p-2 sm:p-2.5 md:p-3 border rounded-lg">
                 <div className="text-xl sm:text-2xl font-bold text-red-600">{stats.rejected}</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Rejected</div>
+                <div className="text-xs sm:text-sm text-white">Rejected</div>
               </div>
               <div className="text-center p-2 sm:p-2.5 md:p-3 border rounded-lg">
                 <div className="text-xl sm:text-2xl font-bold text-yellow-600">{stats.pending}</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Pending</div>
+                <div className="text-xs sm:text-sm text-white">Pending</div>
               </div>
             </div>
 
@@ -296,7 +296,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
             <div className="flex flex-col md:flex-row gap-3">
               <div className="relative flex-1">
                 {!searchQuery && (
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                 )}
                 <Input
                   placeholder="Search by client name or quote number..."
@@ -321,7 +321,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
             {/* Quotes List */}
             <div className="space-y-2 sm:space-y-3">
               {filteredQuotes.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
+                <div className="text-center py-8 text-white">
                   {quotes.length === 0 ? 'No quotes found' : 'No quotes match your search criteria'}
                 </div>
               ) : (
@@ -349,7 +349,7 @@ export const QuotesHistorySection = ({ quotes }: QuotesHistorySectionProps) => {
                         <User className="h-4 w-4 text-elec-yellow shrink-0" />
                         <span className="font-medium truncate">{quote.client.name}</span>
                       </div>
-                      <div className="flex flex-col gap-2 text-xs text-muted-foreground">
+                      <div className="flex flex-col gap-2 text-xs text-white">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
                           <span>Created {format(quote.createdAt, 'dd MMM yyyy')}</span>

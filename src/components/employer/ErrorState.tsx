@@ -36,7 +36,7 @@ export function ErrorState({
 
           <h3 className="text-lg font-semibold text-foreground mb-2">{title}</h3>
 
-          <p className="text-sm text-white/60 mb-6">{message}</p>
+          <p className="text-sm text-white mb-6">{message}</p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             {onRetry && (
@@ -79,7 +79,7 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
 
       <h3 className="text-lg font-medium text-foreground mb-1">{title}</h3>
 
-      {description && <p className="text-sm text-white/60 mb-4 max-w-xs">{description}</p>}
+      {description && <p className="text-sm text-white mb-4 max-w-xs">{description}</p>}
 
       {action && (
         <Button onClick={action.onClick} className="mt-2">

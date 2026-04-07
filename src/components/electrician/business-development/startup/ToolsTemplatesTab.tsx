@@ -121,14 +121,14 @@ const ToolsTemplatesTab = () => {
             >
               <div className="flex-1">
                 <h4 className="font-medium text-foreground">{template.name}</h4>
-                <p className="text-sm text-muted-foreground">{template.description}</p>
+                <p className="text-sm text-white">{template.description}</p>
                 <div className="flex items-center gap-2 mt-2">
                   <Badge variant="outline" className="text-xs">
                     {template.type}
                   </Badge>
-                  <span className="text-xs text-muted-foreground">{template.size}</span>
-                  <span className="text-xs text-muted-foreground">★ {template.rating}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">{template.size}</span>
+                  <span className="text-xs text-white">★ {template.rating}</span>
+                  <span className="text-xs text-white">
                     {template.downloads} downloads
                   </span>
                 </div>
@@ -155,7 +155,7 @@ const ToolsTemplatesTab = () => {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h4 className="font-medium text-foreground">{tool.name}</h4>
-                  <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
+                  <p className="text-sm text-white mb-3">{tool.description}</p>
                   <div className="grid grid-cols-2 gap-2">
                     {tool.features.map((feature, featureIndex) => (
                       <div

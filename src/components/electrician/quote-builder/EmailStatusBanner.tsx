@@ -56,7 +56,7 @@ export const EmailStatusBanner = () => {
             <span className="text-sm">
               Sending from: <strong>{emailConfig.email_address}</strong>
             </span>
-            <span className="text-xs text-muted-foreground">
+            <span className="text-xs text-white">
               ({dailyCount}/{dailyLimit} emails sent today)
             </span>
           </div>

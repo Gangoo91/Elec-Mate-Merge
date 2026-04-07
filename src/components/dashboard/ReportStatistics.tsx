@@ -18,25 +18,25 @@ const ReportStatistics = ({ reportStats }: ReportStatisticsProps) => {
       <Card className="bg-card border-elec-yellow/30">
         <CardContent className="p-4 text-center">
           <div className="text-2xl font-bold text-elec-yellow">{reportStats.total}</div>
-          <div className="text-sm text-muted-foreground">Total Reports</div>
+          <div className="text-sm text-white">Total Reports</div>
         </CardContent>
       </Card>
       <Card className="bg-card border-elec-yellow/30">
         <CardContent className="p-4 text-center">
           <div className="text-2xl font-bold text-green-400">{reportStats.completed}</div>
-          <div className="text-sm text-muted-foreground">Completed</div>
+          <div className="text-sm text-white">Completed</div>
         </CardContent>
       </Card>
       <Card className="bg-card border-elec-yellow/30">
         <CardContent className="p-4 text-center">
           <div className="text-2xl font-bold text-blue-400">{reportStats.inProgress}</div>
-          <div className="text-sm text-muted-foreground">In Progress</div>
+          <div className="text-sm text-white">In Progress</div>
         </CardContent>
       </Card>
       <Card className="bg-card border-elec-yellow/30">
         <CardContent className="p-4 text-center">
           <div className="text-2xl font-bold text-yellow-400">{reportStats.drafts}</div>
-          <div className="text-sm text-muted-foreground">Drafts</div>
+          <div className="text-sm text-white">Drafts</div>
         </CardContent>
       </Card>
     </div>

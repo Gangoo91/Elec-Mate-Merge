@@ -171,7 +171,7 @@ const ComplianceChecker = () => {
         <h3 className="text-xl font-bold text-elec-yellow mb-2">2025 BS7671 Compliance Checker</h3>
         <div className="flex items-center justify-center gap-2 mb-3">
           <Shield className="h-5 w-5 text-amber-400" />
-          <span className="text-muted-foreground">Ensure apprenticeship programme compliance</span>
+          <span className="text-white">Ensure apprenticeship programme compliance</span>
         </div>
       </div>
 
@@ -179,7 +179,7 @@ const ComplianceChecker = () => {
       <div className="text-center p-6 bg-elec-gray rounded-lg border border-amber-500/30">
         <div className={`text-4xl font-bold ${getScoreColor()} mb-2`}>{score.toFixed(0)}%</div>
         <div className={`text-lg font-medium ${getScoreColor()} mb-3`}>{getScoreLevel()}</div>
-        <div className="text-sm text-muted-foreground mb-4">Compliance Score</div>
+        <div className="text-sm text-white mb-4">Compliance Score</div>
         <Progress value={score} className="w-full max-w-md mx-auto mb-4" />
 
         {getCriticalIssues().length > 0 && (
@@ -275,7 +275,7 @@ const ComplianceChecker = () => {
       {/* Quick Tips */}
       <div className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
         <h5 className="font-medium text-elec-yellow mb-2">Pro Tips for Maintaining Compliance</h5>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-white">
           <div>• Schedule monthly compliance reviews</div>
           <div>• Use digital systems for record-keeping</div>
           <div>• Maintain regular contact with training provider</div>

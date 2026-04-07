@@ -43,11 +43,11 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
         {/* Quote Reference */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-4 border-b">
           <div>
-            <p className="text-sm text-muted-foreground mb-1">Quote Number</p>
+            <p className="text-sm text-white mb-1">Quote Number</p>
             <p className="font-semibold text-foreground">{quote.quoteNumber}</p>
           </div>
           <div>
-            <p className="text-sm text-muted-foreground mb-1">Quote Date</p>
+            <p className="text-sm text-white mb-1">Quote Date</p>
             <p className="font-medium text-foreground">{format(quote.createdAt, 'dd MMM yyyy')}</p>
           </div>
         </div>
@@ -68,9 +68,9 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pl-7">
               {quote.accepted_at && (
                 <div className="flex items-start gap-2">
-                  <Calendar className="h-4 w-4 text-muted-foreground mt-0.5" />
+                  <Calendar className="h-4 w-4 text-white mt-0.5" />
                   <div>
-                    <p className="text-xs text-muted-foreground">Accepted On</p>
+                    <p className="text-xs text-white">Accepted On</p>
                     <p className="text-sm font-medium">
                       {format(quote.accepted_at, 'dd MMM yyyy, HH:mm')}
                     </p>
@@ -80,12 +80,12 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
 
               {quote.accepted_by_name && (
                 <div className="flex items-start gap-2">
-                  <User className="h-4 w-4 text-muted-foreground mt-0.5" />
+                  <User className="h-4 w-4 text-white mt-0.5" />
                   <div>
-                    <p className="text-xs text-muted-foreground">Accepted By</p>
+                    <p className="text-xs text-white">Accepted By</p>
                     <p className="text-sm font-medium">{quote.accepted_by_name}</p>
                     {quote.accepted_by_email && (
-                      <p className="text-xs text-muted-foreground">{quote.accepted_by_email}</p>
+                      <p className="text-xs text-white">{quote.accepted_by_email}</p>
                     )}
                   </div>
                 </div>
@@ -94,7 +94,7 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
 
             {quote.signature_url && (
               <div className="pl-7">
-                <p className="text-xs text-muted-foreground mb-2">Client Signature</p>
+                <p className="text-xs text-white mb-2">Client Signature</p>
                 <img
                   src={quote.signature_url}
                   alt="Client signature"
@@ -107,16 +107,16 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
 
         {/* Quote Journey Timeline */}
         <div className="space-y-2">
-          <h4 className="font-semibold text-sm text-muted-foreground">Quote Journey</h4>
+          <h4 className="font-semibold text-sm text-white">Quote Journey</h4>
           <div className="space-y-2 pl-4 border-l-2 border-muted">
             <div className="relative pl-4">
               <div className="absolute left-[-9px] top-1 h-4 w-4 rounded-full bg-primary border-2 border-background" />
               <div>
                 <p className="text-sm font-medium">Quote Created</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   {format(quote.createdAt, 'dd MMM yyyy, HH:mm')}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-xs text-white mt-1">
                   Total: {formatCurrency(quote.total)}
                 </p>
               </div>
@@ -127,7 +127,7 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
                 <div className="absolute left-[-9px] top-4 h-4 w-4 rounded-full bg-success border-2 border-background" />
                 <div>
                   <p className="text-sm font-medium text-success">Client Accepted</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     {format(quote.accepted_at, 'dd MMM yyyy, HH:mm')}
                   </p>
                   {isDigitalSignature && (
@@ -144,7 +144,7 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
                 <div className="absolute left-[-9px] top-4 h-4 w-4 rounded-full bg-primary border-2 border-background" />
                 <div>
                   <p className="text-sm font-medium">Work Completed</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     {format(quote.work_completion_date, 'dd MMM yyyy')}
                   </p>
                 </div>
@@ -155,7 +155,7 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
               <div className="absolute left-[-9px] top-4 h-4 w-4 rounded-full bg-primary border-2 border-background" />
               <div>
                 <p className="text-sm font-medium text-primary">Invoice Raised</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   {quote.invoice_date ? format(quote.invoice_date, 'dd MMM yyyy, HH:mm') : 'Today'}
                 </p>
               </div>
@@ -166,16 +166,16 @@ export const InvoiceQuoteLink = ({ quote, className }: InvoiceQuoteLinkProps) =>
         {/* Job Details if available */}
         {quote.jobDetails && (
           <div className="pt-4 border-t">
-            <p className="text-sm text-muted-foreground mb-2">Job Details</p>
+            <p className="text-sm text-white mb-2">Job Details</p>
             <div className="space-y-1">
               {quote.jobDetails.title && (
                 <p className="text-sm font-medium">{quote.jobDetails.title}</p>
               )}
               {quote.jobDetails.description && (
-                <p className="text-sm text-muted-foreground">{quote.jobDetails.description}</p>
+                <p className="text-sm text-white">{quote.jobDetails.description}</p>
               )}
               {quote.jobDetails.location && (
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   Location: {quote.jobDetails.location}
                 </p>
               )}

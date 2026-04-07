@@ -123,7 +123,7 @@ export function ScheduleInterviewDialog({
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Candidate Name */}
           <div className="bg-muted/50 rounded-lg p-3">
-            <p className="text-sm text-white/60">Scheduling interview with</p>
+            <p className="text-sm text-white">Scheduling interview with</p>
             <p className="font-medium text-foreground">{candidateName}</p>
           </div>
 
@@ -136,7 +136,7 @@ export function ScheduleInterviewDialog({
                   variant="outline"
                   className={cn(
                     'w-full justify-start text-left font-normal',
-                    !date && 'text-white/60'
+                    !date && 'text-white'
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
@@ -163,7 +163,7 @@ export function ScheduleInterviewDialog({
             <Label>Time</Label>
             <Select value={time} onValueChange={setTime}>
               <SelectTrigger className="w-full">
-                <Clock className="mr-2 h-4 w-4 text-white/60" />
+                <Clock className="mr-2 h-4 w-4 text-white" />
                 <SelectValue placeholder="Select time" />
               </SelectTrigger>
               <SelectContent>
@@ -200,7 +200,7 @@ export function ScheduleInterviewDialog({
             <div className="space-y-2">
               <Label>Location</Label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -227,7 +227,7 @@ export function ScheduleInterviewDialog({
           {date && time && (
             <div className="bg-muted/50 rounded-lg p-4 space-y-2">
               <p className="text-sm font-medium">Interview Summary</p>
-              <div className="text-sm text-white/60 space-y-1">
+              <div className="text-sm text-white space-y-1">
                 <p>
                   {format(date, 'EEEE, d MMMM yyyy')} at {time}
                 </p>

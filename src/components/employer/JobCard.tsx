@@ -104,23 +104,23 @@ export function JobCard({
             <h3 className="font-semibold text-foreground truncate text-base leading-tight">
               {title}
             </h3>
-            <p className="text-sm text-white/60 mt-0.5 truncate">{client}</p>
+            <p className="text-sm text-white mt-0.5 truncate">{client}</p>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <StatusBadge status={status} />
-            <ChevronRight className="h-4 w-4 text-white/60" />
+            <ChevronRight className="h-4 w-4 text-white" />
           </div>
         </div>
 
         {/* Location */}
-        <div className="flex items-center gap-2 text-sm text-white/60">
+        <div className="flex items-center gap-2 text-sm text-white">
           <MapPin className="h-3.5 w-3.5 shrink-0 text-elec-yellow/70" />
           <span className="truncate">{location}</span>
         </div>
 
         {/* Description */}
         {description && (
-          <p className="text-xs text-white/60 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-white line-clamp-2 leading-relaxed">
             {description}
           </p>
         )}
@@ -128,7 +128,7 @@ export function JobCard({
         {/* Progress Bar */}
         <div className="space-y-1.5">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-white/60">Progress</span>
+            <span className="text-white">Progress</span>
             <span className="font-bold text-foreground">{progress}%</span>
           </div>
           <div className="relative h-2 w-full rounded-full bg-muted overflow-hidden">
@@ -144,7 +144,7 @@ export function JobCard({
 
         {/* Footer - Dates, Workers, Value */}
         <div className="flex items-center justify-between pt-2 border-t border-border/50 text-xs">
-          <div className="flex items-center gap-1.5 text-white/60">
+          <div className="flex items-center gap-1.5 text-white">
             {hasValidDates && (
               <>
                 <Calendar className="h-3.5 w-3.5 shrink-0 text-elec-yellow/70" />
@@ -177,7 +177,7 @@ export function JobCard({
                     ))}
                   </div>
                   {workersCount > 3 && (
-                    <span className="ml-1 text-white/60 font-medium">
+                    <span className="ml-1 text-white font-medium">
                       +{workersCount - 3}
                     </span>
                   )}
@@ -185,7 +185,7 @@ export function JobCard({
               ) : (
                 <>
                   <Users className="h-3.5 w-3.5 text-white" />
-                  <span className="text-white/60">0</span>
+                  <span className="text-white">0</span>
                 </>
               )}
             </div>

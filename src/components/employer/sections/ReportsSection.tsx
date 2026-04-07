@@ -146,7 +146,7 @@ export function ReportsSection() {
       <div className="space-y-6 animate-fade-in">
         <SectionHeader title="Reports & Analytics" />
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-white/60" />
+          <Loader2 className="h-8 w-8 animate-spin text-white" />
         </div>
       </div>
     );
@@ -205,7 +205,7 @@ export function ReportsSection() {
                   <p className="text-xl font-bold">
                     £{metrics?.revenue.current ? (metrics.revenue.current / 1000).toFixed(0) : 0}k
                   </p>
-                  <p className="text-xs text-white/60">Revenue</p>
+                  <p className="text-xs text-white">Revenue</p>
                   <div className="flex items-center gap-1 mt-1">
                     {revenueGrowth >= 0 ? (
                       <TrendingUp className="h-3 w-3 text-success" />
@@ -232,7 +232,7 @@ export function ReportsSection() {
                   <p className="text-xl font-bold">
                     £{metrics?.profit.current ? (metrics.profit.current / 1000).toFixed(0) : 0}k
                   </p>
-                  <p className="text-xs text-white/60">Profit</p>
+                  <p className="text-xs text-white">Profit</p>
                   <div className="flex items-center gap-1 mt-1">
                     {profitGrowth >= 0 ? (
                       <TrendingUp className="h-3 w-3 text-success" />
@@ -257,8 +257,8 @@ export function ReportsSection() {
                     <Briefcase className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <p className="text-xl font-bold">{metrics?.completedJobs || 0}</p>
-                  <p className="text-xs text-white/60">Jobs Done</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white">Jobs Done</p>
+                  <p className="text-xs text-white mt-1">
                     {metrics?.activeJobs || 0} active
                   </p>
                 </div>
@@ -272,7 +272,7 @@ export function ReportsSection() {
                     <Users className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <p className="text-xl font-bold">{metrics?.complianceRate || 0}%</p>
-                  <p className="text-xs text-white/60">Compliance</p>
+                  <p className="text-xs text-white">Compliance</p>
                   <p className="text-xs text-success mt-1">{metrics?.employees || 0} staff</p>
                 </div>
               </CardContent>
@@ -330,7 +330,7 @@ export function ReportsSection() {
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (
-                  <div className="flex items-center justify-center h-full text-white/60">
+                  <div className="flex items-center justify-center h-full text-white">
                     No revenue data available yet. Start tracking invoices to see trends.
                   </div>
                 )}
@@ -382,7 +382,7 @@ export function ReportsSection() {
                       </LineChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="flex items-center justify-center h-full text-white/60 text-sm">
+                    <div className="flex items-center justify-center h-full text-white text-sm">
                       No trend data available yet
                     </div>
                   )}
@@ -428,7 +428,7 @@ export function ReportsSection() {
                       </PieChart>
                     </ResponsiveContainer>
                   ) : (
-                    <div className="text-white/60 text-sm text-center">
+                    <div className="text-white text-sm text-center">
                       No certifications tracked yet
                     </div>
                   )}
@@ -440,7 +440,7 @@ export function ReportsSection() {
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: item.color }}
                       />
-                      <span className="text-xs text-white/60">
+                      <span className="text-xs text-white">
                         {item.name} {item.value}%
                       </span>
                     </div>
@@ -473,7 +473,7 @@ export function ReportsSection() {
                           </span>
                           <div>
                             <p className="font-medium text-sm">{performer.name}</p>
-                            <p className="text-xs text-white/60">{performer.jobs} jobs</p>
+                            <p className="text-xs text-white">{performer.jobs} jobs</p>
                           </div>
                         </div>
                         <span className="font-semibold text-elec-yellow text-sm">
@@ -482,7 +482,7 @@ export function ReportsSection() {
                       </div>
                     ))
                   ) : (
-                    <div className="text-center py-4 text-white/60 text-sm">
+                    <div className="text-center py-4 text-white text-sm">
                       No job assignments tracked yet
                     </div>
                   )}
@@ -504,7 +504,7 @@ export function ReportsSection() {
                       <div key={idx} className="space-y-1">
                         <div className="flex justify-between text-sm">
                           <span className="font-medium">{item.status}</span>
-                          <span className="text-white/60">
+                          <span className="text-white">
                             {item.count} ({item.percentage}%)
                           </span>
                         </div>
@@ -512,14 +512,14 @@ export function ReportsSection() {
                       </div>
                     ))
                   ) : (
-                    <div className="text-center py-4 text-white/60 text-sm">
+                    <div className="text-center py-4 text-white text-sm">
                       No jobs tracked yet
                     </div>
                   )}
                 </div>
                 <div className="mt-4 pt-3 border-t border-border">
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/60">Total Jobs</span>
+                    <span className="text-white">Total Jobs</span>
                     <span className="font-semibold">
                       {metrics?.totalJobs || jobsByStatus.reduce((acc, j) => acc + j.count, 0)}
                     </span>
@@ -540,19 +540,19 @@ export function ReportsSection() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <div className="p-4 rounded-lg bg-success/10 border border-success/20 text-center">
-                  <p className="text-xs text-white/60">Paid (30 days)</p>
+                  <p className="text-xs text-white">Paid (30 days)</p>
                   <p className="text-xl font-bold text-success">
                     £{paymentSummary ? (paymentSummary.paidLast30Days / 1000).toFixed(0) : 0}k
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-warning/10 border border-warning/20 text-center">
-                  <p className="text-xs text-white/60">Pending</p>
+                  <p className="text-xs text-white">Pending</p>
                   <p className="text-xl font-bold text-warning">
                     £{paymentSummary ? (paymentSummary.pending / 1000).toFixed(0) : 0}k
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
-                  <p className="text-xs text-white/60">Overdue</p>
+                  <p className="text-xs text-white">Overdue</p>
                   <p className="text-xl font-bold text-destructive">
                     £{paymentSummary ? (paymentSummary.overdue / 1000).toFixed(0) : 0}k
                   </p>
@@ -566,7 +566,7 @@ export function ReportsSection() {
         <TabsContent value="profitability" className="space-y-6 mt-6">
           {isFinanceLoading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-white/60" />
+              <Loader2 className="h-8 w-8 animate-spin text-white" />
             </div>
           ) : (
             <>
@@ -575,7 +575,7 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Total Revenue</p>
+                      <p className="text-xs text-white">Total Revenue</p>
                       <p className="text-xl font-bold text-elec-yellow">
                         {formatCompactCurrency(profitability?.totalRevenue || 0)}
                       </p>
@@ -586,7 +586,7 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Total Costs</p>
+                      <p className="text-xs text-white">Total Costs</p>
                       <p className="text-xl font-bold text-orange-500">
                         {formatCompactCurrency(profitability?.totalCosts || 0)}
                       </p>
@@ -597,7 +597,7 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Net Profit</p>
+                      <p className="text-xs text-white">Net Profit</p>
                       <p
                         className={cn(
                           'text-xl font-bold',
@@ -613,7 +613,7 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Profit Margin</p>
+                      <p className="text-xs text-white">Profit Margin</p>
                       <p
                         className={cn(
                           'text-xl font-bold flex items-center gap-1',
@@ -697,7 +697,7 @@ export function ReportsSection() {
                         </AreaChart>
                       </ResponsiveContainer>
                     ) : (
-                      <div className="flex items-center justify-center h-full text-white/60">
+                      <div className="flex items-center justify-center h-full text-white">
                         No financial data available yet
                       </div>
                     )}
@@ -727,14 +727,14 @@ export function ReportsSection() {
                                 'w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium shrink-0',
                                 idx < 3
                                   ? 'bg-elec-yellow/20 text-elec-yellow'
-                                  : 'bg-muted text-white/60'
+                                  : 'bg-muted text-white'
                               )}
                             >
                               {idx + 1}
                             </span>
                             <div className="min-w-0 flex-1">
                               <p className="font-medium text-sm truncate">{job.title}</p>
-                              <p className="text-xs text-white/60">
+                              <p className="text-xs text-white">
                                 {formatCurrency(job.revenue)} revenue
                               </p>
                             </div>
@@ -765,7 +765,7 @@ export function ReportsSection() {
                         </div>
                       ))
                     ) : (
-                      <div className="text-center py-4 text-white/60 text-sm">
+                      <div className="text-center py-4 text-white text-sm">
                         No job profitability data available yet
                       </div>
                     )}
@@ -780,7 +780,7 @@ export function ReportsSection() {
         <TabsContent value="cashflow" className="space-y-6 mt-6">
           {isFinanceLoading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-white/60" />
+              <Loader2 className="h-8 w-8 animate-spin text-white" />
             </div>
           ) : (
             <>
@@ -789,11 +789,11 @@ export function ReportsSection() {
                 <Card className="border-green-500/30 bg-green-500/5">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Cash In</p>
+                      <p className="text-xs text-white">Cash In</p>
                       <p className="text-xl font-bold text-green-500">
                         {formatCompactCurrency(cashFlow?.totalPaid || 0)}
                       </p>
-                      <p className="text-xs text-white/60 mt-1">
+                      <p className="text-xs text-white mt-1">
                         {cashFlow?.invoicesPaid || 0} invoices
                       </p>
                     </div>
@@ -803,11 +803,11 @@ export function ReportsSection() {
                 <Card className="border-amber-500/30 bg-amber-500/5">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Pending</p>
+                      <p className="text-xs text-white">Pending</p>
                       <p className="text-xl font-bold text-amber-500">
                         {formatCompactCurrency(cashFlow?.totalOutstanding || 0)}
                       </p>
-                      <p className="text-xs text-white/60 mt-1">
+                      <p className="text-xs text-white mt-1">
                         {cashFlow?.invoicesOutstanding || 0} invoices
                       </p>
                     </div>
@@ -817,11 +817,11 @@ export function ReportsSection() {
                 <Card className="border-red-500/30 bg-red-500/5">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Overdue</p>
+                      <p className="text-xs text-white">Overdue</p>
                       <p className="text-xl font-bold text-red-500">
                         {formatCompactCurrency(cashFlow?.totalOverdue || 0)}
                       </p>
-                      <p className="text-xs text-white/60 mt-1">
+                      <p className="text-xs text-white mt-1">
                         {cashFlow?.invoicesOverdue || 0} invoices
                       </p>
                     </div>
@@ -831,11 +831,11 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/30 bg-elec-yellow/5">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Collection Rate</p>
+                      <p className="text-xs text-white">Collection Rate</p>
                       <p className="text-xl font-bold text-elec-yellow">
                         {(cashFlow?.collectionRate || 0).toFixed(0)}%
                       </p>
-                      <p className="text-xs text-white/60 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Avg {cashFlow?.averageDaysToPayment || 0} days
                       </p>
                     </div>
@@ -856,7 +856,7 @@ export function ReportsSection() {
                     {/* Collection Progress */}
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-white/60">Invoice Collection</span>
+                        <span className="text-white">Invoice Collection</span>
                         <span className="font-medium">
                           {formatCurrency(cashFlow?.totalPaid || 0)} /{' '}
                           {formatCurrency(
@@ -878,19 +878,19 @@ export function ReportsSection() {
                         <p className="text-2xl font-bold text-green-500">
                           {cashFlow?.invoicesPaid || 0}
                         </p>
-                        <p className="text-xs text-white/60">Paid</p>
+                        <p className="text-xs text-white">Paid</p>
                       </div>
                       <div className="text-center">
                         <p className="text-2xl font-bold text-amber-500">
                           {cashFlow?.invoicesOutstanding || 0}
                         </p>
-                        <p className="text-xs text-white/60">Pending</p>
+                        <p className="text-xs text-white">Pending</p>
                       </div>
                       <div className="text-center">
                         <p className="text-2xl font-bold text-red-500">
                           {cashFlow?.invoicesOverdue || 0}
                         </p>
-                        <p className="text-xs text-white/60">Overdue</p>
+                        <p className="text-xs text-white">Overdue</p>
                       </div>
                     </div>
                   </div>
@@ -906,19 +906,19 @@ export function ReportsSection() {
                   <CardContent>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center py-2 border-b border-border/50">
-                        <span className="text-sm text-white/60">Invoiced</span>
+                        <span className="text-sm text-white">Invoiced</span>
                         <span className="font-semibold">
                           {formatCurrency(quickStats?.monthlyInvoiced || 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-2 border-b border-border/50">
-                        <span className="text-sm text-white/60">Expenses</span>
+                        <span className="text-sm text-white">Expenses</span>
                         <span className="font-semibold text-orange-500">
                           {formatCurrency(quickStats?.monthlyExpenses || 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-2">
-                        <span className="text-sm text-white/60">Net</span>
+                        <span className="text-sm text-white">Net</span>
                         <span
                           className={cn(
                             'font-bold',
@@ -945,19 +945,19 @@ export function ReportsSection() {
                   <CardContent>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center py-2 border-b border-border/50">
-                        <span className="text-sm text-white/60">Awaiting Approval</span>
+                        <span className="text-sm text-white">Awaiting Approval</span>
                         <Badge variant="outline" className="border-amber-500/30 text-amber-500">
                           {quickStats?.pendingExpenses || 0} claims
                         </Badge>
                       </div>
                       <div className="flex justify-between items-center py-2 border-b border-border/50">
-                        <span className="text-sm text-white/60">Amount</span>
+                        <span className="text-sm text-white">Amount</span>
                         <span className="font-semibold">
                           {formatCurrency(quickStats?.pendingExpenseAmount || 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center py-2">
-                        <span className="text-sm text-white/60">Approved Unpaid</span>
+                        <span className="text-sm text-white">Approved Unpaid</span>
                         <span className="font-semibold text-amber-500">
                           {formatCurrency(quickStats?.approvedUnpaidExpenses || 0)}
                         </span>
@@ -974,7 +974,7 @@ export function ReportsSection() {
         <TabsContent value="expenses" className="space-y-6 mt-6">
           {isFinanceLoading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-white/60" />
+              <Loader2 className="h-8 w-8 animate-spin text-white" />
             </div>
           ) : (
             <>
@@ -983,7 +983,7 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Total Expenses</p>
+                      <p className="text-xs text-white">Total Expenses</p>
                       <p className="text-xl font-bold">
                         {formatCompactCurrency(
                           expensesByCategory.reduce((sum, cat) => sum + cat.total, 0)
@@ -996,7 +996,7 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Categories</p>
+                      <p className="text-xs text-white">Categories</p>
                       <p className="text-xl font-bold">{expensesByCategory.length}</p>
                     </div>
                   </CardContent>
@@ -1005,7 +1005,7 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">Pending Claims</p>
+                      <p className="text-xs text-white">Pending Claims</p>
                       <p className="text-xl font-bold text-amber-500">
                         {quickStats?.pendingExpenses || 0}
                       </p>
@@ -1016,7 +1016,7 @@ export function ReportsSection() {
                 <Card className="border-elec-yellow/20">
                   <CardContent className="p-4">
                     <div className="flex flex-col">
-                      <p className="text-xs text-white/60">This Month</p>
+                      <p className="text-xs text-white">This Month</p>
                       <p className="text-xl font-bold">
                         {formatCompactCurrency(quickStats?.monthlyExpenses || 0)}
                       </p>
@@ -1064,7 +1064,7 @@ export function ReportsSection() {
                           </PieChart>
                         </ResponsiveContainer>
                       ) : (
-                        <div className="text-white/60 text-sm text-center">
+                        <div className="text-white text-sm text-center">
                           No expense data available yet
                         </div>
                       )}
@@ -1077,7 +1077,7 @@ export function ReportsSection() {
                             className="w-3 h-3 rounded-full"
                             style={{ backgroundColor: item.color }}
                           />
-                          <span className="text-xs text-white/60">{item.name}</span>
+                          <span className="text-xs text-white">{item.name}</span>
                         </div>
                       ))}
                     </div>
@@ -1115,7 +1115,7 @@ export function ReportsSection() {
                                   <p className="font-medium text-sm capitalize">
                                     {category.category}
                                   </p>
-                                  <p className="text-xs text-white/60">
+                                  <p className="text-xs text-white">
                                     {category.count} expense{category.count !== 1 ? 's' : ''}
                                   </p>
                                 </div>
@@ -1124,7 +1124,7 @@ export function ReportsSection() {
                                 <p className="font-semibold text-sm">
                                   {formatCurrency(category.total)}
                                 </p>
-                                <p className="text-xs text-white/60">
+                                <p className="text-xs text-white">
                                   {category.percentage.toFixed(1)}%
                                 </p>
                               </div>
@@ -1132,7 +1132,7 @@ export function ReportsSection() {
                           );
                         })
                       ) : (
-                        <div className="text-center py-4 text-white/60 text-sm">
+                        <div className="text-center py-4 text-white text-sm">
                           No expense categories tracked yet
                         </div>
                       )}

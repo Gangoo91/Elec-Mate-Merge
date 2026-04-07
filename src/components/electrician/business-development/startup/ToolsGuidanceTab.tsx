@@ -124,7 +124,7 @@ const ToolsGuidanceTab = () => {
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-foreground">{template.name}</h4>
-                    <p className="text-sm text-muted-foreground mt-1">{template.description}</p>
+                    <p className="text-sm text-white mt-1">{template.description}</p>
                   </div>
                   <Button size="sm" className="flex-shrink-0">
                     <Download className="h-4 w-4 mr-1" />
@@ -138,9 +138,9 @@ const ToolsGuidanceTab = () => {
                   >
                     {template.type}
                   </Badge>
-                  <span className="text-xs text-muted-foreground">{template.size}</span>
-                  <span className="text-xs text-muted-foreground">★ {template.rating}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">{template.size}</span>
+                  <span className="text-xs text-white">★ {template.rating}</span>
+                  <span className="text-xs text-white">
                     {template.downloads} downloads
                   </span>
                 </div>
@@ -164,7 +164,7 @@ const ToolsGuidanceTab = () => {
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
                     <h4 className="font-medium text-foreground">{tool.name}</h4>
-                    <p className="text-sm text-muted-foreground mt-1">{tool.description}</p>
+                    <p className="text-sm text-white mt-1">{tool.description}</p>
                   </div>
                   <div className="flex flex-col items-end gap-2">
                     <Badge className="bg-blue-500/20 text-blue-300 border-blue-400/30">

@@ -236,7 +236,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
           <Package className="h-6 w-6 text-elec-yellow" />
           <h3 className="text-2xl font-bold text-foreground">Intelligent Material Search</h3>
         </div>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Search across <span className="text-elec-yellow font-semibold">43,371 materials</span>{' '}
           with AI-powered matching
         </p>
@@ -251,7 +251,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
               <Search className="h-4 w-4 text-elec-yellow" />
               Search Materials
               {autocompleteLoading && (
-                <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+                <Loader2 className="h-3 w-3 animate-spin text-white" />
               )}
             </Label>
             <div className="flex gap-2">
@@ -284,7 +284,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                     ref={autocompleteRef}
                     className="absolute z-[100] w-full mt-1 bg-card border border-primary/20 rounded-lg shadow-xl overflow-hidden"
                   >
-                    <div className="p-2 border-b border-primary/10 flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="p-2 border-b border-primary/10 flex items-center gap-2 text-xs text-white">
                       <Sparkles className="h-3 w-3 text-elec-yellow" />
                       Suggestions
                     </div>
@@ -302,11 +302,11 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                                 __html: highlightMatch(suggestion.name, searchQuery),
                               }}
                             />
-                            <span className="text-xs text-muted-foreground ml-2 whitespace-nowrap">
+                            <span className="text-xs text-white ml-2 whitespace-nowrap">
                               {Math.round(suggestion.score * 100)}%
                             </span>
                           </div>
-                          <span className="text-xs text-muted-foreground">
+                          <span className="text-xs text-white">
                             {suggestion.category}
                           </span>
                         </li>
@@ -401,7 +401,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
             {/* Did you mean? suggestions */}
             {serverSuggestions.length > 0 && (
               <div className="pt-4 border-t border-destructive/20">
-                <p className="text-sm text-muted-foreground mb-3 text-center">Did you mean?</p>
+                <p className="text-sm text-white mb-3 text-center">Did you mean?</p>
                 <div className="flex flex-wrap gap-2 justify-center">
                   {serverSuggestions.slice(0, 5).map((suggestion, index) => (
                     <Button
@@ -425,7 +425,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
       {searchResults.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white">
               Found <span className="font-semibold text-foreground">{searchResults.length}</span>{' '}
               materials
               {searchMethod && (
@@ -471,7 +471,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                       )}
                     </div>
                     {material.brand && (
-                      <p className="text-xs text-muted-foreground">{material.brand}</p>
+                      <p className="text-xs text-white">{material.brand}</p>
                     )}
                   </div>
 
@@ -479,7 +479,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
                       <p className="text-2xl font-bold text-elec-yellow">{material.price}</p>
-                      <p className="text-xs text-muted-foreground">{material.supplier}</p>
+                      <p className="text-xs text-white">{material.supplier}</p>
                     </div>
                     <div className="text-right">
                       <span
@@ -497,7 +497,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                   </div>
 
                   {/* Category & Similarity Score */}
-                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-2 text-xs text-white">
                     <Package className="h-3 w-3" />
                     <span>{material.category}</span>
                     {material.similarity !== undefined && (
@@ -519,7 +519,7 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
                   {material.highlights && material.highlights.length > 0 && (
                     <div className="space-y-1">
                       {material.highlights.slice(0, 2).map((highlight, idx) => (
-                        <p key={idx} className="text-xs text-muted-foreground line-clamp-1">
+                        <p key={idx} className="text-xs text-white line-clamp-1">
                           • {highlight}
                         </p>
                       ))}
@@ -557,9 +557,9 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
       {/* Empty State */}
       {!isSearching && searchResults.length === 0 && !error && searchQuery && (
         <Card className="p-12 text-center border-dashed">
-          <Package className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+          <Package className="h-12 w-12 mx-auto mb-4 text-white" />
           <h3 className="text-lg font-semibold mb-2">No results yet</h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-white">
             Try searching for materials like "sockets", "cables", "consumer unit"
           </p>
         </Card>

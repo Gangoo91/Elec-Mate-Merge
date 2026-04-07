@@ -197,7 +197,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
                 </div>
                 <div>
                   <span className="text-lg font-semibold">Edit Contract</span>
-                  <p className="text-xs text-white/60 font-normal line-clamp-1">
+                  <p className="text-xs text-white font-normal line-clamp-1">
                     {contract.title}
                   </p>
                 </div>
@@ -342,7 +342,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
           </div>
 
           {/* Help text */}
-          <div className="flex justify-between text-xs text-white/60 mt-2">
+          <div className="flex justify-between text-xs text-white mt-2">
             <span>Use headings to structure your contract. Changes auto-save as draft.</span>
           </div>
 

@@ -327,7 +327,7 @@ export function AddEmployeeDialog({
               <div className="relative">
                 <Avatar className="h-28 w-28 border-4 border-background shadow-lg">
                   <AvatarImage src={photoPreview || undefined} />
-                  <AvatarFallback className="bg-muted text-white/60 text-3xl">
+                  <AvatarFallback className="bg-muted text-white text-3xl">
                     {formData.name ? (
                       formData.name
                         .split(' ')
@@ -562,7 +562,7 @@ export function AddEmployeeDialog({
                     </>
                   )}
                   {calculateEquivalent() && (
-                    <p className="text-sm text-white/60">{calculateEquivalent()}</p>
+                    <p className="text-sm text-white">{calculateEquivalent()}</p>
                   )}
                 </div>
               </div>

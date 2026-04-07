@@ -125,7 +125,7 @@ export function JobFinancialsSection() {
       <div className="flex flex-col gap-3">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-foreground">Job Financials</h1>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Budget tracking and profitability analysis
           </p>
         </div>
@@ -133,7 +133,7 @@ export function JobFinancialsSection() {
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               placeholder="Search jobs..."
@@ -158,7 +158,7 @@ export function JobFinancialsSection() {
                 <p className="text-lg md:text-2xl font-bold text-foreground">
                   £{(stats.totalBudget / 1000).toFixed(0)}k
                 </p>
-                <p className="text-xs md:text-sm text-white/60">Budget</p>
+                <p className="text-xs md:text-sm text-white">Budget</p>
               </div>
               <PieChart className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow opacity-70" />
             </div>
@@ -171,7 +171,7 @@ export function JobFinancialsSection() {
                 <p className="text-lg md:text-2xl font-bold text-foreground">
                   £{(stats.totalActual / 1000).toFixed(0)}k
                 </p>
-                <p className="text-xs md:text-sm text-white/60">Spent</p>
+                <p className="text-xs md:text-sm text-white">Spent</p>
               </div>
               <DollarSign className="h-6 w-6 md:h-8 md:w-8 text-info opacity-70" />
             </div>
@@ -184,7 +184,7 @@ export function JobFinancialsSection() {
                 <p className="text-lg md:text-2xl font-bold text-success">
                   £{(stats.totalOutstanding / 1000).toFixed(0)}k
                 </p>
-                <p className="text-xs md:text-sm text-white/60">Outstanding</p>
+                <p className="text-xs md:text-sm text-white">Outstanding</p>
               </div>
               <FileText className="h-6 w-6 md:h-8 md:w-8 text-warning opacity-70" />
             </div>
@@ -197,7 +197,7 @@ export function JobFinancialsSection() {
                 <p className="text-lg md:text-2xl font-bold text-success">
                   {stats.avgMargin.toFixed(1)}%
                 </p>
-                <p className="text-xs md:text-sm text-white/60">Avg Margin</p>
+                <p className="text-xs md:text-sm text-white">Avg Margin</p>
               </div>
               <TrendingUp className="h-6 w-6 md:h-8 md:w-8 text-success opacity-70" />
             </div>
@@ -209,9 +209,9 @@ export function JobFinancialsSection() {
       {filteredFinancials.length === 0 && (
         <Card className="bg-elec-gray border-border">
           <CardContent className="p-8 text-center">
-            <Briefcase className="h-12 w-12 text-white/60 mx-auto mb-4" />
+            <Briefcase className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="font-semibold text-lg mb-2">No Job Financials</h3>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               {searchQuery
                 ? 'No jobs match your search criteria.'
                 : 'Create jobs to start tracking financials. Financial tracking is automatically created for each job.'}
@@ -254,7 +254,7 @@ export function JobFinancialsSection() {
                             {fin.status}
                           </Badge>
                         </div>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           {fin.job?.client || 'No client'}
                         </p>
                       </div>
@@ -272,7 +272,7 @@ export function JobFinancialsSection() {
                           >
                             {Number(fin.margin).toFixed(0)}%
                           </p>
-                          <p className="text-[10px] text-white/60">Margin</p>
+                          <p className="text-[10px] text-white">Margin</p>
                         </div>
                         <Button variant="ghost" size="icon" className="h-8 w-8">
                           {isExpanded ? (
@@ -286,7 +286,7 @@ export function JobFinancialsSection() {
 
                     <div className="space-y-1">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-white/60">Budget Used</span>
+                        <span className="text-white">Budget Used</span>
                         <span
                           className={cn(
                             'font-medium',
@@ -348,7 +348,7 @@ export function JobFinancialsSection() {
                             return (
                               <div key={key}>
                                 <div className="flex items-center justify-between text-xs mb-1">
-                                  <span className="capitalize text-white/60">{label}</span>
+                                  <span className="capitalize text-white">{label}</span>
                                   <span
                                     className={cn(
                                       'font-medium',
@@ -375,13 +375,13 @@ export function JobFinancialsSection() {
                         </h5>
                         <div className="space-y-2">
                           <div className="flex items-center justify-between p-2 bg-elec-gray rounded-lg text-xs">
-                            <span className="text-white/60">Total Value</span>
+                            <span className="text-white">Total Value</span>
                             <span className="font-semibold text-foreground">
                               £{Number(fin.budget_total).toLocaleString()}
                             </span>
                           </div>
                           <div className="flex items-center justify-between p-2 bg-elec-gray rounded-lg text-xs">
-                            <span className="text-white/60">Invoiced</span>
+                            <span className="text-white">Invoiced</span>
                             <span className="font-semibold text-foreground">
                               £{Number(fin.invoiced).toLocaleString()}
                             </span>
@@ -426,7 +426,7 @@ export function JobFinancialsSection() {
                                 <p className="font-medium text-foreground truncate">
                                   {vo.description}
                                 </p>
-                                <p className="text-white/60">
+                                <p className="text-white">
                                   {new Date(vo.created_at).toLocaleDateString()}
                                 </p>
                               </div>

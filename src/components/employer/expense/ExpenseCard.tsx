@@ -55,7 +55,7 @@ const categoryColors: Record<string, string> = {
   PPE: 'bg-red-500/10 text-red-500 border-red-500/30',
   Training: 'bg-teal-500/10 text-teal-500 border-teal-500/30',
   Meals: 'bg-pink-500/10 text-pink-500 border-pink-500/30',
-  Other: 'bg-gray-500/10 text-gray-400 border-gray-500/30',
+  Other: 'bg-gray-500/10 text-white border-gray-500/30',
 };
 
 // Status colors
@@ -159,7 +159,7 @@ export function ExpenseCard({
                 <p className="font-semibold text-foreground truncate">
                   {expense.employees?.name || 'Unknown'}
                 </p>
-                <p className="text-sm text-white/60 line-clamp-1">{expense.description}</p>
+                <p className="text-sm text-white line-clamp-1">{expense.description}</p>
               </div>
               <div className="text-right shrink-0">
                 <p className="text-lg font-bold text-foreground">
@@ -187,7 +187,7 @@ export function ExpenseCard({
 
               {/* Receipt Indicator */}
               {expense.receipt_url && (
-                <Badge variant="outline" className="text-xs bg-muted/50 text-white/60">
+                <Badge variant="outline" className="text-xs bg-muted/50 text-white">
                   <Receipt className="h-3 w-3 mr-1" />
                   Receipt
                 </Badge>
@@ -195,7 +195,7 @@ export function ExpenseCard({
 
               {/* Job Link */}
               {expense.job_id && (
-                <Badge variant="outline" className="text-xs bg-muted/50 text-white/60">
+                <Badge variant="outline" className="text-xs bg-muted/50 text-white">
                   <Briefcase className="h-3 w-3 mr-1" />
                   Linked
                 </Badge>
@@ -204,10 +204,10 @@ export function ExpenseCard({
 
             {/* Time & Actions Row */}
             <div className="flex items-center justify-between mt-3">
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white">
                 {formatDistanceToNow(new Date(expense.submitted_date), { addSuffix: true })}
               </p>
-              {onClick && <ChevronRight className="h-4 w-4 text-white/60" />}
+              {onClick && <ChevronRight className="h-4 w-4 text-white" />}
             </div>
 
             {/* Rejection Reason */}

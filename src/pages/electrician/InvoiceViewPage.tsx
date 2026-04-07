@@ -365,9 +365,9 @@ const InvoiceViewPage = () => {
           Back to Invoices
         </Button>
         <div className="text-center py-12 space-y-4">
-          <FileText className="h-16 w-16 mx-auto text-muted-foreground/30" />
+          <FileText className="h-16 w-16 mx-auto text-white/30" />
           <h2 className="text-2xl font-bold">Invoice Not Found</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             The invoice you're looking for doesn't exist or may have been deleted.
           </p>
           <Button onClick={() => navigate('/electrician/invoices')}>View All Invoices</Button>
@@ -415,13 +415,13 @@ const InvoiceViewPage = () => {
           >
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground font-medium">
+                <p className="text-sm text-white font-medium">
                   {invoice.invoice_status === 'paid' ? 'Amount Paid' : 'Amount Due'}
                 </p>
                 <p className="text-4xl sm:text-5xl font-bold text-foreground">
                   {formatCurrency(invoice.total)}
                 </p>
-                <p className="text-lg text-muted-foreground">{invoice.invoice_number}</p>
+                <p className="text-lg text-white">{invoice.invoice_number}</p>
               </div>
               <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end">
                 {invoice.invoice_status === 'paid' && (
@@ -516,19 +516,19 @@ const InvoiceViewPage = () => {
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Invoice Details */}
           <div className="p-5 rounded-2xl bg-card border">
-            <h3 className="text-sm font-semibold text-muted-foreground mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
               <FileText className="h-4 w-4" />
               Invoice Details
             </h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                <span className="text-xs text-white uppercase tracking-wide">
                   Invoice Number
                 </span>
                 <p className="font-semibold text-base">{invoice.invoice_number}</p>
               </div>
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                <span className="text-xs text-white uppercase tracking-wide">
                   Status
                 </span>
                 <p className="font-semibold text-base capitalize">
@@ -536,16 +536,16 @@ const InvoiceViewPage = () => {
                 </p>
               </div>
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                <span className="text-xs text-white uppercase tracking-wide">
                   Issue Date
                 </span>
                 <p className="font-medium flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <Calendar className="h-4 w-4 text-white" />
                   {invoice.invoice_date ? format(invoice.invoice_date, 'dd MMM yyyy') : 'Not set'}
                 </p>
               </div>
               <div className="space-y-1">
-                <span className="text-xs text-muted-foreground uppercase tracking-wide">
+                <span className="text-xs text-white uppercase tracking-wide">
                   Due Date
                 </span>
                 <p
@@ -562,7 +562,7 @@ const InvoiceViewPage = () => {
 
           {/* Client Details */}
           <div className="p-5 rounded-2xl bg-card border">
-            <h3 className="text-sm font-semibold text-muted-foreground mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
               <User className="h-4 w-4" />
               Client Details
             </h3>
@@ -570,7 +570,7 @@ const InvoiceViewPage = () => {
               <p className="font-semibold text-xl">{invoice.client?.name || 'No client name'}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {invoice.client?.email && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 text-sm text-white">
                     <Mail className="h-4 w-4 flex-shrink-0" />
                     <a
                       href={`mailto:${invoice.client.email}`}
@@ -581,7 +581,7 @@ const InvoiceViewPage = () => {
                   </div>
                 )}
                 {invoice.client?.phone && (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 text-sm text-white">
                     <Phone className="h-4 w-4 flex-shrink-0" />
                     <a href={`tel:${invoice.client.phone}`} className="hover:text-primary">
                       {invoice.client.phone}
@@ -590,7 +590,7 @@ const InvoiceViewPage = () => {
                 )}
               </div>
               {invoice.client?.address && (
-                <div className="flex items-start gap-2 text-sm text-muted-foreground pt-1">
+                <div className="flex items-start gap-2 text-sm text-white pt-1">
                   <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
                   <span className="whitespace-pre-line">{invoice.client.address}</span>
                 </div>
@@ -603,9 +603,9 @@ const InvoiceViewPage = () => {
         <div className="mt-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* Line Items - Takes 2 cols */}
           <div className="lg:col-span-2 p-5 rounded-2xl bg-card border">
-            <h3 className="text-sm font-semibold text-muted-foreground mb-4">Line Items</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">Line Items</h3>
             {/* Table header for desktop */}
-            <div className="hidden sm:grid sm:grid-cols-12 gap-4 pb-2 border-b text-xs text-muted-foreground uppercase tracking-wide">
+            <div className="hidden sm:grid sm:grid-cols-12 gap-4 pb-2 border-b text-xs text-white uppercase tracking-wide">
               <div className="col-span-6">Description</div>
               <div className="col-span-2 text-right">Qty</div>
               <div className="col-span-2 text-right">Unit Price</div>
@@ -620,7 +620,7 @@ const InvoiceViewPage = () => {
                     <div className="sm:hidden flex justify-between items-start">
                       <div className="flex-1 min-w-0 pr-4">
                         <p className="font-medium">{item.description || item.name}</p>
-                        <p className="text-xs text-muted-foreground mt-1">
+                        <p className="text-xs text-white mt-1">
                           {item.quantity} × {formatCurrency(item.unitPrice || item.price || 0)}
                         </p>
                       </div>
@@ -631,13 +631,13 @@ const InvoiceViewPage = () => {
                       <div className="col-span-6">
                         <p className="font-medium">{item.description || item.name}</p>
                         {item.notes && (
-                          <p className="text-xs text-muted-foreground mt-0.5">{item.notes}</p>
+                          <p className="text-xs text-white mt-0.5">{item.notes}</p>
                         )}
                       </div>
-                      <div className="col-span-2 text-right text-muted-foreground">
+                      <div className="col-span-2 text-right text-white">
                         {item.quantity}
                       </div>
-                      <div className="col-span-2 text-right text-muted-foreground">
+                      <div className="col-span-2 text-right text-white">
                         {formatCurrency(item.unitPrice || item.price || 0)}
                       </div>
                       <div className="col-span-2 text-right font-semibold">
@@ -652,27 +652,27 @@ const InvoiceViewPage = () => {
 
           {/* Summary */}
           <div className="p-5 rounded-2xl bg-card border h-fit">
-            <h3 className="text-sm font-semibold text-muted-foreground mb-4">Summary</h3>
+            <h3 className="text-sm font-semibold text-white mb-4">Summary</h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Subtotal</span>
+                <span className="text-white">Subtotal</span>
                 <span className="font-medium">{formatCurrency(invoice.subtotal)}</span>
               </div>
               {(invoice.overhead ?? 0) > 0 && (
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Overhead</span>
+                  <span className="text-white">Overhead</span>
                   <span className="font-medium">{formatCurrency(invoice.overhead)}</span>
                 </div>
               )}
               {(invoice.profit ?? 0) > 0 && (
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Profit</span>
+                  <span className="text-white">Profit</span>
                   <span className="font-medium">{formatCurrency(invoice.profit)}</span>
                 </div>
               )}
               {(invoice.vatAmount ?? 0) > 0 && (
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">
+                  <span className="text-white">
                     VAT ({invoice.settings?.vatRate || 20}%)
                   </span>
                   <span className="font-medium">{formatCurrency(invoice.vatAmount)}</span>
@@ -689,7 +689,7 @@ const InvoiceViewPage = () => {
         {/* Notes */}
         {invoice.notes && (
           <div className="mt-4 p-5 rounded-2xl bg-card border">
-            <h3 className="text-sm font-semibold text-muted-foreground mb-2">Notes</h3>
+            <h3 className="text-sm font-semibold text-white mb-2">Notes</h3>
             <p className="text-sm whitespace-pre-wrap">{invoice.notes}</p>
           </div>
         )}

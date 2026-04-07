@@ -301,7 +301,7 @@ export default function InventoryPage() {
                   ))
                 ) : (
                   <div className="text-center py-12">
-                    <p className="text-white/50 text-sm">
+                    <p className="text-white text-sm">
                       No items matching "{filters.searchQuery}"
                     </p>
                   </div>
@@ -373,7 +373,7 @@ export default function InventoryPage() {
             <button
               type="button"
               onClick={() => setShowSort(!showSort)}
-              className="px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap touch-manipulation flex-shrink-0 bg-white/[0.06] text-white/60 flex items-center gap-1"
+              className="px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap touch-manipulation flex-shrink-0 bg-white/[0.06] text-white flex items-center gap-1"
             >
               <ArrowDownUp className="h-2.5 w-2.5" />
               {SORT_OPTIONS.find((s) => s.id === sortBy)?.label}
@@ -451,7 +451,7 @@ export default function InventoryPage() {
                         'px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap touch-manipulation flex-shrink-0',
                         sortBy === opt.id
                           ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
-                          : 'bg-white/[0.04] text-white/50'
+                          : 'bg-white/[0.04] text-white'
                       )}
                     >
                       {opt.label}
@@ -489,7 +489,7 @@ export default function InventoryPage() {
                     <button
                       type="button"
                       onClick={handleCopyReorderList}
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] text-white/60 text-[12px] font-medium touch-manipulation active:bg-white/[0.08]"
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] text-white text-[12px] font-medium touch-manipulation active:bg-white/[0.08]"
                     >
                       <ClipboardCopy className="h-3 w-3" />
                       Copy reorder list
@@ -543,7 +543,7 @@ export default function InventoryPage() {
                             ? 'No low stock items'
                             : 'No items yet'}
                       </p>
-                      <p className="text-sm text-white/50">
+                      <p className="text-sm text-white">
                         {filters.searchQuery
                           ? 'Try a different search term'
                           : 'Add your first items or pick from common materials below'}

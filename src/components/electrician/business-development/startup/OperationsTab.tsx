@@ -166,19 +166,19 @@ const OperationsTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
               <div className="text-2xl font-bold text-green-400">98%</div>
-              <div className="text-sm text-muted-foreground">Target Reliability</div>
+              <div className="text-sm text-white">Target Reliability</div>
             </div>
             <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
               <div className="text-2xl font-bold text-blue-400">2-4</div>
-              <div className="text-sm text-muted-foreground">Jobs Per Day</div>
+              <div className="text-sm text-white">Jobs Per Day</div>
             </div>
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
               <div className="text-2xl font-bold text-purple-400">15min</div>
-              <div className="text-sm text-muted-foreground">Response Time</div>
+              <div className="text-sm text-white">Response Time</div>
             </div>
             <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
               <div className="text-2xl font-bold text-amber-400">4.8★</div>
-              <div className="text-sm text-muted-foreground">Customer Rating</div>
+              <div className="text-sm text-white">Customer Rating</div>
             </div>
           </div>
         </CardContent>

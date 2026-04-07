@@ -287,8 +287,8 @@ export const QuoteItemsStep = ({ items, onAdd, onUpdate, onRemove }: QuoteItemsS
         ) : (
           <Card className="bg-elec-gray border-elec-yellow/20">
             <CardContent className="p-8 text-center">
-              <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">
+              <Package className="h-12 w-12 text-white mx-auto mb-4" />
+              <p className="text-white">
                 No items added yet. Add your first quote item above.
               </p>
             </CardContent>

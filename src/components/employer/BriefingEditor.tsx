@@ -351,7 +351,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
             </div>
 
             {/* Help text */}
-            <div className="flex justify-between text-xs text-white/60 mt-2">
+            <div className="flex justify-between text-xs text-white mt-2">
               <span>Use headings to structure your briefing. Changes auto-save as draft.</span>
             </div>
 

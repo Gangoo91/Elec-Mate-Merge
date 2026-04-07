@@ -90,7 +90,7 @@ export function WorkerCard({
           {/* Worker Info */}
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-foreground truncate text-base">{employee.name}</p>
-            <p className="text-sm text-white/60 truncate flex items-center gap-1.5">
+            <p className="text-sm text-white truncate flex items-center gap-1.5">
               <Briefcase className="h-3.5 w-3.5" />
               {employee.role}
             </p>
@@ -105,7 +105,7 @@ export function WorkerCard({
                 {employee.active_jobs_count > 0 && (
                   <Badge
                     variant="outline"
-                    className="text-xs px-1.5 py-0 h-5 font-normal text-white/60"
+                    className="text-xs px-1.5 py-0 h-5 font-normal text-white"
                   >
                     {employee.active_jobs_count} active job
                     {employee.active_jobs_count > 1 ? 's' : ''}
@@ -117,7 +117,7 @@ export function WorkerCard({
 
           {/* Status Badge */}
           {employee.status !== 'Active' && (
-            <Badge variant="outline" className="shrink-0 bg-muted text-white/60">
+            <Badge variant="outline" className="shrink-0 bg-muted text-white">
               {employee.status}
             </Badge>
           )}
@@ -130,7 +130,7 @@ export function WorkerCard({
               <AlertTriangle className="h-4 w-4 text-destructive shrink-0 mt-0.5" />
               <div className="flex-1">
                 <p className="font-semibold text-destructive text-sm">Schedule Conflict Detected</p>
-                <p className="text-xs text-white/60 mt-0.5">
+                <p className="text-xs text-white mt-0.5">
                   This worker is already assigned during these dates:
                 </p>
                 <div className="text-xs text-foreground mt-2 space-y-1.5">
@@ -139,10 +139,10 @@ export function WorkerCard({
                       key={clash.id}
                       className="flex items-center gap-2 bg-background/50 rounded px-2 py-1.5"
                     >
-                      <Briefcase className="h-3 w-3 text-white/60" />
+                      <Briefcase className="h-3 w-3 text-white" />
                       <span className="font-medium">{clash.job?.title}</span>
-                      <span className="text-white/60">•</span>
-                      <span className="text-white/60">
+                      <span className="text-white">•</span>
+                      <span className="text-white">
                         {clash.start_date}
                         {clash.end_date ? ` → ${clash.end_date}` : ' (ongoing)'}
                       </span>

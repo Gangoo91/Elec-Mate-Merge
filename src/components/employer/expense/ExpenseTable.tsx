@@ -160,7 +160,7 @@ export function ExpenseTable({
             <TableRow>
               <TableCell
                 colSpan={readOnly ? 7 : 9}
-                className="text-center py-8 text-white/60"
+                className="text-center py-8 text-white"
               >
                 No expenses found
               </TableCell>
@@ -214,7 +214,7 @@ export function ExpenseTable({
                     </Badge>
                   </TableCell>
                   <TableCell className="max-w-[200px]">
-                    <span className="text-sm text-white/60 truncate block">
+                    <span className="text-sm text-white truncate block">
                       {expense.description}
                     </span>
                   </TableCell>
@@ -236,7 +236,7 @@ export function ExpenseTable({
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    {expense.receipt_url && <Receipt className="h-4 w-4 text-white/60" />}
+                    {expense.receipt_url && <Receipt className="h-4 w-4 text-white" />}
                   </TableCell>
                   {!readOnly && (
                     <TableCell onClick={(e) => e.stopPropagation()}>

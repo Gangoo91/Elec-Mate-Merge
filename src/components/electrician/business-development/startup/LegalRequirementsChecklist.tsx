@@ -241,7 +241,7 @@ const LegalRequirementsChecklist = () => {
                           </Badge>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
+                      <p className="text-sm text-white">{item.description}</p>
                     </div>
                   </div>
                 </div>

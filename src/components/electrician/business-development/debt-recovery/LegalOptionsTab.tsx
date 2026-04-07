@@ -365,7 +365,7 @@ const LegalOptionsTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -395,7 +395,7 @@ const LegalOptionsTab = () => {
                       {option.cost}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {option.description}
                   </p>
                 </div>
@@ -463,7 +463,7 @@ const LegalOptionsTab = () => {
                   >
                     {method.method}
                   </h4>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {method.description}
                   </p>
                 </div>
@@ -510,7 +510,7 @@ const LegalOptionsTab = () => {
                   >
                     {consideration.factor}
                   </h4>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {consideration.details}
                   </p>
                 </div>
@@ -592,7 +592,7 @@ const LegalOptionsTab = () => {
                       {strategy.cost}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     Timeline: {strategy.timeframe}
                   </p>
                 </div>
@@ -663,7 +663,7 @@ const LegalOptionsTab = () => {
                   >
                     {method.method}
                   </h4>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {method.description}
                   </p>
                 </div>

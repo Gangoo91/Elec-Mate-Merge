@@ -160,7 +160,7 @@ export function StripeConnectCard() {
         </CardHeader>
         <CardContent className="p-6">
           <div className="flex items-center justify-center py-8">
-            <Loader2 className="h-6 w-6 animate-spin text-white/60" />
+            <Loader2 className="h-6 w-6 animate-spin text-white" />
           </div>
         </CardContent>
       </Card>
@@ -200,8 +200,8 @@ export function StripeConnectCard() {
           {!status?.stripeConfigured ? (
             // Stripe not configured at platform level
             <div className="text-center py-4">
-              <AlertCircle className="h-10 w-10 text-white/60 mx-auto mb-3" />
-              <p className="text-white/60">
+              <AlertCircle className="h-10 w-10 text-white mx-auto mb-3" />
+              <p className="text-white">
                 Stripe payments are not configured for this platform.
               </p>
             </div>
@@ -210,7 +210,7 @@ export function StripeConnectCard() {
             <div className="space-y-4">
               <div className="bg-muted/30 rounded-xl p-4 space-y-2">
                 <p className="text-sm font-medium">Accept online payments</p>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   Connect your Stripe account to receive payments directly from clients when they
                   view invoices online.
                 </p>
@@ -229,7 +229,7 @@ export function StripeConnectCard() {
                 Connect Stripe Account
               </Button>
 
-              <p className="text-xs text-white/60 text-center">
+              <p className="text-xs text-white text-center">
                 1% platform fee + Stripe processing fees apply to each transaction
               </p>
             </div>
@@ -241,7 +241,7 @@ export function StripeConnectCard() {
                   <AlertCircle className="h-5 w-5 text-amber-500" />
                   <p className="text-sm font-medium text-amber-400">Complete your Stripe setup</p>
                 </div>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   Your Stripe account needs additional information before you can accept payments.
                 </p>
               </div>
@@ -264,26 +264,26 @@ export function StripeConnectCard() {
             <div className="space-y-4">
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-white/60">Business</span>
+                  <span className="text-sm text-white">Business</span>
                   <span className="text-sm font-medium">
                     {status.account?.businessName || 'Your Business'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-white/60">Status</span>
+                  <span className="text-sm text-white">Status</span>
                   <div className="flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-emerald-500" />
                     <span className="text-sm font-medium text-emerald-400">Active</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-white/60">Payments</span>
+                  <span className="text-sm text-white">Payments</span>
                   <span className="text-sm font-medium">
                     {status.account?.chargesEnabled ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-white/60">Payouts</span>
+                  <span className="text-sm text-white">Payouts</span>
                   <span className="text-sm font-medium">
                     {status.account?.payoutsEnabled ? 'Enabled' : 'Pending'}
                   </span>
@@ -324,7 +324,7 @@ export function StripeConnectCard() {
                 Disconnect Stripe
               </Button>
 
-              <p className="text-xs text-white/60 text-center">
+              <p className="text-xs text-white text-center">
                 1% platform fee + Stripe processing fees apply to each transaction
               </p>
             </div>

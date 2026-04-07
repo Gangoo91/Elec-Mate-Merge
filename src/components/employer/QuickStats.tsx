@@ -144,7 +144,7 @@ export function QuickStats({ stats, className }: QuickStatsProps) {
                   {stat.suffix}
                 </p>
               )}
-              <p className="text-[10px] text-white/60 mt-0.5 whitespace-nowrap font-medium">
+              <p className="text-[10px] text-white mt-0.5 whitespace-nowrap font-medium">
                 {stat.label}
               </p>
             </div>
@@ -223,7 +223,7 @@ export function QuickStatsGrid({ stats, className }: QuickStatsProps) {
                 {stat.suffix}
               </p>
             )}
-            <p className="text-[10px] sm:text-xs text-white/60 font-medium mt-0.5">
+            <p className="text-[10px] sm:text-xs text-white font-medium mt-0.5">
               {stat.label}
             </p>
           </button>
@@ -279,7 +279,7 @@ export function QuickStatsCompact({ stats, className }: QuickStatsProps) {
                 {stat.suffix}
               </span>
             )}
-            <span className="text-xs text-white/60">{stat.label}</span>
+            <span className="text-xs text-white">{stat.label}</span>
           </div>
         );
       })}

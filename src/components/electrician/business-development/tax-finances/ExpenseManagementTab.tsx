@@ -578,7 +578,7 @@ const ExpenseManagementTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -604,7 +604,7 @@ const ExpenseManagementTab = () => {
                       {card.items.map((item, itemIndex) => (
                         <li
                           key={itemIndex}
-                          className="flex items-start gap-2 text-xs text-muted-foreground leading-relaxed"
+                          className="flex items-start gap-2 text-xs text-white leading-relaxed"
                         >
                           <span className="text-elec-yellow mt-0.5 shrink-0 text-xs">•</span>
                           <span>{item}</span>

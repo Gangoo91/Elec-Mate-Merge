@@ -53,7 +53,7 @@ const PriceTrendIndicator = ({
   const trendConfig = {
     up: { icon: TrendingUp, color: 'text-red-400', bgColor: 'bg-red-500/10' },
     down: { icon: TrendingUp, color: 'text-green-400', bgColor: 'bg-green-500/10' },
-    stable: { icon: TrendingUp, color: 'text-gray-400', bgColor: 'bg-gray-500/10' },
+    stable: { icon: TrendingUp, color: 'text-white', bgColor: 'bg-gray-500/10' },
   };
 
   const config = trendConfig[trend];
@@ -282,7 +282,7 @@ const LivePricingRedesigned = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold text-green-400">+8.2%</div>
-                    <p className="text-xs text-muted-foreground">Material costs this month</p>
+                    <p className="text-xs text-white">Material costs this month</p>
                   </CardContent>
                 </Card>
 
@@ -295,7 +295,7 @@ const LivePricingRedesigned = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold text-blue-400">London</div>
-                    <p className="text-xs text-muted-foreground">Highest job demand</p>
+                    <p className="text-xs text-white">Highest job demand</p>
                   </CardContent>
                 </Card>
 
@@ -308,7 +308,7 @@ const LivePricingRedesigned = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold text-purple-400">2,847</div>
-                    <p className="text-xs text-muted-foreground">Active contributors</p>
+                    <p className="text-xs text-white">Active contributors</p>
                   </CardContent>
                 </Card>
               </div>
@@ -318,7 +318,7 @@ const LivePricingRedesigned = () => {
                   <CardTitle className="text-lg">Coming Soon: Advanced Market Analytics</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-white mb-4">
                     We're building advanced market intelligence features including price prediction,
                     seasonal trends, and competitive analysis.
                   </p>
@@ -332,11 +332,11 @@ const LivePricingRedesigned = () => {
                       <span>Regional demand forecasting</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-gray-400" />
+                      <Clock className="h-4 w-4 text-white" />
                       <span>Competitive benchmarking</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-gray-400" />
+                      <Clock className="h-4 w-4 text-white" />
                       <span>Seasonal pricing models</span>
                     </div>
                   </div>
@@ -373,7 +373,7 @@ const LivePricingRedesigned = () => {
                   <Card className="p-8 text-center border-elec-yellow/20 bg-elec-gray">
                     <AlertTriangle className="h-12 w-12 text-orange-400 mx-auto mb-4" />
                     <h3 className="font-medium mb-2">Data Temporarily Unavailable</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <p className="text-sm text-white mb-4">
                       Unable to fetch scrap metal pricing data. Please try refreshing.
                     </p>
                     <Button onClick={() => refreshPrices(true)} size="sm">
@@ -411,13 +411,13 @@ const LivePricingRedesigned = () => {
                 <CheckCircle className="h-4 w-4 text-green-400" />
                 <span className="text-sm font-medium">Data Quality: High</span>
               </div>
-              <div className="text-xs text-muted-foreground">
+              <div className="text-xs text-white">
                 Last updated:{' '}
                 {data?.lastUpdated ? new Date(data.lastUpdated).toLocaleTimeString() : 'N/A'}
               </div>
             </div>
             <div className="mt-2">
-              <div className="flex justify-between text-xs text-muted-foreground mb-1">
+              <div className="flex justify-between text-xs text-white mb-1">
                 <span>Confidence Score</span>
                 <span>87%</span>
               </div>

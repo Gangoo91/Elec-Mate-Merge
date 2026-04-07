@@ -51,7 +51,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
               )}
             </div>
             <CardTitle className="text-2xl font-bold">{project.name}</CardTitle>
-            <div className="flex items-center gap-4 text-muted-foreground mt-2">
+            <div className="flex items-center gap-4 text-white mt-2">
               <div className="flex items-center gap-1">
                 <User className="h-4 w-4 text-elec-yellow" />
                 <p>{project.clientName}</p>
@@ -66,7 +66,7 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
           </div>
           <div className="flex flex-col items-end gap-1">
             <div className="bg-elec-dark p-3 rounded-md">
-              <p className="text-sm text-muted-foreground mb-1">Project Budget</p>
+              <p className="text-sm text-white mb-1">Project Budget</p>
               <p className="text-2xl font-bold">£{project.budget.toLocaleString()}</p>
             </div>
           </div>
@@ -110,14 +110,14 @@ export const ProjectOverview = ({ project }: ProjectOverviewProps) => {
         {project.description && (
           <div className="mb-6 bg-elec-dark p-4 rounded-md">
             <h3 className="text-md font-medium mb-2">Description</h3>
-            <p className="text-muted-foreground whitespace-pre-line">{project.description}</p>
+            <p className="text-white whitespace-pre-line">{project.description}</p>
           </div>
         )}
 
         {project.notes && (
           <div className="bg-elec-dark p-4 rounded-md">
             <h3 className="text-md font-medium mb-2">Notes</h3>
-            <p className="text-muted-foreground whitespace-pre-line">{project.notes}</p>
+            <p className="text-white whitespace-pre-line">{project.notes}</p>
           </div>
         )}
       </CardContent>

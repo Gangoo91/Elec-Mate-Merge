@@ -336,7 +336,7 @@ const SupportResourcesTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -376,7 +376,7 @@ const SupportResourcesTab = () => {
                           {service.contact}
                         </Badge>
                       </div>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                         {service.description}
                       </p>
 
@@ -442,7 +442,7 @@ const SupportResourcesTab = () => {
                         </div>
                       </div>
                       <p
-                        className={`${isMobile ? 'text-xs text-center' : 'text-sm'} text-muted-foreground`}
+                        className={`${isMobile ? 'text-xs text-center' : 'text-sm'} text-white`}
                       >
                         {service.description}
                       </p>
@@ -493,7 +493,7 @@ const SupportResourcesTab = () => {
                           {platform.cost}
                         </Badge>
                       </div>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                         {platform.description}
                       </p>
 
@@ -558,7 +558,7 @@ const SupportResourcesTab = () => {
                           </Badge>
                         </div>
                         <p
-                          className={`${isMobile ? 'text-xs text-center' : 'text-sm'} text-muted-foreground`}
+                          className={`${isMobile ? 'text-xs text-center' : 'text-sm'} text-white`}
                         >
                           {program.description}
                         </p>
@@ -637,7 +637,7 @@ const SupportResourcesTab = () => {
                         </Badge>
                       </div>
                       <p
-                        className={`${isMobile ? 'text-xs text-center' : 'text-sm'} text-muted-foreground`}
+                        className={`${isMobile ? 'text-xs text-center' : 'text-sm'} text-white`}
                       >
                         {provider.speciality}
                       </p>

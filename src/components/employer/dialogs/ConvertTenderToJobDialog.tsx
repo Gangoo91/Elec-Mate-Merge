@@ -126,9 +126,9 @@ export function ConvertTenderToJobDialog({
         <div className="space-y-4 py-4">
           {/* Source Info */}
           <div className="p-3 bg-success/10 rounded-lg border border-success/20">
-            <p className="text-xs text-white/60">Converting from tender:</p>
+            <p className="text-xs text-white">Converting from tender:</p>
             <p className="font-medium text-success">{tender.title}</p>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               {tender.client} • £{Number(tender.value).toLocaleString()}
             </p>
           </div>
@@ -159,7 +159,7 @@ export function ConvertTenderToJobDialog({
           <div className="space-y-2">
             <Label htmlFor="location">Location</Label>
             <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <Input
                 id="location"
                 value={formData.location}

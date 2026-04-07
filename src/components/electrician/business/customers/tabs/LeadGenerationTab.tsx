@@ -85,7 +85,7 @@ const LeadGenerationTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -100,7 +100,7 @@ const LeadGenerationTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Successful electricians use multiple lead generation channels to ensure consistent
                 customer flow and reduce dependency on single sources.
               </div>
@@ -187,7 +187,7 @@ const LeadGenerationTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Proper lead qualification saves time, improves conversion rates, and ensures you
                 focus on the most promising opportunities.
               </div>
@@ -270,7 +270,7 @@ const LeadGenerationTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Speed of response is critical - the first electrician to respond professionally wins
                 50% of all opportunities.
               </div>
@@ -357,7 +357,7 @@ const LeadGenerationTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Professional quoting separates you from competitors and builds customer confidence
                 in your expertise and pricing structure.
               </div>
@@ -445,7 +445,7 @@ const LeadGenerationTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Converting leads to paying customers requires understanding customer psychology,
                 addressing concerns, and presenting compelling value propositions.
               </div>
@@ -530,7 +530,7 @@ const LeadGenerationTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Systematic lead tracking enables data-driven decisions about marketing investment
                 and sales process optimisation.
               </div>

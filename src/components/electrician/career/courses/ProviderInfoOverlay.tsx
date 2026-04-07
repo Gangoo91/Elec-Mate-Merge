@@ -57,12 +57,12 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
           <MapPin className="h-4 w-4 mr-2 text-elec-yellow" />
           <span className="font-medium">Training Provider Details</span>
         </div>
-        <div className="text-xs text-muted-foreground">
+        <div className="text-xs text-white">
           Click on a marker to view provider details
         </div>
         {userLocation && (
           <div className="mt-3 pt-3 border-t border-elec-yellow/20">
-            <div className="flex items-center text-xs text-muted-foreground">
+            <div className="flex items-center text-xs text-white">
               <MapPin className="h-3 w-3 mr-1 text-elec-yellow/60" />
               <span>Your location: {userLocation}</span>
             </div>
@@ -118,7 +118,7 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
             variant="ghost"
             size="sm"
             onClick={onClose}
-            className="h-6 w-6 p-0 text-muted-foreground hover:text-elec-yellow"
+            className="h-6 w-6 p-0 text-white hover:text-elec-yellow"
           >
             <X className="h-3 w-3" />
           </Button>
@@ -133,7 +133,7 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
       {/* Rating and status */}
       <div className="flex items-center gap-3 mb-2">
         {selectedProvider.rating && (
-          <div className="flex items-center text-xs text-muted-foreground">
+          <div className="flex items-center text-xs text-white">
             <Star className="h-3 w-3 mr-1 text-yellow-400 fill-current" />
             <span>
               {formatRating(selectedProvider.rating, selectedProvider.user_ratings_total)}
@@ -151,18 +151,18 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
       </div>
 
       {/* Address */}
-      <div className="text-xs text-muted-foreground mb-3">{selectedProvider.vicinity}</div>
+      <div className="text-xs text-white mb-3">{selectedProvider.vicinity}</div>
 
       {/* Price level */}
       {selectedProvider.price_level && (
-        <div className="text-xs text-muted-foreground mb-3">
+        <div className="text-xs text-white mb-3">
           Price range: {getPriceLevel(selectedProvider.price_level)}
         </div>
       )}
 
       {/* Distance */}
       {selectedProvider.distance && (
-        <div className="text-xs text-muted-foreground mb-3">
+        <div className="text-xs text-white mb-3">
           Distance: {selectedProvider.distance.toFixed(1)} miles
         </div>
       )}
@@ -199,7 +199,7 @@ const ProviderInfoOverlay: React.FC<ProviderInfoOverlayProps> = ({
       {/* User location */}
       {userLocation && (
         <div className="pt-3 border-t border-elec-yellow/20">
-          <div className="flex items-center text-xs text-muted-foreground">
+          <div className="flex items-center text-xs text-white">
             <MapPin className="h-3 w-3 mr-1 text-elec-yellow/60" />
             <span>Your location: {userLocation}</span>
           </div>

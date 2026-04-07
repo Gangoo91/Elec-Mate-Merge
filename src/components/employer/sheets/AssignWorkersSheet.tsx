@@ -193,12 +193,12 @@ export function AssignWorkersSheet({
                     <div className="p-1.5 rounded-lg bg-elec-yellow/10">
                       <UserPlus className="h-4 w-4 text-elec-yellow" />
                     </div>
-                    <span className="text-xs font-medium text-white/60 uppercase tracking-wide">
+                    <span className="text-xs font-medium text-white uppercase tracking-wide">
                       Assign Workers
                     </span>
                   </div>
                   <h2 className="font-bold text-lg text-foreground truncate">{job.title}</h2>
-                  <div className="flex items-center gap-3 mt-1 text-sm text-white/60">
+                  <div className="flex items-center gap-3 mt-1 text-sm text-white">
                     <span className="flex items-center gap-1 truncate">
                       <Building2 className="h-3.5 w-3.5" />
                       {job.client}
@@ -224,7 +224,7 @@ export function AssignWorkersSheet({
             <div className="px-4 pb-3">
               <div className="relative">
                 {!searchQuery && (
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                 )}
                 <Input
                   placeholder="Search by name or role..."
@@ -283,14 +283,14 @@ export function AssignWorkersSheet({
                   // Empty State
                   <div className="flex flex-col items-center justify-center py-12 text-center">
                     <div className="p-4 rounded-full bg-muted mb-4">
-                      <Users className="h-8 w-8 text-white/60" />
+                      <Users className="h-8 w-8 text-white" />
                     </div>
                     <h3 className="font-semibold text-foreground mb-1">
                       {searchQuery || selectedFilter !== 'All'
                         ? 'No workers found'
                         : 'All workers assigned'}
                     </h3>
-                    <p className="text-sm text-white/60 max-w-[200px]">
+                    <p className="text-sm text-white max-w-[200px]">
                       {searchQuery
                         ? 'Try adjusting your search or filters'
                         : selectedFilter !== 'All'
@@ -364,7 +364,7 @@ export function AssignWorkersSheet({
                     variant="ghost"
                     size="sm"
                     onClick={handleClearSelection}
-                    className="text-white/60"
+                    className="text-white"
                   >
                     Clear all
                   </Button>

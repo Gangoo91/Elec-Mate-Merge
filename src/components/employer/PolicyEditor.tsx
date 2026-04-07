@@ -197,7 +197,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
                 </div>
                 <div>
                   <span className="text-lg font-semibold">Edit Policy</span>
-                  <p className="text-xs text-white/60 font-normal line-clamp-1">
+                  <p className="text-xs text-white font-normal line-clamp-1">
                     {policy.name}
                   </p>
                 </div>
@@ -342,7 +342,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
           </div>
 
           {/* Stats */}
-          <div className="flex justify-between text-xs text-white/60 mt-2">
+          <div className="flex justify-between text-xs text-white mt-2">
             <span>Use headings to structure your policy. Changes auto-save as draft.</span>
             <span>{characterCount} characters</span>
           </div>

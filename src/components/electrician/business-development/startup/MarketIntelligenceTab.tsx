@@ -141,7 +141,7 @@ const MarketIntelligenceTab = () => {
             >
               <div className="flex-1">
                 <h4 className="font-medium text-foreground">{trend.trend}</h4>
-                <p className="text-sm text-muted-foreground">{trend.description}</p>
+                <p className="text-sm text-white">{trend.description}</p>
               </div>
               <div className="flex items-center gap-2 ml-4">
                 <Badge
@@ -176,12 +176,12 @@ const MarketIntelligenceTab = () => {
                 <h4 className="font-medium text-foreground">{region.region}</h4>
                 <div className="text-right">
                   <div className="text-blue-300 font-medium">{region.avgHourlyRate}</div>
-                  <div className="text-xs text-muted-foreground">per hour</div>
+                  <div className="text-xs text-white">per hour</div>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4 mb-3">
                 <div>
-                  <span className="text-xs text-muted-foreground">Competition: </span>
+                  <span className="text-xs text-white">Competition: </span>
                   <Badge
                     variant="outline"
                     className={`text-xs ${
@@ -196,7 +196,7 @@ const MarketIntelligenceTab = () => {
                   </Badge>
                 </div>
                 <div>
-                  <span className="text-xs text-muted-foreground">Demand: </span>
+                  <span className="text-xs text-white">Demand: </span>
                   <Badge
                     variant="outline"
                     className={`text-xs ${
@@ -212,7 +212,7 @@ const MarketIntelligenceTab = () => {
                 </div>
               </div>
               <div>
-                <span className="text-xs text-muted-foreground">Key Specialties: </span>
+                <span className="text-xs text-white">Key Specialties: </span>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {region.specialties.map((specialty, specialtyIndex) => (
                     <Badge
@@ -249,7 +249,7 @@ const MarketIntelligenceTab = () => {
                   <h5 className="font-medium text-green-300 mb-2">Strengths</h5>
                   <ul className="space-y-1">
                     {competitor.strengths.map((strength, strengthIndex) => (
-                      <li key={strengthIndex} className="text-muted-foreground text-xs">
+                      <li key={strengthIndex} className="text-white text-xs">
                         • {strength}
                       </li>
                     ))}
@@ -259,7 +259,7 @@ const MarketIntelligenceTab = () => {
                   <h5 className="font-medium text-red-300 mb-2">Weaknesses</h5>
                   <ul className="space-y-1">
                     {competitor.weaknesses.map((weakness, weaknessIndex) => (
-                      <li key={weaknessIndex} className="text-muted-foreground text-xs">
+                      <li key={weaknessIndex} className="text-white text-xs">
                         • {weakness}
                       </li>
                     ))}
@@ -267,7 +267,7 @@ const MarketIntelligenceTab = () => {
                 </div>
                 <div>
                   <h5 className="font-medium text-elec-yellow mb-2">Your Opportunity</h5>
-                  <p className="text-muted-foreground text-xs">{competitor.opportunity}</p>
+                  <p className="text-white text-xs">{competitor.opportunity}</p>
                 </div>
               </div>
             </div>
@@ -289,13 +289,13 @@ const MarketIntelligenceTab = () => {
                 <h4 className="font-medium text-foreground">{niche.niche}</h4>
                 <div className="text-right">
                   <div className="text-elec-yellow font-medium">{niche.investment}</div>
-                  <div className="text-xs text-muted-foreground">initial investment</div>
+                  <div className="text-xs text-white">initial investment</div>
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground mb-3">{niche.description}</p>
+              <p className="text-sm text-white mb-3">{niche.description}</p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <span className="text-xs text-muted-foreground">Potential: </span>
+                  <span className="text-xs text-white">Potential: </span>
                   <Badge
                     variant="outline"
                     className={`text-xs ${
@@ -308,7 +308,7 @@ const MarketIntelligenceTab = () => {
                   </Badge>
                 </div>
                 <div>
-                  <span className="text-xs text-muted-foreground">Entry Barrier: </span>
+                  <span className="text-xs text-white">Entry Barrier: </span>
                   <Badge
                     variant="outline"
                     className={`text-xs ${

@@ -167,7 +167,7 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
                     </CardHeader>
 
                     <CardContent className="pt-0 space-y-3">
-                      <p className="text-xs text-muted-foreground line-clamp-2">
+                      <p className="text-xs text-white line-clamp-2">
                         {course.description}
                       </p>
 
@@ -185,13 +185,13 @@ const FeaturedCoursesCarousel = ({ courses, onViewDetails }: FeaturedCoursesCaro
 
                       {/* Salary Impact */}
                       <div className="text-xs">
-                        <span className="text-muted-foreground">Salary Impact: </span>
+                        <span className="text-white">Salary Impact: </span>
                         <span className="text-green-400 font-medium">{course.salaryImpact}</span>
                       </div>
 
                       {/* Next Available Date */}
                       <div className="text-xs">
-                        <span className="text-muted-foreground">Next Date: </span>
+                        <span className="text-white">Next Date: </span>
                         <span className="text-elec-yellow">{course.nextDates[0]}</span>
                       </div>
 

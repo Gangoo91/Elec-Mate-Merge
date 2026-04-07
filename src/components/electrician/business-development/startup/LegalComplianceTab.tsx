@@ -279,7 +279,7 @@ const LegalComplianceTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -310,7 +310,7 @@ const LegalComplianceTab = () => {
                         {structure.timeline}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {structure.description}
                     </p>
                   </div>
@@ -408,7 +408,7 @@ const LegalComplianceTab = () => {
                               <div className="text-sm text-green-200 font-medium">
                                 {requirement.qualification}
                               </div>
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-white">
                                 {requirement.description}
                               </div>
                               <Badge
@@ -427,7 +427,7 @@ const LegalComplianceTab = () => {
                                 <div className="text-sm text-green-200 font-medium">
                                   {requirement.qualification}
                                 </div>
-                                <div className="text-xs text-muted-foreground">
+                                <div className="text-xs text-white">
                                   {requirement.description}
                                 </div>
                               </div>
@@ -485,7 +485,7 @@ const LegalComplianceTab = () => {
                           {policy.cost}
                         </Badge>
                       </div>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                         {policy.description}
                       </p>
 
@@ -529,7 +529,7 @@ const LegalComplianceTab = () => {
                         {requirement.timeline}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {requirement.description}
                     </p>
                   </div>

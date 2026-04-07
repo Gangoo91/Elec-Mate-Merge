@@ -145,7 +145,7 @@ export function JobTimelineSection() {
   const getWorkerStatus = (employee: (typeof employees)[0]) => {
     // Simulate different statuses based on employee data
     if (employee.status !== 'Active')
-      return { status: 'Leave', color: 'bg-muted text-white/60' };
+      return { status: 'Leave', color: 'bg-muted text-white' };
 
     // Check if worker has a clash
     const hasClash = clashes.some((c) => c.employee.id === employee.id);
@@ -223,7 +223,7 @@ export function JobTimelineSection() {
       <div className="flex flex-col gap-4">
         <div>
           <h1 className="text-xl md:text-2xl font-bold text-foreground">Job Timeline</h1>
-          <p className="text-sm text-white/60">Visual schedule and resource allocation</p>
+          <p className="text-sm text-white">Visual schedule and resource allocation</p>
         </div>
 
         <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-1">
@@ -267,7 +267,7 @@ export function JobTimelineSection() {
             </div>
             <div>
               <p className="text-lg font-bold text-foreground">{jobsThisWeek.length}</p>
-              <p className="text-xs text-white/60">Jobs This Week</p>
+              <p className="text-xs text-white">Jobs This Week</p>
             </div>
           </CardContent>
         </Card>
@@ -279,7 +279,7 @@ export function JobTimelineSection() {
             </div>
             <div>
               <p className="text-lg font-bold text-foreground">{activeEmployees.length}</p>
-              <p className="text-xs text-white/60">Workers Active</p>
+              <p className="text-xs text-white">Workers Active</p>
             </div>
           </CardContent>
         </Card>
@@ -293,7 +293,7 @@ export function JobTimelineSection() {
               <p className="text-lg font-bold text-foreground">
                 {formatValue(totalWeekValue) || '£0'}
               </p>
-              <p className="text-xs text-white/60">Total Value</p>
+              <p className="text-xs text-white">Total Value</p>
             </div>
           </CardContent>
         </Card>
@@ -314,13 +314,13 @@ export function JobTimelineSection() {
               <AlertTriangle
                 className={cn(
                   'h-4 w-4',
-                  clashes.length > 0 ? 'text-destructive' : 'text-white/60'
+                  clashes.length > 0 ? 'text-destructive' : 'text-white'
                 )}
               />
             </div>
             <div>
               <p className="text-lg font-bold text-foreground">{clashes.length}</p>
-              <p className="text-xs text-white/60">Clashes</p>
+              <p className="text-xs text-white">Clashes</p>
             </div>
           </CardContent>
         </Card>
@@ -329,10 +329,10 @@ export function JobTimelineSection() {
       {/* Mobile Timeline - Premium Card View */}
       <div className="md:hidden space-y-3">
         {jobsLoading ? (
-          <div className="text-center py-8 text-white/60">Loading jobs...</div>
+          <div className="text-center py-8 text-white">Loading jobs...</div>
         ) : jobsThisWeek.length === 0 ? (
           <Card className="bg-elec-gray">
-            <CardContent className="p-6 text-center text-white/60">
+            <CardContent className="p-6 text-center text-white">
               No jobs scheduled this week
             </CardContent>
           </Card>
@@ -365,13 +365,13 @@ export function JobTimelineSection() {
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-white/60 truncate">{job.client}</p>
+                      <p className="text-sm text-white truncate">{job.client}</p>
                     </div>
-                    <ChevronRightIcon className="h-5 w-5 text-white/60 shrink-0" />
+                    <ChevronRightIcon className="h-5 w-5 text-white shrink-0" />
                   </div>
 
                   {/* Location */}
-                  <div className="flex items-center gap-1.5 mt-2 text-sm text-white/60">
+                  <div className="flex items-center gap-1.5 mt-2 text-sm text-white">
                     <MapPin className="h-3.5 w-3.5" />
                     <span className="truncate">{job.location}</span>
                   </div>
@@ -381,7 +381,7 @@ export function JobTimelineSection() {
                     {/* Progress bar */}
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-white/60">Progress</span>
+                        <span className="text-xs text-white">Progress</span>
                         <span className="text-xs font-medium text-foreground">{job.progress}%</span>
                       </div>
                       <div className="h-2 bg-muted rounded-full overflow-hidden">
@@ -438,7 +438,7 @@ export function JobTimelineSection() {
                           key={i}
                           className={cn(
                             'text-[10px]',
-                            isToday(day) ? 'text-elec-yellow font-bold' : 'text-white/60'
+                            isToday(day) ? 'text-elec-yellow font-bold' : 'text-white'
                           )}
                         >
                           {formatShortDay(day)}
@@ -457,7 +457,7 @@ export function JobTimelineSection() {
       <Card className="bg-elec-gray overflow-hidden hidden md:block">
         <div className="grid grid-cols-8 border-b border-border">
           <div className="p-3 bg-muted/50">
-            <span className="text-sm font-medium text-white/60">Jobs</span>
+            <span className="text-sm font-medium text-white">Jobs</span>
           </div>
           {weekDays.map((day, i) => (
             <div
@@ -506,15 +506,15 @@ export function JobTimelineSection() {
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-white/60 truncate">{job.client}</p>
+                  <p className="text-xs text-white truncate">{job.client}</p>
                   <div className="flex items-center gap-2 mt-1">
                     <div className="flex items-center gap-1">
                       <Users className="h-3 w-3 text-elec-yellow" />
-                      <span className="text-xs text-white/60">{job.assignedWorkers}</span>
+                      <span className="text-xs text-white">{job.assignedWorkers}</span>
                     </div>
                     <div className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3 text-white/60" />
-                      <span className="text-xs text-white/60 truncate">{job.location}</span>
+                      <MapPin className="h-3 w-3 text-white" />
+                      <span className="text-xs text-white truncate">{job.location}</span>
                     </div>
                   </div>
                 </div>
@@ -573,7 +573,7 @@ export function JobTimelineSection() {
           Worker Allocation This Week
         </h2>
         {employeesLoading ? (
-          <div className="text-center py-8 text-white/60">Loading employees...</div>
+          <div className="text-center py-8 text-white">Loading employees...</div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
             {activeEmployees.slice(0, 9).map((employee) => {
@@ -598,7 +598,7 @@ export function JobTimelineSection() {
                           <h4 className="font-medium text-sm md:text-base text-foreground truncate">
                             {employee.name}
                           </h4>
-                          <p className="text-xs text-white/60 truncate">
+                          <p className="text-xs text-white truncate">
                             {employee.team_role}
                           </p>
                         </div>
@@ -638,7 +638,7 @@ export function JobTimelineSection() {
                             key={i}
                             className={cn(
                               'text-[10px]',
-                              isToday(day) ? 'text-elec-yellow font-bold' : 'text-white/60'
+                              isToday(day) ? 'text-elec-yellow font-bold' : 'text-white'
                             )}
                           >
                             {formatShortDay(day)}
@@ -668,7 +668,7 @@ export function JobTimelineSection() {
                   <AlertTriangle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
                   <div className="min-w-0 flex-1">
                     <h4 className="font-medium text-foreground">Double Booking Detected</h4>
-                    <p className="text-sm text-white/60 mt-1">
+                    <p className="text-sm text-white mt-1">
                       <span className="font-medium text-foreground">{clash.employee.name}</span> is
                       assigned to both <span className="font-medium">"{clash.jobs[0]?.title}"</span>{' '}
                       and <span className="font-medium">"{clash.jobs[1]?.title}"</span> on{' '}
@@ -686,7 +686,7 @@ export function JobTimelineSection() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="touch-feedback gap-1.5 text-white/60"
+                        className="touch-feedback gap-1.5 text-white"
                       >
                         <X className="h-3.5 w-3.5" />
                         Dismiss
@@ -707,7 +707,7 @@ export function JobTimelineSection() {
               </div>
               <div>
                 <h4 className="font-medium text-foreground">No Resource Clashes</h4>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   All workers are properly allocated this week.
                 </p>
               </div>

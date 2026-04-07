@@ -91,7 +91,7 @@ const AnalyticsDashboard = () => {
                 <Clock className="h-5 w-5 text-blue-400" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Total Hours</p>
+                <p className="text-sm text-white">Total Hours</p>
                 <p className="text-xl font-bold text-foreground">
                   {monthlyProgress.reduce((sum, month) => sum + month.hours, 0)}
                 </p>
@@ -107,7 +107,7 @@ const AnalyticsDashboard = () => {
                 <Target className="h-5 w-5 text-green-400" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Activities</p>
+                <p className="text-sm text-white">Activities</p>
                 <p className="text-xl font-bold text-foreground">
                   {monthlyProgress.reduce((sum, month) => sum + month.activities, 0)}
                 </p>
@@ -123,7 +123,7 @@ const AnalyticsDashboard = () => {
                 <Award className="h-5 w-5 text-purple-400" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Effectiveness</p>
+                <p className="text-sm text-white">Effectiveness</p>
                 <p className="text-xl font-bold text-foreground">
                   {learningEffectiveness.overallEffectiveness}%
                 </p>
@@ -139,7 +139,7 @@ const AnalyticsDashboard = () => {
                 <TrendingUp className="h-5 w-5 text-yellow-400" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Competency</p>
+                <p className="text-sm text-white">Competency</p>
                 <p className="text-xl font-bold text-foreground">
                   {competencyGaps.completionPercentage}%
                 </p>
@@ -339,7 +339,7 @@ const AnalyticsDashboard = () => {
                     </div>
                   </div>
                   <Progress value={learningEffectiveness.evidenceRate} className="h-2" />
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     Activities with supporting evidence
                   </p>
                 </div>
@@ -367,7 +367,7 @@ const AnalyticsDashboard = () => {
                     </div>
                   </div>
                   <Progress value={learningEffectiveness.reflectionRate} className="h-2" />
-                  <p className="text-xs text-muted-foreground">Activities with reflection notes</p>
+                  <p className="text-xs text-white">Activities with reflection notes</p>
                 </div>
               </CardContent>
             </Card>
@@ -393,7 +393,7 @@ const AnalyticsDashboard = () => {
                     </div>
                   </div>
                   <Progress value={learningEffectiveness.verificationRate} className="h-2" />
-                  <p className="text-xs text-muted-foreground">Verified activities</p>
+                  <p className="text-xs text-white">Verified activities</p>
                 </div>
               </CardContent>
             </Card>
@@ -410,7 +410,7 @@ const AnalyticsDashboard = () => {
                     <AlertTriangle className="h-5 w-5 text-yellow-400 mt-0.5" />
                     <div>
                       <p className="font-medium text-yellow-400">Improve Evidence Collection</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white">
                         Consider uploading certificates, photos, or documents for more of your CPD
                         activities.
                       </p>
@@ -423,7 +423,7 @@ const AnalyticsDashboard = () => {
                     <BookOpen className="h-5 w-5 text-blue-400 mt-0.5" />
                     <div>
                       <p className="font-medium text-blue-400">Add More Reflection</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white">
                         Write reflection notes to capture what you learned and how you'll apply it.
                       </p>
                     </div>
@@ -435,7 +435,7 @@ const AnalyticsDashboard = () => {
                     <Star className="h-5 w-5 text-green-400 mt-0.5" />
                     <div>
                       <p className="font-medium text-green-400">Excellent Learning Quality!</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white">
                         Your CPD activities are well-documented and reflective. Keep up the great
                         work!
                       </p>
@@ -459,7 +459,7 @@ const AnalyticsDashboard = () => {
                   <div className="text-3xl font-bold text-foreground mb-2">
                     {competencyGaps.completionPercentage}%
                   </div>
-                  <p className="text-sm text-muted-foreground">Overall Competency Progress</p>
+                  <p className="text-sm text-white">Overall Competency Progress</p>
                   <Progress value={competencyGaps.completionPercentage} className="h-3 mt-3" />
                 </div>
 
@@ -468,13 +468,13 @@ const AnalyticsDashboard = () => {
                     <div className="text-xl font-bold text-green-400">
                       {competencyGaps.acquiredCompetencies}
                     </div>
-                    <p className="text-xs text-muted-foreground">Acquired</p>
+                    <p className="text-xs text-white">Acquired</p>
                   </div>
                   <div>
                     <div className="text-xl font-bold text-yellow-400">
                       {competencyGaps.identifiedGaps.length}
                     </div>
-                    <p className="text-xs text-muted-foreground">Gaps</p>
+                    <p className="text-xs text-white">Gaps</p>
                   </div>
                 </div>
               </CardContent>
@@ -497,7 +497,7 @@ const AnalyticsDashboard = () => {
                 ) : (
                   <div className="text-center py-8">
                     <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-3" />
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-white">
                       No skill gaps identified! You're making excellent progress.
                     </p>
                   </div>
@@ -516,7 +516,7 @@ const AnalyticsDashboard = () => {
                   {competencyGaps.identifiedGaps.slice(0, 3).map((gap, index) => (
                     <div key={index} className="p-3 bg-muted/20 rounded-lg">
                       <h4 className="font-medium text-foreground mb-2">{gap}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <p className="text-sm text-white mb-2">
                         Consider looking for training opportunities in this area to strengthen your
                         competency profile.
                       </p>

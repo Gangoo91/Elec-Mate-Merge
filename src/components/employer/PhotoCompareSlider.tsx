@@ -124,7 +124,7 @@ export const PhotoCompareSlider = ({
           <div className="flex items-center gap-4">
             <div className="text-sm">
               <span className="text-blue-400 font-medium">Before</span>
-              <span className="text-white/60 mx-2">vs</span>
+              <span className="text-white mx-2">vs</span>
               <span className="text-green-400 font-medium">After</span>
             </div>
             <Badge variant="secondary" className="text-xs">

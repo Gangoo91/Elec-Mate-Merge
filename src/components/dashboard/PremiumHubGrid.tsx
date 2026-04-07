@@ -19,11 +19,13 @@ import {
   School,
   BookOpen,
   Heart,
+  Settings2,
   LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useDashboardData } from '@/hooks/useDashboardData';
 import { useAuth } from '@/contexts/AuthContext';
+import { useDashboardPreferences } from '@/hooks/useDashboardPreferences';
 
 interface HubConfig {
   id: string;
@@ -293,11 +295,11 @@ function PremiumHubCard({
 export function PremiumHubGrid() {
   const dashboardData = useDashboardData();
   const { profile, user, isLoading } = useAuth();
+  const { isHubVisible } = useDashboardPreferences();
   const userRole = profile?.role || '';
   const userEmail = user?.email?.toLowerCase() || '';
 
-  // Filter hubs based on user role and allowed emails
-  // If no role set or still loading, show all hubs so user can explore (except email-restricted ones)
+  // Filter hubs based on user role, allowed emails, and user preferences
   const filteredHubs = hubsConfig.filter((hub) => {
     // Check email restriction first
     if (hub.allowedEmails && hub.allowedEmails.length > 0) {
@@ -306,10 +308,14 @@ export function PremiumHubGrid() {
       }
     }
     // Then check role
-    if (!userRole || isLoading) {
-      return true;
+    if (userRole && !isLoading && !hub.roles.includes(userRole)) {
+      return false;
     }
-    return hub.roles.includes(userRole);
+    // Then check user preference (Electrical Hub always visible)
+    if (hub.id !== 'electrician' && !isHubVisible(hub.id)) {
+      return false;
+    }
+    return true;
   });
 
   // Show loading skeleton while profile loads
@@ -324,15 +330,34 @@ export function PremiumHubGrid() {
   }
 
   if (filteredHubs.length === 0) {
-    return null;
+    return (
+      <div className="text-center py-6">
+        <p className="text-sm text-white mb-2">No hubs visible on your dashboard.</p>
+        <button
+          onClick={() => navigate('/settings?tab=preferences')}
+          className="text-xs text-elec-yellow font-medium touch-manipulation h-11 px-4 rounded-xl active:scale-[0.98]"
+        >
+          Customise in Settings
+        </button>
+      </div>
+    );
   }
 
   return (
     <div>
-      {/* Section header */}
-      <h2 className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-0.5">
-        Your Hubs
-      </h2>
+      {/* Section header with customise gear */}
+      <div className="flex items-center justify-between mb-3 px-0.5">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider">
+          Your Hubs
+        </h2>
+        <button
+          onClick={() => navigate('/settings?tab=preferences')}
+          className="h-11 w-11 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] transition-all touch-manipulation -mr-2"
+          aria-label="Customise dashboard"
+        >
+          <Settings2 className="h-4 w-4 text-white" />
+        </button>
+      </div>
 
       <motion.div
         variants={containerVariants}
@@ -340,9 +365,18 @@ export function PremiumHubGrid() {
         animate="visible"
         className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4"
       >
-        {filteredHubs.map((hub) => (
-          <PremiumHubCard key={hub.id} hub={hub} data={dashboardData} isPrimary={hub.isPrimary} />
-        ))}
+        {filteredHubs.map((hub, index) => {
+          // First hub = hero (spans 2 cols on mobile), last odd hub also spans 2 cols
+          const isHero = index === 0;
+          const isLastOdd = filteredHubs.length % 2 === 1 && index === filteredHubs.length - 1;
+          const shouldSpan = isHero || isLastOdd;
+
+          return (
+            <div key={hub.id} className={shouldSpan ? 'col-span-2 lg:col-span-1' : undefined}>
+              <PremiumHubCard hub={hub} data={dashboardData} isPrimary={shouldSpan} />
+            </div>
+          );
+        })}
       </motion.div>
     </div>
   );

@@ -142,7 +142,7 @@ export function ElevenLabsToolCard({
           <CardContent className="pt-0 space-y-4 border-t border-border">
             {/* Tool Name */}
             <div className="space-y-2 pt-4">
-              <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+              <label className="text-xs font-medium text-white uppercase tracking-wide">
                 Name (copy to ElevenLabs)
               </label>
               <div className="flex items-center gap-2 bg-muted/50 rounded-md p-2">
@@ -153,7 +153,7 @@ export function ElevenLabsToolCard({
 
             {/* Description */}
             <div className="space-y-2">
-              <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+              <label className="text-xs font-medium text-white uppercase tracking-wide">
                 Description (copy to ElevenLabs)
               </label>
               <div className="flex items-start gap-2 bg-muted/50 rounded-md p-2">
@@ -165,7 +165,7 @@ export function ElevenLabsToolCard({
             {/* Parameters */}
             {tool.parameters && tool.parameters.length > 0 && (
               <div className="space-y-3">
-                <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+                <label className="text-xs font-medium text-white uppercase tracking-wide">
                   Parameters ({tool.parameters.length})
                 </label>
 
@@ -188,13 +188,13 @@ export function ElevenLabsToolCard({
                     <div className="grid gap-2 text-sm">
                       {/* Data Type */}
                       <div className="flex items-center justify-between py-1 border-b border-border/30">
-                        <span className="text-white/60">Data type:</span>
+                        <span className="text-white">Data type:</span>
                         <span className="font-medium">{getDataType(param.type)}</span>
                       </div>
 
                       {/* Identifier */}
                       <div className="flex items-center justify-between py-1 border-b border-border/30">
-                        <span className="text-white/60">Identifier:</span>
+                        <span className="text-white">Identifier:</span>
                         <div className="flex items-center gap-1">
                           <code className="text-elec-yellow font-mono">{param.name}</code>
                           <CopyButton
@@ -207,22 +207,22 @@ export function ElevenLabsToolCard({
 
                       {/* Required */}
                       <div className="flex items-center justify-between py-1 border-b border-border/30">
-                        <span className="text-white/60">Required:</span>
-                        <span className={param.required ? 'text-red-400' : 'text-white/60'}>
+                        <span className="text-white">Required:</span>
+                        <span className={param.required ? 'text-red-400' : 'text-white'}>
                           {param.required ? 'Yes ✓' : 'No'}
                         </span>
                       </div>
 
                       {/* Value Type */}
                       <div className="flex items-center justify-between py-1 border-b border-border/30">
-                        <span className="text-white/60">Value Type:</span>
+                        <span className="text-white">Value Type:</span>
                         <span className="font-medium">LLM Prompt</span>
                       </div>
 
                       {/* Description */}
                       <div className="py-1 border-b border-border/30">
                         <div className="flex items-center justify-between">
-                          <span className="text-white/60">Description:</span>
+                          <span className="text-white">Description:</span>
                           <CopyButton
                             text={param.description}
                             fieldName={`param-desc-${param.name}`}
@@ -236,7 +236,7 @@ export function ElevenLabsToolCard({
                       {param.enum && param.enum.length > 0 && (
                         <div className="py-1">
                           <div className="flex items-center justify-between mb-2">
-                            <span className="text-white/60">
+                            <span className="text-white">
                               Enum Values ({param.enum.length}):
                             </span>
                             <Button
@@ -283,20 +283,20 @@ export function ElevenLabsToolCard({
 
             {/* ElevenLabs Settings */}
             <div className="space-y-2 pt-2 border-t border-border">
-              <label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+              <label className="text-xs font-medium text-white uppercase tracking-wide">
                 ElevenLabs Settings
               </label>
               <div className="grid gap-2 text-sm bg-muted/30 rounded-lg p-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-white/60">Wait for response:</span>
+                  <span className="text-white">Wait for response:</span>
                   <span>{tool.waitForResponse ? 'Yes' : 'No'}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-white/60">Disable interruptions:</span>
+                  <span className="text-white">Disable interruptions:</span>
                   <span>{tool.disableInterruptions ? 'Yes' : 'No'}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-white/60">Execution mode:</span>
+                  <span className="text-white">Execution mode:</span>
                   <span>{tool.executionMode || 'Immediate'}</span>
                 </div>
               </div>

@@ -97,7 +97,7 @@ const SkillLevelBadge = ({ level }: { level: string }) => {
       <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
         <div className={cn('h-full rounded-full transition-all', config.color, config.width)} />
       </div>
-      <span className="text-xs text-white/60 capitalize w-20">{level}</span>
+      <span className="text-xs text-white capitalize w-20">{level}</span>
     </div>
   );
 };
@@ -215,7 +215,7 @@ export function ApplicantProfileSheet({
                       </Badge>
                     </div>
                   )}
-                  <div className="flex items-center gap-3 mt-2 text-sm text-white/60">
+                  <div className="flex items-center gap-3 mt-2 text-sm text-white">
                     {application.applicant_email && (
                       <span className="flex items-center gap-1">
                         <Mail className="h-3.5 w-3.5" />
@@ -248,25 +248,25 @@ export function ApplicantProfileSheet({
                   <div className="text-lg font-bold text-foreground">
                     {profile.qualifications?.length || 0}
                   </div>
-                  <div className="text-xs text-white/60">Qualifications</div>
+                  <div className="text-xs text-white">Qualifications</div>
                 </div>
                 <div className="p-2 rounded-lg bg-muted/50 text-center">
                   <div className="text-lg font-bold text-foreground">
                     {profile.skills?.length || 0}
                   </div>
-                  <div className="text-xs text-white/60">Skills</div>
+                  <div className="text-xs text-white">Skills</div>
                 </div>
                 <div className="p-2 rounded-lg bg-muted/50 text-center">
                   <div className="text-lg font-bold text-foreground">
                     {Math.round(totalExperience)}y
                   </div>
-                  <div className="text-xs text-white/60">Experience</div>
+                  <div className="text-xs text-white">Experience</div>
                 </div>
                 <div className="p-2 rounded-lg bg-muted/50 text-center">
                   <div className="text-lg font-bold text-foreground">
                     {profile.training?.length || 0}
                   </div>
-                  <div className="text-xs text-white/60">Training</div>
+                  <div className="text-xs text-white">Training</div>
                 </div>
               </div>
             )}
@@ -332,7 +332,7 @@ export function ApplicantProfileSheet({
                         <div className="mt-4 p-3 rounded-lg bg-background/50">
                           <div className="flex items-center gap-2 text-sm">
                             <CreditCard className="h-4 w-4 text-emerald-400" />
-                            <span className="text-white/60">ECS Card:</span>
+                            <span className="text-white">ECS Card:</span>
                             <span className="font-semibold text-foreground">
                               {profile.ecs_card_type}
                             </span>
@@ -340,7 +340,7 @@ export function ApplicantProfileSheet({
                           {profile.ecs_expiry_date && (
                             <div className="flex items-center gap-2 text-sm mt-1">
                               <Calendar className="h-4 w-4 text-emerald-400" />
-                              <span className="text-white/60">Expires:</span>
+                              <span className="text-white">Expires:</span>
                               <span className="text-foreground">
                                 {formatDate(profile.ecs_expiry_date)}
                               </span>
@@ -357,7 +357,7 @@ export function ApplicantProfileSheet({
                   <Card className="bg-card border-border">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-foreground mb-2">About</h3>
-                      <p className="text-sm text-white/60">{profile.bio}</p>
+                      <p className="text-sm text-white">{profile.bio}</p>
                     </CardContent>
                   </Card>
                 )}
@@ -393,7 +393,7 @@ export function ApplicantProfileSheet({
                         <FileText className="h-4 w-4 text-blue-400" />
                         Cover Letter
                       </h3>
-                      <p className="text-sm text-white/60 whitespace-pre-wrap">
+                      <p className="text-sm text-white whitespace-pre-wrap">
                         {application.cover_letter}
                       </p>
                     </CardContent>
@@ -411,12 +411,12 @@ export function ApplicantProfileSheet({
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="font-medium text-foreground">{application.vacancy.title}</p>
-                          <p className="text-sm text-white/60 flex items-center gap-1">
+                          <p className="text-sm text-white flex items-center gap-1">
                             <MapPin className="h-3.5 w-3.5" />
                             {application.vacancy.location}
                           </p>
                         </div>
-                        <div className="text-right text-sm text-white/60">
+                        <div className="text-right text-sm text-white">
                           <p>Applied: {formatDate(application.applied_at)}</p>
                         </div>
                       </div>
@@ -440,7 +440,7 @@ export function ApplicantProfileSheet({
                               <h4 className="font-semibold text-foreground">
                                 {qual.qualification_name}
                               </h4>
-                              <p className="text-sm text-white/60">{qual.awarding_body}</p>
+                              <p className="text-sm text-white">{qual.awarding_body}</p>
                               <div className="flex items-center gap-2 mt-1">
                                 <Badge variant="outline" className="text-xs">
                                   {qual.qualification_type}
@@ -460,10 +460,10 @@ export function ApplicantProfileSheet({
                             {qual.is_verified ? (
                               <CheckCircle2 className="h-5 w-5 text-emerald-400" />
                             ) : (
-                              <AlertCircle className="h-5 w-5 text-white/60" />
+                              <AlertCircle className="h-5 w-5 text-white" />
                             )}
                             {qual.date_achieved && (
-                              <p className="text-xs text-white/60 mt-1">
+                              <p className="text-xs text-white mt-1">
                                 {formatDate(qual.date_achieved)}
                               </p>
                             )}
@@ -475,7 +475,7 @@ export function ApplicantProfileSheet({
                 ) : (
                   <div className="text-center py-8">
                     <GraduationCap className="h-12 w-12 mx-auto text-white mb-3" />
-                    <p className="text-white/60">No qualifications added</p>
+                    <p className="text-white">No qualifications added</p>
                   </div>
                 )}
               </TabsContent>
@@ -508,7 +508,7 @@ export function ApplicantProfileSheet({
                             <div className="flex items-start justify-between">
                               <div>
                                 <h4 className="font-semibold text-foreground">{job.job_title}</h4>
-                                <p className="text-sm text-white/60">{job.employer_name}</p>
+                                <p className="text-sm text-white">{job.employer_name}</p>
                               </div>
                               {job.is_current && (
                                 <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
@@ -516,7 +516,7 @@ export function ApplicantProfileSheet({
                                 </Badge>
                               )}
                             </div>
-                            <div className="flex items-center gap-2 mt-2 text-xs text-white/60">
+                            <div className="flex items-center gap-2 mt-2 text-xs text-white">
                               <Calendar className="h-3.5 w-3.5" />
                               <span>
                                 {formatDate(job.start_date)} -{' '}
@@ -527,7 +527,7 @@ export function ApplicantProfileSheet({
                               </span>
                             </div>
                             {job.description && (
-                              <p className="text-sm text-white/60 mt-2">
+                              <p className="text-sm text-white mt-2">
                                 {job.description}
                               </p>
                             )}
@@ -550,7 +550,7 @@ export function ApplicantProfileSheet({
                 ) : (
                   <div className="text-center py-8">
                     <Building2 className="h-12 w-12 mx-auto text-white mb-3" />
-                    <p className="text-white/60">No work history added</p>
+                    <p className="text-white">No work history added</p>
                   </div>
                 )}
               </TabsContent>
@@ -569,7 +569,7 @@ export function ApplicantProfileSheet({
                               <CheckCircle2 className="h-4 w-4 text-emerald-400" />
                             )}
                           </div>
-                          <span className="text-xs text-white/60">
+                          <span className="text-xs text-white">
                             {skill.years_experience}y exp
                           </span>
                         </div>
@@ -580,7 +580,7 @@ export function ApplicantProfileSheet({
                 ) : (
                   <div className="text-center py-8">
                     <Wrench className="h-12 w-12 mx-auto text-white mb-3" />
-                    <p className="text-white/60">No skills added</p>
+                    <p className="text-white">No skills added</p>
                   </div>
                 )}
 
@@ -600,11 +600,11 @@ export function ApplicantProfileSheet({
                                 {training.training_name}
                               </h4>
                               {training.provider && (
-                                <p className="text-sm text-white/60">{training.provider}</p>
+                                <p className="text-sm text-white">{training.provider}</p>
                               )}
                               <div className="flex items-center gap-2 mt-2">
                                 {training.completed_date && (
-                                  <span className="text-xs text-white/60 flex items-center gap-1">
+                                  <span className="text-xs text-white flex items-center gap-1">
                                     <Calendar className="h-3 w-3" />
                                     {formatDate(training.completed_date)}
                                   </span>

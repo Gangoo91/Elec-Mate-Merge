@@ -565,7 +565,7 @@ ${companyName}`;
         className="w-64 bg-card/95 backdrop-blur-lg border border-border/50 shadow-2xl rounded-2xl z-50 p-2"
         sideOffset={8}
       >
-        <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-2 uppercase tracking-wider">
+        <DropdownMenuLabel className="text-[10px] font-semibold text-white px-3 py-2 uppercase tracking-wider">
           Send Invoice
         </DropdownMenuLabel>
         <DropdownMenuItem
@@ -582,7 +582,7 @@ ${companyName}`;
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Send via Email</span>
-            <span className="text-xs text-muted-foreground">Sends with PDF attachment</span>
+            <span className="text-xs text-white">Sends with PDF attachment</span>
           </div>
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -599,7 +599,7 @@ ${companyName}`;
           </div>
           <div className="flex flex-col">
             <span className="font-semibold text-sm">Share via WhatsApp</span>
-            <span className="text-xs text-muted-foreground">Send with PDF link</span>
+            <span className="text-xs text-white">Send with PDF link</span>
           </div>
         </DropdownMenuItem>
 
@@ -607,7 +607,7 @@ ${companyName}`;
         {!accountingLoading && (
           <>
             <DropdownMenuSeparator className="my-2 bg-border/30" />
-            <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-1 uppercase tracking-wider">
+            <DropdownMenuLabel className="text-[10px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
               Accounting Software
             </DropdownMenuLabel>
             {/* Already synced - show green tick */}
@@ -625,7 +625,7 @@ ${companyName}`;
                         ]?.name || invoice.external_invoice_provider
                       : 'Accounting'}
                   </span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     Invoice is in your accounting software
                   </span>
                 </div>
@@ -656,7 +656,7 @@ ${companyName}`;
                         <span className="font-semibold text-sm">
                           Sync to {ACCOUNTING_PROVIDERS[integration.provider].name}
                         </span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-white">
                           {integration.tenantName || 'Send invoice to accounting'}
                         </span>
                       </div>
@@ -673,11 +673,11 @@ ${companyName}`;
                 </div>
                 <div className="flex flex-col">
                   <span className="font-semibold text-sm">Connect Accounting</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     Xero, QuickBooks, Sage & more
                   </span>
                 </div>
-                <ExternalLink className="h-4 w-4 text-muted-foreground ml-auto" />
+                <ExternalLink className="h-4 w-4 text-white ml-auto" />
               </DropdownMenuItem>
             )}
           </>
@@ -687,7 +687,7 @@ ${companyName}`;
         {stripeStatus === 'not_connected' && (
           <>
             <DropdownMenuSeparator className="my-2 bg-border/30" />
-            <DropdownMenuLabel className="text-[10px] font-semibold text-muted-foreground px-3 py-1 uppercase tracking-wider">
+            <DropdownMenuLabel className="text-[10px] font-semibold text-white px-3 py-1 uppercase tracking-wider">
               Accept Card Payments
             </DropdownMenuLabel>
             {/* Primary: Connect existing Stripe via OAuth (INSTANT!) */}
@@ -715,7 +715,7 @@ ${companyName}`;
               <button
                 onClick={handleConnectStripeExpress}
                 disabled={isConnectingStripe}
-                className="text-[11px] text-muted-foreground hover:text-foreground underline underline-offset-2 touch-manipulation"
+                className="text-[11px] text-white hover:text-foreground underline underline-offset-2 touch-manipulation"
               >
                 Don't have Stripe? Create free account
               </button>
@@ -741,7 +741,7 @@ ${companyName}`;
                 <span className="font-semibold text-sm flex items-center gap-1">
                   {isConnectingStripe ? 'Loading...' : 'Finish Stripe Setup'}
                 </span>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-white">
                   Complete verification to accept payments
                 </span>
               </div>

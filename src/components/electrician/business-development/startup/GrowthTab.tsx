@@ -191,19 +191,19 @@ const GrowthTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
               <div className="text-2xl font-bold text-green-400">Year 1</div>
-              <div className="text-sm text-muted-foreground">£50K Revenue</div>
+              <div className="text-sm text-white">£50K Revenue</div>
             </div>
             <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
               <div className="text-2xl font-bold text-blue-400">Year 2</div>
-              <div className="text-sm text-muted-foreground">£100K Revenue</div>
+              <div className="text-sm text-white">£100K Revenue</div>
             </div>
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
               <div className="text-2xl font-bold text-purple-400">Year 3</div>
-              <div className="text-sm text-muted-foreground">£200K Revenue</div>
+              <div className="text-sm text-white">£200K Revenue</div>
             </div>
             <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
               <div className="text-2xl font-bold text-amber-400">5-10</div>
-              <div className="text-sm text-muted-foreground">Team Members</div>
+              <div className="text-sm text-white">Team Members</div>
             </div>
           </div>
         </CardContent>
@@ -269,7 +269,7 @@ const GrowthTab = () => {
                   <h4 className="font-semibold text-foreground">{channel.channel}</h4>
                   <Badge className="bg-green-500/20 text-green-400">{channel.cost}</Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{channel.description}</p>
+                <p className="text-sm text-white mb-3">{channel.description}</p>
 
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
@@ -305,11 +305,11 @@ const GrowthTab = () => {
 
                 <div className="grid grid-cols-2 gap-2 text-xs mb-3">
                   <div>
-                    <span className="text-muted-foreground">Investment: </span>
+                    <span className="text-white">Investment: </span>
                     <span className="text-amber-400">{area.investment}</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground">Premium: </span>
+                    <span className="text-white">Premium: </span>
                     <span className="text-green-400">{area.premium}</span>
                   </div>
                 </div>
@@ -347,11 +347,11 @@ const GrowthTab = () => {
                 <h4 className="font-semibold text-elec-yellow mb-2">{member.role}</h4>
                 <div className="space-y-3">
                   <div>
-                    <div className="text-xs text-muted-foreground">Timing</div>
+                    <div className="text-xs text-white">Timing</div>
                     <div className="text-sm text-blue-400">{member.timing}</div>
                   </div>
                   <div>
-                    <div className="text-xs text-muted-foreground">Annual Cost</div>
+                    <div className="text-xs text-white">Annual Cost</div>
                     <div className="text-sm text-green-400">{member.cost}</div>
                   </div>
 

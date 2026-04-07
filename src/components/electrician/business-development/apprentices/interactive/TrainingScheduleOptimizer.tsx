@@ -229,7 +229,7 @@ const TrainingScheduleOptimiser = () => {
                       </div>
                       <div className="text-right">
                         <div className="text-green-300 font-medium">{module.duration} weeks</div>
-                        <div className="text-xs text-muted-foreground">{module.timing}</div>
+                        <div className="text-xs text-white">{module.timing}</div>
                       </div>
                     </div>
                   ))}
@@ -277,7 +277,7 @@ const TrainingScheduleOptimiser = () => {
                         On-job: {schedule.onJob}h<br />
                         College: {schedule.college}h
                       </div>
-                      <div className="text-xs text-muted-foreground mt-1">{schedule.notes}</div>
+                      <div className="text-xs text-white mt-1">{schedule.notes}</div>
                     </div>
                   ))}
                 </div>

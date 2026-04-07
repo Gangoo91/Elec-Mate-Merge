@@ -102,7 +102,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
             <h4 className="font-semibold text-sm sm:text-base truncate">
               {invoice.invoice_number}
             </h4>
-            <p className="text-xs sm:text-sm text-muted-foreground truncate">
+            <p className="text-xs sm:text-sm text-white truncate">
               {invoice.client?.name}
             </p>
           </div>
@@ -122,7 +122,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
 
         {/* Amount - Centered and Prominent */}
         <div className="text-center py-2 sm:py-4 bg-background/50 rounded-lg border border-primary/10">
-          <div className="text-xs text-muted-foreground mb-0.5 sm:mb-1">Total Amount</div>
+          <div className="text-xs text-white mb-0.5 sm:mb-1">Total Amount</div>
           <div className="text-xl sm:text-2xl md:text-3xl font-bold text-elec-yellow">
             {formatCurrency(invoice.total)}
           </div>
@@ -132,7 +132,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs">
           {invoice.invoice_date && (
             <div className="space-y-0">
-              <div className="text-muted-foreground font-medium">Invoice Date</div>
+              <div className="text-white font-medium">Invoice Date</div>
               <div className="text-foreground">
                 {new Date(invoice.invoice_date).toLocaleDateString('en-GB')}
               </div>
@@ -140,7 +140,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           )}
           {invoice.invoice_due_date && (
             <div className="space-y-0">
-              <div className="text-muted-foreground font-medium">Due Date</div>
+              <div className="text-white font-medium">Due Date</div>
               <div
                 className={
                   daysOverdue > 0 && showActions !== 'paid'
@@ -154,7 +154,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           )}
           {invoice.invoice_sent_at && (
             <div className="space-y-0">
-              <div className="text-muted-foreground font-medium">Sent</div>
+              <div className="text-white font-medium">Sent</div>
               <div className="text-foreground">
                 {formatDistanceToNow(new Date(invoice.invoice_sent_at), { addSuffix: true })}
               </div>
@@ -162,7 +162,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
           )}
           {invoice.invoice_paid_at && (
             <div className="space-y-0">
-              <div className="text-muted-foreground font-medium">Paid</div>
+              <div className="text-white font-medium">Paid</div>
               <div className="text-foreground">
                 {new Date(invoice.invoice_paid_at).toLocaleDateString('en-GB')}
               </div>
@@ -279,7 +279,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
 
             <TabsContent value="sent" className="space-y-4 mt-4">
               {categorizedInvoices.sent.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground">
+                <div className="text-center py-12 text-white">
                   <Send className="h-16 w-16 mx-auto mb-3 opacity-20" />
                   <p className="text-base">No sent invoices awaiting payment</p>
                 </div>
@@ -290,7 +290,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
 
             <TabsContent value="draft" className="space-y-4 mt-4">
               {categorizedInvoices.draft.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground">
+                <div className="text-center py-12 text-white">
                   <FileText className="h-16 w-16 mx-auto mb-3 opacity-20" />
                   <p className="text-base">No draft invoices</p>
                 </div>
@@ -301,7 +301,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
 
             <TabsContent value="paid" className="space-y-4 mt-4">
               {categorizedInvoices.paid.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground">
+                <div className="text-center py-12 text-white">
                   <CheckCircle className="h-16 w-16 mx-auto mb-3 opacity-20" />
                   <p className="text-base">No paid invoices yet</p>
                 </div>
@@ -312,7 +312,7 @@ export const InvoiceStatusPanel = ({ invoices, onRefresh }: InvoiceStatusPanelPr
 
             <TabsContent value="overdue" className="space-y-4 mt-4">
               {categorizedInvoices.overdue.length === 0 ? (
-                <div className="text-center py-12 text-muted-foreground">
+                <div className="text-center py-12 text-white">
                   <CheckCircle className="h-16 w-16 mx-auto mb-3 opacity-20 text-success" />
                   <p className="text-base text-success">No overdue invoices! 🎉</p>
                 </div>

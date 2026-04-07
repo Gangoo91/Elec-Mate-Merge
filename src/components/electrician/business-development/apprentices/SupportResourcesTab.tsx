@@ -306,7 +306,7 @@ const SupportResourcesTab = () => {
             <div className="text-center space-y-2">
               {metric.icon}
               <div className="text-xs font-medium text-foreground">{metric.metric}</div>
-              <div className="text-xs text-muted-foreground">{metric.data}</div>
+              <div className="text-xs text-white">{metric.data}</div>
             </div>
           </Card>
         ))}
@@ -328,7 +328,7 @@ const SupportResourcesTab = () => {
                         {platform.timing}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">{platform.description}</p>
+                    <p className="text-xs text-white">{platform.description}</p>
                   </div>
 
                   <div>
@@ -388,7 +388,7 @@ const SupportResourcesTab = () => {
                       className="border border-green-500/20 rounded-lg p-3 space-y-2"
                     >
                       <h5 className="font-medium text-foreground text-sm">{service.service}</h5>
-                      <p className="text-xs text-muted-foreground">{service.description}</p>
+                      <p className="text-xs text-white">{service.description}</p>
 
                       <div>
                         <h6 className="font-medium text-green-300 mb-1 text-xs">
@@ -441,7 +441,7 @@ const SupportResourcesTab = () => {
                       {contact.contact}
                     </Badge>
                   </div>
-                  <p className="text-xs text-muted-foreground">{contact.description}</p>
+                  <p className="text-xs text-white">{contact.description}</p>
 
                   <div>
                     <h5 className="font-medium text-red-300 mb-1 text-xs">Specialises In</h5>
@@ -485,7 +485,7 @@ const SupportResourcesTab = () => {
                       className="border border-purple-500/20 rounded-lg p-3 space-y-2"
                     >
                       <h5 className="font-medium text-foreground text-sm">{resource.name}</h5>
-                      <p className="text-xs text-muted-foreground">{resource.description}</p>
+                      <p className="text-xs text-white">{resource.description}</p>
 
                       <div>
                         <h6 className="font-medium text-purple-300 mb-1 text-xs">Features</h6>

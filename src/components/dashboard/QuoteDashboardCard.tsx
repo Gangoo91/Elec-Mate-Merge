@@ -112,7 +112,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-center py-4">No active quotes require action</p>
+          <p className="text-white text-center py-4">No active quotes require action</p>
         </CardContent>
       </Card>
     );
@@ -143,7 +143,7 @@ export const QuoteDashboardCard = ({ quotes }: QuoteDashboardCardProps) => {
                     </h4>
                     <div className="flex-shrink-0">{getStatusBadge(quote)}</div>
                   </div>
-                  <p className="mobile-text text-muted-foreground truncate min-w-0">
+                  <p className="mobile-text text-white truncate min-w-0">
                     Client: {quote.client.name}
                   </p>
                 </div>

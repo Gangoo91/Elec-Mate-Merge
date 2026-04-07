@@ -349,7 +349,7 @@ const ExpensesPage = () => {
                 ? 'All Expenses'
                 : EXPENSE_CATEGORIES.find((c) => c.id === selectedCategory)?.label}
             </h2>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-white">
               {filteredExpenses.length} {filteredExpenses.length === 1 ? 'expense' : 'expenses'}
             </span>
           </div>
@@ -362,9 +362,9 @@ const ExpensesPage = () => {
             searchQuery.trim() ? (
               <Card className="bg-muted/20 border-dashed">
                 <CardContent className="py-10 text-center">
-                  <Search className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                  <Search className="h-10 w-10 mx-auto text-white mb-3" />
                   <p className="font-medium">No expenses found</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-white mt-1">
                     No expenses match &quot;{searchQuery}&quot;
                   </p>
                   <Button variant="outline" onClick={() => handleSearch('')} className="mt-4">
@@ -375,9 +375,9 @@ const ExpensesPage = () => {
             ) : (
               <Card className="bg-muted/20 border-dashed">
                 <CardContent className="py-10 text-center">
-                  <Receipt className="h-10 w-10 mx-auto text-muted-foreground/50 mb-3" />
+                  <Receipt className="h-10 w-10 mx-auto text-white mb-3" />
                   <p className="font-medium">No expenses yet</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-white mt-1">
                     Add your first expense to start tracking
                   </p>
                   <Button
@@ -396,10 +396,10 @@ const ExpensesPage = () => {
                 {dateGroupedExpenses.map((group) => (
                   <div key={group.date}>
                     <div className="flex items-center justify-between py-2">
-                      <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      <span className="text-xs font-semibold text-white uppercase tracking-wider">
                         {group.label}
                       </span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-xs text-white">
                         £{group.total.toFixed(2)}
                       </span>
                     </div>

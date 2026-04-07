@@ -149,7 +149,7 @@ const InvoiceBuilderCreate = () => {
             </div>
             <div>
               <p className="text-sm font-medium">Quote Data Imported</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 Client and items pre-filled from quote
               </p>
             </div>
@@ -164,7 +164,7 @@ const InvoiceBuilderCreate = () => {
             </div>
             <div>
               <p className="text-sm font-medium">Certificate Data Imported</p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 Client details pre-filled from certificate
               </p>
             </div>

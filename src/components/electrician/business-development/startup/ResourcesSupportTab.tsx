@@ -339,7 +339,7 @@ const ResourcesSupportTab = () => {
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-foreground">{category.title}</h3>
-                <p className="text-sm text-muted-foreground">{category.description}</p>
+                <p className="text-sm text-white">{category.description}</p>
               </div>
             </div>
 
@@ -359,9 +359,9 @@ const ResourcesSupportTab = () => {
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
+                      <p className="text-sm text-white mb-2">{resource.description}</p>
 
-                      <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                      <div className="flex flex-wrap gap-2 text-xs text-white">
                         {resource.phone && (
                           <div className="flex items-center gap-1">
                             <Phone className="h-3 w-3" />
@@ -442,7 +442,7 @@ const ResourcesSupportTab = () => {
             >
               <div className="text-left">
                 <div className="font-semibold text-foreground">{category.title}</div>
-                <div className="text-sm text-muted-foreground">{category.description}</div>
+                <div className="text-sm text-white">{category.description}</div>
               </div>
             </MobileAccordionTrigger>
 
@@ -466,9 +466,9 @@ const ResourcesSupportTab = () => {
                             </Badge>
                           )}
                         </div>
-                        <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
+                        <p className="text-sm text-white mb-2">{resource.description}</p>
 
-                        <div className="space-y-1 text-xs text-muted-foreground">
+                        <div className="space-y-1 text-xs text-white">
                           {resource.phone && (
                             <div className="flex items-center gap-1">
                               <Phone className="h-3 w-3" />
@@ -544,7 +544,7 @@ const ResourcesSupportTab = () => {
     <div className="space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold text-foreground">Support & Resources</h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Comprehensive UK support services for electrical contractors
         </p>
       </div>
@@ -558,7 +558,7 @@ const ResourcesSupportTab = () => {
           </div>
           <div>
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Important Documentation</h3>
-            <p className="text-muted-foreground mb-3">
+            <p className="text-white mb-3">
               Keep these essential records for legal, tax, and professional compliance:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">

@@ -185,7 +185,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-white/60" />
+                      <Shield className="h-4 w-4 text-white" />
                       <span className="text-sm">RAMS</span>
                     </div>
                     {hasRAMS ? (
@@ -205,7 +205,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <ClipboardList className="h-4 w-4 text-white/60" />
+                      <ClipboardList className="h-4 w-4 text-white" />
                       <span className="text-sm">Method Statement</span>
                     </div>
                     {hasMethodStatement ? (
@@ -281,7 +281,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                     </Badge>
                   </div>
                   <Progress value={progress} className="h-2" />
-                  <p className="text-sm text-white/60">{currentStep}</p>
+                  <p className="text-sm text-white">{currentStep}</p>
                 </div>
               </CardContent>
             </Card>
@@ -294,7 +294,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                   <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
                   <div>
                     <h3 className="font-medium text-foreground">Generation Failed</h3>
-                    <p className="text-sm text-white/60 mt-1">{error}</p>
+                    <p className="text-sm text-white mt-1">{error}</p>
                     <Button
                       variant="outline"
                       className="mt-3 h-11 touch-manipulation"
@@ -319,7 +319,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                     </div>
                     <div>
                       <h3 className="font-medium text-foreground">Briefing Pack Ready!</h3>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         Worker briefing created from RAMS & Method Statement
                       </p>
                     </div>
@@ -344,7 +344,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                   </div>
 
                   {selectedJobPackId && (
-                    <p className="text-xs text-white/60 text-center">
+                    <p className="text-xs text-white text-center">
                       ✓ Attached to Job Pack
                     </p>
                   )}
@@ -362,11 +362,11 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground mb-1">AI Briefing Pack</h3>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Combines your RAMS and Method Statement into a worker-friendly briefing
                       document.
                     </p>
-                    <ul className="mt-3 space-y-1 text-sm text-white/60">
+                    <ul className="mt-3 space-y-1 text-sm text-white">
                       <li>• Key hazards and controls summary</li>
                       <li>• PPE requirements</li>
                       <li>• Emergency procedures</li>

@@ -106,7 +106,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({ isOpen, onClose, 
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                      <p className="text-sm font-medium text-muted-foreground">{metric.title}</p>
+                      <p className="text-sm font-medium text-white">{metric.title}</p>
                       <p className="text-xl font-bold">{metric.value}</p>
                     </div>
                     <div className={`p-2 rounded-lg bg-gray-100 dark:bg-gray-800`}>
@@ -213,7 +213,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({ isOpen, onClose, 
                       />
                       <span className="text-lg font-bold">Net Profit:</span>
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-white">
                       Profit Margin: {formatPercentage(breakdown.profitMargin)}
                     </div>
                   </div>
@@ -223,7 +223,7 @@ const FinancialSnapshot: React.FC<FinancialSnapshotProps> = ({ isOpen, onClose, 
                     >
                       {formatCurrency(breakdown.totalProfit)}
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-sm text-white">
                       {breakdown.totalProfit >= 0 ? 'Profitable' : 'Loss'}
                     </div>
                   </div>

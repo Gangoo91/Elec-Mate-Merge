@@ -179,7 +179,7 @@ export function AddTrainingRequestDialog({
             <div className="space-y-2">
               <Label htmlFor="customProvider">Custom Provider Name</Label>
               <div className="relative">
-                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   id="customProvider"
                   value={customProvider}
@@ -195,7 +195,7 @@ export function AddTrainingRequestDialog({
           <div className="space-y-2">
             <Label htmlFor="completedDate">Completion Date</Label>
             <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60" />
+              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <Input
                 id="completedDate"
                 type="date"

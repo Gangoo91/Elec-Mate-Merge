@@ -33,7 +33,7 @@ export function DataTable<T extends Record<string, any>>({
                 {columns.map((col) => (
                   <th
                     key={String(col.key)}
-                    className="text-left py-3 px-4 text-sm font-medium text-white/60"
+                    className="text-left py-3 px-4 text-sm font-medium text-white"
                   >
                     {col.label}
                   </th>

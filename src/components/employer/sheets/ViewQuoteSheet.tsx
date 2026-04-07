@@ -139,7 +139,7 @@ export function ViewQuoteSheet({
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, string> = {
-      Draft: 'bg-muted text-white/60',
+      Draft: 'bg-muted text-white',
       Sent: 'bg-warning/20 text-warning',
       Approved: 'bg-success/20 text-success',
       'Client Accepted': 'bg-success/20 text-success',
@@ -300,7 +300,7 @@ export function ViewQuoteSheet({
                   </div>
                   <div>
                     <SheetTitle className="text-lg font-semibold">{quote.quote_number}</SheetTitle>
-                    <p className="text-sm text-white/60">{quote.client}</p>
+                    <p className="text-sm text-white">{quote.client}</p>
                   </div>
                 </div>
                 {getStatusBadge(quote.status)}
@@ -319,7 +319,7 @@ export function ViewQuoteSheet({
                         <div className="flex-1 space-y-2">
                           <div>
                             <p className="font-semibold text-success">Client Accepted</p>
-                            <p className="text-sm text-white/60">
+                            <p className="text-sm text-white">
                               {acceptance.client_name} accepted on{' '}
                               {acceptance.responded_at &&
                                 format(new Date(acceptance.responded_at), "d MMM yyyy 'at' HH:mm")}
@@ -327,13 +327,13 @@ export function ViewQuoteSheet({
                           </div>
                           {acceptance.client_notes && (
                             <div className="text-sm">
-                              <span className="text-white/60">Notes: </span>
+                              <span className="text-white">Notes: </span>
                               {acceptance.client_notes}
                             </div>
                           )}
                           {acceptance.signature_data && (
                             <div className="space-y-1">
-                              <span className="text-sm text-white/60 flex items-center gap-1">
+                              <span className="text-sm text-white flex items-center gap-1">
                                 <Signature className="h-3 w-3" /> Client Signature
                               </span>
                               <img
@@ -356,14 +356,14 @@ export function ViewQuoteSheet({
                         <XCircle className="h-6 w-6 text-destructive flex-shrink-0" />
                         <div className="flex-1">
                           <p className="font-semibold text-destructive">Client Declined</p>
-                          <p className="text-sm text-white/60">
+                          <p className="text-sm text-white">
                             {acceptance.client_name} declined on{' '}
                             {acceptance.responded_at &&
                               format(new Date(acceptance.responded_at), "d MMM yyyy 'at' HH:mm")}
                           </p>
                           {acceptance.client_notes && (
                             <div className="text-sm mt-2">
-                              <span className="text-white/60">Reason: </span>
+                              <span className="text-white">Reason: </span>
                               {acceptance.client_notes}
                             </div>
                           )}
@@ -397,7 +397,7 @@ export function ViewQuoteSheet({
                             ? 'bg-success text-success-foreground'
                             : isCurrent
                               ? 'bg-elec-yellow text-elec-yellow-foreground'
-                              : 'bg-muted text-white/60'
+                              : 'bg-muted text-white'
                         }`}
                           >
                             {isComplete ? <Check className="h-4 w-4" /> : idx + 1}
@@ -462,7 +462,7 @@ export function ViewQuoteSheet({
                         </Button>
                       )}
                       {acceptance && acceptance.status === 'pending' && (
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Awaiting client response. Expires{' '}
                           {format(new Date(acceptance.expires_at), 'd MMM yyyy')}
                         </p>
@@ -477,7 +477,7 @@ export function ViewQuoteSheet({
                     {/* Job Title Banner */}
                     {(quote as any).job_title && (
                       <div className="bg-elec-yellow/10 rounded-lg p-3 -m-1 mb-2">
-                        <span className="text-xs text-white/60 uppercase tracking-wide">
+                        <span className="text-xs text-white uppercase tracking-wide">
                           Project
                         </span>
                         <p className="font-semibold text-elec-yellow text-lg">
@@ -489,7 +489,7 @@ export function ViewQuoteSheet({
                     {/* Client Address */}
                     {(quote as any).client_address && (
                       <div>
-                        <span className="text-sm text-white/60">Client Address</span>
+                        <span className="text-sm text-white">Client Address</span>
                         <p className="font-medium whitespace-pre-line">
                           {(quote as any).client_address}
                         </p>
@@ -498,15 +498,15 @@ export function ViewQuoteSheet({
 
                     {quote.description && (
                       <div>
-                        <span className="text-sm text-white/60">Description</span>
+                        <span className="text-sm text-white">Description</span>
                         <p className="font-medium">{quote.description}</p>
                       </div>
                     )}
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-white/60" />
+                        <Calendar className="h-4 w-4 text-white" />
                         <div>
-                          <span className="text-white/60">Created</span>
+                          <span className="text-white">Created</span>
                           <p className="font-medium">
                             {new Date(quote.created_at).toLocaleDateString('en-GB')}
                           </p>
@@ -514,9 +514,9 @@ export function ViewQuoteSheet({
                       </div>
                       {quote.sent_date && (
                         <div className="flex items-center gap-2">
-                          <Send className="h-4 w-4 text-white/60" />
+                          <Send className="h-4 w-4 text-white" />
                           <div>
-                            <span className="text-white/60">Sent</span>
+                            <span className="text-white">Sent</span>
                             <p className="font-medium">
                               {new Date(quote.sent_date).toLocaleDateString('en-GB')}
                             </p>
@@ -525,9 +525,9 @@ export function ViewQuoteSheet({
                       )}
                       {quote.valid_until && (
                         <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-white/60" />
+                          <Clock className="h-4 w-4 text-white" />
                           <div>
-                            <span className="text-white/60">Valid Until</span>
+                            <span className="text-white">Valid Until</span>
                             <p className="font-medium">
                               {new Date(quote.valid_until).toLocaleDateString('en-GB')}
                             </p>
@@ -555,7 +555,7 @@ export function ViewQuoteSheet({
                             >
                               <div className="min-w-0 flex-1">
                                 <p className="font-medium text-sm truncate">{item.description}</p>
-                                <p className="text-xs text-white/60">
+                                <p className="text-xs text-white">
                                   {item.quantity} hrs × £{Number(item.unitPrice || 0).toFixed(2)}/hr
                                 </p>
                               </div>
@@ -586,7 +586,7 @@ export function ViewQuoteSheet({
                             >
                               <div className="min-w-0 flex-1">
                                 <p className="font-medium text-sm truncate">{item.description}</p>
-                                <p className="text-xs text-white/60">
+                                <p className="text-xs text-white">
                                   {item.quantity} {item.unit} × £
                                   {Number(item.unitPrice || 0).toFixed(2)}
                                 </p>
@@ -605,11 +605,11 @@ export function ViewQuoteSheet({
                 <Card className="bg-elec-yellow/10 border-elec-yellow/20">
                   <CardContent className="p-4 space-y-2">
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/60">Subtotal</span>
+                      <span className="text-white">Subtotal</span>
                       <span className="font-medium">£{subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-white/60">VAT @ 20%</span>
+                      <span className="text-white">VAT @ 20%</span>
                       <span className="font-medium">£{(subtotal * 0.2).toFixed(2)}</span>
                     </div>
                     <Separator className="my-2" />
@@ -628,7 +628,7 @@ export function ViewQuoteSheet({
                     <h3 className="font-semibold text-sm">Notes</h3>
                     <Card className="bg-muted/30">
                       <CardContent className="p-3">
-                        <p className="text-sm text-white/60 whitespace-pre-wrap">
+                        <p className="text-sm text-white whitespace-pre-wrap">
                           {quote.notes}
                         </p>
                       </CardContent>
@@ -812,7 +812,7 @@ export function ViewQuoteSheet({
                 onChange={(e) => setRecipientEmail(e.target.value)}
               />
             </div>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               This will send quote {quote.quote_number} for £{Number(quote.value).toLocaleString()}{' '}
               to the client with an accept/decline link.
             </p>
@@ -840,7 +840,7 @@ export function ViewQuoteSheet({
             <DialogTitle>Quote Accept Link Generated</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Share this link with your client so they can review and accept the quote online.
             </p>
             <div className="flex gap-2">

@@ -197,7 +197,7 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
           {quote.accepted_at && (
             <div className="mt-6 p-4 border border-elec-green/30 bg-elec-green/10 rounded-lg">
               <h4 className="font-medium text-elec-green mb-2">Quote Accepted</h4>
-              <div className="text-sm text-muted-foreground space-y-1">
+              <div className="text-sm text-white space-y-1">
                 <p>
                   <strong>Accepted by:</strong> {quote.accepted_by_name}
                 </p>

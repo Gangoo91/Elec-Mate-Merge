@@ -148,7 +148,7 @@ const DigitalSkillsAnalyser = () => {
             </div>
             <div className="mt-2">
               <Progress value={results.percentage} className="w-full" />
-              <div className="text-sm text-muted-foreground mt-1">
+              <div className="text-sm text-white mt-1">
                 {results.totalScore}/{results.maxScore} points ({results.percentage.toFixed(0)}%)
               </div>
             </div>
@@ -157,7 +157,7 @@ const DigitalSkillsAnalyser = () => {
           {/* Recommendation */}
           <div className="p-4 bg-elec-gray border border-elec-yellow/20 rounded-lg mb-6">
             <h4 className="font-semibold text-foreground mb-2">Recommendation</h4>
-            <p className="text-muted-foreground">{results.recommendation}</p>
+            <p className="text-white">{results.recommendation}</p>
           </div>
 
           {/* Training Focus Areas */}
@@ -184,7 +184,7 @@ const DigitalSkillsAnalyser = () => {
                   <span className="text-foreground">{question.category}</span>
                   <div className="flex items-center gap-2">
                     <Progress value={((answers[index] || 0) / 4) * 100} className="w-20" />
-                    <span className="text-sm text-muted-foreground">{answers[index] || 0}/4</span>
+                    <span className="text-sm text-white">{answers[index] || 0}/4</span>
                   </div>
                 </div>
               ))}

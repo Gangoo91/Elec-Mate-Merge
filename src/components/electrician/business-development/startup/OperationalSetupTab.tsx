@@ -243,17 +243,17 @@ const OperationalSetupTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
               <Calculator className="h-5 w-5 text-green-400 mb-2" />
-              <div className="text-sm text-muted-foreground">Setup Investment</div>
+              <div className="text-sm text-white">Setup Investment</div>
               <div className="text-xl font-bold text-green-400">£10K-35K</div>
             </div>
             <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
               <Clock className="h-5 w-5 text-blue-400 mb-2" />
-              <div className="text-sm text-muted-foreground">Time to Operational</div>
+              <div className="text-sm text-white">Time to Operational</div>
               <div className="text-xl font-bold text-blue-400">4-8 weeks</div>
             </div>
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
               <Shield className="h-5 w-5 text-purple-400 mb-2" />
-              <div className="text-sm text-muted-foreground">Daily Earning Target</div>
+              <div className="text-sm text-white">Daily Earning Target</div>
               <div className="text-xl font-bold text-purple-400">£250-500</div>
             </div>
           </div>
@@ -263,7 +263,7 @@ const OperationalSetupTab = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-sm">
               <div>
                 <h5 className="font-medium text-foreground mb-2">Week 1-2</h5>
-                <ul className="space-y-1 text-muted-foreground">
+                <ul className="space-y-1 text-white">
                   <li>• Purchase essential tools</li>
                   <li>• Set up insurance</li>
                   <li>• Open business bank account</li>
@@ -271,7 +271,7 @@ const OperationalSetupTab = () => {
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Week 3-4</h5>
-                <ul className="space-y-1 text-muted-foreground">
+                <ul className="space-y-1 text-white">
                   <li>• Vehicle acquisition</li>
                   <li>• Software setup</li>
                   <li>• Supplier accounts</li>
@@ -279,7 +279,7 @@ const OperationalSetupTab = () => {
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Week 5-6</h5>
-                <ul className="space-y-1 text-muted-foreground">
+                <ul className="space-y-1 text-white">
                   <li>• Office organisation</li>
                   <li>• Process documentation</li>
                   <li>• Marketing materials</li>
@@ -287,7 +287,7 @@ const OperationalSetupTab = () => {
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Week 7-8</h5>
-                <ul className="space-y-1 text-muted-foreground">
+                <ul className="space-y-1 text-white">
                   <li>• Final testing</li>
                   <li>• First customer jobs</li>
                   <li>• System refinement</li>
@@ -306,7 +306,7 @@ const OperationalSetupTab = () => {
               <div className="flex items-start justify-between">
                 <div>
                   <CardTitle className="text-foreground text-lg">{area.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{area.timeframe}</p>
+                  <p className="text-sm text-white">{area.timeframe}</p>
                 </div>
                 <Badge className={getPriorityColor(area.priority)}>{area.priority}</Badge>
               </div>
@@ -314,7 +314,7 @@ const OperationalSetupTab = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="bg-elec-dark/50 p-3 rounded">
-                  <div className="text-sm text-muted-foreground">Estimated Investment</div>
+                  <div className="text-sm text-white">Estimated Investment</div>
                   <div className="text-xl font-bold text-elec-yellow">{area.cost}</div>
                 </div>
 
@@ -324,7 +324,7 @@ const OperationalSetupTab = () => {
                     {area.items.map((item, itemIndex) => (
                       <div
                         key={itemIndex}
-                        className="flex items-center gap-2 text-sm text-muted-foreground"
+                        className="flex items-center gap-2 text-sm text-white"
                       >
                         <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full" />
                         {item}
@@ -360,7 +360,7 @@ const OperationalSetupTab = () => {
                       {tool.features.map((feature, featureIndex) => (
                         <div
                           key={featureIndex}
-                          className="flex items-center gap-2 text-xs text-muted-foreground"
+                          className="flex items-center gap-2 text-xs text-white"
                         >
                           <div className="w-1 h-1 bg-blue-400 rounded-full" />
                           {feature}
@@ -391,10 +391,10 @@ const OperationalSetupTab = () => {
                     <h4 className="font-semibold text-foreground">{operation.task}</h4>
                     <div className="text-right">
                       <div className="text-sm text-green-400">{operation.time}</div>
-                      <div className="text-xs text-muted-foreground">{operation.duration}</div>
+                      <div className="text-xs text-white">{operation.duration}</div>
                     </div>
                   </div>
-                  <p className="text-xs text-muted-foreground">{operation.description}</p>
+                  <p className="text-xs text-white">{operation.description}</p>
                 </div>
               ))}
             </div>
@@ -417,7 +417,7 @@ const OperationalSetupTab = () => {
                     {standard.standards.map((item, itemIndex) => (
                       <div
                         key={itemIndex}
-                        className="flex items-start gap-2 text-xs text-muted-foreground"
+                        className="flex items-start gap-2 text-xs text-white"
                       >
                         <div className="w-1 h-1 bg-amber-400 rounded-full mt-1.5 flex-shrink-0" />
                         {item}
@@ -440,17 +440,17 @@ const OperationalSetupTab = () => {
             <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-purple-500/30">
               <FileText className="h-5 w-5 text-purple-400" />
               <span className="font-medium">Job Sheet Templates</span>
-              <span className="text-xs text-muted-foreground">Customisable forms</span>
+              <span className="text-xs text-white">Customisable forms</span>
             </Button>
             <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-blue-500/30">
               <Truck className="h-5 w-5 text-blue-400" />
               <span className="font-medium">Van Setup Guide</span>
-              <span className="text-xs text-muted-foreground">Organisation tips</span>
+              <span className="text-xs text-white">Organisation tips</span>
             </Button>
             <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-green-500/30">
               <Calculator className="h-5 w-5 text-green-400" />
               <span className="font-medium">Pricing Calculator</span>
-              <span className="text-xs text-muted-foreground">Fair pricing tool</span>
+              <span className="text-xs text-white">Fair pricing tool</span>
             </Button>
           </div>
 
@@ -459,7 +459,7 @@ const OperationalSetupTab = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="font-medium text-foreground mb-2">Systems Setup</h5>
-                <ul className="space-y-1 text-muted-foreground">
+                <ul className="space-y-1 text-white">
                   <li>□ Accounting software configured</li>
                   <li>□ Customer database created</li>
                   <li>□ Invoice templates designed</li>
@@ -468,7 +468,7 @@ const OperationalSetupTab = () => {
               </div>
               <div>
                 <h5 className="font-medium text-foreground mb-2">Process Documentation</h5>
-                <ul className="space-y-1 text-muted-foreground">
+                <ul className="space-y-1 text-white">
                   <li>□ Standard operating procedures</li>
                   <li>□ Safety protocols documented</li>
                   <li>□ Customer communication scripts</li>

@@ -131,7 +131,7 @@ export function EditJobBudgetSheet({
         {/* Header */}
         <SheetHeader className="p-4 border-b border-border shrink-0">
           <SheetTitle>Edit Job Budget</SheetTitle>
-          {jobTitle && <p className="text-sm text-white/60">{jobTitle}</p>}
+          {jobTitle && <p className="text-sm text-white">{jobTitle}</p>}
         </SheetHeader>
 
         {/* Content */}
@@ -149,11 +149,11 @@ export function EditJobBudgetSheet({
                 {budgetFields.map(({ id, label, icon: Icon }) => (
                   <div key={id} className="space-y-1.5">
                     <Label className="text-sm flex items-center gap-2">
-                      <Icon className="h-4 w-4 text-white/60" />
+                      <Icon className="h-4 w-4 text-white" />
                       {label}
                     </Label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 font-medium">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white font-medium">
                         £
                       </span>
                       <Input
@@ -191,11 +191,11 @@ export function EditJobBudgetSheet({
 
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between py-1.5 border-b border-border/50">
-                    <span className="text-white/60">Costs Subtotal</span>
+                    <span className="text-white">Costs Subtotal</span>
                     <span className="font-medium">{formatCurrency(subtotal)}</span>
                   </div>
                   <div className="flex justify-between py-1.5 border-b border-border/50">
-                    <span className="text-white/60">
+                    <span className="text-white">
                       Profit ({profitPercent.toFixed(1)}%)
                     </span>
                     <span className="font-medium text-green-500">
@@ -220,7 +220,7 @@ export function EditJobBudgetSheet({
                   )}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-white/60">Change from original</span>
+                    <span className="text-sm text-white">Change from original</span>
                     <span
                       className={cn(
                         'font-bold',

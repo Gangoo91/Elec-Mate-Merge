@@ -67,7 +67,7 @@ export const EnhancedInput: React.FC<EnhancedInputProps> = ({
           )}
         />
         {unit && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium">
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-white font-medium">
             {unit}
           </div>
         )}
@@ -76,7 +76,7 @@ export const EnhancedInput: React.FC<EnhancedInputProps> = ({
       {error && <p className="text-sm text-destructive">{error}</p>}
 
       {!error && placeholder && (
-        <p className="text-xs text-muted-foreground">Example: {placeholder}</p>
+        <p className="text-xs text-white">Example: {placeholder}</p>
       )}
     </div>
   );

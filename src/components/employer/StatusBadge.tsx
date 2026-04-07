@@ -23,7 +23,7 @@ const statusStyles: Record<StatusType, string> = {
   warning: 'bg-warning/20 text-warning border-warning/30',
   expired: 'bg-destructive/20 text-destructive border-destructive/30',
   rejected: 'bg-destructive/20 text-destructive border-destructive/30',
-  inactive: 'bg-muted text-white/60 border-muted',
+  inactive: 'bg-muted text-white border-muted',
 };
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {

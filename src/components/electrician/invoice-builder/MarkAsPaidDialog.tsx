@@ -160,7 +160,7 @@ export const MarkAsPaidDialog = ({
                   variant="outline"
                   className={cn(
                     'w-full justify-start text-left font-normal',
-                    !paymentDate && 'text-muted-foreground'
+                    !paymentDate && 'text-white'
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
@@ -200,7 +200,7 @@ export const MarkAsPaidDialog = ({
           {/* Payment Reference */}
           <div className="space-y-2">
             <Label htmlFor="payment-reference">
-              Payment Reference <span className="text-muted-foreground">(Optional)</span>
+              Payment Reference <span className="text-white">(Optional)</span>
             </Label>
             <Input
               id="payment-reference"
@@ -213,7 +213,7 @@ export const MarkAsPaidDialog = ({
           {/* Notes */}
           <div className="space-y-2">
             <Label htmlFor="notes">
-              Notes <span className="text-muted-foreground">(Optional)</span>
+              Notes <span className="text-white">(Optional)</span>
             </Label>
             <Textarea
               id="notes"
@@ -227,15 +227,15 @@ export const MarkAsPaidDialog = ({
           {/* Summary */}
           <div className="rounded-lg bg-muted p-4 space-y-1">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Invoice Number:</span>
+              <span className="text-white">Invoice Number:</span>
               <span className="font-medium">{invoice.invoice_number}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Client:</span>
+              <span className="text-white">Client:</span>
               <span className="font-medium">{invoice.client?.name}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Amount:</span>
+              <span className="text-white">Amount:</span>
               <span className="font-bold text-lg">
                 {new Intl.NumberFormat('en-GB', {
                   style: 'currency',

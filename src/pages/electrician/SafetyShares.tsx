@@ -58,7 +58,7 @@ const SafetyShares = () => {
       <div className="space-y-8 animate-fade-in">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Safety Shares</h1>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Essential safety information and knowledge sharing for electrical professionals
           </p>
         </div>
@@ -110,10 +110,10 @@ const SafetyShares = () => {
             <Sparkles className="h-6 w-6 text-elec-yellow" />
             <h2 className="text-xl font-semibold text-elec-yellow">Enhanced Features</h2>
           </div>
-          <p className="text-gray-300 mb-4">
+          <p className="text-white mb-4">
             Try our enhanced Safety Shares experience with interactive features including:
           </p>
-          <ul className="list-disc list-inside text-gray-400 space-y-2">
+          <ul className="list-disc list-inside text-white space-y-2">
             <li>Real-time data integration with live content updates</li>
             <li>User ratings and reviews for all safety content</li>
             <li>Personal bookmarking system to save important resources</li>

@@ -394,30 +394,30 @@ const MajorProjectsCard = () => {
         {/* Project Summary */}
         <div>
           <h3 className="text-lg font-semibold text-foreground mb-2">Project Overview</h3>
-          <p className="text-gray-300">{project.description}</p>
+          <p className="text-white">{project.description}</p>
         </div>
 
         {/* Project Details Grid */}
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Client</p>
+            <p className="text-sm text-white">Client</p>
             <p className="text-foreground font-medium">{project.client}</p>
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Contract Value</p>
+            <p className="text-sm text-white">Contract Value</p>
             <p className="text-foreground font-medium">
               {project.contract_value ? formatCurrency(project.contract_value) : 'TBC'}
             </p>
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Location</p>
+            <p className="text-sm text-white">Location</p>
             <p className="text-foreground font-medium">{project.location || 'UK'}</p>
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Duration</p>
+            <p className="text-sm text-white">Duration</p>
             <p className="text-foreground font-medium">
               {(() => {
                 if (
@@ -456,7 +456,7 @@ const MajorProjectsCard = () => {
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Start Date</p>
+            <p className="text-sm text-white">Start Date</p>
             <p className="text-foreground font-medium">
               {project.start_date
                 ? new Date(project.start_date).toLocaleDateString('en-GB')
@@ -465,7 +465,7 @@ const MajorProjectsCard = () => {
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm text-muted-foreground">Contractors</p>
+            <p className="text-sm text-white">Contractors</p>
             <p className="text-foreground font-medium">{project.contractors || 'TBC'}</p>
           </div>
         </div>
@@ -498,12 +498,12 @@ const MajorProjectsCard = () => {
       return 'bg-green-500/20 text-green-400 border-green-500/30';
     if (statusLower.includes('progress'))
       return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-    if (statusLower.includes('complet')) return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+    if (statusLower.includes('complet')) return 'bg-gray-500/20 text-white border-gray-500/30';
     return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
   };
 
   const getSectorColor = (category: string) => {
-    if (!category) return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+    if (!category) return 'bg-gray-500/20 text-white border-gray-500/30';
     switch (category.toLowerCase()) {
       case 'transport':
         return 'bg-purple-500/20 text-purple-400 border-purple-500/30';
@@ -519,7 +519,7 @@ const MajorProjectsCard = () => {
       case 'education':
         return 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -587,13 +587,13 @@ const MajorProjectsCard = () => {
               </CardTitle>
 
               {/* Short Description */}
-              <p className="text-gray-300 text-sm text-center mb-3 line-clamp-3">
+              <p className="text-white text-sm text-center mb-3 line-clamp-3">
                 {project.description}
               </p>
 
               {/* Client */}
               <div className="text-center mb-4">
-                <span className="text-sm text-muted-foreground">
+                <span className="text-sm text-white">
                   Client:{' '}
                   <span className="text-elec-yellow hover:text-elec-yellow/80 transition-colors cursor-pointer">
                     {project.client}
@@ -612,7 +612,7 @@ const MajorProjectsCard = () => {
                   <div className="text-foreground font-medium text-sm">
                     {formatCurrency(project.contract_value)}
                   </div>
-                  <div className="text-xs text-muted-foreground">Contract Value</div>
+                  <div className="text-xs text-white">Contract Value</div>
                 </div>
 
                 <div className="text-center">
@@ -622,7 +622,7 @@ const MajorProjectsCard = () => {
                   <div className="text-foreground font-medium text-sm">
                     {project.duration ? formatDuration(project.duration) : '18 months'}
                   </div>
-                  <div className="text-xs text-muted-foreground">Duration</div>
+                  <div className="text-xs text-white">Duration</div>
                 </div>
 
                 <div className="text-center">
@@ -635,7 +635,7 @@ const MajorProjectsCard = () => {
                       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
                       .join(' ')}
                   </div>
-                  <div className="text-xs text-muted-foreground">Location</div>
+                  <div className="text-xs text-white">Location</div>
                 </div>
 
                 <div className="text-center">
@@ -647,14 +647,14 @@ const MajorProjectsCard = () => {
                       ? `${project.contractors.split(', ').length} contractor${project.contractors.split(', ').length !== 1 ? 's' : ''}`
                       : 'TBC'}
                   </div>
-                  <div className="text-xs text-muted-foreground">Contractors</div>
+                  <div className="text-xs text-white">Contractors</div>
                 </div>
               </div>
 
               {/* Bottom Section */}
               <div className="flex items-center justify-between">
                 {/* Start Date - Bottom left with calendar icon */}
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 text-sm text-white">
                   <Calendar className="h-4 w-4" />
                   <span>
                     {project.start_date

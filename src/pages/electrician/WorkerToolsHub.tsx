@@ -98,7 +98,7 @@ const getStatusColour = (status?: string): string => {
     case 'Office':
       return 'text-elec-yellow';
     case 'Off Duty':
-      return 'text-gray-400';
+      return 'text-white';
     default:
       return 'text-white';
   }

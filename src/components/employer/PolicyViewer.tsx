@@ -100,7 +100,7 @@ export function PolicyViewer({
       case 'Legal':
         return 'bg-info/10 text-info';
       default:
-        return 'bg-muted text-white/60';
+        return 'bg-muted text-white';
     }
   };
 
@@ -131,7 +131,7 @@ export function PolicyViewer({
                         : userPolicy?.template?.category || 'Policy'}
                     </Badge>
                     {'version' in policy && (
-                      <span className="text-xs text-white/60">v{policy.version}</span>
+                      <span className="text-xs text-white">v{policy.version}</span>
                     )}
                     {userPolicy && (
                       <Badge
@@ -165,7 +165,7 @@ export function PolicyViewer({
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-info/10 border border-info/20">
                 <h3 className="font-medium text-foreground mb-2">Adopt Policy</h3>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   Add this policy to your company documents. Optionally enter your company name to
                   personalise the document.
                 </p>
@@ -184,7 +184,7 @@ export function PolicyViewer({
                     placeholder="Enter your company name"
                     className="h-11"
                   />
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     This will replace [Company Name] placeholders in the policy
                   </p>
                 </div>
@@ -201,7 +201,7 @@ export function PolicyViewer({
                     onChange={(e) => setReviewDate(e.target.value)}
                     className="h-11"
                   />
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Set a reminder to review this policy
                   </p>
                 </div>
@@ -212,7 +212,7 @@ export function PolicyViewer({
               {/* Summary if available */}
               {'summary' in policy && policy.summary && (
                 <div className="p-4 rounded-lg bg-muted/50 border">
-                  <p className="text-sm text-white/60">{policy.summary}</p>
+                  <p className="text-sm text-white">{policy.summary}</p>
                 </div>
               )}
 
@@ -229,13 +229,13 @@ export function PolicyViewer({
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     {userPolicy.company_name && (
                       <div>
-                        <span className="text-white/60">Company:</span>
+                        <span className="text-white">Company:</span>
                         <p className="font-medium">{userPolicy.company_name}</p>
                       </div>
                     )}
                     {userPolicy.adopted_at && (
                       <div>
-                        <span className="text-white/60">Adopted:</span>
+                        <span className="text-white">Adopted:</span>
                         <p className="font-medium">
                           {new Date(userPolicy.adopted_at).toLocaleDateString('en-GB')}
                         </p>
@@ -243,7 +243,7 @@ export function PolicyViewer({
                     )}
                     {userPolicy.review_date && (
                       <div>
-                        <span className="text-white/60">Review Due:</span>
+                        <span className="text-white">Review Due:</span>
                         <p className="font-medium">
                           {new Date(userPolicy.review_date).toLocaleDateString('en-GB')}
                         </p>
@@ -251,7 +251,7 @@ export function PolicyViewer({
                     )}
                     {userPolicy.approved_by && (
                       <div>
-                        <span className="text-white/60">Approved By:</span>
+                        <span className="text-white">Approved By:</span>
                         <p className="font-medium">{userPolicy.approved_by}</p>
                       </div>
                     )}

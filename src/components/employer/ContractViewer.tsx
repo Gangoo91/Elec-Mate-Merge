@@ -305,7 +305,7 @@ export function ContractViewer({
       case 'HR Letters':
         return 'bg-success/10 text-success';
       default:
-        return 'bg-muted text-white/60';
+        return 'bg-muted text-white';
     }
   };
 
@@ -370,7 +370,7 @@ export function ContractViewer({
                       {category}
                     </Badge>
                     {template?.version && (
-                      <span className="text-xs text-white/60">v{template.version}</span>
+                      <span className="text-xs text-white">v{template.version}</span>
                     )}
                     {userContract && (
                       <Badge
@@ -409,7 +409,7 @@ export function ContractViewer({
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-info/10 border border-info/20">
                 <h3 className="font-medium text-foreground mb-2">Use This Template</h3>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   Fill in the details below to personalise this contract. Placeholders like [Company
                   Name] will be replaced with your values.
                 </p>
@@ -518,7 +518,7 @@ export function ContractViewer({
               {/* Summary if available */}
               {template?.summary && !isEditing && (
                 <div className="p-4 rounded-lg bg-muted/50 border">
-                  <p className="text-sm text-white/60">{template.summary}</p>
+                  <p className="text-sm text-white">{template.summary}</p>
                 </div>
               )}
 
@@ -615,13 +615,13 @@ export function ContractViewer({
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     {userContract.party_name && (
                       <div>
-                        <span className="text-white/60">Party:</span>
+                        <span className="text-white">Party:</span>
                         <p className="font-medium">{userContract.party_name}</p>
                       </div>
                     )}
                     {userContract.adopted_at && (
                       <div>
-                        <span className="text-white/60">Created:</span>
+                        <span className="text-white">Created:</span>
                         <p className="font-medium">
                           {new Date(userContract.adopted_at).toLocaleDateString('en-GB')}
                         </p>
@@ -629,7 +629,7 @@ export function ContractViewer({
                     )}
                     {userContract.start_date && (
                       <div>
-                        <span className="text-white/60">Start Date:</span>
+                        <span className="text-white">Start Date:</span>
                         <p className="font-medium">
                           {new Date(userContract.start_date).toLocaleDateString('en-GB')}
                         </p>
@@ -637,7 +637,7 @@ export function ContractViewer({
                     )}
                     {userContract.employee?.name && (
                       <div>
-                        <span className="text-white/60">Employee:</span>
+                        <span className="text-white">Employee:</span>
                         <p className="font-medium">{userContract.employee.name}</p>
                       </div>
                     )}

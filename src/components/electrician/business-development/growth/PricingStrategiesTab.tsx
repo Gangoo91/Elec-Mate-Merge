@@ -394,7 +394,7 @@ export const PricingStrategiesTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -437,7 +437,7 @@ export const PricingStrategiesTab = () => {
                         {strategy.timeline}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {strategy.description}
                     </p>
                   </div>
@@ -446,19 +446,19 @@ export const PricingStrategiesTab = () => {
                     className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}
                   >
                     <div className="flex items-center gap-2">
-                      <Calculator className="h-4 w-4 text-muted-foreground" />
+                      <Calculator className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                         {strategy.investment}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                      <TrendingUp className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                         {strategy.roi}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-muted-foreground" />
+                      <Shield className="h-4 w-4 text-white" />
                       <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                         {strategy.riskLevel}
                       </span>
@@ -505,7 +505,7 @@ export const PricingStrategiesTab = () => {
                             {phase.tasks.map((task, taskIndex) => (
                               <li
                                 key={taskIndex}
-                                className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-start gap-1`}
+                                className={`${isMobile ? 'text-xs' : 'text-sm'} text-white flex items-start gap-1`}
                               >
                                 <div className="w-1 h-1 bg-muted-foreground rounded-full mt-2 shrink-0" />
                                 {task}
@@ -552,7 +552,7 @@ export const PricingStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Compare your pricing against current UK electrical industry standards
                 </p>
 
@@ -584,9 +584,9 @@ export const PricingStrategiesTab = () => {
                               </Badge>
                             </div>
                             <div className="flex items-center gap-2">
-                              <LineChart className="h-4 w-4 text-muted-foreground" />
+                              <LineChart className="h-4 w-4 text-white" />
                               <span
-                                className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                                className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                               >
                                 {benchmark.current}
                               </span>
@@ -610,7 +610,7 @@ export const PricingStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-purple-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Strategies to justify premium pricing and differentiate your services
                 </p>
 
@@ -628,7 +628,7 @@ export const PricingStrategiesTab = () => {
                             {advantage.title}
                           </h4>
                           <p
-                            className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mt-1`}
+                            className={`${isMobile ? 'text-xs' : 'text-sm'} text-white mt-1`}
                           >
                             {advantage.description}
                           </p>
@@ -677,7 +677,7 @@ export const PricingStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Key metrics to track pricing strategy success and optimisation
                 </p>
 
@@ -727,7 +727,7 @@ export const PricingStrategiesTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="border border-yellow-500/20 rounded-lg p-3 space-y-3">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                   Immediate steps to improve your pricing strategy and profitability
                 </p>
 

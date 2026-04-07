@@ -88,7 +88,7 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
               variant="ghost"
               size="sm"
               className={cn(
-                'h-6 px-2 text-xs text-white/60 hover:text-foreground',
+                'h-6 px-2 text-xs text-white hover:text-foreground',
                 compact && 'h-5 px-1.5'
               )}
             >
@@ -165,7 +165,7 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="w-full justify-start h-8 text-white/60"
+                  className="w-full justify-start h-8 text-white"
                   onClick={() => setShowCreateForm(true)}
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -199,7 +199,7 @@ export function JobLabelStrips({
         />
       ))}
       {labels.length > 3 && (
-        <span className="text-[10px] text-white/60">+{labels.length - 3}</span>
+        <span className="text-[10px] text-white">+{labels.length - 3}</span>
       )}
     </div>
   );

@@ -79,7 +79,7 @@ const BusinessAdmin = () => {
             <h2 className="text-xl font-bold text-amber-600 dark:text-amber-400">Coming Soon</h2>
             <div className="h-2 w-2 bg-amber-500 rounded-full animate-pulse"></div>
           </div>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-white text-sm">
             Advanced business administration tools are currently in development. These comprehensive
             features will help you manage every aspect of your electrical business efficiently.
           </p>
@@ -91,7 +91,7 @@ const BusinessAdmin = () => {
           <h2 id="admin-tools" className="text-lg sm:text-xl font-semibold text-center">
             Business Administration & Management
           </h2>
-          <p className="text-sm text-muted-foreground max-w-3xl mx-auto text-center">
+          <p className="text-sm text-white max-w-3xl mx-auto text-center">
             Preview of upcoming tools to run and manage your electrical business efficiently.
           </p>
 
@@ -104,7 +104,7 @@ const BusinessAdmin = () => {
                     <CardTitle className="text-base sm:text-lg leading-tight mb-2">
                       {tool.title}
                     </CardTitle>
-                    <p className="text-xs text-muted-foreground">{tool.description}</p>
+                    <p className="text-xs text-white">{tool.description}</p>
                   </CardHeader>
                 </Card>
               </div>

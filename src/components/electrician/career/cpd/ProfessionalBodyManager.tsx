@@ -155,7 +155,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Professional Body Memberships</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Manage your professional body memberships and CPD requirements
           </p>
         </div>
@@ -183,12 +183,12 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
       {memberships.length === 0 ? (
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-8 text-center space-y-4">
-            <Award className="h-12 w-12 text-muted-foreground mx-auto" />
+            <Award className="h-12 w-12 text-white mx-auto" />
             <div>
               <h3 className="text-lg font-semibold text-foreground">
                 No Professional Body Memberships
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-white">
                 Add your professional body memberships to enable CPD tracking and compliance
                 monitoring
               </p>
@@ -258,14 +258,14 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                     {/* Membership Details */}
                     <div>
                       <div className="text-sm font-medium text-foreground">Membership Number</div>
-                      <div className="text-muted-foreground">
+                      <div className="text-white">
                         {membership.membership_number || 'Not provided'}
                       </div>
                     </div>
 
                     <div>
                       <div className="text-sm font-medium text-foreground">Registration Date</div>
-                      <div className="text-muted-foreground">
+                      <div className="text-white">
                         {membership.registration_date
                           ? formatDate(membership.registration_date)
                           : 'Not provided'}
@@ -275,7 +275,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                     <div>
                       <div className="text-sm font-medium text-foreground">Next Renewal</div>
                       <div
-                        className={`flex items-center space-x-2 ${renewalStatus?.color || 'text-muted-foreground'}`}
+                        className={`flex items-center space-x-2 ${renewalStatus?.color || 'text-white'}`}
                       >
                         {StatusIcon && <StatusIcon className="h-4 w-4" />}
                         <span>
@@ -292,7 +292,7 @@ const ProfessionalBodyManager: React.FC<ProfessionalBodyManagerProps> = ({ onClo
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="text-sm font-medium text-foreground">CPD Requirements</div>
-                        <div className="text-muted-foreground text-sm">
+                        <div className="text-white text-sm">
                           {membership.professional_body?.annual_cpd_hours} hours annually
                         </div>
                       </div>

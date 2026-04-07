@@ -71,7 +71,7 @@ import {
 
 const weatherIcons: Record<WeatherCondition, React.ReactNode> = {
   Clear: <Sun className="h-4 w-4 text-yellow-400" />,
-  Cloudy: <Cloud className="h-4 w-4 text-gray-400" />,
+  Cloudy: <Cloud className="h-4 w-4 text-white" />,
   'Partly Cloudy': <CloudSun className="h-4 w-4 text-blue-300" />,
   Rain: <CloudRain className="h-4 w-4 text-blue-400" />,
   'Heavy Rain': <CloudRain className="h-4 w-4 text-blue-600" />,

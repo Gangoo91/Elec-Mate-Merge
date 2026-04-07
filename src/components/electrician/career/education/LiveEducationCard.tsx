@@ -40,7 +40,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
     if (rate >= 95) return 'text-green-400';
     if (rate >= 90) return 'text-blue-400';
     if (rate >= 85) return 'text-amber-400';
-    return 'text-muted-foreground';
+    return 'text-white';
   };
 
   const getCategoryIcon = (category: string) => {
@@ -106,25 +106,25 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground line-clamp-3">{option.description}</p>
+        <p className="text-sm text-white line-clamp-3">{option.description}</p>
 
         {/* Key Metrics */}
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="flex items-center gap-1">
             <Star className="h-3 w-3 text-amber-400 fill-amber-400" />
             <span className="text-foreground font-medium">{option.rating}</span>
-            <span className="text-muted-foreground">rating</span>
+            <span className="text-white">rating</span>
           </div>
           <div className="flex items-center gap-1">
             <Users className={`h-3 w-3 ${getEmploymentStatusColor(option.employmentRate)}`} />
             <span className="text-foreground font-medium">{option.employmentRate}%</span>
-            <span className="text-muted-foreground">employed</span>
+            <span className="text-white">employed</span>
           </div>
         </div>
 
         {/* Duration and Study Mode */}
         <div className="flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1 text-muted-foreground">
+          <div className="flex items-center gap-1 text-white">
             <Clock className="h-3 w-3" />
             <span>{option.duration}</span>
           </div>
@@ -138,7 +138,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
 
         {/* Location */}
         {option.locations.length > 0 && (
-          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+          <div className="flex items-center gap-1 text-xs text-white">
             <MapPin className="h-3 w-3" />
             <span className="truncate">
               {option.locations.slice(0, 2).join(', ')}
@@ -164,7 +164,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
         {/* Key Topics Preview */}
         {option.keyTopics.length > 0 && (
           <div className="space-y-2">
-            <span className="text-xs font-medium text-muted-foreground">Key Topics:</span>
+            <span className="text-xs font-medium text-white">Key Topics:</span>
             <div className="flex flex-wrap gap-1">
               {option.keyTopics.slice(0, 3).map((topic, idx) => (
                 <Badge
@@ -178,7 +178,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
               {option.keyTopics.length > 3 && (
                 <Badge
                   variant="outline"
-                  className="bg-elec-dark/50 text-muted-foreground border-elec-yellow/20 text-xs"
+                  className="bg-elec-dark/50 text-white border-elec-yellow/20 text-xs"
                 >
                   +{option.keyTopics.length - 3} more
                 </Badge>
@@ -212,7 +212,7 @@ const LiveEducationCard = ({ option, onViewDetails }: LiveEducationCardProps) =>
         </div>
 
         {/* Live Data Indicator */}
-        <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-elec-yellow/10">
+        <div className="flex items-center justify-between text-xs text-white pt-2 border-t border-elec-yellow/10">
           <div className="flex items-center gap-1">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             <span>Live data</span>

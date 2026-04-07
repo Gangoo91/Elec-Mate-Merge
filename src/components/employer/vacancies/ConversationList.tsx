@@ -32,9 +32,9 @@ export function ConversationList({
     return (
       <Card className="bg-elec-gray border-border">
         <CardContent className="p-8 text-center">
-          <Inbox className="h-12 w-12 mx-auto text-white/60 mb-4" />
+          <Inbox className="h-12 w-12 mx-auto text-white mb-4" />
           <h3 className="font-semibold text-foreground mb-2">No Messages</h3>
-          <p className="text-sm text-white/60">{emptyMessage}</p>
+          <p className="text-sm text-white">{emptyMessage}</p>
         </CardContent>
       </Card>
     );

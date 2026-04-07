@@ -453,11 +453,11 @@ export default function PriceBook() {
                 <h1 className="text-base font-semibold text-white">Price Book</h1>
               </div>
               {tab === 'Items' && (
-                <Button variant="ghost" size="icon" onClick={() => setImportSheetOpen(true)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-9 w-9 touch-manipulation">
+                <Button variant="ghost" size="icon" onClick={() => setImportSheetOpen(true)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation">
                   <Upload className="h-4 w-4" />
                 </Button>
               )}
-              <Button onClick={() => (tab === 'Items' ? setAddSheetOpen(true) : setBundleSheetOpen(true))} size="sm" className="h-9 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold px-3">
+              <Button onClick={() => (tab === 'Items' ? setAddSheetOpen(true) : setBundleSheetOpen(true))} size="sm" className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold px-3">
                 <Plus className="h-4 w-4 sm:mr-1" />
                 <span className="hidden sm:inline">Add</span>
               </Button>
@@ -546,7 +546,7 @@ export default function PriceBook() {
               {/* Category pills */}
               <motion.div variants={itemVariants} className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
                 {CATEGORIES.map((cat) => (
-                  <button key={cat} onClick={() => setActiveCategory(cat)} className={cn('h-9 px-3.5 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-[0.97]', activeCategory === cat ? 'bg-elec-yellow text-black' : 'bg-white/[0.05] text-white border border-white/[0.08]')}>
+                  <button key={cat} onClick={() => setActiveCategory(cat)} className={cn('h-11 px-3.5 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-[0.97]', activeCategory === cat ? 'bg-elec-yellow text-black' : 'bg-white/[0.05] text-white border border-white/[0.08]')}>
                     {cat}
                   </button>
                 ))}
@@ -614,11 +614,11 @@ export default function PriceBook() {
 
                             {/* Actions */}
                             <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-white/[0.04]">
-                              <button onClick={() => handleAddToQuote(p.item.name, sellPrice, p.item.unit || 'each')} className="h-9 px-3 rounded-full flex items-center gap-1.5 text-xs font-medium text-elec-yellow active:bg-elec-yellow/5 touch-manipulation">
+                              <button onClick={() => handleAddToQuote(p.item.name, sellPrice, p.item.unit || 'each')} className="h-11 px-3 rounded-full flex items-center gap-1.5 text-xs font-medium text-elec-yellow active:bg-elec-yellow/5 touch-manipulation">
                                 <FileText className="h-3 w-3" />Add to Quote
                               </button>
                               <div className="flex items-center gap-1">
-                                <button onClick={() => openEditSheet(p)} className="h-9 px-3 rounded-full flex items-center gap-1.5 text-xs font-medium text-white active:bg-white/[0.05] touch-manipulation">
+                                <button onClick={() => openEditSheet(p)} className="h-11 px-3 rounded-full flex items-center gap-1.5 text-xs font-medium text-white active:bg-white/[0.05] touch-manipulation">
                                   <Pencil className="h-3 w-3" />Edit
                                 </button>
                               </div>
@@ -779,7 +779,7 @@ export default function PriceBook() {
                   </div>
                   Create Bundle
                 </SheetTitle>
-                <button onClick={resetBundleSheet} className="h-9 w-9 rounded-full flex items-center justify-center text-white active:bg-white/10 touch-manipulation"><X className="h-5 w-5" /></button>
+                <button onClick={resetBundleSheet} className="h-11 w-11 rounded-full flex items-center justify-center text-white active:bg-white/10 touch-manipulation"><X className="h-5 w-5" /></button>
               </div>
             </SheetHeader>
 

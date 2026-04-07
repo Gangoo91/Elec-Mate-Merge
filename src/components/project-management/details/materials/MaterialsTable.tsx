@@ -14,7 +14,7 @@ export const MaterialsTable = ({ materials, onDeleteMaterial }: MaterialsTablePr
   if (materials.length === 0) {
     return (
       <div className="text-center py-10">
-        <p className="text-muted-foreground">No materials added yet.</p>
+        <p className="text-white">No materials added yet.</p>
       </div>
     );
   }

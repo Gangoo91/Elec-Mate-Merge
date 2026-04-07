@@ -56,23 +56,23 @@ export function PhotoGalleryHeader({
           <div className="flex items-center justify-around w-full gap-4">
             <div className="text-center">
               <div className="text-lg font-bold text-foreground">{stats.total}</div>
-              <div className="text-[10px] text-white/60 uppercase tracking-wide">Total</div>
+              <div className="text-[10px] text-white uppercase tracking-wide">Total</div>
             </div>
             <div className="text-center">
               <div className="text-lg font-bold text-success">{stats.approved}</div>
-              <div className="text-[10px] text-white/60 uppercase tracking-wide">
+              <div className="text-[10px] text-white uppercase tracking-wide">
                 Approved
               </div>
             </div>
             <div className="text-center">
               <div className="text-lg font-bold text-info">{stats.shared}</div>
-              <div className="text-[10px] text-white/60 uppercase tracking-wide">
+              <div className="text-[10px] text-white uppercase tracking-wide">
                 Shared
               </div>
             </div>
             <div className="text-center">
               <div className="text-lg font-bold text-destructive">{stats.issues}</div>
-              <div className="text-[10px] text-white/60 uppercase tracking-wide">
+              <div className="text-[10px] text-white uppercase tracking-wide">
                 Issues
               </div>
             </div>
@@ -80,9 +80,9 @@ export function PhotoGalleryHeader({
         ) : (
           <div className="flex items-center gap-3 text-sm">
             <span className="flex items-center gap-1.5 text-foreground">
-              <Camera className="h-3.5 w-3.5 text-white/60" />
+              <Camera className="h-3.5 w-3.5 text-white" />
               <span className="font-medium">{stats.total}</span>
-              <span className="text-white/60">photos</span>
+              <span className="text-white">photos</span>
             </span>
             <span className="text-border">•</span>
             <span className="flex items-center gap-1 text-success">
@@ -101,9 +101,9 @@ export function PhotoGalleryHeader({
           </div>
         )}
         {statsExpanded ? (
-          <ChevronUp className="h-4 w-4 text-white/60 flex-shrink-0" />
+          <ChevronUp className="h-4 w-4 text-white flex-shrink-0" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-white/60 flex-shrink-0" />
+          <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
         )}
       </button>
 
@@ -111,7 +111,7 @@ export function PhotoGalleryHeader({
       <div className="flex items-center gap-2">
         <div className="relative flex-1">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             placeholder="Search photos..."

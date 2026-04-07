@@ -264,7 +264,7 @@ export function ApplyToVacancyDialog({
             </div>
             <div>
               <span className="block">Apply to Vacancy</span>
-              <span className="text-sm font-normal text-muted-foreground">
+              <span className="text-sm font-normal text-white">
                 Submit your application
               </span>
             </div>
@@ -285,7 +285,7 @@ export function ApplyToVacancyDialog({
                 </Avatar>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-foreground text-base">{vacancy.title}</p>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1.5 mt-0.5">
+                  <p className="text-sm text-white flex items-center gap-1.5 mt-0.5">
                     <Building2 className="h-4 w-4" />
                     {vacancy.employer?.company_name || 'Employer'}
                   </p>
@@ -312,8 +312,8 @@ export function ApplyToVacancyDialog({
           {/* Elec-ID Profile Preview */}
           {profileLoading ? (
             <div className="flex items-center gap-3 p-4 bg-muted rounded-xl">
-              <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-              <span className="text-sm text-muted-foreground">Loading your Elec-ID...</span>
+              <Loader2 className="h-5 w-5 animate-spin text-white" />
+              <span className="text-sm text-white">Loading your Elec-ID...</span>
             </div>
           ) : elecIdProfile ? (
             <div className="space-y-3">
@@ -367,7 +367,7 @@ export function ApplyToVacancyDialog({
                         {elecIdProfile.ecs_card_type && (
                           <div className="flex items-center gap-2 text-sm">
                             <CreditCard className="h-4 w-4 text-emerald-400" />
-                            <span className="text-muted-foreground">ECS Card:</span>
+                            <span className="text-white">ECS Card:</span>
                             <span className="text-foreground font-medium">
                               {elecIdProfile.ecs_card_type}
                             </span>
@@ -380,7 +380,7 @@ export function ApplyToVacancyDialog({
                             <div className="flex items-start gap-2 text-sm">
                               <Wrench className="h-4 w-4 text-emerald-400 mt-0.5" />
                               <div>
-                                <span className="text-muted-foreground">Specialisations:</span>
+                                <span className="text-white">Specialisations:</span>
                                 <div className="flex flex-wrap gap-1.5 mt-1.5">
                                   {elecIdProfile.specialisations.slice(0, 4).map((spec, i) => (
                                     <Badge key={i} variant="outline" className="text-xs h-6">
@@ -402,7 +402,7 @@ export function ApplyToVacancyDialog({
                           <div className="flex items-start gap-2 text-sm">
                             <Briefcase className="h-4 w-4 text-emerald-400 mt-0.5" />
                             <div>
-                              <span className="text-muted-foreground">Bio:</span>
+                              <span className="text-white">Bio:</span>
                               <p className="text-foreground line-clamp-2 mt-0.5">
                                 {elecIdProfile.bio}
                               </p>
@@ -412,7 +412,7 @@ export function ApplyToVacancyDialog({
 
                         {/* What's included */}
                         <div className="mt-2 pt-2 border-t border-emerald-500/10">
-                          <p className="text-xs text-muted-foreground mb-2">Also includes:</p>
+                          <p className="text-xs text-white mb-2">Also includes:</p>
                           <div className="flex flex-wrap gap-1.5">
                             <Badge variant="outline" className="text-xs h-6 bg-background/50">
                               <Award className="h-3 w-3 mr-1" />
@@ -440,7 +440,7 @@ export function ApplyToVacancyDialog({
                 <AlertCircle className="h-5 w-5 text-destructive shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-destructive">Elec-ID Required</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-sm text-white mt-1">
                     Please complete your Elec-ID profile before applying. Your profile helps
                     employers verify your credentials.
                   </p>
@@ -474,7 +474,7 @@ export function ApplyToVacancyDialog({
             {loadingCVs ? (
               <div className="flex items-center gap-2 p-3 bg-muted rounded-xl">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="text-sm text-muted-foreground">Loading your CVs...</span>
+                <span className="text-sm text-white">Loading your CVs...</span>
               </div>
             ) : userCVs.length > 0 ? (
               <Select value={selectedCvId} onValueChange={setSelectedCvId}>
@@ -493,7 +493,7 @@ export function ApplyToVacancyDialog({
                             Primary
                           </Badge>
                         )}
-                        <span className="text-xs text-muted-foreground ml-1">
+                        <span className="text-xs text-white ml-1">
                           ({cv.template_id})
                         </span>
                       </div>
@@ -503,7 +503,7 @@ export function ApplyToVacancyDialog({
               </Select>
             ) : (
               <div className="p-3 bg-muted/50 rounded-xl">
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   No CVs saved yet. Create one to attach to your application.
                 </p>
               </div>
@@ -553,7 +553,7 @@ export function ApplyToVacancyDialog({
               className="resize-none text-base touch-manipulation"
               disabled={isGeneratingCoverLetter}
             />
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               {elecIdProfile
                 ? 'Use AI to write a personalised cover letter based on your Elec-ID, or write your own.'
                 : 'A personalised cover letter can help you stand out from other applicants.'}
@@ -572,7 +572,7 @@ export function ApplyToVacancyDialog({
               <Label htmlFor="share-profile" className="text-sm font-medium">
                 Share my Elec-ID profile with the employer
               </Label>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white">
                 This includes your certifications, work history, and verification status.
               </p>
             </div>

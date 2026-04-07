@@ -72,7 +72,7 @@ const BusinessStructureTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -87,7 +87,7 @@ const BusinessStructureTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 The simplest and most popular business structure for individual electricians
                 starting their trade business in the UK.
               </div>
@@ -178,7 +178,7 @@ const BusinessStructureTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 A separate legal entity offering liability protection and tax efficiency for
                 established electricians with higher profits.
               </div>
@@ -259,7 +259,7 @@ const BusinessStructureTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Two or more electricians working together, sharing skills, costs, and
                 responsibilities in a flexible business arrangement.
               </div>
@@ -340,7 +340,7 @@ const BusinessStructureTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Use this comprehensive tool to evaluate which business structure best suits your
                 electrical contracting business needs.
               </div>
@@ -421,7 +421,7 @@ const BusinessStructureTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 A hybrid structure combining partnership flexibility with limited liability
                 protection - ideal for professional electrical partnerships.
               </div>
@@ -506,7 +506,7 @@ const BusinessStructureTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm text-white">
                 Comprehensive side-by-side comparison of all business structures to help UK
                 electricians make informed decisions.
               </div>

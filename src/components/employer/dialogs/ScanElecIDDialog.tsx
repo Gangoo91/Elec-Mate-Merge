@@ -266,7 +266,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                   <span className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-white/60">or</span>
+                  <span className="bg-background px-2 text-white">or</span>
                 </div>
               </div>
 
@@ -275,7 +275,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                 Simulate QR Scan
               </Button>
 
-              <p className="text-xs text-white/60 text-center">
+              <p className="text-xs text-white text-center">
                 In production, this would activate your device camera to scan a QR code
               </p>
             </div>
@@ -296,7 +296,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                 />
               </div>
               <div className="space-y-2">
-                <p className="text-sm text-white/60">Scanning for Elec-ID...</p>
+                <p className="text-sm text-white">Scanning for Elec-ID...</p>
                 <Progress value={scanProgress} className="h-2 w-48 mx-auto" />
               </div>
             </div>
@@ -319,7 +319,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                 <ShieldCheck className="h-16 w-16 text-elec-yellow animate-pulse" />
               </div>
               <div className="space-y-2">
-                <p className="text-sm text-white/60">Verifying credentials...</p>
+                <p className="text-sm text-white">Verifying credentials...</p>
                 <div className="flex justify-center gap-1">
                   {[0, 1, 2].map((i) => (
                     <div
@@ -341,7 +341,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
               </div>
               <div className="space-y-2">
                 <p className="text-sm font-medium text-destructive">Elec-ID Not Found</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   No profile found for "{elecIdInput}". Check the ID and try again.
                 </p>
               </div>
@@ -374,8 +374,8 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                           <ShieldCheck className="h-4 w-4 text-success flex-shrink-0" />
                         )}
                       </div>
-                      <p className="text-sm text-white/60">{result.employee?.role}</p>
-                      <p className="text-xs font-mono text-white/60 mt-1">
+                      <p className="text-sm text-white">{result.employee?.role}</p>
+                      <p className="text-xs font-mono text-white mt-1">
                         {result.elec_id_number}
                       </p>
                     </div>
@@ -396,7 +396,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                       <p className="font-medium text-foreground">
                         {statusConfig[overallStatus].label}
                       </p>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         {statusConfig[overallStatus].message}
                       </p>
                     </div>
@@ -419,7 +419,7 @@ export const ScanElecIDDialog = ({ open, onOpenChange }: ScanElecIDDialogProps) 
                       <span className="text-sm text-foreground">{cert.name}</span>
                       <div className="flex items-center gap-2">
                         {cert.expiryDate && (
-                          <span className="text-xs text-white/60 flex items-center gap-1">
+                          <span className="text-xs text-white flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
                             {new Date(cert.expiryDate).toLocaleDateString('en-GB')}
                           </span>

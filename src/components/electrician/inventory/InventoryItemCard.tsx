@@ -156,11 +156,11 @@ export const InventoryItemCard = memo(function InventoryItemCard({
               {isLowStock && <AlertTriangle className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />}
             </div>
             <div className="flex items-center gap-2 ml-4">
-              <span className="text-[11px] text-white/50 bg-white/[0.06] px-2 py-0.5 rounded-full flex items-center gap-1">
+              <span className="text-[11px] text-white bg-white/[0.06] px-2 py-0.5 rounded-full flex items-center gap-1">
                 <MapPin className="h-2.5 w-2.5" />
                 {location.label}
               </span>
-              <span className="text-[11px] text-white/50 bg-white/[0.06] px-2 py-0.5 rounded-full">
+              <span className="text-[11px] text-white bg-white/[0.06] px-2 py-0.5 rounded-full">
                 {category.label}
               </span>
               {item.supplier && (

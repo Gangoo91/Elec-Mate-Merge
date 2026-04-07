@@ -154,7 +154,7 @@ export const InvoicesDashboardCard = ({ invoices }: InvoicesDashboardCardProps) 
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground text-center py-4">No invoices require action</p>
+          <p className="text-white text-center py-4">No invoices require action</p>
         </CardContent>
       </Card>
     );
@@ -188,11 +188,11 @@ export const InvoicesDashboardCard = ({ invoices }: InvoicesDashboardCardProps) 
                     <div className="flex-shrink-0">{getStatusBadge(invoice)}</div>
                   </div>
                   <div className="space-y-1">
-                    <p className="mobile-text text-muted-foreground truncate min-w-0">
+                    <p className="mobile-text text-white truncate min-w-0">
                       Client: {invoice.client?.name || 'N/A'}
                     </p>
                     {invoice.invoice_due_date && (
-                      <p className="mobile-text text-sm text-muted-foreground truncate min-w-0">
+                      <p className="mobile-text text-sm text-white truncate min-w-0">
                         Due: {format(new Date(invoice.invoice_due_date), 'dd MMM yyyy')}
                       </p>
                     )}

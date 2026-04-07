@@ -306,7 +306,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                   ? 'bg-success/20 text-success'
                   : jobPack.status === 'In Progress'
                     ? 'bg-info/20 text-info'
-                    : 'bg-muted text-white/60'
+                    : 'bg-muted text-white'
               }`}
             >
               {jobPack.status}
@@ -428,21 +428,21 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
               </>
             ) : (
               <>
-                <div className="flex items-center gap-3 text-white/60">
+                <div className="flex items-center gap-3 text-white">
                   <MapPin className="h-5 w-5 shrink-0" />
                   <span>{jobPack.location}</span>
                 </div>
 
                 {jobPack.scope && (
                   <div className="space-y-2">
-                    <Label className="text-white/60">Scope of Works</Label>
+                    <Label className="text-white">Scope of Works</Label>
                     <p className="text-sm">{jobPack.scope}</p>
                   </div>
                 )}
 
                 {jobPack.hazards && jobPack.hazards.length > 0 && (
                   <div className="space-y-2">
-                    <Label className="text-white/60 flex items-center gap-2">
+                    <Label className="text-white flex items-center gap-2">
                       <AlertTriangle className="h-4 w-4 text-warning" />
                       Identified Hazards
                     </Label>
@@ -462,7 +462,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
 
                 {assignedEmployees.length > 0 && (
                   <div className="space-y-2">
-                    <Label className="text-white/60 flex items-center gap-2">
+                    <Label className="text-white flex items-center gap-2">
                       <Users className="h-4 w-4" />
                       Assigned Workers ({assignedEmployees.length})
                     </Label>
@@ -524,12 +524,12 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                         className={`p-2 rounded-lg ${jobPack.rams_generated ? 'bg-success/20' : 'bg-muted'}`}
                       >
                         <FileText
-                          className={`h-5 w-5 ${jobPack.rams_generated ? 'text-success' : 'text-white/60'}`}
+                          className={`h-5 w-5 ${jobPack.rams_generated ? 'text-success' : 'text-white'}`}
                         />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">RAMS</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Risk Assessment & Method Statement
                         </p>
                       </div>
@@ -575,12 +575,12 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                         className={`p-2 rounded-lg ${jobPack.method_statement_generated ? 'bg-success/20' : 'bg-muted'}`}
                       >
                         <ClipboardList
-                          className={`h-5 w-5 ${jobPack.method_statement_generated ? 'text-success' : 'text-white/60'}`}
+                          className={`h-5 w-5 ${jobPack.method_statement_generated ? 'text-success' : 'text-white'}`}
                         />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Method Statement</p>
-                        <p className="text-xs text-white/60">Step-by-step work procedure</p>
+                        <p className="text-xs text-white">Step-by-step work procedure</p>
                       </div>
                     </div>
                     {jobPack.method_statement_generated ? (
@@ -622,12 +622,12 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                         className={`p-2 rounded-lg ${jobPack.briefing_pack_generated ? 'bg-success/20' : 'bg-muted'}`}
                       >
                         <BookOpen
-                          className={`h-5 w-5 ${jobPack.briefing_pack_generated ? 'text-success' : 'text-white/60'}`}
+                          className={`h-5 w-5 ${jobPack.briefing_pack_generated ? 'text-success' : 'text-white'}`}
                         />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Briefing Pack</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Complete worker briefing document
                         </p>
                       </div>
@@ -662,7 +662,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                     )}
                   </div>
                   {!jobPack.rams_generated || !jobPack.method_statement_generated ? (
-                    <p className="text-xs text-white/60 mt-2">
+                    <p className="text-xs text-white mt-2">
                       Generate RAMS and Method Statement first
                     </p>
                   ) : null}
@@ -672,9 +672,9 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
               {/* Upload Area */}
               <Card className="border-dashed">
                 <CardContent className="p-6 text-center">
-                  <Upload className="h-8 w-8 mx-auto text-white/60 mb-2" />
+                  <Upload className="h-8 w-8 mx-auto text-white mb-2" />
                   <p className="text-sm font-medium text-foreground">Upload Additional Documents</p>
-                  <p className="text-xs text-white/60">Design drawings, specs, schedules</p>
+                  <p className="text-xs text-white">Design drawings, specs, schedules</p>
                   <Button variant="outline" className="mt-3 h-11 touch-manipulation">
                     Choose Files
                   </Button>
@@ -683,12 +683,12 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
 
               {documents.length > 0 && (
                 <div className="space-y-2">
-                  <Label className="text-white/60">Uploaded Documents</Label>
+                  <Label className="text-white">Uploaded Documents</Label>
                   {documents.map((doc) => (
                     <Card key={doc.id}>
                       <CardContent className="p-3 flex items-center justify-between">
                         <div className="flex items-center gap-2 min-w-0 flex-1">
-                          <FileText className="h-4 w-4 text-white/60 shrink-0" />
+                          <FileText className="h-4 w-4 text-white shrink-0" />
                           <span className="text-sm truncate">{doc.title}</span>
                         </div>
                         <Button
@@ -711,7 +711,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
             {jobPack.required_certifications && jobPack.required_certifications.length > 0 ? (
               <>
                 <div className="space-y-2">
-                  <Label className="text-white/60 flex items-center gap-2">
+                  <Label className="text-white flex items-center gap-2">
                     <Award className="h-4 w-4 text-info" />
                     Required Certifications
                   </Label>
@@ -748,7 +748,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                       value={certificationCompliance.percentage}
                       className={`h-2 ${certificationCompliance.percentage === 100 ? '[&>div]:bg-success' : '[&>div]:bg-warning'}`}
                     />
-                    <p className="text-xs text-white/60 mt-2">
+                    <p className="text-xs text-white mt-2">
                       {certificationCompliance.percentage === 100
                         ? 'All assigned workers have required certifications'
                         : `${certificationCompliance.total - certificationCompliance.compliant} worker(s) may be missing certifications`}
@@ -757,7 +757,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                 </Card>
 
                 <div className="space-y-2">
-                  <Label className="text-white/60">Worker Certification Status</Label>
+                  <Label className="text-white">Worker Certification Status</Label>
                   {assignedEmployees.map((emp) => {
                     const isCompliant = Math.random() > 0.3; // Simulated
                     return (
@@ -778,7 +778,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                             </div>
                             <div className="min-w-0">
                               <p className="text-sm font-medium truncate">{emp.name}</p>
-                              <p className="text-xs text-white/60 truncate">
+                              <p className="text-xs text-white truncate">
                                 {emp.team_role}
                               </p>
                             </div>
@@ -798,7 +798,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
             ) : (
               <div className="text-center py-8">
                 <Award className="h-12 w-12 mx-auto text-white mb-3" />
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   No certifications required for this job pack
                 </p>
                 <Button
@@ -885,7 +885,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                       <CheckCircle2 className="h-5 w-5 text-success" />
                       <div>
                         <p className="font-medium text-success">Pack Sent to Workers</p>
-                        <p className="text-xs text-white/60 truncate">
+                        <p className="text-xs text-white truncate">
                           {new Date(jobPack.sent_to_workers_at).toLocaleString('en-GB', {
                             dateStyle: 'medium',
                             timeStyle: 'short',
@@ -904,7 +904,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                 </Card>
 
                 <div className="space-y-2">
-                  <Label className="text-white/60">Acknowledgement Status</Label>
+                  <Label className="text-white">Acknowledgement Status</Label>
                   {assignedEmployees.map((emp) => {
                     const ack = acknowledgements.find((a) => a.employee_id === emp.id);
                     return (
@@ -914,12 +914,12 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                             {ack ? (
                               <CheckCircle2 className="h-4 w-4 text-success" />
                             ) : (
-                              <Clock className="h-4 w-4 text-white/60" />
+                              <Clock className="h-4 w-4 text-white" />
                             )}
                             <div className="min-w-0">
                               <p className="text-sm font-medium truncate">{emp.name}</p>
                               {ack && (
-                                <p className="text-xs text-white/60 truncate">
+                                <p className="text-xs text-white truncate">
                                   Acknowledged{' '}
                                   {new Date(ack.acknowledged_at).toLocaleString('en-GB', {
                                     dateStyle: 'medium',
@@ -954,7 +954,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                 <div className="text-center py-6">
                   <Send className="h-12 w-12 mx-auto text-elec-yellow/50 mb-3" />
                   <h3 className="font-semibold text-foreground mb-1">Ready to Distribute</h3>
-                  <p className="text-sm text-white/60">
+                  <p className="text-sm text-white">
                     Send this job pack to {assignedEmployees.length} assigned worker(s)
                   </p>
                 </div>
@@ -962,7 +962,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                 <Card>
                   <CardContent className="p-4 space-y-3">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Documents Ready</span>
+                      <span className="text-white">Documents Ready</span>
                       <span className="font-medium">
                         {
                           [
@@ -975,11 +975,11 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                       </span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Workers Assigned</span>
+                      <span className="text-white">Workers Assigned</span>
                       <span className="font-medium">{assignedEmployees.length}</span>
                     </div>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Certifications</span>
+                      <span className="text-white">Certifications</span>
                       <Badge
                         variant={
                           certificationCompliance.percentage === 100 ? 'secondary' : 'outline'
@@ -1011,7 +1011,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                 </Button>
 
                 {assignedEmployees.length === 0 && (
-                  <p className="text-xs text-center text-white/60">
+                  <p className="text-xs text-center text-white">
                     Assign workers before sending
                   </p>
                 )}

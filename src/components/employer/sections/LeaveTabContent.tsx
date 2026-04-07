@@ -49,7 +49,7 @@ import type { LeaveType, LeaveStatus } from '@/hooks/useEmployeeLeave';
 const LEAVE_TYPES: { value: LeaveType; label: string; colour: string }[] = [
   { value: 'annual', label: 'Annual Leave', colour: 'bg-elec-yellow/20 text-elec-yellow' },
   { value: 'sick', label: 'Sick Leave', colour: 'bg-destructive/20 text-destructive' },
-  { value: 'unpaid', label: 'Unpaid Leave', colour: 'bg-muted text-white/60' },
+  { value: 'unpaid', label: 'Unpaid Leave', colour: 'bg-muted text-white' },
   { value: 'compassionate', label: 'Compassionate', colour: 'bg-info/20 text-info' },
   { value: 'training', label: 'Training', colour: 'bg-warning/20 text-warning' },
   { value: 'bank_holiday', label: 'Bank Holiday', colour: 'bg-success/20 text-success' },
@@ -67,9 +67,9 @@ const getStatusColour = (status: LeaveStatus): string => {
     case 'rejected':
       return 'bg-destructive/20 text-destructive border-destructive/30';
     case 'cancelled':
-      return 'bg-muted text-white/60 border-muted';
+      return 'bg-muted text-white border-muted';
     default:
-      return 'bg-muted text-white/60';
+      return 'bg-muted text-white';
   }
 };
 
@@ -300,7 +300,7 @@ export function LeaveTabContent() {
                 </Select>
               )}
               <div className="ml-auto text-sm">
-                <span className="text-white/60">Total:</span>
+                <span className="text-white">Total:</span>
                 <span className="ml-1 font-semibold text-foreground">{calculateDays()} days</span>
               </div>
             </div>
@@ -335,7 +335,7 @@ export function LeaveTabContent() {
 
       {/* Holiday Allowance Cards */}
       <div className="space-y-3">
-        <h4 className="text-sm font-medium text-white/60">Holiday Allowances</h4>
+        <h4 className="text-sm font-medium text-white">Holiday Allowances</h4>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {holidayAllowances.slice(0, 4).map((ha) => {
             const employee = employees.find((e) => e.id === ha.employeeId);
@@ -354,13 +354,13 @@ export function LeaveTabContent() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-foreground truncate">{employee.name}</p>
-                      <p className="text-xs text-white/60">{employee.role}</p>
+                      <p className="text-xs text-white">{employee.role}</p>
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Used</span>
+                      <span className="text-white">Used</span>
                       <span className="font-medium text-foreground">
                         {ha.usedDays + ha.pendingDays} / {ha.totalDays + ha.carriedOver} days
                       </span>
@@ -374,7 +374,7 @@ export function LeaveTabContent() {
                         )}
                       </div>
                       {ha.carriedOver > 0 && (
-                        <span className="text-white/60">+{ha.carriedOver} carried</span>
+                        <span className="text-white">+{ha.carriedOver} carried</span>
                       )}
                     </div>
                   </div>
@@ -389,7 +389,7 @@ export function LeaveTabContent() {
       {pendingRequests.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center gap-2">
-            <h4 className="text-sm font-medium text-white/60">Pending Requests</h4>
+            <h4 className="text-sm font-medium text-white">Pending Requests</h4>
             <Badge variant="secondary" className="bg-warning/20 text-warning">
               {pendingRequests.length}
             </Badge>
@@ -409,14 +409,14 @@ export function LeaveTabContent() {
                         <p className="font-medium text-foreground">{lr.employeeName}</p>
                         <Badge className={cn('text-xs', typeInfo.colour)}>{typeInfo.label}</Badge>
                       </div>
-                      <p className="text-sm text-white/60 mb-2">
+                      <p className="text-sm text-white mb-2">
                         {format(parseISO(lr.startDate), 'd MMM')} -{' '}
                         {format(parseISO(lr.endDate), 'd MMM yyyy')}
                         <span className="mx-2">•</span>
                         {lr.totalDays} {lr.totalDays === 1 ? 'day' : 'days'}
                       </p>
                       {lr.reason && (
-                        <p className="text-sm text-white/60 italic mb-3">"{lr.reason}"</p>
+                        <p className="text-sm text-white italic mb-3">"{lr.reason}"</p>
                       )}
                       <div className="flex gap-2">
                         <Button
@@ -448,13 +448,13 @@ export function LeaveTabContent() {
 
       {/* All Requests List */}
       <div className="space-y-3">
-        <h4 className="text-sm font-medium text-white/60">All Requests</h4>
+        <h4 className="text-sm font-medium text-white">All Requests</h4>
         {leaveRequests.length === 0 ? (
           <Card className="bg-elec-gray border-border">
             <CardContent className="p-8 text-center">
-              <Palmtree className="h-12 w-12 text-white/60 mx-auto mb-3" />
+              <Palmtree className="h-12 w-12 text-white mx-auto mb-3" />
               <p className="text-foreground font-medium mb-1">No leave requests</p>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Use the button above to create a new request.
               </p>
             </CardContent>
@@ -483,7 +483,7 @@ export function LeaveTabContent() {
                           </p>
                           <Badge className={cn('text-xs', typeInfo.colour)}>{typeInfo.label}</Badge>
                         </div>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           {format(parseISO(lr.startDate), 'd MMM')} -{' '}
                           {format(parseISO(lr.endDate), 'd MMM')} • {lr.totalDays}d
                         </p>
@@ -502,7 +502,7 @@ export function LeaveTabContent() {
       {/* Team Calendar View */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-medium text-white/60">Team Calendar</h4>
+          <h4 className="text-sm font-medium text-white">Team Calendar</h4>
           <div className="flex items-center gap-1">
             <Button
               variant="ghost"
@@ -531,7 +531,7 @@ export function LeaveTabContent() {
             {/* Day headers */}
             <div className="grid grid-cols-7 gap-1 mb-1">
               {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
-                <div key={i} className="text-center text-xs text-white/60 py-1">
+                <div key={i} className="text-center text-xs text-white py-1">
                   {day}
                 </div>
               ))}
@@ -554,7 +554,7 @@ export function LeaveTabContent() {
                     key={day.toISOString()}
                     className={cn(
                       'aspect-square rounded-md flex flex-col items-center justify-center relative text-xs',
-                      isWeekendDay && 'bg-muted/30 text-white/60',
+                      isWeekendDay && 'bg-muted/30 text-white',
                       isToday && 'ring-2 ring-elec-yellow',
                       employeesOff.length > 0 && !isWeekendDay && 'bg-warning/10'
                     )}
@@ -574,7 +574,7 @@ export function LeaveTabContent() {
                           />
                         ))}
                         {employeesOff.length > 3 && (
-                          <span className="text-[8px] text-white/60">
+                          <span className="text-[8px] text-white">
                             +{employeesOff.length - 3}
                           </span>
                         )}
@@ -589,11 +589,11 @@ export function LeaveTabContent() {
             <div className="flex justify-center gap-4 mt-3 pt-2 border-t border-border">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-success" />
-                <span className="text-xs text-white/60">Approved</span>
+                <span className="text-xs text-white">Approved</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-warning" />
-                <span className="text-xs text-white/60">Pending</span>
+                <span className="text-xs text-white">Pending</span>
               </div>
             </div>
           </CardContent>

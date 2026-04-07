@@ -96,7 +96,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
         <div className="text-center py-12">
           <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
           <h3 className="text-lg font-medium mb-2">Error Loading Tools</h3>
-          <p className="text-muted-foreground">Unable to load tool data. Please try again later.</p>
+          <p className="text-white">Unable to load tool data. Please try again later.</p>
         </div>
       </div>
     );
@@ -113,7 +113,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
             </Button>
           </div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">{categoryName}</h1>
-          <p className="text-muted-foreground text-sm md:text-base">
+          <p className="text-white text-sm md:text-base">
             {isLoading ? 'Loading tools...' : `${categoryTools.length} tools available`}
           </p>
         </div>
@@ -121,7 +121,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
 
       <div className="relative max-w-md">
         {!searchTerm && (
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           placeholder={`Search ${categoryName.toLowerCase()}...`}
@@ -145,18 +145,18 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
         </div>
       ) : categoryTools.length === 0 ? (
         <div className="text-center py-12">
-          <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <Package className="h-12 w-12 text-white mx-auto mb-4" />
           <h3 className="text-lg font-medium mb-2">
             {searchTerm ? 'No matching tools found' : 'No tools available yet'}
           </h3>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             {searchTerm
               ? 'Try adjusting your search terms or browse all available tools.'
               : 'Tool data for this category is being populated. The system is now fetching tools from multiple suppliers.'}
           </p>
           {!searchTerm && allTools && allTools.length > 0 && (
             <div className="mt-4 p-4 bg-elec-gray/50 rounded-lg border">
-              <p className="text-sm text-muted-foreground mb-2">
+              <p className="text-sm text-white mb-2">
                 Available categories in database:
               </p>
               <div className="flex flex-wrap gap-2">
@@ -242,7 +242,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                 {tool.highlights && tool.highlights.length > 0 && (
                   <ul className="space-y-1.5 list-disc pl-4">
                     {tool.highlights.slice(0, 3).map((highlight, idx) => (
-                      <li key={idx} className="text-xs text-muted-foreground leading-relaxed">
+                      <li key={idx} className="text-xs text-white leading-relaxed">
                         {highlight}
                       </li>
                     ))}
@@ -255,7 +255,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                       {tool.salePrice ? (
                         <div className="flex items-center gap-2">
                           <span>{tool.salePrice}</span>
-                          <span className="text-sm text-muted-foreground line-through">
+                          <span className="text-sm text-white line-through">
                             {tool.price}
                           </span>
                         </div>
@@ -264,7 +264,7 @@ const ToolCategoryDisplay = ({ categoryName }: ToolCategoryDisplayProps) => {
                       )}
                     </div>
                     {tool.reviews && (
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1 text-xs text-white">
                         <Star className="h-3 w-3 fill-current text-yellow-500" />
                         {tool.reviews}
                       </div>

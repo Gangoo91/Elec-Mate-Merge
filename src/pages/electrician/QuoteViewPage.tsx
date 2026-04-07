@@ -473,9 +473,9 @@ const QuoteViewPage = () => {
           Back to Quotes
         </Button>
         <div className="text-center py-12 space-y-4">
-          <FileText className="h-16 w-16 mx-auto text-muted-foreground/30" />
+          <FileText className="h-16 w-16 mx-auto text-white/30" />
           <h2 className="text-2xl font-bold">Quote Not Found</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             The quote you're looking for doesn't exist or may have been deleted.
           </p>
           <Button onClick={() => navigate('/electrician/quotes')}>View All Quotes</Button>

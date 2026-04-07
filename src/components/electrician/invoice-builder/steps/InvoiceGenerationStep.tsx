@@ -155,22 +155,22 @@ export const InvoiceGenerationStep = ({
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold mb-2">Review & Generate Invoice</h2>
-        <p className="text-muted-foreground">
+        <p className="text-white">
           Review all invoice details before generating the final invoice.
         </p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-4">
         <Card className="p-4">
-          <div className="text-sm text-muted-foreground mb-1">Invoice Number</div>
+          <div className="text-sm text-white mb-1">Invoice Number</div>
           <div className="font-semibold text-lg">{invoice.invoice_number}</div>
         </Card>
         <Card className="p-4">
-          <div className="text-sm text-muted-foreground mb-1">Invoice Date</div>
+          <div className="text-sm text-white mb-1">Invoice Date</div>
           <div className="font-semibold text-lg">{formatDate(invoice.invoice_date)}</div>
         </Card>
         <Card className="p-4">
-          <div className="text-sm text-muted-foreground mb-1">Due Date</div>
+          <div className="text-sm text-white mb-1">Due Date</div>
           <div className="font-semibold text-lg">{formatDate(invoice.invoice_due_date)}</div>
         </Card>
       </div>
@@ -179,8 +179,8 @@ export const InvoiceGenerationStep = ({
         <h3 className="font-semibold mb-3">Client</h3>
         <div className="text-sm space-y-1">
           <div className="font-medium">{invoice.client?.name}</div>
-          <div className="text-muted-foreground">{invoice.client?.email}</div>
-          <div className="text-muted-foreground">
+          <div className="text-white">{invoice.client?.email}</div>
+          <div className="text-white">
             {invoice.client?.address}, {invoice.client?.postcode}
           </div>
         </div>
@@ -213,14 +213,14 @@ export const InvoiceGenerationStep = ({
           </div>
 
           {invoice.overhead !== undefined && invoice.overhead !== 0 && (
-            <div className="flex justify-between text-sm text-muted-foreground">
+            <div className="flex justify-between text-sm text-white">
               <span>Overhead ({invoice.settings?.overheadPercentage || 0}%):</span>
               <span>{formatCurrency(invoice.overhead)}</span>
             </div>
           )}
 
           {invoice.profit !== undefined && invoice.profit !== 0 && (
-            <div className="flex justify-between text-sm text-muted-foreground">
+            <div className="flex justify-between text-sm text-white">
               <span>Profit Margin ({invoice.settings?.profitMargin || 0}%):</span>
               <span>{formatCurrency(invoice.profit)}</span>
             </div>
@@ -244,21 +244,21 @@ export const InvoiceGenerationStep = ({
         <h3 className="font-semibold mb-3">Payment Information</h3>
         <div className="text-sm space-y-1">
           <div className="flex justify-between">
-            <span className="text-muted-foreground">Payment Terms:</span>
+            <span className="text-white">Payment Terms:</span>
             <span className="font-medium">{invoice.settings?.paymentTerms || 'N/A'}</span>
           </div>
           {invoice.settings?.bankDetails && (
             <>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Account Name:</span>
+                <span className="text-white">Account Name:</span>
                 <span className="font-medium">{invoice.settings.bankDetails.accountName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Account Number:</span>
+                <span className="text-white">Account Number:</span>
                 <span className="font-medium">{invoice.settings.bankDetails.accountNumber}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Sort Code:</span>
+                <span className="text-white">Sort Code:</span>
                 <span className="font-medium">{invoice.settings.bankDetails.sortCode}</span>
               </div>
             </>

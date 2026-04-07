@@ -216,7 +216,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                     </Badge>
                   </div>
                   <Progress value={progress} className="h-2" />
-                  <p className="text-sm text-white/60">{currentStep}</p>
+                  <p className="text-sm text-white">{currentStep}</p>
                 </div>
               </CardContent>
             </Card>
@@ -229,7 +229,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                   <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
                   <div>
                     <h3 className="font-medium text-foreground">Generation Failed</h3>
-                    <p className="text-sm text-white/60 mt-1">{error}</p>
+                    <p className="text-sm text-white mt-1">{error}</p>
                     <Button variant="outline" size="sm" className="mt-3" onClick={handleReset}>
                       <RefreshCw className="h-4 w-4 mr-2" />
                       Try Again
@@ -250,7 +250,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                     </div>
                     <div>
                       <h3 className="font-medium text-foreground">Method Statement Generated!</h3>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         Step-by-step procedures created
                       </p>
                     </div>
@@ -275,7 +275,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                   </div>
 
                   {selectedJobPackId && (
-                    <p className="text-xs text-white/60 text-center">
+                    <p className="text-xs text-white text-center">
                       ✓ Attached to Job Pack
                     </p>
                   )}
@@ -293,10 +293,10 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                   </div>
                   <div>
                     <h3 className="font-medium text-foreground mb-1">Method Statement Generator</h3>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Generate detailed installation procedures following BS 7671 standards.
                     </p>
-                    <ul className="mt-3 space-y-1 text-sm text-white/60">
+                    <ul className="mt-3 space-y-1 text-sm text-white">
                       <li>• 8-14 detailed installation steps</li>
                       <li>• Tools and materials per step</li>
                       <li>• Testing procedures with pass/fail criteria</li>

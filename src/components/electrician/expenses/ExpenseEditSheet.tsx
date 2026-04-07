@@ -130,7 +130,7 @@ const COLOUR_CLASSES: Record<string, { bg: string; text: string; border: string 
   },
   'gray-500': {
     bg: 'bg-gray-500/15 hover:bg-gray-500/25',
-    text: 'text-gray-400',
+    text: 'text-white',
     border: 'border-gray-500/30',
   },
 };
@@ -381,7 +381,7 @@ export function ExpenseEditSheet({
                         <CategoryIcon className={cn('h-5 w-5', colours.text)} />
                       </div>
                       <span className="font-medium text-foreground">{categoryConfig.label}</span>
-                      <ChevronLeft className="h-4 w-4 text-muted-foreground ml-auto rotate-180" />
+                      <ChevronLeft className="h-4 w-4 text-white ml-auto rotate-180" />
                     </button>
                   </div>
 
@@ -389,7 +389,7 @@ export function ExpenseEditSheet({
                   <div className="space-y-2">
                     <Label htmlFor="amount">Amount</Label>
                     <div className="flex items-center gap-2">
-                      <span className="text-2xl font-semibold text-muted-foreground">£</span>
+                      <span className="text-2xl font-semibold text-white">£</span>
                       <Input
                         id="amount"
                         type="number"
@@ -461,16 +461,16 @@ export function ExpenseEditSheet({
                           /* Loading state while resolving URL */
                           <div className="w-full h-40 flex flex-col items-center justify-center bg-white/[0.02]">
                             <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mb-2" />
-                            <p className="text-sm text-muted-foreground">Loading receipt...</p>
+                            <p className="text-sm text-white">Loading receipt...</p>
                           </div>
                         ) : receiptImageError || !receiptDisplayUrl ? (
                           /* Error state - image failed to load */
                           <div className="w-full h-40 flex flex-col items-center justify-center bg-white/[0.02]">
                             <AlertCircle className="h-8 w-8 text-amber-400 mb-2" />
-                            <p className="text-sm text-muted-foreground text-center px-4">
+                            <p className="text-sm text-white text-center px-4">
                               Receipt image unavailable
                             </p>
-                            <p className="text-xs text-muted-foreground/70 mt-1">
+                            <p className="text-xs text-white mt-1">
                               The image may have expired or been removed
                             </p>
                           </div>
@@ -530,11 +530,11 @@ export function ExpenseEditSheet({
                         className="w-full flex items-center gap-3 p-4 rounded-xl border border-dashed border-white/20 hover:border-elec-yellow/30 hover:bg-elec-yellow/5 touch-manipulation active:scale-[0.98] transition-all"
                       >
                         <div className="w-12 h-12 rounded-lg bg-white/[0.05] flex items-center justify-center">
-                          <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                          <ImageIcon className="h-6 w-6 text-white" />
                         </div>
                         <div className="text-left">
                           <p className="font-medium text-foreground">Add Receipt or Photo</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-sm text-white">
                             Attach an image of your receipt or invoice
                           </p>
                         </div>
@@ -546,7 +546,7 @@ export function ExpenseEditSheet({
                   <div className="space-y-2">
                     <Label htmlFor="vat">VAT Amount (optional)</Label>
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-medium text-muted-foreground">£</span>
+                      <span className="text-lg font-medium text-white">£</span>
                       <Input
                         id="vat"
                         type="number"
@@ -624,7 +624,7 @@ export function ExpenseEditSheet({
                   <div className="flex items-center justify-between py-2">
                     <div>
                       <Label>Tax Deductible</Label>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-white">
                         Include in tax deduction calculations
                       </p>
                     </div>
@@ -647,7 +647,7 @@ export function ExpenseEditSheet({
                   exit={{ opacity: 0, x: 20 }}
                   className="p-4 sm:p-6"
                 >
-                  <p className="text-base text-muted-foreground mb-6 text-center">
+                  <p className="text-base text-white mb-6 text-center">
                     Select a new category
                   </p>
                   <div className="space-y-2">
@@ -678,7 +678,7 @@ export function ExpenseEditSheet({
                           <div className="flex-1 text-left">
                             <span className="font-medium text-foreground">{category.label}</span>
                             {category.taxNote && (
-                              <span className="text-xs text-muted-foreground ml-2">
+                              <span className="text-xs text-white ml-2">
                                 ({category.taxNote})
                               </span>
                             )}
@@ -729,7 +729,7 @@ export function ExpenseEditSheet({
                       <div className="w-16 h-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mb-4">
                         <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
                       </div>
-                      <p className="text-muted-foreground">Uploading receipt...</p>
+                      <p className="text-white">Uploading receipt...</p>
                     </div>
                   ) : (
                     <>
@@ -744,7 +744,7 @@ export function ExpenseEditSheet({
                           </div>
                           <div className="text-left">
                             <p className="font-semibold text-foreground">Take Photo</p>
-                            <p className="text-sm text-muted-foreground">Use your camera</p>
+                            <p className="text-sm text-white">Use your camera</p>
                           </div>
                         </div>
                       </button>
@@ -760,7 +760,7 @@ export function ExpenseEditSheet({
                           </div>
                           <div className="text-left">
                             <p className="font-semibold text-foreground">Upload from Gallery</p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-white">
                               Choose an existing photo
                             </p>
                           </div>

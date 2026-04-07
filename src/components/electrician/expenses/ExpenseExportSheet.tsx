@@ -62,13 +62,13 @@ export function ExpenseExportSheet({
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Ready to Export</p>
+                  <p className="text-sm text-white">Ready to Export</p>
                   <p className="text-2xl font-bold text-elec-yellow">
                     {expenseCount} {expenseCount === 1 ? 'expense' : 'expenses'}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-muted-foreground">Total Value</p>
+                  <p className="text-sm text-white">Total Value</p>
                   <p className="text-xl font-semibold text-foreground">
                     £{stats.monthlyAmount.toFixed(2)}
                   </p>
@@ -78,7 +78,7 @@ export function ExpenseExportSheet({
 
             <div className="space-y-3">
               <Label className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <Calendar className="h-4 w-4 text-white" />
                 Date Range
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -140,7 +140,7 @@ export function ExpenseExportSheet({
 
             <div className="space-y-3">
               <Label className="flex items-center gap-2">
-                <FileSpreadsheet className="h-4 w-4 text-muted-foreground" />
+                <FileSpreadsheet className="h-4 w-4 text-white" />
                 CSV Format
               </Label>
               <div className="space-y-2">
@@ -160,14 +160,14 @@ export function ExpenseExportSheet({
                         'w-10 h-10 rounded-lg flex items-center justify-center text-lg font-bold',
                         selectedFormat === option.id
                           ? 'bg-elec-yellow/20 text-elec-yellow'
-                          : 'bg-white/[0.05] text-muted-foreground'
+                          : 'bg-white/[0.05] text-white'
                       )}
                     >
                       {option.name.charAt(0)}
                     </div>
                     <div className="flex-1 text-left">
                       <p className="font-medium text-foreground">{option.name}</p>
-                      <p className="text-xs text-muted-foreground">{option.description}</p>
+                      <p className="text-xs text-white">{option.description}</p>
                     </div>
                     {selectedFormat === option.id && <Check className="h-5 w-5 text-elec-yellow" />}
                   </button>

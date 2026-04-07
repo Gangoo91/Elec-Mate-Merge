@@ -26,11 +26,11 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
           <CardContent className="p-4">
             <div className="text-center space-y-2">
               <MapPin className="h-8 w-8 text-elec-yellow mx-auto" />
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Click on a course marker to view details
               </p>
               {userLocation && (
-                <p className="text-xs text-muted-foreground">Your location: {userLocation}</p>
+                <p className="text-xs text-white">Your location: {userLocation}</p>
               )}
             </div>
           </CardContent>
@@ -83,12 +83,12 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
               {selectedCourse.rating > 0 && (
                 <div className="flex items-center gap-1 shrink-0">
                   <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                  <span className="text-xs text-muted-foreground">{selectedCourse.rating}</span>
+                  <span className="text-xs text-white">{selectedCourse.rating}</span>
                 </div>
               )}
             </div>
 
-            <p className="text-xs text-muted-foreground">{selectedCourse.provider}</p>
+            <p className="text-xs text-white">{selectedCourse.provider}</p>
 
             <Badge
               variant="outline"
@@ -102,29 +102,29 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
           <div className="grid grid-cols-2 gap-3 text-xs">
             <div className="flex items-center gap-1">
               <Clock className="h-3 w-3 text-elec-yellow" />
-              <span className="text-muted-foreground">{selectedCourse.duration}</span>
+              <span className="text-white">{selectedCourse.duration}</span>
             </div>
 
             <div className="flex items-center gap-1">
               <PoundSterling className="h-3 w-3 text-elec-yellow" />
-              <span className="text-muted-foreground">{selectedCourse.price}</span>
+              <span className="text-white">{selectedCourse.price}</span>
             </div>
 
             <div className="flex items-center gap-1">
               <Users className="h-3 w-3 text-elec-yellow" />
-              <span className="text-muted-foreground">{selectedCourse.level}</span>
+              <span className="text-white">{selectedCourse.level}</span>
             </div>
 
             <div className="flex items-center gap-1">
               <MapPin className="h-3 w-3 text-elec-yellow" />
-              <span className="text-muted-foreground">{selectedCourse.format}</span>
+              <span className="text-white">{selectedCourse.format}</span>
             </div>
           </div>
 
           {/* Location Info */}
           {selectedCourse.locations && selectedCourse.locations.length > 0 && (
             <div className="text-xs">
-              <p className="text-muted-foreground">
+              <p className="text-white">
                 <MapPin className="h-3 w-3 inline mr-1" />
                 {selectedCourse.locations[0]}
                 {selectedCourse.locations.length > 1 && (
@@ -137,7 +137,7 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
           {/* Next Dates */}
           {selectedCourse.nextDates && selectedCourse.nextDates.length > 0 && (
             <div className="text-xs">
-              <p className="text-muted-foreground">Next start: {selectedCourse.nextDates[0]}</p>
+              <p className="text-white">Next start: {selectedCourse.nextDates[0]}</p>
             </div>
           )}
 
@@ -156,7 +156,7 @@ const CourseInfoOverlay: React.FC<CourseInfoOverlayProps> = ({
 
           {/* User Location Info */}
           {userLocation && (
-            <div className="text-xs text-muted-foreground pt-1 border-t border-border/50">
+            <div className="text-xs text-white pt-1 border-t border-border/50">
               Your location: {userLocation}
             </div>
           )}

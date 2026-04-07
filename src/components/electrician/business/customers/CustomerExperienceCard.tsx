@@ -32,7 +32,7 @@ const CustomerExperienceCard = () => {
                 <Heart className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                 <div>
                   <div className="font-semibold">Professional Communication Systems</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-white">
                     Building trust through clear, consistent communication
                   </div>
                 </div>
@@ -81,7 +81,7 @@ const CustomerExperienceCard = () => {
                 <Trophy className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                 <div>
                   <div className="font-semibold">Professional Service Standards</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-white">
                     Consistent excellence in every customer interaction
                   </div>
                 </div>
@@ -127,7 +127,7 @@ const CustomerExperienceCard = () => {
                 <Clock className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                 <div>
                   <div className="font-semibold">Systematic Follow-Up Processes</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-white">
                     Maintaining relationships beyond job completion
                   </div>
                 </div>
@@ -169,7 +169,7 @@ const CustomerExperienceCard = () => {
                 <Zap className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                 <div>
                   <div className="font-semibold">Value-Added Services</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-white">
                     Going beyond expectations to create memorable experiences
                   </div>
                 </div>
@@ -212,7 +212,7 @@ const CustomerExperienceCard = () => {
                 <Target className="h-5 w-5 text-elec-yellow flex-shrink-0" />
                 <div>
                   <div className="font-semibold">Customer Loyalty & Retention</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-white">
                     Building long-term relationships through structured programmes
                   </div>
                 </div>

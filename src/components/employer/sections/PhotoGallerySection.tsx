@@ -422,7 +422,7 @@ export function PhotoGallerySection() {
               {!isMobile && (
                 <CardContent className="p-2">
                   <p className="text-xs font-medium truncate text-foreground">{photo.jobTitle}</p>
-                  <p className="text-[10px] text-white/60 truncate">{photo.uploadedBy}</p>
+                  <p className="text-[10px] text-white truncate">{photo.uploadedBy}</p>
                 </CardContent>
               )}
             </Card>
@@ -466,8 +466,8 @@ export function PhotoGallerySection() {
                       {photo.category}
                     </Badge>
                   </div>
-                  <p className="text-xs text-white/60 truncate">{photo.notes}</p>
-                  <div className="flex items-center gap-3 mt-1 text-[10px] text-white/60">
+                  <p className="text-xs text-white truncate">{photo.notes}</p>
+                  <div className="flex items-center gap-3 mt-1 text-[10px] text-white">
                     <span className="flex items-center gap-1">
                       <User className="h-2.5 w-2.5" />
                       {photo.uploadedBy}
@@ -502,7 +502,7 @@ export function PhotoGallerySection() {
         <Card className="bg-elec-gray/50 border-border/30">
           <CardContent className="p-12 text-center">
             <Camera className="h-12 w-12 mx-auto text-white mb-4" />
-            <p className="text-white/60 font-medium">No photos found</p>
+            <p className="text-white font-medium">No photos found</p>
             <p className="text-xs text-white mt-1">Try adjusting your filters</p>
           </CardContent>
         </Card>

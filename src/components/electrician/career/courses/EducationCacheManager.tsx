@@ -125,7 +125,7 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
         {/* Cache Status */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Status</p>
+            <p className="text-sm text-white">Status</p>
             <Badge variant={getStatusColor()} className="flex items-center gap-1 w-fit">
               {getStatusIcon()}
               {cacheInfo?.refreshStatus || 'Unknown'}
@@ -133,17 +133,17 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
           </div>
 
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Version</p>
+            <p className="text-sm text-white">Version</p>
             <p className="font-medium">v{cacheInfo?.cacheVersion || 1}</p>
           </div>
 
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Next Refresh</p>
+            <p className="text-sm text-white">Next Refresh</p>
             <p className="font-medium">{formatNextRefresh()}</p>
           </div>
 
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Schedule</p>
+            <p className="text-sm text-white">Schedule</p>
             <p className="font-medium">Sunday 2 AM</p>
           </div>
         </div>
@@ -152,7 +152,7 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
         {cacheInfo && (
           <div className="space-y-2 p-3 bg-elec-gray/20 rounded-lg">
             <h4 className="font-medium text-sm">Cache Details</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-muted-foreground">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-white">
               <div>Next refresh: {new Date(cacheInfo.nextRefresh).toLocaleString()}</div>
               <div>Days until refresh: {cacheInfo.daysUntilRefresh}</div>
             </div>
@@ -173,7 +173,7 @@ const EducationCacheManager: React.FC<EducationCacheManagerProps> = ({
             {isRefreshing ? 'Refreshing...' : 'Refresh Cache Now'}
           </Button>
 
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-white">
             Manually refresh the cache to fetch the latest course data. This process may take a few
             minutes.
           </p>

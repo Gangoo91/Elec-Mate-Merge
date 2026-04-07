@@ -102,7 +102,7 @@ const EnhancedSafetyAlertsCard = () => {
       case 'low':
         return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
       default:
-        return 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+        return 'bg-gray-500/20 text-white border-gray-500/30';
     }
   };
 
@@ -146,7 +146,7 @@ const EnhancedSafetyAlertsCard = () => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-foreground">Enhanced Safety Alerts</h2>
-          <p className="text-muted-foreground">
+          <p className="text-white">
             Interactive safety alerts with ratings, bookmarks, and real-time tracking
           </p>
         </div>
@@ -162,7 +162,7 @@ const EnhancedSafetyAlertsCard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
               {!searchQuery && (
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground pointer-events-none" />
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search alerts..."
@@ -216,17 +216,17 @@ const EnhancedSafetyAlertsCard = () => {
                     </Badge>
                     <div className="flex items-center gap-1">
                       {renderStars(alert.rating)}
-                      <span className="text-xs text-muted-foreground ml-1">({alert.rating})</span>
+                      <span className="text-xs text-white ml-1">({alert.rating})</span>
                     </div>
                   </div>
                   <CardTitle className="text-foreground text-lg mb-2">{alert.title}</CardTitle>
-                  <p className="text-gray-300 text-sm mb-3">{alert.description}</p>
+                  <p className="text-white text-sm mb-3">{alert.description}</p>
                 </div>
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={() => toggleBookmark(alert.id)}
-                  className={alert.bookmarked ? 'text-elec-yellow' : 'text-gray-400'}
+                  className={alert.bookmarked ? 'text-elec-yellow' : 'text-white'}
                 >
                   <Bookmark className={`h-4 w-4 ${alert.bookmarked ? 'fill-current' : ''}`} />
                 </Button>
@@ -235,7 +235,7 @@ const EnhancedSafetyAlertsCard = () => {
 
             <CardContent className="pt-0">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-4 text-sm text-white">
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
                     <span>{alert.location}</span>
@@ -249,7 +249,7 @@ const EnhancedSafetyAlertsCard = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-4 text-sm text-white">
                   <div className="flex items-center gap-1">
                     <Eye className="h-4 w-4" />
                     <span>{alert.views.toLocaleString()}</span>
@@ -258,7 +258,7 @@ const EnhancedSafetyAlertsCard = () => {
                     size="sm"
                     variant="ghost"
                     onClick={() => handleLike(alert.id)}
-                    className="flex items-center gap-1 text-muted-foreground hover:text-elec-yellow"
+                    className="flex items-center gap-1 text-white hover:text-elec-yellow"
                   >
                     <ThumbsUp className="h-4 w-4" />
                     <span>{alert.likes}</span>
@@ -275,7 +275,7 @@ const EnhancedSafetyAlertsCard = () => {
       </div>
 
       {filteredAlerts.length === 0 && (
-        <div className="text-center py-8 text-muted-foreground">
+        <div className="text-center py-8 text-white">
           No alerts found matching your search criteria.
         </div>
       )}

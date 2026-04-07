@@ -22,7 +22,7 @@ const OverviewCard = ({ title, value, description, icon, isMobile }: OverviewCar
       </CardHeader>
       <CardContent className="pt-0 p-2 sm:p-2.5 md:p-3.5 text-left">
         <div className="text-sm sm:text-base md:text-lg font-bold mb-1">{value}</div>
-        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{description}</p>
+        <p className="text-xs md:text-sm text-white leading-relaxed">{description}</p>
       </CardContent>
     </Card>
   );

@@ -47,7 +47,7 @@ const tierConfig: Record<
 > = {
   basic: {
     label: 'Basic',
-    color: 'text-white/60',
+    color: 'text-white',
     bg: 'bg-muted',
     border: 'border-border/50',
   },
@@ -143,7 +143,7 @@ export function TalentProfileCard({
               {isInLabourBank && <Zap className="h-3.5 w-3.5 text-success shrink-0" />}
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-white/60 mt-0.5">
+            <div className="flex items-center gap-2 text-sm text-white mt-0.5">
               <div className="flex items-center gap-1">
                 <Star className="h-3 w-3 text-warning fill-warning" />
                 <span className="font-medium text-foreground">{rating.toFixed(1)}</span>
@@ -164,7 +164,7 @@ export function TalentProfileCard({
                 {tier.label}
               </Badge>
               {verifiedDocsCount > 0 && (
-                <span className="text-xs text-white/60 flex items-center gap-1">
+                <span className="text-xs text-white flex items-center gap-1">
                   <FileCheck className="h-3 w-3" />
                   {verifiedDocsCount} verified
                 </span>
@@ -185,7 +185,7 @@ export function TalentProfileCard({
             ) : (
               <p className="font-bold text-foreground text-lg">£{dayRate}</p>
             )}
-            <p className="text-xs text-white/60">/day</p>
+            <p className="text-xs text-white">/day</p>
           </div>
         </div>
 

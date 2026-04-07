@@ -526,7 +526,7 @@ const ProtectionTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -551,7 +551,7 @@ const ProtectionTab = () => {
                       {strategy.title}
                     </h4>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {strategy.description}
                   </p>
                 </div>
@@ -600,7 +600,7 @@ const ProtectionTab = () => {
                       {option.coverage}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {option.description}
                   </p>
                 </div>
@@ -652,7 +652,7 @@ const ProtectionTab = () => {
                   >
                     {practice.practice}
                   </h4>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {practice.description}
                   </p>
                 </div>
@@ -755,7 +755,7 @@ const ProtectionTab = () => {
                       {tech.roi}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {tech.description}
                   </p>
                 </div>
@@ -861,7 +861,7 @@ const ProtectionTab = () => {
                   >
                     {system.system}
                   </h4>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {system.description}
                   </p>
                 </div>
@@ -957,7 +957,7 @@ const ProtectionTab = () => {
                   >
                     {strategy.strategy}
                   </h4>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {strategy.description}
                   </p>
                 </div>
@@ -1029,7 +1029,7 @@ const ProtectionTab = () => {
                       {strategy.expectedROI}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {strategy.description}
                   </p>
                   <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-orange-300 italic`}>

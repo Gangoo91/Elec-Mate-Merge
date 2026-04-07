@@ -395,7 +395,7 @@ const CourseMap: React.FC<CourseMapProps> = ({
             <div className="text-lg font-medium text-foreground mb-2">
               No training providers found
             </div>
-            <div className="text-sm text-muted-foreground mb-4">
+            <div className="text-sm text-white mb-4">
               {userLocation
                 ? `No electrical training providers found within ${searchRadius} miles of ${userLocation}. Try increasing the search radius or searching a different area.`
                 : 'Set your location and search for nearby electrical training providers using the search button above.'}

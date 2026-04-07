@@ -166,7 +166,7 @@ export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheet
                 </div>
                 <div>
                   <SheetTitle className="text-left">Daily Vehicle Check</SheetTitle>
-                  <p className="text-xs text-white/60 mt-0.5">
+                  <p className="text-xs text-white mt-0.5">
                     {vehicle.registration} - {vehicle.make} {vehicle.model}
                   </p>
                 </div>
@@ -190,7 +190,7 @@ export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheet
                 'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
                 viewMode === 'check'
                   ? 'text-green-400 border-b-2 border-green-400'
-                  : 'text-white/60'
+                  : 'text-white'
               )}
             >
               New Check
@@ -201,7 +201,7 @@ export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheet
                 'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
                 viewMode === 'history'
                   ? 'text-green-400 border-b-2 border-green-400'
-                  : 'text-white/60'
+                  : 'text-white'
               )}
             >
               History ({checks.length})
@@ -394,8 +394,8 @@ export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheet
               <div className="p-4">
                 {checks.length === 0 ? (
                   <div className="text-center py-12">
-                    <History className="h-16 w-16 text-white/60 mx-auto mb-4 opacity-50" />
-                    <p className="text-sm text-white/60">No checks recorded yet</p>
+                    <History className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
+                    <p className="text-sm text-white">No checks recorded yet</p>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -420,7 +420,7 @@ export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheet
                                 month: 'short',
                               })}
                             </p>
-                            <p className="text-sm text-white/60">
+                            <p className="text-sm text-white">
                               {check.check_time?.slice(0, 5)}
                               {check.driver?.name && ` • ${check.driver.name}`}
                             </p>
@@ -429,7 +429,7 @@ export function DailyCheckSheet({ open, onOpenChange, vehicle }: DailyCheckSheet
                         </div>
 
                         {check.mileage && (
-                          <p className="text-sm text-white/60 mb-1">
+                          <p className="text-sm text-white mb-1">
                             Mileage: {check.mileage.toLocaleString()}
                           </p>
                         )}

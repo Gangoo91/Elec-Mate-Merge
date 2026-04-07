@@ -57,7 +57,7 @@ export const SmartDateInput: React.FC<SmartDateInputProps> = ({
             variant="outline"
             className={cn(
               'w-full h-14 justify-start text-left font-normal bg-elec-grey border-primary/30 hover:border-elec-yellow/40',
-              !value && 'text-muted-foreground'
+              !value && 'text-white'
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />

@@ -141,7 +141,7 @@ export function ExpenseDetailSheet({
             {/* Amount Card */}
             <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
               <div className="text-center">
-                <p className="text-sm text-white/60 mb-1">Amount</p>
+                <p className="text-sm text-white mb-1">Amount</p>
                 <p className="text-3xl font-bold text-foreground">
                   {formatCurrency(Number(expense.amount))}
                 </p>
@@ -158,7 +158,7 @@ export function ExpenseDetailSheet({
                 </Avatar>
                 <div>
                   <p className="font-semibold">{expense.employees?.name || 'Unknown'}</p>
-                  <p className="text-sm text-white/60">Submitted expense</p>
+                  <p className="text-sm text-white">Submitted expense</p>
                 </div>
               </div>
             </Card>
@@ -167,13 +167,13 @@ export function ExpenseDetailSheet({
             <Card className="p-4 space-y-4">
               {/* Description */}
               <div>
-                <Label className="text-xs text-white/60">Description</Label>
+                <Label className="text-xs text-white">Description</Label>
                 <p className="mt-1 text-sm">{expense.description}</p>
               </div>
 
               {/* Category */}
               <div className="flex items-center justify-between py-2 border-t border-border/50">
-                <span className="text-sm text-white/60">Category</span>
+                <span className="text-sm text-white">Category</span>
                 <Badge variant="outline" className="gap-1">
                   <CategoryIcon className="h-3 w-3" />
                   {expense.category}
@@ -182,7 +182,7 @@ export function ExpenseDetailSheet({
 
               {/* Submitted Date */}
               <div className="flex items-center justify-between py-2 border-t border-border/50">
-                <span className="text-sm text-white/60">Submitted</span>
+                <span className="text-sm text-white">Submitted</span>
                 <span className="text-sm font-medium flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   {format(new Date(expense.submitted_date), 'dd MMM yyyy')}
@@ -192,7 +192,7 @@ export function ExpenseDetailSheet({
               {/* Job Link */}
               {expense.job_id && (
                 <div className="flex items-center justify-between py-2 border-t border-border/50">
-                  <span className="text-sm text-white/60">Linked Job</span>
+                  <span className="text-sm text-white">Linked Job</span>
                   <Button variant="link" size="sm" className="h-auto p-0 gap-1">
                     <Briefcase className="h-3 w-3" />
                     View Job
@@ -203,14 +203,14 @@ export function ExpenseDetailSheet({
 
               {/* Receipt */}
               <div className="flex items-center justify-between py-2 border-t border-border/50">
-                <span className="text-sm text-white/60">Receipt</span>
+                <span className="text-sm text-white">Receipt</span>
                 {expense.receipt_url ? (
                   <Button variant="outline" size="sm" className="gap-1">
                     <Receipt className="h-3 w-3" />
                     View Receipt
                   </Button>
                 ) : (
-                  <span className="text-sm text-white/60">Not attached</span>
+                  <span className="text-sm text-white">Not attached</span>
                 )}
               </div>
             </Card>
@@ -218,7 +218,7 @@ export function ExpenseDetailSheet({
             {/* Approval Timeline */}
             {(expense.approved_by || expense.paid_date) && (
               <Card className="p-4">
-                <Label className="text-xs text-white/60 mb-3 block">Timeline</Label>
+                <Label className="text-xs text-white mb-3 block">Timeline</Label>
                 <div className="space-y-3">
                   {expense.approved_date && (
                     <div className="flex items-start gap-3">
@@ -238,7 +238,7 @@ export function ExpenseDetailSheet({
                         <p className="text-sm font-medium">
                           {isRejected ? 'Rejected' : 'Approved'} by {expense.approved_by}
                         </p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           {format(new Date(expense.approved_date), 'dd MMM yyyy, HH:mm')}
                         </p>
                       </div>
@@ -251,7 +251,7 @@ export function ExpenseDetailSheet({
                       </div>
                       <div>
                         <p className="text-sm font-medium">Marked as paid</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           {format(new Date(expense.paid_date), 'dd MMM yyyy')}
                         </p>
                       </div>
@@ -268,7 +268,7 @@ export function ExpenseDetailSheet({
                   <AlertCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-medium text-red-500">Rejection Reason</p>
-                    <p className="text-sm text-white/60 mt-1">{expense.rejection_reason}</p>
+                    <p className="text-sm text-white mt-1">{expense.rejection_reason}</p>
                   </div>
                 </div>
               </Card>

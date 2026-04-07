@@ -107,7 +107,7 @@ const statusConfig: Record<
 const tierConfig = {
   basic: {
     bg: 'bg-gray-500/10',
-    text: 'text-gray-400',
+    text: 'text-white',
     border: 'border-gray-500/30',
     icon: Shield,
   },

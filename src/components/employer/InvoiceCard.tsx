@@ -25,7 +25,7 @@ const getStatusConfig = (status: string, isOverdue: boolean) => {
     {
       Draft: {
         icon: <FileText className="h-3.5 w-3.5" />,
-        className: 'bg-muted text-white/60 border-transparent',
+        className: 'bg-muted text-white border-transparent',
         borderClass: 'border-l-muted-foreground/50',
       },
       Pending: {
@@ -146,7 +146,7 @@ export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: Invo
 
           {/* Invoice Number */}
           <div className="mb-2">
-            <span className="inline-block font-mono text-[11px] text-white/60 bg-muted/60 px-2 py-1 rounded-md">
+            <span className="inline-block font-mono text-[11px] text-white bg-muted/60 px-2 py-1 rounded-md">
               {invoice.invoice_number}
             </span>
           </div>
@@ -157,13 +157,13 @@ export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: Invo
               {invoice.client}
             </h3>
             {invoice.project && (
-              <p className="text-sm text-white/60 line-clamp-1">{invoice.project}</p>
+              <p className="text-sm text-white line-clamp-1">{invoice.project}</p>
             )}
           </div>
 
           {/* Footer - Due/Paid Info */}
           <div className="flex items-center justify-between pt-3 border-t border-border/40">
-            <div className="flex items-center gap-4 text-sm text-white/60">
+            <div className="flex items-center gap-4 text-sm text-white">
               {invoice.paid_date ? (
                 <span className="flex items-center gap-1.5 text-success font-medium">
                   <CheckCircle className="h-3.5 w-3.5" />

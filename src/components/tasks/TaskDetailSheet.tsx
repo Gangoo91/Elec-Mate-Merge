@@ -271,7 +271,7 @@ export function TaskDetailSheet({
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <p className="text-[13px] font-semibold text-white">
-                    Photos {photos.length > 0 && <span className="text-white/50 font-normal">({photos.length})</span>}
+                    Photos {photos.length > 0 && <span className="text-white font-normal">({photos.length})</span>}
                   </p>
                   {/* Upload buttons */}
                   <div className="flex items-center gap-2">

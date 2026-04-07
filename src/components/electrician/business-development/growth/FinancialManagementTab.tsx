@@ -409,7 +409,7 @@ export const FinancialManagementTab = () => {
               <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-foreground`}>
                 {metric.metric}
               </div>
-              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 {metric.data}
               </div>
             </div>
@@ -451,7 +451,7 @@ export const FinancialManagementTab = () => {
                       {system.timeline}
                     </Badge>
                   </div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                     {system.description}
                   </p>
                 </div>
@@ -460,19 +460,19 @@ export const FinancialManagementTab = () => {
                   className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}
                 >
                   <div className="flex items-center gap-2">
-                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                    <DollarSign className="h-4 w-4 text-white" />
                     <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                       {system.investment}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                    <TrendingUp className="h-4 w-4 text-white" />
                     <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                       {system.roi}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-muted-foreground" />
+                    <Shield className="h-4 w-4 text-white" />
                     <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-foreground`}>
                       {system.riskLevel}
                     </span>
@@ -489,7 +489,7 @@ export const FinancialManagementTab = () => {
                     {system.components.map((component, compIndex) => (
                       <li
                         key={compIndex}
-                        className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                        className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                       >
                         <CheckCircle
                           className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-green-400 mt-0.5 shrink-0`}
@@ -518,7 +518,7 @@ export const FinancialManagementTab = () => {
                           {phase.tasks.map((task, taskIndex) => (
                             <li
                               key={taskIndex}
-                              className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                              className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                             >
                               <Target
                                 className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-elec-yellow mt-0.5 shrink-0`}
@@ -542,7 +542,7 @@ export const FinancialManagementTab = () => {
                     {system.ukSpecific2025.map((consideration, considerationIndex) => (
                       <li
                         key={considerationIndex}
-                        className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                        className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                       >
                         <MapPin
                           className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-yellow-400 mt-0.5 shrink-0`}
@@ -566,7 +566,7 @@ export const FinancialManagementTab = () => {
               <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>
                 Industry Financial Benchmarks
               </h4>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Key financial performance indicators for electrical contracting businesses
               </p>
 
@@ -582,7 +582,7 @@ export const FinancialManagementTab = () => {
                       {category.benchmarks.map((benchmark, bIndex) => (
                         <div key={bIndex} className="flex justify-between items-center">
                           <span
-                            className={`text-muted-foreground ${isMobile ? 'text-xs' : 'text-sm'}`}
+                            className={`text-white ${isMobile ? 'text-xs' : 'text-sm'}`}
                           >
                             {benchmark.metric}
                           </span>
@@ -608,7 +608,7 @@ export const FinancialManagementTab = () => {
               <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>
                 Strategic Financial Growth
               </h4>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Financial strategies to drive sustainable business growth and profitability
               </p>
 
@@ -620,7 +620,7 @@ export const FinancialManagementTab = () => {
                     >
                       {strategy.title}
                     </h5>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                       {strategy.description}
                     </p>
 
@@ -634,7 +634,7 @@ export const FinancialManagementTab = () => {
                         {strategy.advantages.map((advantage, advIndex) => (
                           <li
                             key={advIndex}
-                            className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                            className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                           >
                             <CheckCircle
                               className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-green-400 mt-0.5 shrink-0`}
@@ -671,7 +671,7 @@ export const FinancialManagementTab = () => {
               <h4 className={`font-medium text-foreground ${isMobile ? 'text-sm' : 'text-base'}`}>
                 Risk Management Framework
               </h4>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+              <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
                 Comprehensive approach to identifying and managing financial risks in electrical
                 contracting
               </p>
@@ -688,7 +688,7 @@ export const FinancialManagementTab = () => {
                       {category.risks.map((risk, riskIndex) => (
                         <li
                           key={riskIndex}
-                          className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}
+                          className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-white`}
                         >
                           <AlertCircle
                             className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-red-400 mt-0.5 shrink-0`}
