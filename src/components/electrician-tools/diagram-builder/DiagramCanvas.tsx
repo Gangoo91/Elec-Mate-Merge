@@ -79,7 +79,7 @@ const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null })
 
 // Scale: 52px = 1 metre
 const SCALE = 52;
-const WALL_THICKNESS = 8;
+const WALL_THICKNESS = 3;
 const SNAP_DISTANCE = 10; // px for wall endpoint snapping
 const AXIS_SNAP_DEGREES = 10; // snap to horizontal/vertical within this angle
 
@@ -385,8 +385,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               const group = util.groupSVGElements(validObjects, {
                 left: symbolX,
                 top: symbolY,
-                scaleX: 1,
-                scaleY: 1,
+                scaleX: 1.2,
+                scaleY: 1.2,
                 selectable: true,
                 hasControls: false,
                 lockScalingX: true,
@@ -686,6 +686,14 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           renderedObjectIds.current.add(obj.id);
         }
         if (newObjects.length > 0 || toRemove.length > 0) {
+          // Bring symbols and circuit dots above walls
+          const allObjs = canvas.getObjects();
+          allObjs.forEach((fObj) => {
+            const cd = (fObj as any).customData;
+            if (cd?.type === 'symbol' || cd?.type === 'circuit-dot' || cd?.type === 'cable') {
+              canvas.bringObjectToFront(fObj);
+            }
+          });
           canvas.renderAll();
         }
       };
@@ -865,8 +873,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             fabricObj = util.groupSVGElements(validObjects, {
               left: obj.x,
               top: obj.y,
-              scaleX: 1,
-              scaleY: 1,
+              scaleX: 1.2,
+              scaleY: 1.2,
               angle: obj.rotation || 0,
               selectable: true,
               hasControls: false,
@@ -1351,9 +1359,20 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               }
 
               if (bestDist < 40) {
-                placeX = bestPoint.x;
-                placeY = bestPoint.y;
-                // Rotate symbol to be perpendicular to wall
+                // Offset symbol 12px away from wall (into the room)
+                const wallAngleRad = bestAngle * (Math.PI / 180);
+                const offsetDist = 2;
+                // Perpendicular offset — pick the side closer to where user tapped
+                const perpX = -Math.sin(wallAngleRad) * offsetDist;
+                const perpY = Math.cos(wallAngleRad) * offsetDist;
+                // Choose which side of the wall based on original tap position
+                const tapDx = x - bestPoint.x;
+                const tapDy = y - bestPoint.y;
+                const dotProduct = tapDx * perpX + tapDy * perpY;
+                const sign = dotProduct >= 0 ? 1 : -1;
+
+                placeX = bestPoint.x + perpX * sign;
+                placeY = bestPoint.y + perpY * sign;
                 placeRotation = bestAngle + 90;
               }
             }
@@ -1661,7 +1680,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             // Symbols are fixed size — only save position and rotation
             if (customData.type === 'symbol') {
               // Reset any accidental scaling back to 1:1
-              modifiedObj.set({ scaleX: 1, scaleY: 1 });
+              modifiedObj.set({ scaleX: 1.2, scaleY: 1.2 });
               return {
                 ...obj,
                 x: modifiedObj.left || obj.x,
@@ -1719,7 +1738,13 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         }
 
         if (bestDist < 40) {
-          movingObj.set({ left: bestPoint.x, top: bestPoint.y, angle: bestAngle });
+          // Offset 12px from wall into the room
+          const wallRad = bestAngle * (Math.PI / 180);
+          const px = -Math.sin(wallRad) * 2;
+          const py = Math.cos(wallRad) * 2;
+          const dot = (movingObj.left - bestPoint.x) * px + (movingObj.top - bestPoint.y) * py;
+          const s = dot >= 0 ? 1 : -1;
+          movingObj.set({ left: bestPoint.x + px * s, top: bestPoint.y + py * s, angle: bestAngle });
         }
       };
 

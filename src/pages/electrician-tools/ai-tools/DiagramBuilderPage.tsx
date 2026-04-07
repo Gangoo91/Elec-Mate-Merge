@@ -572,22 +572,7 @@ const DiagramBuilderPage = () => {
         </div>
 
         <div className="flex items-center gap-1.5">
-          {/* Rotate selected */}
-          <button
-            onClick={() => { canvasRef.current?.handleRotate?.(); haptic.light(); }}
-            className="h-8 w-8 rounded-lg bg-white/[0.08] border border-white/[0.1] flex items-center justify-center touch-manipulation active:scale-95"
-          >
-            <RotateCw className="h-3.5 w-3.5 text-white/70" />
-          </button>
-          {/* Delete selected */}
-          <button
-            onClick={() => { canvasRef.current?.deleteSelected?.(); haptic.heavy(); }}
-            className="h-8 w-8 rounded-lg bg-white/[0.08] border border-white/[0.1] flex items-center justify-center touch-manipulation active:scale-95"
-          >
-            <Trash2 className="h-3.5 w-3.5 text-white/70" />
-          </button>
-
-          {/* Done / Save Room button */}
+          {/* Save Room — primary action */}
           <Button
             onClick={() => {
               if (canvasObjects.length === 0) {
@@ -597,31 +582,31 @@ const DiagramBuilderPage = () => {
               haptic.light();
               setSaveSheetOpen(true);
             }}
-            className="h-9 px-4 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-sm font-bold touch-manipulation rounded-lg"
+            className="h-9 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-bold touch-manipulation rounded-lg"
           >
             <Save className="h-3.5 w-3.5 mr-1" />
-            Save Room
+            Save
           </Button>
 
-          {/* Export PDF button — visible in header */}
+          {/* Export — visible when rooms saved */}
           {rooms.length > 0 && (
             <Button
               onClick={() => {
                 if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
-                  toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
+                  toast({ title: 'Save this room first', description: 'Tap Save before exporting' });
                   return;
                 }
                 setExportReviewOpen(true);
               }}
               variant="ghost"
-              className="h-9 px-3 text-white hover:bg-white/10 text-sm font-medium touch-manipulation rounded-lg"
+              className="h-9 px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
             >
               <Download className="h-3.5 w-3.5 mr-1" />
-              Export
+              PDF
             </Button>
           )}
 
-          {/* Overflow menu */}
+          {/* Overflow menu — rotate, delete, and other options */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -634,30 +619,18 @@ const DiagramBuilderPage = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-elec-card border-white/10 min-w-[180px]">
               <DropdownMenuItem
-                onClick={() => {
-                  if (rooms.length === 0 && canvasObjects.length === 0) {
-                    toast({ title: 'Nothing to export', description: 'Save at least one room first' });
-                    return;
-                  }
-                  // If current canvas has unsaved work, prompt to save first
-                  if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
-                    toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
-                    return;
-                  }
-                  setExportReviewOpen(true);
-                }}
-                className="text-white hover:bg-white/10 touch-manipulation"
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Export PDF
-              </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-white/10" />
-              <DropdownMenuItem
-                onClick={handleRotateAll}
+                onClick={() => { canvasRef.current?.handleRotate?.(); haptic.light(); }}
                 className="text-white hover:bg-white/10 touch-manipulation"
               >
                 <RotateCw className="h-4 w-4 mr-2" />
-                Rotate 90°
+                Rotate Selected
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => { canvasRef.current?.deleteSelected?.(); haptic.heavy(); }}
+                className="text-white hover:bg-white/10 touch-manipulation"
+              >
+                <Trash2 className="h-4 w-4 mr-2" />
+                Delete Selected
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-white/10" />
 
@@ -855,18 +828,28 @@ const DiagramBuilderPage = () => {
         onSymbolSelect={(symbolId, quantity) => {
           if (quantity > 1) {
             // Multi-place: add symbols in a grid pattern near canvas centre
-            // Use actual canvas dimensions for centre
-            const canvasEl = canvasRef.current?.getCanvasElement();
-            const centreX = canvasEl ? canvasEl.width / 2 : window.innerWidth / 2;
-            const centreY = canvasEl ? canvasEl.height / 2 : (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
+            // Use viewport-aware centre (account for zoom/pan)
+            const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
+            let centreX = window.innerWidth / 2;
+            let centreY = (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
+            if (fabricCanvas) {
+              const vpt = fabricCanvas.viewportTransform;
+              const zoom = fabricCanvas.getZoom();
+              if (vpt) {
+                // Convert screen centre to canvas coordinates
+                centreX = (centreX - vpt[4]) / zoom;
+                centreY = (centreY - vpt[5]) / zoom;
+              }
+            }
             const cols = Math.min(quantity, 4);
             const spacing = 60;
+            const ts = Date.now();
             const newObjects: CanvasObject[] = [];
             for (let i = 0; i < quantity; i++) {
               const col = i % cols;
               const row = Math.floor(i / cols);
               newObjects.push({
-                id: `obj-${Date.now()}-${i}`,
+                id: `obj-${ts}-${i}`,
                 type: 'symbol' as const,
                 x: centreX + col * spacing - ((cols - 1) * spacing) / 2,
                 y: centreY + row * spacing,
