@@ -177,8 +177,7 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
 
         return JSON.parse(cleanedContent);
       },
-      3,
-      2000
+      { maxAttempts: 3, backoff: [1000, 2000, 4000] }
     );
 
     console.log('✅ Room parsed:', JSON.stringify(result, null, 2));

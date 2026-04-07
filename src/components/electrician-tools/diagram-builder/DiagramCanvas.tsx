@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/button';
 // Minimap component — renders a small overview of the canvas
 const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null }) => {
   const minimapRef = useRef<HTMLCanvasElement>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (!minimapRef.current || !fabricCanvas) return;
@@ -54,11 +53,18 @@ const MinimapOverlay = ({ fabricCanvas }: { fabricCanvas: FabricCanvas | null })
       }
     };
 
-    intervalRef.current = setInterval(update, 1000);
+    // Event-driven updates instead of polling
+    fabricCanvas.on('after:render', update);
+    fabricCanvas.on('object:modified', update);
+    fabricCanvas.on('object:added', update);
+    fabricCanvas.on('object:removed', update);
     update();
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      fabricCanvas.off('after:render', update);
+      fabricCanvas.off('object:modified', update);
+      fabricCanvas.off('object:added', update);
+      fabricCanvas.off('object:removed', update);
     };
   }, [fabricCanvas]);
 
@@ -106,6 +112,8 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const redoStack = useRef<CanvasObject[][]>([]);
     // Dimension tool needs two clicks — track first click
     const [dimensionStart, setDimensionStart] = useState<{ x: number; y: number } | null>(null);
+    // Cable tool — click symbol A then symbol B to draw cable route
+    const [cableStartId, setCableStartId] = useState<string | null>(null);
     const [zoomLevel, setZoomLevel] = useState(1);
     // Flag to prevent grid redraw from clearing AI-rendered content
     const aiRenderActiveRef = useRef(false);
@@ -196,6 +204,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       getCanvasElement: (): HTMLCanvasElement | null => {
         return canvasRef.current;
       },
+      getFabricCanvas: () => fabricCanvasRef.current,
       undo,
       redo,
       zoomToFit,
@@ -376,9 +385,12 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
               const group = util.groupSVGElements(validObjects, {
                 left: symbolX,
                 top: symbolY,
-                scaleX: 1.5,
-                scaleY: 1.5,
+                scaleX: 1,
+                scaleY: 1,
                 selectable: true,
+                hasControls: false,
+                lockScalingX: true,
+                lockScalingY: true,
                 originX: 'center',
                 originY: 'center',
               });
@@ -440,6 +452,54 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         canvas.add(scaleLabel);
 
         canvas.renderAll();
+
+        // Sync AI-generated objects to React state so "Done" can save them
+        const newCanvasObjects: any[] = [];
+
+        // Add walls as CanvasObjects
+        let wx = offsetX, wy = offsetY;
+        walls.forEach((wall: any, idx: number) => {
+          const length = wall.length * scale;
+          let ex = wx, ey = wy;
+          if (wall.id === 'north') ex = wx + length;
+          else if (wall.id === 'east') ey = wy + length;
+          else if (wall.id === 'south') ex = wx - length;
+          else if (wall.id === 'west') ey = wy - length;
+
+          newCanvasObjects.push({
+            id: `ai-wall-${idx}-${Date.now()}`,
+            type: 'wall',
+            x: wx, y: wy,
+            points: [{ x: wx, y: wy }, { x: ex, y: ey }],
+          });
+          wx = ex; wy = ey;
+        });
+
+        // Add symbols as CanvasObjects
+        symbols.forEach((symbol: any, idx: number) => {
+          const symbolId = symbol.type.replace(/-bs7671$/, '');
+          let sx = offsetX + 20, sy = offsetY + 20;
+          if (symbol.position === 'center') {
+            sx = offsetX + roomWidth / 2; sy = offsetY + roomHeight / 2;
+          } else if (symbol.wall) {
+            const pos = (symbol.position || 0) * scale;
+            if (symbol.wall === 'north') { sx = offsetX + pos; sy = offsetY + WALL_THICKNESS + SYMBOL_INSET; }
+            else if (symbol.wall === 'south') { sx = offsetX + pos; sy = offsetY + roomHeight - WALL_THICKNESS - SYMBOL_INSET - 20; }
+            else if (symbol.wall === 'east') { sx = offsetX + roomWidth - WALL_THICKNESS - SYMBOL_INSET - 20; sy = offsetY + pos; }
+            else if (symbol.wall === 'west') { sx = offsetX + WALL_THICKNESS + SYMBOL_INSET; sy = offsetY + pos; }
+          }
+          newCanvasObjects.push({
+            id: `ai-sym-${idx}-${Date.now()}`,
+            type: 'symbol',
+            x: sx, y: sy,
+            width: 40, height: 40,
+            rotation: 0,
+            symbolId,
+          });
+        });
+
+        onObjectsChange(newCanvasObjects);
+        aiRenderActiveRef.current = false;
 
         // Auto-zoom to fit the generated room on screen
         setTimeout(() => zoomToFit(), 100);
@@ -805,13 +865,14 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
             fabricObj = util.groupSVGElements(validObjects, {
               left: obj.x,
               top: obj.y,
-              scaleX: (obj.width || 40) / 40,
-              scaleY: (obj.height || 40) / 40,
+              scaleX: 1,
+              scaleY: 1,
               angle: obj.rotation || 0,
               selectable: true,
               hasControls: false,
               lockScalingX: true,
               lockScalingY: true,
+              lockRotation: true,
               originX: 'center',
               originY: 'center',
             });
@@ -942,6 +1003,27 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         canvas.add(label);
 
         return; // Already added manually
+      } else if (obj.type === 'cable' && obj.points && obj.points.length >= 2) {
+        // Cable route — dashed line in circuit colour
+        const p1 = obj.points[0];
+        const p2 = obj.points[1];
+        const COLOURS: Record<string, string> = {
+          L1: '#3B82F6', L2: '#60A5FA', S1: '#EF4444', S2: '#F87171',
+          C1: '#F59E0B', EV1: '#10B981', FA1: '#EC4899', IH1: '#8B5CF6', AC1: '#06B6D4',
+        };
+        const cableColour = COLOURS[obj.circuitRef || ''] || '#6B7280';
+
+        const cableLine = new Line([p1.x, p1.y, p2.x, p2.y], {
+          stroke: cableColour,
+          strokeWidth: 2,
+          strokeDashArray: [6, 4],
+          selectable: true,
+          hasControls: false,
+          evented: true,
+        });
+        (cableLine as any).customData = { id: obj.id, type: 'cable' };
+        canvas.add(cableLine);
+        return;
       } else if (obj.type === 'dimension' && obj.points && obj.points.length >= 2) {
         const p1 = obj.points[0];
         const p2 = obj.points[1];
@@ -1052,11 +1134,10 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       return () => window.removeEventListener('keydown', handleKeyDown);
     }, [objects]);
 
-    // Clear dimension start when tool changes away from dimension
+    // Clear dimension/cable start when tool changes
     useEffect(() => {
-      if (activeTool !== 'dimension') {
-        setDimensionStart(null);
-      }
+      if (activeTool !== 'dimension') setDimensionStart(null);
+      if (activeTool !== 'cable') setCableStartId(null);
     }, [activeTool]);
 
     // Handle mouse events for drawing
@@ -1120,9 +1201,52 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
           return;
         }
 
-        // Always allow tapping existing objects to select them (except in eraser mode)
+        // Cable tool — click on symbol to start/end a cable route
+        if (activeTool === 'cable' && e.target && (e.target as any).customData?.type === 'symbol') {
+          const targetData = (e.target as any).customData;
+          const targetObj = objects.find((o) => o.id === targetData.id);
+          if (!targetObj) return;
+
+          if (!cableStartId) {
+            // First click — set cable start
+            setCableStartId(targetData.id);
+            canvas.setActiveObject(e.target);
+            canvas.renderAll();
+          } else if (cableStartId !== targetData.id) {
+            // Second click — draw cable between the two symbols
+            saveState();
+            const startObj = objects.find((o) => o.id === cableStartId);
+            if (startObj) {
+              // Determine circuit colour from either symbol's circuitRef
+              const circuitRef = startObj.circuitRef || targetObj.circuitRef || 'S1';
+              const COLOURS: Record<string, string> = {
+                L1: '#3B82F6', L2: '#60A5FA', S1: '#EF4444', S2: '#F87171',
+                C1: '#F59E0B', EV1: '#10B981', FA1: '#EC4899', IH1: '#8B5CF6', AC1: '#06B6D4',
+              };
+
+              const newCable: CanvasObject = {
+                id: `cable-${Date.now()}`,
+                type: 'cable',
+                x: startObj.x,
+                y: startObj.y,
+                points: [
+                  { x: startObj.x, y: startObj.y },
+                  { x: targetObj.x, y: targetObj.y },
+                ],
+                circuitRef,
+              };
+              onObjectsChange([...objects, newCable]);
+            }
+            setCableStartId(null);
+            canvas.discardActiveObject();
+            canvas.renderAll();
+          }
+          return;
+        }
+
+        // Always allow tapping existing objects to select them (except in eraser/cable mode)
         // Fixes ELE-611: wall-draw cursor stays active when clicking placed symbols
-        if (activeTool !== 'eraser' && activeTool !== 'select' && e.target && (e.target as any).customData) {
+        if (activeTool !== 'eraser' && activeTool !== 'select' && activeTool !== 'cable' && e.target && (e.target as any).customData) {
           canvas.setActiveObject(e.target);
           canvas.renderAll();
           onToolChange?.('select');
@@ -1517,8 +1641,34 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
 
         saveState();
 
+        // Move circuit colour dots to follow the symbol
+        if (customData.type === 'symbol') {
+          const dots = canvas.getObjects().filter(
+            (o) => (o as any).customData?.type === 'circuit-dot' &&
+                   (o as any).customData?.parentId === customData.id
+          );
+          dots.forEach((dot) => {
+            dot.set({
+              left: (modifiedObj.left || 0) + 16,
+              top: (modifiedObj.top || 0) - 16,
+            });
+          });
+          if (dots.length > 0) canvas.renderAll();
+        }
+
         const updatedObjects = objects.map((obj) => {
           if (obj.id === customData.id) {
+            // Symbols are fixed size — only save position and rotation
+            if (customData.type === 'symbol') {
+              // Reset any accidental scaling back to 1:1
+              modifiedObj.set({ scaleX: 1, scaleY: 1 });
+              return {
+                ...obj,
+                x: modifiedObj.left || obj.x,
+                y: modifiedObj.top || obj.y,
+                rotation: modifiedObj.angle || obj.rotation || 0,
+              };
+            }
             return {
               ...obj,
               x: modifiedObj.left || obj.x,
@@ -1534,8 +1684,51 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
         onObjectsChange(updatedObjects);
       };
 
+      // Wall snap while dragging wall-mount symbols
+      const handleObjectMoving = (e: any) => {
+        const movingObj = e.target;
+        const customData = (movingObj as any).customData;
+        if (!customData || customData.type !== 'symbol') return;
+
+        const sym = symbolRegistry.find((s) => s.id === customData.symbolId);
+        if (!sym || (sym.mountType !== 'wall' && sym.mountType !== 'panel')) return;
+
+        const wallObjects = objects.filter((o) => o.type === 'wall' && o.points && o.points.length >= 2);
+        let bestDist = 40;
+        let bestPoint = { x: movingObj.left, y: movingObj.top };
+        let bestAngle = movingObj.angle || 0;
+
+        for (const wall of wallObjects) {
+          const p1 = wall.points![0];
+          const p2 = wall.points![1];
+          const dx = p2.x - p1.x;
+          const dy = p2.y - p1.y;
+          const lenSq = dx * dx + dy * dy;
+          if (lenSq === 0) continue;
+          let t = ((movingObj.left - p1.x) * dx + (movingObj.top - p1.y) * dy) / lenSq;
+          t = Math.max(0, Math.min(1, t));
+          const projX = p1.x + t * dx;
+          const projY = p1.y + t * dy;
+          const dist = Math.hypot(movingObj.left - projX, movingObj.top - projY);
+
+          if (dist < bestDist) {
+            bestDist = dist;
+            bestPoint = { x: projX, y: projY };
+            bestAngle = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+          }
+        }
+
+        if (bestDist < 40) {
+          movingObj.set({ left: bestPoint.x, top: bestPoint.y, angle: bestAngle });
+        }
+      };
+
       canvas.on('object:modified', handleObjectModified);
-      return () => { canvas.off('object:modified', handleObjectModified); };
+      canvas.on('object:moving', handleObjectMoving);
+      return () => {
+        canvas.off('object:modified', handleObjectModified);
+        canvas.off('object:moving', handleObjectMoving);
+      };
     }, [objects]);
 
     // Rotate selected object 90° or rotate all if nothing selected

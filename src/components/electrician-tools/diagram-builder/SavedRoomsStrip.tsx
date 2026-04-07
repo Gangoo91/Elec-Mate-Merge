@@ -42,7 +42,7 @@ export const SavedRoomsStrip = ({
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <span className="text-[10px] text-white/40">No preview</span>
+                  <span className="text-[10px] text-white">No preview</span>
                 </div>
               )}
             </div>

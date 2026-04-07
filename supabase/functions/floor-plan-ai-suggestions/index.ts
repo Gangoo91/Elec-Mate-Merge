@@ -44,7 +44,7 @@ serve(async (req) => {
     const { data: regulations } = await supabaseAdmin
       .from('regulations_intelligence')
       .select('regulation_number, category, primary_topic')
-      .or(keywords.map(k => `keywords.cs.{${k}}`).join(','))
+      .or(keywords.map(k => `primary_topic.ilike.%${k}%`).join(','))
       .limit(10);
 
     // Get practical work guidance

@@ -117,7 +117,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
             {cloudSyncing ? (
               <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
             ) : (
-              <Cloud className="h-4 w-4 text-white/30" />
+              <Cloud className="h-4 w-4 text-white" />
             )}
           </SheetTitle>
         </SheetHeader>
@@ -156,7 +156,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
           {/* Saved plans list */}
           {plans.length === 0 ? (
             <div className="text-center py-8">
-              <FileText className="h-10 w-10 text-white/20 mx-auto mb-3" />
+              <FileText className="h-10 w-10 text-white mx-auto mb-3" />
               <p className="text-white text-sm">No saved floor plans</p>
               <p className="text-white/60 text-xs mt-1">Save your current work to access it later</p>
             </div>
@@ -172,7 +172,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
                     <img src={plan.rooms[0].thumbnail} alt="" className="w-full h-full object-cover" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <FileText className="h-4 w-4 text-white/20" />
+                      <FileText className="h-4 w-4 text-white" />
                     </div>
                   )}
                 </div>

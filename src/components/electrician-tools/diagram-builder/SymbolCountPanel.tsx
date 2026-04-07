@@ -29,7 +29,7 @@ export const SymbolCountPanel = ({ counts, circuits }: SymbolCountPanelProps) =>
       {/* Pill toggle */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-between px-3 py-1.5 touch-manipulation"
+        className="w-full flex items-center justify-between px-3 py-2.5 touch-manipulation h-11"
       >
         <span className="text-white text-xs font-medium">{totalItems} item{totalItems !== 1 ? 's' : ''}</span>
         {expanded ? (

@@ -26,6 +26,7 @@ import {
   HardHat,
   Trash2,
   X,
+  LayoutGrid,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -114,7 +115,8 @@ type LinkType =
   | 'rams'
   | 'siteVisit'
   | 'circuitDesign'
-  | 'costEstimate';
+  | 'costEstimate'
+  | 'floorPlan';
 
 const ProjectDetailPage = () => {
   const navigate = useNavigate();
@@ -129,6 +131,7 @@ const ProjectDetailPage = () => {
     siteVisits,
     circuitDesigns,
     costEstimates,
+    floorPlans,
     isLoading,
     progress,
     totalTasks,
@@ -150,6 +153,8 @@ const ProjectDetailPage = () => {
     fetchUnlinkedSiteVisits,
     fetchUnlinkedCircuitDesigns,
     fetchUnlinkedCostEstimates,
+    linkFloorPlan,
+    fetchUnlinkedFloorPlans,
     completeProject,
     deleteProject,
     refresh,
@@ -398,6 +403,13 @@ const ProjectDetailPage = () => {
       link: linkCostEstimate,
       createLabel: 'New cost estimate',
       createUrl: '/electrician-tools/cost-engineer',
+    },
+    floorPlan: {
+      title: 'Link Floor Plan',
+      fetch: fetchUnlinkedFloorPlans,
+      link: linkFloorPlan,
+      createLabel: 'Create new floor plan',
+      createUrl: '/electrician-tools/room-planner',
     },
   };
 
@@ -1266,6 +1278,80 @@ const ProjectDetailPage = () => {
                         {ce.query || 'Cost Estimate'}
                       </p>
                       <p className="text-[11px] text-white capitalize">{ce.status}</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                  </button>
+                ))
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── Floor Plans Section ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible
+            open={openSections.has('floorPlan')}
+            onOpenChange={() => toggleSection('floorPlan')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+                <div className="flex items-center gap-3">
+                  <LayoutGrid className="h-5 w-5 text-cyan-400" />
+                  <span className="text-[15px] font-bold text-white">Floor Plans</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {floorPlans.length > 0 && (
+                    <span className="text-[12px] font-bold text-white bg-white/10 px-2.5 py-0.5 rounded-full">
+                      {floorPlans.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setLinkType('floorPlan');
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow"
+                  >
+                    + Link
+                  </span>
+                  {openSections.has('floorPlan') ? (
+                    <ChevronUp className="h-4 w-4 text-white" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2 space-y-2">
+              {floorPlans.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <p className="text-sm text-white mb-3">
+                    Link an existing floor plan or create a new one
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setLinkType('floorPlan')}
+                    className="h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-elec-yellow touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    + Link Floor Plan
+                  </button>
+                </div>
+              ) : (
+                floorPlans.map((fp) => (
+                  <button
+                    key={fp.id}
+                    type="button"
+                    onClick={() => navigate('/electrician-tools/room-planner')}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
+                  >
+                    <div className="min-w-0 text-left">
+                      <p className="text-sm font-medium text-white truncate">
+                        {fp.name || 'Floor Plan'}
+                      </p>
+                      <p className="text-[11px] text-white">
+                        {fp.total_items} items — {fp.status}
+                      </p>
                     </div>
                     <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                   </button>

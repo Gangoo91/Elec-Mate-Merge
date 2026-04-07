@@ -26,7 +26,7 @@ const SymbolPreview = ({ symbolId }: { symbolId: string }) => {
     if (!svgHtml) {
       loadSymbolSvg(symbolId).then(setSvgHtml);
     }
-  }, [symbolId, svgHtml]);
+  }, [symbolId]);
 
   if (!svgHtml) return <div className="w-10 h-10 rounded bg-white/5" />;
 
@@ -125,13 +125,13 @@ export const SymbolLibrary = ({
                 }}
                 className="w-full h-11 bg-elec-dark border border-white/10 rounded-md px-3 flex items-center gap-2 touch-manipulation"
               >
-                <Search className="h-4 w-4 text-white/40 flex-shrink-0" />
-                <span className="text-white/40 text-base">Search symbols...</span>
+                <Search className="h-4 w-4 text-white flex-shrink-0" />
+                <span className="text-white text-base">Search symbols...</span>
               </button>
             ) : (
               <>
                 {!searchTerm && (
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                 )}
                 <Input
                   ref={searchInputRef}
@@ -234,7 +234,7 @@ export const SymbolLibrary = ({
           </div>
 
           {filteredSymbols.length === 0 && (
-            <div className="text-center text-white/40 py-8 text-sm">
+            <div className="text-center text-white py-8 text-sm">
               No symbols found
             </div>
           )}

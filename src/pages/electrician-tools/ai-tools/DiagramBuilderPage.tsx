@@ -22,6 +22,8 @@ import {
   RotateCw,
   FileText,
   Trash2,
+  Spline,
+  Download,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -54,11 +56,11 @@ import { preloadAllSymbols } from '@/components/electrician-tools/diagram-builde
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 
-export type DrawingTool = 'select' | 'line' | 'rectangle' | 'wall' | 'text' | 'symbol' | 'dimension' | 'eraser';
+export type DrawingTool = 'select' | 'line' | 'rectangle' | 'wall' | 'text' | 'symbol' | 'dimension' | 'eraser' | 'cable';
 
 export interface CanvasObject {
   id: string;
-  type: 'symbol' | 'line' | 'rectangle' | 'text' | 'wall' | 'dimension';
+  type: 'symbol' | 'line' | 'rectangle' | 'text' | 'wall' | 'dimension' | 'cable';
   x: number;
   y: number;
   width?: number;
@@ -118,7 +120,7 @@ const DiagramBuilderPage = () => {
     currentLength: number;
     position: { x: number; y: number };
   } | null>(null);
-  const [wallEditLength, setWallEditLength] = useState<number>(0);
+  const [wallEditLength, setWallEditLength] = useState<string>('0');
   // exportDialogOpen removed — using ExportReviewSheet only
   const [placingSymbolName, setPlacingSymbolName] = useState<string | null>(null);
   const [saveSheetOpen, setSaveSheetOpen] = useState(false);
@@ -320,6 +322,13 @@ const DiagramBuilderPage = () => {
   };
 
   const handleSaveRoom = (name: string) => {
+    // Reset viewport to 1:1 zoom before capture so coordinates match pixels
+    const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
+    if (fabricCanvas) {
+      fabricCanvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+      fabricCanvas.renderAll();
+    }
+
     const canvasEl = canvasRef.current?.getCanvasElement();
     let thumbnail = '';
     let fullImage = '';
@@ -432,6 +441,7 @@ const DiagramBuilderPage = () => {
     { id: 'wall', icon: PenTool, label: 'Wall' },
     { id: 'shapes', icon: LayoutGrid, label: 'Shapes' },
     { id: 'add-symbol', icon: Plus, label: 'Symbol' },
+    { id: 'cable', icon: Spline, label: 'Cable' },
     { id: 'dimension', icon: Ruler, label: 'Measure' },
     { id: 'eraser', icon: Eraser, label: 'Delete' },
     { id: 'ai-room', icon: Sparkles, label: 'AI' },
@@ -465,11 +475,12 @@ const DiagramBuilderPage = () => {
   };
 
   const applyWallLength = () => {
-    if (!wallEditState || !wallEditLength || wallEditLength < 0.5) return;
+    const parsedLength = parseFloat(wallEditLength);
+    if (!wallEditState || isNaN(parsedLength) || parsedLength < 0.3) return;
     haptic.light();
 
     const SCALE_PX = 52;
-    const newLengthPx = wallEditLength * SCALE_PX;
+    const newLengthPx = parsedLength * SCALE_PX;
 
     const updatedObjects = canvasObjects.map((obj) => {
       if (obj.id !== wallEditState.wallId) return obj;
@@ -588,9 +599,27 @@ const DiagramBuilderPage = () => {
             }}
             className="h-9 px-4 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-sm font-bold touch-manipulation rounded-lg"
           >
-            <Check className="h-3.5 w-3.5 mr-1" />
-            Done
+            <Save className="h-3.5 w-3.5 mr-1" />
+            Save Room
           </Button>
+
+          {/* Export PDF button — visible in header */}
+          {rooms.length > 0 && (
+            <Button
+              onClick={() => {
+                if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
+                  toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
+                  return;
+                }
+                setExportReviewOpen(true);
+              }}
+              variant="ghost"
+              className="h-9 px-3 text-white hover:bg-white/10 text-sm font-medium touch-manipulation rounded-lg"
+            >
+              <Download className="h-3.5 w-3.5 mr-1" />
+              Export
+            </Button>
+          )}
 
           {/* Overflow menu */}
           <DropdownMenu>
@@ -612,7 +641,7 @@ const DiagramBuilderPage = () => {
                   }
                   // If current canvas has unsaved work, prompt to save first
                   if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
-                    toast({ title: 'Save this room first', description: 'Tap Done to save before exporting' });
+                    toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
                     return;
                   }
                   setExportReviewOpen(true);
@@ -738,7 +767,7 @@ const DiagramBuilderPage = () => {
           toolbarHeight={TOOLBAR_HEIGHT}
           onWallTapped={(wallId, currentLength, screenPos) => {
             setWallEditState({ wallId, currentLength, position: screenPos });
-            setWallEditLength(parseFloat(currentLength.toFixed(2)));
+            setWallEditLength(currentLength.toFixed(2));
           }}
           onRotate={handleRotateAll}
           onToolChange={(tool) => {
@@ -752,16 +781,26 @@ const DiagramBuilderPage = () => {
         {/* Empty canvas hint */}
         {canvasObjects.length === 0 && rooms.length === 0 && (
           <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-            <div className="text-center pointer-events-auto">
-              <p className="text-white/40 text-sm mb-3">Tap to get started</p>
-              <div className="flex gap-3">
-                <button onClick={() => setShapesSheetOpen(true)} className="px-4 py-2.5 bg-white/[0.08] border border-white/15 rounded-xl text-white text-xs font-medium touch-manipulation active:scale-95">
-                  Room Shape
+            <div className="text-center pointer-events-auto px-6 max-w-sm">
+              <h2 className="text-white text-lg font-bold mb-1">Create Your First Room</h2>
+              <p className="text-white text-xs mb-5">Pick a method below to get started</p>
+              <div className="space-y-2">
+                <button onClick={() => setShapesSheetOpen(true)} className="w-full p-3 bg-white/[0.08] border border-white/15 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
+                  <LayoutGrid className="h-5 w-5 text-elec-yellow shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-white">Room Shape</p>
+                    <p className="text-[10px] text-white/50">Rectangle, L-shape, T-shape...</p>
+                  </div>
                 </button>
-                <button onClick={() => setAiDialogOpen(true)} className="px-4 py-2.5 bg-elec-yellow/20 border border-elec-yellow/30 rounded-xl text-elec-yellow text-xs font-medium touch-manipulation active:scale-95">
-                  AI Generate
+                <button onClick={() => setAiDialogOpen(true)} className="w-full p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
+                  <Sparkles className="h-5 w-5 text-elec-yellow shrink-0" />
+                  <div>
+                    <p className="text-sm font-semibold text-elec-yellow">AI Generate</p>
+                    <p className="text-[10px] text-elec-yellow/50">Templates, voice, or photo</p>
+                  </div>
                 </button>
               </div>
+              <p className="text-white text-[10px] mt-4">Or use the wall tool in the toolbar below</p>
             </div>
           </div>
         )}
@@ -783,12 +822,12 @@ const DiagramBuilderPage = () => {
                   active
                     ? 'text-elec-yellow'
                     : isAction
-                      ? 'text-white/30'
+                      ? 'text-white'
                       : 'text-white/60'
                 )}
               >
                 <Icon className="h-5 w-5" />
-                <span className={cn('text-[9px] mt-0.5 leading-none', active ? 'font-bold' : 'font-medium')}>
+                <span className={cn('text-[9px] mt-0.5 leading-none hidden min-[375px]:block', active ? 'font-bold' : 'font-medium')}>
                   {tool.label}
                 </span>
               </button>
@@ -804,7 +843,7 @@ const DiagramBuilderPage = () => {
 
       {/* Symbol placement indicator */}
       {placingSymbolName && (
-        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-full bg-elec-yellow text-black text-xs font-semibold shadow-lg">
+        <div className="absolute top-14 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-full bg-elec-yellow text-black text-xs font-semibold shadow-lg animate-pulse">
           Tap canvas to place: {placingSymbolName}
         </div>
       )}
@@ -816,8 +855,10 @@ const DiagramBuilderPage = () => {
         onSymbolSelect={(symbolId, quantity) => {
           if (quantity > 1) {
             // Multi-place: add symbols in a grid pattern near canvas centre
-            const centreX = 300;
-            const centreY = 250;
+            // Use actual canvas dimensions for centre
+            const canvasEl = canvasRef.current?.getCanvasElement();
+            const centreX = canvasEl ? canvasEl.width / 2 : window.innerWidth / 2;
+            const centreY = canvasEl ? canvasEl.height / 2 : (window.innerHeight - HEADER_HEIGHT - TOOLBAR_HEIGHT) / 2;
             const cols = Math.min(quantity, 4);
             const spacing = 60;
             const newObjects: CanvasObject[] = [];
@@ -1039,7 +1080,7 @@ const DiagramBuilderPage = () => {
                   min="0.5"
                   max="20"
                   value={wallEditLength}
-                  onChange={(e) => setWallEditLength(parseFloat(e.target.value) || 0)}
+                  onChange={(e) => setWallEditLength(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') applyWallLength();
                     if (e.key === 'Escape') setWallEditState(null);

@@ -141,7 +141,7 @@ export function assignCircuits(symbolIds: string[]): {
       circuitRef: 'C1',
       circuitName: 'Cooker Circuit',
       cableSize: '6mm² T&E',
-      protectionRating: '32A MCB Type B',
+      protectionRating: '45A MCB Type B',
       rcdRequired: false,
       typicalLoad: '8kW',
     });
@@ -166,7 +166,7 @@ export function assignCircuits(symbolIds: string[]): {
   const extractorSymbols = symbolIds.filter((id) => id === 'extractor-fan');
   extractorSymbols.forEach((id) => {
     // Fused spur from lighting circuit
-    const lightingCircuit = splitLighting ? 'L1' : 'L1';
+    const lightingCircuit = 'L1';
     assignments.push({
       symbolId: id,
       symbolName: getSymbolName(id),

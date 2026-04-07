@@ -269,7 +269,7 @@ export const AIRoomBuilderDialog = ({
     },
   });
 
-  // Reset to hub when dialog opens
+  // Reset to hub when dialog opens/closes
   useEffect(() => {
     if (open) {
       setMode('hub');
@@ -278,6 +278,12 @@ export const AIRoomBuilderDialog = ({
       setSpecResult(null);
       setQuoteResult(null);
       setSelectedAutoPlaceRoom(null);
+      setPhotoPreview(null);
+      setPhotoGenerating(false);
+    } else {
+      // Clean up speech when dialog closes
+      if (speech.isListening) speech.stopListening();
+      speech.resetTranscript();
     }
   }, [open]);
 
@@ -571,15 +577,19 @@ export const AIRoomBuilderDialog = ({
     onOpenChange(false);
   };
 
-  const hubTools = [
-    { id: 'templates' as Mode, icon: LayoutGrid, title: 'Room Templates', desc: '12 room types with standard layouts', color: 'bg-elec-yellow/10 text-elec-yellow' },
-    { id: 'describe' as Mode, icon: Mic, title: 'Describe Room', desc: 'Voice or text — describe your room', color: 'bg-blue-500/10 text-blue-400' },
-    { id: 'autoplace' as Mode, icon: Zap, title: 'Auto-Place Symbols', desc: 'Quick-add typical symbols for a room type', color: 'bg-green-500/10 text-green-400' },
-    { id: 'review' as Mode, icon: Shield, title: 'Compliance Review', desc: 'Check drawing against BS 7671', color: 'bg-orange-500/10 text-orange-400' },
-    { id: 'suggestions' as Mode, icon: Lightbulb, title: 'Smart Suggestions', desc: 'AI finds what\'s missing or could be better', color: 'bg-purple-500/10 text-purple-400' },
-    { id: 'spec' as Mode, icon: FileText, title: 'Write Specification', desc: 'AI generates professional electrical spec', color: 'bg-cyan-500/10 text-cyan-400' },
-    { id: 'quote' as Mode, icon: PoundSterling, title: 'Generate Quote', desc: 'Price the job from your floor plan', color: 'bg-emerald-500/10 text-emerald-400' },
-    { id: 'photo' as Mode, icon: Camera, title: 'Photo to Plan', desc: 'Take a photo, AI generates the floor plan', color: 'bg-pink-500/10 text-pink-400' },
+  const hubToolsQuickStart = [
+    { id: 'templates' as Mode, icon: LayoutGrid, title: 'Room Templates', desc: 'Pick a room type, adjust dimensions', color: 'bg-elec-yellow/10 text-elec-yellow' },
+    { id: 'describe' as Mode, icon: Mic, title: 'Describe Room', desc: 'Tell us about it — we draw it', color: 'bg-blue-500/10 text-blue-400' },
+    { id: 'photo' as Mode, icon: Camera, title: 'Photo to Plan', desc: 'Snap a photo, AI generates the plan', color: 'bg-pink-500/10 text-pink-400' },
+  ];
+  const hubToolsDesign = [
+    { id: 'autoplace' as Mode, icon: Zap, title: 'Auto-Place Symbols', desc: 'Quick-add sockets, lights, switches', color: 'bg-green-500/10 text-green-400' },
+    { id: 'review' as Mode, icon: Shield, title: 'Compliance Check', desc: 'Verify against BS 7671 regulations', color: 'bg-orange-500/10 text-orange-400' },
+    { id: 'suggestions' as Mode, icon: Lightbulb, title: 'Smart Suggestions', desc: 'Find missing sockets, lights, or safety items', color: 'bg-purple-500/10 text-purple-400' },
+  ];
+  const hubToolsOutput = [
+    { id: 'spec' as Mode, icon: FileText, title: 'Write Specification', desc: 'Generate a client spec sheet', color: 'bg-cyan-500/10 text-cyan-400' },
+    { id: 'quote' as Mode, icon: PoundSterling, title: 'Price This Job', desc: 'Labour + materials cost estimate', color: 'bg-emerald-500/10 text-emerald-400' },
   ];
 
   const reviewItemIcon = (type: 'warning' | 'info' | 'pass') => {
@@ -632,22 +642,33 @@ export const AIRoomBuilderDialog = ({
           <div className="flex-1 overflow-y-auto">
             {/* ==================== HUB ==================== */}
             {mode === 'hub' && (
-              <div className="p-4 space-y-2">
-                {hubTools.map((tool) => (
-                  <button
-                    key={tool.id}
-                    onClick={() => setMode(tool.id)}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
-                  >
-                    <div className={cn('h-10 w-10 rounded-xl flex items-center justify-center shrink-0', tool.color)}>
-                      <tool.icon className="h-5 w-5" />
+              <div className="p-4 space-y-4">
+                {[
+                  { label: 'Quick Start', tools: hubToolsQuickStart },
+                  { label: 'Design Tools', tools: hubToolsDesign },
+                  { label: 'Output', tools: hubToolsOutput },
+                ].map((section) => (
+                  <div key={section.label}>
+                    <p className="text-[10px] font-bold text-white uppercase tracking-wider mb-2">{section.label}</p>
+                    <div className="space-y-2">
+                      {section.tools.map((tool) => (
+                        <button
+                          key={tool.id}
+                          onClick={() => setMode(tool.id)}
+                          className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+                        >
+                          <div className={cn('h-10 w-10 rounded-xl flex items-center justify-center shrink-0', tool.color)}>
+                            <tool.icon className="h-5 w-5" />
+                          </div>
+                          <div className="flex-1 text-left">
+                            <p className="text-sm font-semibold text-white">{tool.title}</p>
+                            <p className="text-xs text-white">{tool.desc}</p>
+                          </div>
+                          <ChevronRight className="h-4 w-4 text-white shrink-0" />
+                        </button>
+                      ))}
                     </div>
-                    <div className="flex-1 text-left">
-                      <p className="text-sm font-semibold text-white">{tool.title}</p>
-                      <p className="text-xs text-white">{tool.desc}</p>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white/30 shrink-0" />
-                  </button>
+                  </div>
                 ))}
               </div>
             )}
@@ -672,7 +693,7 @@ export const AIRoomBuilderDialog = ({
                       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/40 to-amber-400/40" />
                       <p className="text-sm font-semibold text-white">{template.name}</p>
                       <p className="text-[11px] text-white mt-0.5">{template.dimensions}</p>
-                      <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/20" />
+                      <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     </button>
                   ))}
                 </div>
@@ -841,7 +862,7 @@ export const AIRoomBuilderDialog = ({
                           <p className="text-xs text-white">{pack.length} symbols</p>
                         </div>
                       </div>
-                      <ChevronRight className={cn('h-4 w-4 text-white/30 shrink-0 transition-transform', selectedAutoPlaceRoom === roomType && 'rotate-90')} />
+                      <ChevronRight className={cn('h-4 w-4 text-white shrink-0 transition-transform', selectedAutoPlaceRoom === roomType && 'rotate-90')} />
                     </button>
                     {selectedAutoPlaceRoom === roomType && (
                       <div className="mt-2 ml-4 space-y-2">

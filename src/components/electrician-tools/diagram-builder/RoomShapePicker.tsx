@@ -348,7 +348,7 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced }: RoomShape
                       onChange={(e) => updateWallLength(i, e.target.value)}
                       className="h-10 flex-1 bg-white/10 border border-white/20 rounded-lg text-white text-center text-sm touch-manipulation focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none"
                     />
-                    <span className="text-white/40 text-xs w-4">m</span>
+                    <span className="text-white text-xs w-4">m</span>
                   </div>
                 ))}
               </div>
@@ -366,7 +366,7 @@ export function RoomShapePicker({ open, onOpenChange, onShapePlaced }: RoomShape
               Place {selectedShape.name}
             </Button>
           ) : (
-            <p className="text-white/40 text-sm text-center py-2">Select a shape</p>
+            <p className="text-white text-sm text-center py-2">Select a shape</p>
           )}
         </div>
       </SheetContent>
