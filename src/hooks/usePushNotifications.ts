@@ -317,7 +317,10 @@ const PREFERENCES_KEY = 'elecmate_notification_preferences';
 export function useNotificationPreferences() {
   const { user } = useAuth();
   const [preferences, setPreferences] = useState<NotificationPreferences>(() => {
-    const stored = storageGetJSONSync<Partial<NotificationPreferences> | null>(PREFERENCES_KEY, null);
+    const stored = storageGetJSONSync<Partial<NotificationPreferences> | null>(
+      PREFERENCES_KEY,
+      null
+    );
     return stored ? { ...DEFAULT_PREFERENCES, ...stored } : DEFAULT_PREFERENCES;
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -452,7 +455,7 @@ export function useQuietHours() {
           .select('category, enabled')
           .eq('user_id', user.id)
           .eq('category', 'quiet_hours')
-          .single();
+          .maybeSingle();
 
         if (data) {
           setPrefs((prev) => {
