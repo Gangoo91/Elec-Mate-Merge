@@ -35,7 +35,7 @@ export const InventoryItemCard = memo(function InventoryItemCard({
         {/* Left: category dot + info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <div className={cn('w-2 h-2 rounded-full flex-shrink-0', `bg-${category.colour}`)} />
+            <div className={cn('w-2 h-2 rounded-full flex-shrink-0', category.dotClass)} />
             <p className="text-[15px] font-medium text-white truncate">{item.name}</p>
             {isLowStock && <AlertTriangle className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />}
           </div>

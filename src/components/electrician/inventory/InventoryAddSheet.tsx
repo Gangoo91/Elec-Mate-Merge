@@ -130,7 +130,7 @@ export function InventoryAddSheet({ open, onOpenChange, onSave }: InventoryAddSh
                     className={cn(
                       'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-all',
                       category === cat.id
-                        ? `bg-${cat.colour}/20 text-white border border-${cat.colour}/40`
+                        ? cat.pillActiveClass
                         : 'bg-white/[0.04] text-white/60 border border-white/[0.06]'
                     )}
                   >

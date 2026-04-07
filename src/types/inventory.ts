@@ -27,18 +27,79 @@ export interface InventoryCategoryConfig {
   id: InventoryCategory;
   label: string;
   icon: string; // Lucide icon name
-  colour: string; // Tailwind colour class
+  /** Full Tailwind class for the category dot/badge background */
+  dotClass: string;
+  /** Full Tailwind classes for active pill state */
+  pillActiveClass: string;
+  /** Full Tailwind classes for filter pill with count */
+  filterActiveClass: string;
 }
 
 export const INVENTORY_CATEGORIES: InventoryCategoryConfig[] = [
-  { id: 'cable', label: 'Cable', icon: 'Cable', colour: 'blue-500' },
-  { id: 'accessories', label: 'Accessories', icon: 'Plug', colour: 'cyan-500' },
-  { id: 'fixings', label: 'Fixings', icon: 'Wrench', colour: 'amber-500' },
-  { id: 'consumer_units', label: 'Consumer Units', icon: 'LayoutGrid', colour: 'purple-500' },
-  { id: 'mcbs_rcds', label: 'MCBs/RCDs', icon: 'Zap', colour: 'orange-500' },
-  { id: 'tools', label: 'Tools', icon: 'Hammer', colour: 'emerald-500' },
-  { id: 'ppe', label: 'PPE', icon: 'HardHat', colour: 'red-500' },
-  { id: 'other', label: 'Other', icon: 'Package', colour: 'gray-500' },
+  {
+    id: 'cable',
+    label: 'Cable',
+    icon: 'Cable',
+    dotClass: 'bg-blue-500',
+    pillActiveClass: 'bg-blue-500/20 text-white border border-blue-500/40',
+    filterActiveClass: 'bg-blue-500/20 text-white border border-blue-500/30',
+  },
+  {
+    id: 'accessories',
+    label: 'Accessories',
+    icon: 'Plug',
+    dotClass: 'bg-cyan-500',
+    pillActiveClass: 'bg-cyan-500/20 text-white border border-cyan-500/40',
+    filterActiveClass: 'bg-cyan-500/20 text-white border border-cyan-500/30',
+  },
+  {
+    id: 'fixings',
+    label: 'Fixings',
+    icon: 'Wrench',
+    dotClass: 'bg-amber-500',
+    pillActiveClass: 'bg-amber-500/20 text-white border border-amber-500/40',
+    filterActiveClass: 'bg-amber-500/20 text-white border border-amber-500/30',
+  },
+  {
+    id: 'consumer_units',
+    label: 'Consumer Units',
+    icon: 'LayoutGrid',
+    dotClass: 'bg-purple-500',
+    pillActiveClass: 'bg-purple-500/20 text-white border border-purple-500/40',
+    filterActiveClass: 'bg-purple-500/20 text-white border border-purple-500/30',
+  },
+  {
+    id: 'mcbs_rcds',
+    label: 'MCBs/RCDs',
+    icon: 'Zap',
+    dotClass: 'bg-orange-500',
+    pillActiveClass: 'bg-orange-500/20 text-white border border-orange-500/40',
+    filterActiveClass: 'bg-orange-500/20 text-white border border-orange-500/30',
+  },
+  {
+    id: 'tools',
+    label: 'Tools',
+    icon: 'Hammer',
+    dotClass: 'bg-emerald-500',
+    pillActiveClass: 'bg-emerald-500/20 text-white border border-emerald-500/40',
+    filterActiveClass: 'bg-emerald-500/20 text-white border border-emerald-500/30',
+  },
+  {
+    id: 'ppe',
+    label: 'PPE',
+    icon: 'HardHat',
+    dotClass: 'bg-red-500',
+    pillActiveClass: 'bg-red-500/20 text-white border border-red-500/40',
+    filterActiveClass: 'bg-red-500/20 text-white border border-red-500/30',
+  },
+  {
+    id: 'other',
+    label: 'Other',
+    icon: 'Package',
+    dotClass: 'bg-gray-500',
+    pillActiveClass: 'bg-gray-500/20 text-white border border-gray-500/40',
+    filterActiveClass: 'bg-gray-500/20 text-white border border-gray-500/30',
+  },
 ];
 
 export const INVENTORY_LOCATIONS: { id: InventoryLocation; label: string; icon: string }[] = [

@@ -175,7 +175,7 @@ export default function InventoryPage() {
                 className={cn(
                   'px-3 py-1 rounded-full text-[12px] font-medium whitespace-nowrap touch-manipulation transition-all flex-shrink-0',
                   filters.category === cat.id
-                    ? `bg-${cat.colour}/20 text-white border border-${cat.colour}/30`
+                    ? cat.filterActiveClass
                     : 'bg-white/[0.04] text-white/50'
                 )}
               >
