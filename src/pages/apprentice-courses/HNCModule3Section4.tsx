@@ -26,7 +26,7 @@ const HNCModule3Section4 = () => {
       title: 'Star and delta configurations',
       description: 'Three-phase connection methods and their electrical characteristics',
       icon: Star,
-      href: '../h-n-c-module3-section4-4-1',
+      href: '../h-n-c-module3-section4-1',
     },
     {
       number: 'Subsection 2',
@@ -34,7 +34,7 @@ const HNCModule3Section4 = () => {
       description:
         'Mathematical relationships between line and phase quantities in three-phase systems',
       icon: Triangle,
-      href: '../h-n-c-module3-section4-4-2',
+      href: '../h-n-c-module3-section4-2',
     },
     {
       number: 'Subsection 3',
@@ -42,7 +42,7 @@ const HNCModule3Section4 = () => {
       description:
         'Analysis of symmetrical and asymmetrical loading conditions in three-phase systems',
       icon: Scale,
-      href: '../h-n-c-module3-section4-4-3',
+      href: '../h-n-c-module3-section4-3',
     },
     {
       number: 'Subsection 4',
@@ -50,14 +50,14 @@ const HNCModule3Section4 = () => {
       description:
         'Power calculations and measurement techniques for three-phase electrical systems',
       icon: Calculator,
-      href: '../h-n-c-module3-section4-4-4',
+      href: '../h-n-c-module3-section4-4',
     },
     {
       number: 'Subsection 5',
       title: 'Cable sizing and voltage drop in three-phase systems',
       description: 'Design considerations for three-phase cable selection and voltage regulation',
       icon: Cable,
-      href: '../h-n-c-module3-section4-4-5',
+      href: '../h-n-c-module3-section4-5',
     },
     {
       number: 'Subsection 6',
@@ -65,14 +65,14 @@ const HNCModule3Section4 = () => {
       description:
         'Safety systems and protection coordination in three-phase distribution networks',
       icon: Shield,
-      href: '../h-n-c-module3-section4-4-6',
+      href: '../h-n-c-module3-section4-6',
     },
     {
       number: 'Subsection 7',
       title: 'Harmonics and power quality issues',
       description: 'Power quality problems and mitigation techniques in three-phase installations',
       icon: Radio,
-      href: '../h-n-c-module3-section4-4-7',
+      href: '../h-n-c-module3-section4-7',
     },
     {
       number: 'Subsection 8',
@@ -80,7 +80,7 @@ const HNCModule3Section4 = () => {
       description:
         'Practical design and installation of three-phase distribution systems in buildings',
       icon: Building,
-      href: '../h-n-c-module3-section4-4-8',
+      href: '../h-n-c-module3-section4-8',
     },
   ];
 

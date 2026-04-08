@@ -16,7 +16,7 @@ const HNCModule3Section2 = () => {
       title: 'Principles of inductance and capacitance',
       description: 'Fundamental concepts of energy storage in magnetic and electric fields',
       icon: Magnet,
-      href: '../h-n-c-module3-section2-2-1',
+      href: '../h-n-c-module3-section2-1',
     },
     {
       number: 'Subsection 2',
@@ -24,7 +24,7 @@ const HNCModule3Section2 = () => {
       description:
         'Calculating inductive and capacitive reactance, complex impedance in AC systems',
       icon: Waves,
-      href: '../h-n-c-module3-section2-2-2',
+      href: '../h-n-c-module3-section2-2',
     },
     {
       number: 'Subsection 3',
@@ -32,7 +32,7 @@ const HNCModule3Section2 = () => {
       description:
         'Vector representation of AC quantities and phase relationships between voltage and current',
       icon: RotateCcw,
-      href: '../h-n-c-module3-section2-2-3',
+      href: '../h-n-c-module3-section2-3',
     },
     {
       number: 'Subsection 4',
@@ -40,7 +40,7 @@ const HNCModule3Section2 = () => {
       description:
         'Understanding power factor impact on electrical efficiency and system performance',
       icon: Zap,
-      href: '../h-n-c-module3-section2-2-4',
+      href: '../h-n-c-module3-section2-4',
     },
     {
       number: 'Subsection 5',
@@ -48,7 +48,7 @@ const HNCModule3Section2 = () => {
       description:
         'Techniques for improving power factor using capacitor banks and electronic correction systems',
       icon: Filter,
-      href: '../h-n-c-module3-section2-2-5',
+      href: '../h-n-c-module3-section2-5',
     },
     {
       number: 'Subsection 6',
@@ -56,7 +56,7 @@ const HNCModule3Section2 = () => {
       description:
         'Series and parallel resonance phenomena and their effects in electrical installations',
       icon: Radio,
-      href: '../h-n-c-module3-section2-2-6',
+      href: '../h-n-c-module3-section2-6',
     },
     {
       number: 'Subsection 7',
@@ -64,7 +64,7 @@ const HNCModule3Section2 = () => {
       description:
         'Practical application of reactive component principles in building services equipment',
       icon: Settings,
-      href: '../h-n-c-module3-section2-2-7',
+      href: '../h-n-c-module3-section2-7',
     },
   ];
 
