@@ -181,6 +181,7 @@ export async function formatEicJson(
       client_address: formData.clientAddress || '',
       client_phone: formData.clientPhone || '',
       client_email: formData.clientEmail || '',
+      occupier: formData.occupier || '',
     },
 
     installation_details: {
@@ -293,6 +294,13 @@ export async function formatEicJson(
       spd_fitted: board.spdFitted ?? false,
       spd_operational: board.spdOperationalStatus ?? board.spdOperational ?? false,
       spd_na: board.spdNA ?? false,
+      spd_t1: board.spdT1 ?? false,
+      spd_t2: board.spdT2 ?? false,
+      spd_t3: board.spdT3 ?? false,
+      spd_make: board.spdMake || '',
+      spd_model: board.spdModel || '',
+      spd_location: board.spdLocation || '',
+      spd_rated_current_ka: board.spdRatedCurrentKa || '',
       polarity_confirmed: board.confirmedCorrectPolarity ?? board.polarityConfirmed ?? false,
       phase_sequence_confirmed:
         board.confirmedPhaseSequence ?? board.phaseSequenceConfirmed ?? false,
@@ -662,7 +670,11 @@ export async function formatEicJson(
     })(),
     has_departures: !!(formData.designerDepartures || '').trim(),
     has_permitted_exceptions: !!(formData.permittedExceptions || '').trim(),
-    has_earth_electrode: !!(formData.earthElectrodeType || formData.earthElectrodeResistance || '').trim(),
+    has_earth_electrode: !!(
+      formData.earthElectrodeType ||
+      formData.earthElectrodeResistance ||
+      ''
+    ).trim(),
     has_additional_boards: (() => {
       const boards = formData.distributionBoards || [];
       return Array.isArray(boards) && boards.length > 1;

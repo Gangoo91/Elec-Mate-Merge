@@ -888,6 +888,12 @@
             <div class="form-label">Client Address</div>
             <div class="form-value">{{ client_details.client_address }}</div>
         </div>
+        {% if client_details.occupier != blank %}
+        <div class="form-row">
+            <div class="form-label">Occupier</div>
+            <div class="form-value">{{ client_details.occupier }}</div>
+        </div>
+        {% endif %}
     </div>
 </div>
 
@@ -1797,6 +1803,53 @@
             <span class="checkbox-label">SPD N/A</span>
         </div>
     </div>
+    {% unless board.spd_na %}
+    {% if board.spd_t1 or board.spd_t2 or board.spd_t3 %}
+    <div class="inline-form" style="margin-top: 2px">
+        <div class="inline-group">
+            <span class="inline-label">SPD Type:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if board.spd_t1 %}checked{% endif %}">{% if board.spd_t1 %}&#10003;{% endif %}</span>
+                    <span class="checkbox-label">Type 1</span>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if board.spd_t2 %}checked{% endif %}">{% if board.spd_t2 %}&#10003;{% endif %}</span>
+                    <span class="checkbox-label">Type 2</span>
+                </div>
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if board.spd_t3 %}checked{% endif %}">{% if board.spd_t3 %}&#10003;{% endif %}</span>
+                    <span class="checkbox-label">Type 3</span>
+                </div>
+            </div>
+        </div>
+        {% if board.spd_make != blank %}
+        <div class="inline-group">
+            <span class="inline-label">Make:</span>
+            <span class="inline-value">{{ board.spd_make }}</span>
+        </div>
+        {% endif %}
+        {% if board.spd_model != blank %}
+        <div class="inline-group">
+            <span class="inline-label">Model:</span>
+            <span class="inline-value">{{ board.spd_model }}</span>
+        </div>
+        {% endif %}
+        {% if board.spd_location != blank %}
+        <div class="inline-group">
+            <span class="inline-label">Location:</span>
+            <span class="inline-value">{{ board.spd_location }}</span>
+        </div>
+        {% endif %}
+        {% if board.spd_rated_current_ka != blank %}
+        <div class="inline-group">
+            <span class="inline-label">Rated kA:</span>
+            <span class="inline-value">{{ board.spd_rated_current_ka }}</span>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% endunless %}
     {% endfor %}
 </div>
 
@@ -1921,6 +1974,13 @@
                 <span class="checkbox-box {% if board.spd_na %}checked{% endif %}" style="display: inline-flex;">{% if board.spd_na %}&#10003;{% endif %}</span>
                 SPD N/A
             </span>
+            {% unless board.spd_na %}
+            {% if board.spd_t1 %}<span><strong>T1</strong></span>{% endif %}
+            {% if board.spd_t2 %}<span><strong>T2</strong></span>{% endif %}
+            {% if board.spd_t3 %}<span><strong>T3</strong></span>{% endif %}
+            {% if board.spd_make != blank %}<span><strong>SPD:</strong> {{ board.spd_make }} {{ board.spd_model }}</span>{% endif %}
+            {% if board.spd_rated_current_ka != blank %}<span><strong>kA:</strong> {{ board.spd_rated_current_ka }}</span>{% endif %}
+            {% endunless %}
         </div>
     </div>
 
