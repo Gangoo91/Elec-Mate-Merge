@@ -17,21 +17,21 @@ const HNCModule3Section3 = () => {
       description:
         'Understanding different AC measurement values and their mathematical relationships',
       icon: Waves,
-      href: '../h-n-c-module3-section3-3-1',
+      href: '../h-n-c-module3-section3-1',
     },
     {
       number: 'Subsection 2',
       title: 'Frequency, period and amplitude relationships',
       description: 'Time-domain characteristics of AC waveforms and their frequency components',
       icon: Clock,
-      href: '../h-n-c-module3-section3-3-2',
+      href: '../h-n-c-module3-section3-2',
     },
     {
       number: 'Subsection 3',
       title: 'Phase difference and vector representation',
       description: 'Vector methods for analysing phase relationships in AC circuits',
       icon: RotateCcw,
-      href: '../h-n-c-module3-section3-3-3',
+      href: '../h-n-c-module3-section3-3',
     },
     {
       number: 'Subsection 4',
@@ -39,21 +39,21 @@ const HNCModule3Section3 = () => {
       description:
         'Analysis of different waveform types and distortion effects in electrical systems',
       icon: TrendingUp,
-      href: '../h-n-c-module3-section3-3-4',
+      href: '../h-n-c-module3-section3-4',
     },
     {
       number: 'Subsection 5',
       title: 'Harmonics – sources, effects and mitigation',
       description: 'Understanding harmonic distortion, sources and methods for harmonic control',
       icon: Radio,
-      href: '../h-n-c-module3-section3-3-5',
+      href: '../h-n-c-module3-section3-5',
     },
     {
       number: 'Subsection 6',
       title: 'True, reactive and apparent power in AC systems',
       description: 'Power relationships in AC circuits and their measurement techniques',
       icon: Zap,
-      href: '../h-n-c-module3-section3-3-6',
+      href: '../h-n-c-module3-section3-6',
     },
     {
       number: 'Subsection 7',
@@ -61,7 +61,7 @@ const HNCModule3Section3 = () => {
       description:
         'Graphical representation of power relationships and system efficiency calculations',
       icon: Triangle,
-      href: '../h-n-c-module3-section3-3-7',
+      href: '../h-n-c-module3-section3-7',
     },
   ];
 
