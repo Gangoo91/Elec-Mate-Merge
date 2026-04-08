@@ -1,106 +1,80 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
-import { FileCheck, Award, ChevronDown } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
 
 interface StandardsComplianceSectionProps {
   formData: Record<string, string | boolean | undefined>;
   onUpdate: (field: string, value: string | boolean) => void;
-  isOpen: boolean;
-  onToggle: () => void;
 }
 
 const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
   formData,
   onUpdate,
-  isOpen,
-  onToggle,
 }) => {
-  const isMobile = useIsMobile();
-
   return (
-    <div className={cn(isMobile ? '' : 'border border-border bg-card overflow-hidden rounded-lg')}>
-      <Collapsible open={isOpen} onOpenChange={onToggle}>
-        {isMobile ? (
-          <button
-            onClick={onToggle}
-            className="flex items-center gap-3 py-4 px-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full text-left"
-          >
-            <div className="h-10 w-10 rounded-xl bg-orange-500/15 flex items-center justify-center shrink-0">
-              <Award className="h-5 w-5 text-orange-400" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-foreground">Standards & Compliance</h3>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-5 w-5 text-white transition-transform shrink-0',
-                isOpen && 'rotate-180'
-              )}
-            />
-          </button>
-        ) : (
-          <SectionHeader
-            title="Standards and Compliance"
-            icon={FileCheck}
-            isOpen={isOpen}
-            color="amber-500"
-          />
-        )}
-        <CollapsibleContent>
-          <div className={cn('space-y-6', isMobile ? 'px-4 py-4' : 'p-4 sm:p-6')}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="designStandard" className="font-medium text-sm">
-                  Design Standard
-                </Label>
-                <Select
-                  value={formData.designStandard || 'BS7671'}
-                  onValueChange={(value) => onUpdate('designStandard', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select standard" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="BS7671">BS 7671:18+A3:2024</SelectItem>
-                    <SelectItem value="other">Other Standard</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+    <div className="space-y-4">
+      <SectionTitle title="Standards and Compliance" />
 
-              <div>
-                <Label htmlFor="partPCompliance" className="font-medium text-sm">
-                  Part P Compliance
-                </Label>
-                <Select
-                  value={formData.partPCompliance || ''}
-                  onValueChange={(value) => onUpdate('partPCompliance', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select compliance" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="compliant">Compliant</SelectItem>
-                    <SelectItem value="notApplicable">Not Applicable</SelectItem>
-                    <SelectItem value="nonNotifiable">Non-notifiable</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+      <div className="space-y-3">
+        <div>
+          <Label className="text-white text-xs mb-1.5 block">Design Standard</Label>
+          <div className="grid grid-cols-2 gap-1">
+            {[
+              { value: 'BS7671', label: 'BS 7671:2018+A3' },
+              { value: 'other', label: 'Other' },
+            ].map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => onUpdate('designStandard', opt.value)}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
+                  (formData.designStandard || 'BS7671') === opt.value
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {(formData.designStandard || 'BS7671') === opt.value && <Check className="h-3 w-3" />}
+                {opt.label}
+              </button>
+            ))}
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+        </div>
+
+        <div>
+          <Label className="text-white text-xs mb-1.5 block">Part P Compliance</Label>
+          <div className="grid grid-cols-3 gap-1">
+            {[
+              { value: 'compliant', label: 'Compliant' },
+              { value: 'notApplicable', label: 'N/A' },
+              { value: 'nonNotifiable', label: 'Non-notifiable' },
+            ].map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => onUpdate('partPCompliance', (formData.partPCompliance as string) === opt.value ? '' : opt.value)}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98] flex items-center justify-center gap-1',
+                  (formData.partPCompliance as string) === opt.value
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {(formData.partPCompliance as string) === opt.value && <Check className="h-3 w-3" />}
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

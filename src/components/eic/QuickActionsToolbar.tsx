@@ -67,7 +67,7 @@ const QuickActionsToolbar: React.FC<QuickActionsToolbarProps> = ({ formData, onU
   };
 
   return (
-    <div className="flex flex-wrap gap-2 p-3 bg-muted/50 rounded-lg mb-4">
+    <div className="flex flex-wrap gap-2 p-3 bg-white/[0.03] rounded-lg mb-4">
       <Button
         variant="outline"
         size="sm"

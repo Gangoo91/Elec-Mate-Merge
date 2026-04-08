@@ -1,17 +1,9 @@
-/**
- * EIC Inspection Checklist Card
- *
- * Premium flat design for the Schedule of Inspections.
- * Native mobile app feel with touch-optimized controls.
- */
-
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import { Check, Minus, MessageSquare } from 'lucide-react';
 import { EICInspectionItem } from '@/data/bs7671EICChecklistData';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 
 interface EICInspectionChecklistCardProps {
@@ -27,32 +19,174 @@ interface EICInspectionChecklistCardProps {
   onNavigateToObservations?: () => void;
 }
 
+const InspectionItemRow: React.FC<{
+  item: EICInspectionItem;
+  onOutcomeChange: (id: string, outcome: 'satisfactory' | 'not-applicable' | 'limitation') => void;
+  onNotesChange: (id: string, notes: string) => void;
+}> = ({ item, onOutcomeChange, onNotesChange }) => {
+  const haptic = useHaptic();
+  const [swipeOffset, setSwipeOffset] = useState(0);
+  const [localNotes, setLocalNotes] = useState(item.notes || '');
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+
+  const handleNotesChange = (value: string) => {
+    setLocalNotes(value);
+    if (debounceTimer) clearTimeout(debounceTimer);
+    const timer = setTimeout(() => onNotesChange(item.id, value), 300);
+    setDebounceTimer(timer);
+  };
+
+  React.useEffect(() => {
+    setLocalNotes(item.notes || '');
+  }, [item.notes]);
+
+  React.useEffect(() => {
+    return () => { if (debounceTimer) clearTimeout(debounceTimer); };
+  }, [debounceTimer]);
+
+  const swipeHandlers = useSwipeable({
+    onSwiping: (e) => {
+      const offset = Math.max(-80, Math.min(80, e.deltaX));
+      setSwipeOffset(offset);
+    },
+    onSwipedRight: () => {
+      if (swipeOffset > 40) {
+        haptic.success();
+        onOutcomeChange(item.id, 'satisfactory');
+      }
+      setSwipeOffset(0);
+    },
+    onSwipedLeft: () => {
+      if (swipeOffset < -40) {
+        haptic.light();
+        onOutcomeChange(item.id, 'not-applicable');
+      }
+      setSwipeOffset(0);
+    },
+    onTouchEndOrOnMouseUp: () => setSwipeOffset(0),
+    trackMouse: false,
+    trackTouch: true,
+    delta: 10,
+    preventScrollOnSwipe: false,
+  });
+
+  const getBorderColor = () => {
+    switch (item.outcome) {
+      case 'satisfactory': return 'border-l-green-500';
+      case 'not-applicable': return 'border-l-white/20';
+      case 'limitation': return 'border-l-amber-500';
+      default: return 'border-l-transparent';
+    }
+  };
+
+  return (
+    <div className="relative overflow-hidden rounded-lg">
+      {/* Swipe backgrounds */}
+      <div className="absolute inset-0 flex pointer-events-none">
+        <div className={cn('flex-1 flex items-center px-4', swipeOffset > 20 ? 'opacity-100' : 'opacity-0', 'bg-green-500/20')}>
+          <Check className="h-5 w-5 text-green-400" />
+        </div>
+        <div className={cn('flex-1 flex items-center justify-end px-4', swipeOffset < -20 ? 'opacity-100' : 'opacity-0', 'bg-white/[0.06]')}>
+          <span className="text-xs text-white">N/A</span>
+        </div>
+      </div>
+
+      <div
+        {...swipeHandlers}
+        style={{ transform: `translateX(${swipeOffset}px)`, transition: swipeOffset === 0 ? 'transform 200ms ease-out' : 'none' }}
+        className={cn(
+          'relative p-3 border-l-4 bg-white/[0.06] border border-white/[0.08] rounded-lg touch-manipulation',
+          getBorderColor(),
+          item.outcome === 'satisfactory' && 'bg-green-500/[0.08]',
+          item.outcome === 'limitation' && 'bg-amber-500/[0.08]',
+        )}
+      >
+        {/* Item number + description + buttons in one row */}
+        <div className="flex items-start gap-2">
+          <span className={cn(
+            'text-[10px] font-bold mt-0.5 shrink-0 w-5 text-center',
+            item.outcome === 'satisfactory' ? 'text-green-400' :
+            item.outcome === 'limitation' ? 'text-amber-400' :
+            'text-elec-yellow'
+          )}>
+            {item.itemNumber}
+          </span>
+
+          <div className="flex-1 min-w-0">
+            <p className="text-xs text-white leading-snug">{item.description}</p>
+
+            {/* Outcome buttons — compact row */}
+            <div className="flex gap-1 mt-2">
+              <button
+                onClick={() => { haptic.light(); onOutcomeChange(item.id, 'satisfactory'); }}
+                className={cn(
+                  'h-8 flex-1 rounded-md font-semibold text-[11px] transition-all touch-manipulation active:scale-[0.97] flex items-center justify-center gap-1',
+                  item.outcome === 'satisfactory'
+                    ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                    : 'bg-white/[0.03] border border-white/[0.06] text-white'
+                )}
+              >
+                ✓
+              </button>
+              <button
+                onClick={() => { haptic.light(); onOutcomeChange(item.id, 'not-applicable'); }}
+                className={cn(
+                  'h-8 flex-1 rounded-md font-semibold text-[11px] transition-all touch-manipulation active:scale-[0.97]',
+                  item.outcome === 'not-applicable'
+                    ? 'bg-white/[0.08] border border-white/[0.15] text-white'
+                    : 'bg-white/[0.03] border border-white/[0.06] text-white'
+                )}
+              >
+                N/A
+              </button>
+              <button
+                onClick={() => { haptic.warning(); onOutcomeChange(item.id, 'limitation'); }}
+                className={cn(
+                  'h-8 flex-1 rounded-md font-semibold text-[11px] transition-all touch-manipulation active:scale-[0.97]',
+                  item.outcome === 'limitation'
+                    ? 'bg-amber-500/20 border border-amber-500/40 text-amber-400'
+                    : 'bg-white/[0.03] border border-white/[0.06] text-white'
+                )}
+              >
+                LIM
+              </button>
+            </div>
+
+            {/* Notes — only when outcome is set */}
+            {item.outcome && (
+              <div className="mt-2">
+                <Textarea
+                  placeholder="Notes..."
+                  value={localNotes}
+                  onChange={(e) => handleNotesChange(e.target.value)}
+                  className="min-h-[40px] text-xs bg-white/[0.04] border-white/[0.06] resize-none focus:ring-1 focus:ring-elec-yellow/30 placeholder:text-white"
+                  style={{ fontSize: '13px' }}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
   inspectionItems,
   onUpdateItem,
   onAutoCreateObservation,
   onNavigateToObservations,
 }) => {
-  const isMobile = useIsMobile();
-  const haptic = useHaptic();
-
   const handleOutcomeChange = (
     id: string,
     outcome: 'satisfactory' | 'not-applicable' | 'limitation'
   ) => {
-    haptic.light();
     const currentItem = inspectionItems.find((item) => item.id === id);
     if (currentItem?.outcome === outcome) {
-      // Toggle off if clicking the same button
       onUpdateItem(id, 'outcome', '');
     } else {
       onUpdateItem(id, 'outcome', outcome);
-      if (outcome === 'satisfactory') {
-        haptic.success();
-      }
-      // Auto-create observation when LIM is selected
       if (outcome === 'limitation' && currentItem && onAutoCreateObservation) {
-        haptic.heavy();
         onAutoCreateObservation({
           id: currentItem.id,
           item: currentItem.description,
@@ -60,7 +194,6 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
           notes: currentItem.notes,
           defectCode: 'limitation',
         });
-        // Navigate to observations section
         if (onNavigateToObservations) {
           setTimeout(() => onNavigateToObservations(), 300);
         }
@@ -68,152 +201,29 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
     }
   };
 
+  const handleNotesChange = (id: string, notes: string) => {
+    onUpdateItem(id, 'notes', notes);
+  };
+
   if (inspectionItems.length === 0) {
     return (
-      <div className="text-center py-12 text-muted-foreground">
-        <p>No inspection items found. Please refresh the page or contact support.</p>
+      <div className="text-center py-8 text-white text-xs">
+        No inspection items found
       </div>
     );
   }
 
   return (
-    <div className={cn('space-y-0', isMobile && '-mx-4')}>
-      {/* Subtitle */}
-      <p className={cn('text-xs text-muted-foreground mb-2', isMobile ? 'px-4' : 'px-1')}>
-        IET Model Forms - BS7671 18th Edition + A3:2024 compliant
-      </p>
-
-      {/* Inspection Items - Cards */}
-      <div className={cn('space-y-2', isMobile ? 'px-4' : 'px-1')}>
-        {inspectionItems.map((item, index) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.15, delay: index * 0.01 }}
-            className={cn(
-              'p-3.5 rounded-xl touch-manipulation transition-colors duration-200',
-              'border',
-              item.outcome === 'satisfactory' &&
-                'bg-green-500/10 border-green-500/25',
-              item.outcome === 'not-applicable' &&
-                'bg-neutral-500/10 border-neutral-500/20',
-              item.outcome === 'limitation' &&
-                'bg-amber-500/10 border-amber-500/25',
-              !item.outcome &&
-                'bg-white/[0.04] border-white/[0.08]'
-            )}
-          >
-            {/* Item Row */}
-            <div className="flex items-start gap-3">
-              {/* Number Badge */}
-              <div
-                className={cn(
-                  'flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center',
-                  'text-xs font-bold transition-colors duration-200',
-                  item.outcome === 'satisfactory' && 'bg-green-500/20 text-green-400',
-                  item.outcome === 'not-applicable' && 'bg-neutral-500/20 text-neutral-400',
-                  item.outcome === 'limitation' && 'bg-amber-500/20 text-amber-400',
-                  !item.outcome && 'bg-elec-yellow/15 text-elec-yellow'
-                )}
-              >
-                {item.itemNumber}
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                {/* Description */}
-                <p className="text-sm text-foreground text-left leading-snug mb-3">
-                  {item.description}
-                </p>
-
-                {/* Buttons Row */}
-                <div className="flex gap-2">
-                  {/* Satisfactory Button */}
-                  <button
-                    onClick={() => handleOutcomeChange(item.id, 'satisfactory')}
-                    className={cn(
-                      'h-11 px-4 rounded-lg font-medium text-sm transition-all duration-150',
-                      'touch-manipulation active:scale-[0.97]',
-                      'flex items-center justify-center gap-1.5',
-                      item.outcome === 'satisfactory'
-                        ? 'bg-green-500 text-white shadow-sm shadow-green-500/20'
-                        : 'bg-white/[0.06] text-foreground border border-white/[0.10] hover:bg-white/[0.10]'
-                    )}
-                  >
-                    {item.outcome === 'satisfactory' && <Check className="w-4 h-4" />}
-                    <span className={cn(item.outcome === 'satisfactory' ? '' : 'hidden sm:inline')}>
-                      Satisfactory
-                    </span>
-                    <span className={cn(item.outcome === 'satisfactory' ? 'hidden' : 'sm:hidden')}>
-                      ✓
-                    </span>
-                  </button>
-
-                  {/* N/A Button */}
-                  <button
-                    onClick={() => handleOutcomeChange(item.id, 'not-applicable')}
-                    className={cn(
-                      'h-11 px-4 rounded-lg font-medium text-sm transition-all duration-150',
-                      'touch-manipulation active:scale-[0.97]',
-                      'flex items-center justify-center gap-1.5',
-                      item.outcome === 'not-applicable'
-                        ? 'bg-neutral-500 text-white shadow-sm shadow-neutral-500/20'
-                        : 'bg-white/[0.06] text-foreground border border-white/[0.10] hover:bg-white/[0.10]'
-                    )}
-                  >
-                    {item.outcome === 'not-applicable' && <Minus className="w-4 h-4" />}
-                    N/A
-                  </button>
-
-                  {/* LIM (Limitation) Button */}
-                  <button
-                    onClick={() => handleOutcomeChange(item.id, 'limitation')}
-                    className={cn(
-                      'h-11 px-4 rounded-lg font-medium text-sm transition-all duration-150',
-                      'touch-manipulation active:scale-[0.97]',
-                      'flex items-center justify-center gap-1.5',
-                      item.outcome === 'limitation'
-                        ? 'bg-amber-500 text-black shadow-sm shadow-amber-500/20'
-                        : 'bg-white/[0.06] text-foreground border border-white/[0.10] hover:bg-white/[0.10]'
-                    )}
-                  >
-                    {item.outcome === 'limitation' && <Check className="w-4 h-4" />}
-                    LIM
-                  </button>
-                </div>
-
-                {/* Animated Notes Section */}
-                <AnimatePresence>
-                  {item.outcome && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="mt-3 pt-3 border-t border-border/20">
-                        <div className="flex items-center gap-1.5 mb-2">
-                          <MessageSquare className="w-3.5 h-3.5 text-muted-foreground" />
-                          <span className="text-xs text-muted-foreground">Notes (optional)</span>
-                        </div>
-                        <Textarea
-                          placeholder="Add any observations or comments..."
-                          value={item.notes || ''}
-                          onChange={(e) => onUpdateItem(item.id, 'notes', e.target.value)}
-                          className="min-h-[60px] text-base bg-background border-border resize-none focus:ring-1 focus:ring-elec-yellow/50 focus:border-elec-yellow/50 touch-manipulation"
-                          style={{ fontSize: '16px' }}
-                        />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+    <div className="space-y-1">
+      <p className="text-[9px] text-white mb-2">Swipe right = ✓ · Swipe left = N/A</p>
+      {inspectionItems.map((item) => (
+        <InspectionItemRow
+          key={item.id}
+          item={item}
+          onOutcomeChange={handleOutcomeChange}
+          onNotesChange={handleNotesChange}
+        />
+      ))}
     </div>
   );
 };

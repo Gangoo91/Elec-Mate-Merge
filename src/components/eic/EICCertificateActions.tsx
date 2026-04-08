@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   FileText,
@@ -31,6 +30,13 @@ import { Input } from '@/components/ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
 
 interface EICCertificateActionsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -349,131 +355,67 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
   return (
     <>
-      <div
-        className={cn(
-          'space-y-5',
-          isMobile ? '' : 'rounded-xl border border-white/10 bg-white/[0.02] p-5'
-        )}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
-              <FileText className="h-5 w-5 text-elec-yellow" />
+      <div className="space-y-4">
+        {/* Section Completion — compact row */}
+        <div className="grid grid-cols-4 gap-1">
+          {completionSections.map((section) => (
+            <div
+              key={section.label}
+              className={cn(
+                'h-9 rounded-lg flex items-center justify-center text-[9px] font-semibold',
+                section.done
+                  ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {section.done ? '✓' : '○'} {section.label.split(' ')[0]}
             </div>
-            <h3 className="font-semibold text-white">Certificate Actions</h3>
-          </div>
-          <Badge
-            className={cn(
-              'gap-1.5 border',
-              isFullyComplete
-                ? 'bg-green-500/15 text-green-400 border-green-500/30'
-                : canGenerateCertificate
-                  ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-                  : 'bg-white/5 text-white border-white/20'
-            )}
-          >
-            {isFullyComplete ? (
-              <>
-                <CheckCircle className="h-3 w-3" /> Complete
-              </>
-            ) : canGenerateCertificate ? (
-              <>
-                <Clock className="h-3 w-3" /> Ready
-              </>
-            ) : (
-              <>
-                <AlertTriangle className="h-3 w-3" /> Incomplete
-              </>
-            )}
-          </Badge>
+          ))}
         </div>
 
-        {/* Section Completion */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-semibold text-white">Section Completion</h4>
-          <div className="space-y-2">
-            {completionSections.map((section) => (
-              <div key={section.label} className="flex items-center gap-2.5">
-                {section.done ? (
-                  <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                ) : (
-                  <Clock className="h-4 w-4 text-amber-400 shrink-0" />
-                )}
-                <span className={cn('text-sm', section.done ? 'text-green-400' : 'text-white')}>
-                  {section.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Validation Warning */}
+        {/* Validation — inline */}
         {!canGenerateCertificate && (
-          <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-4">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 shrink-0" />
-              <div>
-                <p className="text-sm font-semibold text-amber-400 mb-2">
-                  Required sections incomplete:
-                </p>
-                <ul className="space-y-1.5">
-                  {!hasRequiredInstallationDetails && (
-                    <li className="text-sm text-white flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                      Complete client name, installation address, and installation date
-                    </li>
-                  )}
-                  {!hasRequiredDeclarations && (
-                    <li className="text-sm text-white flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                      Complete all three declarations with names and signatures
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </div>
-          </div>
+          <p className="text-[10px] text-elec-yellow">
+            {!hasRequiredInstallationDetails && 'Complete client details. '}
+            {!hasRequiredDeclarations && 'Complete all declarations with signatures.'}
+          </p>
         )}
 
-        {/* Primary Action */}
-        <Button
+        {/* Generate button */}
+        <button
+          type="button"
           onClick={handleGeneratePDF}
           disabled={!canGenerateCertificate || isExporting}
-          className="h-14 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+          className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold text-sm rounded-lg active:scale-[0.98] transition-transform disabled:opacity-50 flex items-center justify-center gap-2"
         >
-          <Download className="h-5 w-5 mr-2" />
           {isExporting ? 'Generating...' : 'Generate EIC PDF'}
-        </Button>
+        </button>
 
         {/* Secondary Actions */}
-        <div className="grid grid-cols-2 gap-3">
-          <Button
+        <div className="grid grid-cols-3 gap-1">
+          <button
+            type="button"
             onClick={handleSaveDraft}
-            variant="outline"
-            className="h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform"
+            className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] flex items-center justify-center text-[10px] font-semibold"
           >
-            <Save className="h-4 w-4 mr-2" />
-            Save Draft
-          </Button>
-
-          <Button
+            Save
+          </button>
+          <button
+            type="button"
             onClick={handleEmailCertificate}
-            variant="outline"
             disabled={!canGenerateCertificate}
-            className="h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+            className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
           >
-            <Mail className="h-4 w-4 mr-2" />
-            Email Certificate
-          </Button>
-
-          <Button
+            Email
+          </button>
+          <button
+            type="button"
             onClick={() => {
               const url = createInvoiceFromCertificate({
                 clientName: formData.clientName || '',
                 clientEmail: formData.clientEmail || '',
                 clientPhone: formData.clientPhone || '',
-                clientAddress: formData.clientAddress || formData.clientAddress || '',
+                clientAddress: formData.clientAddress || '',
                 installationAddress: formData.installationAddress || '',
                 certificateType: 'EIC',
                 certificateReference: formData.certificateNumber || '',
@@ -481,13 +423,11 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
               });
               navigate(url);
             }}
-            variant="outline"
             disabled={!canGenerateCertificate}
-            className="h-12 touch-manipulation border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+            className="h-10 touch-manipulation bg-white/[0.05] border border-elec-yellow/30 text-elec-yellow rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
           >
-            <Receipt className="h-4 w-4 mr-2" />
-            Create Invoice
-          </Button>
+            Invoice
+          </button>
         </div>
       </div>
 
@@ -502,19 +442,19 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
       {/* Email Dialog */}
       <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
-        <DialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md overflow-hidden">
+        <DialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-md overflow-hidden bg-white/[0.03] border border-white/[0.06]">
           <DialogHeader className="text-left">
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className="flex items-center gap-2 text-white">
               <Mail className="h-5 w-5 text-elec-yellow shrink-0" />
               Email EIC Certificate
             </DialogTitle>
-            <DialogDescription className="text-left">
+            <DialogDescription className="text-left text-white">
               The certificate will be generated and sent as a PDF attachment.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-2 min-w-0">
             <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-white">
+              <label htmlFor="email" className="text-white text-xs font-medium">
                 Recipient Email
               </label>
               <Input
@@ -525,14 +465,14 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
                 value={emailRecipient}
                 onChange={(e) => setEmailRecipient(e.target.value)}
                 disabled={isSendingEmail}
-                className="h-12 text-base text-left touch-manipulation w-full"
+                className="h-12 text-base text-left touch-manipulation w-full bg-white/[0.06] border-white/[0.08] text-white"
               />
             </div>
             {formData.clientEmail && emailRecipient !== formData.clientEmail && (
               <button
                 type="button"
                 onClick={() => setEmailRecipient(formData.clientEmail)}
-                className="w-full h-11 flex items-center gap-2 px-3 text-sm touch-manipulation border border-white/20 rounded-lg text-white hover:bg-white/5 active:scale-[0.98] transition-transform overflow-hidden"
+                className="w-full h-11 flex items-center gap-2 px-3 text-sm touch-manipulation border border-white/[0.08] rounded-lg text-white hover:bg-white/[0.05] active:scale-[0.98] transition-transform overflow-hidden"
               >
                 <Mail className="h-4 w-4 text-elec-yellow shrink-0" />
                 <span className="truncate">Use Client Email: {formData.clientEmail}</span>
@@ -540,31 +480,32 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
             )}
           </div>
           <div className="flex flex-col gap-3 pt-2">
-            <Button
+            <button
+              type="button"
               onClick={handleSendEmail}
               disabled={isSendingEmail || !emailRecipient}
-              className="h-12 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl active:scale-[0.98] transition-transform"
+              className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold rounded-xl active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
             >
               {isSendingEmail ? (
                 <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                   Sending...
                 </>
               ) : (
                 <>
-                  <Mail className="h-4 w-4 mr-2" />
+                  <Mail className="h-4 w-4" />
                   Send Certificate
                 </>
               )}
-            </Button>
-            <Button
-              variant="ghost"
+            </button>
+            <button
+              type="button"
               onClick={() => setShowEmailDialog(false)}
               disabled={isSendingEmail}
-              className="h-11 w-full touch-manipulation text-white hover:bg-white/5"
+              className="h-11 w-full touch-manipulation text-white hover:bg-white/[0.05] rounded-xl"
             >
               Cancel
-            </Button>
+            </button>
           </div>
         </DialogContent>
       </Dialog>

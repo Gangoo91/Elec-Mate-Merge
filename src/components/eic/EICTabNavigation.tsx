@@ -1,10 +1,6 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, ChevronRight, CheckCircle, Circle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
 import { EICTabValue } from '@/hooks/useEICTabs';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
 
@@ -22,144 +18,76 @@ interface EICTabNavigationProps {
   onToggleComplete: () => void;
   onGenerateCertificate?: () => void;
   canGenerateCertificate?: boolean;
+  showGenerate?: boolean;
 }
 
 const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
-  currentTab,
   currentTabIndex,
   totalTabs,
   canNavigateNext,
   canNavigatePrevious,
   navigateNext,
   navigatePrevious,
-  getProgressPercentage,
-  isCurrentTabComplete,
-  currentTabHasRequiredFields,
-  onToggleComplete,
   onGenerateCertificate,
   canGenerateCertificate = true,
+  showGenerate,
 }) => {
-  const isMobile = useIsMobile();
   const haptic = useHaptic();
-
-  const getTabDisplayName = (tab: EICTabValue) => {
-    const names = {
-      installation: 'Installation Details',
-      inspections: 'Schedule of Inspections',
-      testing: 'Schedule of Testing',
-      declarations: 'Declarations',
-    };
-    return names[tab];
-  };
 
   const handlePrevious = () => {
     haptic.light();
     navigatePrevious();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNext = () => {
     haptic.light();
     navigateNext();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleToggleComplete = () => {
-    haptic.light();
-    onToggleComplete();
-  };
-
-  const handleGenerateCertificate = () => {
+  const handleGenerate = () => {
     haptic.success();
     onGenerateCertificate?.();
   };
 
+  const isLastTab = currentTabIndex === totalTabs - 1;
+
   return (
-    <div
-      className={cn(
-        'border rounded-lg p-3 md:p-6 space-y-3 md:space-y-4',
-        isMobile && 'border-border/30 bg-card/30'
-      )}
-    >
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div className="flex items-center gap-2 md:gap-4 flex-wrap">
-          <Badge variant="outline" className="text-sm">
-            Step {currentTabIndex + 1} of {totalTabs}
-          </Badge>
-          <h3 className="font-medium text-elec-yellow">{getTabDisplayName(currentTab)}</h3>
-        </div>
-
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleToggleComplete}
-            className={cn(
-              'flex items-center space-x-1 h-11 touch-manipulation',
-              isCurrentTabComplete ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'
-            )}
+    <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-t border-white/[0.06] px-4 py-3 safe-area-bottom">
+      <div className="flex gap-2 max-w-xl mx-auto">
+        {canNavigatePrevious && (
+          <button
+            onClick={handlePrevious}
+            className="h-12 w-12 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.95] transition-all shrink-0"
           >
-            {isCurrentTabComplete ? (
-              <CheckCircle className="h-4 w-4" />
-            ) : (
-              <Circle className="h-4 w-4" />
-            )}
-            <span className="text-xs">{isCurrentTabComplete ? 'Complete' : 'Mark Complete'}</span>
-          </Button>
-        </div>
-      </div>
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+        )}
 
-      <div className="space-y-2">
-        <div className="flex justify-between text-xs text-muted-foreground">
-          <span>Progress</span>
-          <span>{getProgressPercentage()}%</span>
-        </div>
-        <Progress value={getProgressPercentage()} className="h-2" />
-      </div>
-
-      <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center pt-2">
-        <Button
-          variant="outline"
-          onClick={handlePrevious}
-          disabled={!canNavigatePrevious}
-          className="h-12 w-full md:w-auto flex items-center justify-center space-x-2 touch-manipulation bg-card/50 border-border/30 hover:bg-card active:bg-card/70"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          <span>Previous</span>
-        </Button>
-
-        <div className="flex flex-wrap justify-center gap-2 order-first md:order-none">
-          {currentTabHasRequiredFields && (
-            <Badge variant="secondary" className="text-xs">
-              Required fields completed
-            </Badge>
-          )}
-          {isCurrentTabComplete && (
-            <Badge
-              variant="default"
-              className="text-xs bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/30"
-            >
-              Section complete
-            </Badge>
-          )}
-        </div>
-
-        {currentTabIndex === totalTabs - 1 ? (
-          <Button
-            onClick={handleGenerateCertificate}
+        {isLastTab && showGenerate ? (
+          <button
+            onClick={handleGenerate}
             disabled={!canGenerateCertificate}
-            className="h-14 w-full md:w-auto flex items-center justify-center space-x-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-12 flex-1 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all bg-elec-yellow text-black disabled:opacity-50"
           >
-            <CheckCircle className="h-5 w-5" />
-            <span>Generate Certificate</span>
-          </Button>
+            <CheckCircle className="h-4 w-4" />
+            Generate Certificate
+          </button>
         ) : (
-          <Button
+          <button
             onClick={handleNext}
             disabled={!canNavigateNext}
-            className="h-12 w-full md:w-auto flex items-center justify-center space-x-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+            className={cn(
+              'h-12 flex-1 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-all',
+              canNavigateNext
+                ? 'bg-elec-yellow text-black'
+                : 'bg-white/[0.06] border border-white/[0.08] text-white'
+            )}
           >
-            <span>Next</span>
+            Next
             <ChevronRight className="h-4 w-4" />
-          </Button>
+          </button>
         )}
       </div>
     </div>

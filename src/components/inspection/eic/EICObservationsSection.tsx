@@ -1,9 +1,14 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { AlertTriangle, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import EICDefectObservationsList from './EICDefectObservationsList';
 import { EICObservation } from '@/hooks/useEICObservations';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
 
 interface EICObservationsSectionProps {
   observations: EICObservation[];
@@ -31,57 +36,46 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
 
   return (
     <div className={className} id="eic-observations-section">
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Observations and Limitations
-            {criticalCount > 0 && (
-              <span className="ml-2 px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-medium rounded-full">
-                {criticalCount} defects
-              </span>
-            )}
-            {limitationsCount > 0 && (
-              <span className="ml-2 px-2 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-medium rounded-full">
-                {limitationsCount} limitation{limitationsCount !== 1 ? 's' : ''}
-              </span>
-            )}
-          </CardTitle>
-          <p className="text-sm text-white">
-            Record any unsatisfactory items, limitations, or observations identified during the
-            inspection
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <p className="text-sm text-white">
-                {observations.length === 0
-                  ? 'No observations recorded'
-                  : `${observations.length} observation${observations.length !== 1 ? 's' : ''} recorded`}
-              </p>
-              <Button
-                onClick={onAddObservation}
-                variant="outline"
-                size="default"
-                className="h-11 touch-manipulation"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Observation
-              </Button>
-            </div>
+      <div className="space-y-4">
+        <SectionTitle title="Observations and Limitations" />
 
-            <EICDefectObservationsList
-              observations={observations}
-              reportId={reportId}
-              onAddObservation={onAddObservation}
-              onUpdateObservation={onUpdateObservation}
-              onRemoveObservation={onRemoveObservation}
-              onSyncToInspectionItem={onSyncToInspectionItem}
-            />
-          </div>
-        </CardContent>
-      </Card>
+        <div className="flex items-center gap-2 flex-wrap">
+          {criticalCount > 0 && (
+            <span className="px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-medium rounded-full">
+              {criticalCount} defects
+            </span>
+          )}
+          {limitationsCount > 0 && (
+            <span className="px-2 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-medium rounded-full">
+              {limitationsCount} limitation{limitationsCount !== 1 ? 's' : ''}
+            </span>
+          )}
+        </div>
+
+        <div className="flex justify-between items-center">
+          <p className="text-xs text-white">
+            {observations.length === 0
+              ? 'No observations recorded'
+              : `${observations.length} observation${observations.length !== 1 ? 's' : ''}`}
+          </p>
+          <button
+            onClick={onAddObservation}
+            className="h-11 px-4 rounded-lg bg-white/[0.05] border border-white/[0.08] text-white text-sm font-medium touch-manipulation active:scale-[0.98] flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" />
+            Add
+          </button>
+        </div>
+
+        <EICDefectObservationsList
+          observations={observations}
+          reportId={reportId}
+          onAddObservation={onAddObservation}
+          onUpdateObservation={onUpdateObservation}
+          onRemoveObservation={onRemoveObservation}
+          onSyncToInspectionItem={onSyncToInspectionItem}
+        />
+      </div>
     </div>
   );
 };

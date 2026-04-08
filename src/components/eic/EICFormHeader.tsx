@@ -1,17 +1,7 @@
-/**
- * EIC Form Header
- *
- * Sticky backdrop-blur header matching EICR pattern.
- * Progress is handled by SmartTabs below.
- */
-
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Plus, Zap } from 'lucide-react';
+import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { SyncStatusIndicator } from '@/components/ui/sync-status-indicator';
 import { SyncStatus } from '@/hooks/useCloudSync';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptic } from '@/hooks/useHaptic';
 
 interface EICFormHeaderProps {
   onBack: () => void;
@@ -34,98 +24,31 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
   onBack,
   isSaving = false,
   onManualSave,
-  onStartNew,
   formData,
   syncState,
   isOnline = true,
   isAuthenticated = false,
-  onSyncNow,
 }) => {
-  const isMobile = useIsMobile();
-  const haptic = useHaptic();
+  const certNumber = formData?.certificateNumber;
 
-  const handleBack = () => {
-    haptic.light();
-    onBack();
-  };
-
-  const handleSave = () => {
-    haptic.light();
-    onManualSave?.();
-  };
-
-  if (isMobile) {
-    return (
-      <div className="-mx-4 bg-background/95 backdrop-blur-md sticky top-0 z-40 border-b border-border/30">
-        <div className="flex items-center h-14 px-4">
-          <Button
-            variant="ghost"
-            onClick={handleBack}
-            size="icon"
-            className="h-14 w-14 shrink-0 -ml-4 touch-manipulation active:scale-95 transition-transform rounded-none"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-
-          <div className="flex-1 min-w-0 flex items-center gap-2">
-            <Zap className="h-4 w-4 text-elec-yellow shrink-0" />
-            <span className="font-semibold truncate text-base">EIC</span>
-          </div>
-
-          {syncState && (
-            <SyncStatusIndicator
-              status={syncState.status}
-              lastSyncTime={syncState.lastSyncTime}
-              isOnline={isOnline}
-              isAuthenticated={isAuthenticated}
-              onSyncNow={onSyncNow}
-              className="shrink-0 mr-2"
-            />
-          )}
-
-          <Button
-            onClick={handleSave}
-            disabled={isSaving || syncState?.status === 'syncing'}
-            variant="ghost"
-            size="icon"
-            className="h-14 w-14 shrink-0 -mr-4 touch-manipulation active:scale-95 transition-transform rounded-none"
-          >
-            <Save className="h-5 w-5" />
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  // Desktop layout - clean professional header matching EICR
   return (
-    <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border/30">
-      <Button
-        variant="ghost"
-        onClick={handleBack}
-        size="sm"
-        className="gap-1.5 -ml-2 text-muted-foreground hover:text-foreground"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back
-      </Button>
-
-      <div className="flex items-center gap-3 flex-1">
-        <div className="flex items-center justify-center h-9 w-9 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-          <Zap className="h-4 w-4 text-elec-yellow" />
-        </div>
-        <div className="flex flex-col">
-          <h1 className="text-base font-semibold leading-tight">
-            EIC - Electrical Installation Certificate
-          </h1>
-          {formData?.certificateNumber && (
-            <span className="text-xs text-muted-foreground font-mono">
-              {formData.certificateNumber}
-            </span>
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2.5">
+        <button
+          onClick={onBack}
+          className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </button>
+        <div>
+          <h1 className="text-sm font-bold text-white leading-tight">EIC</h1>
+          {certNumber && (
+            <p className="text-[10px] text-white font-mono mt-0.5">
+              {certNumber}
+            </p>
           )}
         </div>
       </div>
-
       <div className="flex items-center gap-2">
         {syncState && (
           <SyncStatusIndicator
@@ -133,32 +56,21 @@ const EICFormHeader: React.FC<EICFormHeaderProps> = ({
             lastSyncTime={syncState.lastSyncTime}
             isOnline={isOnline}
             isAuthenticated={isAuthenticated}
-            onSyncNow={onSyncNow}
           />
         )}
-        {onStartNew && (
-          <Button
-            onClick={() => {
-              haptic.light();
-              onStartNew();
-            }}
-            variant="outline"
-            size="sm"
-            className="border-border/40 hover:border-border/60"
+        {onManualSave && (
+          <button
+            onClick={onManualSave}
+            disabled={isSaving || syncState?.status === 'syncing'}
+            className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
           >
-            <Plus className="h-4 w-4 mr-1.5" />
-            New
-          </Button>
+            {isSaving ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Save className="h-4 w-4" />
+            )}
+          </button>
         )}
-        <Button
-          onClick={handleSave}
-          disabled={isSaving || syncState?.status === 'syncing'}
-          size="sm"
-          className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-        >
-          <Save className="h-4 w-4 mr-1.5" />
-          Save
-        </Button>
       </div>
     </div>
   );

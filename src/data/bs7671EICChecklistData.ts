@@ -1,6 +1,6 @@
 /**
  * BS 7671 EIC Schedule of Inspections Data
- * Based on IET Model Forms for BS 7671:2018+A2:2022
+ * Based on IET Model Forms for BS 7671:2018+A3:2024
  * Official EIC Schedule of Inspections (14 items)
  */
 

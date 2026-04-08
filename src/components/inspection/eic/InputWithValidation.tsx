@@ -1,8 +1,7 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { CheckCircle, AlertCircle, Info } from 'lucide-react';
+import { CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface InputWithValidationProps {
@@ -50,22 +49,14 @@ const InputWithValidation: React.FC<InputWithValidationProps> = ({
   const showSuccess = touched && isComplete && isValid;
 
   return (
-    <div className={cn('space-y-2', className)}>
-      <div className="flex items-center gap-2">
-        <Label htmlFor={id}>
+    <div className={cn('space-y-1.5', className)}>
+      <div className="flex items-center gap-1.5">
+        <Label htmlFor={id} className="text-white text-xs">
           {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && ' *'}
         </Label>
-
-        {showSuccess && <CheckCircle className="h-4 w-4 text-green-500" />}
-
-        {showError && <AlertCircle className="h-4 w-4 text-red-500" />}
-
-        {required && !touched && (
-          <Badge variant="secondary" className="text-xs">
-            Required
-          </Badge>
-        )}
+        {showSuccess && <CheckCircle className="h-3 w-3 text-green-400" />}
+        {showError && <AlertCircle className="h-3 w-3 text-red-400" />}
       </div>
 
       <Input
@@ -77,20 +68,18 @@ const InputWithValidation: React.FC<InputWithValidationProps> = ({
         onBlur={() => setTouched(true)}
         placeholder={placeholder}
         className={cn(
-          showError && 'border-red-300 focus:border-red-500',
-          showSuccess && 'border-green-300 focus:border-green-500'
+          'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
+          showError && 'border-red-500/50 focus:border-red-500',
+          showSuccess && 'border-green-500/50 focus:border-green-500'
         )}
       />
 
       {helpText && (
-        <div className="flex items-start gap-1 text-xs text-white">
-          <Info className="h-3 w-3 mt-0.5 flex-shrink-0" />
-          <span>{helpText}</span>
-        </div>
+        <span className="text-[10px] text-white block">{helpText}</span>
       )}
 
       {showError && validationRules?.message && (
-        <p className="text-xs text-red-600 flex items-center gap-1">
+        <p className="text-[10px] text-red-400 flex items-center gap-1">
           <AlertCircle className="h-3 w-3" />
           {validationRules.message}
         </p>

@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Camera, Upload, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 interface InspectionPhotoUploadProps {
   onPhotoCapture: (file: File) => Promise<void>;
@@ -18,44 +17,35 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Pre-upload validation
-    const maxSize = 20 * 1024 * 1024; // 20MB (desktop photos can be larger)
+    const maxSize = 20 * 1024 * 1024;
     const allowedTypes = [
       'image/jpeg', 'image/jpg', 'image/png', 'image/webp',
-      'image/heic', 'image/heif', // iPhone/desktop photos
+      'image/heic', 'image/heif',
     ];
 
-    // Validate file size
     if (file.size > maxSize) {
-      alert(
-        `File size too large. Maximum allowed size is 20MB. Your file is ${(file.size / 1024 / 1024).toFixed(2)}MB.`
-      );
-      e.target.value = ''; // Reset input
+      alert(`File too large. Max 20MB. Yours: ${(file.size / 1024 / 1024).toFixed(1)}MB.`);
+      e.target.value = '';
       return;
     }
 
-    // Validate file type — some browsers report HEIC with empty type, fall back to extension check
     const validExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.heic', '.heif'];
     const fileName = file.name.toLowerCase();
     const hasValidExtension = validExtensions.some((ext) => fileName.endsWith(ext));
     const hasValidType = allowedTypes.includes(file.type) || file.type === '';
 
     if (!hasValidType && !hasValidExtension) {
-      alert(`Invalid file type. Supported formats: JPEG, PNG, WEBP, HEIC.`);
-      e.target.value = ''; // Reset input
+      alert('Invalid file type. Use JPEG, PNG, WEBP, or HEIC.');
+      e.target.value = '';
       return;
     }
 
-    // All validation passed, proceed with upload
     await onPhotoCapture(file);
-
-    // Reset input
     e.target.value = '';
   };
 
   return (
-    <div className="flex gap-2 flex-wrap">
-      {/* Camera Capture (Mobile) */}
+    <div className="grid grid-cols-2 gap-1">
       <input
         ref={cameraInputRef}
         type="file"
@@ -64,23 +54,16 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
         onChange={handleFileChange}
         className="hidden"
       />
-      <Button
+      <button
         type="button"
-        variant="outline"
-        size="sm"
         onClick={() => cameraInputRef.current?.click()}
         disabled={isUploading}
-        className="flex-1 sm:flex-none"
+        className="h-9 rounded-lg text-[10px] font-semibold bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1"
       >
-        {isUploading ? (
-          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-        ) : (
-          <Camera className="h-4 w-4 mr-2" />
-        )}
+        {isUploading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
         Take Photo
-      </Button>
+      </button>
 
-      {/* File Upload */}
       <input
         ref={fileInputRef}
         type="file"
@@ -88,21 +71,15 @@ const InspectionPhotoUpload: React.FC<InspectionPhotoUploadProps> = ({
         onChange={handleFileChange}
         className="hidden"
       />
-      <Button
+      <button
         type="button"
-        variant="outline"
-        size="sm"
         onClick={() => fileInputRef.current?.click()}
         disabled={isUploading}
-        className="flex-1 sm:flex-none"
+        className="h-9 rounded-lg text-[10px] font-semibold bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-1"
       >
-        {isUploading ? (
-          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-        ) : (
-          <Upload className="h-4 w-4 mr-2" />
-        )}
-        Upload Photo
-      </Button>
+        {isUploading ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
+        Upload
+      </button>
     </div>
   );
 };

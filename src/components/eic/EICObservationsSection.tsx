@@ -1,18 +1,16 @@
-/**
- * EIC Observations Section
- *
- * Premium glass morphism section for recording observations and limitations.
- * Native mobile app feel with touch-optimized controls.
- */
-
 import React from 'react';
-import { motion } from 'framer-motion';
-import { AlertTriangle, Plus, FileWarning, Info } from 'lucide-react';
+import { Plus, AlertTriangle, Info } from 'lucide-react';
 import EICDefectObservationsList from './EICDefectObservationsList';
 import { EICObservation } from '@/hooks/useEICObservations';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
 
 interface EICObservationsSectionProps {
   observations: EICObservation[];
@@ -33,7 +31,6 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
   onSyncToInspectionItem,
   className,
 }) => {
-  const isMobile = useIsMobile();
   const haptic = useHaptic();
   const unsatisfactoryCount = observations.filter(
     (obs) => obs.defectCode === 'unsatisfactory'
@@ -46,81 +43,46 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
   };
 
   return (
-    <div className={cn('space-y-3', isMobile && '-mx-4', className)} id="eic-observations-section">
-      {/* Section Header */}
-      <div
-        className={cn(
-          'flex items-center justify-between',
-          isMobile
-            ? 'px-4 py-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]'
-            : 'pb-3 border-b border-border/30'
+    <div className={cn('space-y-3', className)} id="eic-observations-section">
+      <SectionTitle title="Observations & Limitations" />
+
+      <div className="flex items-center gap-2 flex-wrap">
+        {unsatisfactoryCount > 0 && (
+          <span className="flex items-center gap-1 px-2 py-1 bg-red-500/10 text-red-400 border border-red-500/20 text-xs font-medium rounded-full">
+            <AlertTriangle className="w-3 h-3" />
+            {unsatisfactoryCount} defects
+          </span>
         )}
+        {limitationsCount > 0 && (
+          <span className="flex items-center gap-1 px-2 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs font-medium rounded-full">
+            <Info className="w-3 h-3" />
+            {limitationsCount} LIM
+          </span>
+        )}
+      </div>
+
+      <button
+        onClick={handleAddObservation}
+        className="w-full h-11 rounded-lg font-medium text-sm bg-white/[0.05] border border-white/[0.08] text-white flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98]"
       >
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-orange-500/20 flex items-center justify-center shrink-0">
-            <AlertTriangle className="h-5 w-5 text-orange-400" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-foreground">Observations & Limitations</h3>
-          </div>
-        </div>
+        <Plus className="w-4 h-4" />
+        Add Observation
+      </button>
 
-        {/* Badges */}
-        <div className="flex items-center gap-2">
-          {unsatisfactoryCount > 0 && (
-            <span className="flex items-center gap-1 px-2 py-1 bg-red-500/15 text-red-400 text-xs font-medium rounded-full">
-              <AlertTriangle className="w-3 h-3" />
-              {unsatisfactoryCount}
-            </span>
-          )}
-          {limitationsCount > 0 && (
-            <span className="flex items-center gap-1 px-2 py-1 bg-purple-500/15 text-purple-400 text-xs font-medium rounded-full">
-              <Info className="w-3 h-3" />
-              {limitationsCount}
-            </span>
-          )}
-        </div>
-      </div>
-
-      {/* Content Area */}
-      <div className={cn(isMobile && 'px-4')}>
-        {/* Add Observation Button - Always Visible */}
-        <motion.button
-          onClick={handleAddObservation}
-          whileTap={{ scale: 0.98 }}
-          className={cn(
-            'w-full h-12 rounded-xl font-medium text-sm',
-            'bg-orange-500/10 text-orange-400 border border-orange-500/20',
-            'hover:bg-orange-500/15 transition-colors duration-200',
-            'flex items-center justify-center gap-2',
-            'touch-manipulation'
-          )}
-        >
-          <Plus className="w-4 h-4" />
-          Add Observation
-        </motion.button>
-      </div>
-
-      {/* Observations List */}
       {observations.length > 0 && (
-        <div className={cn(isMobile && 'px-4')}>
-          <EICDefectObservationsList
-            observations={observations}
-            reportId={reportId}
-            onAddObservation={handleAddObservation}
-            onUpdateObservation={onUpdateObservation}
-            onRemoveObservation={onRemoveObservation}
-            onSyncToInspectionItem={onSyncToInspectionItem}
-          />
-        </div>
+        <EICDefectObservationsList
+          observations={observations}
+          reportId={reportId}
+          onAddObservation={handleAddObservation}
+          onUpdateObservation={onUpdateObservation}
+          onRemoveObservation={onRemoveObservation}
+          onSyncToInspectionItem={onSyncToInspectionItem}
+        />
       )}
 
-      {/* Empty State */}
       {observations.length === 0 && (
-        <div className={cn('text-center py-6 text-white', isMobile && 'px-4')}>
-          <FileWarning className="w-8 h-8 mx-auto mb-2 opacity-40" />
-          <p className="text-sm">No observations recorded</p>
-          <p className="text-xs mt-1">Tap above to add any defects or limitations</p>
+        <div className="text-center py-6 text-white">
+          <p className="text-xs">No observations recorded</p>
         </div>
       )}
     </div>

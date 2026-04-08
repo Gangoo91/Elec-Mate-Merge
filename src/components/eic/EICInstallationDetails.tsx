@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Textarea } from '@/components/ui/textarea';
 import EICClientDetailsSection from './EICClientDetailsSection';
 import EICSupplyCharacteristicsSection from './EICSupplyCharacteristicsSection';
 import EICElectricalInstallationSection from './EICElectricalInstallationSection';
 import EarthingAndBondingSection from './EarthingAndBondingSection';
 import StandardsComplianceSection from './StandardsComplianceSection';
 import SmartFieldDependencies from './SmartFieldDependencies';
-import KeyboardNavigationProvider from './KeyboardNavigationProvider';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FormField = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    {children}
+  </div>
+);
 
 interface EICInstallationDetailsProps {
   formData: any;
@@ -18,68 +30,33 @@ interface EICInstallationDetailsProps {
 const EICInstallationDetails: React.FC<EICInstallationDetailsProps> = ({
   formData,
   onUpdate,
-  onQuickSave,
 }) => {
-  const isMobile = useIsMobile();
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
-    client: true,
-    supply: true,
-    electrical: true,
-    earthing: true,
-    standards: true,
-  });
-
-  const toggleSection = (section: string) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
-
   return (
-    <KeyboardNavigationProvider onQuickSave={onQuickSave}>
-      <div className={cn('space-y-4', isMobile && '-mx-4')}>
-        {/* Smart Field Dependencies - invisible component that handles auto-fills */}
-        <SmartFieldDependencies formData={formData} onUpdate={onUpdate} />
+    <div className="space-y-4 pb-20 lg:pb-4">
+      <SmartFieldDependencies formData={formData} onUpdate={onUpdate} />
+      <EICClientDetailsSection formData={formData} onUpdate={onUpdate} />
+      <EICSupplyCharacteristicsSection formData={formData} onUpdate={onUpdate} />
+      <EICElectricalInstallationSection formData={formData} onUpdate={onUpdate} />
+      <EarthingAndBondingSection formData={formData} onUpdate={onUpdate} />
+      <StandardsComplianceSection formData={formData} onUpdate={onUpdate} />
 
-        {/* Client & Installation Information */}
-        <EICClientDetailsSection
-          formData={formData}
-          onUpdate={onUpdate}
-          isOpen={openSections.client}
-          onToggle={() => toggleSection('client')}
-        />
+      {/* Comments on Existing Installation — BS 7671 Reg 644.1.2 */}
+      {(formData.workType === 'addition' || formData.workType === 'alteration') && (
+        <div className="space-y-4">
+          <SectionTitle title="Comments on Existing Installation" />
+          <p className="text-[10px] text-white">
+            In the case of an addition or alteration, see Regulation 644.1.2
+          </p>
+          <Textarea
+            value={formData.existingInstallationComments || ''}
+            onChange={(e) => onUpdate('existingInstallationComments', e.target.value)}
+            placeholder="Record any comments on the condition of the existing installation..."
+            className="min-h-[100px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white"
+          />
+        </div>
+      )}
 
-        {/* Supply Characteristics */}
-        <EICSupplyCharacteristicsSection
-          formData={formData}
-          onUpdate={onUpdate}
-          isOpen={openSections.supply}
-          onToggle={() => toggleSection('supply')}
-        />
-
-        {/* Electrical Installation Details */}
-        <EICElectricalInstallationSection
-          formData={formData}
-          onUpdate={onUpdate}
-          isOpen={openSections.electrical}
-          onToggle={() => toggleSection('electrical')}
-        />
-
-        {/* Earthing and Bonding */}
-        <EarthingAndBondingSection
-          formData={formData}
-          onUpdate={onUpdate}
-          isOpen={openSections.earthing}
-          onToggle={() => toggleSection('earthing')}
-        />
-
-        {/* Standards and Compliance */}
-        <StandardsComplianceSection
-          formData={formData}
-          onUpdate={onUpdate}
-          isOpen={openSections.standards}
-          onToggle={() => toggleSection('standards')}
-        />
-      </div>
-    </KeyboardNavigationProvider>
+    </div>
   );
 };
 

@@ -26,7 +26,7 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
         className={cn(
           'flex items-center justify-between gap-3',
           isMobile
-            ? 'px-4 py-4 bg-card/30 border-y border-border/20'
+            ? 'px-4 py-4 bg-white/[0.03] border-y border-white/[0.06]'
             : 'p-4 border-b border-white/10'
         )}
       >

@@ -1,437 +1,315 @@
-import React from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import SectionHeader from '@/components/ui/section-header';
-import { Users, FileText, ChevronDown } from 'lucide-react';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useMultiFieldSync } from '@/hooks/useFieldSync';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FormField = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    {children}
+  </div>
+);
 
 interface EICClientDetailsSectionProps {
   formData: Record<string, unknown>;
   onUpdate: (field: string, value: string) => void;
-  isOpen: boolean;
-  onToggle: () => void;
 }
 
-const EICClientDetailsSection = ({
-  formData,
-  onUpdate,
-  isOpen,
-  onToggle,
-}: EICClientDetailsSectionProps) => {
-  const isMobile = useIsMobile();
+const CLIENT_SECTION_FIELDS = [
+  'clientName', 'clientPhone', 'clientEmail', 'clientAddress', 'occupier',
+  'sameAsClientAddress', 'installationAddress', 'description',
+  'installationType', 'workType', 'extentOfInstallation',
+  'continuationSheetNo', 'installationDate', 'constructionDate', 'testDate',
+] as const;
 
-  const handleSameAddressToggle = (checked: boolean) => {
-    if (checked && formData.clientAddress) {
-      onUpdate('installationAddress', formData.clientAddress);
+type ClientSectionFields = { [K in (typeof CLIENT_SECTION_FIELDS)[number]]?: string };
+
+const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSectionProps) => {
+  const haptic = useHaptic();
+  const [clientType, setClientType] = useState<'new' | 'existing'>('new');
+
+  const initialFieldValues = useMemo(() => {
+    const values: ClientSectionFields = {};
+    for (const field of CLIENT_SECTION_FIELDS) {
+      values[field] = (formData[field] as string) || '';
     }
-    onUpdate('sameAsClientAddress', checked ? 'true' : 'false');
-  };
+    return values;
+  }, [formData]);
 
-  const handleSelectCustomer = (customer: Customer | null) => {
-    if (customer) {
-      onUpdate('clientName', customer.name || '');
-      onUpdate('clientEmail', customer.email || '');
-      onUpdate('clientPhone', customer.phone || '');
-      onUpdate('clientAddress', customer.address || '');
-      if (formData.sameAsClientAddress === 'true' && customer.address) {
-        onUpdate('installationAddress', customer.address);
+  const handleBatchUpdate = useCallback(
+    (updates: Partial<ClientSectionFields>) => {
+      for (const [field, value] of Object.entries(updates)) {
+        onUpdate(field, value);
       }
-    }
-  };
+    },
+    [onUpdate]
+  );
 
-  // Calculate completion percentage
-  const getCompletionPercentage = () => {
-    const requiredFields = [
-      'clientName',
-      'clientAddress',
-      'installationAddress',
-      'description',
-      'installationDate',
-      'workType',
-    ];
-    const filled = requiredFields.filter((f) => formData[f]).length;
-    return Math.round((filled / requiredFields.length) * 100);
-  };
+  const { values: localValues, setValue, setValues, flush } = useMultiFieldSync(initialFieldValues, handleBatchUpdate, 500);
 
-  // Handle work type checkbox changes (IET form requires: New / Addition / Alteration)
-  const handleWorkTypeChange = (type: string, checked: boolean) => {
-    if (checked) {
-      onUpdate('workType', type);
-    } else if (formData.workType === type) {
-      onUpdate('workType', '');
-    }
-  };
+  const handleFieldChange = useCallback(
+    (field: keyof ClientSectionFields, value: string) => { setValue(field, value); },
+    [setValue]
+  );
+
+  const handleSameAddressToggle = useCallback(
+    (checked: boolean) => {
+      haptic.light();
+      const updates: Partial<ClientSectionFields> = { sameAsClientAddress: checked ? 'true' : 'false' };
+      if (checked && localValues.clientAddress) { updates.installationAddress = localValues.clientAddress; }
+      setValues(updates);
+      flush();
+    },
+    [haptic, localValues.clientAddress, setValues, flush]
+  );
+
+  const handleSelectCustomer = useCallback(
+    (customer: Customer | null) => {
+      if (customer) {
+        haptic.success();
+        const updates: Partial<ClientSectionFields> = {
+          clientName: customer.name || '',
+          clientEmail: customer.email || '',
+          clientPhone: customer.phone || '',
+          clientAddress: customer.address || '',
+        };
+        if (localValues.sameAsClientAddress === 'true' && customer.address) {
+          updates.installationAddress = customer.address;
+        }
+        setValues(updates);
+        flush();
+      }
+    },
+    [haptic, localValues.sameAsClientAddress, setValues, flush]
+  );
 
   return (
-    <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-      <Collapsible open={isOpen} onOpenChange={onToggle}>
-        <CollapsibleTrigger className="w-full">
-          {isMobile ? (
-            // Mobile: Flat section header - no card wrapper
-            <div className="flex items-center gap-3 py-4 px-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-              <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0">
-                <Users className="h-5 w-5 text-blue-400" />
-              </div>
-              <div className="flex-1 text-left min-w-0">
-                <h3 className="font-semibold text-foreground">Client & Installation Details</h3>
-                <span className="text-xs text-white">{getCompletionPercentage()}% complete</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-5 w-5 text-white transition-transform shrink-0',
-                  isOpen && 'rotate-180'
-                )}
-              />
-            </div>
-          ) : (
-            <SectionHeader
-              title="Client & Installation Details"
-              icon={Users}
-              isOpen={isOpen}
-              color="amber-500"
-              completionPercentage={getCompletionPercentage()}
-            />
-          )}
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div
-            className={cn('space-y-5 sm:space-y-6', isMobile ? 'px-4 py-4' : 'p-4 sm:p-5 md:p-6')}
+    <div className="space-y-6">
+      {/* Client Type Toggle */}
+      <div className="flex gap-1.5">
+        {[
+          { val: 'new' as const, label: 'New Client' },
+          { val: 'existing' as const, label: 'Existing' },
+        ].map((opt) => (
+          <button
+            key={opt.val}
+            type="button"
+            onClick={() => { haptic.light(); setClientType(opt.val); }}
+            className={cn(
+              'flex-1 h-11 rounded-xl border text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
+              clientType === opt.val
+                ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
+                : 'bg-white/[0.03] border-white/[0.06] text-white'
+            )}
           >
-            {/* Certificate Number (Read-only) */}
-            <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-              <div className="flex items-center gap-2 mb-2">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm font-medium text-foreground">Certificate Number</span>
-              </div>
-              <Input
-                id="certificateNumber"
-                value={formData.certificateNumber || ''}
-                readOnly
-                className="bg-white/[0.03] cursor-not-allowed font-mono text-white border-white/[0.08]"
-                tabIndex={-1}
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Existing Client Selector */}
+      {clientType === 'existing' && (
+        <ClientSelector onSelectCustomer={handleSelectCustomer} />
+      )}
+
+      {/* Client Information */}
+      {/* Client Details — grouped card */}
+      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-3">
+        <SectionTitle title="Details of the Client" />
+        <div className="grid grid-cols-2 gap-3 items-end">
+          <FormField label="Client Name" required>
+            <Input
+              value={localValues.clientName || ''}
+              onChange={(e) => handleFieldChange('clientName', e.target.value)}
+              placeholder="Full name"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20"
+            />
+          </FormField>
+          <FormField label="Occupier">
+            <Input
+              value={localValues.occupier || ''}
+              onChange={(e) => handleFieldChange('occupier', e.target.value)}
+              placeholder="If different"
+              className="h-11 text-base touch-manipulation bg-white/[0.04] border-white/[0.06] placeholder:text-white"
+            />
+          </FormField>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 items-end">
+          <FormField label="Phone">
+            <Input
+              type="tel"
+              value={localValues.clientPhone || ''}
+              onChange={(e) => handleFieldChange('clientPhone', e.target.value)}
+              placeholder="Contact number"
+              className="h-11 text-base touch-manipulation bg-white/[0.04] border-white/[0.06] focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20"
+            />
+          </FormField>
+          <FormField label="Email">
+            <Input
+              type="email"
+              value={localValues.clientEmail || ''}
+              onChange={(e) => handleFieldChange('clientEmail', e.target.value)}
+              placeholder="Email address"
+              className="h-11 text-base touch-manipulation bg-white/[0.04] border-white/[0.06] focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20"
+            />
+          </FormField>
+        </div>
+
+        <FormField label="Client Address" required>
+          <Textarea
+            value={localValues.clientAddress || ''}
+            onChange={(e) => handleFieldChange('clientAddress', e.target.value)}
+            placeholder="Full postal address"
+            className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white"
+          />
+        </FormField>
+      </div>
+
+      {/* Installation Address — grouped card */}
+      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-3">
+        <SectionTitle title="Installation Address" />
+        <button
+          type="button"
+          onClick={() => handleSameAddressToggle(localValues.sameAsClientAddress !== 'true')}
+          className={cn(
+            'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2',
+            localValues.sameAsClientAddress === 'true'
+              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+              : 'bg-white/[0.05] border border-white/[0.08] text-white'
+          )}
+        >
+          {localValues.sameAsClientAddress === 'true' && <Check className="h-3.5 w-3.5" />}
+          Same as client address
+        </button>
+
+        {localValues.sameAsClientAddress !== 'true' && (
+          <FormField label="Installation Address" required>
+            <Textarea
+                value={localValues.installationAddress || ''}
+                onChange={(e) => handleFieldChange('installationAddress', e.target.value)}
+                placeholder="Full address of the installation"
+                className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white"
               />
-              <p className="text-xs text-white mt-1.5">Auto-generated and cannot be changed</p>
-            </div>
+            </FormField>
+          )}
+      </div>
 
-            {/* Client Information */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
-                Client Information
-              </h4>
-
-              {/* Client Selector */}
-              <ClientSelector onSelectCustomer={handleSelectCustomer} />
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="clientName" className="text-sm">
-                    Client Name *
-                  </Label>
-                  <Input
-                    id="clientName"
-                    value={formData.clientName || ''}
-                    onChange={(e) => onUpdate('clientName', e.target.value)}
-                    placeholder="Full name of person ordering work"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="clientPhone" className="text-sm">
-                      Client Phone
-                    </Label>
-                    <Input
-                      id="clientPhone"
-                      type="tel"
-                      value={formData.clientPhone || ''}
-                      onChange={(e) => onUpdate('clientPhone', e.target.value)}
-                      placeholder="Contact telephone"
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="clientEmail" className="text-sm">
-                      Client Email
-                    </Label>
-                    <Input
-                      id="clientEmail"
-                      type="email"
-                      value={formData.clientEmail || ''}
-                      onChange={(e) => onUpdate('clientEmail', e.target.value)}
-                      placeholder="Email address"
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="clientAddress" className="text-sm">
-                    Client Address *
-                  </Label>
-                  <Textarea
-                    id="clientAddress"
-                    value={formData.clientAddress || ''}
-                    onChange={(e) => onUpdate('clientAddress', e.target.value)}
-                    placeholder="Client's full postal address"
-                    rows={2}
-                    className="text-base touch-manipulation min-h-[80px]"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Installation Details */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
-                Installation Details
-              </h4>
-
-              {/* Same as client address checkbox */}
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20">
-                <Checkbox
-                  id="sameAsClientAddress"
-                  checked={formData.sameAsClientAddress === 'true'}
-                  onCheckedChange={handleSameAddressToggle}
-                  className="border-elec-yellow/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black mt-0.5"
-                />
-                <Label
-                  htmlFor="sameAsClientAddress"
-                  className="text-sm font-medium cursor-pointer leading-relaxed"
-                >
-                  Installation address is the same as client address
-                </Label>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="installationAddress" className="text-sm">
-                  Installation Address *
-                </Label>
-                <Textarea
-                  id="installationAddress"
-                  value={formData.installationAddress || ''}
-                  onChange={(e) => onUpdate('installationAddress', e.target.value)}
-                  placeholder="Full address of the installation"
-                  rows={2}
-                  disabled={formData.sameAsClientAddress === 'true'}
-                  className={cn(
-                    'text-base touch-manipulation min-h-[80px]',
-                    formData.sameAsClientAddress === 'true' && 'opacity-50'
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="description" className="text-sm">
-                    Description of Work *
-                  </Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description || ''}
-                    onChange={(e) => onUpdate('description', e.target.value)}
-                    placeholder="Describe the electrical installation"
-                    rows={2}
-                    className="text-base touch-manipulation min-h-[80px]"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="installationType" className="text-sm">
-                    Installation Type
-                  </Label>
-                  <Select
-                    value={formData.installationType || ''}
-                    onValueChange={(value) => onUpdate('installationType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="domestic">Domestic</SelectItem>
-                      <SelectItem value="commercial">Commercial</SelectItem>
-                      <SelectItem value="industrial">Industrial</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-
-            {/* Description and Extent of Installation (IET Form Section) */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
-                Description and Extent of Installation
-              </h4>
-
-              {/* Work Type - IET Form checkboxes */}
-              <div className="space-y-2">
-                <Label className="text-sm">Type of Work *</Label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div
-                    className={cn(
-                      'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
-                      formData.workType === 'new'
-                        ? 'bg-green-500/15 border-green-500/50'
-                        : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
-                    )}
-                    onClick={() => handleWorkTypeChange('new', formData.workType !== 'new')}
-                  >
-                    <Checkbox
-                      id="workTypeNew"
-                      checked={formData.workType === 'new'}
-                      onCheckedChange={(checked) => handleWorkTypeChange('new', checked as boolean)}
-                      className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                    />
-                    <Label htmlFor="workTypeNew" className="text-sm font-medium cursor-pointer">
-                      New installation
-                    </Label>
-                  </div>
-                  <div
-                    className={cn(
-                      'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
-                      formData.workType === 'addition'
-                        ? 'bg-blue-500/15 border-blue-500/50'
-                        : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
-                    )}
-                    onClick={() =>
-                      handleWorkTypeChange('addition', formData.workType !== 'addition')
-                    }
-                  >
-                    <Checkbox
-                      id="workTypeAddition"
-                      checked={formData.workType === 'addition'}
-                      onCheckedChange={(checked) =>
-                        handleWorkTypeChange('addition', checked as boolean)
-                      }
-                      className="border-blue-500/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
-                    />
-                    <Label
-                      htmlFor="workTypeAddition"
-                      className="text-sm font-medium cursor-pointer"
-                    >
-                      Addition to existing
-                    </Label>
-                  </div>
-                  <div
-                    className={cn(
-                      'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
-                      formData.workType === 'alteration'
-                        ? 'bg-amber-500/15 border-amber-500/50'
-                        : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
-                    )}
-                    onClick={() =>
-                      handleWorkTypeChange('alteration', formData.workType !== 'alteration')
-                    }
-                  >
-                    <Checkbox
-                      id="workTypeAlteration"
-                      checked={formData.workType === 'alteration'}
-                      onCheckedChange={(checked) =>
-                        handleWorkTypeChange('alteration', checked as boolean)
-                      }
-                      className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                    />
-                    <Label
-                      htmlFor="workTypeAlteration"
-                      className="text-sm font-medium cursor-pointer"
-                    >
-                      Alteration to existing
-                    </Label>
-                  </div>
-                </div>
-              </div>
-
-              {/* Extent of Installation */}
-              <div className="space-y-2">
-                <Label htmlFor="extentOfInstallation" className="text-sm">
-                  Extent of Installation Covered by this Certificate
-                </Label>
-                <Textarea
-                  id="extentOfInstallation"
-                  value={formData.extentOfInstallation || ''}
-                  onChange={(e) => onUpdate('extentOfInstallation', e.target.value)}
-                  placeholder="Describe the extent of installation covered by this certificate (e.g., 'Complete rewire of ground floor' or 'New consumer unit and all circuits')"
-                  rows={3}
-                  className="text-base touch-manipulation min-h-[100px]"
-                />
-                <p className="text-xs text-white">
-                  Specify what parts of the installation are covered by this certificate
-                </p>
-              </div>
-
-              {/* Continuation Sheet Reference (BS 7671) */}
-              <div className="space-y-2">
-                <Label htmlFor="continuationSheetNo" className="text-sm">
-                  Continuation Sheet No.
-                </Label>
-                <Input
-                  id="continuationSheetNo"
-                  value={formData.continuationSheetNo || ''}
-                  onChange={(e) => onUpdate('continuationSheetNo', e.target.value)}
-                  placeholder="e.g., 1"
-                  className="h-11 text-base touch-manipulation max-w-[200px]"
-                />
-              </div>
-            </div>
-
-            {/* Installation Dates */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-elec-yellow">
-                Installation Dates
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="installationDate" className="text-sm">
-                    Date of Installation *
-                  </Label>
-                  <Input
-                    id="installationDate"
-                    type="date"
-                    value={formData.installationDate || ''}
-                    onChange={(e) => onUpdate('installationDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="constructionDate" className="text-sm">
-                    Date of Construction
-                  </Label>
-                  <Input
-                    id="constructionDate"
-                    type="date"
-                    value={formData.constructionDate || ''}
-                    onChange={(e) => onUpdate('constructionDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="testDate" className="text-sm">
-                    Date of Testing
-                  </Label>
-                  <Input
-                    id="testDate"
-                    type="date"
-                    value={formData.testDate || ''}
-                    onChange={(e) => onUpdate('testDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-              </div>
-            </div>
+      {/* Description and Extent of Installation */}
+      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-3">
+        <SectionTitle title="Description & Extent of Installation" />
+          {/* Work Type + Premises side by side */}
+          <div className="grid grid-cols-4 gap-1.5">
+            {[
+              { value: 'new', label: 'New' },
+              { value: 'addition', label: 'Addition' },
+              { value: 'alteration', label: 'Alteration' },
+            ].map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  handleFieldChange('workType', localValues.workType === option.value ? '' : option.value);
+                  flush();
+                }}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98] flex items-center justify-center gap-1',
+                  localValues.workType === option.value
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {localValues.workType === option.value && <Check className="h-3 w-3" />}
+                {option.label}
+              </button>
+            ))}
+            <MobileSelectPicker
+              value={localValues.installationType || ''}
+              onValueChange={(value) => { haptic.light(); handleFieldChange('installationType', value); flush(); }}
+              options={[
+                { value: 'domestic', label: 'Domestic' },
+                { value: 'commercial', label: 'Commercial' },
+                { value: 'industrial', label: 'Industrial' },
+                { value: 'other', label: 'Other' },
+              ]}
+              placeholder="Premises"
+              title="Premises Type"
+              triggerClassName="h-10 text-[11px]"
+            />
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+
+          <FormField label="Description of Installation" required>
+            <Input
+              value={localValues.description || ''}
+              onChange={(e) => handleFieldChange('description', e.target.value)}
+              placeholder="e.g., Full rewire of 3-bed semi-detached"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+            />
+          </FormField>
+
+          <FormField label="Extent Covered by this Certificate">
+            <Input
+              value={localValues.extentOfInstallation || ''}
+              onChange={(e) => handleFieldChange('extentOfInstallation', e.target.value)}
+              placeholder="e.g., All circuits from new consumer unit"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+            />
+          </FormField>
+      </div>
+
+      {/* Dates */}
+      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-3">
+        <SectionTitle title="Dates" />
+          {/* Set all to today button */}
+          <button
+            type="button"
+            onClick={() => {
+              haptic.light();
+              const today = new Date().toISOString().split('T')[0];
+              setValues({ installationDate: today, constructionDate: today, testDate: today });
+              flush();
+            }}
+            className="w-full h-9 rounded-lg text-xs font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
+          >
+            Set all to today
+          </button>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { field: 'installationDate' as const, label: 'Installation *' },
+              { field: 'constructionDate' as const, label: 'Construction' },
+              { field: 'testDate' as const, label: 'Testing' },
+            ].map(({ field, label }) => (
+              <div key={field}>
+                <Label className="text-white text-xs mb-1.5 block">{label}</Label>
+                <div className="relative">
+                  <Input
+                    type="date"
+                    value={localValues[field] || ''}
+                    onChange={(e) => handleFieldChange(field, e.target.value)}
+                    onBlur={flush}
+                    className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] text-xs [&::-webkit-datetime-edit]:text-xs [&::-webkit-date-and-time-value]:text-xs"
+                    style={{ fontSize: '12px' }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+      </div>
     </div>
   );
 };

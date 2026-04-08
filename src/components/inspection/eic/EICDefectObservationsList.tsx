@@ -23,7 +23,7 @@ const EICDefectObservationsList: React.FC<EICDefectObservationsListProps> = ({
 }) => {
   if (observations.length === 0) {
     return (
-      <div className="text-center py-8 border-2 border-dashed border-white/20 rounded-lg">
+      <div className="text-center py-8 border border-dashed border-white/[0.08] rounded-lg">
         <p className="text-white mb-4">No observations recorded yet</p>
         <Button onClick={onAddObservation} variant="outline">
           <Plus className="h-4 w-4 mr-2" />

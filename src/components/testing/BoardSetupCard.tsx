@@ -122,7 +122,7 @@ const MAIN_SWITCH_RATINGS = [
 ];
 
 const inputCn =
-  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/60 focus:border-elec-yellow';
+  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow';
 
 const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   board,
@@ -153,45 +153,78 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         </div>
       </div>
 
-      {/* Reference + Location + Make */}
-      <div className="grid grid-cols-2 gap-3 items-end">
-        <div>
-          <label className="text-xs text-white block mb-1">Reference</label>
-          <Input value={board.reference} onChange={(e) => onUpdate('reference', e.target.value)} placeholder="Main CU" className={inputCn} />
+      {/* Board Details — grouped card */}
+      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-2">
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <div>
+            <label className="text-[10px] text-white block mb-1">Reference</label>
+            <Input value={board.reference} onChange={(e) => onUpdate('reference', e.target.value)} placeholder="Main CU" className={inputCn} />
+          </div>
+          <div>
+            <label className="text-[10px] text-white block mb-1">Location</label>
+            <MobileSelectPicker value={board.location || ''} onValueChange={(value) => onUpdate('location', value)} options={BOARD_LOCATIONS.map((loc) => ({ value: loc, label: loc }))} placeholder="Select" title="Location" triggerClassName="text-white" />
+          </div>
         </div>
+
+        <div className="grid grid-cols-3 gap-2 items-end">
+          <div>
+            <label className="text-[10px] text-white block mb-1">Make</label>
+            <MobileSelectPicker value={board.make || ''} onValueChange={(value) => onUpdate('make', value)} options={BOARD_MANUFACTURERS.map((m) => ({ value: m, label: m }))} placeholder="Select" title="Manufacturer" triggerClassName="text-white" />
+          </div>
+          <div>
+            <label className="text-[10px] text-white block mb-1">Model</label>
+            <Input value={board.model || ''} onChange={(e) => onUpdate('model', e.target.value)} placeholder="VML110" className={inputCn} />
+          </div>
+          <div>
+            <label className="text-[10px] text-white block mb-1">From</label>
+            <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'Main CU'} className={inputCn} />
+          </div>
+        </div>
+
+        {/* Ways as toggle buttons */}
         <div>
-          <label className="text-xs text-white block mb-1">Location</label>
-          <MobileSelectPicker value={board.location || ''} onValueChange={(value) => onUpdate('location', value)} options={BOARD_LOCATIONS.map((loc) => ({ value: loc, label: loc }))} placeholder="Select" title="Location" triggerClassName="text-white" />
+          <label className="text-[10px] text-white block mb-1">Ways</label>
+          <div className="grid grid-cols-8 gap-1">
+            {[6, 8, 10, 12, 14, 16, 18, 20].map((w) => (
+              <button
+                key={w}
+                type="button"
+                onClick={() => onUpdate('totalWays', board.totalWays === w ? 0 : w)}
+                className={cn(
+                  'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                  board.totalWays === w
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {w}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Board Type as toggle buttons */}
+        <div>
+          <label className="text-[10px] text-white block mb-1">Type</label>
+          <div className="grid grid-cols-4 gap-1">
+            {BOARD_TYPES.slice(0, 4).map((t) => (
+              <button
+                key={t.value}
+                type="button"
+                onClick={() => onUpdate('type', board.type === t.value ? '' : t.value as BoardType)}
+                className={cn(
+                  'h-9 rounded-md font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                  board.type === t.value
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {t.label.split(' ')[0]}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-
-      <div className="grid grid-cols-2 gap-3 items-end">
-        <div>
-          <label className="text-xs text-white block mb-1">Manufacturer</label>
-          <MobileSelectPicker value={board.make || ''} onValueChange={(value) => onUpdate('make', value)} options={BOARD_MANUFACTURERS.map((m) => ({ value: m, label: m }))} placeholder="Select" title="Manufacturer" triggerClassName="text-white" />
-        </div>
-        <div>
-          <label className="text-xs text-white block mb-1">Board Type</label>
-          <MobileSelectPicker value={board.type || ''} onValueChange={(value) => onUpdate('type', value as BoardType)} options={BOARD_TYPES.map((t) => ({ value: t.value, label: t.label }))} placeholder="Select" title="Board Type" triggerClassName="text-white" />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-3">
-        <div>
-          <label className="text-xs text-white block mb-1">Ways</label>
-          <MobileSelectPicker value={board.totalWays?.toString() || ''} onValueChange={(value) => onUpdate('totalWays', parseInt(value, 10))} options={BOARD_SIZES.map((s) => ({ value: s.toString(), label: `${s} way` }))} placeholder="Select" title="Size (Ways)" triggerClassName="text-white" />
-        </div>
-        <div>
-          <label className="text-xs text-white block mb-1">Model</label>
-          <Input value={board.model || ''} onChange={(e) => onUpdate('model', e.target.value)} placeholder="VML110" className={inputCn} />
-        </div>
-        <div>
-          <label className="text-xs text-white block mb-1">Supplied From</label>
-          <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'Main CU'} className={inputCn} />
-        </div>
-      </div>
-
-      <div className="h-[1px] bg-gradient-to-r from-white/[0.06] to-transparent" />
 
       {/* Incoming Device — Smart Cascading */}
       {(() => {
@@ -200,15 +233,14 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         const isRCD = board.incomingDeviceBsEn === '61008';
         const ratingUnit = isRCD ? 'mA' : 'A';
         return (
-          <div className="space-y-2">
-            <label className="text-xs text-white block">Incoming Device</label>
-            <div className={cn('grid gap-3', incomingTypeOptions ? 'grid-cols-3' : 'grid-cols-2')}>
+          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-2">
+            <label className="text-[10px] font-medium text-elec-yellow/80 uppercase tracking-wider">Incoming Device</label>
+            <div className={cn('grid gap-2', incomingTypeOptions ? 'grid-cols-3' : 'grid-cols-2')}>
               <div>
-                <label className="text-[10px] text-white/60 block mb-1">BS EN</label>
+                <label className="text-[10px] text-white block mb-1">BS EN</label>
                 <MobileSelectPicker
                   value={board.incomingDeviceBsEn || ''}
                   onValueChange={(value) => {
-                    // Batch update: set BS EN and clear dependent fields
                     onUpdate({ incomingDeviceBsEn: value, incomingDeviceType: '', incomingDeviceRating: '' });
                   }}
                   options={BS_EN_OPTIONS}
@@ -219,7 +251,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
               </div>
               {incomingTypeOptions && (
                 <div>
-                  <label className="text-[10px] text-white/60 block mb-1">Type</label>
+                  <label className="text-[10px] text-white block mb-1">Type</label>
                   <MobileSelectPicker
                     value={board.incomingDeviceType || ''}
                     onValueChange={(value) => onUpdate('incomingDeviceType', value)}
@@ -231,7 +263,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 </div>
               )}
               <div>
-                <label className="text-[10px] text-white/60 block mb-1">Rating ({ratingUnit})</label>
+                <label className="text-[10px] text-white block mb-1">Rating ({ratingUnit})</label>
                 <MobileSelectPicker
                   value={board.incomingDeviceRating || ''}
                   onValueChange={(value) => onUpdate('incomingDeviceRating', value)}
@@ -246,25 +278,22 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         );
       })()}
 
-      <div className="h-[1px] bg-gradient-to-r from-white/[0.06] to-transparent" />
-
       {/* Main Switch — Smart Cascading */}
       {(() => {
         const switchTypeOptions = getTypeOptionsForBsEn(board.mainSwitchBsEn || '');
         const switchRatings = getRatingOptionsForBsEn(board.mainSwitchBsEn || '');
         const isRCD = board.mainSwitchBsEn === '61008';
         const ratingUnit = isRCD ? 'mA' : 'A';
-        // Use SWITCH_TYPE_OPTIONS as fallback when no BS EN selected
         const typeOptions = switchTypeOptions || SWITCH_TYPE_OPTIONS.map((o) => ({ value: o.value, label: o.label }));
         const ratingOptions = board.mainSwitchBsEn
           ? switchRatings.map((r) => ({ value: String(r), label: `${r}${ratingUnit}` }))
           : MAIN_SWITCH_RATINGS;
         return (
-          <div className="space-y-2">
-            <label className="text-xs text-white block">Main Switch</label>
+          <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-2">
+            <label className="text-[10px] font-medium text-elec-yellow/80 uppercase tracking-wider">Main Switch</label>
             <div className="grid grid-cols-2 gap-3 items-end">
               <div>
-                <label className="text-[10px] text-white/60 block mb-1">BS EN</label>
+                <label className="text-[10px] text-white block mb-1">BS EN</label>
                 <MobileSelectPicker
                   value={board.mainSwitchBsEn || ''}
                   onValueChange={(value) => {
@@ -277,7 +306,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 />
               </div>
               <div>
-                <label className="text-[10px] text-white/60 block mb-1">Type</label>
+                <label className="text-[10px] text-white block mb-1">Type</label>
                 <MobileSelectPicker
                   value={board.mainSwitchType || ''}
                   onValueChange={(value) => onUpdate('mainSwitchType', value)}
@@ -288,7 +317,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 />
               </div>
               <div>
-                <label className="text-[10px] text-white/60 block mb-1">Rating ({ratingUnit})</label>
+                <label className="text-[10px] text-white block mb-1">Rating ({ratingUnit})</label>
                 <MobileSelectPicker
                   value={board.mainSwitchRating || ''}
                   onValueChange={(value) => onUpdate('mainSwitchRating', value)}
@@ -298,16 +327,26 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                   triggerClassName="text-white"
                 />
               </div>
-              <div>
-                <label className="text-[10px] text-white/60 block mb-1">Poles</label>
-                <MobileSelectPicker
-                  value={board.mainSwitchPoles || ''}
-                  onValueChange={(value) => onUpdate('mainSwitchPoles', value)}
-                  options={[{ value: 'SP', label: 'SP' }, { value: 'DP', label: 'DP' }, { value: 'TP', label: 'TP' }, { value: 'TPN', label: 'TPN' }]}
-                  placeholder="Select"
-                  title="Poles"
-                  triggerClassName="text-white"
-                />
+            </div>
+            {/* Poles as toggle buttons */}
+            <div>
+              <label className="text-[10px] text-white block mb-1">Poles</label>
+              <div className="grid grid-cols-4 gap-1">
+                {['SP', 'DP', 'TP', 'TPN'].map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => onUpdate('mainSwitchPoles', board.mainSwitchPoles === p ? '' : p)}
+                    className={cn(
+                      'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                      board.mainSwitchPoles === p
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
+                  >
+                    {p}
+                  </button>
+                ))}
               </div>
             </div>
           </div>

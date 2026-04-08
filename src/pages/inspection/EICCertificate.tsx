@@ -8,25 +8,14 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
-  ArrowLeft,
-  FileText,
-  Save,
-  Download,
   Zap,
-  CheckCircle2,
   AlertCircle,
   Loader2,
-  CircuitBoard,
-  Receipt,
 } from 'lucide-react';
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
 import {
   createQuoteFromCertificate,
@@ -36,9 +25,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 
 // Import EIC form components
+import EICFormHeader from '@/components/inspection/eic/EICFormHeader';
 import EICFormTabs from '@/components/inspection/eic/EICFormTabs';
-import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
-import { useEICObservations, EICObservation } from '@/hooks/useEICObservations';
+import { useEICTabs } from '@/hooks/useEICTabs';
+import { useEICObservations } from '@/hooks/useEICObservations';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
@@ -436,23 +426,13 @@ export default function EICCertificate() {
   // Loading state for design
   if (designId && isLoadingDesign) {
     return (
-      <div className="bg-background">
-        <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-          <Card className="border-elec-yellow/20">
-            <CardContent className="py-12">
-              <div className="flex flex-col items-center gap-4">
-                <div className="p-4 rounded-full bg-elec-yellow/10">
-                  <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
-                </div>
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold text-white">Loading Design</h3>
-                  <p className="text-sm text-white">
-                    Pre-filling circuits from Circuit Designer...
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+      <div className="bg-background min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
+          <div className="text-center">
+            <h3 className="text-sm font-semibold text-white">Loading Design</h3>
+            <p className="text-xs text-white mt-1">Pre-filling circuits from Circuit Designer...</p>
+          </div>
         </div>
       </div>
     );
@@ -461,117 +441,38 @@ export default function EICCertificate() {
   // Error state for design
   if (designId && designError) {
     return (
-      <div className="bg-background">
-        <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-          <Alert className="bg-red-500/10 border-red-500/30">
-            <AlertCircle className="h-4 w-4 text-red-400" />
-            <AlertDescription className="text-red-300">
-              Failed to load design. Please try again or start a new EIC.
-            </AlertDescription>
-          </Alert>
-          <div className="flex gap-2 mt-4">
-            <Button variant="outline" onClick={() => navigate('/electrician/inspection-testing')}>
-              Back to Dashboard
-            </Button>
-            <Button onClick={() => navigate('/electrician/inspection/eic/new')}>
-              Start New EIC
-            </Button>
-          </div>
+      <div className="bg-background min-h-screen px-4 py-8">
+        <Alert className="bg-red-500/10 border-red-500/30">
+          <AlertCircle className="h-4 w-4 text-red-400" />
+          <AlertDescription className="text-red-300">
+            Failed to load design. Please try again or start a new EIC.
+          </AlertDescription>
+        </Alert>
+        <div className="flex gap-2 mt-4">
+          <Button variant="outline" onClick={() => navigate('/electrician/inspection-testing')}>
+            Back
+          </Button>
+          <Button onClick={() => navigate('/electrician/inspection/eic/new')}>
+            Start New EIC
+          </Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="bg-card border-b border-border sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-muted-foreground hover:text-foreground"
-                onClick={() => navigate('/electrician/inspection-testing')}
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <div className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-green-500" />
-                <div>
-                  <h1 className="text-lg font-bold text-foreground">
-                    {isNew ? 'New EIC' : 'EIC Certificate'}
-                  </h1>
-                  <p className="text-xs text-muted-foreground">
-                    Electrical Installation Certificate
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {/* Design Source Indicator */}
-              {formData.designSourceId && (
-                <Badge
-                  className={cn(
-                    'gap-1.5',
-                    'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30'
-                  )}
-                >
-                  <CircuitBoard className="h-3 w-3" />
-                  From Circuit Designer
-                </Badge>
-              )}
-
-              <Badge
-                variant="outline"
-                className="bg-amber-500/10 text-amber-400 border-amber-500/30"
-              >
-                Draft
-              </Badge>
-
-              <Button variant="outline" size="sm" onClick={handleSaveDraft} disabled={isSaving}>
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4 mr-2" />
-                )}
-                Save
-              </Button>
-
-              <Button size="sm" onClick={handleGenerateCertificate} disabled={isGenerating}>
-                {isGenerating ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Download className="h-4 w-4 mr-2" />
-                )}
-                Generate PDF
-              </Button>
-
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCreateQuote}
-                className="bg-emerald-500/10 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20"
-              >
-                <FileText className="h-4 w-4 mr-2" />
-                Quote
-              </Button>
-
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleCreateInvoice}
-                className="bg-blue-500/10 border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
-              >
-                <Receipt className="h-4 w-4 mr-2" />
-                Invoice
-              </Button>
-            </div>
-          </div>
+    <div className="bg-background min-h-screen">
+      {/* Header — EICR pattern */}
+      <div className="bg-background">
+        <div className="px-2 py-2.5">
+          <EICFormHeader
+            onBack={() => navigate('/electrician/inspection-testing')}
+            isSaving={isSaving}
+            onManualSave={handleSaveDraft}
+            formData={formData}
+          />
         </div>
+        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       {/* Design Source Banner */}
@@ -583,13 +484,12 @@ export default function EICCertificate() {
             exit={{ opacity: 0, height: 0 }}
             className="border-b border-elec-yellow/20 bg-elec-yellow/5"
           >
-            <div className="max-w-6xl mx-auto px-4 py-2 sm:px-6 lg:px-8">
+            <div className="px-4 py-2">
               <div className="flex items-center gap-2 text-sm">
                 <Zap className="h-4 w-4 text-elec-yellow" />
-                <span className="text-elec-yellow font-medium">Circuit Designer Integration:</span>
-                <span className="text-white">
-                  {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test
-                  values. Enter actual readings on-site.
+                <span className="text-elec-yellow font-medium">Circuit Designer:</span>
+                <span className="text-white text-xs">
+                  {formData.scheduleOfTests?.length || 0} circuits pre-filled
                 </span>
               </div>
             </div>
@@ -597,8 +497,8 @@ export default function EICCertificate() {
         )}
       </AnimatePresence>
 
-      {/* Main Content - EIC Form Tabs */}
-      <main className="max-w-6xl mx-auto px-4 py-6 sm:px-6 lg:px-8 pb-20 sm:pb-6">
+      {/* Main Content — full-width mobile */}
+      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
         <EICFormTabs
           currentTab={tabProps.currentTab}
           onTabChange={tabProps.setCurrentTab}

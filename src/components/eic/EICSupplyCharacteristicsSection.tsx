@@ -1,26 +1,30 @@
 import React from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Zap, AlertCircle, Shield, Plug, ChevronDown } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import SectionHeader from '@/components/ui/section-header';
+import { AlertCircle, Shield, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface EICSupplyCharacteristicsSectionProps {
   formData: Record<string, string | boolean>;
   onUpdate: (field: string, value: string | boolean) => void;
-  isOpen: boolean;
-  onToggle: () => void;
 }
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FormField = ({ label, required, hint, children }: { label: string; required?: boolean; hint?: string; children: React.ReactNode }) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    {children}
+    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
+  </div>
+);
 
 // Smart device configuration - BS standard determines available types and ratings
 const DEVICE_CONFIG: Record<
@@ -50,26 +54,9 @@ const DEVICE_CONFIG: Record<
       { value: 'D', label: 'Type D' },
     ],
     ratings: [
-      '16',
-      '20',
-      '25',
-      '32',
-      '40',
-      '50',
-      '63',
-      '80',
-      '100',
-      '125',
-      '160',
-      '200',
-      '250',
-      '315',
-      '400',
-      '500',
-      '630',
-      '800',
-      '1000',
-      '1250',
+      '16', '20', '25', '32', '40', '50', '63', '80', '100',
+      '125', '160', '200', '250', '315', '400', '500', '630',
+      '800', '1000', '1250',
     ],
   },
   'BS 88-2': {
@@ -79,30 +66,9 @@ const DEVICE_CONFIG: Record<
       { value: 'aM', label: 'aM (Motor Starter)' },
     ],
     ratings: [
-      '2',
-      '4',
-      '6',
-      '10',
-      '16',
-      '20',
-      '25',
-      '32',
-      '40',
-      '50',
-      '63',
-      '80',
-      '100',
-      '125',
-      '160',
-      '200',
-      '250',
-      '315',
-      '400',
-      '500',
-      '630',
-      '800',
-      '1000',
-      '1250',
+      '2', '4', '6', '10', '16', '20', '25', '32', '40', '50',
+      '63', '80', '100', '125', '160', '200', '250', '315',
+      '400', '500', '630', '800', '1000', '1250',
     ],
   },
   'BS 88-3': {
@@ -133,37 +99,24 @@ const DEVICE_CONFIG: Record<
       { value: 'other', label: 'Other' },
     ],
     ratings: [
-      '6',
-      '10',
-      '16',
-      '20',
-      '25',
-      '32',
-      '40',
-      '50',
-      '63',
-      '80',
-      '100',
-      '125',
-      '160',
-      '200',
-      '250',
-      '315',
-      '400',
-      '500',
-      '630',
+      '6', '10', '16', '20', '25', '32', '40', '50', '63', '80',
+      '100', '125', '160', '200', '250', '315', '400', '500', '630',
     ],
   },
 };
 
+const EARTHING_OPTIONS = [
+  { value: 'tnc', label: 'TN-C' },
+  { value: 'tncs', label: 'TN-C-S (PME)' },
+  { value: 'tns', label: 'TN-S' },
+  { value: 'tt', label: 'TT' },
+  { value: 'it', label: 'IT' },
+];
+
 const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionProps> = ({
   formData,
   onUpdate,
-  isOpen,
-  onToggle,
 }) => {
-  const isMobile = useIsMobile();
-
   // Get available types based on selected BS standard
   const getAvailableTypes = () => {
     const bsStandard = formData.supplyDeviceBsEn || '';
@@ -218,394 +171,284 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
     }
   };
 
-  // Calculate completion percentage
-  const getCompletionPercentage = () => {
-    const requiredFields = [
-      'supplyVoltage',
-      'phases',
-      'earthingArrangement',
-      'liveCondutorType',
-      'prospectiveFaultCurrent',
-      'externalZe',
-    ];
-    const filled = requiredFields.filter((f) => formData[f]).length;
-    return Math.round((filled / requiredFields.length) * 100);
-  };
-
   return (
-    <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-      <Collapsible open={isOpen} onOpenChange={onToggle}>
-        <CollapsibleTrigger className="w-full">
-          {isMobile ? (
-            <div className="flex items-center gap-3 py-4 px-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-              <div className="h-10 w-10 rounded-xl bg-yellow-500/15 flex items-center justify-center shrink-0">
-                <Zap className="h-5 w-5 text-yellow-400" />
-              </div>
-              <div className="flex-1 text-left min-w-0">
-                <h3 className="font-semibold text-foreground">Supply Characteristics</h3>
-                <span className="text-xs text-white">{getCompletionPercentage()}% complete</span>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-5 w-5 text-white transition-transform shrink-0',
-                  isOpen && 'rotate-180'
-                )}
-              />
-            </div>
-          ) : (
-            <SectionHeader
-              title="Supply Characteristics"
-              icon={Zap}
-              isOpen={isOpen}
-              color="yellow-500"
-              completionPercentage={getCompletionPercentage()}
-            />
-          )}
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <div
-            className={cn('space-y-5 sm:space-y-6', isMobile ? 'px-4 py-4' : 'p-4 sm:p-5 md:p-6')}
-          >
-            {/* Voltage & Frequency */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="supplyVoltage" className="text-sm">
-                  Supply Voltage *
-                </Label>
-                <Select
-                  value={formData.supplyVoltage || ''}
-                  onValueChange={(value) => onUpdate('supplyVoltage', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select voltage" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="230V">230V (Single Phase)</SelectItem>
-                    <SelectItem value="400V">400V (Three Phase)</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="supplyFrequency" className="text-sm">
-                  Frequency (Hz)
-                </Label>
-                <Input
-                  id="supplyFrequency"
-                  type="text"
-                  inputMode="decimal"
-                  value={formData.supplyFrequency ?? '50'}
-                  onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
-                  placeholder="50"
-                  className="h-11 text-base touch-manipulation"
-                />
-                <p className="text-xs text-white">Typically 50Hz in the UK</p>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phases" className="text-sm">
-                  Number of Phases *
-                </Label>
-                <Select value={formData.phases || ''} onValueChange={handlePhasesChange}>
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select phases" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="single">Single Phase</SelectItem>
-                    <SelectItem value="three">Three Phase</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Earthing */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-green-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-green-400">
-                Earthing Arrangement
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="earthingArrangement" className="text-sm">
-                    Earthing Type *
-                  </Label>
-                  <Select
-                    value={formData.earthingArrangement || ''}
-                    onValueChange={handleEarthingArrangementChange}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select earthing type" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="tnc">TN-C</SelectItem>
-                      <SelectItem value="tncs">TN-C-S (PME)</SelectItem>
-                      <SelectItem value="tns">TN-S</SelectItem>
-                      <SelectItem value="tt">TT</SelectItem>
-                      <SelectItem value="it">IT</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="supplyPME" className="text-sm">
-                    Supply PME
-                  </Label>
-                  <Select
-                    value={formData.supplyPME || ''}
-                    onValueChange={(value) => onUpdate('supplyPME', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="PME status" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                      <SelectItem value="unknown">Unknown</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {formData.earthingArrangement === 'tncs' && formData.supplyPME !== 'yes' && (
-                    <p className="text-xs text-amber-400 mt-1 flex items-center gap-1">
-                      <AlertCircle className="h-3 w-3" />
-                      TN-C-S systems typically have PME
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Number and Type of Live Conductors (IET Form) */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-blue-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-blue-400">
-                Number and Type of Live Conductors
-              </h4>
-              <div className="space-y-2">
-                <Label className="text-sm">Live Conductor Configuration *</Label>
-                <Select
-                  value={formData.liveCondutorType || ''}
-                  onValueChange={(value) => onUpdate('liveCondutorType', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select configuration" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="ac-1ph-2w">AC: 1-phase, 2-wire</SelectItem>
-                    <SelectItem value="ac-2ph-3w">AC: 2-phase, 3-wire</SelectItem>
-                    <SelectItem value="ac-3ph-3w">AC: 3-phase, 3-wire</SelectItem>
-                    <SelectItem value="ac-3ph-4w">AC: 3-phase, 4-wire</SelectItem>
-                    <SelectItem value="dc-2w">DC: 2-wire</SelectItem>
-                    <SelectItem value="dc-3w">DC: 3-wire</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Nature of Supply Parameters (IET Form) */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-purple-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-purple-400">
-                Nature of Supply Parameters
-              </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="prospectiveFaultCurrent" className="text-sm">
-                    Prospective Fault Current I<sub>pf</sub> (kA) *
-                  </Label>
-                  <Input
-                    id="prospectiveFaultCurrent"
-                    type="text"
-                    inputMode="decimal"
-                    value={formData.prospectiveFaultCurrent || ''}
-                    onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
-                    placeholder="e.g., 16"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                  <p className="text-xs text-white">By enquiry or measurement</p>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="externalZe" className="text-sm">
-                    External Earth Fault Loop Impedance Z<sub>e</sub> (Ω) *
-                  </Label>
-                  <Input
-                    id="externalZe"
-                    type="text"
-                    inputMode="decimal"
-                    value={formData.externalZe || ''}
-                    onChange={(e) => onUpdate('externalZe', e.target.value)}
-                    placeholder="e.g., 0.35"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                  <p className="text-xs text-white">By enquiry or measurement</p>
-                </div>
-              </div>
-
-              {/* Supply Polarity Confirmation */}
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-                <Checkbox
-                  id="supplyPolarityConfirmed"
-                  checked={formData.supplyPolarityConfirmed === true}
-                  onCheckedChange={(checked) => onUpdate('supplyPolarityConfirmed', checked)}
-                  className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 mt-0.5"
-                />
-                <Label
-                  htmlFor="supplyPolarityConfirmed"
-                  className="text-sm font-medium cursor-pointer leading-relaxed"
-                >
-                  Confirmation of supply polarity
-                </Label>
-              </div>
-
-              {/* Other Sources of Supply */}
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30">
-                  <Checkbox
-                    id="otherSourcesOfSupply"
-                    checked={formData.otherSourcesOfSupply === true}
-                    onCheckedChange={(checked) => onUpdate('otherSourcesOfSupply', checked)}
-                    className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 mt-0.5"
-                  />
-                  <Label
-                    htmlFor="otherSourcesOfSupply"
-                    className="text-sm font-medium cursor-pointer leading-relaxed"
-                  >
-                    Other sources of supply present (as detailed on attached schedule)
-                  </Label>
-                </div>
-                {formData.otherSourcesOfSupply && (
-                  <div className="space-y-2 ml-6">
-                    <Label htmlFor="otherSourcesDetails" className="text-sm">
-                      Details of Other Sources
-                    </Label>
-                    <Input
-                      id="otherSourcesDetails"
-                      value={formData.otherSourcesDetails || ''}
-                      onChange={(e) => onUpdate('otherSourcesDetails', e.target.value)}
-                      placeholder="e.g., Solar PV system, Generator backup"
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Supply Protective Device (IET Form) */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                <h4 className="text-sm font-semibold text-orange-400 flex items-center gap-2">
-                  <Shield className="h-4 w-4" />
-                  Supply Protective Device
-                </h4>
+    <div className="space-y-4">
+      {/* Supply Details */}
+      <SectionTitle title="Supply Details" />
+      <div className="space-y-3">
+        {/* Voltage + Phases as toggle buttons */}
+        <div className="grid grid-cols-2 gap-3">
+          <FormField label="Voltage" required>
+            <div className="grid grid-cols-3 gap-1">
+              {[
+                { value: '230V', label: '230V' },
+                { value: '400V', label: '400V' },
+                { value: 'other', label: 'Other' },
+              ].map((opt) => (
                 <button
+                  key={opt.value}
                   type="button"
-                  onClick={() => {
-                    if (formData.supplyDeviceRating === 'LIM') {
-                      onUpdate('supplyDeviceRating', '');
-                    } else {
-                      onUpdate('supplyDeviceRating', 'LIM');
-                    }
-                  }}
+                  onClick={() => onUpdate('supplyVoltage', opt.value)}
                   className={cn(
-                    'h-9 px-3 rounded-md text-sm font-semibold touch-manipulation transition-colors shrink-0',
-                    formData.supplyDeviceRating === 'LIM'
-                      ? 'bg-orange-500 text-black'
-                      : 'bg-white/10 text-white hover:bg-white/20'
+                    'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                    formData.supplyVoltage === opt.value
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
                   )}
                 >
-                  LIM
+                  {opt.label}
                 </button>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="supplyDeviceBsEn" className="text-sm">
-                    BS (EN)
-                  </Label>
-                  <Select
-                    value={formData.supplyDeviceBsEn || ''}
-                    onValueChange={handleBsStandardChange}
-                    disabled={formData.supplyDeviceRating === 'LIM'}
-                  >
-                    <SelectTrigger
-                      className={cn(
-                        'h-11 touch-manipulation',
-                        formData.supplyDeviceRating === 'LIM' && 'opacity-40'
-                      )}
-                    >
-                      <SelectValue placeholder="Select BS standard" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="BS EN 60898">BS EN 60898 (MCB)</SelectItem>
-                      <SelectItem value="BS EN 61009">BS EN 61009 (RCBO)</SelectItem>
-                      <SelectItem value="BS EN 60947-2">BS EN 60947-2 (MCCB)</SelectItem>
-                      <SelectItem value="BS 88-2">BS 88-2 (HRC Fuse)</SelectItem>
-                      <SelectItem value="BS 88-3">BS 88-3 (Fuse)</SelectItem>
-                      <SelectItem value="BS 1361">BS 1361 (Fuse)</SelectItem>
-                      <SelectItem value="BS 3036">BS 3036 (Rewirable Fuse)</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="supplyDeviceType" className="text-sm">
-                    Type
-                  </Label>
-                  <Select
-                    value={formData.supplyDeviceType || ''}
-                    onValueChange={(value) => onUpdate('supplyDeviceType', value)}
-                    disabled={formData.supplyDeviceRating === 'LIM'}
-                  >
-                    <SelectTrigger
-                      className={cn(
-                        'h-11 touch-manipulation',
-                        formData.supplyDeviceRating === 'LIM' && 'opacity-40'
-                      )}
-                    >
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      {getAvailableTypes().map((type) => (
-                        <SelectItem key={type.value} value={type.value}>
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="supplyDeviceRating" className="text-sm">
-                    Rated Current (A)
-                  </Label>
-                  <Select
-                    value={
-                      formData.supplyDeviceRating === 'LIM' ? '' : formData.supplyDeviceRating || ''
-                    }
-                    onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
-                    disabled={formData.supplyDeviceRating === 'LIM'}
-                  >
-                    <SelectTrigger
-                      className={cn(
-                        'h-11 touch-manipulation',
-                        formData.supplyDeviceRating === 'LIM' && 'opacity-40'
-                      )}
-                    >
-                      <SelectValue
-                        placeholder={
-                          formData.supplyDeviceRating === 'LIM' ? 'LIM' : 'Select rating'
-                        }
-                      />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
-                      {getAvailableRatings().map((rating) => (
-                        <SelectItem key={rating} value={rating}>
-                          {rating}A
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+              ))}
             </div>
+          </FormField>
+          <FormField label="Phases" required>
+            <div className="grid grid-cols-2 gap-1">
+              {[
+                { value: 'single', label: '1-Phase' },
+                { value: 'three', label: '3-Phase' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => handlePhasesChange(opt.value)}
+                  className={cn(
+                    'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                    formData.phases === opt.value
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </FormField>
+        </div>
+
+        <FormField label="Frequency (Hz)">
+          <Input
+            id="supplyFrequency"
+            type="text"
+            inputMode="decimal"
+            value={formData.supplyFrequency ?? '50'}
+            onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
+            placeholder="50"
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+          />
+        </FormField>
+      </div>
+
+      {/* Earthing Arrangement */}
+      <SectionTitle title="Earthing Arrangement" />
+      <div className="space-y-3">
+        <div className="grid grid-cols-5 gap-1">
+          {EARTHING_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => handleEarthingArrangementChange(opt.value)}
+              className={cn(
+                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98]',
+                formData.earthingArrangement === opt.value
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+
+        <FormField label="PME">
+          <div className="grid grid-cols-3 gap-1">
+            {[
+              { value: 'yes', label: 'Yes' },
+              { value: 'no', label: 'No' },
+              { value: 'unknown', label: 'Unknown' },
+            ].map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => onUpdate('supplyPME', opt.value)}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                  formData.supplyPME === opt.value
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {opt.label}
+              </button>
+            ))}
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+          {formData.earthingArrangement === 'tncs' && formData.supplyPME !== 'yes' && (
+            <span className="text-[10px] text-elec-yellow/80 block mt-1">TN-C-S systems typically have PME</span>
+          )}
+        </FormField>
+      </div>
+
+      {/* Number and Type of Live Conductors */}
+      <SectionTitle title="Number and Type of Live Conductors" />
+      <FormField label="Live Conductor Configuration" required>
+        <MobileSelectPicker
+          value={(formData.liveCondutorType as string) || ''}
+          onValueChange={(value) => onUpdate('liveCondutorType', value)}
+          options={[
+            { value: 'ac-1ph-2w', label: 'AC: 1-phase, 2-wire' },
+            { value: 'ac-2ph-3w', label: 'AC: 2-phase, 3-wire' },
+            { value: 'ac-3ph-3w', label: 'AC: 3-phase, 3-wire' },
+            { value: 'ac-3ph-4w', label: 'AC: 3-phase, 4-wire' },
+            { value: 'dc-2w', label: 'DC: 2-wire' },
+            { value: 'dc-3w', label: 'DC: 3-wire' },
+            { value: 'other', label: 'Other' },
+          ]}
+          placeholder="Select configuration"
+          title="Live Conductor Configuration"
+        />
+      </FormField>
+
+      {/* Nature of Supply Parameters */}
+      <SectionTitle title="Nature of Supply Parameters" />
+      <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-3 items-end">
+          <FormField label="Ipf (kA)" required>
+            <Input
+              id="prospectiveFaultCurrent"
+              type="text"
+              inputMode="decimal"
+              value={formData.prospectiveFaultCurrent || ''}
+              onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
+              placeholder="16"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+            />
+          </FormField>
+          <FormField label="Ze (Ω)" required>
+            <Input
+              id="externalZe"
+              type="text"
+              inputMode="decimal"
+              value={formData.externalZe || ''}
+              onChange={(e) => onUpdate('externalZe', e.target.value)}
+              placeholder="0.35"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+            />
+          </FormField>
+        </div>
+
+        {/* Polarity + Other Sources as toggle buttons */}
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => onUpdate('supplyPolarityConfirmed', !formData.supplyPolarityConfirmed)}
+            className={cn(
+              'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
+              formData.supplyPolarityConfirmed
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+            )}
+          >
+            {formData.supplyPolarityConfirmed && <Check className="h-3.5 w-3.5" />}
+            Polarity Confirmed
+          </button>
+          <button
+            type="button"
+            onClick={() => onUpdate('otherSourcesOfSupply', !formData.otherSourcesOfSupply)}
+            className={cn(
+              'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
+              formData.otherSourcesOfSupply
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+            )}
+          >
+            {formData.otherSourcesOfSupply && <Check className="h-3.5 w-3.5" />}
+            Other Sources
+          </button>
+        </div>
+
+        {formData.otherSourcesOfSupply && (
+          <FormField label="Details of Other Sources">
+            <Input
+              id="otherSourcesDetails"
+              value={formData.otherSourcesDetails || ''}
+              onChange={(e) => onUpdate('otherSourcesDetails', e.target.value)}
+              placeholder="e.g., Solar PV, Generator"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+            />
+          </FormField>
+        )}
+      </div>
+
+      {/* Supply Protective Device */}
+      <SectionTitle title="Supply Protective Device" />
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2 text-white">
+          <Shield className="h-4 w-4" />
+          <span className="text-xs font-medium">Device Details</span>
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            if (formData.supplyDeviceRating === 'LIM') {
+              onUpdate('supplyDeviceRating', '');
+            } else {
+              onUpdate('supplyDeviceRating', 'LIM');
+            }
+          }}
+          className={cn(
+            'h-9 px-3 rounded-md text-sm font-semibold touch-manipulation transition-colors shrink-0',
+            formData.supplyDeviceRating === 'LIM'
+              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+              : 'bg-white/[0.05] border border-white/[0.08] text-white'
+          )}
+        >
+          LIM
+        </button>
+      </div>
+      <div className="grid grid-cols-3 gap-2 items-end">
+        <FormField label="BS (EN)">
+          <MobileSelectPicker
+            value={(formData.supplyDeviceBsEn as string) || ''}
+            onValueChange={handleBsStandardChange}
+            disabled={formData.supplyDeviceRating === 'LIM'}
+            options={[
+              { value: 'BS EN 60898', label: 'BS EN 60898 (MCB)' },
+              { value: 'BS EN 61009', label: 'BS EN 61009 (RCBO)' },
+              { value: 'BS EN 60947-2', label: 'BS EN 60947-2 (MCCB)' },
+              { value: 'BS 88-2', label: 'BS 88-2 (HRC Fuse)' },
+              { value: 'BS 88-3', label: 'BS 88-3 (Fuse)' },
+              { value: 'BS 1361', label: 'BS 1361 (Fuse)' },
+              { value: 'BS 3036', label: 'BS 3036 (Rewirable Fuse)' },
+              { value: 'other', label: 'Other' },
+            ]}
+            placeholder="Select BS standard"
+            title="BS (EN) Standard"
+          />
+        </FormField>
+        <FormField label="Type">
+          <MobileSelectPicker
+            value={(formData.supplyDeviceType as string) || ''}
+            onValueChange={(value) => onUpdate('supplyDeviceType', value)}
+            disabled={formData.supplyDeviceRating === 'LIM'}
+            options={getAvailableTypes().map((t) => ({ value: t.value, label: t.label }))}
+            placeholder="Select type"
+            title="Device Type"
+          />
+        </FormField>
+        <FormField label="Rated Current (A)">
+          <MobileSelectPicker
+            value={
+              formData.supplyDeviceRating === 'LIM' ? '' : (formData.supplyDeviceRating as string) || ''
+            }
+            onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
+            disabled={formData.supplyDeviceRating === 'LIM'}
+            options={getAvailableRatings().map((rating) => ({ value: rating, label: `${rating}A` }))}
+            placeholder={
+              formData.supplyDeviceRating === 'LIM' ? 'LIM' : 'Select rating'
+            }
+            title="Rated Current"
+          />
+        </FormField>
+      </div>
     </div>
   );
 };

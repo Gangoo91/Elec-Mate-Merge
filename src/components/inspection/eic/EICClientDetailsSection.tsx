@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,27 +10,34 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Separator } from '@/components/ui/separator';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
-import { Users, Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FormField = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    {children}
+  </div>
+);
 
 interface EICClientDetailsSectionProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   onUpdate: (field: string, value: string) => void;
-  isOpen: boolean;
-  onToggle: () => void;
 }
 
 const EICClientDetailsSection = ({
   formData,
   onUpdate,
-  isOpen,
-  onToggle,
 }: EICClientDetailsSectionProps) => {
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [showSavePrompt, setShowSavePrompt] = useState(false);
@@ -72,277 +78,206 @@ const EICClientDetailsSection = ({
   };
 
   return (
-    <Card className="border border-border bg-card overflow-hidden">
-      <Collapsible open={isOpen} onOpenChange={onToggle}>
-        <SectionHeader
-          title="Client & Installation Details"
-          icon={Users}
-          isOpen={isOpen}
-          color="amber-500"
+    <div className="space-y-4">
+      {/* Certificate Details */}
+      <SectionTitle title="Certificate Details" />
+      <FormField label="Certificate Number">
+        <Input
+          id="certificateNumber"
+          value={formData.certificateNumber || ''}
+          readOnly
+          className="bg-white/[0.06] border-white/[0.08] cursor-not-allowed font-mono text-foreground"
+          tabIndex={-1}
         />
-        <CollapsibleContent>
-          <CardContent className="space-y-6 p-4 sm:p-6">
-            {/* Certificate Number (Read-only) */}
-            <div className="space-y-4">
-              <div className="bg-gradient-to-r from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-lg px-4 py-3">
-                <h3 className="text-sm sm:text-base font-semibold text-foreground pl-2.5 border-l-2 border-l-blue-400">
-                  Certificate Details
-                </h3>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="certificateNumber" className="font-medium text-sm">
-                  Certificate Number
-                </Label>
-                <Input
-                  id="certificateNumber"
-                  value={formData.certificateNumber || ''}
-                  readOnly
-                  className="bg-muted/50 cursor-not-allowed font-mono text-foreground"
-                  tabIndex={-1}
-                />
-                <p className="text-xs text-white">Auto-generated and cannot be changed</p>
-              </div>
+        <p className="text-xs text-white mt-1">Auto-generated and cannot be changed</p>
+      </FormField>
+
+      {/* Client Information */}
+      <SectionTitle title="Client Information" />
+
+      {/* Customer Selector */}
+      <FormField label="Select Existing Customer">
+        {selectedCustomer ? (
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center flex-shrink-0">
+              <Check className="h-4 w-4 text-white" />
             </div>
-
-            <Separator className="my-6" />
-
-            {/* Client Information */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 pl-2.5 border-l-2 border-l-yellow-400">
-                Client Information
-              </h3>
-
-              {/* Customer Selector */}
-              <div className="space-y-2">
-                <Label className="font-medium text-sm">Select Existing Customer</Label>
-                {selectedCustomer ? (
-                  <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                    <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center flex-shrink-0">
-                      <Check className="h-4 w-4 text-white" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-emerald-400">
-                        {selectedCustomer.name}
-                      </p>
-                      <p className="text-xs text-white truncate">
-                        {selectedCustomer.email || selectedCustomer.phone || ''}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleClearCustomer}
-                      className="p-2 rounded-lg hover:bg-white/5 touch-manipulation"
-                    >
-                      <X className="h-4 w-4 text-white" />
-                    </button>
-                  </div>
-                ) : (
-                  <ClientSelector
-                    onSelectCustomer={handleCustomerSelect}
-                    selectedCustomerId={formData.customerId}
-                  />
-                )}
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="clientName" className="font-medium text-sm">
-                    Client Name *
-                  </Label>
-                  <Input
-                    id="clientName"
-                    value={formData.clientName || ''}
-                    onChange={(e) => onUpdate('clientName', e.target.value)}
-                    placeholder="Full name of person ordering work"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="clientPhone" className="font-medium text-sm">
-                      Client Phone
-                    </Label>
-                    <Input
-                      id="clientPhone"
-                      type="tel"
-                      value={formData.clientPhone || ''}
-                      onChange={(e) => onUpdate('clientPhone', e.target.value)}
-                      placeholder="Contact telephone number"
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="clientEmail" className="font-medium text-sm">
-                      Client Email
-                    </Label>
-                    <Input
-                      id="clientEmail"
-                      type="email"
-                      value={formData.clientEmail || ''}
-                      onChange={(e) => onUpdate('clientEmail', e.target.value)}
-                      placeholder="Email address for correspondence"
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="clientAddress" className="font-medium text-sm">
-                    Client Address *
-                  </Label>
-                  <Textarea
-                    id="clientAddress"
-                    value={formData.clientAddress || ''}
-                    onChange={(e) => onUpdate('clientAddress', e.target.value)}
-                    placeholder="Client's full postal address"
-                    rows={3}
-                    className="text-base touch-manipulation min-h-[120px]"
-                  />
-                </div>
-              </div>
-
-              {/* Save Customer Prompt */}
-              {!formData.customerId &&
-                formData.clientName?.trim() &&
-                !selectedCustomer &&
-                !savePromptDismissed && (
-                  <SaveCustomerPrompt
-                    client={{
-                      name: formData.clientName,
-                      email: formData.clientEmail || undefined,
-                      phone: formData.clientPhone || undefined,
-                      address: formData.clientAddress || undefined,
-                    }}
-                    onSaved={handleCustomerSaved}
-                    onDismiss={() => setSavePromptDismissed(true)}
-                  />
-                )}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-emerald-400">
+                {selectedCustomer.name}
+              </p>
+              <p className="text-xs text-white truncate">
+                {selectedCustomer.email || selectedCustomer.phone || ''}
+              </p>
             </div>
+            <button
+              type="button"
+              onClick={handleClearCustomer}
+              className="p-2 rounded-lg hover:bg-white/5 touch-manipulation"
+            >
+              <X className="h-4 w-4 text-white" />
+            </button>
+          </div>
+        ) : (
+          <ClientSelector
+            onSelectCustomer={handleCustomerSelect}
+            selectedCustomerId={formData.customerId}
+          />
+        )}
+      </FormField>
 
-            <Separator className="my-6" />
+      <FormField label="Client Name" required>
+        <Input
+          id="clientName"
+          value={formData.clientName || ''}
+          onChange={(e) => onUpdate('clientName', e.target.value)}
+          placeholder="Full name of person ordering work"
+          className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+        />
+      </FormField>
 
-            {/* Installation Details */}
-            <div className="space-y-4">
-              <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-lg px-4 py-3">
-                <h3 className="text-sm sm:text-base font-semibold text-foreground pl-2.5 border-l-2 border-l-elec-yellow">
-                  Installation Details
-                </h3>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3 p-4 bg-muted rounded-lg border border-border">
-                  <Checkbox
-                    id="sameAsClientAddress"
-                    checked={formData.sameAsClientAddress === 'true'}
-                    onCheckedChange={handleSameAddressToggle}
-                  />
-                  <Label
-                    htmlFor="sameAsClientAddress"
-                    className="text-base font-medium cursor-pointer leading-relaxed"
-                  >
-                    Installation address is the same as client address
-                  </Label>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="installationAddress" className="font-medium text-sm">
-                    Installation Address *
-                  </Label>
-                  <Textarea
-                    id="installationAddress"
-                    value={formData.installationAddress || ''}
-                    onChange={(e) => onUpdate('installationAddress', e.target.value)}
-                    placeholder="Full address of the installation"
-                    rows={3}
-                    disabled={formData.sameAsClientAddress === 'true'}
-                    className="text-base touch-manipulation min-h-[120px]"
-                  />
-                </div>
-              </div>
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Client Phone">
+          <Input
+            id="clientPhone"
+            type="tel"
+            value={formData.clientPhone || ''}
+            onChange={(e) => onUpdate('clientPhone', e.target.value)}
+            placeholder="Contact telephone number"
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+          />
+        </FormField>
+        <FormField label="Client Email">
+          <Input
+            id="clientEmail"
+            type="email"
+            value={formData.clientEmail || ''}
+            onChange={(e) => onUpdate('clientEmail', e.target.value)}
+            placeholder="Email address for correspondence"
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+          />
+        </FormField>
+      </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="description" className="font-medium text-sm">
-                    Description of Work *
-                  </Label>
-                  <Textarea
-                    id="description"
-                    value={formData.description || ''}
-                    onChange={(e) => onUpdate('description', e.target.value)}
-                    placeholder="Describe the electrical installation or work carried out"
-                    rows={3}
-                    className="text-base touch-manipulation min-h-[120px]"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="installationType" className="font-medium text-sm">
-                    Installation Type
-                  </Label>
-                  <Select
-                    value={formData.installationType || ''}
-                    onValueChange={(value) => onUpdate('installationType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select installation type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray text-foreground z-50">
-                      <SelectItem value="domestic">Domestic</SelectItem>
-                      <SelectItem value="commercial">Commercial</SelectItem>
-                      <SelectItem value="industrial">Industrial</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
+      <FormField label="Client Address" required>
+        <Textarea
+          id="clientAddress"
+          value={formData.clientAddress || ''}
+          onChange={(e) => onUpdate('clientAddress', e.target.value)}
+          placeholder="Client's full postal address"
+          rows={3}
+          className="text-base touch-manipulation min-h-[120px] bg-white/[0.06] border-white/[0.08]"
+        />
+      </FormField>
 
-            <Separator className="my-6" />
+      {/* Save Customer Prompt */}
+      {!formData.customerId &&
+        formData.clientName?.trim() &&
+        !selectedCustomer &&
+        !savePromptDismissed && (
+          <SaveCustomerPrompt
+            client={{
+              name: formData.clientName,
+              email: formData.clientEmail || undefined,
+              phone: formData.clientPhone || undefined,
+              address: formData.clientAddress || undefined,
+            }}
+            onSaved={handleCustomerSaved}
+            onDismiss={() => setSavePromptDismissed(true)}
+          />
+        )}
 
-            {/* Installation Dates */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-border pb-2 pl-2.5 border-l-2 border-l-green-400">
-                Installation Dates
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="installationDate" className="font-medium text-sm">
-                    Date of Installation *
-                  </Label>
-                  <Input
-                    id="installationDate"
-                    type="date"
-                    value={formData.installationDate || ''}
-                    onChange={(e) => onUpdate('installationDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="constructionDate" className="font-medium text-sm">
-                    Date of Construction
-                  </Label>
-                  <Input
-                    id="constructionDate"
-                    type="date"
-                    value={formData.constructionDate || ''}
-                    onChange={(e) => onUpdate('constructionDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="testDate" className="font-medium text-sm">
-                    Date of Testing
-                  </Label>
-                  <Input
-                    id="testDate"
-                    type="date"
-                    value={formData.testDate || ''}
-                    onChange={(e) => onUpdate('testDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </CollapsibleContent>
-      </Collapsible>
-    </Card>
+      {/* Installation Details */}
+      <SectionTitle title="Installation Details" />
+
+      <div className="flex items-start gap-3 p-4 bg-white/[0.03] border border-white/[0.06] rounded-lg">
+        <Checkbox
+          id="sameAsClientAddress"
+          checked={formData.sameAsClientAddress === 'true'}
+          onCheckedChange={handleSameAddressToggle}
+        />
+        <Label
+          htmlFor="sameAsClientAddress"
+          className="text-base font-medium cursor-pointer leading-relaxed"
+        >
+          Installation address is the same as client address
+        </Label>
+      </div>
+
+      <FormField label="Installation Address" required>
+        <Textarea
+          id="installationAddress"
+          value={formData.installationAddress || ''}
+          onChange={(e) => onUpdate('installationAddress', e.target.value)}
+          placeholder="Full address of the installation"
+          rows={3}
+          disabled={formData.sameAsClientAddress === 'true'}
+          className="text-base touch-manipulation min-h-[120px] bg-white/[0.06] border-white/[0.08]"
+        />
+      </FormField>
+
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Description of Work" required>
+          <Textarea
+            id="description"
+            value={formData.description || ''}
+            onChange={(e) => onUpdate('description', e.target.value)}
+            placeholder="Describe the electrical installation or work carried out"
+            rows={3}
+            className="text-base touch-manipulation min-h-[120px] bg-white/[0.06] border-white/[0.08]"
+          />
+        </FormField>
+        <FormField label="Installation Type">
+          <Select
+            value={formData.installationType || ''}
+            onValueChange={(value) => onUpdate('installationType', value)}
+          >
+            <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow">
+              <SelectValue placeholder="Select installation type" />
+            </SelectTrigger>
+            <SelectContent className="bg-white/[0.06] border-white/[0.08] text-foreground z-50">
+              <SelectItem value="domestic">Domestic</SelectItem>
+              <SelectItem value="commercial">Commercial</SelectItem>
+              <SelectItem value="industrial">Industrial</SelectItem>
+              <SelectItem value="other">Other</SelectItem>
+            </SelectContent>
+          </Select>
+        </FormField>
+      </div>
+
+      {/* Installation Dates */}
+      <SectionTitle title="Installation Dates" />
+
+      <div className="grid grid-cols-3 gap-2 items-end">
+        <FormField label="Date of Installation" required>
+          <Input
+            id="installationDate"
+            type="date"
+            value={formData.installationDate || ''}
+            onChange={(e) => onUpdate('installationDate', e.target.value)}
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+          />
+        </FormField>
+        <FormField label="Date of Construction">
+          <Input
+            id="constructionDate"
+            type="date"
+            value={formData.constructionDate || ''}
+            onChange={(e) => onUpdate('constructionDate', e.target.value)}
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+          />
+        </FormField>
+        <FormField label="Date of Testing">
+          <Input
+            id="testDate"
+            type="date"
+            value={formData.testDate || ''}
+            onChange={(e) => onUpdate('testDate', e.target.value)}
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+          />
+        </FormField>
+      </div>
+    </div>
   );
 };
 

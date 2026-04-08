@@ -1,6 +1,4 @@
 import React from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,7 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, FileText, Trash2, Minus, Info } from 'lucide-react';
+import { AlertTriangle, Trash2, Minus, Info, FileText } from 'lucide-react';
 import { EICObservation } from '@/hooks/useEICObservations';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
@@ -27,6 +25,30 @@ interface EICDefectObservationCardProps {
   onSyncToInspectionItem?: (inspectionItemId: string, newOutcome: string) => void;
 }
 
+const defectCodes = [
+  { code: 'unsatisfactory', description: 'Does not comply with BS 7671', severity: 'high' },
+  { code: 'limitation', description: 'Limitation noted during inspection', severity: 'limitation' },
+  { code: 'not-applicable', description: 'Not applicable to this installation', severity: 'neutral' },
+];
+
+const getSeverityIcon = (severity: string) => {
+  switch (severity) {
+    case 'high': return <AlertTriangle className="h-4 w-4 text-red-500" />;
+    case 'limitation': return <Info className="h-4 w-4 text-purple-400" />;
+    case 'neutral': return <Minus className="h-4 w-4 text-white" />;
+    default: return <FileText className="h-4 w-4 text-elec-yellow" />;
+  }
+};
+
+const getBorderColor = (severity: string) => {
+  switch (severity) {
+    case 'high': return 'border-l-red-500';
+    case 'limitation': return 'border-l-purple-500';
+    case 'neutral': return 'border-l-white/20';
+    default: return 'border-l-elec-yellow';
+  }
+};
+
 const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
   observation,
   reportId,
@@ -35,7 +57,6 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
   onRemove,
   onSyncToInspectionItem,
 }) => {
-  // Initialize photo management with observation context for AI
   const { photos, isUploading, isScanning, uploadPhoto, deletePhoto, scanPhotoWithAI } =
     useInspectionPhotos({
       reportId: reportId || '',
@@ -50,107 +71,64 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
       },
     });
 
-  const defectCodes = [
-    { code: 'unsatisfactory', description: 'Does not comply with BS 7671', severity: 'high' },
-    {
-      code: 'limitation',
-      description: 'Limitation noted during inspection',
-      severity: 'limitation',
-    },
-    {
-      code: 'not-applicable',
-      description: 'Not applicable to this installation',
-      severity: 'neutral',
-    },
-  ];
-
-  const getSeverityIcon = (severity: string) => {
-    switch (severity) {
-      case 'high':
-        return <AlertTriangle className="h-4 w-4 text-red-500" />;
-      case 'limitation':
-        return <Info className="h-4 w-4 text-purple-500" />;
-      case 'neutral':
-        return <Minus className="h-4 w-4 text-white" />;
-      default:
-        return <FileText className="h-4 w-4 text-elec-yellow" />;
-    }
-  };
-
-  const getBorderColor = (severity: string) => {
-    switch (severity) {
-      case 'high':
-        return 'border-l-red-500';
-      case 'limitation':
-        return 'border-l-purple-500';
-      case 'neutral':
-        return 'border-l-gray-500';
-      default:
-        return 'border-l-elec-yellow';
-    }
-  };
-
   const currentDefectCode = defectCodes.find((c) => c.code === observation.defectCode);
   const borderColor = getBorderColor(currentDefectCode?.severity || 'high');
 
   return (
-    <Card className={`p-4 sm:p-6 border border-border border-l-4 ${borderColor}`}>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-        <h4 className="font-semibold flex items-center gap-2 text-base">
+    <div className={`bg-white/[0.03] rounded-lg border border-white/[0.06] border-l-4 ${borderColor} p-4 space-y-4`}>
+      <div className="flex items-center justify-between">
+        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
           {getSeverityIcon(currentDefectCode?.severity || 'high')}
-          Observation {index + 1} - {observation.defectCode.toUpperCase()}
+          Observation {index + 1}
         </h4>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           {(observation.defectCode === 'C1' ||
             observation.defectCode === 'C2' ||
             observation.defectCode === 'C3') && (
-            <div className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
+            <div className="flex items-center gap-2 px-2 py-1 bg-white/[0.03] rounded-lg">
               <Checkbox
                 checked={observation.rectified}
                 onCheckedChange={(checked) => onUpdate(observation.id, 'rectified', checked)}
+                className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
               />
-              <Label className="text-base cursor-pointer leading-relaxed">Rectified</Label>
+              <Label className="text-xs text-white cursor-pointer">Rectified</Label>
             </div>
           )}
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={() => onRemove(observation.id)}
-            className="text-red-500 hover:text-red-700 h-11 w-11 p-0 touch-manipulation active:scale-[0.98] transition-transform"
-            aria-label="Remove observation"
+            className="w-9 h-9 rounded-lg bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-red-400 touch-manipulation active:scale-[0.98]"
           >
             <Trash2 className="h-4 w-4" />
-          </Button>
+          </button>
         </div>
       </div>
-      <div className="space-y-4">
+
+      <div className="space-y-3">
         <div>
-          <Label className="text-sm font-medium mb-1.5 block">Item/Location</Label>
+          <Label className="text-white text-xs mb-1.5 block">Item/Location</Label>
           <Input
             placeholder="e.g., Consumer unit, Kitchen socket"
             value={observation.item}
             onChange={(e) => onUpdate(observation.id, 'item', e.target.value)}
-            className="h-11 text-base touch-manipulation"
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
           />
         </div>
+
         <div>
-          <Label className="text-sm font-medium mb-1.5 block">Classification</Label>
+          <Label className="text-white text-xs mb-1.5 block">Classification</Label>
           <Select
             value={observation.defectCode}
             onValueChange={(value: 'unsatisfactory' | 'limitation' | 'not-applicable') => {
-              // Update observation locally
               onUpdate(observation.id, 'defectCode', value);
-
-              // Sync back to inspection item if linked
               if (observation.inspectionItemId && onSyncToInspectionItem) {
                 onSyncToInspectionItem(observation.inspectionItemId, value);
               }
             }}
           >
-            <SelectTrigger className="h-11 touch-manipulation">
+            <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white/[0.06] border-white/[0.08] text-white z-50">
               {defectCodes.map((code) => (
                 <SelectItem key={code.code} value={code.code}>
                   {code.code.toUpperCase()} - {code.description}
@@ -159,8 +137,9 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
             </SelectContent>
           </Select>
         </div>
+
         <div>
-          <Label className="text-sm font-medium mb-1.5 block">
+          <Label className="text-white text-xs mb-1.5 block">
             {observation.defectCode === 'not-applicable'
               ? 'Reason for Not Applicable'
               : observation.defectCode === 'limitation'
@@ -177,36 +156,35 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
             }
             value={observation.description}
             onChange={(e) => onUpdate(observation.id, 'description', e.target.value)}
-            rows={4}
-            className="text-base touch-manipulation min-h-[120px] resize-none"
+            rows={3}
+            className="text-sm touch-manipulation min-h-[80px] resize-none bg-white/[0.06] border-white/[0.08]"
           />
         </div>
+
         {observation.defectCode !== 'not-applicable' && (
           <div>
-            <Label className="text-sm font-medium mb-1.5 block">
-              {observation.defectCode === 'limitation'
-                ? 'Further Action Required'
-                : 'Recommendation'}
+            <Label className="text-white text-xs mb-1.5 block">
+              {observation.defectCode === 'limitation' ? 'Further Action Required' : 'Recommendation'}
             </Label>
             <Textarea
               placeholder={
                 observation.defectCode === 'limitation'
                   ? 'What action is needed to overcome this limitation...'
-                  : 'Recommended remedial action to achieve compliance...'
+                  : 'Recommended remedial action...'
               }
               value={observation.recommendation}
               onChange={(e) => onUpdate(observation.id, 'recommendation', e.target.value)}
-              rows={3}
-              className="text-base touch-manipulation min-h-[120px] resize-none"
+              rows={2}
+              className="text-sm touch-manipulation min-h-[60px] resize-none bg-white/[0.06] border-white/[0.08]"
             />
           </div>
         )}
 
-        {/* Photo Evidence Section */}
-        <div className="space-y-3 pt-4 border-t border-border">
+        {/* Photo Evidence */}
+        <div className="space-y-2 pt-3 border-t border-white/[0.06]">
           <div className="flex items-center justify-between">
-            <Label className="text-sm font-medium">Photo Evidence</Label>
-            <span className="text-xs text-white">
+            <Label className="text-white text-xs">Photo Evidence</Label>
+            <span className="text-[10px] text-white">
               {photos.length} photo{photos.length !== 1 ? 's' : ''}
             </span>
           </div>
@@ -232,7 +210,7 @@ const EICDefectObservationCard: React.FC<EICDefectObservationCardProps> = ({
           />
         </div>
       </div>
-    </Card>
+    </div>
   );
 };
 

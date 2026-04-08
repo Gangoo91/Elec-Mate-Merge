@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 import { EICFormProvider, useEICForm } from './eic/EICFormProvider';
 import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
@@ -6,7 +6,7 @@ import EICFormHeader from './eic/EICFormHeader';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
-import { CircuitBoard } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 
 const EICFormInner = ({ onBack }: { onBack: () => void }) => {
   const {
@@ -90,15 +90,11 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
   if (isLoadingDesign) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="text-center space-y-4">
-          <div className="p-4 rounded-full bg-elec-yellow/10 inline-flex">
-            <CircuitBoard className="h-8 w-8 text-elec-yellow animate-pulse" />
-          </div>
+        <div className="text-center space-y-3">
+          <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mx-auto" />
           <div>
-            <h3 className="text-lg font-semibold text-foreground">Loading Design</h3>
-            <p className="text-sm text-muted-foreground">
-              Pre-filling circuits from Circuit Designer...
-            </p>
+            <h3 className="text-sm font-semibold text-white">Loading Design</h3>
+            <p className="text-xs text-white mt-1">Pre-filling circuits...</p>
           </div>
         </div>
       </div>
@@ -106,22 +102,25 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
   }
 
   return (
-    <div className="bg-background">
-      <div className="px-4 py-3 sm:px-6 lg:px-8">
-        <EICFormHeader
-          onBack={onBack}
-          isSaving={isSaving}
-          onManualSave={handleManualSave}
-          onStartNew={handleStartNew}
-          formData={formData}
-          syncState={syncState}
-          isOnline={isOnline}
-          isAuthenticated={isAuthenticated}
-          onSyncNow={syncNow}
-        />
+    <div className="bg-background min-h-screen">
+      {/* Header — EICR pattern */}
+      <div className="bg-background">
+        <div className="px-2 py-2.5">
+          <EICFormHeader
+            onBack={onBack}
+            isSaving={isSaving}
+            onManualSave={handleManualSave}
+            formData={formData}
+            syncState={syncState}
+            isOnline={isOnline}
+            isAuthenticated={isAuthenticated}
+          />
+        </div>
+        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      <main className="px-4 py-6 sm:px-6 lg:px-8 pb-20 sm:pb-6">
+      {/* Main Content — full-width mobile */}
+      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
         <EICFormTabs
           currentTab={currentTab}
           onTabChange={handleTabChange}

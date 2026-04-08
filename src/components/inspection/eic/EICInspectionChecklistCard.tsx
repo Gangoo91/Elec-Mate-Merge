@@ -1,9 +1,16 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText } from 'lucide-react';
 import { EICInspectionItem } from '@/data/bs7671EICChecklistData';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
+import { useHaptic } from '@/hooks/useHaptic';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
 interface EICInspectionChecklistCardProps {
   inspectionItems: EICInspectionItem[];
   onUpdateItem: (id: string, field: keyof EICInspectionItem, value: any) => void;
@@ -16,23 +23,31 @@ interface EICInspectionChecklistCardProps {
   }) => string;
   onNavigateToObservations?: () => void;
 }
+
+const OUTCOME_OPTIONS = [
+  { value: 'satisfactory' as const, label: '✓', short: 'OK' },
+  { value: 'not-applicable' as const, label: 'N/A', short: 'N/A' },
+  { value: 'limitation' as const, label: 'LIM', short: 'LIM' },
+];
+
 const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
   inspectionItems,
   onUpdateItem,
   onAutoCreateObservation,
   onNavigateToObservations,
 }) => {
+  const haptic = useHaptic();
+
   const handleOutcomeChange = (
     id: string,
     outcome: 'satisfactory' | 'not-applicable' | 'limitation'
   ) => {
+    haptic.light();
     const currentItem = inspectionItems.find((item) => item.id === id);
     if (currentItem?.outcome === outcome) {
-      // Toggle off if clicking the same button
       onUpdateItem(id, 'outcome', '');
     } else {
       onUpdateItem(id, 'outcome', outcome);
-      // Auto-create observation when LIM is selected
       if (outcome === 'limitation' && currentItem && onAutoCreateObservation) {
         onAutoCreateObservation({
           id: currentItem.id,
@@ -41,92 +56,76 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
           notes: currentItem.notes,
           defectCode: 'limitation',
         });
-        // Navigate to observations section
         if (onNavigateToObservations) {
           setTimeout(() => onNavigateToObservations(), 300);
         }
       }
     }
   };
+
   return (
-    <Card className="border border-border bg-card overflow-hidden">
-      <CardHeader>
-        <CardTitle className="text-elec-yellow flex items-center gap-2">
-          <FileText className="h-5 w-5" />
-          Schedule of Inspections
-        </CardTitle>
-        <p className="text-sm text-white">
-          IET Model Forms - BS7671 18th Edition + A3:2024 compliant. For residential and similar
-          premises with up to 100 A supply.
-        </p>
-      </CardHeader>
-      <CardContent className="p-2 sm:p-4 md:p-6">
-        {inspectionItems.length === 0 ? (
-          <div className="text-center py-8 text-white">
-            <p>No inspection items found. Please refresh the page or contact support.</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {inspectionItems.map((item) => (
-              <div
-                key={item.id}
-                className="border border-border rounded-lg p-3 sm:p-4 bg-background/50 space-y-3"
-              >
-                {/* Item Header */}
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 w-12 sm:w-14">
-                    <div className="text-sm font-semibold text-elec-yellow">{item.itemNumber}</div>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-foreground">{item.description}</p>
-                  </div>
-                </div>
+    <div className="space-y-3">
+      <SectionTitle title="Schedule of Inspections" />
+      <p className="text-[10px] text-white">
+        BS 7671:18+A3:2024 — Residential and similar premises with up to 100 A supply
+      </p>
 
-                {/* Outcome Buttons */}
-                <div className="flex items-center gap-2 pl-0 sm:pl-14">
-                  <Button
-                    variant={item.outcome === 'satisfactory' ? 'default' : 'outline'}
-                    size="default"
-                    onClick={() => handleOutcomeChange(item.id, 'satisfactory')}
-                    className={`h-11 touch-manipulation ${item.outcome === 'satisfactory' ? 'bg-green-600 hover:bg-green-700 text-foreground border-green-600' : 'border-border text-foreground hover:bg-card'}`}
-                  >
-                    ✓ Satisfactory
-                  </Button>
-                  <Button
-                    variant={item.outcome === 'not-applicable' ? 'default' : 'outline'}
-                    size="default"
-                    onClick={() => handleOutcomeChange(item.id, 'not-applicable')}
-                    className={`h-11 touch-manipulation ${item.outcome === 'not-applicable' ? 'bg-accent hover:bg-muted text-foreground border-border' : 'border-border text-foreground hover:bg-card'}`}
-                  >
-                    N/A
-                  </Button>
-                  <Button
-                    variant={item.outcome === 'limitation' ? 'default' : 'outline'}
-                    size="default"
-                    onClick={() => handleOutcomeChange(item.id, 'limitation')}
-                    className={`h-11 touch-manipulation ${item.outcome === 'limitation' ? 'bg-amber-500 hover:bg-amber-600 text-black border-amber-500' : 'border-border text-foreground hover:bg-card'}`}
-                  >
-                    LIM
-                  </Button>
-                </div>
-
-                {/* Notes Field */}
-                {item.outcome && (
-                  <div className="pl-0 sm:pl-14">
-                    <Textarea
-                      placeholder="Add notes (optional)"
-                      value={item.notes || ''}
-                      onChange={(e) => onUpdateItem(item.id, 'notes', e.target.value)}
-                      className="text-base touch-manipulation min-h-[120px] bg-card border-border text-foreground"
-                    />
-                  </div>
-                )}
+      {inspectionItems.length === 0 ? (
+        <div className="text-center py-8 text-white text-xs">
+          No inspection items found
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {inspectionItems.map((item) => (
+            <div
+              key={item.id}
+              className="bg-white/[0.03] rounded-lg border border-white/[0.06] p-3 space-y-2"
+            >
+              <div className="flex items-start gap-2">
+                <span className="text-xs font-semibold text-elec-yellow flex-shrink-0 w-10 mt-0.5">
+                  {item.itemNumber}
+                </span>
+                <p className="text-xs text-white flex-1">{item.description}</p>
               </div>
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+
+              <div className="flex items-center gap-1.5 pl-10">
+                {OUTCOME_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => handleOutcomeChange(item.id, option.value)}
+                    className={cn(
+                      'h-9 px-3 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98] flex-1',
+                      item.outcome === option.value
+                        ? option.value === 'satisfactory'
+                          ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                          : option.value === 'limitation'
+                            ? 'bg-amber-500/20 border border-amber-500/40 text-amber-400'
+                            : 'bg-white/[0.08] border border-white/[0.15] text-white'
+                        : 'bg-white/[0.03] border border-white/[0.06] text-white/60'
+                    )}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+
+              {item.outcome && (
+                <div className="pl-10">
+                  <Textarea
+                    placeholder="Notes (optional)"
+                    value={item.notes || ''}
+                    onChange={(e) => onUpdateItem(item.id, 'notes', e.target.value)}
+                    className="text-sm touch-manipulation min-h-[60px] bg-white/[0.06] border-white/[0.08] resize-none"
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
+
 export default EICInspectionChecklistCard;

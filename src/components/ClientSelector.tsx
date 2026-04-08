@@ -50,7 +50,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
       <Label className="text-white text-[10px] uppercase tracking-wider mb-1 block">Select Client</Label>
 
       {selectedCustomer ? (
-        <div className="relative p-3.5 rounded-xl border border-blue-500/20 bg-blue-500/[0.05]">
+        <div className="relative p-3.5 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.05]">
           <button
             type="button"
             onClick={handleClearSelection}
@@ -75,7 +75,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
         <button
           type="button"
           onClick={() => setIsSheetOpen(true)}
-          className="w-full h-12 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-between px-3 text-sm text-white/40 touch-manipulation hover:bg-white/[0.08] active:scale-[0.98] transition-all"
+          className="w-full h-12 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-between px-3 text-sm text-white touch-manipulation hover:bg-white/[0.08] active:scale-[0.98] transition-all"
         >
           <span>Search clients...</span>
           <ChevronDown className="h-4 w-4 opacity-40" />
@@ -101,12 +101,12 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
             {/* Search Input */}
             <div className="px-4 py-3 border-b border-white/[0.06]">
               <div className="flex items-center gap-2.5 h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08]">
-                <Search className="h-4 w-4 text-white/40 flex-shrink-0" />
+                <Search className="h-4 w-4 text-white flex-shrink-0" />
                 <input
                   placeholder="Search by name, email, phone..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="flex-1 bg-transparent text-base text-white placeholder:text-white/40 outline-none"
+                  className="flex-1 bg-transparent text-base text-white placeholder:text-white outline-none"
                   autoFocus
                 />
                 {searchTerm && (

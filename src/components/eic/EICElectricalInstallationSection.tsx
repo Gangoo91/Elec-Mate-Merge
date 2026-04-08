@@ -1,40 +1,61 @@
 import React, { useMemo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
-import { Cable, ChevronDown } from 'lucide-react';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cableSizeOptions } from '@/types/cableTypes';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
 import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FormField = ({ label, required, hint, children }: { label: string; required?: boolean; hint?: string; children: React.ReactNode }) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    {children}
+    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
+  </div>
+);
+
+const inputClasses = "h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]";
 
 interface EICElectricalInstallationSectionProps {
   formData: Record<string, unknown>;
   onUpdate: (field: string, value: string) => void;
-  isOpen: boolean;
-  onToggle: () => void;
 }
 
 const EICElectricalInstallationSection = ({
   formData,
   onUpdate,
-  isOpen,
-  onToggle,
 }: EICElectricalInstallationSectionProps) => {
-  const isMobile = useIsMobile();
-  const hasRCDProtection = formData.rcdMainSwitch === 'yes' || formData.rcdMainSwitch === 'rcbo';
-  const showRCDFields = formData.rcdMainSwitch && formData.rcdMainSwitch !== 'no';
+  const hasRCDProtection = formData.rcdMainSwitch && formData.rcdMainSwitch !== 'no';
+  const showRCDFields = hasRCDProtection;
+
+  // Smart cascading: device type → auto-set BS EN
+  const DEVICE_TO_BS: Record<string, string> = {
+    'main-switch': '',
+    'switch-fuse': 'BS EN 60947-3',
+    'circuit-breaker': 'BS EN 60898-1',
+    'rcd': 'BS EN 61008-1',
+    'mcb': 'BS EN 60898-1',
+    'mccb': 'BS EN 60947-2',
+    'fuse': 'BS 88-2',
+    'isolator': 'BS EN 60947-3',
+  };
+
+  const handleDeviceTypeChange = (value: string) => {
+    const newValue = formData.mainProtectiveDevice === value ? '' : value;
+    onUpdate('mainProtectiveDevice', newValue);
+    // Auto-set BS EN if we have a mapping
+    if (newValue && DEVICE_TO_BS[newValue]) {
+      onUpdate('mainSwitchBsEn', DEVICE_TO_BS[newValue]);
+    }
+  };
 
   const handleRCDMainSwitchChange = (value: string) => {
     const actualValue = value === '__clear__' ? '' : value;
@@ -50,13 +71,13 @@ const EICElectricalInstallationSection = ({
   // Migrate legacy single-board data to multi-board format
   const boards: DistributionBoard[] = useMemo(() => {
     // If we already have distributionBoards, use them
-    if (formData.distributionBoards && formData.distributionBoards.length > 0) {
-      return formData.distributionBoards;
+    if (formData.distributionBoards && (formData.distributionBoards as DistributionBoard[]).length > 0) {
+      return formData.distributionBoards as DistributionBoard[];
     }
 
     // Otherwise, create main board from legacy fields
     const mainBoard = createMainBoard();
-    if (formData.boardLocation) mainBoard.location = formData.boardLocation;
+    if (formData.boardLocation) mainBoard.location = formData.boardLocation as string;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if (formData.boardType) mainBoard.type = formData.boardType as any;
     if (formData.boardSize) {
@@ -79,594 +100,530 @@ const EICElectricalInstallationSection = ({
     }
   };
 
+  // --- Option arrays ---
+
+  const deviceTypeOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: 'main-switch', label: 'Main Switch' },
+    { value: 'switch-fuse', label: 'Switch Fuse' },
+    { value: 'circuit-breaker', label: 'Circuit-breaker' },
+    { value: 'rcd', label: 'RCD' },
+    { value: 'mcb', label: 'MCB' },
+    { value: 'mccb', label: 'MCCB' },
+    { value: 'fuse', label: 'Fuse' },
+    { value: 'isolator', label: 'Isolator' },
+  ];
+
+  const bsEnOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: 'BS EN 60898-1', label: 'BS EN 60898-1 (MCBs)' },
+    { value: 'BS EN 60898-2', label: 'BS EN 60898-2 (MCBs AC/DC)' },
+    { value: 'BS EN 60947-2', label: 'BS EN 60947-2 (MCCBs)' },
+    { value: 'BS EN 60947-3', label: 'BS EN 60947-3 (Switch-disconnectors)' },
+    { value: 'BS EN 61008-1', label: 'BS EN 61008-1 (RCCBs)' },
+    { value: 'BS EN 61009-1', label: 'BS EN 61009-1 (RCBOs)' },
+    { value: 'BS 88-2', label: 'BS 88-2 (HRC Fuses)' },
+    { value: 'BS 88-3', label: 'BS 88-3 (HRC Fuses)' },
+    { value: 'BS 1361', label: 'BS 1361 (Cartridge Fuses)' },
+    { value: 'BS 1362', label: 'BS 1362 (Plug Fuses)' },
+    { value: 'BS 3036', label: 'BS 3036 (Semi-enclosed Fuses)' },
+    { value: 'BS 7671', label: 'BS 7671 (Wiring Regs)' },
+  ];
+
+  const polesOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '1', label: '1 Pole' },
+    { value: '2', label: '2 Pole' },
+    { value: '3', label: '3 Pole' },
+    { value: '4', label: '4 Pole' },
+  ];
+
+  const currentRatingOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '5', label: '5A' },
+    { value: '6', label: '6A' },
+    { value: '10', label: '10A' },
+    { value: '15', label: '15A' },
+    { value: '16', label: '16A' },
+    { value: '20', label: '20A' },
+    { value: '25', label: '25A' },
+    { value: '30', label: '30A' },
+    { value: '32', label: '32A' },
+    { value: '40', label: '40A' },
+    { value: '45', label: '45A' },
+    { value: '50', label: '50A' },
+    { value: '60', label: '60A' },
+    { value: '63', label: '63A' },
+    { value: '80', label: '80A' },
+    { value: '100', label: '100A' },
+    { value: '125', label: '125A' },
+    { value: '160', label: '160A' },
+    { value: '200', label: '200A' },
+    { value: '250', label: '250A' },
+    { value: '315', label: '315A' },
+    { value: '400', label: '400A' },
+    { value: '500', label: '500A' },
+    { value: '630', label: '630A' },
+    { value: '800', label: '800A' },
+    { value: '1000', label: '1000A' },
+    { value: '1250', label: '1250A' },
+    { value: '1600', label: '1600A' },
+  ];
+
+  const fuseSettingOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '3', label: '3A' },
+    { value: '5', label: '5A' },
+    { value: '6', label: '6A' },
+    { value: '10', label: '10A' },
+    { value: '13', label: '13A' },
+    { value: '15', label: '15A' },
+    { value: '16', label: '16A' },
+    { value: '20', label: '20A' },
+    { value: '25', label: '25A' },
+    { value: '30', label: '30A' },
+    { value: '32', label: '32A' },
+    { value: '40', label: '40A' },
+    { value: '45', label: '45A' },
+    { value: '50', label: '50A' },
+    { value: '60', label: '60A' },
+    { value: '63', label: '63A' },
+    { value: '80', label: '80A' },
+    { value: '100', label: '100A' },
+    { value: '125', label: '125A' },
+    { value: '160', label: '160A' },
+    { value: '200', label: '200A' },
+    { value: '250', label: '250A' },
+    { value: '315', label: '315A' },
+    { value: '400', label: '400A' },
+    { value: '500', label: '500A' },
+    { value: '630', label: '630A' },
+    { value: '800', label: '800A' },
+    { value: '1000', label: '1000A' },
+    { value: '1250', label: '1250A' },
+    { value: '1600', label: '1600A' },
+  ];
+
+  const voltageOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '230', label: '230V' },
+    { value: '400', label: '400V' },
+    { value: 'other', label: 'Other' },
+  ];
+
+  const breakingCapacityOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '1', label: '1kA' },
+    { value: '1.5', label: '1.5kA' },
+    { value: '3', label: '3kA' },
+    { value: '4.5', label: '4.5kA' },
+    { value: '6', label: '6kA' },
+    { value: '10', label: '10kA' },
+    { value: '15', label: '15kA' },
+    { value: '16', label: '16kA' },
+    { value: '20', label: '20kA' },
+    { value: '25', label: '25kA' },
+    { value: '35', label: '35kA' },
+    { value: '50', label: '50kA' },
+    { value: '70', label: '70kA' },
+    { value: '100', label: '100kA' },
+  ];
+
+  const rcdRatingOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '30', label: '30mA' },
+    { value: '100', label: '100mA' },
+    { value: '300', label: '300mA' },
+  ];
+
+  const rcdTypeOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: 'ac', label: 'AC Type' },
+    { value: 'a', label: 'A Type' },
+    { value: 'b', label: 'B Type' },
+    { value: 'f', label: 'F Type' },
+  ];
+
+  const rcdTimeDelayOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '0', label: '0ms (No delay)' },
+    { value: '40', label: '40ms' },
+    { value: '150', label: '150ms' },
+    { value: '200', label: '200ms' },
+    { value: '300', label: '300ms' },
+    { value: '500', label: '500ms (S Type)' },
+  ];
+
+  const intakeCableSizeOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    ...cableSizeOptions.map((o) => ({ value: o.value, label: o.label })),
+    { value: 'custom', label: 'Other/Custom' },
+  ];
+
+  const intakeCableTypeOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: 'pvc', label: 'PVC' },
+    { value: 'xlpe', label: 'XLPE' },
+    { value: 'swa', label: 'SWA (Steel Wire Armoured)' },
+    { value: 'pvc-swa', label: 'PVC/SWA' },
+    { value: 'xlpe-swa', label: 'XLPE/SWA' },
+    { value: 'concentric', label: 'Concentric' },
+    { value: 'paper', label: 'Paper Insulated' },
+    { value: 'pilc', label: 'PILC (Paper Insulated Lead Covered)' },
+    { value: 'micc', label: 'MICC (Mineral Insulated)' },
+    { value: 'other', label: 'Other' },
+  ];
+
+  const tailsSizeOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '16mm', label: '16mm\u00B2' },
+    { value: '25mm', label: '25mm\u00B2' },
+    { value: '35mm', label: '35mm\u00B2' },
+    { value: '50mm', label: '50mm\u00B2' },
+    { value: 'custom', label: 'Other/Custom' },
+  ];
+
+  const tailsLengthOptions = [
+    { value: '__clear__', label: '— Clear —' },
+    { value: '1m', label: '1m' },
+    { value: '1.5m', label: '1.5m' },
+    { value: '2m', label: '2m' },
+    { value: '2.5m', label: '2.5m' },
+    { value: '3m', label: '3m' },
+    { value: '4m', label: '4m' },
+    { value: '5m', label: '5m' },
+    { value: 'custom', label: 'Custom Length' },
+  ];
+
+  // RCD Main Switch toggle value
+  const rcdMainSwitchValue = (formData.rcdMainSwitch as string) || '';
+
   return (
-    <div className={cn(isMobile ? '' : 'border border-border bg-card overflow-hidden rounded-lg')}>
-      <Collapsible open={isOpen} onOpenChange={onToggle}>
-        {isMobile ? (
+    <div className="space-y-4">
+      {/* Main Switch */}
+      <SectionTitle title="Main Switch / Circuit-Breaker / RCD" />
+
+      {/* Device Type as toggle buttons */}
+      <div className="grid grid-cols-4 gap-1">
+        {[
+          { value: 'main-switch', label: 'Switch' },
+          { value: 'circuit-breaker', label: 'CB' },
+          { value: 'rcd', label: 'RCD' },
+          { value: 'fuse', label: 'Fuse' },
+        ].map((opt) => (
           <button
-            onClick={onToggle}
-            className="flex items-center gap-3 py-4 px-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full text-left"
+            key={opt.value}
+            type="button"
+            onClick={() => handleDeviceTypeChange(opt.value)}
+            className={cn(
+              'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98]',
+              formData.mainProtectiveDevice === opt.value
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+            )}
           >
-            <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center shrink-0">
-              <Cable className="h-5 w-5 text-purple-400" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-foreground">Electrical Installation Details</h3>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-5 w-5 text-white transition-transform shrink-0',
-                isOpen && 'rotate-180'
-              )}
-            />
+            {opt.label}
           </button>
-        ) : (
-          <SectionHeader
-            title="Electrical Installation Details"
-            icon={Cable}
-            isOpen={isOpen}
-            color="amber-500"
+        ))}
+      </div>
+
+      <FormField label="Location">
+        <Input
+          value={(formData.mainSwitchLocation as string) || ''}
+          onChange={(e) => onUpdate('mainSwitchLocation', e.target.value)}
+          placeholder="e.g., Under stairs cupboard"
+          className={inputClasses}
+        />
+      </FormField>
+
+      <div className="grid grid-cols-2 gap-3 items-end">
+        <FormField label="BS (EN)">
+          <MobileSelectPicker
+            value={(formData.mainSwitchBsEn as string) || ''}
+            onValueChange={(value) =>
+              onUpdate('mainSwitchBsEn', value === '__clear__' ? '' : value)
+            }
+            options={bsEnOptions}
+            placeholder="Select BS"
+            title="BS (EN) Standard"
+            triggerClassName={inputClasses}
           />
-        )}
-        <CollapsibleContent>
-          <div className={cn('space-y-6', isMobile ? 'px-4 py-4' : 'p-4 sm:p-6')}>
-            {/* Main Switch / Switch-fuse / Circuit-breaker / RCD (IET Form) */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 pl-2.5 border-l-2 border-l-yellow-400">
-                Main Switch / Switch-fuse / Circuit-breaker / RCD
-              </h3>
+        </FormField>
+        <FormField label="Poles">
+          <MobileSelectPicker
+            value={(formData.mainSwitchPoles as string) || ''}
+            onValueChange={(value) =>
+              onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value)
+            }
+            options={polesOptions}
+            placeholder="Poles"
+            title="Number of Poles"
+            triggerClassName={inputClasses}
+          />
+        </FormField>
+      </div>
 
-              {/* Location (IET Form) */}
-              <div className="space-y-2">
-                <Label htmlFor="mainSwitchLocation" className="font-medium text-sm">
-                  Location
-                </Label>
-                <Input
-                  id="mainSwitchLocation"
-                  value={formData.mainSwitchLocation || ''}
-                  onChange={(e) => onUpdate('mainSwitchLocation', e.target.value)}
-                  placeholder="e.g., Under stairs cupboard, Garage"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
+      <div className="grid grid-cols-2 gap-3 items-end">
+        <FormField label="Rating (A)" required>
+          <MobileSelectPicker
+            value={(formData.mainSwitchRating as string) || ''}
+            onValueChange={(value) =>
+              onUpdate('mainSwitchRating', value === '__clear__' ? '' : value)
+            }
+            options={currentRatingOptions}
+            placeholder="Rating"
+            title="Current Rating"
+            triggerClassName={inputClasses}
+          />
+        </FormField>
+        <FormField label="Fuse Setting (A)">
+          <MobileSelectPicker
+            value={(formData.mainSwitchFuseRating as string) || ''}
+            onValueChange={(value) =>
+              onUpdate('mainSwitchFuseRating', value === '__clear__' ? '' : value)
+            }
+            options={fuseSettingOptions}
+            placeholder="Setting"
+            title="Fuse/Device Setting"
+            triggerClassName={inputClasses}
+          />
+        </FormField>
+      </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="mainProtectiveDevice" className="font-medium text-sm">
-                    Device Type *
-                  </Label>
-                  <Select
-                    value={formData.mainProtectiveDevice || ''}
-                    onValueChange={(value) =>
-                      onUpdate('mainProtectiveDevice', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select device type" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="main-switch">Main Switch</SelectItem>
-                      <SelectItem value="switch-fuse">Switch Fuse</SelectItem>
-                      <SelectItem value="circuit-breaker">Circuit-breaker</SelectItem>
-                      <SelectItem value="rcd">RCD</SelectItem>
-                      <SelectItem value="mcb">MCB</SelectItem>
-                      <SelectItem value="mccb">MCCB</SelectItem>
-                      <SelectItem value="fuse">Fuse</SelectItem>
-                      <SelectItem value="isolator">Isolator</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="mainSwitchBsEn" className="font-medium text-sm">
-                    BS (EN)
-                  </Label>
-                  <Select
-                    value={formData.mainSwitchBsEn || ''}
-                    onValueChange={(value) =>
-                      onUpdate('mainSwitchBsEn', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select BS standard" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="BS EN 60898-1">BS EN 60898-1 (MCBs)</SelectItem>
-                      <SelectItem value="BS EN 60898-2">BS EN 60898-2 (MCBs AC/DC)</SelectItem>
-                      <SelectItem value="BS EN 60947-2">BS EN 60947-2 (MCCBs)</SelectItem>
-                      <SelectItem value="BS EN 60947-3">
-                        BS EN 60947-3 (Switch-disconnectors)
-                      </SelectItem>
-                      <SelectItem value="BS EN 61008-1">BS EN 61008-1 (RCCBs)</SelectItem>
-                      <SelectItem value="BS EN 61009-1">BS EN 61009-1 (RCBOs)</SelectItem>
-                      <SelectItem value="BS 88-2">BS 88-2 (HRC Fuses)</SelectItem>
-                      <SelectItem value="BS 88-3">BS 88-3 (HRC Fuses)</SelectItem>
-                      <SelectItem value="BS 1361">BS 1361 (Cartridge Fuses)</SelectItem>
-                      <SelectItem value="BS 1362">BS 1362 (Plug Fuses)</SelectItem>
-                      <SelectItem value="BS 3036">BS 3036 (Semi-enclosed Fuses)</SelectItem>
-                      <SelectItem value="BS 7671">BS 7671 (Wiring Regs)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="mainSwitchPoles" className="font-medium text-sm">
-                    No. of Poles
-                  </Label>
-                  <Select
-                    value={formData.mainSwitchPoles || ''}
-                    onValueChange={(value) =>
-                      onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select poles" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="1">1 Pole</SelectItem>
-                      <SelectItem value="2">2 Pole</SelectItem>
-                      <SelectItem value="3">3 Pole</SelectItem>
-                      <SelectItem value="4">4 Pole</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+      <div className="grid grid-cols-2 gap-3 items-end">
+        <FormField label="Voltage (V)">
+          <MobileSelectPicker
+            value={(formData.mainSwitchVoltageRating as string) || ''}
+            onValueChange={(value) =>
+              onUpdate('mainSwitchVoltageRating', value === '__clear__' ? '' : value)
+            }
+            options={voltageOptions}
+            placeholder="Voltage"
+            title="Voltage Rating"
+            triggerClassName={inputClasses}
+          />
+        </FormField>
+        <FormField label="Breaking Capacity (kA)">
+          <MobileSelectPicker
+            value={(formData.breakingCapacity as string) || ''}
+            onValueChange={(value) =>
+              onUpdate('breakingCapacity', value === '__clear__' ? '' : value)
+          }
+          options={breakingCapacityOptions}
+          placeholder="Select capacity"
+          title="Breaking Capacity"
+          triggerClassName={inputClasses}
+        />
+      </FormField>
+      </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                  <Label htmlFor="mainSwitchRating" className="font-medium text-sm">
-                    Current Rating (A) *
-                  </Label>
-                  <Select
-                    value={formData.mainSwitchRating || ''}
-                    onValueChange={(value) =>
-                      onUpdate('mainSwitchRating', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select rating" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      {/* BS 3036 Semi-enclosed fuse ratings */}
-                      <SelectItem value="5">5A</SelectItem>
-                      <SelectItem value="15">15A</SelectItem>
-                      {/* MCB/MCCB standard ratings */}
-                      <SelectItem value="6">6A</SelectItem>
-                      <SelectItem value="10">10A</SelectItem>
-                      <SelectItem value="16">16A</SelectItem>
-                      <SelectItem value="20">20A</SelectItem>
-                      <SelectItem value="25">25A</SelectItem>
-                      <SelectItem value="30">30A</SelectItem>
-                      <SelectItem value="32">32A</SelectItem>
-                      <SelectItem value="40">40A</SelectItem>
-                      <SelectItem value="45">45A</SelectItem>
-                      <SelectItem value="50">50A</SelectItem>
-                      <SelectItem value="60">60A</SelectItem>
-                      <SelectItem value="63">63A</SelectItem>
-                      <SelectItem value="80">80A</SelectItem>
-                      <SelectItem value="100">100A</SelectItem>
-                      <SelectItem value="125">125A</SelectItem>
-                      <SelectItem value="160">160A</SelectItem>
-                      <SelectItem value="200">200A</SelectItem>
-                      <SelectItem value="250">250A</SelectItem>
-                      <SelectItem value="315">315A</SelectItem>
-                      <SelectItem value="400">400A</SelectItem>
-                      <SelectItem value="500">500A</SelectItem>
-                      <SelectItem value="630">630A</SelectItem>
-                      <SelectItem value="800">800A</SelectItem>
-                      <SelectItem value="1000">1000A</SelectItem>
-                      <SelectItem value="1250">1250A</SelectItem>
-                      <SelectItem value="1600">1600A</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="mainSwitchFuseRating" className="font-medium text-sm">
-                    Fuse/Device Setting (A)
-                  </Label>
-                  <Select
-                    value={formData.mainSwitchFuseRating || ''}
-                    onValueChange={(value) =>
-                      onUpdate('mainSwitchFuseRating', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select setting" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      {/* BS 1362 plug fuse ratings */}
-                      <SelectItem value="3">3A</SelectItem>
-                      {/* BS 3036 Semi-enclosed fuse ratings */}
-                      <SelectItem value="5">5A</SelectItem>
-                      <SelectItem value="15">15A</SelectItem>
-                      <SelectItem value="20">20A</SelectItem>
-                      <SelectItem value="30">30A</SelectItem>
-                      <SelectItem value="45">45A</SelectItem>
-                      {/* MCB/MCCB/BS 88 standard ratings */}
-                      <SelectItem value="6">6A</SelectItem>
-                      <SelectItem value="10">10A</SelectItem>
-                      <SelectItem value="13">13A</SelectItem>
-                      <SelectItem value="16">16A</SelectItem>
-                      <SelectItem value="25">25A</SelectItem>
-                      <SelectItem value="32">32A</SelectItem>
-                      <SelectItem value="40">40A</SelectItem>
-                      <SelectItem value="50">50A</SelectItem>
-                      <SelectItem value="60">60A</SelectItem>
-                      <SelectItem value="63">63A</SelectItem>
-                      <SelectItem value="80">80A</SelectItem>
-                      <SelectItem value="100">100A</SelectItem>
-                      <SelectItem value="125">125A</SelectItem>
-                      <SelectItem value="160">160A</SelectItem>
-                      <SelectItem value="200">200A</SelectItem>
-                      <SelectItem value="250">250A</SelectItem>
-                      <SelectItem value="315">315A</SelectItem>
-                      <SelectItem value="400">400A</SelectItem>
-                      <SelectItem value="500">500A</SelectItem>
-                      <SelectItem value="630">630A</SelectItem>
-                      <SelectItem value="800">800A</SelectItem>
-                      <SelectItem value="1000">1000A</SelectItem>
-                      <SelectItem value="1250">1250A</SelectItem>
-                      <SelectItem value="1600">1600A</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="mainSwitchVoltageRating" className="font-medium text-sm">
-                    Voltage Rating (V)
-                  </Label>
-                  <Select
-                    value={formData.mainSwitchVoltageRating || ''}
-                    onValueChange={(value) =>
-                      onUpdate('mainSwitchVoltageRating', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select voltage" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="230">230V</SelectItem>
-                      <SelectItem value="400">400V</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="breakingCapacity" className="font-medium text-sm">
-                    Breaking Capacity (kA)
-                  </Label>
-                  <Select
-                    value={formData.breakingCapacity || ''}
-                    onValueChange={(value) =>
-                      onUpdate('breakingCapacity', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select capacity" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="1">1kA</SelectItem>
-                      <SelectItem value="1.5">1.5kA</SelectItem>
-                      <SelectItem value="3">3kA</SelectItem>
-                      <SelectItem value="4.5">4.5kA</SelectItem>
-                      <SelectItem value="6">6kA</SelectItem>
-                      <SelectItem value="10">10kA</SelectItem>
-                      <SelectItem value="15">15kA</SelectItem>
-                      <SelectItem value="16">16kA</SelectItem>
-                      <SelectItem value="20">20kA</SelectItem>
-                      <SelectItem value="25">25kA</SelectItem>
-                      <SelectItem value="35">35kA</SelectItem>
-                      <SelectItem value="50">50kA</SelectItem>
-                      <SelectItem value="70">70kA</SelectItem>
-                      <SelectItem value="100">100kA</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
+      {/* RCD Protection — grouped card */}
+      <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-3">
+        <SectionTitle title="RCD Protection" />
 
-            <Separator />
-
-            {/* RCD Protection */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 pl-2.5 border-l-2 border-l-blue-400">
-                RCD Protection
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="rcdMainSwitch" className="font-medium text-sm">
-                    RCD Main Switch
-                  </Label>
-                  <Select
-                    value={formData.rcdMainSwitch || ''}
-                    onValueChange={handleRCDMainSwitchChange}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select RCD type" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                      <SelectItem value="rcbo">RCBO</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {showRCDFields ? (
-                  <>
-                    <div>
-                      <Label htmlFor="rcdRating" className="font-medium text-sm">
-                        I<sub>Δn</sub> Rating (mA)
-                      </Label>
-                      <Select
-                        value={formData.rcdRating || ''}
-                        onValueChange={(value) =>
-                          onUpdate('rcdRating', value === '__clear__' ? '' : value)
-                        }
-                      >
-                        <SelectTrigger className="h-11 touch-manipulation">
-                          <SelectValue placeholder="Select rating" />
-                        </SelectTrigger>
-                        <SelectContent className="max-w-[calc(100vw-2rem)]">
-                          <SelectItem value="__clear__">
-                            <span className="text-muted-foreground">Clear selection</span>
-                          </SelectItem>
-                          <SelectItem value="30">30mA</SelectItem>
-                          <SelectItem value="100">100mA</SelectItem>
-                          <SelectItem value="300">300mA</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <Label htmlFor="rcdType" className="font-medium text-sm">
-                        RCD Type
-                      </Label>
-                      <Select
-                        value={formData.rcdType || ''}
-                        onValueChange={(value) =>
-                          onUpdate('rcdType', value === '__clear__' ? '' : value)
-                        }
-                      >
-                        <SelectTrigger className="h-11 touch-manipulation">
-                          <SelectValue placeholder="Select type" />
-                        </SelectTrigger>
-                        <SelectContent className="max-w-[calc(100vw-2rem)]">
-                          <SelectItem value="__clear__">
-                            <span className="text-muted-foreground">Clear selection</span>
-                          </SelectItem>
-                          <SelectItem value="ac">AC Type</SelectItem>
-                          <SelectItem value="a">A Type</SelectItem>
-                          <SelectItem value="b">B Type</SelectItem>
-                          <SelectItem value="f">F Type</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </>
-                ) : (
-                  formData.rcdMainSwitch === 'no' && (
-                    <div className="md:col-span-2 flex items-center justify-center p-4 bg-white/[0.03] border border-white/[0.08] rounded-lg">
-                      <p className="text-sm text-white text-center">
-                        RCD rating and type fields are not applicable when no RCD protection is
-                        installed
-                      </p>
-                    </div>
-                  )
-                )}
-              </div>
-
-              {/* RCD Time Fields (IET Form) */}
-              {showRCDFields && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-3 rounded-lg bg-blue-500/5 border border-blue-500/20">
-                  <div>
-                    <Label htmlFor="rcdTimeDelay" className="font-medium text-sm">
-                      Rated Time Delay (ms)
-                    </Label>
-                    <Select
-                      value={formData.rcdTimeDelay || ''}
-                      onValueChange={(value) =>
-                        onUpdate('rcdTimeDelay', value === '__clear__' ? '' : value)
-                      }
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation">
-                        <SelectValue placeholder="Select delay" />
-                      </SelectTrigger>
-                      <SelectContent className="max-w-[calc(100vw-2rem)]">
-                        <SelectItem value="__clear__">
-                          <span className="text-muted-foreground">Clear selection</span>
-                        </SelectItem>
-                        <SelectItem value="0">0ms (No delay)</SelectItem>
-                        <SelectItem value="40">40ms</SelectItem>
-                        <SelectItem value="150">150ms</SelectItem>
-                        <SelectItem value="200">200ms</SelectItem>
-                        <SelectItem value="300">300ms</SelectItem>
-                        <SelectItem value="500">500ms (S Type)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="rcdOperatingTime" className="font-medium text-sm">
-                      Operating Time (ms)
-                    </Label>
-                    <Input
-                      id="rcdOperatingTime"
-                      type="text"
-                      inputMode="numeric"
-                      value={formData.rcdOperatingTime || ''}
-                      onChange={(e) => onUpdate('rcdOperatingTime', e.target.value)}
-                      placeholder="e.g., 40"
-                      className="h-11 text-base touch-manipulation"
-                    />
-                    <p className="text-xs text-white mt-1">Manufacturer rated operating time</p>
-                  </div>
-                  <div>
-                    <Label htmlFor="rcdMeasuredTime" className="font-medium text-sm">
-                      Measured Operating Time (ms)
-                    </Label>
-                    <Input
-                      id="rcdMeasuredTime"
-                      type="text"
-                      inputMode="numeric"
-                      value={formData.rcdMeasuredTime || ''}
-                      onChange={(e) => onUpdate('rcdMeasuredTime', e.target.value)}
-                      placeholder="e.g., 28"
-                      className="h-11 text-base touch-manipulation"
-                    />
-                    <p className="text-xs text-white mt-1">Trip time at IΔn</p>
-                  </div>
-                </div>
+        {/* RCD Main Switch — toggle buttons */}
+        <div className="grid grid-cols-3 gap-1">
+          {[
+            { value: 'yes', label: 'RCD' },
+            { value: 'no', label: 'No RCD' },
+            { value: 'rcbo', label: 'RCBO' },
+          ].map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => handleRCDMainSwitchChange(
+                rcdMainSwitchValue === opt.value ? '__clear__' : opt.value
               )}
-            </div>
+              className={cn(
+                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                rcdMainSwitchValue === opt.value
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
 
-            <Separator />
-
-            {/* Distribution Boards - Multi-board support */}
-            <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} />
-
-            <Separator />
-
-            {/* Supply Cables */}
-            <div className="space-y-4">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground border-b border-elec-gray pb-2 pl-2.5 border-l-2 border-l-purple-400">
-                Supply Cables
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="intakeCableSize" className="font-medium text-sm">
-                    Intake Cable Size
-                  </Label>
-                  <Select
-                    value={formData.intakeCableSize || ''}
-                    onValueChange={(value) =>
-                      onUpdate('intakeCableSize', value === '__clear__' ? '' : value)
-                    }
+        {showRCDFields ? (
+          <div className="space-y-3">
+            {/* Type as toggle buttons */}
+            <FormField label="RCD Type">
+              <div className="grid grid-cols-4 gap-1">
+                {[
+                  { value: 'ac', label: 'AC' },
+                  { value: 'a', label: 'A' },
+                  { value: 'b', label: 'B' },
+                  { value: 'f', label: 'F' },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => onUpdate('rcdType', (formData.rcdType as string) === opt.value ? '' : opt.value)}
+                    className={cn(
+                      'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                      (formData.rcdType as string) === opt.value
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select cable size" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      {cableSizeOptions.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                      <SelectItem value="custom">Other/Custom</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="intakeCableType" className="font-medium text-sm">
-                    Intake Cable Type
-                  </Label>
-                  <Select
-                    value={formData.intakeCableType || ''}
-                    onValueChange={(value) =>
-                      onUpdate('intakeCableType', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select cable type" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="pvc">PVC</SelectItem>
-                      <SelectItem value="xlpe">XLPE</SelectItem>
-                      <SelectItem value="swa">SWA (Steel Wire Armoured)</SelectItem>
-                      <SelectItem value="pvc-swa">PVC/SWA</SelectItem>
-                      <SelectItem value="xlpe-swa">XLPE/SWA</SelectItem>
-                      <SelectItem value="concentric">Concentric</SelectItem>
-                      <SelectItem value="paper">Paper Insulated</SelectItem>
-                      <SelectItem value="pilc">PILC (Paper Insulated Lead Covered)</SelectItem>
-                      <SelectItem value="micc">MICC (Mineral Insulated)</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                    Type {opt.label}
+                  </button>
+                ))}
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="tailsSize" className="font-medium text-sm">
-                    Meter Tails Size
-                  </Label>
-                  <Select
-                    value={formData.tailsSize || ''}
-                    onValueChange={(value) =>
-                      onUpdate('tailsSize', value === '__clear__' ? '' : value)
-                    }
+            </FormField>
+
+            {/* Rating as toggle buttons */}
+            <FormField label="IΔn Rating (mA)">
+              <div className="grid grid-cols-3 gap-1">
+                {['30', '100', '300'].map((r) => (
+                  <button
+                    key={r}
+                    type="button"
+                    onClick={() => onUpdate('rcdRating', (formData.rcdRating as string) === r ? '' : r)}
+                    className={cn(
+                      'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                      (formData.rcdRating as string) === r
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select tails size" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="16mm">16mm²</SelectItem>
-                      <SelectItem value="25mm">25mm²</SelectItem>
-                      <SelectItem value="35mm">35mm²</SelectItem>
-                      <SelectItem value="50mm">50mm²</SelectItem>
-                      <SelectItem value="custom">Other/Custom</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="tailsLength" className="font-medium text-sm">
-                    Meter Tails Length
-                  </Label>
-                  <Select
-                    value={formData.tailsLength || ''}
-                    onValueChange={(value) =>
-                      onUpdate('tailsLength', value === '__clear__' ? '' : value)
-                    }
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select length" />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      <SelectItem value="__clear__">
-                        <span className="text-muted-foreground">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="1m">1m</SelectItem>
-                      <SelectItem value="1.5m">1.5m</SelectItem>
-                      <SelectItem value="2m">2m</SelectItem>
-                      <SelectItem value="2.5m">2.5m</SelectItem>
-                      <SelectItem value="3m">3m</SelectItem>
-                      <SelectItem value="4m">4m</SelectItem>
-                      <SelectItem value="5m">5m</SelectItem>
-                      <SelectItem value="custom">Custom Length</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                    {r}mA
+                  </button>
+                ))}
               </div>
+            </FormField>
+
+            {/* Time fields in 3-col */}
+            <div className="grid grid-cols-3 gap-2 items-end">
+              <FormField label="Delay (ms)">
+                <MobileSelectPicker
+                  value={(formData.rcdTimeDelay as string) || ''}
+                  onValueChange={(value) =>
+                    onUpdate('rcdTimeDelay', value === '__clear__' ? '' : value)
+                  }
+                  options={rcdTimeDelayOptions}
+                  placeholder="Delay"
+                  title="Time Delay"
+                  triggerClassName={inputClasses}
+                />
+              </FormField>
+              <FormField label="Rated (ms)">
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  value={(formData.rcdOperatingTime as string) || ''}
+                  onChange={(e) => onUpdate('rcdOperatingTime', e.target.value)}
+                  placeholder="40"
+                  className={inputClasses}
+                />
+              </FormField>
+              <FormField label="Measured (ms)">
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  value={(formData.rcdMeasuredTime as string) || ''}
+                  onChange={(e) => onUpdate('rcdMeasuredTime', e.target.value)}
+                  placeholder="28"
+                  className={inputClasses}
+                />
+              </FormField>
             </div>
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+        ) : (
+          rcdMainSwitchValue === 'no' && (
+          <div className="flex items-center justify-center p-4 bg-white/[0.03] border border-white/[0.08] rounded-lg">
+            <p className="text-xs text-white text-center">
+              RCD rating and type not applicable
+            </p>
+          </div>
+        )
+      )}
+      </div>
+
+      {/* Distribution Boards */}
+      <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} />
+
+      {/* Supply Cables */}
+      <SectionTitle title="Supply Cables" />
+      <div className="space-y-3">
+        {/* Intake Cable — size as toggle buttons */}
+        <FormField label="Intake Cable Size">
+          <div className="grid grid-cols-6 gap-1">
+            {['16mm', '25mm', '35mm', '50mm', '70mm', '95mm'].map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => onUpdate('intakeCableSize', formData.intakeCableSize === size ? '' : size)}
+                className={cn(
+                  'h-10 rounded-lg font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                  formData.intakeCableSize === size
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {size}²
+              </button>
+            ))}
+          </div>
+        </FormField>
+
+        <FormField label="Intake Cable Type">
+          <MobileSelectPicker
+            value={(formData.intakeCableType as string) || ''}
+            onValueChange={(value) =>
+              onUpdate('intakeCableType', value === '__clear__' ? '' : value)
+            }
+            options={intakeCableTypeOptions}
+            placeholder="Cable type"
+            title="Intake Cable Type"
+            triggerClassName={inputClasses}
+          />
+        </FormField>
+
+        {/* Meter Tails — size as toggle buttons */}
+        <div className="grid grid-cols-2 gap-3 items-end">
+          <FormField label="Tails Size">
+            <div className="grid grid-cols-3 gap-1">
+              {['16mm', '25mm', '35mm'].map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => onUpdate('tailsSize', formData.tailsSize === size ? '' : size)}
+                  className={cn(
+                    'h-10 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98]',
+                    formData.tailsSize === size
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {size}²
+                </button>
+              ))}
+            </div>
+          </FormField>
+          <FormField label="Tails Length">
+            <div className="grid grid-cols-3 gap-1">
+              {['1m', '2m', '3m'].map((len) => (
+                <button
+                  key={len}
+                  type="button"
+                  onClick={() => onUpdate('tailsLength', formData.tailsLength === len ? '' : len)}
+                  className={cn(
+                    'h-10 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98]',
+                    formData.tailsLength === len
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {len}
+                </button>
+              ))}
+            </div>
+          </FormField>
+        </div>
+      </div>
     </div>
   );
 };

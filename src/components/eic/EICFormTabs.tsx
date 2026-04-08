@@ -99,13 +99,13 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
     {
       value: 'declarations',
       label: 'Declarations',
-      shortLabel: 'Declarations',
+      shortLabel: 'Declare',
       content: <EICTabContent tabValue="declarations" {...contentProps} />,
     },
     {
       value: 'certificate',
       label: 'Certificate',
-      shortLabel: 'Certificate',
+      shortLabel: 'Cert',
       content: <EICTabContent tabValue="certificate" {...contentProps} />,
     },
   ];

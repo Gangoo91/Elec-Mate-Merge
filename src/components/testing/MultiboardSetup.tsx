@@ -96,7 +96,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
     <div className={cn('space-y-4', className)}>
       {/* Stats */}
       <div className="flex items-center justify-between mb-1">
-        <span className="text-[10px] text-white/60">
+        <span className="text-[10px] text-white">
           {stats.totalBoards} board{stats.totalBoards !== 1 ? 's' : ''}
           {stats.totalWays > 0 && ` · ${stats.totalWays} ways`}
         </span>
@@ -119,7 +119,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
       {currentBoards.length < maxBoards && (
         <button
           onClick={handleAddBoard}
-          className="w-full h-10 rounded-lg border border-dashed border-white/[0.10] text-[11px] font-medium text-white/60 hover:bg-white/[0.03] touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5"
+          className="w-full h-10 rounded-lg border border-dashed border-white/[0.10] text-[11px] font-medium text-white hover:bg-white/[0.03] touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5"
         >
           <Plus className="h-3.5 w-3.5" />
           Add Sub-Board
@@ -127,7 +127,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
       )}
 
       {currentBoards.length >= maxBoards && (
-        <p className="text-[10px] text-white/60 text-center">Maximum {maxBoards} boards</p>
+        <p className="text-[10px] text-white text-center">Maximum {maxBoards} boards</p>
       )}
     </div>
   );

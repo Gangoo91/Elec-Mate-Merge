@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import {
@@ -10,29 +9,36 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Zap, CheckCircle2, Shield, ChevronDown } from 'lucide-react';
-import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
-import { SectionHeader } from '@/components/ui/section-header';
+import { AlertTriangle, Check } from 'lucide-react';
 import InputWithValidation from './InputWithValidation';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FormField = ({ label, required, hint, children }: { label: string; required?: boolean; hint?: string; children: React.ReactNode }) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    {children}
+    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
+  </div>
+);
 
 interface EarthingAndBondingSectionProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
-  isOpen: boolean;
-  onToggle: () => void;
 }
 
 const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
   formData,
   onUpdate,
-  isOpen,
-  onToggle,
 }) => {
-  const isMobile = useIsMobile();
   const isPMESelected = formData.earthElectrodeType === 'pme';
   const isSupplementaryBondingNotRequired = formData.supplementaryBondingSize === 'not-required';
 
@@ -60,10 +66,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
     const knownServices = ['water', 'gas', 'oil', 'structural steel', 'steel', 'telecom'];
     const parts = value
       .split(',')
-      .map((s) => s.trim())
-      .filter((s) => s);
+      .map((s: string) => s.trim())
+      .filter((s: string) => s);
     const otherParts = parts.filter(
-      (part) => !knownServices.some((service) => part.toLowerCase().includes(service))
+      (part: string) => !knownServices.some((service) => part.toLowerCase().includes(service))
     );
     return otherParts.join(', ');
   });
@@ -72,10 +78,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
     const knownServices = ['water', 'gas', 'oil', 'structural steel', 'steel', 'telecom'];
     const parts = value
       .split(',')
-      .map((s) => s.trim())
-      .filter((s) => s);
+      .map((s: string) => s.trim())
+      .filter((s: string) => s);
     return parts.some(
-      (part) => !knownServices.some((service) => part.toLowerCase().includes(service))
+      (part: string) => !knownServices.some((service) => part.toLowerCase().includes(service))
     );
   });
 
@@ -121,490 +127,360 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
   };
 
   return (
-    <div className={cn(isMobile ? '' : 'border border-border bg-card overflow-hidden rounded-lg')}>
-      <Collapsible open={isOpen} onOpenChange={onToggle}>
-        {isMobile ? (
-          <button
-            onClick={onToggle}
-            className="flex items-center gap-3 py-4 px-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full text-left"
-          >
-            <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center shrink-0">
-              <Shield className="h-5 w-5 text-green-400" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-foreground">Earthing & Bonding</h3>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-5 w-5 text-white transition-transform shrink-0',
-                isOpen && 'rotate-180'
-              )}
-            />
-          </button>
-        ) : (
-          <SectionHeader title="Earthing & Bonding" icon={Zap} isOpen={isOpen} color="amber-500" />
-        )}
-        <CollapsibleContent>
-          <div className={cn('space-y-6', isMobile ? 'px-4 py-4' : 'p-4 sm:p-6')}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="earthElectrodeType" className="font-medium text-sm">
-                  Earth Electrode Type
-                </Label>
-                <Select
-                  value={formData.earthElectrodeType || ''}
-                  onValueChange={(value) => {
-                    onUpdate('earthElectrodeType', value);
-                    // Clear resistance value when PME is selected
-                    if (value === 'pme') {
-                      onUpdate('earthElectrodeResistance', '');
-                    }
-                  }}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select electrode type" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="rod">Earth Rod</SelectItem>
-                    <SelectItem value="plate">Earth Plate</SelectItem>
-                    <SelectItem value="tape">Earth Tape</SelectItem>
-                    <SelectItem value="foundation">Foundation Earth</SelectItem>
-                    <SelectItem value="pme">PME (No electrode required)</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {!isPMESelected && (
-                <InputWithValidation
-                  id="earthElectrodeResistance"
-                  label="Earth Electrode Resistance (Ω)"
-                  value={formData.earthElectrodeResistance || ''}
-                  onChange={(value) => onUpdate('earthElectrodeResistance', value)}
-                  placeholder="e.g., 0.5"
-                  type="text"
-                  step="0.1"
-                  helpText="Maximum 200Ω for TT systems"
-                />
-              )}
-
-              {isPMESelected && (
-                <div className="flex items-center p-2">
-                  <p className="text-xs text-white">
-                    No earth electrode resistance measurement required for PME installations
-                  </p>
-                </div>
-              )}
-
-              {!isPMESelected && (
-                <div className="space-y-2">
-                  <Label htmlFor="earthElectrodeLocation" className="font-medium text-sm">
-                    Earth Electrode Location
-                  </Label>
-                  <Input
-                    id="earthElectrodeLocation"
-                    value={formData.earthElectrodeLocation || ''}
-                    onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
-                    placeholder="e.g., Garden adjacent to main building"
-                    className="h-11 text-base touch-manipulation"
-                    style={{ fontSize: '16px' }}
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Means of Earthing (IET Form) */}
-            <div className="space-y-3">
-              <Label className="font-medium text-sm">Means of Earthing *</Label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div
-                  className={cn(
-                    'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
-                    formData.meansOfEarthing === 'distributor'
-                      ? 'bg-green-500/15 border-green-500/50'
-                      : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
-                  )}
-                  onClick={() =>
-                    onUpdate(
-                      'meansOfEarthing',
-                      formData.meansOfEarthing === 'distributor' ? '' : 'distributor'
-                    )
-                  }
-                >
-                  <Checkbox
-                    id="meansEarthingDistributor"
-                    checked={formData.meansOfEarthing === 'distributor'}
-                    onCheckedChange={(checked) =>
-                      onUpdate('meansOfEarthing', checked ? 'distributor' : '')
-                    }
-                    className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                  />
-                  <Label
-                    htmlFor="meansEarthingDistributor"
-                    className="text-sm font-medium cursor-pointer"
-                  >
-                    Distributor's facility
-                  </Label>
-                </div>
-                <div
-                  className={cn(
-                    'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
-                    formData.meansOfEarthing === 'electrode'
-                      ? 'bg-blue-500/15 border-blue-500/50'
-                      : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
-                  )}
-                  onClick={() =>
-                    onUpdate(
-                      'meansOfEarthing',
-                      formData.meansOfEarthing === 'electrode' ? '' : 'electrode'
-                    )
-                  }
-                >
-                  <Checkbox
-                    id="meansEarthingElectrode"
-                    checked={formData.meansOfEarthing === 'electrode'}
-                    onCheckedChange={(checked) =>
-                      onUpdate('meansOfEarthing', checked ? 'electrode' : '')
-                    }
-                    className="border-blue-500/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
-                  />
-                  <Label
-                    htmlFor="meansEarthingElectrode"
-                    className="text-sm font-medium cursor-pointer"
-                  >
-                    Installation earth electrode
-                  </Label>
-                </div>
-              </div>
-            </div>
-
-            {/* Maximum Demand (IET Form) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="maximumDemand" className="font-medium text-sm">
-                  Maximum Demand (Load)
-                </Label>
-                <Input
-                  id="maximumDemand"
-                  type="text"
-                  inputMode="decimal"
-                  value={formData.maximumDemand || ''}
-                  onChange={(e) => onUpdate('maximumDemand', e.target.value)}
-                  placeholder="e.g., 60"
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="maximumDemandUnit" className="font-medium text-sm">
-                  Unit
-                </Label>
-                <Select
-                  value={formData.maximumDemandUnit || 'amps'}
-                  onValueChange={(value) => onUpdate('maximumDemandUnit', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select unit" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="kva">kVA</SelectItem>
-                    <SelectItem value="amps">Amps</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Main Protective Conductors (IET Form) */}
-            <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-purple-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-purple-400">
-                Main Protective Conductors
-              </h4>
-
-              {/* Earthing Conductor */}
-              <div className="space-y-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
-                <Label className="font-medium text-sm text-purple-300">Earthing Conductor</Label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="earthingConductorMaterial" className="text-xs text-white">
-                      Material
-                    </Label>
-                    <Select
-                      value={formData.earthingConductorMaterial || ''}
-                      onValueChange={(value) => onUpdate('earthingConductorMaterial', value)}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation">
-                        <SelectValue placeholder="Select material" />
-                      </SelectTrigger>
-                      <SelectContent className="max-w-[calc(100vw-2rem)]">
-                        <SelectItem value="copper">Copper</SelectItem>
-                        <SelectItem value="aluminium">Aluminium</SelectItem>
-                        <SelectItem value="steel">Steel</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="earthingConductorCsa" className="text-xs text-white">
-                      csa (mm²)
-                    </Label>
-                    <Select
-                      value={formData.earthingConductorCsa || ''}
-                      onValueChange={(value) => onUpdate('earthingConductorCsa', value)}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation">
-                        <SelectValue placeholder="Select size" />
-                      </SelectTrigger>
-                      <SelectContent className="max-w-[calc(100vw-2rem)]">
-                        <SelectItem value="6">6mm²</SelectItem>
-                        <SelectItem value="10">10mm²</SelectItem>
-                        <SelectItem value="16">16mm²</SelectItem>
-                        <SelectItem value="25">25mm²</SelectItem>
-                        <SelectItem value="35">35mm²</SelectItem>
-                        <SelectItem value="50">50mm²</SelectItem>
-                        <SelectItem value="70">70mm²</SelectItem>
-                        <SelectItem value="95">95mm²</SelectItem>
-                        <SelectItem value="120">120mm²</SelectItem>
-                        <SelectItem value="150">150mm²</SelectItem>
-                        <SelectItem value="185">185mm²</SelectItem>
-                        <SelectItem value="240">240mm²</SelectItem>
-                        <SelectItem value="300">300mm²</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="flex items-end">
-                    <div className="flex items-center gap-2 p-2 rounded-lg bg-green-500/10 border border-green-500/30 w-full h-11">
-                      <Checkbox
-                        id="earthingConductorVerified"
-                        checked={formData.earthingConductorVerified === true}
-                        onCheckedChange={(checked) =>
-                          onUpdate('earthingConductorVerified', checked)
-                        }
-                        className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                      />
-                      <Label htmlFor="earthingConductorVerified" className="text-xs cursor-pointer">
-                        Verified
-                      </Label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Main Protective Bonding Conductors */}
-              <div className="space-y-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.06]">
-                <Label className="font-medium text-sm text-purple-300">
-                  Main Protective Bonding Conductors
-                </Label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="mainBondingMaterial" className="text-xs text-white">
-                      Material
-                    </Label>
-                    <Select
-                      value={formData.mainBondingMaterial || ''}
-                      onValueChange={(value) => onUpdate('mainBondingMaterial', value)}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation">
-                        <SelectValue placeholder="Select material" />
-                      </SelectTrigger>
-                      <SelectContent className="max-w-[calc(100vw-2rem)]">
-                        <SelectItem value="copper">Copper</SelectItem>
-                        <SelectItem value="aluminium">Aluminium</SelectItem>
-                        <SelectItem value="steel">Steel</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="mainBondingCsa" className="text-xs text-white">
-                      csa (mm²)
-                    </Label>
-                    <Select
-                      value={formData.mainBondingSize || ''}
-                      onValueChange={(value) => onUpdate('mainBondingSize', value)}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation">
-                        <SelectValue placeholder="Select size" />
-                      </SelectTrigger>
-                      <SelectContent className="max-w-[calc(100vw-2rem)]">
-                        <SelectItem value="none">None / Not required</SelectItem>
-                        <SelectItem value="6mm">6mm²</SelectItem>
-                        <SelectItem value="10mm">10mm²</SelectItem>
-                        <SelectItem value="16mm">16mm²</SelectItem>
-                        <SelectItem value="25mm">25mm²</SelectItem>
-                        <SelectItem value="35mm">35mm²</SelectItem>
-                        <SelectItem value="custom">Other/Custom</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="flex items-end">
-                    <div className="flex items-center gap-2 p-2 rounded-lg bg-green-500/10 border border-green-500/30 w-full h-11">
-                      <Checkbox
-                        id="mainBondingVerified"
-                        checked={formData.mainBondingVerified === true}
-                        onCheckedChange={(checked) => onUpdate('mainBondingVerified', checked)}
-                        className="border-green-500/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                      />
-                      <Label htmlFor="mainBondingVerified" className="text-xs cursor-pointer">
-                        Verified
-                      </Label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bonding Connections (IET Form) */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-amber-400 border-b border-white/10 pb-2 pl-2.5 border-l-2 border-l-amber-400">
-                Bonding Connections To
-              </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {[
-                  { key: 'water', label: 'Water pipes' },
-                  { key: 'gas', label: 'Gas pipes' },
-                  { key: 'oil', label: 'Oil pipes' },
-                  { key: 'structural-steel', label: 'Structural steel' },
-                  { key: 'lightning', label: 'Lightning protection' },
-                ].map(({ key, label }) => (
-                  <div
-                    key={key}
-                    className={cn(
-                      'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
-                      bondingLocations.has(key)
-                        ? 'bg-amber-500/15 border-amber-500/50'
-                        : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
-                    )}
-                    onClick={() => handleBondingLocationChange(key, !bondingLocations.has(key))}
-                  >
-                    <Checkbox
-                      id={`eic-bonding-${key}`}
-                      checked={bondingLocations.has(key)}
-                      onCheckedChange={(checked) =>
-                        handleBondingLocationChange(key, checked as boolean)
-                      }
-                      className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 data-[state=checked]:text-black"
-                    />
-                    <label
-                      htmlFor={`eic-bonding-${key}`}
-                      className="text-sm font-medium cursor-pointer"
-                    >
-                      {label}
-                    </label>
-                  </div>
-                ))}
-                <div
-                  className={cn(
-                    'flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer touch-manipulation',
-                    otherChecked
-                      ? 'bg-amber-500/15 border-amber-500/50'
-                      : 'bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05]'
-                  )}
-                  onClick={() => {
-                    const newVal = !otherChecked;
-                    setOtherChecked(newVal);
-                    if (!newVal) {
-                      setOtherBonding('');
-                      updateMainBondingLocations(bondingLocations, '');
-                    }
-                  }}
-                >
-                  <Checkbox
-                    id="eic-bonding-other-check"
-                    checked={otherChecked}
-                    onCheckedChange={(checked) => {
-                      const newVal = checked as boolean;
-                      setOtherChecked(newVal);
-                      if (!newVal) {
-                        setOtherBonding('');
-                        updateMainBondingLocations(bondingLocations, '');
-                      }
-                    }}
-                    className="border-amber-500/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 data-[state=checked]:text-black"
-                  />
-                  <label
-                    htmlFor="eic-bonding-other-check"
-                    className="text-sm font-medium cursor-pointer"
-                  >
-                    Other
-                  </label>
-                </div>
-              </div>
-              {otherChecked && (
-                <div className="space-y-2 mt-3">
-                  <Label htmlFor="eic-bonding-other" className="text-sm font-medium">
-                    Specify Other
-                  </Label>
-                  <Input
-                    id="eic-bonding-other"
-                    value={otherBonding}
-                    onChange={(e) => handleOtherBondingChange(e.target.value)}
-                    placeholder="e.g., Metal pipework, Central heating"
-                    className="touch-manipulation h-11 text-base"
-                    style={{ fontSize: '16px' }}
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* Supplementary Bonding */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="supplementaryBondingSize" className="font-medium text-sm">
-                  Supplementary Bonding Size
-                </Label>
-                <Select
-                  value={formData.supplementaryBondingSize || ''}
-                  onValueChange={(value) => onUpdate('supplementaryBondingSize', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select conductor size" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="2.5mm">2.5mm²</SelectItem>
-                    <SelectItem value="4mm">4mm²</SelectItem>
-                    <SelectItem value="6mm">6mm²</SelectItem>
-                    <SelectItem value="10mm">10mm²</SelectItem>
-                    <SelectItem value="not-required">Not Required</SelectItem>
-                    <SelectItem value="custom">Other/Custom</SelectItem>
-                  </SelectContent>
-                </Select>
-                {formData.supplementaryBondingSize === 'custom' && (
-                  <Input
-                    placeholder="Enter custom size (mm²)"
-                    value={formData.supplementaryBondingSizeCustom || ''}
-                    onChange={(e) => onUpdate('supplementaryBondingSizeCustom', e.target.value)}
-                    className="mt-2 touch-manipulation"
-                    inputMode="numeric"
-                  />
+    <div className="space-y-4">
+      {/* Earth Electrode */}
+      <SectionTitle title="Earth Electrode" />
+      <div className="space-y-3">
+        <FormField label="Electrode Type">
+          <div className="grid grid-cols-3 gap-1">
+            {[
+              { value: 'rod', label: 'Rod' },
+              { value: 'plate', label: 'Plate' },
+              { value: 'tape', label: 'Tape' },
+              { value: 'foundation', label: 'Foundation' },
+              { value: 'pme', label: 'PME' },
+              { value: 'other', label: 'Other' },
+            ].map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => {
+                  const newVal = formData.earthElectrodeType === opt.value ? '' : opt.value;
+                  onUpdate('earthElectrodeType', newVal);
+                  if (newVal === 'pme') onUpdate('earthElectrodeResistance', '');
+                }}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                  formData.earthElectrodeType === opt.value
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
                 )}
-                {isSupplementaryBondingNotRequired && (
-                  <p className="text-xs text-white mt-1">
-                    Supplementary bonding may not be required if RCD protection is installed
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <Label htmlFor="equipotentialBonding" className="font-medium text-sm">
-                  Equipotential Bonding
-                </Label>
-                <Select
-                  value={formData.equipotentialBonding || ''}
-                  onValueChange={(value) => onUpdate('equipotentialBonding', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select status" />
-                  </SelectTrigger>
-                  <SelectContent className="max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="satisfactory">Satisfactory</SelectItem>
-                    <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
-                    <SelectItem value="not-applicable">Not Applicable</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+              >
+                {opt.label}
+              </button>
+            ))}
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+        </FormField>
+
+        {!isPMESelected && (
+          <div className="grid grid-cols-2 gap-3 items-end">
+            <FormField label="Resistance (Ω)">
+              <Input
+                type="text"
+                inputMode="decimal"
+                value={formData.earthElectrodeResistance || ''}
+                onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
+                placeholder="e.g., 0.5"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+            <FormField label="Location">
+              <Input
+                value={formData.earthElectrodeLocation || ''}
+                onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
+                placeholder="e.g., Garden adjacent to building"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+          </div>
+        )}
+      </div>
+
+
+      {/* Means of Earthing */}
+      <SectionTitle title="Means of Earthing" />
+
+      <FormField label="Means of Earthing" required>
+        <div className="grid grid-cols-2 gap-2 items-end mt-1.5">
+          <button
+            type="button"
+            className={cn(
+              'h-11 rounded-lg text-xs font-medium touch-manipulation transition-all',
+              formData.meansOfEarthing === 'distributor'
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+            )}
+            onClick={() =>
+              onUpdate(
+                'meansOfEarthing',
+                formData.meansOfEarthing === 'distributor' ? '' : 'distributor'
+              )
+            }
+          >
+            Distributor's facility
+          </button>
+          <button
+            type="button"
+            className={cn(
+              'h-11 rounded-lg text-xs font-medium touch-manipulation transition-all',
+              formData.meansOfEarthing === 'electrode'
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+            )}
+            onClick={() =>
+              onUpdate(
+                'meansOfEarthing',
+                formData.meansOfEarthing === 'electrode' ? '' : 'electrode'
+              )
+            }
+          >
+            Installation earth electrode
+          </button>
+        </div>
+      </FormField>
+
+      {/* Maximum Demand */}
+      <SectionTitle title="Maximum Demand" />
+      <div className="space-y-2">
+        <div className="grid grid-cols-3 gap-2 items-end">
+          <div className="col-span-2">
+            <FormField label="Load">
+              <Input
+                type="text"
+                inputMode="decimal"
+                value={formData.maximumDemand || ''}
+                onChange={(e) => onUpdate('maximumDemand', e.target.value)}
+                placeholder="e.g., 60"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+          </div>
+          <FormField label="Unit">
+            <div className="grid grid-cols-2 gap-1">
+              {[
+                { value: 'amps', label: 'A' },
+                { value: 'kva', label: 'kVA' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => onUpdate('maximumDemandUnit', opt.value)}
+                  className={cn(
+                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                    (formData.maximumDemandUnit || 'amps') === opt.value
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </FormField>
+        </div>
+      </div>
+
+      {/* Main Protective Conductors */}
+      <SectionTitle title="Main Protective Conductors" />
+
+      {/* Earthing Conductor */}
+      <div className="space-y-2">
+        <Label className="text-white text-xs font-medium block">Earthing Conductor</Label>
+        <div className="grid grid-cols-3 gap-1">
+          {['Copper', 'Aluminium', 'Steel'].map((mat) => (
+            <button
+              key={mat}
+              type="button"
+              onClick={() => onUpdate('earthingConductorMaterial', formData.earthingConductorMaterial === mat.toLowerCase() ? '' : mat.toLowerCase())}
+              className={cn(
+                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                formData.earthingConductorMaterial === mat.toLowerCase()
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {mat}
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-6 gap-1">
+          {['6', '10', '16', '25', '35', '50'].map((size) => (
+            <button
+              key={size}
+              type="button"
+              onClick={() => onUpdate('earthingConductorCsa', formData.earthingConductorCsa === size ? '' : size)}
+              className={cn(
+                'h-10 rounded-lg font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                formData.earthingConductorCsa === size
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {size}mm²
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => onUpdate('earthingConductorVerified', !formData.earthingConductorVerified)}
+          className={cn(
+            'w-full h-9 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
+            formData.earthingConductorVerified
+              ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+              : 'bg-white/[0.05] border border-white/[0.08] text-white'
+          )}
+        >
+          {formData.earthingConductorVerified && <Check className="h-3 w-3" />}
+          Connection / Continuity Verified
+        </button>
+      </div>
+
+      {/* Main Protective Bonding Conductors */}
+      <div className="space-y-2">
+        <Label className="text-white text-xs font-medium block">Main Protective Bonding Conductors</Label>
+        <div className="grid grid-cols-3 gap-1">
+          {['Copper', 'Aluminium', 'Steel'].map((mat) => (
+            <button
+              key={mat}
+              type="button"
+              onClick={() => onUpdate('mainBondingMaterial', formData.mainBondingMaterial === mat.toLowerCase() ? '' : mat.toLowerCase())}
+              className={cn(
+                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                formData.mainBondingMaterial === mat.toLowerCase()
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {mat}
+            </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-6 gap-1">
+          {['6mm', '10mm', '16mm', '25mm', '35mm', '50mm'].map((size) => (
+            <button
+              key={size}
+              type="button"
+              onClick={() => onUpdate('mainBondingSize', formData.mainBondingSize === size ? '' : size)}
+              className={cn(
+                'h-10 rounded-lg font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                formData.mainBondingSize === size
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {size}²
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => onUpdate('mainBondingVerified', !formData.mainBondingVerified)}
+          className={cn(
+            'w-full h-9 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
+            formData.mainBondingVerified
+              ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+              : 'bg-white/[0.05] border border-white/[0.08] text-white'
+          )}
+        >
+          {formData.mainBondingVerified && <Check className="h-3 w-3" />}
+          Connection / Continuity Verified
+        </button>
+      </div>
+
+      {/* Bonding Connections */}
+      <SectionTitle title="Bonding Connections To" />
+      <div className="grid grid-cols-3 gap-1">
+        {[
+          { key: 'water', label: 'Water' },
+          { key: 'gas', label: 'Gas' },
+          { key: 'oil', label: 'Oil' },
+          { key: 'structural-steel', label: 'Steel' },
+          { key: 'lightning', label: 'Lightning' },
+          { key: 'other', label: 'Other' },
+        ].map(({ key, label }) => (
+          <button
+            key={key}
+            type="button"
+            onClick={() => {
+              if (key === 'other') {
+                const newVal = !otherChecked;
+                setOtherChecked(newVal);
+                if (!newVal) { setOtherBonding(''); updateMainBondingLocations(bondingLocations, ''); }
+              } else {
+                handleBondingLocationChange(key, !bondingLocations.has(key));
+              }
+            }}
+            className={cn(
+              'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
+              (key === 'other' ? otherChecked : bondingLocations.has(key))
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+            )}
+          >
+            {(key === 'other' ? otherChecked : bondingLocations.has(key)) && <Check className="h-3 w-3" />}
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {otherChecked && (
+        <FormField label="Specify Other">
+          <Input
+            value={otherBonding}
+            onChange={(e) => handleOtherBondingChange(e.target.value)}
+            placeholder="e.g., Central heating pipework"
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+          />
+        </FormField>
+      )}
+
+      {/* Supplementary Bonding */}
+      <SectionTitle title="Supplementary Bonding" />
+      <div className="space-y-2">
+        <FormField label="Size">
+          <div className="grid grid-cols-5 gap-1">
+            {[
+              { value: '2.5mm', label: '2.5' },
+              { value: '4mm', label: '4' },
+              { value: '6mm', label: '6' },
+              { value: '10mm', label: '10' },
+              { value: 'not-required', label: 'N/R' },
+            ].map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => onUpdate('supplementaryBondingSize', formData.supplementaryBondingSize === opt.value ? '' : opt.value)}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                  formData.supplementaryBondingSize === opt.value
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {opt.label}{opt.value !== 'not-required' ? 'mm²' : ''}
+              </button>
+            ))}
+          </div>
+        </FormField>
+
+        <FormField label="Equipotential Bonding">
+          <div className="grid grid-cols-3 gap-1">
+            {[
+              { value: 'satisfactory', label: '✓ OK' },
+              { value: 'unsatisfactory', label: '✗ Unsat' },
+              { value: 'not-applicable', label: 'N/A' },
+            ].map((opt) => (
+              <button
+                key={opt.value}
+                type="button"
+                onClick={() => onUpdate('equipotentialBonding', formData.equipotentialBonding === opt.value ? '' : opt.value)}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                  formData.equipotentialBonding === opt.value
+                    ? opt.value === 'satisfactory'
+                      ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                      : opt.value === 'unsatisfactory'
+                        ? 'bg-red-500/20 border border-red-500/40 text-red-400'
+                        : 'bg-white/[0.08] border border-white/[0.15] text-white'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </FormField>
+      </div>
     </div>
   );
 };
