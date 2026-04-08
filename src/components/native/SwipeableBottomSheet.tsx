@@ -62,7 +62,7 @@ export const SwipeableBottomSheet: React.FC<SwipeableBottomSheetProps> = ({
             'fixed bottom-0 left-0 right-0 z-50',
             'bg-background rounded-t-3xl',
             'border-t border-white/10',
-            'max-h-[96vh]',
+            'max-h-[70vh]',
             'focus:outline-none',
             className
           )}

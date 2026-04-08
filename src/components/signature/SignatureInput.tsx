@@ -72,13 +72,13 @@ const SignatureInput = ({
 
   return (
     <div className={`space-y-2 ${className}`}>
-      <Card className="bg-card border-border">
+      <Card className="bg-white/[0.03] border-white/[0.08]">
         <MobileTabs
           value={activeTab}
           onValueChange={(value) => setActiveTab(value as any)}
           className="w-full"
         >
-          <MobileTabsList className="bg-muted w-full justify-center">
+          <MobileTabsList className="bg-white/[0.06] w-full justify-center">
             <MobileTabsTrigger
               value="text"
               className="gap-1.5 text-sm px-4 py-2.5 min-h-[40px] flex-1 touch-manipulation"
@@ -108,7 +108,7 @@ const SignatureInput = ({
                 value={textSignature}
                 onChange={(e) => handleTextChange(e.target.value)}
                 placeholder={placeholder}
-                className="bg-muted border-border text-foreground placeholder:text-gray-400 focus:border-elec-yellow focus:ring-elec-yellow h-8 text-sm"
+                className="bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow h-11 text-base touch-manipulation"
               />
             </MobileTabsContent>
 
@@ -159,7 +159,7 @@ const SignatureInput = ({
                     </Button>
                   }
                 />
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-white/40">
                   Manage your saved signatures and select one to use in this field.
                 </p>
               </div>

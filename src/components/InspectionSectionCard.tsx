@@ -37,6 +37,7 @@ interface InspectionSectionCardProps {
   onAutoCreateObservation?: (inspectionItem: InspectionItem) => void;
   onBulkMarkSatisfactory?: (sectionId: string) => void;
   onBulkClearSection?: (sectionId: string) => void;
+  quickMarkMode?: boolean;
 }
 
 const InspectionSectionCard = ({
@@ -49,6 +50,7 @@ const InspectionSectionCard = ({
   onAutoCreateObservation,
   onBulkMarkSatisfactory,
   onBulkClearSection,
+  quickMarkMode,
 }: InspectionSectionCardProps) => {
   const handleOutcomeChange = (itemId: string, outcome: InspectionItem['outcome']) => {
     console.log(`[InspectionSectionCard] handleOutcomeChange called:`, {
@@ -116,6 +118,7 @@ const InspectionSectionCard = ({
       onAutoCreateObservation={onAutoCreateObservation}
       onBulkMarkSatisfactory={onBulkMarkSatisfactory}
       onBulkClearSection={onBulkClearSection}
+      quickMarkMode={quickMarkMode}
     />
   );
 

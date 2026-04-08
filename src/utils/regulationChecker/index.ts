@@ -8,13 +8,14 @@ import { checkZsCompliance } from './zsValidator';
 import { checkDeviceDirectionality } from './deviceDirectionalityValidator';
 
 // Main regulation checker function with enhanced Zs validation
-export const checkRegulationCompliance = (result: TestResult): RegulationCheckResult => {
+// Optional earthingArrangement — pass 'TT' to use RCD-based Zs limits
+export const checkRegulationCompliance = (result: TestResult, earthingArrangement?: string): RegulationCheckResult => {
   const allWarnings: RegulationWarning[] = [
     ...checkCableProtectiveDeviceMatch(result),
     ...checkCircuitTypeConsistency(result),
     ...checkEarthingRequirements(result),
     ...checkTestValues(result),
-    ...checkZsCompliance(result),
+    ...checkZsCompliance(result, earthingArrangement),
     ...checkDeviceDirectionality(result), // Amendment 3:2024 compliance
   ];
 
@@ -28,12 +29,13 @@ export const checkRegulationCompliance = (result: TestResult): RegulationCheckRe
 
 // Batch check multiple results
 export const checkAllResultsCompliance = (
-  results: TestResult[]
+  results: TestResult[],
+  earthingArrangement?: string
 ): Map<string, RegulationCheckResult> => {
   const complianceMap = new Map<string, RegulationCheckResult>();
 
   results.forEach((result) => {
-    complianceMap.set(result.id, checkRegulationCompliance(result));
+    complianceMap.set(result.id, checkRegulationCompliance(result, earthingArrangement));
   });
 
   return complianceMap;

@@ -8,15 +8,13 @@ interface FormFieldProps {
   children: React.ReactNode;
 }
 
-// Form field wrapper - MUST be outside main component to prevent focus loss
 const FormField = ({ label, required, hint, children }: FormFieldProps) => (
-  <div className="space-y-2">
-    <Label className="text-sm text-white">
-      {label}
-      {required && <span className="text-elec-yellow ml-1">*</span>}
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">
+      {label}{required && ' *'}
     </Label>
     {children}
-    {hint && <p className="text-xs text-white">{hint}</p>}
+    {hint && <p className="text-[10px] text-white/40 mt-1">{hint}</p>}
   </div>
 );
 

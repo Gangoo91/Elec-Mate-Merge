@@ -134,7 +134,7 @@ const InspectionItemCard = ({
       <div className="p-3 md:p-4">
         {/* Header with Outcome Badge */}
         <div className="flex items-center justify-between mb-3 md:mb-4">
-          <h4 className="font-semibold flex items-center gap-2 text-foreground">
+          <h4 className="font-semibold flex items-center gap-2 text-white">
             {getOutcomeIcon()}
             {sectionItem.number}. {sectionItem.item}
           </h4>
@@ -189,7 +189,7 @@ const InspectionItemCard = ({
           {sectionItem.description && (
             <div className="md:col-span-2">
               <Label>Item Description</Label>
-              <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+              <p className="text-sm text-white/50 mt-1 leading-relaxed">
                 {sectionItem.description}
               </p>
             </div>

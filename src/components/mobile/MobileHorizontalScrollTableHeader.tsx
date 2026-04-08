@@ -35,13 +35,13 @@ export const MobileHorizontalScrollTableHeader: React.FC<
   onFillAllFunctional,
 }) => {
   const headerCell =
-    'font-semibold text-xs p-0.5 text-center whitespace-nowrap border-r border-border bg-elec-gray text-foreground';
+    'font-semibold text-xs p-0.5 text-center whitespace-nowrap border-r border-white/[0.08] bg-white/[0.06] text-white';
 
   return (
-    <TableHeader className="sticky top-14 z-40 bg-elec-gray shadow-sm border-b h-12">
-      <TableRow className="hover:bg-transparent border-b border-border">
+    <TableHeader className="sticky top-14 z-40 bg-white/[0.06] shadow-sm border-b border-white/[0.08] h-12">
+      <TableRow className="hover:bg-transparent border-b border-white/[0.08]">
         {/* Circuit Details Group */}
-        <TableHead className="sticky left-0 z-20 border-r-[3px] border-primary/40 font-bold text-xs p-0.5 text-center whitespace-nowrap bg-elec-gray-light text-foreground w-[83px] min-w-[83px] max-w-[83px]">
+        <TableHead className="sticky left-0 z-20 border-r-[3px] border-primary/40 font-bold text-xs p-0.5 text-center whitespace-nowrap bg-white/[0.08] text-white w-[83px] min-w-[83px] max-w-[83px]">
           C
         </TableHead>
         <TableHead className={`${headerCell} w-[152px] min-w-[152px] max-w-[152px]`}>
@@ -323,7 +323,7 @@ export const MobileHorizontalScrollTableHeader: React.FC<
         </TableHead>
 
         {/* Actions Column */}
-        <TableHead className="border-l border-border font-semibold text-xs p-0.5 text-center whitespace-nowrap bg-elec-gray text-foreground w-[83px] min-w-[83px] max-w-[83px]">
+        <TableHead className="border-l border-white/[0.08] font-semibold text-xs p-0.5 text-center whitespace-nowrap bg-white/[0.06] text-white w-[83px] min-w-[83px] max-w-[83px]">
           Del
         </TableHead>
       </TableRow>

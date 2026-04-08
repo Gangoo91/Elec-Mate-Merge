@@ -70,7 +70,7 @@ export const MobileSelectPicker = ({
               <div className="flex flex-col">
                 <span>{option.label}</span>
                 {option.description && (
-                  <span className="text-xs text-muted-foreground">{option.description}</span>
+                  <span className="text-xs text-white/60">{option.description}</span>
                 )}
               </div>
             </SelectItem>
@@ -89,27 +89,27 @@ export const MobileSelectPicker = ({
         disabled={disabled}
         className={cn(
           'flex items-center justify-between w-full h-11 px-3',
-          'bg-background border border-input rounded-md',
-          'touch-manipulation text-left',
+          'bg-white/[0.06] border border-white/[0.08] rounded-lg',
+          'touch-manipulation text-left text-white',
           'transition-colors',
           disabled && 'opacity-50 cursor-not-allowed',
-          !disabled && 'active:bg-muted/50',
+          !disabled && 'active:bg-white/[0.08]',
           triggerClassName
         )}
       >
-        <span className={cn('truncate', !selectedOption && 'text-muted-foreground')}>
+        <span className={cn('truncate', !selectedOption && 'text-white/60')}>
           {selectedOption?.label || placeholder}
         </span>
-        <ChevronDown className="h-4 w-4 text-muted-foreground flex-shrink-0 ml-2" />
+        <ChevronDown className="h-4 w-4 text-white/60 flex-shrink-0 ml-2" />
       </button>
 
       <SwipeableBottomSheet
         open={open}
         onOpenChange={setOpen}
         title={title}
-        contentClassName="pb-8"
+        contentClassName="pb-8 max-h-[60vh] overflow-y-auto"
       >
-        <div className="space-y-1.5">
+        <div className="space-y-1">
           {options.map((option) => (
             <button
               key={option.value}
@@ -120,21 +120,16 @@ export const MobileSelectPicker = ({
               }}
               className={cn(
                 'w-full flex items-center justify-between',
-                'min-h-[56px] px-4 py-3 rounded-xl',
+                'h-11 px-4 rounded-lg',
                 'touch-manipulation active:scale-[0.98]',
                 'transition-all duration-150',
                 value === option.value
                   ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
-                  : 'bg-white/5 hover:bg-white/10 border border-transparent'
+                  : 'bg-white/[0.05] hover:bg-white/[0.08] border border-transparent'
               )}
             >
-              <div className="flex flex-col items-start text-left">
-                <span className="text-base font-medium">{option.label}</span>
-                {option.description && (
-                  <span className="text-xs text-muted-foreground mt-0.5">{option.description}</span>
-                )}
-              </div>
-              {value === option.value && <Check className="h-5 w-5 flex-shrink-0 ml-3" />}
+              <span className="text-sm font-medium truncate">{option.label}</span>
+              {value === option.value && <Check className="h-4 w-4 flex-shrink-0 ml-2" />}
             </button>
           ))}
         </div>

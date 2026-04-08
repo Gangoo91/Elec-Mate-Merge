@@ -42,7 +42,7 @@ import TestMethodInfo from '@/components/TestMethodInfo';
 import DistributionBoardVerificationSection from '@/components/testing/DistributionBoardVerificationSection';
 
 import { Button } from '@/components/ui/button';
-import { BarChart3, Wrench, Zap, FileText, X, Camera } from 'lucide-react';
+import { BarChart3, Zap, X, Camera } from 'lucide-react';
 
 interface ScheduleOfTestsProps {
   formData: any;
@@ -156,7 +156,7 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({ formData, onUp
           </div>
         )
       ) : (
-        <div className="w-full space-y-6 py-4 sm:py-6 lg:py-8 sm:px-4 lg:px-6 bg-background sm:bg-elec-gray sm:border sm:border-primary/30 sm:rounded-xl sm:shadow-lg sm:shadow-black/10">
+        <div className="w-full space-y-6 py-4 sm:py-6 lg:py-8 sm:px-4 lg:px-6 bg-background sm:bg-white/[0.02] sm:border sm:border-white/[0.06] sm:rounded-xl">
           <div data-autofill-section>
             <EnhancedTestResultDesktopTable
               testResults={circuitState.testResults}
@@ -170,7 +170,7 @@ export const ScheduleOfTests: React.FC<ScheduleOfTestsProps> = ({ formData, onUp
           </div>
 
           {/* Analytics Button */}
-          <div className="flex justify-center pt-6 border-t border-border/50">
+          <div className="flex justify-center pt-6 border-t border-white/[0.06]">
             <Button
               onClick={() => setShowAnalytics(!showAnalytics)}
               size="default"
@@ -216,54 +216,43 @@ const InfoSections: React.FC<{ formData: any; onUpdate: (field: string, value: a
   formData,
   onUpdate,
 }) => (
-  <div className="w-full space-y-6 p-4 lg:p-6 pb-20 lg:pb-6 mt-6 bg-elec-gray rounded-xl border border-primary/30 shadow-lg shadow-black/10">
-    {/* Two-column layout on xl screens */}
-    <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-      {/* Test Instrument Info */}
-      <div className="space-y-3">
-        <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
-          <Wrench className="h-4 w-4 text-elec-yellow" />
-          Test Instrument Information
-        </h3>
-        <div className="bg-background/50 rounded-lg p-4">
-          <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-        </div>
-      </div>
-
-      {/* Distribution Board Verification */}
-      <div className="space-y-3">
-        <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
-          <Zap className="h-4 w-4 text-elec-yellow" />
-          Distribution Board Verification
-        </h3>
-        <div className="bg-background/50 rounded-lg p-4">
-          <DistributionBoardVerificationSection
-            data={{
-              dbReference: formData.dbReference || '',
-              zdb: formData.zdb || '',
-              ipf: formData.ipf || '',
-              confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
-              confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
-              spdOperationalStatus: formData.spdOperationalStatus || false,
-              spdNA: formData.spdNA || false,
-            }}
-            onUpdate={(field, value) => onUpdate(field, value)}
-          />
-        </div>
-      </div>
+  <div className="w-full space-y-0 mt-6 pb-20 lg:pb-6">
+    {/* Test Instrument Info */}
+    <div className="space-y-3 px-3 lg:px-6 py-5">
+      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+      <h3 className="text-xs font-medium text-white uppercase tracking-wider">
+        Test Instrument Information
+      </h3>
+      <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
     </div>
 
-    <div className="h-px bg-muted/30" />
+    {/* Distribution Board Verification */}
+    <div className="space-y-3 px-3 lg:px-6 py-5">
+      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+      <h3 className="text-xs font-medium text-white uppercase tracking-wider">
+        Distribution Board Verification
+      </h3>
+      <DistributionBoardVerificationSection
+        data={{
+          dbReference: formData.dbReference || '',
+          zdb: formData.zdb || '',
+          ipf: formData.ipf || '',
+          confirmedCorrectPolarity: formData.confirmedCorrectPolarity || false,
+          confirmedPhaseSequence: formData.confirmedPhaseSequence || false,
+          spdOperationalStatus: formData.spdOperationalStatus || false,
+          spdNA: formData.spdNA || false,
+        }}
+        onUpdate={(field, value) => onUpdate(field, value)}
+      />
+    </div>
 
     {/* Test Method - Full Width */}
-    <div className="space-y-3">
-      <h3 className="text-sm sm:text-base font-semibold flex items-center gap-2 px-1">
-        <FileText className="h-4 w-4 text-elec-yellow" />
+    <div className="space-y-3 px-3 lg:px-6 py-5">
+      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+      <h3 className="text-xs font-medium text-white uppercase tracking-wider">
         Test Method & Notes
       </h3>
-      <div className="bg-background/50 rounded-lg p-4">
-        <TestMethodInfo formData={formData} onUpdate={onUpdate} />
-      </div>
+      <TestMethodInfo formData={formData} onUpdate={onUpdate} />
     </div>
   </div>
 );

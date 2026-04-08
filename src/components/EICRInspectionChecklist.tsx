@@ -410,10 +410,87 @@ const EICRInspectionChecklist = ({
     timestamp: new Date().toISOString(),
   });
 
+  // Calculate overall progress
+  const totalItems = inspectionItems.length;
+  const completedItems = inspectionItems.filter(i => i.outcome && i.outcome !== '').length;
+  const c1Count = inspectionItems.filter(i => i.outcome === 'C1').length;
+  const c2Count = inspectionItems.filter(i => i.outcome === 'C2').length;
+  const c3Count = inspectionItems.filter(i => i.outcome === 'C3').length;
+  const progressPercent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+
+  // Quick mark mode
+  const [quickMarkMode, setQuickMarkMode] = React.useState(false);
+
+  // Auto-scroll to next incomplete section when one completes
+  React.useEffect(() => {
+    if (!inspectionItems.length) return;
+    for (const section of bs7671InspectionSections) {
+      const sectionItems = section.items;
+      const allDone = sectionItems.every(si => {
+        const item = inspectionItems.find(i => i.id === si.id);
+        return item?.outcome && item.outcome !== '';
+      });
+      if (!allDone && !expandedSections[section.id]) {
+        // Found first incomplete section — if previous section just completed, open this one
+        const prevIdx = bs7671InspectionSections.indexOf(section) - 1;
+        if (prevIdx >= 0) {
+          const prevSection = bs7671InspectionSections[prevIdx];
+          const prevAllDone = prevSection.items.every(si => {
+            const item = inspectionItems.find(i => i.id === si.id);
+            return item?.outcome && item.outcome !== '';
+          });
+          if (prevAllDone && expandedSections[prevSection.id]) {
+            setExpandedSections(prev => ({ ...prev, [prevSection.id]: false, [section.id]: true }));
+            setTimeout(() => {
+              document.querySelector(`[data-section="${section.id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 200);
+          }
+        }
+        break;
+      }
+    }
+  }, [completedItems]);
+
   return (
     <div className="space-y-4 sm:space-y-6 pb-24 lg:pb-6">
+      {/* Progress + Quick Mark */}
+      <div className="space-y-3 px-1">
+        {/* Progress row */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className={`text-sm font-bold ${progressPercent === 100 ? 'text-green-400' : 'text-white'}`}>
+              {progressPercent}%
+            </span>
+            <span className="text-[10px] text-white">{completedItems}/{totalItems}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            {c1Count > 0 && <span className="text-[8px] font-bold bg-red-500/20 text-red-400 px-1.5 py-0.5 rounded">{c1Count}</span>}
+            {c2Count > 0 && <span className="text-[8px] font-bold bg-orange-500/20 text-orange-400 px-1.5 py-0.5 rounded">{c2Count}</span>}
+            {c3Count > 0 && <span className="text-[8px] font-bold bg-yellow-500/20 text-yellow-400 px-1.5 py-0.5 rounded">{c3Count}</span>}
+          </div>
+        </div>
+        <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all duration-500 ${progressPercent === 100 ? 'bg-green-500' : 'bg-elec-yellow'}`}
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+        {/* Quick Mark */}
+        <button
+          type="button"
+          onClick={() => setQuickMarkMode(!quickMarkMode)}
+          className={`w-full h-10 rounded-xl text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2 ${
+            quickMarkMode
+              ? 'bg-green-500/15 border border-green-500/30 text-green-400'
+              : 'bg-white/[0.03] border border-white/[0.06] text-white'
+          }`}
+        >
+          {quickMarkMode ? 'Quick Mark ON — tap item = OK' : 'Quick Mark Mode'}
+        </button>
+      </div>
+
       {/* Checklist Sections */}
-      <div className="space-y-3">
+      <div className="space-y-1">
         <InspectionChecklistCard
           inspectionItems={inspectionItems}
           sections={bs7671InspectionSections}
@@ -424,11 +501,9 @@ const EICRInspectionChecklist = ({
           onAutoCreateObservation={autoCreateObservation}
           onBulkMarkSatisfactory={bulkMarkSatisfactory}
           onBulkClearSection={bulkClearSection}
+          quickMarkMode={quickMarkMode}
         />
       </div>
-
-      {/* Reference Guide */}
-      <DefectCodesReference />
 
       {/* Defect Observations */}
       <DefectObservationsSection
@@ -442,6 +517,9 @@ const EICRInspectionChecklist = ({
 
       {/* Overall Assessment */}
       <OverallAssessmentCard formData={formData} onUpdate={onUpdate} />
+
+      {/* Reference Guide — at bottom for reference, not workflow */}
+      <DefectCodesReference />
 
       {/* Floating Stats Pill (mobile) */}
       <InspectionStatsSummary inspectionItems={inspectionItems} />

@@ -730,10 +730,7 @@ export const useReportSync = ({
         }));
 
         if (showToast) {
-          toast({
-            title: 'Saved',
-            description: 'Your report has been saved.',
-          });
+          // Sync indicator handles save status — no toast needed
           trackFeatureUse(userId || '', 'certificate_saved', {
             reportType,
             reportId: savedReportId,

@@ -34,6 +34,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
         autoComplete="off"
         autoCorrect="off"
         autoCapitalize="off"
+        style={{ fontSize: '16px', ...props.style }}
         className={cn(
           // Base layout & sizing
           'flex w-full h-12 md:h-11 px-4 py-3 md:px-3 md:py-2',

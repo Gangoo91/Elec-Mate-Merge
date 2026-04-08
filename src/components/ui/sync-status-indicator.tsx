@@ -177,10 +177,22 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
     }
   };
 
+  const statusText = getStatusText();
+  const isRecentlySaved = statusText.includes('just now') || statusText.includes('Synced');
+
   return (
-    <div className={cn('flex items-center gap-2', className)}>
-      {getStatusIcon()}
-      <span className={cn('text-sm font-medium', getStatusColor())}>{getStatusText()}</span>
+    <div className={cn('flex items-center gap-1.5', className)}>
+      {/* Compact: just a dot + short text */}
+      <div className={cn(
+        'h-2 w-2 rounded-full flex-shrink-0',
+        status === 'synced' ? 'bg-green-500' :
+        status === 'syncing' ? 'bg-blue-500 animate-pulse' :
+        status === 'unsaved' ? 'bg-amber-500 animate-pulse' :
+        status === 'error' ? 'bg-red-500' :
+        !isOnline ? 'bg-amber-500' :
+        'bg-white/30'
+      )} />
+      <span className="text-[10px] text-white/70">{statusText}</span>
     </div>
   );
 };

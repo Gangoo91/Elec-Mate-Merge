@@ -142,30 +142,20 @@ const DefectObservationCard = ({
   };
 
   return (
-    <div className="eicr-section-card overflow-hidden">
-      {/* Classification Badge Header */}
-      <div className={cn('px-4 py-3 border-b border-white/5', config.bgClass)}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <IconComponent className={cn('h-5 w-5', config.textClass)} />
-            <div>
-              <h4 className={cn('font-semibold text-sm', config.textClass)}>{config.label}</h4>
-              <p className="text-xs text-white">{config.description}</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-white">#{index + 1}</span>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onRemove(defect.id)}
-              className="h-8 w-8 text-red-400/70 hover:text-red-400 hover:bg-red-500/10"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </div>
+    <div className="rounded-xl border border-white/[0.06] overflow-hidden">
+      {/* Header — compact */}
+      <div className="flex items-center justify-between px-3.5 py-2.5 border-b border-white/[0.06]">
+        <div className="flex items-center gap-2">
+          <span className={cn('text-xs font-bold', config.textClass)}>
+            #{index + 1} — {defect.defectCode}
+          </span>
         </div>
+        <button
+          onClick={() => onRemove(defect.id)}
+          className="w-8 h-8 rounded-lg flex items-center justify-center border border-red-500/20 bg-red-500/10 text-red-400 touch-manipulation active:scale-[0.98]"
+        >
+          <Trash2 className="h-3.5 w-3.5" />
+        </button>
       </div>
 
       {/* Content */}
@@ -184,17 +174,10 @@ const DefectObservationCard = ({
                   type="button"
                   onClick={() => handleCodeChange(code)}
                   className={cn(
-                    'px-3 py-1.5 rounded-full text-xs font-medium transition-all',
-                    'border touch-manipulation',
+                    'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border touch-manipulation active:scale-[0.98]',
                     isActive
-                      ? cn(
-                          codeConfig.bgClass,
-                          codeConfig.borderClass,
-                          codeConfig.textClass,
-                          'ring-2 ring-offset-2 ring-offset-background',
-                          codeConfig.borderClass.replace('border-', 'ring-')
-                        )
-                      : 'bg-white/5 border-white/10 text-white hover:bg-white/10'
+                      ? cn(codeConfig.bgClass, codeConfig.borderClass, codeConfig.textClass)
+                      : 'bg-white/[0.03] border-white/[0.06] text-white/50'
                   )}
                 >
                   {code}
@@ -215,7 +198,7 @@ const DefectObservationCard = ({
               const { sanitizeTextInput } = await import('@/utils/inputSanitization');
               onUpdate(defect.id, 'item', sanitizeTextInput(value));
             }}
-            className="h-10 text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
+            className="h-10 text-sm bg-white/[0.06] border-white/[0.08] focus:border-yellow-500 focus:ring-yellow-500
                        placeholder:text-white"
           />
         </div>
@@ -244,7 +227,7 @@ const DefectObservationCard = ({
               onUpdate(defect.id, 'description', sanitizeTextInput(value));
             }}
             rows={3}
-            className="text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
+            className="text-sm bg-white/[0.06] border-white/[0.08] focus:border-yellow-500 focus:ring-yellow-500
                        placeholder:text-white resize-none"
           />
         </div>
@@ -268,7 +251,7 @@ const DefectObservationCard = ({
                 onUpdate(defect.id, 'recommendation', sanitizeTextInput(value));
               }}
               rows={2}
-              className="text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
+              className="text-sm bg-white/[0.06] border-white/[0.08] focus:border-yellow-500 focus:ring-yellow-500
                          placeholder:text-white resize-none"
             />
           </div>

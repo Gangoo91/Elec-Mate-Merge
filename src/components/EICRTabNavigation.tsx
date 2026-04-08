@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, ArrowRight, CheckCircle, Circle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle2, Download, PoundSterling } from 'lucide-react';
+
 interface EICRTabNavigationProps {
   currentTab: string;
   currentTabIndex: number;
@@ -18,7 +19,6 @@ interface EICRTabNavigationProps {
 }
 
 const EICRTabNavigation = ({
-  currentTab,
   currentTabIndex,
   totalTabs,
   canNavigateNext,
@@ -27,99 +27,58 @@ const EICRTabNavigation = ({
   navigatePrevious,
   getProgressPercentage,
   isCurrentTabComplete,
-  currentTabHasRequiredFields,
-  onToggleComplete,
-  lastTabLabel = 'Complete EICR',
 }: EICRTabNavigationProps) => {
+  const progress = getProgressPercentage();
   const isLastTab = currentTabIndex === totalTabs - 1;
 
-  const handleNavigateNext = () => {
-    navigateNext();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleNavigatePrevious = () => {
-    navigatePrevious();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <div className="space-y-6 border-t-2 border-border bg-background mt-8 rounded-b-xl p-6">
-      {/* Progress Indicator */}
-      <div className="space-y-3">
-        <div className="flex justify-between items-center text-sm font-medium">
-          <span className="text-muted-foreground">
-            Step {currentTabIndex + 1} of {totalTabs}
+    <div className="sticky bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-white/[0.08] p-4">
+      {/* Progress bar */}
+      <div className="mb-3">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[10px] text-white">
+            {currentTabIndex + 1}/{totalTabs}
           </span>
-          <span className="text-elec-yellow">{getProgressPercentage()}% Complete</span>
+          <span className="text-[10px] font-medium text-white">{progress}%</span>
         </div>
-        <Progress value={getProgressPercentage()} className="w-full h-3" />
-      </div>
-
-      {/* Mark as Complete Section */}
-      <div className="flex justify-center py-2">
-        <Button
-          variant={isCurrentTabComplete ? 'default' : 'outline'}
-          onClick={onToggleComplete}
-          className={`h-10 px-6 gap-2 text-base transition-all ${
-            isCurrentTabComplete
-              ? 'bg-green-600 hover:bg-green-700 text-foreground border-green-600 shadow-lg shadow-green-600/20'
-              : currentTabHasRequiredFields
-                ? 'border-green-600 text-green-600 hover:bg-green-600/10'
-                : 'opacity-50 cursor-not-allowed'
-          }`}
-          disabled={!currentTabHasRequiredFields}
-        >
-          {isCurrentTabComplete ? (
-            <CheckCircle className="h-4 w-4" />
-          ) : (
-            <Circle className="h-4 w-4" />
-          )}
-          <span className="hidden sm:inline">
-            {isCurrentTabComplete ? 'Section Complete - Click to Edit' : 'Mark as Complete'}
-          </span>
-          <span className="sm:hidden font-medium">
-            {isCurrentTabComplete ? 'Complete' : 'Mark Complete'}
-          </span>
-        </Button>
-      </div>
-
-      {/* Navigation Buttons */}
-      <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center sm:gap-4">
-        <Button
-          variant="outline"
-          onClick={handleNavigatePrevious}
-          disabled={!canNavigatePrevious}
-          className="h-11 w-full sm:w-auto px-6 gap-2 text-base border-border text-foreground hover:bg-muted touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          <span className="font-medium">Previous</span>
-        </Button>
-
-        <Button
-          onClick={handleNavigateNext}
-          disabled={!canNavigateNext}
-          className="h-11 w-full sm:w-auto px-6 gap-2 text-base bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-lg shadow-elec-yellow/20 touch-manipulation"
-        >
-          <span className="font-medium">{isLastTab ? lastTabLabel : 'Next Section'}</span>
-          <ArrowRight className="h-4 w-4" />
-        </Button>
-      </div>
-
-      {/* Helpful hints */}
-      {!currentTabHasRequiredFields && !isCurrentTabComplete && (
-        <div className="text-center px-2">
-          <p className="text-sm text-muted-foreground">
-            Complete the required fields before marking this section as complete
-          </p>
+        <div className="h-1 bg-white/[0.12] rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-300 rounded-full"
+            style={{ width: `${progress}%` }}
+          />
         </div>
-      )}
+      </div>
 
-      {currentTabHasRequiredFields && !isCurrentTabComplete && (
-        <div className="text-center px-2">
-          <p className="text-sm text-green-600 font-medium">
-            All required fields completed. Click "Mark Complete" when you're ready to move on.
-          </p>
+      {isLastTab ? (
+        <div>
+          <Button
+            variant="outline"
+            onClick={() => { navigatePrevious(); scrollToTop(); }}
+            disabled={!canNavigatePrevious}
+            className="w-full h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg border-white/[0.12] text-white"
+          >
+            Previous Section
+          </Button>
+        </div>
+      ) : (
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={() => { navigatePrevious(); scrollToTop(); }}
+            disabled={!canNavigatePrevious}
+            className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg border-white/[0.12] text-white"
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={() => { navigateNext(); scrollToTop(); }}
+            disabled={!canNavigateNext}
+            className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow"
+          >
+            Next
+          </Button>
         </div>
       )}
     </div>

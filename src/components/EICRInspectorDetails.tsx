@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
+// Button removed — using native buttons
 import {
   Select,
   SelectContent,
@@ -12,26 +12,18 @@ import {
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
-  AlertTriangle,
-  User,
   Upload,
   X,
-  Award,
-  Building2,
-  Palette,
-  Shield,
   Check,
-  Settings,
+  ChevronDown,
 } from 'lucide-react';
 import { useInspectorProfiles, InspectorProfile } from '@/hooks/useInspectorProfiles';
 import InspectorProfileDialog from './InspectorProfileDialog';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
-import SectionTitle from '@/components/ui/SectionTitle';
 import FormField from '@/components/ui/FormField';
 
 interface EICRInspectorDetailsProps {
@@ -45,11 +37,17 @@ const availableQualifications = [
   '18th Edition BS7671',
   'City & Guilds 2391-52',
   'City & Guilds 2391-51',
+  'City & Guilds 2394/2395',
+  'EAL Level 3 I&T',
+  'EAL Level 4 I&T',
   'NICEIC Approved',
   'NAPIT Registered',
+  'ELECSA Registered',
   'ECA Member',
   'JIB Approved',
   'CompEx Certified',
+  'AM2 Certified',
+  'SSSTS/SMSTS',
 ];
 
 const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps) => {
@@ -328,49 +326,42 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
   const validation = getValidationStatus();
 
   return (
-    <div className={cn('space-y-2', isMobile && '-mx-4')}>
-      {/* Validation Alert */}
+    <div className={cn('space-y-2', '')}>
+      {/* Validation */}
       {!validation.isValid && (
-        <div className={cn('px-4', isMobile && 'px-4')}>
-          <Alert className="border-orange-500/30 bg-orange-500/10">
-            <AlertTriangle className="h-4 w-4 text-orange-400" />
-            <AlertDescription className="text-orange-400 text-sm">
-              Missing: {validation.missingFields.join(', ')}
-            </AlertDescription>
-          </Alert>
+        <div className="px-4">
+          <p className="text-[11px] text-amber-400/80">
+            Required: {validation.missingFields.map(f => f.replace('inspector', '').replace('Qualifications', 'Qualifications')).join(', ')}
+          </p>
         </div>
       )}
 
       {/* Quick Load Button - Loads ALL saved details */}
       {(companyProfile || getAvailableProfile()) && (
-        <div className={cn('px-4 py-2', isMobile && 'px-4')}>
-          <Button
+        <div className={cn('px-4 py-2', '')}>
+          <button
             onClick={handleLoadFromBusinessSettings}
             disabled={companyProfileLoading}
-            variant="outline"
-            className="w-full h-11 border-border/50 text-foreground hover:bg-card/50 font-medium touch-manipulation"
+            className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98] disabled:opacity-50"
           >
-            <Settings className="h-4 w-4 mr-2" />
-            Load My Saved Details
-          </Button>
+            Load from profile
+          </button>
         </div>
       )}
 
       {/* Personal Details Section */}
       <Collapsible open={openSections.personal} onOpenChange={() => toggleSection('personal')}>
         <CollapsibleTrigger asChild>
-          <div>
-            <SectionTitle
-              icon={User}
-              title="Personal Details"
-              color="blue"
-              isOpen={openSections.personal}
-              isMobile={isMobile}
-            />
-          </div>
+          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
+            <div className="flex-1 text-left">
+              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Personal Details</h3>
+            </div>
+            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.personal && 'rotate-180')} />
+          </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+          <div className={cn('space-y-4 py-4', '')}>
             <FormField label="Inspector Name" required>
               <Input
                 value={formData.inspectorName || ''}
@@ -396,39 +387,48 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
         onOpenChange={() => toggleSection('qualifications')}
       >
         <CollapsibleTrigger asChild>
-          <div>
-            <SectionTitle
-              icon={Award}
-              title="Qualifications"
-              color="yellow"
-              isOpen={openSections.qualifications}
-              badge={`${selectedQualifications.length} selected`}
-              isMobile={isMobile}
-            />
-          </div>
+          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
+            <div className="flex-1 text-left">
+              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+              <div className="flex items-center gap-2">
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Qualifications</h3>
+                {selectedQualifications.length > 0 && (
+                  <span className="text-[10px] text-white">{selectedQualifications.length} selected</span>
+                )}
+              </div>
+            </div>
+            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.qualifications && 'rotate-180')} />
+          </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn('py-4', isMobile ? 'px-4' : '')}>
-            <p className="text-xs text-muted-foreground mb-3">Tap to select your qualifications</p>
-            <div className="flex flex-wrap gap-2">
+          <div className="py-3">
+            <div className="grid grid-cols-2 gap-1.5">
               {availableQualifications.map((qualification) => {
                 const isSelected = selectedQualifications.includes(qualification);
                 return (
                   <button
                     key={qualification}
                     type="button"
-                    onClick={() => toggleQualification(qualification)}
+                    onClick={() => {
+                      haptic.light();
+                      toggleQualification(qualification);
+                    }}
                     className={cn(
-                      'px-3 py-2 rounded-lg text-sm font-medium transition-all touch-manipulation',
-                      'flex items-center gap-2',
-                      'active:scale-95',
+                      'h-11 px-3 rounded-lg text-[11px] font-medium transition-all touch-manipulation',
+                      'flex items-center gap-2 text-left',
+                      'active:scale-[0.98]',
                       isSelected
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.06]'
                     )}
                   >
-                    {isSelected && <Check className="h-4 w-4" />}
-                    {qualification}
+                    <div className={cn(
+                      'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0',
+                      isSelected ? 'bg-elec-yellow border-elec-yellow' : 'border-white/30'
+                    )}>
+                      {isSelected && <Check className="h-3 w-3 text-black" />}
+                    </div>
+                    <span className="truncate">{qualification}</span>
                   </button>
                 );
               })}
@@ -443,18 +443,16 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
         onOpenChange={() => toggleSection('registration')}
       >
         <CollapsibleTrigger asChild>
-          <div>
-            <SectionTitle
-              icon={Shield}
-              title="Professional Registration"
-              color="green"
-              isOpen={openSections.registration}
-              isMobile={isMobile}
-            />
-          </div>
+          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
+            <div className="flex-1 text-left">
+              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Professional Registration</h3>
+            </div>
+            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.registration && 'rotate-180')} />
+          </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+          <div className={cn('space-y-4 py-4', '')}>
             <FormField label="Registration Scheme">
               <Select
                 value={formData.registrationScheme || ''}
@@ -463,7 +461,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
                   onUpdate('registrationScheme', value);
                 }}
               >
-                <SelectTrigger className="h-11 touch-manipulation bg-card/50 border-border/30">
+                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
                   <SelectValue placeholder="Select scheme" />
                 </SelectTrigger>
                 <SelectContent className="z-[200]" position="popper" sideOffset={4}>
@@ -504,18 +502,16 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
         onOpenChange={() => toggleSection('insurance')}
       >
         <CollapsibleTrigger asChild>
-          <div>
-            <SectionTitle
-              icon={Shield}
-              title="Insurance Details"
-              color="blue"
-              isOpen={openSections.insurance}
-              isMobile={isMobile}
-            />
-          </div>
+          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
+            <div className="flex-1 text-left">
+              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Insurance Details</h3>
+            </div>
+            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.insurance && 'rotate-180')} />
+          </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+          <div className={cn('space-y-4 py-4', '')}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField label="Insurance Provider">
                 <Input
@@ -559,21 +555,16 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       {/* Company Details Section */}
       <Collapsible open={openSections.company} onOpenChange={() => toggleSection('company')}>
         <CollapsibleTrigger asChild>
-          <div>
-            <SectionTitle
-              icon={Building2}
-              title="Company Details"
-              color="purple"
-              isOpen={openSections.company}
-              isMobile={isMobile}
-            />
-          </div>
+          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
+            <div className="flex-1 text-left">
+              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Company Details</h3>
+            </div>
+            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.company && 'rotate-180')} />
+          </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-            <div className="flex justify-end">
-              <InspectorProfileDialog onProfileSelected={handleProfileSelect} />
-            </div>
+          <div className={cn('space-y-4 py-4', '')}>
             <FormField label="Company Name">
               <Input
                 value={formData.companyName || ''}
@@ -618,49 +609,46 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
       {/* Company Branding Section */}
       <Collapsible open={openSections.branding} onOpenChange={() => toggleSection('branding')}>
         <CollapsibleTrigger asChild>
-          <div>
-            <SectionTitle
-              icon={Palette}
-              title="Company Branding"
-              color="orange"
-              isOpen={openSections.branding}
-              isMobile={isMobile}
-            />
-          </div>
+          <button className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.98]">
+            <div className="flex-1 text-left">
+              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+              <h3 className="text-xs font-medium text-white uppercase tracking-wider">Company Branding</h3>
+            </div>
+            <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', openSections.branding && 'rotate-180')} />
+          </button>
         </CollapsibleTrigger>
         <CollapsibleContent>
-          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+          <div className={cn('space-y-4 py-4', '')}>
             {/* Logo Upload */}
-            <div className="space-y-3">
-              <Label className="text-sm text-foreground/80">Company Logo</Label>
+            {/* Logo */}
+            <div className="space-y-2">
+              <label className="text-xs text-white/80 block">Company Logo</label>
               {formData.companyLogo ? (
-                <div className="relative w-fit">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
                   <img
                     src={formData.companyLogo}
                     alt="Company Logo"
-                    className="max-w-48 max-h-32 object-contain rounded-lg border border-border bg-background/50 p-2"
+                    className="w-14 h-14 object-contain rounded-lg bg-white/[0.06] p-1.5"
                   />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="sm"
-                    onClick={handleRemoveLogo}
-                    className="absolute -top-2 -right-2 w-8 h-8 rounded-full p-0"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-white truncate">Logo uploaded</p>
+                    <button
+                      type="button"
+                      onClick={handleRemoveLogo}
+                      className="text-[10px] text-red-400/60 hover:text-red-400 touch-manipulation mt-0.5"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <button
                   type="button"
                   onClick={() => document.getElementById('logo-upload')?.click()}
-                  className="w-full border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-elec-yellow/50 transition-colors touch-manipulation"
+                  className="w-full border border-dashed border-white/[0.10] rounded-lg p-4 text-center hover:border-elec-yellow/30 transition-colors touch-manipulation active:scale-[0.98]"
                 >
-                  <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Tap to upload logo</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    JPG, PNG, GIF or WebP (max 5MB)
-                  </p>
+                  <Upload className="h-5 w-5 text-white mx-auto mb-1.5" />
+                  <p className="text-[11px] text-white">Tap to upload logo</p>
                 </button>
               )}
               <input
@@ -673,37 +661,46 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
             </div>
 
             {/* Branding Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <FormField label="Company Tagline">
                 <Input
                   value={formData.companyTagline || ''}
                   onChange={(e) => onUpdate('companyTagline', e.target.value)}
                   placeholder="Professional Electrical Services"
-                  className="h-11 text-base touch-manipulation"
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+                  style={{ fontSize: '16px' }}
                 />
               </FormField>
               <FormField label="Website">
                 <Input
                   value={formData.companyWebsite || ''}
                   onChange={(e) => onUpdate('companyWebsite', e.target.value)}
-                  placeholder="www.yourcompany.co.uk"
-                  className="h-11 text-base touch-manipulation"
+                  placeholder="www.company.co.uk"
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+                  style={{ fontSize: '16px' }}
                 />
               </FormField>
             </div>
             <FormField label="Accent Colour">
-              <div className="flex gap-2">
-                <Input
-                  type="color"
-                  value={formData.companyAccentColor || '#f59e0b'}
-                  onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
-                  className="w-14 h-11 p-1 cursor-pointer"
-                />
+              <div className="flex items-center gap-2">
+                <div className="relative w-11 h-11 rounded-lg overflow-hidden border border-white/[0.08] flex-shrink-0">
+                  <input
+                    type="color"
+                    value={formData.companyAccentColor || '#f59e0b'}
+                    onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
+                    className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
+                  />
+                  <div
+                    className="w-full h-full"
+                    style={{ backgroundColor: formData.companyAccentColor || '#f59e0b' }}
+                  />
+                </div>
                 <Input
                   value={formData.companyAccentColor || '#f59e0b'}
                   onChange={(e) => onUpdate('companyAccentColor', e.target.value)}
                   placeholder="#f59e0b"
-                  className="flex-1 h-11 text-base touch-manipulation font-mono"
+                  className="flex-1 h-11 text-base touch-manipulation font-mono bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+                  style={{ fontSize: '16px' }}
                 />
               </div>
             </FormField>

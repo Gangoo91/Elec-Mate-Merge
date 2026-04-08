@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
-import { Button } from '@/components/ui/button';
-import { Plus, Zap, AlertCircle } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   DistributionBoard,
@@ -58,11 +57,14 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
   const handleAddBoard = () => {
     if (currentBoards.length >= maxBoards) return;
 
+    const mainBoard = currentBoards.find((b) => b.order === 0);
     const newBoard = createDefaultBoard(
       generateBoardId(),
       getNextSubBoardName(currentBoards),
       currentBoards.length
     );
+    // Smart: auto-populate "Supplied From" with main board name
+    newBoard.suppliedFrom = mainBoard?.name || 'Main CU';
     onBoardsChange([...currentBoards, newBoard]);
   };
 
@@ -92,33 +94,13 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
 
   return (
     <div className={cn('space-y-4', className)}>
-      {/* Section Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-base font-semibold text-white">Distribution Boards</h3>
-        </div>
-
-        {/* Summary Stats */}
-        <div className="flex items-center gap-3 text-xs text-white/60">
-          <span>
-            {stats.totalBoards} {stats.totalBoards === 1 ? 'board' : 'boards'}
-          </span>
-          {stats.totalWays > 0 && (
-            <span className="text-elec-yellow">{stats.totalWays} ways total</span>
-          )}
-        </div>
+      {/* Stats */}
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-[10px] text-white/60">
+          {stats.totalBoards} board{stats.totalBoards !== 1 ? 's' : ''}
+          {stats.totalWays > 0 && ` · ${stats.totalWays} ways`}
+        </span>
       </div>
-
-      {/* Completion Hint */}
-      {stats.configuredBoards < stats.totalBoards && (
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20">
-          <AlertCircle className="h-4 w-4 text-amber-400 shrink-0" />
-          <span className="text-xs text-amber-300">
-            Complete board details for accurate circuit protection calculations
-          </span>
-        </div>
-      )}
 
       {/* Board Cards */}
       <div className="space-y-3">
@@ -133,21 +115,19 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
         ))}
       </div>
 
-      {/* Add Sub-Board Button */}
+      {/* Add Sub-Board */}
       {currentBoards.length < maxBoards && (
-        <Button
-          variant="outline"
+        <button
           onClick={handleAddBoard}
-          className="w-full h-12 touch-manipulation border-dashed border-white/20 text-white/70 hover:text-white hover:border-elec-yellow/50 hover:bg-elec-yellow/5"
+          className="w-full h-10 rounded-lg border border-dashed border-white/[0.10] text-[11px] font-medium text-white/60 hover:bg-white/[0.03] touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5"
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className="h-3.5 w-3.5" />
           Add Sub-Board
-        </Button>
+        </button>
       )}
 
-      {/* Max boards message */}
       {currentBoards.length >= maxBoards && (
-        <p className="text-xs text-white text-center">Maximum of {maxBoards} boards reached</p>
+        <p className="text-[10px] text-white/60 text-center">Maximum {maxBoards} boards</p>
       )}
     </div>
   );

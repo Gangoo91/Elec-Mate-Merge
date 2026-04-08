@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Plus, CircuitBoard } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { DistributionBoard } from '@/types/distributionBoard';
 
 interface BoardManagementProps {
@@ -8,37 +7,31 @@ interface BoardManagementProps {
   onAddBoard: () => void;
 }
 
-/**
- * BoardManagement - Header component for managing distribution boards
- * Provides "Add Sub-Board" button and board count summary
- */
 const BoardManagement: React.FC<BoardManagementProps> = ({ boards, onAddBoard }) => {
   const subBoardCount = boards.filter((b) => b.order > 0).length;
 
   return (
-    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-slate-800/50 to-slate-900/50 rounded-xl border border-white/10">
-      <div className="flex items-center gap-3">
-        <div className="p-2.5 rounded-lg bg-elec-yellow/20">
-          <CircuitBoard className="h-5 w-5 text-elec-yellow" />
-        </div>
+    <div className="space-y-3">
+      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+      <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-semibold text-white">Distribution Boards</h3>
-          <p className="text-sm text-white/50">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider">
+            Distribution Boards
+          </h2>
+          <p className="text-[10px] text-white/40 mt-0.5">
             {boards.length} board{boards.length !== 1 ? 's' : ''}
-            {subBoardCount > 0 && ` (${subBoardCount} sub-board${subBoardCount !== 1 ? 's' : ''})`}
+            {subBoardCount > 0 &&
+              ` · ${subBoardCount} sub-board${subBoardCount !== 1 ? 's' : ''}`}
           </p>
         </div>
+        <button
+          onClick={onAddBoard}
+          className="h-9 px-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs font-semibold text-white/50 touch-manipulation active:scale-[0.98] flex items-center gap-1.5"
+        >
+          <Plus className="h-3.5 w-3.5" />
+          Sub-Board
+        </button>
       </div>
-
-      <Button
-        variant="outline"
-        size="sm"
-        className="h-9 border-blue-500/30 text-blue-400 hover:bg-blue-500/10 hover:text-blue-300 hover:border-blue-500/50"
-        onClick={onAddBoard}
-      >
-        <Plus className="h-4 w-4 mr-2" />
-        Add Sub-Board
-      </Button>
     </div>
   );
 };

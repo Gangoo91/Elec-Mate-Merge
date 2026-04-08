@@ -244,33 +244,29 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
 
   return (
     <div className="space-y-4">
-      {/* Profile Banner - Both Mobile & Desktop */}
+      {/* Profile Instrument */}
       {profileInstrument && (
-        <div className="flex items-center justify-between gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+        <div className="flex items-center justify-between gap-3 p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06]">
           <div className="flex items-center gap-2 min-w-0">
-            <User className="h-4 w-4 text-amber-400 flex-shrink-0" />
-            <span className="text-sm text-white truncate">
+            <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow flex-shrink-0" />
+            <span className="text-xs text-white/80 truncate">
               {profileInstrument.make} {profileInstrument.model}
             </span>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleAutoFillFromProfile}
-            className="h-9 px-3 text-xs bg-amber-500/20 border-amber-500/30 text-amber-300 hover:bg-amber-500/30 hover:text-amber-200 flex-shrink-0 touch-manipulation"
-          >
-            {hasAutoFilled ? (
-              <>
-                <Check className="h-3 w-3 mr-1.5" />
-                Loaded
-              </>
-            ) : (
-              <>
-                <User className="h-3 w-3 mr-1.5" />
-                Use Profile
-              </>
-            )}
-          </Button>
+          {hasAutoFilled ? (
+            <span className="text-[10px] font-medium text-green-400 flex items-center gap-1 flex-shrink-0">
+              <Check className="h-3 w-3" />
+              Loaded
+            </span>
+          ) : (
+            <button
+              type="button"
+              onClick={handleAutoFillFromProfile}
+              className="h-8 px-2.5 text-[10px] font-medium rounded-md bg-white/[0.06] border border-white/[0.08] text-white/80 hover:text-white/70 touch-manipulation active:scale-[0.98] flex-shrink-0"
+            >
+              Use Profile
+            </button>
+          )}
         </div>
       )}
 
@@ -278,7 +274,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
       <div className="space-y-3">
         {/* Test Instrument - Full Width */}
         <div className="space-y-1.5">
-          <Label htmlFor="testInstrumentMake" className="text-sm text-white">
+          <Label htmlFor="testInstrumentMake" className="text-xs text-white/80">
             Test Instrument
           </Label>
           {!isOtherSelected ? (
@@ -302,11 +298,12 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
               ]}
               placeholder="Select test instrument..."
               title="Test Instrument"
+              triggerClassName="bg-white/[0.06] border-white/[0.08] text-white"
             />
           ) : (
             <div className="space-y-2">
               <Input
-                className="h-11 text-base touch-manipulation border-white/30"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
                 placeholder="Enter make/model"
                 value={formData.customTestInstrument || ''}
                 onChange={(e) => onUpdate('customTestInstrument', e.target.value)}
@@ -331,7 +328,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
 
         {/* Serial Number - Full Width */}
         <div className="space-y-1.5">
-          <Label htmlFor="testInstrumentSerial" className="text-sm text-white">
+          <Label htmlFor="testInstrumentSerial" className="text-xs text-white/80">
             Serial Number
           </Label>
           <Input
@@ -339,14 +336,15 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
             value={formData.testInstrumentSerial || ''}
             onChange={(e) => onUpdate('testInstrumentSerial', e.target.value)}
             placeholder="Enter serial number"
-            className="h-11 text-base touch-manipulation border-white/30"
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+            style={{ fontSize: '16px' }}
           />
         </div>
 
         {/* Calibration & Temperature - 2 Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label htmlFor="calibrationDate" className="text-sm text-white">
+            <Label htmlFor="calibrationDate" className="text-xs text-white/80">
               Calibration Date
             </Label>
             <Input
@@ -354,12 +352,13 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
               type="date"
               value={formData.calibrationDate || ''}
               onChange={(e) => onUpdate('calibrationDate', e.target.value)}
-              className="h-11 text-base touch-manipulation border-white/30"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              style={{ fontSize: '16px' }}
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="testTemperature" className="text-sm text-white">
+            <Label htmlFor="testTemperature" className="text-xs text-white/80">
               Temperature (°C)
             </Label>
             <Input
@@ -367,7 +366,8 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
               value={formData.testTemperature || ''}
               onChange={(e) => onUpdate('testTemperature', e.target.value)}
               placeholder="20°C"
-              className="h-11 text-base touch-manipulation border-white/30"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+              style={{ fontSize: '16px' }}
             />
           </div>
         </div>

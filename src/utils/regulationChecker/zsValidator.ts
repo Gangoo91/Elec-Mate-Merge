@@ -3,7 +3,9 @@ import { RegulationWarning } from './types';
 import {
   getZsLimitFromDeviceString,
   getDisconnectionTimeForCircuit,
+  getRcdZsLimit,
   type ZsLookupResult,
+  type RcdRating,
 } from '@/data/zsLimits';
 
 // RCD requirement checker
@@ -39,7 +41,8 @@ const shouldHaveRCD = (result: TestResult): boolean => {
 };
 
 // Enhanced Zs validation using correct BS 7671 Tables 41.2, 41.3, 41.4
-export const checkZsCompliance = (result: TestResult): RegulationWarning[] => {
+// Optional earthingArrangement param — when 'TT', use RCD-based Zs limits instead of fuse/MCB tables
+export const checkZsCompliance = (result: TestResult, earthingArrangement?: string): RegulationWarning[] => {
   const warnings: RegulationWarning[] = [];
 
   if (!result.zs) return warnings;
@@ -52,8 +55,33 @@ export const checkZsCompliance = (result: TestResult): RegulationWarning[] => {
 
   const deviceType = result.protectiveDeviceType || '';
   const circuitDescription = result.circuitDescription || '';
+  const isTT = earthingArrangement === 'TT';
 
-  // Get Zs limit from official BS 7671 data
+  // For TT systems, Zs limit is based on RCD rating (Reg 411.5.2), not fuse/MCB tables
+  // TT systems rely on RCD disconnection — max Zs = 230V / I∆n (e.g. 1667Ω for 30mA RCD)
+  if (isTT) {
+    const rcdRatingMa = parseInt(result.rcdRating?.replace('mA', '') || '');
+    if (!isNaN(rcdRatingMa) && [30, 100, 300, 500].includes(rcdRatingMa)) {
+      const rcdZs = getRcdZsLimit(rcdRatingMa as RcdRating);
+      if (rcdZs && zsValue <= rcdZs.maxZs) {
+        // Zs is within RCD-based limit — no warning needed for TT
+        return warnings;
+      }
+    }
+    // TT system without RCD — warn
+    if (!result.rcdRating || result.rcdRating === 'N/A') {
+      warnings.push({
+        severity: 'critical',
+        title: 'TT System Requires RCD Protection',
+        description: 'TT earthing arrangements require RCD protection on all circuits (Reg 411.5.2). No RCD detected on this circuit.',
+        regulation: 'BS 7671 Regulation 411.5.2',
+        suggestion: 'Install RCD protection (typically 30mA) for all circuits on TT systems.',
+      });
+      return warnings;
+    }
+  }
+
+  // Get Zs limit from official BS 7671 data (TN systems)
   const zsLookup = getZsLimitFromDeviceString(deviceType, rating, circuitDescription);
 
   if (zsLookup && zsValue > zsLookup.maxZs) {

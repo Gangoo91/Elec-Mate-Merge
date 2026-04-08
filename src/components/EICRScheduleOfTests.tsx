@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-expressions */
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { cn } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -2095,11 +2096,11 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         <div className="min-h-screen bg-background -mx-4">
           {/* Voice Status Indicator - Shows at top when active */}
           {voiceActive && (
-            <div className="p-4 bg-green-500/20 border-b border-green-500/30">
+            <div className="p-3 bg-green-500/10 border-b border-green-500/20">
               <div className="flex items-center justify-center gap-2">
                 <Mic className="h-4 w-4 text-green-400 animate-pulse" />
-                <span className="text-sm text-green-400 font-medium">
-                  Voice Active - Say "Add circuit" or test values
+                <span className="text-xs text-green-400 font-medium">
+                  Voice Active — Say "Add circuit" or test values
                 </span>
               </div>
             </div>
@@ -2128,116 +2129,84 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 >
                   {/* Board Header */}
                   <CollapsibleTrigger className="w-full" asChild>
-                    <button className="w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors bg-card/50 border-y border-border/30 active:bg-card/90">
-                      {/* Progress Ring */}
-                      <div className="relative flex-shrink-0">
-                        <svg className="w-12 h-12 -rotate-90">
-                          <circle
-                            cx="24"
-                            cy="24"
-                            r="20"
-                            strokeWidth="3"
-                            stroke="currentColor"
-                            fill="none"
-                            className="text-border/30"
-                          />
-                          <circle
-                            cx="24"
-                            cy="24"
-                            r="20"
-                            strokeWidth="3"
-                            stroke="currentColor"
-                            fill="none"
-                            strokeDasharray={`${boardProgressPercent * 1.26} 126`}
-                            strokeLinecap="round"
-                            className={isComplete ? 'text-green-500' : 'text-elec-yellow'}
-                          />
-                        </svg>
-                        <div
-                          className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${isComplete ? 'text-green-400' : 'text-elec-yellow'}`}
-                        >
-                          {isComplete ? (
-                            <CheckCircle className="h-5 w-5" />
-                          ) : (
-                            <Zap className="h-5 w-5" />
-                          )}
-                        </div>
-                      </div>
+                    <button className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all">
+                      {/* Board badge */}
+                      <span
+                        className={cn(
+                          'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0',
+                          isComplete
+                            ? 'bg-green-500/15 text-green-400'
+                            : boardProgressPercent > 0
+                              ? 'bg-elec-yellow/15 text-elec-yellow'
+                              : 'bg-white/[0.06] text-white/80'
+                        )}
+                      >
+                        {isComplete ? <CheckCircle className="h-3.5 w-3.5" /> : board.id === MAIN_BOARD_ID || board.order === 0 ? 'M' : 'S'}
+                      </span>
 
                       {/* Board Info */}
                       <div className="flex-1 min-w-0">
-                        <h3
-                          className={`font-semibold text-base ${isComplete ? 'text-green-400' : 'text-foreground'}`}
-                        >
+                        <h3 className={cn('text-sm font-semibold truncate', isComplete ? 'text-green-400' : 'text-white')}>
                           {board.name}
                         </h3>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                          <span>
-                            {boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''}
-                          </span>
-                          <span>·</span>
-                          <span
-                            className={
-                              isComplete
-                                ? 'text-green-400 font-medium'
-                                : boardProgressPercent > 0
-                                  ? 'text-elec-yellow font-medium'
-                                  : ''
-                            }
-                          >
-                            {boardProgressPercent}% complete
-                          </span>
-                        </div>
                       </div>
+
+                      {/* Progress pill */}
+                      <span className={cn(
+                        'text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0',
+                        isComplete
+                          ? 'bg-green-500/15 text-green-400'
+                          : boardProgressPercent > 0
+                            ? 'bg-white/[0.06] text-elec-yellow'
+                            : 'bg-white/[0.04] text-white'
+                      )}>
+                        {boardCircuits.length} · {boardProgressPercent}%
+                      </span>
 
                       {/* Chevron */}
                       <ChevronDown
-                        className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${expandedBoards.has(board.id) ? 'rotate-180' : ''}`}
+                        className={cn('h-4 w-4 text-white transition-transform duration-200 flex-shrink-0', expandedBoards.has(board.id) && 'rotate-180')}
                       />
                     </button>
                   </CollapsibleTrigger>
 
                   <CollapsibleContent>
-                    {/* Board Verification Details — Redesigned */}
-                    <div className="px-4 pt-4 pb-3 space-y-4 bg-card/20">
-                      {/* Reference & Location — Full width stacked on mobile */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div className="space-y-1.5">
-                          <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
-                            Board Reference
-                          </label>
+                    {/* Board Details */}
+                    <div className="p-4 border-b border-white/[0.06] space-y-4">
+                      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+                      <p className="text-xs font-medium text-white uppercase tracking-wider">Board Details</p>
+                      {/* Board Reference & Location */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs text-white/80 block mb-1">Reference</label>
                           <DebouncedInput
                             type="text"
                             value={board.reference || ''}
                             onChange={(value) => handleUpdateBoard(board.id, 'reference', value)}
                             placeholder={board.name}
-                            className="w-full h-11 px-3 rounded-lg bg-background border border-border/40 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none touch-manipulation"
+                            className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
                             style={{ fontSize: '16px' }}
                           />
                         </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
-                            Location
-                          </label>
+                        <div>
+                          <label className="text-xs text-white/80 block mb-1">Location</label>
                           <DebouncedInput
                             type="text"
                             value={board.location || ''}
                             onChange={(value) => handleUpdateBoard(board.id, 'location', value)}
-                            placeholder="e.g., Garage, Under stairs"
-                            className="w-full h-11 px-3 rounded-lg bg-background border border-border/40 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none touch-manipulation"
+                            placeholder="e.g., Garage"
+                            className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
                             style={{ fontSize: '16px' }}
                           />
                         </div>
                       </div>
 
-                      {/* Measurements — Side by side with units */}
+                      {/* Measurements */}
+                      <p className="text-xs font-medium text-white uppercase tracking-wider">Measurements</p>
                       <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1.5">
-                          <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
-                            Z<sub className="text-[9px]">DB</sub>{' '}
-                            <span className="text-muted-foreground font-normal normal-case">
-                              (Ω)
-                            </span>
+                        <div>
+                          <label className="text-xs text-white/80 block mb-1">
+                            Z<sub>DB</sub> (Ω)
                           </label>
                           <div className="relative">
                             <DebouncedInput
@@ -2246,20 +2215,15 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               value={board.zdb || ''}
                               onChange={(value) => handleUpdateBoard(board.id, 'zdb', value)}
                               placeholder="0.00"
-                              className="w-full h-11 px-3 pr-9 rounded-lg bg-background border border-border/40 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none touch-manipulation"
+                              className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium">
-                              Ω
-                            </span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">Ω</span>
                           </div>
                         </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
-                            I<sub className="text-[9px]">PF</sub>{' '}
-                            <span className="text-muted-foreground font-normal normal-case">
-                              (kA)
-                            </span>
+                        <div>
+                          <label className="text-xs text-white/80 block mb-1">
+                            I<sub>PF</sub> (kA)
                           </label>
                           <div className="relative">
                             <DebouncedInput
@@ -2268,110 +2232,84 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               value={board.ipf || ''}
                               onChange={(value) => handleUpdateBoard(board.id, 'ipf', value)}
                               placeholder="0.0"
-                              className="w-full h-11 px-3 pr-9 rounded-lg bg-background border border-border/40 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none touch-manipulation"
+                              className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium">
-                              kA
-                            </span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">kA</span>
                           </div>
                         </div>
                       </div>
 
-                      {/* Divider */}
-                      <div className="border-t border-border/20" />
-
-                      {/* Verification Checks — Labelled group */}
-                      <div className="space-y-2.5 relative z-10">
-                        <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
-                          Verification
-                        </label>
-                        <div className="grid grid-cols-2 gap-2">
+                      {/* Verification */}
+                      <div className="space-y-2">
+                        <p className="text-xs font-medium text-white uppercase tracking-wider">Verification</p>
+                        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+                        <div className="grid grid-cols-2 gap-2 relative z-10">
+                          {/* Polarity */}
                           <button
                             type="button"
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              handleUpdateBoard(
-                                board.id,
-                                'confirmedCorrectPolarity',
-                                !board.confirmedCorrectPolarity
-                              );
+                              handleUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity);
                             }}
-                            className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.97] flex items-center gap-2.5 px-3 cursor-pointer select-none ${
+                            className={cn(
+                              'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
                               board.confirmedCorrectPolarity
-                                ? 'bg-green-500/15 border border-green-500/40 text-green-400'
-                                : 'bg-background border border-border/40 text-muted-foreground'
-                            }`}
+                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                            )}
                           >
-                            <div
-                              className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 pointer-events-none transition-colors ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-muted-foreground/50'}`}
-                            >
-                              {board.confirmedCorrectPolarity && (
-                                <Check className="h-3.5 w-3.5 text-white" />
-                              )}
+                            <div className={cn('w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none', board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-white/40')}>
+                              {board.confirmedCorrectPolarity && <Check className="h-3 w-3 text-white" />}
                             </div>
-                            <span className="flex-1 text-left pointer-events-none">Polarity</span>
+                            <span className="pointer-events-none">Polarity</span>
                           </button>
+                          {/* Phase Seq */}
                           <button
                             type="button"
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              handleUpdateBoard(
-                                board.id,
-                                'confirmedPhaseSequence',
-                                !board.confirmedPhaseSequence
-                              );
+                              handleUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence);
                             }}
-                            className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.97] flex items-center gap-2.5 px-3 cursor-pointer select-none ${
+                            className={cn(
+                              'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
                               board.confirmedPhaseSequence
-                                ? 'bg-green-500/15 border border-green-500/40 text-green-400'
-                                : 'bg-background border border-border/40 text-muted-foreground'
-                            }`}
+                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                            )}
                           >
-                            <div
-                              className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 pointer-events-none transition-colors ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-muted-foreground/50'}`}
-                            >
-                              {board.confirmedPhaseSequence && (
-                                <Check className="h-3.5 w-3.5 text-white" />
-                              )}
+                            <div className={cn('w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none', board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-white/40')}>
+                              {board.confirmedPhaseSequence && <Check className="h-3 w-3 text-white" />}
                             </div>
-                            <span className="flex-1 text-left pointer-events-none">Phase Seq</span>
+                            <span className="pointer-events-none">Phase Seq</span>
                           </button>
-                        </div>
-
-                        {/* SPD Row */}
-                        <div className="grid grid-cols-2 gap-2">
+                          {/* SPD OK */}
                           <button
                             type="button"
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
                               if (!board.spdNA) {
-                                handleUpdateBoard(
-                                  board.id,
-                                  'spdOperationalStatus',
-                                  !board.spdOperationalStatus
-                                );
+                                handleUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
                               }
                             }}
                             disabled={board.spdNA}
-                            className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.97] flex items-center gap-2.5 px-3 cursor-pointer select-none ${
-                              board.spdOperationalStatus
-                                ? 'bg-green-500/15 border border-green-500/40 text-green-400'
-                                : 'bg-background border border-border/40 text-muted-foreground'
-                            } ${board.spdNA ? 'opacity-30 cursor-not-allowed' : ''}`}
+                            className={cn(
+                              'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
+                              board.spdOperationalStatus && !board.spdNA
+                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                                : 'bg-white/[0.05] border border-white/[0.08] text-white',
+                              board.spdNA && 'opacity-30 cursor-not-allowed'
+                            )}
                           >
-                            <div
-                              className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 pointer-events-none transition-colors ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground/50'}`}
-                            >
-                              {board.spdOperationalStatus && (
-                                <Check className="h-3.5 w-3.5 text-white" />
-                              )}
+                            <div className={cn('w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none', board.spdOperationalStatus && !board.spdNA ? 'bg-green-500 border-green-500' : 'border-white/40')}>
+                              {board.spdOperationalStatus && !board.spdNA && <Check className="h-3 w-3 text-white" />}
                             </div>
-                            <span className="flex-1 text-left pointer-events-none">SPD OK</span>
+                            <span className="pointer-events-none">SPD OK</span>
                           </button>
+                          {/* SPD N/A */}
                           <button
                             type="button"
                             onClick={(e) => {
@@ -2383,65 +2321,98 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                                 ...(newValue ? { spdOperationalStatus: false } : {}),
                               });
                             }}
-                            className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.97] flex items-center gap-2.5 px-3 cursor-pointer select-none ${
+                            className={cn(
+                              'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
                               board.spdNA
-                                ? 'bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow'
-                                : 'bg-background border border-border/40 text-muted-foreground'
-                            }`}
+                                ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
+                                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                            )}
                           >
-                            <div
-                              className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 pointer-events-none transition-colors ${board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground/50'}`}
-                            >
-                              {board.spdNA && <Check className="h-3.5 w-3.5 text-black" />}
+                            <div className={cn('w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none', board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-white/40')}>
+                              {board.spdNA && <Check className="h-3 w-3 text-black" />}
                             </div>
-                            <span className="flex-1 text-left pointer-events-none">SPD N/A</span>
+                            <span className="pointer-events-none">SPD N/A</span>
                           </button>
                         </div>
+
+                        {/* SPD Type — show when SPD is applicable */}
+                        {!board.spdNA && (
+                          <div className="space-y-2 mt-1">
+                            <p className="text-xs text-white/80">SPD Type Installed</p>
+                            <div className="grid grid-cols-3 gap-2">
+                              {(['spdT1', 'spdT2', 'spdT3'] as const).map((field, i) => {
+                                const label = `Type ${i + 1}`;
+                                const isActive = !!(board as any)[field];
+                                return (
+                                  <button
+                                    key={field}
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      handleUpdateBoard(board.id, field, !isActive);
+                                    }}
+                                    className={cn(
+                                      'w-full h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5 cursor-pointer select-none',
+                                      isActive
+                                        ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
+                                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                                    )}
+                                  >
+                                    {label}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {/* Tools Bar - Above Circuit Table */}
-                    <div className="grid grid-cols-[1fr_1fr_44px] gap-2 p-4 bg-background border-y border-border/30">
+                    {/* Tools Bar */}
+                    <div className="grid grid-cols-3 gap-2 px-4 py-3 bg-background border-y border-white/[0.06]">
+                      {/* AI Scan */}
                       <Button
-                        className="h-11 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
+                        className="h-11 rounded-xl bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] text-xs"
                         onClick={() => {
                           setActiveBoardId(board.id);
                           onOpenBoardScan ? onOpenBoardScan() : setShowBoardCapture(true);
                         }}
                       >
-                        <Camera className="h-5 w-5 mr-2" />
-                        AI Scan
+                        <Camera className="h-4 w-4 mr-1.5" />
+                        AI
                       </Button>
+                      {/* Add Circuit */}
                       <Button
-                        className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-95"
+                        className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white font-semibold hover:bg-white/[0.10] touch-manipulation active:scale-[0.98] text-xs"
                         onClick={() => addCircuitToBoard(board.id)}
                       >
-                        <Plus className="h-5 w-5 mr-2" />
-                        Add Circuit
+                        <Plus className="h-4 w-4 mr-1.5" />
+                        Add
                       </Button>
+                      {/* Speak */}
                       <Button
-                        className={`h-11 w-11 rounded-xl touch-manipulation active:scale-95 ${
+                        className={cn(
+                          'h-11 rounded-xl font-semibold touch-manipulation active:scale-[0.98] text-xs',
                           voiceActive
                             ? 'bg-green-500 text-white'
                             : voiceConnecting
                               ? 'bg-yellow-500 text-black animate-pulse'
                               : 'bg-purple-600 text-white'
-                        }`}
+                        )}
                         onClick={toggleVoice}
                         disabled={voiceConnecting}
                       >
-                        <Mic className={`h-5 w-5 ${voiceActive ? 'animate-pulse' : ''}`} />
+                        <Mic className={cn('h-4 w-4 mr-1.5', voiceActive && 'animate-pulse')} />
+                        {voiceActive ? 'Live' : 'Speak'}
                       </Button>
                     </div>
 
                     {/* Circuit Table */}
                     <div className="bg-background">
                       {boardCircuits.length === 0 ? (
-                        <div className="p-8 text-center">
-                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
-                            <Zap className="h-6 w-6 text-white" />
-                          </div>
-                          <p className="text-sm text-white mb-3">No circuits yet</p>
+                        <div className="p-6 text-center space-y-3">
+                          <p className="text-xs text-white">No circuits — tap Add Circuit or AI Scan</p>
                           <Button
                             onClick={() => addCircuitToBoard(board.id)}
                             className="h-11 bg-elec-yellow text-black font-medium hover:bg-elec-yellow/90 touch-manipulation"
@@ -2473,35 +2444,27 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
                       {/* Add Circuit to This Board */}
                       {boardCircuits.length > 0 && (
-                        <div className="p-4 border-t border-border/20">
-                          <Button
+                        <div className="px-4 py-3 border-t border-white/[0.06]">
+                          <button
                             onClick={() => addCircuitToBoard(board.id)}
-                            variant="outline"
-                            className="w-full h-11 border-dashed border-white/20 text-white hover:bg-white/5 touch-manipulation"
+                            className="w-full h-10 rounded-lg border border-dashed border-white/[0.10] text-[11px] font-medium text-white hover:bg-white/[0.03] touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5"
                           >
-                            <Plus className="h-4 w-4 mr-2" />
-                            Add Circuit to {board.name}
-                          </Button>
+                            <Plus className="h-3.5 w-3.5" />
+                            Add Circuit
+                          </button>
                         </div>
                       )}
                     </div>
 
                     {/* Board Actions Footer */}
                     {board.id !== MAIN_BOARD_ID && (
-                      <div className="p-3 bg-card/30 border-t border-border/20 flex justify-between items-center">
-                        <span className="text-xs text-muted-foreground">
-                          {boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''} in
-                          this board
-                        </span>
-                        <Button
-                          variant="ghost"
-                          size="sm"
+                      <div className="px-4 py-2 border-t border-white/[0.06] flex justify-end">
+                        <button
                           onClick={() => handleRemoveBoard(board.id)}
-                          className="h-8 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                          className="text-[10px] text-red-400/50 hover:text-red-400 touch-manipulation"
                         >
-                          <Trash2 className="h-3.5 w-3.5 mr-1" />
                           Remove Board
-                        </Button>
+                        </button>
                       </div>
                     )}
                   </CollapsibleContent>
@@ -2509,33 +2472,29 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               );
             })}
 
-            {/* Add Board Button */}
-            <div className="p-4">
-              <Button
-                onClick={handleAddBoard}
-                variant="outline"
-                className="w-full h-12 border-dashed border-white/20 text-white hover:bg-white/5 touch-manipulation"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Distribution Board
-              </Button>
-            </div>
-
-            {/* View Toggle */}
-            <div className="px-4 pb-2 flex items-center justify-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleMobileView}
-                className="h-9 text-xs gap-1.5 text-muted-foreground hover:text-foreground"
-              >
-                {mobileViewType === 'table' ? (
-                  <Layout className="h-3.5 w-3.5" />
-                ) : (
-                  <Table className="h-3.5 w-3.5" />
-                )}
-                Switch to {mobileViewType === 'table' ? 'Card' : 'Table'} View
-              </Button>
+            {/* Footer Actions */}
+            <div className="px-4 py-4 space-y-3">
+              <div className="h-[1px] bg-gradient-to-r from-white/[0.06] to-transparent" />
+              <div className="flex items-center justify-between">
+                <button
+                  onClick={handleAddBoard}
+                  className="text-[11px] font-medium text-white hover:text-white/80 touch-manipulation flex items-center gap-1"
+                >
+                  <Plus className="h-3 w-3" />
+                  Add Sub-Board
+                </button>
+                <button
+                  onClick={toggleMobileView}
+                  className="text-[11px] font-medium text-white hover:text-white/80 touch-manipulation flex items-center gap-1"
+                >
+                  {mobileViewType === 'table' ? (
+                    <Layout className="h-3 w-3" />
+                  ) : (
+                    <Table className="h-3 w-3" />
+                  )}
+                  {mobileViewType === 'table' ? 'Card View' : 'Table View'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -2693,76 +2652,26 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         </div>
       )}
 
-      {/* SHARED INFO SECTIONS - Responsive Layout */}
-      {useMobileView ? (
-        /* Mobile: Edge-to-Edge Collapsible Sections */
-        <div className="-mx-4 pb-24 mt-4">
-          {/* Test Instrument Info */}
-          <Collapsible>
-            <CollapsibleTrigger className="w-full" asChild>
-              <button className="w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors bg-card/50 border-y border-border/30 active:bg-card/90">
-                <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                  <Wrench className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-foreground">Test Instruments</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Equipment details & calibration
-                  </p>
-                </div>
-                <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <div className="bg-card/30 px-4 py-4">
-                <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          {/* Test Method & Notes */}
-          <Collapsible>
-            <CollapsibleTrigger className="w-full" asChild>
-              <button className="w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors bg-card/50 border-b border-border/30 active:bg-card/90">
-                <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                  <FileText className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-foreground">Test Method & Notes</h3>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Method applied & observations
-                  </p>
-                </div>
-                <ChevronDown className="h-5 w-5 text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180" />
-              </button>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <div className="bg-card/30 px-4 py-4">
-                <TestMethodInfo formData={formData} onUpdate={onUpdate} />
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+      {/* Info Sections */}
+      <div className={useMobileView ? '-mx-4 pb-24 mt-4 space-y-0 border-t border-white/[0.06]' : 'grid grid-cols-2 gap-4 mt-6'}>
+        {/* Test Instruments */}
+        <div className={useMobileView ? 'px-4 py-5' : 'p-4'}>
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
+          <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-4">
+            Test Instruments
+          </h3>
+          <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
         </div>
-      ) : (
-        /* Desktop: Horizontal Card Grid */
-        <div className="grid grid-cols-2 gap-4 mt-6">
-          <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-              <Wrench className="h-4 w-4 text-elec-yellow" />
-              Test Instruments
-            </h3>
-            <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-          </div>
 
-          <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-              <FileText className="h-4 w-4 text-elec-yellow" />
-              Test Method & Notes
-            </h3>
-            <TestMethodInfo formData={formData} onUpdate={onUpdate} />
-          </div>
+        {/* Test Method & Notes */}
+        <div className={useMobileView ? 'px-4 py-5' : 'p-4'}>
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
+          <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-4">
+            Test Method & Notes
+          </h3>
+          <TestMethodInfo formData={formData} onUpdate={onUpdate} />
         </div>
-      )}
+      </div>
 
       {/* Quick Fill RCD Panel Dialog */}
       {showQuickFillPanel && (

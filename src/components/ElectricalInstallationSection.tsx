@@ -12,6 +12,7 @@ import { Cable, Gauge, CircuitBoard } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
 import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
 
@@ -33,36 +34,13 @@ interface ElectricalInstallationSectionProps {
   onUpdate: (field: string, value: any) => void;
 }
 
-// Section header - MUST be outside main component to prevent focus loss
-const SectionTitle = ({
-  icon: Icon,
-  title,
-  color = 'orange',
-  isMobile,
-}: {
-  icon: React.ElementType;
-  title: string;
-  color?: string;
-  isMobile: boolean;
-}) => (
-  <div
-    className={cn(
-      'flex items-center gap-3 py-3',
-      isMobile
-        ? '-mx-4 px-4 bg-card/30 border-y border-border/20'
-        : 'pb-2 border-b border-border/30'
-    )}
-  >
-    <div
-      className={cn('h-8 w-8 rounded-lg flex items-center justify-center', `bg-${color}-500/20`)}
-    >
-      <Icon className={cn('h-4 w-4', `text-${color}-400`)} />
-    </div>
-    <h3 className="font-semibold text-foreground">{title}</h3>
+const SectionTitle = ({ title }: { icon?: any; title: string; color?: string; isMobile?: boolean }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
   </div>
 );
 
-// Input field wrapper - MUST be outside main component to prevent focus loss
 const FormField = ({
   label,
   required,
@@ -74,13 +52,12 @@ const FormField = ({
   hint?: string;
   children: React.ReactNode;
 }) => (
-  <div className="space-y-2">
-    <Label className="text-sm text-foreground/80">
-      {label}
-      {required && <span className="text-elec-yellow ml-1">*</span>}
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">
+      {label}{required && ' *'}
     </Label>
     {children}
-    {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    {hint && <p className="text-[10px] text-white mt-1">{hint}</p>}
   </div>
 );
 
@@ -96,6 +73,7 @@ const ElectricalInstallationSectionInner = ({
 }: ElectricalInstallationSectionProps) => {
   const isMobile = useIsMobile();
   const haptic = useHaptic();
+  const { getWarningsForField } = useEICRSmartForm(formData);
 
   // Migrate legacy single-board data to multi-board format
   const boards: DistributionBoard[] = useMemo(() => {
@@ -150,24 +128,23 @@ const ElectricalInstallationSectionInner = ({
   ];
 
   return (
-    <div className={cn('space-y-6', isMobile && '-mx-4')}>
+    <div className={cn('space-y-6', '')}>
       {/* Distribution Boards Section */}
       <div>
-        <SectionTitle
-          icon={CircuitBoard}
-          title="Distribution Boards"
-          color="orange"
-          isMobile={isMobile}
-        />
-        <div className={cn('py-4', isMobile ? 'px-4' : '')}>
+        <SectionTitle title="Distribution Boards" />
+        <div className={cn('py-4', '')}>
           <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} />
+          {/* Board ways vs circuits warnings */}
+          {boards.map((b) => getWarningsForField(`board-${b.id}`).map((w, i) => (
+            <p key={`${b.id}-${i}`} className="text-[10px] text-amber-400/80 mt-1">{w.message}</p>
+          )))}
         </div>
       </div>
 
       {/* Intake Cable Section */}
       <div>
-        <SectionTitle icon={Cable} title="Intake Cable" color="blue" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+        <SectionTitle title="Intake Cable" />
+        <div className={cn('space-y-4 py-4', '')}>
           <FormField label="Intake Cable Size" required>
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
               {intakeCableSizes.map((size) => (
@@ -181,8 +158,8 @@ const ElectricalInstallationSectionInner = ({
                   className={cn(
                     'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
                     formData.intakeCableSize === size
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.03] text-white border border-white/[0.06]'
                   )}
                 >
                   {size}²
@@ -190,6 +167,10 @@ const ElectricalInstallationSectionInner = ({
               ))}
             </div>
           </FormField>
+
+          {getWarningsForField('intakeCableSize').map((w, i) => (
+            <p key={i} className="text-[10px] text-amber-400/80">{w.message} ({w.regulation})</p>
+          ))}
 
           <FormField label="Intake Cable Type" required>
             <Select
@@ -199,7 +180,7 @@ const ElectricalInstallationSectionInner = ({
                 onUpdate('intakeCableType', value);
               }}
             >
-              <SelectTrigger className="h-11 touch-manipulation">
+              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
                 <SelectValue placeholder="Select cable type" />
               </SelectTrigger>
               <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
@@ -216,42 +197,44 @@ const ElectricalInstallationSectionInner = ({
 
       {/* Meter Tails Section */}
       <div>
-        <SectionTitle icon={Gauge} title="Meter Tails" color="green" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <FormField label="Tails Size" required>
-            <div className="grid grid-cols-3 gap-2">
-              {tailsSizes.map((size) => (
-                <button
-                  key={size}
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    onUpdate('tailsSize', formData.tailsSize === size ? '' : size);
-                  }}
-                  className={cn(
-                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
-                    formData.tailsSize === size
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
-                  )}
-                >
-                  {size}²
-                </button>
-              ))}
-            </div>
-          </FormField>
-
-          <FormField label="Approximate Length (m)">
-            <Input
-              value={formData.tailsLength || ''}
-              onChange={(e) => onUpdate('tailsLength', e.target.value)}
-              placeholder="e.g., 3"
-              type="number"
-              min="0"
-              step="0.1"
-              className="h-11 text-base touch-manipulation"
+        <SectionTitle title="Meter Tails" />
+        <div className="space-y-3 py-3">
+          <div className="grid grid-cols-[2fr_1fr] gap-3">
+            <FormField label="Tails Size *">
+              <div className="grid grid-cols-3 gap-1.5">
+                {tailsSizes.map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate('tailsSize', formData.tailsSize === size ? '' : size);
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                      formData.tailsSize === size
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {size}²
+                  </button>
+                ))}
+              </div>
+            </FormField>
+            <FormField label="Length (m)">
+              <Input
+                value={formData.tailsLength || ''}
+                onChange={(e) => onUpdate('tailsLength', e.target.value)}
+                placeholder="3"
+                type="number"
+                min="0"
+                step="0.1"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                inputMode="decimal"
             />
           </FormField>
+          </div>
         </div>
       </div>
     </div>

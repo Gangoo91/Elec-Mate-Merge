@@ -114,10 +114,10 @@ const InspectionItemRow = ({
   // Determine row styling based on outcome - using proper dark colours for both red and amber
   const getRowStyling = () => {
     if (isC1OrC2) {
-      return 'bg-red-600 border-l-4 border-l-red-800 text-foreground';
+      return 'bg-red-600 border-l-4 border-l-red-800 text-white';
     }
     if (isC3) {
-      return 'bg-amber-600 border-l-4 border-l-amber-800 text-foreground';
+      return 'bg-amber-600 border-l-4 border-l-amber-800 text-white';
     }
     return '';
   };
@@ -171,7 +171,7 @@ const InspectionItemRow = ({
           )}
           {sectionItem.description && (
             <p
-              className={`text-xs ${isC1OrC2 || isC3 ? 'text-gray-200' : 'text-muted-foreground'}`}
+              className={`text-xs ${isC1OrC2 || isC3 ? 'text-gray-200' : 'text-white/50'}`}
             >
               {sectionItem.description}
             </p>
@@ -190,7 +190,7 @@ const InspectionItemRow = ({
           placeholder="Notes..."
           value={localNotes}
           onChange={(e) => handleNotesChange(e.target.value)}
-          className={`text-xs ${isCritical ? 'bg-black text-foreground placeholder-gray-400 border-gray-600' : ''}`}
+          className={`text-xs ${isCritical ? 'bg-black text-white placeholder-gray-400 border-gray-600' : ''}`}
         />
       </TableCell>
       <TableCell>

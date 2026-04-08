@@ -439,10 +439,7 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       queryClient.invalidateQueries({ queryKey: ['my-reports'] });
       queryClient.invalidateQueries({ queryKey: ['expiry-reminders'] });
 
-      toast({
-        title: 'Saved',
-        description: 'Your EICR report has been saved to the cloud.',
-      });
+      // Sync indicator handles save status — no toast needed
     } else if (!isOnline) {
       toast({
         title: 'Queued for sync',

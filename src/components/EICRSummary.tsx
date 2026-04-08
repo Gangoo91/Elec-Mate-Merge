@@ -26,7 +26,7 @@ import {
   XCircle,
   FileText,
   FileDown,
-  FileCheck,
+  Check,
   Save,
   Copy,
   ChevronDown,
@@ -34,7 +34,6 @@ import {
   Loader2,
   User,
   Mail,
-  PenTool,
   Code,
   Receipt,
   Sparkles,
@@ -186,7 +185,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       case 'unsatisfactory':
         return 'text-red-600';
       default:
-        return 'text-gray-600';
+        return 'text-white';
     }
   };
 
@@ -801,29 +800,20 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           <CollapsibleTrigger className="w-full" asChild>
             <button
               onClick={() => haptic.light()}
-              className={cn(
-                'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
-                'bg-card/50 border-y border-border/30',
-                'active:bg-card/80'
-              )}
+              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
             >
-              <div className="h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-amber-500/20">
-                <FileCheck className="h-5 w-5 text-amber-400" />
+              <div className="flex-1 text-left">
+                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Standards Compliance</h3>
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground">Standards Compliance</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Design standard and regulatory compliance
-                </p>
-              </div>
-              <ChevronDown className="h-5 w-5 text-muted-foreground" />
+              <ChevronDown className="h-4 w-4 text-white transition-transform ml-3 flex-shrink-0" />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('p-4 space-y-4', isMobile ? '' : 'px-6')}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground/80">Design Standard</Label>
+            <div className="px-4 py-3 space-y-4">
+              <div className="grid grid-cols-2 gap-3 items-end">
+                <div>
+                  <label className="text-xs text-white block mb-1">Design Standard</label>
                   <Select
                     value={formData.designStandard || ''}
                     onValueChange={(value) => {
@@ -831,8 +821,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                       onUpdate('designStandard', value);
                     }}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-card/50 border-border/30">
-                      <SelectValue placeholder="Select standard" />
+                    <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
+                      <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
                       <SelectItem value="BS7671">BS 7671</SelectItem>
@@ -840,10 +830,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground/80">
-                    Part P Compliance
-                  </Label>
+                <div>
+                  <label className="text-xs text-white block mb-1">Part P Compliance</label>
                   <Select
                     value={formData.partPCompliance || ''}
                     onValueChange={(value) => {
@@ -851,8 +839,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                       onUpdate('partPCompliance', value);
                     }}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-card/50 border-border/30">
-                      <SelectValue placeholder="Select status" />
+                    <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
+                      <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent className="z-[100]">
                       <SelectItem value="compliant">Compliant</SelectItem>
@@ -862,45 +850,40 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   </Select>
                 </div>
               </div>
-              <div className="space-y-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    onUpdate('bs7671Compliance', !formData.bs7671Compliance);
-                  }}
-                  className={cn(
-                    'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
-                    formData.bs7671Compliance
-                      ? 'border-elec-yellow bg-elec-yellow/10'
-                      : 'border-border/30 bg-card/30'
-                  )}
-                >
-                  <Checkbox
-                    checked={formData.bs7671Compliance || false}
-                    className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <span className="font-medium">Work complies with BS 7671</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    onUpdate('buildingRegsCompliance', !formData.buildingRegsCompliance);
-                  }}
-                  className={cn(
-                    'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
-                    formData.buildingRegsCompliance
-                      ? 'border-elec-yellow bg-elec-yellow/10'
-                      : 'border-border/30 bg-card/30'
-                  )}
-                >
-                  <Checkbox
-                    checked={formData.buildingRegsCompliance || false}
-                    className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <span className="font-medium">Work complies with Building Regulations</span>
-                </button>
+              <div className="space-y-2">
+                <label className="text-xs text-white block">Complies With</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate('bs7671Compliance', !formData.bs7671Compliance);
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                      formData.bs7671Compliance
+                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    BS 7671
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate('buildingRegsCompliance', !formData.buildingRegsCompliance);
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                      formData.buildingRegsCompliance
+                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    Building Regs
+                  </button>
+                </div>
               </div>
             </div>
           </CollapsibleContent>
@@ -913,51 +896,21 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           <CollapsibleTrigger className="w-full" asChild>
             <button
               onClick={() => haptic.light()}
-              className={cn(
-                'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
-                'bg-card/50 border-y border-border/30',
-                'active:bg-card/80'
-              )}
+              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
             >
-              <div
-                className={cn(
-                  'h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0',
-                  formData.overallAssessment === 'satisfactory'
-                    ? 'bg-green-500/20'
-                    : formData.overallAssessment === 'unsatisfactory'
-                      ? 'bg-red-500/20'
-                      : 'bg-elec-yellow/20'
-                )}
-              >
-                {formData.overallAssessment === 'satisfactory' ? (
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                ) : formData.overallAssessment === 'unsatisfactory' ? (
-                  <XCircle className="h-5 w-5 text-red-400" />
-                ) : (
-                  <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-                )}
+              <div className="flex-1 text-left">
+                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Overall Assessment</h3>
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground">Overall Assessment</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {formData.overallAssessment === 'satisfactory'
-                    ? 'Installation Satisfactory'
-                    : formData.overallAssessment === 'unsatisfactory'
-                      ? 'Installation Unsatisfactory'
-                      : 'Select assessment status'}
-                </p>
-              </div>
-              <ChevronDown className="h-5 w-5 text-muted-foreground" />
+              <ChevronDown className="h-4 w-4 text-white transition-transform ml-3 flex-shrink-0" />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('p-4 space-y-4', isMobile ? '' : 'px-6')}>
+            <div className="px-4 py-3 space-y-4">
               {/* Assessment Toggle Buttons */}
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">
-                  Overall Assessment *
-                </Label>
-                <div className="grid grid-cols-2 gap-3">
+                <label className="text-xs text-white block">Overall Assessment *</label>
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => {
@@ -966,15 +919,13 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                       haptic.success();
                     }}
                     className={cn(
-                      'h-14 rounded-xl font-semibold transition-all touch-manipulation',
-                      'flex flex-col items-center justify-center gap-1 active:scale-95',
+                      'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center',
                       formData.overallAssessment === 'satisfactory'
-                        ? 'bg-green-500 text-white ring-2 ring-green-500/50 ring-offset-2 ring-offset-background'
-                        : 'bg-green-500/10 text-green-400 border border-green-500/30 hover:bg-green-500/20'
+                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                        : 'bg-white/[0.05] text-white border border-white/[0.06]'
                     )}
                   >
-                    <CheckCircle className="h-5 w-5" />
-                    <span className="text-sm">Satisfactory</span>
+                    Satisfactory
                   </button>
                   <button
                     type="button"
@@ -984,24 +935,20 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                       haptic.warning();
                     }}
                     className={cn(
-                      'h-14 rounded-xl font-semibold transition-all touch-manipulation',
-                      'flex flex-col items-center justify-center gap-1 active:scale-95',
+                      'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center',
                       formData.overallAssessment === 'unsatisfactory'
-                        ? 'bg-red-500 text-white ring-2 ring-red-500/50 ring-offset-2 ring-offset-background'
-                        : 'bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20'
+                        ? 'bg-red-500/20 border border-red-500/40 text-red-400'
+                        : 'bg-white/[0.05] text-white border border-white/[0.06]'
                     )}
                   >
-                    <XCircle className="h-5 w-5" />
-                    <span className="text-sm">Unsatisfactory</span>
+                    Unsatisfactory
                   </button>
                 </div>
               </div>
 
               {/* Continued Use Toggle Buttons */}
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">
-                  Satisfactory for Continued Use *
-                </Label>
+                <label className="text-xs text-white block">Satisfactory for Continued Use *</label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { value: 'yes', label: 'Yes' },
@@ -1016,11 +963,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                         onUpdate('satisfactoryForContinuedUse', option.value);
                       }}
                       className={cn(
-                        'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
-                        'active:scale-95',
+                        'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm',
+                        'active:scale-[0.98]',
                         formData.satisfactoryForContinuedUse === option.value
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                          : 'bg-white/[0.05] text-white border border-white/[0.06]'
                       )}
                     >
                       {option.label}
@@ -1037,31 +984,25 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   onUpdate('noRemedialAction', !formData.noRemedialAction);
                 }}
                 className={cn(
-                  'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+                  'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2',
                   formData.noRemedialAction
-                    ? 'border-green-500 bg-green-500/10'
-                    : 'border-border/30 bg-card/30'
+                    ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
                 )}
               >
-                <Checkbox
-                  checked={formData.noRemedialAction || false}
-                  className="h-5 w-5 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-                />
-                <div className="text-left">
-                  <span className="font-medium">No remedial action required</span>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Tick if no defects or observations were recorded
-                  </p>
+                {formData.noRemedialAction && <Check className="h-3.5 w-3.5" />}
+                <div className="text-center">
+                  <span>No remedial action required</span>
                 </div>
               </button>
 
               {/* Additional Comments */}
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">
+                <Label className="text-xs text-white">
                   Additional Comments
                 </Label>
                 <textarea
-                  className="w-full p-3 border border-border/30 bg-card/50 rounded-lg resize-none touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
+                  className="w-full p-3 border border-white/[0.06] bg-white/[0.03] rounded-lg resize-none touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
                   style={{ fontSize: '16px' }}
                   rows={3}
                   placeholder="Enter any additional comments or observations..."
@@ -1098,7 +1039,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 description: "Inspector details copied to 'Inspected By' section",
               });
             }}
-            className="w-full h-12 touch-manipulation text-base bg-blue-500/20 border-blue-500/30 text-blue-300 hover:bg-blue-500/30"
+            className="w-full h-11 touch-manipulation text-sm rounded-lg bg-blue-500/20 border-blue-500/30 text-blue-300 hover:bg-blue-500/30 active:scale-[0.98]"
             variant="outline"
           >
             <User className="h-4 w-4 mr-2" />
@@ -1116,47 +1057,41 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         >
           <CollapsibleTrigger className="w-full" asChild>
             <button
-              className={cn(
-                'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
-                'bg-card/50 border-y border-border/30',
-                inspectedByOpen && 'bg-card/80',
-                'active:bg-card/90'
-              )}
+              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
             >
-              <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <PenTool className="h-5 w-5 text-elec-yellow" />
+              <div className="flex-1 text-left">
+                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Inspected By</h3>
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground">Inspected By</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {formData.inspectedByName || 'Inspector signature required'}
-                </p>
-              </div>
-              {formData.inspectedBySignature && (
-                <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
-              )}
-              <ChevronDown
-                className={cn(
-                  'h-5 w-5 text-muted-foreground transition-transform duration-200',
-                  inspectedByOpen && 'rotate-180'
-                )}
-              />
+              <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', inspectedByOpen && 'rotate-180')} />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('p-4 space-y-4 bg-card/30', isMobile ? '' : 'px-6')}>
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">Name (Capitals) *</Label>
-                <Input
-                  value={formData.inspectedByName || ''}
-                  onChange={(e) => onUpdate('inspectedByName', e.target.value.toUpperCase())}
-                  placeholder="FULL NAME IN CAPITALS"
-                  className="uppercase h-11 text-base touch-manipulation bg-card/50 border-border/30"
-                />
+            <div className="px-4 py-3 space-y-3">
+              {/* Name + Signature side by side on wider, stacked on narrow */}
+              <div className="grid grid-cols-2 gap-3 items-end">
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">Name *</Label>
+                  <Input
+                    value={formData.inspectedByName || ''}
+                    onChange={(e) => onUpdate('inspectedByName', e.target.value.toUpperCase())}
+                    placeholder="FULL NAME"
+                    className="uppercase h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">Position</Label>
+                  <Input
+                    value={formData.inspectedByPosition || ''}
+                    onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
+                    placeholder="Job title"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">Signature *</Label>
+              <div className="space-y-1.5">
+                <Label className="text-xs text-white">Signature *</Label>
                 <SignatureInput
                   value={formData.inspectedBySignature || ''}
                   onChange={(value) => onUpdate('inspectedBySignature', value || '')}
@@ -1165,41 +1100,29 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground/80">For/on behalf of</Label>
+              <div className="grid grid-cols-2 gap-3 items-end">
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">For/on behalf of</Label>
                   <Input
                     value={formData.inspectedByForOnBehalfOf || ''}
                     onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
                     placeholder="Company name"
-                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground/80">Position</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">Address</Label>
                   <Input
-                    value={formData.inspectedByPosition || ''}
-                    onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
-                    placeholder="Job title"
-                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                    value={formData.inspectedByAddress || ''}
+                    onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
+                    placeholder="Full address"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">Address</Label>
-                <textarea
-                  className="w-full p-3 border border-border/30 bg-card/50 rounded-lg resize-none touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
-                  style={{ fontSize: '16px' }}
-                  rows={2}
-                  value={formData.inspectedByAddress || ''}
-                  onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
-                  placeholder="Full address"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">CP Scheme</Label>
+                <Label className="text-xs text-white">CP Scheme</Label>
                 <div className="flex items-center gap-3">
                   <Input
                     value={formData.inspectedByCpScheme || ''}
@@ -1207,7 +1130,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                     placeholder="Competent Person Scheme"
                     disabled={formData.inspectedByCpSchemeNA}
                     className={cn(
-                      'flex-1 h-11 text-base touch-manipulation bg-card/50 border-border/30',
+                      'flex-1 h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
                       formData.inspectedByCpSchemeNA && 'opacity-50'
                     )}
                   />
@@ -1223,7 +1146,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                       'h-11 px-4 rounded-lg font-medium transition-all touch-manipulation',
                       formData.inspectedByCpSchemeNA
                         ? 'bg-gray-500 text-white'
-                        : 'bg-gray-500/10 text-gray-400 border border-gray-500/30'
+                        : 'bg-white/[0.05] text-white border border-white/[0.06]'
                     )}
                   >
                     N/A
@@ -1244,35 +1167,17 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         >
           <CollapsibleTrigger className="w-full" asChild>
             <button
-              className={cn(
-                'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
-                'bg-card/50 border-y border-border/30',
-                authorisedByOpen && 'bg-card/80',
-                'active:bg-card/90'
-              )}
+              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
             >
-              <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                <User className="h-5 w-5 text-purple-400" />
+              <div className="flex-1 text-left">
+                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Report Authorised By</h3>
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground">Report Authorised By</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {formData.reportAuthorisedByName || 'Authorisation required'}
-                </p>
-              </div>
-              {formData.reportAuthorisedBySignature && (
-                <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
-              )}
-              <ChevronDown
-                className={cn(
-                  'h-5 w-5 text-muted-foreground transition-transform duration-200',
-                  authorisedByOpen && 'rotate-180'
-                )}
-              />
+              <ChevronDown className={cn('h-4 w-4 text-white transition-transform ml-3 flex-shrink-0', authorisedByOpen && 'rotate-180')} />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('p-4 space-y-4 bg-card/30', isMobile ? '' : 'px-6')}>
+            <div className="px-4 py-3 space-y-4">
               {/* Same as Inspected By Quick Action */}
               <button
                 type="button"
@@ -1289,53 +1194,44 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                     onUpdate('reportAuthorisedByAddress', formData.inspectedByAddress);
                     onUpdate('reportAuthorisedByMembershipNo', formData.inspectedByCpScheme);
                     haptic.success();
-                    toast({
-                      title: 'Details copied',
-                      description: "Copied from 'Inspected By' section",
-                    });
                   }
                 }}
                 className={cn(
-                  'w-full flex items-center gap-3 p-3 rounded-lg border-2 transition-all touch-manipulation',
+                  'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2',
                   formData.sameAsInspectedBy
-                    ? 'border-purple-500 bg-purple-500/10'
-                    : 'border-border/30 bg-card/30'
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
                 )}
               >
-                <Checkbox
-                  checked={formData.sameAsInspectedBy || false}
-                  className="h-5 w-5 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
-                />
-                <span className="text-sm font-medium">Same person as Inspected By</span>
+                {formData.sameAsInspectedBy && <Check className="h-3.5 w-3.5" />}
+                Same as Inspected By
               </button>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground/80">
-                    Name (Capitals) *
-                  </Label>
+              {/* Row 1: Name + Date */}
+              <div className="grid grid-cols-2 gap-3 items-end">
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">Name *</Label>
                   <Input
                     value={formData.reportAuthorisedByName || ''}
-                    onChange={(e) =>
-                      onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())
-                    }
+                    onChange={(e) => onUpdate('reportAuthorisedByName', e.target.value.toUpperCase())}
                     placeholder="FULL NAME"
-                    className="uppercase h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                    className="uppercase h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground/80">Date *</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">Date *</Label>
                   <Input
                     type="date"
                     value={formData.reportAuthorisedByDate || ''}
                     onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">Signature *</Label>
+              {/* Row 2: Signature */}
+              <div className="space-y-1.5">
+                <Label className="text-xs text-white">Signature *</Label>
                 <SignatureInput
                   value={formData.reportAuthorisedBySignature || ''}
                   onChange={(value) => onUpdate('reportAuthorisedBySignature', value || '')}
@@ -1344,47 +1240,48 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground/80">For/on behalf of</Label>
+              {/* Row 3: Company + Position */}
+              <div className="grid grid-cols-2 gap-3 items-end">
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">For/on behalf of</Label>
                   <Input
                     value={formData.reportAuthorisedByForOnBehalfOf || ''}
                     onChange={(e) => onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)}
                     placeholder="Company name"
-                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium text-foreground/80">Position</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">Position</Label>
                   <Input
                     value={formData.reportAuthorisedByPosition || ''}
                     onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
                     placeholder="Job title"
-                    className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">Address</Label>
-                <textarea
-                  className="w-full p-3 border border-border/30 bg-card/50 rounded-lg resize-none touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow/50"
-                  style={{ fontSize: '16px' }}
-                  rows={2}
-                  value={formData.reportAuthorisedByAddress || ''}
-                  onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
-                  placeholder="Full address"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-sm font-medium text-foreground/80">Membership No</Label>
-                <Input
-                  value={formData.reportAuthorisedByMembershipNo || ''}
-                  onChange={(e) => onUpdate('reportAuthorisedByMembershipNo', e.target.value)}
-                  placeholder="Registration number"
-                  className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
-                />
+              {/* Row 4: Address + Membership */}
+              <div className="grid grid-cols-2 gap-3 items-end">
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">Address</Label>
+                  <Input
+                    value={formData.reportAuthorisedByAddress || ''}
+                    onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
+                    placeholder="Full address"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-xs text-white">Membership No</Label>
+                  <Input
+                    value={formData.reportAuthorisedByMembershipNo || ''}
+                    onChange={(e) => onUpdate('reportAuthorisedByMembershipNo', e.target.value)}
+                    placeholder="Registration number"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  />
+                </div>
               </div>
             </div>
           </CollapsibleContent>
@@ -1394,145 +1291,54 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       {/* Generate Certificate - Fixed Bottom Bar on Mobile */}
       <div
         className={cn(
-          'border-y border-border/30 bg-card/50',
-          isMobile ? 'p-4' : 'p-6 mx-4 rounded-xl border'
+          'border-y border-white/[0.06] bg-white/[0.03]',
+          isMobile ? 'p-4' : 'p-6 mx-4 rounded-lg border'
         )}
       >
-        {/* Status Summary */}
-        <div
-          className={cn(
-            'flex items-center gap-3 mb-4 p-3 rounded-lg',
-            formData.overallAssessment === 'satisfactory'
-              ? 'bg-green-500/10 border border-green-500/20'
-              : formData.overallAssessment === 'unsatisfactory'
-                ? 'bg-red-500/10 border border-red-500/20'
-                : 'bg-elec-yellow/10 border border-elec-yellow/20'
-          )}
-        >
-          <div
-            className={cn(
-              'h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0',
-              formData.overallAssessment === 'satisfactory'
-                ? 'bg-green-500/20'
-                : formData.overallAssessment === 'unsatisfactory'
-                  ? 'bg-red-500/20'
-                  : 'bg-elec-yellow/20'
-            )}
-          >
-            {formData.overallAssessment === 'satisfactory' ? (
-              <CheckCircle className="h-5 w-5 text-green-400" />
-            ) : formData.overallAssessment === 'unsatisfactory' ? (
-              <XCircle className="h-5 w-5 text-red-400" />
-            ) : (
-              <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-            )}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p
-              className={cn(
-                'font-semibold',
-                formData.overallAssessment === 'satisfactory'
-                  ? 'text-green-400'
-                  : formData.overallAssessment === 'unsatisfactory'
-                    ? 'text-red-400'
-                    : 'text-elec-yellow'
-              )}
-            >
-              {formData.overallAssessment === 'satisfactory' && 'Satisfactory'}
-              {formData.overallAssessment === 'unsatisfactory' && 'Unsatisfactory'}
-              {!formData.overallAssessment && 'Assessment Pending'}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {isFormComplete() ? 'Ready to generate certificate' : 'Complete all required fields'}
-            </p>
-          </div>
-          {formData.certificateNumber && (
-            <span className="text-xs font-mono text-muted-foreground hidden sm:block">
-              {formData.certificateNumber}
-            </span>
-          )}
-        </div>
-
         {/* Action Buttons */}
-        <div className="space-y-3">
+        <div className="space-y-3 px-4">
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+
           <Button
-            className="w-full h-14 gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-bold text-base shadow-lg shadow-elec-yellow/20 transition-all duration-200 active:scale-95 touch-manipulation"
+            className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm rounded-lg transition-all active:scale-[0.98] touch-manipulation"
             onClick={() => {
               haptic.light();
               handleGenerateCertificate();
             }}
             disabled={!isFormComplete() || isGenerating}
           >
-            {isGenerating ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <FileDown className="h-5 w-5" />
-                Generate PDF Certificate
-              </>
-            )}
+            {isGenerating ? 'Generating...' : 'Generate PDF'}
           </Button>
 
-          <div className="grid grid-cols-2 gap-3">
-            <Button
-              variant="outline"
-              className="h-12 gap-2 bg-card/50 border-border/30 hover:bg-card transition-all duration-200 active:scale-95 touch-manipulation"
-              onClick={() => {
-                haptic.light();
-                setShowEmailDialog(true);
-              }}
+          <div className="grid grid-cols-3 gap-2">
+            <button
+              className="h-11 rounded-lg bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98] disabled:opacity-40"
+              onClick={() => { haptic.light(); setShowEmailDialog(true); }}
               disabled={!isFormComplete()}
             >
-              <Mail className="h-4 w-4" />
               Email
-            </Button>
-            <Button
-              variant="outline"
-              className="h-12 gap-2 bg-card/50 border-border/30 hover:bg-card transition-all duration-200 active:scale-95 touch-manipulation"
-              onClick={() => {
-                haptic.light();
-                handleSaveDraft();
-              }}
+            </button>
+            <button
+              className="h-11 rounded-lg bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
+              onClick={() => { haptic.light(); setShowQuoteOptions(true); }}
             >
-              <Save className="h-4 w-4" />
-              Save Draft
-            </Button>
-          </div>
-
-          {/* Quote & Invoice Buttons */}
-          <div className="grid grid-cols-2 gap-3">
-            <Button
-              variant="outline"
-              className="h-12 gap-2 bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 transition-all duration-200 active:scale-95 touch-manipulation"
-              onClick={() => {
-                haptic.light();
-                setShowQuoteOptions(true);
-              }}
-            >
-              <FileText className="h-4 w-4" />
               Quote
-            </Button>
-            <Button
-              variant="outline"
-              className="h-12 gap-2 bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 transition-all duration-200 active:scale-95 touch-manipulation"
+            </button>
+            <button
+              className="h-11 rounded-lg bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
               onClick={handleCreateInvoice}
             >
-              <Receipt className="h-4 w-4" />
               Invoice
-            </Button>
+            </button>
           </div>
 
-          {/* Danger Notice — shows when C1 observations exist, sends ALL C1s */}
+          {/* Danger Notice — only when C1 observations exist */}
           {formData.defectObservations?.some((d: any) => d.defectCode === 'C1') && (() => {
             const c1Observations = formData.defectObservations?.filter((d: any) => d.defectCode === 'C1') || [];
             const c1Count = c1Observations.length;
             return (
-              <Button
-                variant="outline"
-                className="w-full h-12 gap-2 bg-red-500/10 border-red-500/30 hover:bg-red-500/20 text-red-400 transition-all duration-200 active:scale-95 touch-manipulation"
+              <button
+                className="w-full h-11 rounded-lg bg-red-500/15 border border-red-500/40 text-xs font-semibold text-red-400 touch-manipulation active:scale-[0.98]"
                 onClick={() => {
                   navigate('/electrician/inspection-testing/danger-notice', {
                     state: {
@@ -1559,18 +1365,10 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                   });
                 }}
               >
-                <AlertTriangle className="h-4 w-4" />
-                Issue Danger Notice{c1Count > 1 ? ` (${c1Count} C1s)` : ''}
-              </Button>
+                Danger Notice{c1Count > 1 ? ` (${c1Count} C1s)` : ''}
+              </button>
             );
           })()}
-
-          {!isFormComplete() && (
-            <p className="text-xs text-amber-300/70 flex items-center justify-center gap-2 pt-2">
-              <AlertTriangle className="h-3.5 w-3.5" />
-              Complete all required fields
-            </p>
-          )}
         </div>
       </div>
 
@@ -1580,53 +1378,35 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           <CollapsibleTrigger className="w-full" asChild>
             <button
               onClick={() => haptic.light()}
-              className={cn(
-                'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
-                'bg-card/30 border-y border-border/30',
-                'active:bg-card/50'
-              )}
+              className="w-full flex items-center justify-between py-2 px-4 touch-manipulation active:scale-[0.98]"
             >
-              <div className="h-10 w-10 rounded-xl bg-gray-500/20 flex items-center justify-center flex-shrink-0">
-                <Code className="h-5 w-5 text-gray-400" />
+              <div className="flex-1 text-left">
+                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-white/[0.06] to-transparent mb-2" />
+                <h3 className="text-xs font-medium text-white uppercase tracking-wider">Developer Tools</h3>
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground">Developer Tools</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  Raw JSON Data (
-                  {formattedJsonPreview
-                    ? `${Math.round(formattedJsonPreview.length / 1024)}KB`
-                    : '...'}
-                  )
-                </p>
-              </div>
-              <ChevronDown
-                className={cn(
-                  'h-5 w-5 text-muted-foreground transition-transform duration-200',
-                  isJsonOpen && 'rotate-180'
-                )}
-              />
+              <ChevronDown className={cn('h-4 w-4 text-white/20 transition-transform ml-3 flex-shrink-0', isJsonOpen && 'rotate-180')} />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('p-4 bg-card/30', isMobile ? '' : 'px-6')}>
+            <div className={cn('p-4 bg-white/[0.02]', isMobile ? '' : 'px-6')}>
               <div className="flex justify-end mb-3">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={handleCopyJson}
-                  className="h-9 gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation"
+                  className="h-11 gap-2 border-elec-yellow/30 hover:bg-elec-yellow/10 touch-manipulation rounded-lg active:scale-[0.98]"
                 >
                   <Copy className="h-4 w-4" />
                   Copy JSON
                 </Button>
               </div>
-              <div className="bg-background/50 rounded-xl border border-border/50 overflow-hidden">
-                <div className="bg-card/50 px-4 py-2 border-b border-border/50 flex items-center justify-between">
+              <div className="bg-background/50 rounded-lg border border-white/[0.06] overflow-hidden">
+                <div className="bg-white/[0.03] px-4 py-2 border-b border-white/[0.06] flex items-center justify-between">
                   <span className="text-xs font-mono text-elec-yellow">form_data.json</span>
-                  <span className="text-xs text-muted-foreground">Formatted EICR Data</span>
+                  <span className="text-xs text-white">Formatted EICR Data</span>
                 </div>
                 <div className="p-4 max-h-96 overflow-y-auto">
-                  <pre className="text-xs font-mono text-neutral-300 whitespace-pre-wrap break-words leading-relaxed">
+                  <pre className="text-xs font-mono text-white whitespace-pre-wrap break-words leading-relaxed">
                     {formattedJsonPreview || 'Loading...'}
                   </pre>
                 </div>
@@ -1690,7 +1470,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                     <AlertTriangle className="h-5 w-5" />
                     <span>Cloud generation failed</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white">
                     Attempting local generation as fallback...
                   </p>
                 </div>

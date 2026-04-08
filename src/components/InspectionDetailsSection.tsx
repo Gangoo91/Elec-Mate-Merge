@@ -38,32 +38,13 @@ interface InspectionDetailsSectionProps {
   onUpdate: (field: string, value: string) => void;
 }
 
-// Section header component - MUST be outside main component to prevent re-renders
-const SectionTitle = ({
-  icon: Icon,
-  title,
-  isMobile,
-}: {
-  icon: React.ElementType;
-  title: string;
-  isMobile: boolean;
-}) => (
-  <div
-    className={cn(
-      'flex items-center gap-3 py-3',
-      isMobile
-        ? '-mx-4 px-4 bg-card/30 border-y border-border/20'
-        : 'pb-2 border-b border-border/30'
-    )}
-  >
-    <div className="h-8 w-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-      <Icon className="h-4 w-4 text-blue-400" />
-    </div>
-    <h3 className="font-semibold text-foreground">{title}</h3>
+const SectionTitle = ({ title }: { icon?: any; title: string; isMobile?: boolean }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
   </div>
 );
 
-// Input field wrapper - MUST be outside main component to prevent focus loss
 const FormField = ({
   label,
   required,
@@ -75,13 +56,13 @@ const FormField = ({
   hint?: string;
   children: React.ReactNode;
 }) => (
-  <div className="space-y-2">
-    <Label className="text-sm text-foreground/80">
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">
       {label}
       {required && <span className="text-elec-yellow ml-1">*</span>}
     </Label>
     {children}
-    {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    {hint && <p className="text-xs text-white">{hint}</p>}
   </div>
 );
 
@@ -177,11 +158,11 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
   ];
 
   return (
-    <div className={cn('space-y-6', isMobile && '-mx-4')}>
+    <div className={cn('space-y-6', '')}>
       {/* Purpose of Inspection Section */}
       <div>
         <SectionTitle icon={ClipboardList} title="Purpose of Inspection" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+        <div className={cn('space-y-4 py-4', '')}>
           <FormField label="Purpose" required>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {purposeOptions.map((option) => (
@@ -198,8 +179,8 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                   className={cn(
                     'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm px-2',
                     formData.purposeOfInspection === option.value
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.03] text-white border border-white/[0.06]'
                   )}
                 >
                   {isMobile ? option.shortLabel : option.label}
@@ -224,29 +205,28 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
       {/* Inspection Dates Section */}
       <div>
         <SectionTitle icon={Calendar} title="Inspection Dates" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <FormField label="Date of Inspection" required>
-            <div className="flex gap-2">
+        <div className={cn('space-y-4 py-4', '')}>
+          <div className="grid grid-cols-2 gap-3 items-end">
+            <FormField label="Date of Inspection" required>
               <Input
                 type="date"
                 value={formData.inspectionDate || ''}
                 onChange={(e) => onUpdate('inspectionDate', e.target.value)}
-                className="flex-1 h-11 text-base touch-manipulation"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
               />
-              <Button
-                type="button"
-                variant="outline"
-                onClick={setTodaysDate}
-                className="h-11 px-4 touch-manipulation border-border/50"
-              >
-                <CalendarCheck className="h-4 w-4" />
-                <span className="ml-2 hidden sm:inline">Today</span>
-              </Button>
-            </div>
-          </FormField>
+            </FormField>
+            <FormField label="Next Inspection">
+              <Input
+                type="date"
+                value={formData.nextInspectionDate || ''}
+                onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+          </div>
 
           <FormField label="Inspection Interval" required>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               {intervalOptions.map((option) => (
                 <button
                   key={option.value}
@@ -261,8 +241,8 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                   className={cn(
                     'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
                     formData.inspectionInterval === option.value
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.03] text-white border border-white/[0.06]'
                   )}
                 >
                   {option.label}
@@ -278,36 +258,12 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             )}
           </FormField>
 
-          <FormField label="Next Inspection Date">
-            <div className="flex gap-2">
-              <Input
-                type="date"
-                value={formData.nextInspectionDate || ''}
-                onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
-                className="flex-1 h-11 text-base touch-manipulation"
-              />
-              <Button
-                type="button"
-                variant="outline"
-                onClick={calculateNextInspectionDate}
-                disabled={!formData.inspectionDate || !formData.inspectionInterval}
-                className="h-11 px-4 touch-manipulation border-border/50"
-              >
-                <Calculator className="h-4 w-4" />
-                <span className="ml-2 hidden sm:inline">Calc</span>
-              </Button>
-            </div>
-          </FormField>
-
-          <FormField
-            label="Reasons for Recommended Interval"
-            hint="Justify the chosen inspection interval"
-          >
+          <FormField label="Reasons for Interval">
             <Textarea
               value={formData.intervalReasons || ''}
               onChange={(e) => onUpdate('intervalReasons', e.target.value)}
               placeholder="e.g., Age of installation, type of premises, environmental conditions"
-              className="min-h-[80px] text-base touch-manipulation resize-none"
+              className="min-h-[80px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
             />
           </FormField>
         </div>
@@ -316,71 +272,63 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
       {/* Inspection Scope Section */}
       <div>
         <SectionTitle icon={Telescope} title="Inspection Scope" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <FormField label="Agreed With" hint="Person with whom the extent was agreed">
-            <Input
-              value={formData.agreedWith || ''}
-              onChange={(e) => onUpdate('agreedWith', e.target.value)}
-              placeholder="Name of person"
-              className="h-11 text-base touch-manipulation"
-            />
-          </FormField>
+        <div className="space-y-3 py-3">
+          <div className="grid grid-cols-2 gap-3 items-end">
+            <FormField label="Agreed With">
+              <Input
+                value={formData.agreedWith || ''}
+                onChange={(e) => onUpdate('agreedWith', e.target.value)}
+                placeholder="Name of person"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+            <FormField label="BS 7671 Edition">
+              <Select
+                value={formData.bsAmendment || 'amd3-2024'}
+                onValueChange={(value) => {
+                  haptic.light();
+                  onUpdate('bsAmendment', value);
+                }}
+              >
+                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="amd1-2020">Amendment 1 (2020)</SelectItem>
+                  <SelectItem value="amd2-2022">Amendment 2 (2022)</SelectItem>
+                  <SelectItem value="amd3-2024">Amendment 3 (2024)</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormField>
+          </div>
 
-          <FormField
-            label="Extent of Inspection"
-            required
-            hint="Include specific areas, circuits, and systems inspected"
-          >
+          <FormField label="Extent of Inspection" required>
             <Textarea
               value={formData.extentOfInspection || ''}
               onChange={(e) => onUpdate('extentOfInspection', e.target.value)}
-              placeholder="Describe what areas/circuits/systems were inspected"
-              className="min-h-[100px] text-base touch-manipulation resize-none"
+              placeholder="Areas, circuits, and systems inspected"
+              className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
             />
           </FormField>
 
-          <FormField
-            label="Limitations of Inspection"
-            hint="Note any areas that could not be accessed or inspected"
-          >
-            <Textarea
-              value={formData.limitationsOfInspection || ''}
-              onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
-              placeholder="Any areas not inspected or limitations encountered"
-              className="min-h-[100px] text-base touch-manipulation resize-none"
-            />
-          </FormField>
-
-          <FormField
-            label="Operational Limitations"
-            hint="Any constraints on the operation of the installation during testing"
-          >
-            <Textarea
-              value={formData.operationalLimitations || ''}
-              onChange={(e) => onUpdate('operationalLimitations', e.target.value)}
-              placeholder="e.g., circuits not isolated, equipment in continuous use"
-              className="min-h-[80px] text-base touch-manipulation resize-none"
-            />
-          </FormField>
-
-          <FormField label="BS 7671 Edition" hint="Amendment edition used for this inspection">
-            <Select
-              value={formData.bsAmendment || 'amd3-2024'}
-              onValueChange={(value) => {
-                haptic.light();
-                onUpdate('bsAmendment', value);
-              }}
-            >
-              <SelectTrigger className="h-11 touch-manipulation">
-                <SelectValue placeholder="Select edition" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="amd1-2020">Amendment 1 (2020)</SelectItem>
-                <SelectItem value="amd2-2022">Amendment 2 (2022)</SelectItem>
-                <SelectItem value="amd3-2024">Amendment 3 (2024)</SelectItem>
-              </SelectContent>
-            </Select>
-          </FormField>
+          <div className="grid grid-cols-2 gap-3 items-end">
+            <FormField label="Limitations">
+              <Textarea
+                value={formData.limitationsOfInspection || ''}
+                onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
+                placeholder="Areas not inspected"
+                className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+              />
+            </FormField>
+            <FormField label="Operational Limitations">
+              <Textarea
+                value={formData.operationalLimitations || ''}
+                onChange={(e) => onUpdate('operationalLimitations', e.target.value)}
+                placeholder="Circuits not isolated, etc."
+                className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+              />
+            </FormField>
+          </div>
         </div>
       </div>
     </div>

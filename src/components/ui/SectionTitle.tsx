@@ -1,37 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 interface SectionTitleProps {
-  icon: React.ElementType;
+  icon?: React.ElementType;
   title: string;
   color?: string;
-  isOpen: boolean;
+  isOpen?: boolean;
   badge?: string;
-  isMobile: boolean;
+  isMobile?: boolean;
 }
 
-// Section header - MUST be outside main component to prevent focus loss
-const SectionTitle = ({ icon: Icon, title, color = 'blue', isOpen, badge, isMobile }: SectionTitleProps) => (
-  <div
-    className={cn(
-      'w-full flex items-center gap-3 py-4 text-left touch-manipulation transition-colors cursor-pointer',
-      isMobile ? 'px-4 bg-card/30 border-y border-border/20' : 'pb-3 border-b border-border/30',
-      'active:bg-card/50'
-    )}
-  >
-    <div
-      className={cn('h-10 w-10 rounded-xl flex items-center justify-center', `bg-${color}-500/20`)}
-    >
-      <Icon className={cn('h-5 w-5', `text-${color}-400`)} />
-    </div>
-    <div className="flex-1 min-w-0">
-      <h3 className="font-semibold text-foreground">{title}</h3>
-      {badge && <span className="text-xs text-white">{badge}</span>}
-    </div>
-    <ChevronDown
-      className={cn('h-5 w-5 text-white transition-transform', isOpen && 'rotate-180')}
-    />
+const SectionTitle = ({ title }: SectionTitleProps) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
   </div>
 );
 

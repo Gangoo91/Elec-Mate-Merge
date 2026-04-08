@@ -37,11 +37,12 @@ export const checkCircuitTypeConsistency = (result: TestResult): RegulationWarni
       });
     }
 
-    if (result.liveSize !== '2.5mm') {
+    const normalisedSize = result.liveSize?.replace(/mm²?/g, '').trim() || '';
+    if (!['2.5', '4'].includes(normalisedSize) && normalisedSize !== '') {
       warnings.push({
         severity: 'warning',
         title: 'Non-Standard Ring Final Cable Size',
-        description: `Ring final circuits typically use 2.5mm² cable, but ${result.liveSize} is specified.`,
+        description: `Ring final circuits typically use 2.5mm² or 4mm² cable, but ${result.liveSize} is specified.`,
         regulation: 'BS 7671 Appendix 15',
         suggestion: 'Verify cable size is appropriate for the intended ring final application.',
       });

@@ -107,7 +107,7 @@ export const ScheduleHeader: React.FC<ScheduleHeaderProps> = ({
 };
 
 /**
- * Mobile-optimized sticky toolbar - Clean 3-action design
+ * Mobile-optimized sticky toolbar
  */
 const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnalytics'>> = ({
   circuitCount,
@@ -126,145 +126,129 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
 }) => {
   return (
     <>
-      {/* Compact Title + Stats Row */}
-      <div className={cn('px-4 py-2 bg-background border-b border-border/30', className)}>
+      {/* Title Row */}
+      <div className={cn('px-3 py-3', className)}>
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-bold text-foreground">Schedule of Tests</h2>
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Schedule of Tests</h2>
+            <p className="text-[10px] text-white/40 mt-0.5">
+              {circuitCount} circuit{circuitCount !== 1 ? 's' : ''}
+            </p>
           </div>
-          <Badge variant="secondary" className="px-2.5 py-1 text-xs font-medium">
-            {circuitCount} {circuitCount === 1 ? 'circuit' : 'circuits'}
-          </Badge>
         </div>
       </div>
 
-      {/* Sticky Toolbar - 3 Primary Actions + Menu */}
-      <div className="sticky top-0 z-20 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
+      {/* Sticky Toolbar */}
+      <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-md border-y border-white/[0.06]">
         <div className="px-3 py-2 flex items-center justify-between gap-2">
-          {/* Primary Actions - Clean & Focused */}
+          {/* Primary Actions */}
           <div className="flex items-center gap-2 flex-1">
-            {/* Add Circuit */}
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-3 gap-1.5 flex-1 max-w-[100px] hover:bg-primary/10 hover:border-primary/30 font-medium"
+            <button
+              className="h-10 px-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs font-semibold text-white/50 touch-manipulation active:scale-[0.98] flex items-center gap-1.5 flex-1 max-w-[100px] justify-center"
               onClick={onAddCircuit}
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-3.5 w-3.5" />
               Add
-            </Button>
+            </button>
 
-            {/* Scan Board - Hero Feature */}
-            <Button
-              size="sm"
-              className="h-10 px-3 gap-1.5 flex-1 max-w-[120px] bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 font-medium shadow-sm"
+            <button
+              className="h-10 px-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30 text-xs font-semibold text-elec-yellow touch-manipulation active:scale-[0.98] flex items-center gap-1.5 flex-1 max-w-[120px] justify-center"
               onClick={onScanBoard}
             >
-              <Camera className="h-4 w-4" />
+              <Camera className="h-3.5 w-3.5" />
               Scan
-            </Button>
+            </button>
 
-            {/* Quick Entry - Speed Feature */}
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-3 gap-1.5 flex-1 max-w-[100px] hover:bg-amber-500/10 hover:border-amber-500/30 font-medium text-amber-500"
+            <button
+              className="h-10 px-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs font-semibold text-elec-yellow touch-manipulation active:scale-[0.98] flex items-center gap-1.5 flex-1 max-w-[100px] justify-center"
               onClick={onSmartAutoFill}
             >
-              <Zap className="h-4 w-4" />
+              <Zap className="h-3.5 w-3.5" />
               Quick
-            </Button>
+            </button>
           </div>
 
-          {/* Overflow Menu - Everything Else */}
+          {/* Overflow Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="h-10 w-10 p-0 shrink-0 hover:bg-muted">
-                <MoreVertical className="h-5 w-5 text-muted-foreground" />
-              </Button>
+              <button className="h-10 w-10 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center touch-manipulation active:scale-[0.98] shrink-0">
+                <MoreVertical className="h-4 w-4 text-white/40" />
+              </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-64 bg-card border-border">
-              {/* AI Tools Section */}
-              <div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">
+            <DropdownMenuContent align="end" className="w-64 bg-background border-white/[0.08]">
+              {/* AI Tools */}
+              <div className="px-2 py-1.5 text-[10px] font-semibold text-white/30 uppercase tracking-wide">
                 AI Tools
               </div>
               <DropdownMenuItem onClick={onScanTestResults} className="gap-3 py-2.5">
-                <FileText className="h-4 w-4 text-primary" />
+                <FileText className="h-4 w-4 text-elec-yellow" />
                 <div className="flex flex-col">
-                  <span className="font-medium">Scan Test Results</span>
-                  <span className="text-[11px] text-muted-foreground">Photo of test sheet</span>
+                  <span className="font-medium text-white">Scan Test Results</span>
+                  <span className="text-[11px] text-white/40">Photo of test sheet</span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onScribbleToTable} className="gap-3 py-2.5">
-                <Pen className="h-4 w-4 text-primary" />
+                <Pen className="h-4 w-4 text-elec-yellow" />
                 <div className="flex flex-col">
-                  <span className="font-medium">Text to Circuits</span>
-                  <span className="text-[11px] text-muted-foreground">
-                    Type or paste circuit list
-                  </span>
+                  <span className="font-medium text-white">Text to Circuits</span>
+                  <span className="text-[11px] text-white/40">Type or paste circuit list</span>
                 </div>
               </DropdownMenuItem>
 
-              <DropdownMenuSeparator />
+              <DropdownMenuSeparator className="bg-white/[0.06]" />
 
-              {/* Smart Features Section */}
-              <div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">
+              {/* Smart Features */}
+              <div className="px-2 py-1.5 text-[10px] font-semibold text-white/30 uppercase tracking-wide">
                 Smart Features
               </div>
               <DropdownMenuItem onClick={onRcdPresets} className="gap-3 py-2.5">
                 <Shield className="h-4 w-4 text-blue-400" />
                 <div className="flex flex-col">
-                  <span className="font-medium">RCD Presets</span>
-                  <span className="text-[11px] text-muted-foreground">
-                    Apply common RCD settings
-                  </span>
+                  <span className="font-medium text-white">RCD Presets</span>
+                  <span className="text-[11px] text-white/40">Apply common RCD settings</span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onBulkInfill} className="gap-3 py-2.5">
                 <Grid className="h-4 w-4 text-green-400" />
                 <div className="flex flex-col">
-                  <span className="font-medium">Bulk Infill</span>
-                  <span className="text-[11px] text-muted-foreground">
-                    Fill multiple circuits at once
-                  </span>
+                  <span className="font-medium text-white">Bulk Infill</span>
+                  <span className="text-[11px] text-white/40">Fill multiple circuits at once</span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onQuickFillRcd} className="gap-3 py-2.5">
-                <Zap className="h-4 w-4 text-amber-400" />
+                <Zap className="h-4 w-4 text-elec-yellow" />
                 <div className="flex flex-col">
-                  <span className="font-medium">Quick Fill RCD</span>
-                  <span className="text-[11px] text-muted-foreground">
-                    Auto-detect RCD protection
-                  </span>
+                  <span className="font-medium text-white">Quick Fill RCD</span>
+                  <span className="text-[11px] text-white/40">Auto-detect RCD protection</span>
                 </div>
               </DropdownMenuItem>
 
-              <DropdownMenuSeparator />
+              <DropdownMenuSeparator className="bg-white/[0.06]" />
 
               {/* View Options */}
-              <div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase tracking-wide">
+              <div className="px-2 py-1.5 text-[10px] font-semibold text-white/30 uppercase tracking-wide">
                 View Options
               </div>
               <DropdownMenuItem onClick={onToggleViewMode} className="gap-3 py-2.5">
                 {viewMode === 'table' ? (
                   <>
-                    <Layout className="h-4 w-4" />
-                    <span className="font-medium">Switch to Card View</span>
+                    <Layout className="h-4 w-4 text-white/50" />
+                    <span className="font-medium text-white">Switch to Card View</span>
                   </>
                 ) : (
                   <>
-                    <Table className="h-4 w-4" />
-                    <span className="font-medium">Switch to Table View</span>
+                    <Table className="h-4 w-4 text-white/50" />
+                    <span className="font-medium text-white">Switch to Table View</span>
                   </>
                 )}
               </DropdownMenuItem>
 
               {circuitCount > 0 && (
                 <>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator className="bg-white/[0.06]" />
                   <DropdownMenuItem
                     onClick={onRemoveAllCircuits}
-                    className="gap-3 py-2.5 text-destructive focus:text-destructive"
+                    className="gap-3 py-2.5 text-red-400 focus:text-red-400"
                   >
                     <Trash2 className="h-4 w-4" />
                     <span className="font-medium">Clear All Circuits</span>

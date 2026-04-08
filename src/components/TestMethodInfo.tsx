@@ -22,7 +22,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="testMethod" className="text-sm text-white">
+          <Label htmlFor="testMethod" className="text-xs text-white/80">
             Test Method Applied
           </Label>
           <MobileSelectPicker
@@ -31,10 +31,11 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
             options={testMethodOptions}
             placeholder="Select BS 7671 method..."
             title="Test Method Applied"
+            triggerClassName="bg-white/[0.06] border-white/[0.08] text-white"
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="testVoltage" className="text-sm text-white">
+          <Label htmlFor="testVoltage" className="text-xs text-white/80">
             Test Voltage Applied
           </Label>
           <MobileSelectPicker
@@ -43,12 +44,13 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
             options={insulationTestVoltageOptions}
             placeholder="Select test voltage..."
             title="Test Voltage"
+            triggerClassName="bg-white/[0.06] border-white/[0.08] text-white"
           />
         </div>
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="testNotes" className="text-sm text-white">
+        <Label htmlFor="testNotes" className="text-xs text-white/80">
           Test Notes & Observations
         </Label>
         <Textarea
@@ -56,7 +58,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
           value={formData.testNotes || ''}
           onChange={(e) => onUpdate('testNotes', e.target.value)}
           placeholder="Deviations, limitations, or additional observations..."
-          className="min-h-[100px] resize-none text-base touch-manipulation border-white/30"
+          className="min-h-[100px] resize-none text-base touch-manipulation bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
           style={{ fontSize: '16px' }}
         />
       </div>

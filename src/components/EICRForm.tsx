@@ -204,10 +204,10 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   }
 
   return (
-    <div className="bg-background">
-      {/* Header - matches EIC structure */}
-      <div className="bg-card border-b border-border sticky top-0 z-10">
-        <div className="px-4 py-3 sm:px-6 lg:px-8">
+    <div className="bg-background min-h-screen">
+      {/* Header — fire alarm pattern */}
+      <div className="bg-background">
+        <div className="px-2 py-2.5">
           <EICRFormHeader
             onBack={onBack}
             currentReportId={currentReportId}
@@ -227,9 +227,10 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
             onTabChange={handleTabChange}
           />
         </div>
+        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      {/* Main Content - matches EIC structure */}
+      {/* Main Content — full-width mobile */}
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
         <EICRFormContent
           formData={formData}

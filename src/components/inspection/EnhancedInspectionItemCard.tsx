@@ -31,6 +31,7 @@ interface EnhancedInspectionItemCardProps {
   onUpdateItem: (id: string, field: keyof InspectionItem, value: any) => void;
   onOutcomeChange: (itemId: string, outcome: InspectionItem['outcome']) => void;
   onNavigateToObservations?: () => void;
+  quickMarkMode?: boolean;
 }
 
 // Outcome options for quick selection
@@ -49,6 +50,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
   onUpdateItem,
   onOutcomeChange,
   onNavigateToObservations,
+  quickMarkMode,
 }) => {
   const haptic = useHaptic();
   const [localNotes, setLocalNotes] = useState(inspectionItem?.notes || '');
@@ -116,15 +118,23 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
     preventScrollOnSwipe: false,
   });
 
+  const [flashRed, setFlashRed] = React.useState(false);
+
   const handleOutcomeClick = (outcome: InspectionItem['outcome']) => {
     haptic.light();
     if (currentOutcome === outcome) {
       onOutcomeChange(sectionItem.id, '');
     } else {
       onOutcomeChange(sectionItem.id, outcome);
-      if (outcome === 'C1') haptic.warning();
-      else if (outcome === 'C2' || outcome === 'C3') haptic.heavy();
-      else if (outcome === 'satisfactory') haptic.success();
+      if (outcome === 'C1') {
+        haptic.warning();
+        setFlashRed(true);
+        setTimeout(() => setFlashRed(false), 600);
+      } else if (outcome === 'C2' || outcome === 'C3') {
+        haptic.heavy();
+      } else if (outcome === 'satisfactory') {
+        haptic.success();
+      }
     }
   };
 
@@ -146,7 +156,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
       case 'not-verified':
         return { border: 'border-l-blue-500', bg: 'bg-blue-500/5' };
       default:
-        return { border: 'border-l-border/50', bg: '' };
+        return { border: 'border-l-white/20', bg: '' };
     }
   };
 
@@ -185,8 +195,9 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
         {...swipeHandlers}
         style={{ transform: `translateX(${swipeOffset}px)` }}
         className={cn(
-          'relative border-l-4 rounded-lg transition-transform',
-          'bg-card/50 border border-border/30',
+          'relative border-l-4 rounded-lg transition-all duration-300',
+          'bg-white/[0.06] border border-white/[0.10]',
+          flashRed && 'ring-2 ring-red-500/50 bg-red-500/10',
           styles.border,
           styles.bg
         )}
@@ -195,8 +206,13 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
         <button
           type="button"
           onClick={() => {
-            haptic.light();
-            setIsExpanded(!isExpanded);
+            if (quickMarkMode && currentOutcome !== 'satisfactory') {
+              haptic.success();
+              onOutcomeChange(sectionItem.id, 'satisfactory');
+            } else {
+              haptic.light();
+              setIsExpanded(!isExpanded);
+            }
           }}
           className="w-full p-3 flex items-center gap-3 text-left touch-manipulation"
         >
@@ -213,7 +229,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
                     : currentOutcome === 'C3'
                       ? 'bg-yellow-500/20 text-yellow-400'
                       : currentOutcome === 'not-applicable'
-                        ? 'bg-gray-500/20 text-gray-400'
+                        ? 'bg-white/[0.06] text-white'
                         : currentOutcome === 'not-verified'
                           ? 'bg-blue-500/20 text-blue-400'
                           : currentOutcome === 'limitation'
@@ -242,14 +258,14 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
           <div className="flex-1 min-w-0 text-left">
             <p
               className={cn(
-                'text-sm text-foreground font-medium leading-tight text-left',
+                'text-sm text-white font-medium leading-tight text-left',
                 !isExpanded && 'line-clamp-2'
               )}
             >
               {sectionItem.item}
             </p>
             {sectionItem.clause && (
-              <span className="text-xs text-muted-foreground font-mono block text-left">
+              <span className="text-xs text-white/80 font-mono block text-left">
                 {sectionItem.clause}
               </span>
             )}
@@ -258,57 +274,36 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
           {/* Expand indicator */}
           <ChevronRight
             className={cn(
-              'h-4 w-4 text-muted-foreground transition-transform',
+              'h-4 w-4 text-white/80 transition-transform',
               isExpanded && 'rotate-90'
             )}
           />
         </button>
 
-        {/* Inline outcome buttons - always visible */}
-        <div className="px-3 pb-3 flex gap-1.5">
+        {/* Outcome buttons */}
+        <div className="px-3 pb-3 grid grid-cols-6 gap-1.5">
           {outcomeOptions.map((option) => {
             const isActive = currentOutcome === option.value;
-            const Icon = option.icon;
+            const colorMap: Record<string, { active: string; inactive: string }> = {
+              green: { active: 'bg-green-500/25 border-green-500/50 text-green-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
+              red: { active: 'bg-red-500/25 border-red-500/50 text-red-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
+              orange: { active: 'bg-orange-500/25 border-orange-500/50 text-orange-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
+              yellow: { active: 'bg-yellow-500/25 border-yellow-500/50 text-yellow-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
+              gray: { active: 'bg-white/[0.15] border-white/[0.20] text-white', inactive: 'bg-white/[0.05] border-white/[0.08] text-white/60' },
+              blue: { active: 'bg-blue-500/25 border-blue-500/50 text-blue-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
+            };
+            const colors = colorMap[option.color] || colorMap.gray;
             return (
               <button
                 key={option.value}
                 type="button"
                 onClick={() => handleOutcomeClick(option.value)}
                 className={cn(
-                  'flex-1 h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation',
-                  'flex items-center justify-center gap-0.5',
-                  'active:scale-95',
-                  isActive
-                    ? option.color === 'green'
-                      ? 'bg-green-500 text-white'
-                      : option.color === 'red'
-                        ? 'bg-red-500 text-white'
-                        : option.color === 'orange'
-                          ? 'bg-orange-500 text-white'
-                          : option.color === 'yellow'
-                            ? 'bg-yellow-500 text-black'
-                            : option.color === 'gray'
-                              ? 'bg-gray-500 text-white'
-                              : option.color === 'blue'
-                                ? 'bg-blue-500 text-white'
-                                : 'bg-purple-500 text-white'
-                    : option.color === 'green'
-                      ? 'bg-green-500/10 text-green-400 border border-green-500/30'
-                      : option.color === 'red'
-                        ? 'bg-red-500/10 text-red-400 border border-red-500/30'
-                        : option.color === 'orange'
-                          ? 'bg-orange-500/10 text-orange-400 border border-orange-500/30'
-                          : option.color === 'yellow'
-                            ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/30'
-                            : option.color === 'gray'
-                              ? 'bg-white/5 text-white border border-white/10'
-                              : option.color === 'blue'
-                                ? 'bg-blue-500/10 text-blue-400 border border-blue-500/30'
-                                : 'bg-purple-500/10 text-purple-400 border border-purple-500/30'
+                  'h-10 rounded-lg text-[11px] font-bold border transition-all touch-manipulation active:scale-[0.98]',
+                  isActive ? colors.active : colors.inactive
                 )}
               >
-                {Icon && <Icon className="h-3.5 w-3.5" />}
-                <span>{option.label}</span>
+                {option.label}
               </button>
             );
           })}
@@ -316,52 +311,48 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
 
         {/* Expanded content */}
         {isExpanded && (
-          <div className="px-3 pb-3 space-y-3 border-t border-border/20 pt-3">
-            {/* Notes */}
-            <div>
-              <Textarea
-                placeholder="Add inspection notes..."
-                value={localNotes}
-                onChange={(e) => handleNotesChange(e.target.value)}
-                rows={2}
-                style={{ fontSize: '16px' }}
-                className="text-base text-white bg-input border-white/10 focus:border-elec-yellow/50 placeholder:text-white resize-none min-h-[70px]"
-              />
-            </div>
+          <div className="px-3 pb-3 space-y-2 border-t border-white/[0.06] pt-3">
+            <Textarea
+              placeholder="Add notes..."
+              value={localNotes}
+              onChange={(e) => handleNotesChange(e.target.value)}
+              rows={2}
+              style={{ fontSize: '16px' }}
+              className="text-base text-white bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow placeholder:text-white/40 resize-none min-h-[60px]"
+            />
 
-            {/* Action button for critical outcomes */}
-            {isCriticalOutcome && onNavigateToObservations && (
-              <Button
-                variant="outline"
-                onClick={onNavigateToObservations}
+            <div className="grid grid-cols-2 gap-2">
+              {/* View observations — only for C1/C2/C3 */}
+              {isCriticalOutcome && onNavigateToObservations && (
+                <button
+                  type="button"
+                  onClick={onNavigateToObservations}
+                  className={cn(
+                    'h-10 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98]',
+                    currentOutcome === 'C1' && 'bg-red-500/10 border border-red-500/30 text-red-400',
+                    currentOutcome === 'C2' && 'bg-orange-500/10 border border-orange-500/30 text-orange-400',
+                    currentOutcome === 'C3' && 'bg-yellow-500/10 border border-yellow-500/30 text-yellow-400'
+                  )}
+                >
+                  View Observations
+                </button>
+              )}
+
+              {/* LIM toggle */}
+              <button
+                type="button"
+                onClick={() => handleOutcomeClick('limitation')}
                 className={cn(
-                  'w-full h-11 text-sm active:scale-95 touch-manipulation',
-                  currentOutcome === 'C1' && 'bg-red-500/10 border-red-500/30 text-red-400',
-                  currentOutcome === 'C2' &&
-                    'bg-orange-500/10 border-orange-500/30 text-orange-400',
-                  currentOutcome === 'C3' && 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400'
+                  'h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                  isCriticalOutcome && onNavigateToObservations ? '' : 'col-span-2',
+                  currentOutcome === 'limitation'
+                    ? 'bg-purple-500/20 border border-purple-500/40 text-purple-400'
+                    : 'bg-white/[0.05] text-white border border-white/[0.08]'
                 )}
               >
-                <Eye className="h-4 w-4 mr-2" />
-                View
-              </Button>
-            )}
-
-            {/* LIM option if not in main row */}
-            <button
-              type="button"
-              onClick={() => handleOutcomeClick('limitation')}
-              className={cn(
-                'w-full h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation',
-                'flex items-center justify-center',
-                'active:scale-95',
-                currentOutcome === 'limitation'
-                  ? 'bg-purple-500 text-white'
-                  : 'bg-purple-500/10 text-purple-400 border border-purple-500/30'
-              )}
-            >
-              Mark as Limitation (LIM)
-            </button>
+                Limitation (LIM)
+              </button>
+            </div>
           </div>
         )}
       </div>

@@ -149,31 +149,16 @@ const DefectCodesReference = ({ defaultOpen = false }: DefectCodesReferenceProps
           setIsOpen(open);
         }}
       >
-        {/* Header */}
+        {/* Header — gradient line pattern */}
         <CollapsibleTrigger className="w-full" asChild>
-          <button
-            className={cn(
-              'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
-              'bg-card/50 border-y border-border/30',
-              isOpen && 'bg-card/80',
-              'active:bg-card/90'
-            )}
-          >
-            {/* Icon Badge */}
-            <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-              <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-            </div>
-
-            {/* Title */}
+          <button className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all">
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-foreground">Defect Classification</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">BS 7671 observation codes</p>
+              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider">Defect Classification</h2>
             </div>
-
-            {/* Chevron */}
             <ChevronDown
               className={cn(
-                'h-5 w-5 text-muted-foreground transition-transform duration-200',
+                'h-4 w-4 text-white/30 transition-transform duration-200 flex-shrink-0',
                 isOpen && 'rotate-180'
               )}
             />
@@ -181,7 +166,7 @@ const DefectCodesReference = ({ defaultOpen = false }: DefectCodesReferenceProps
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <div className={cn('space-y-2 bg-card/30', isMobile ? 'p-4' : 'p-4')}>
+          <div className={cn('space-y-2 bg-white/[0.02]', isMobile ? 'p-4' : 'p-4')}>
             {defectCodes.map((code) => {
               const Icon = getSeverityIcon(code.severity);
               const colors = getColorClasses(code.color);
@@ -195,25 +180,15 @@ const DefectCodesReference = ({ defaultOpen = false }: DefectCodesReferenceProps
                     colors.border
                   )}
                 >
-                  {/* Code Badge */}
-                  <div
-                    className={cn(
-                      'flex-shrink-0 w-12 h-12 rounded-xl flex flex-col items-center justify-center',
-                      colors.bg,
-                      'border',
-                      colors.border
-                    )}
-                  >
-                    <Icon className={cn('h-5 w-5', colors.icon)} />
-                  </div>
+                  {/* Code */}
+                  <span className={cn('flex-shrink-0 w-10 text-center text-sm font-bold', colors.text)}>
+                    {code.code}
+                  </span>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className={cn('font-bold text-base', colors.text)}>{code.code}</span>
-                      <span className="text-sm text-foreground font-medium">{code.label}</span>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
+                    <span className="text-sm text-white font-medium">{code.label}</span>
+                    <p className="text-[10px] text-white/40 mt-0.5 line-clamp-1">
                       {code.description}
                     </p>
                   </div>

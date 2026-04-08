@@ -90,30 +90,27 @@ export const SmartTabs = ({
       <div className="-mx-4 sm:mx-0">
         {/* Progress bar */}
         {showProgress && (
-          <div className="px-4 sm:px-0 pb-1">
-            <div className="flex justify-between text-xs text-muted-foreground mb-1">
-              <span>
-                {completedCount} of {tabs.length} sections complete
-              </span>
-              <span className="text-elec-yellow font-medium">{progressPercent}%</span>
+          <div className="px-4 sm:px-0 pb-2">
+            <div className="flex justify-between text-[10px] text-white mb-1">
+              <span>{completedCount}/{tabs.length} sections</span>
+              <span className="font-medium">{progressPercent}%</span>
             </div>
-            <div className="h-1 bg-muted rounded-full overflow-hidden">
+            <div className="h-1 bg-white/[0.12] rounded-full overflow-hidden">
               <div
-                className="h-full bg-elec-yellow"
+                className="h-full bg-elec-yellow rounded-full"
                 style={{ width: `${progressPercent}%`, transition: 'width 300ms ease-out' }}
               />
             </div>
           </div>
         )}
 
-        {/* Horizontal scrollable tab strip - edge-to-edge on mobile */}
+        {/* Tab strip — equal width grid on mobile */}
         <div
           ref={scrollRef}
           className={cn(
-            'flex',
-            isMobile ? 'gap-1 px-3 pb-2' : 'gap-2 overflow-x-auto scrollbar-hide'
+            isMobile ? 'grid grid-cols-5 gap-1 px-2 pb-2' : 'flex gap-2 overflow-x-auto scrollbar-hide'
           )}
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          style={isMobile ? undefined : { scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {tabs.map((tab, index) => {
             const tabComplete = isTabComplete(tab);
@@ -126,33 +123,33 @@ export const SmartTabs = ({
                 ref={isActive ? activeTabRef : null}
                 onClick={() => handleValueChange(tab.value)}
                 className={cn(
-                  'flex items-center justify-center gap-1 rounded-lg font-medium touch-manipulation whitespace-nowrap',
-                  'active:scale-95 transition-[background-color,color,transform] duration-150',
+                  'flex items-center justify-center gap-1 rounded-lg font-semibold touch-manipulation',
+                  'active:scale-[0.98] transition-all duration-150',
                   isActive
-                    ? 'bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20'
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
                     : tabComplete
                       ? 'bg-green-500/10 text-green-400 border border-green-500/30'
-                      : 'bg-card/50 text-muted-foreground hover:text-foreground hover:bg-card border border-transparent',
+                      : 'bg-white/[0.05] text-white border border-white/[0.08]',
                   isMobile
-                    ? 'text-[12px] h-9 px-1.5 py-1.5 flex-1 min-w-0'
+                    ? 'text-[11px] h-9 px-1 min-w-0'
                     : 'text-sm h-10 px-3 py-2.5 shrink-0'
                 )}
               >
-                {/* Step number badge */}
+                {/* Step number */}
                 <span
                   className={cn(
                     'flex items-center justify-center rounded-full font-bold shrink-0',
-                    isMobile ? 'h-[16px] w-[16px] text-[10px]' : 'h-[18px] w-[18px] text-[11px]',
+                    isMobile ? 'h-4 w-4 text-[9px]' : 'h-[18px] w-[18px] text-[11px]',
                     isActive
-                      ? 'bg-black/20 text-black'
+                      ? 'bg-elec-yellow/30 text-elec-yellow'
                       : tabComplete
                         ? 'bg-green-500/20 text-green-400'
-                        : 'bg-white/10 text-current'
+                        : 'bg-white/[0.08] text-current'
                   )}
                 >
                   {tabComplete && !isActive ? <CheckCircle className="h-2.5 w-2.5" /> : index + 1}
                 </span>
-                <span className={cn(isMobile && 'truncate')}>{displayLabel}</span>
+                <span className="truncate">{displayLabel}</span>
               </button>
             );
           })}

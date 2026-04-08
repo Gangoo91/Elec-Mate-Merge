@@ -96,60 +96,33 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
         {isExpanded && (
           <div
             className="fixed bottom-32 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-sm
-                          bg-black/95 backdrop-blur-xl border border-white/10 rounded-2xl p-4
+                          bg-background border border-white/[0.08] rounded-2xl p-4
                           shadow-2xl animate-in slide-in-from-bottom-2 duration-200"
           >
-            <h4 className="text-sm font-semibold text-white mb-3">Inspection Progress</h4>
-
-            {/* Progress Bar */}
-            <div className="mb-4">
-              <div className="flex items-center justify-between text-xs mb-1.5">
-                <span className="text-white">
-                  {completed} of {total} items
-                </span>
-                <span className="text-elec-yellow font-semibold">{progressPercent}%</span>
-              </div>
-              <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-elec-yellow rounded-full transition-all duration-500"
-                  style={{ width: `${progressPercent}%` }}
-                />
-              </div>
+            {/* Progress row */}
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs text-white/50">{completed}/{total} items</span>
+              <span className="text-xs font-semibold text-white">{progressPercent}%</span>
+            </div>
+            <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden mb-4">
+              <div
+                className="h-full bg-elec-yellow rounded-full transition-all duration-500"
+                style={{ width: `${progressPercent}%` }}
+              />
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-4 gap-2">
-              <div className="text-center p-2 rounded-lg bg-green-500/10">
-                <div className="text-lg font-bold text-green-400">{satisfactory}</div>
-                <div className="text-[10px] text-green-400/70">OK</div>
+            {/* Stats — single row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-bold text-green-400">{satisfactory} <span className="font-normal text-white/40">OK</span></span>
+                <span className="text-xs font-bold text-red-400">{c1Count} <span className="font-normal text-white/40">C1</span></span>
+                <span className="text-xs font-bold text-orange-400">{c2Count} <span className="font-normal text-white/40">C2</span></span>
+                <span className="text-xs font-bold text-yellow-400">{c3Count} <span className="font-normal text-white/40">C3</span></span>
               </div>
-              <div className="text-center p-2 rounded-lg bg-red-500/10">
-                <div className="text-lg font-bold text-red-400">{c1Count}</div>
-                <div className="text-[10px] text-red-400/70">C1</div>
-              </div>
-              <div className="text-center p-2 rounded-lg bg-orange-500/10">
-                <div className="text-lg font-bold text-orange-400">{c2Count}</div>
-                <div className="text-[10px] text-orange-400/70">C2</div>
-              </div>
-              <div className="text-center p-2 rounded-lg bg-yellow-500/10">
-                <div className="text-lg font-bold text-yellow-400">{c3Count}</div>
-                <div className="text-[10px] text-yellow-400/70">C3</div>
-              </div>
-            </div>
-
-            {/* Secondary Stats */}
-            <div className="flex items-center justify-center gap-4 mt-3 pt-3 border-t border-white/10">
-              <div className="flex items-center gap-1.5">
-                <Circle className="h-3 w-3 text-white" />
-                <span className="text-xs text-white">{notApplicable} N/A</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <AlertCircle className="h-3 w-3 text-blue-400" />
-                <span className="text-xs text-white">{notVerified} N/V</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <AlertCircle className="h-3 w-3 text-purple-400" />
-                <span className="text-xs text-white">{limitation} LIM</span>
+              <div className="flex items-center gap-2 text-[10px] text-white/30">
+                <span>{notApplicable} N/A</span>
+                <span>{notVerified} N/V</span>
+                <span>{limitation} LIM</span>
               </div>
             </div>
           </div>

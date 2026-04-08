@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,7 +10,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Users, Building2, MapPin, UserPlus, History } from 'lucide-react';
+import { Check } from 'lucide-react';
+// Icons removed — clean design
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -24,32 +24,21 @@ interface ClientDetailsSectionProps {
   onUpdate: (field: string, value: string) => void;
 }
 
-// Section header component - MUST be outside main component to prevent re-renders
+// Section header — fire alarm pattern (gradient accent line + uppercase title)
 const SectionTitle = ({
-  icon: Icon,
   title,
-  isMobile,
 }: {
-  icon: React.ElementType;
+  icon?: React.ElementType;
   title: string;
-  isMobile: boolean;
+  isMobile?: boolean;
 }) => (
-  <div
-    className={cn(
-      'flex items-center gap-3 py-3',
-      isMobile
-        ? '-mx-4 px-4 bg-card/30 border-y border-border/20'
-        : 'pb-2 border-b border-border/30'
-    )}
-  >
-    <div className="h-8 w-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-      <Icon className="h-4 w-4 text-elec-yellow" />
-    </div>
-    <h3 className="font-semibold text-foreground">{title}</h3>
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
   </div>
 );
 
-// Input field wrapper - MUST be outside main component to prevent focus loss on re-renders
+// Field wrapper — fire alarm pattern
 const FormField = ({
   label,
   required,
@@ -59,10 +48,9 @@ const FormField = ({
   required?: boolean;
   children: React.ReactNode;
 }) => (
-  <div className="space-y-2">
-    <Label className="text-sm text-foreground/80">
-      {label}
-      {required && <span className="text-elec-yellow ml-1">*</span>}
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">
+      {label}{required && ' *'}
     </Label>
     {children}
   </div>
@@ -179,78 +167,67 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
   );
 
   return (
-    <div className={cn('space-y-6', isMobile && '-mx-4')}>
-      {/* Client Type Toggle - Edge-to-edge on mobile */}
-      <div>
-        <div className={cn(isMobile ? 'px-4' : '')}>
-          <Label className="text-sm text-foreground/60 mb-3 block text-center">Client Type</Label>
-        </div>
-        <div className={cn('grid grid-cols-2 gap-2', isMobile ? 'px-4' : '')}>
-          <Button
+    <div className={cn('space-y-6', '')}>
+      {/* Client Type Toggle */}
+      <div className="flex gap-1.5">
+        {[
+          { val: 'new' as const, label: 'New Client' },
+          { val: 'existing' as const, label: 'Existing' },
+        ].map((opt) => (
+          <button
+            key={opt.val}
             type="button"
-            variant={clientType === 'new' ? 'default' : 'outline'}
+            onClick={() => { haptic.light(); setClientType(opt.val); }}
             className={cn(
-              'h-12 font-medium touch-manipulation',
-              clientType === 'new'
-                ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                : 'border-border/50'
+              'flex-1 h-11 rounded-xl border text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
+              clientType === opt.val
+                ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
+                : 'bg-white/[0.03] border-white/[0.06] text-white'
             )}
-            onClick={() => {
-              haptic.light();
-              setClientType('new');
-            }}
           >
-            <UserPlus className="h-4 w-4 mr-2" />
-            New Client
-          </Button>
-          <Button
-            type="button"
-            variant={clientType === 'existing' ? 'default' : 'outline'}
-            className={cn(
-              'h-12 font-medium touch-manipulation',
-              clientType === 'existing'
-                ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                : 'border-border/50'
-            )}
-            onClick={() => {
-              haptic.light();
-              setClientType('existing');
-            }}
-          >
-            <Users className="h-4 w-4 mr-2" />
-            Existing Client
-          </Button>
-        </div>
+            {opt.label}
+          </button>
+        ))}
       </div>
 
       {/* Existing Client Selector */}
       {clientType === 'existing' && (
-        <div className={cn(isMobile ? 'px-4' : '')}>
+        <div className={cn('')}>
           <ClientSelector onSelectCustomer={handleSelectCustomer} />
         </div>
       )}
 
       {/* Client Information Section */}
       <div>
-        <SectionTitle icon={Users} title="Client Information" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <FormField label="Client Name" required>
-            <Input
-              value={localValues.clientName || ''}
-              onChange={(e) => handleFieldChange('clientName', e.target.value)}
-              placeholder="Full name of person ordering work"
-              className="h-11 text-base touch-manipulation"
-            />
-          </FormField>
+        <SectionTitle title="Client Information" />
+        <div className="space-y-3 py-3">
+          <div className="grid grid-cols-2 gap-3 items-end">
+            <FormField label="Client Name" required>
+              <Input
+                value={localValues.clientName || ''}
+                onChange={(e) => handleFieldChange('clientName', e.target.value)}
+                placeholder="Full name"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+            <FormField label="Occupier">
+              <Input
+                value={localValues.occupier || ''}
+                onChange={(e) => handleFieldChange('occupier', e.target.value)}
+                placeholder="If different"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 items-end">
             <FormField label="Phone">
               <Input
                 type="tel"
                 value={localValues.clientPhone || ''}
                 onChange={(e) => handleFieldChange('clientPhone', e.target.value)}
                 placeholder="Contact number"
-                className="h-11 text-base touch-manipulation"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
               />
             </FormField>
             <FormField label="Email">
@@ -259,7 +236,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                 value={localValues.clientEmail || ''}
                 onChange={(e) => handleFieldChange('clientEmail', e.target.value)}
                 placeholder="Email address"
-                className="h-11 text-base touch-manipulation"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
               />
             </FormField>
           </div>
@@ -268,17 +245,8 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
             <Textarea
               value={localValues.clientAddress || ''}
               onChange={(e) => handleFieldChange('clientAddress', e.target.value)}
-              placeholder="Client's full postal address"
-              className="min-h-[100px] text-base touch-manipulation resize-none"
-            />
-          </FormField>
-
-          <FormField label="Occupier">
-            <Input
-              value={localValues.occupier || ''}
-              onChange={(e) => handleFieldChange('occupier', e.target.value)}
-              placeholder="Name of occupier (if different from client)"
-              className="h-11 text-base touch-manipulation"
+              placeholder="Full postal address"
+              className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
             />
           </FormField>
         </div>
@@ -286,46 +254,22 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
 
       {/* Installation Details Section */}
       <div>
-        <SectionTitle icon={Building2} title="Installation Details" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+        <SectionTitle title="Installation Details" />
+        <div className="space-y-3 py-3">
           {/* Same Address Toggle */}
-          <div
-            role="button"
-            tabIndex={0}
+          <button
+            type="button"
             onClick={() => handleSameAddressToggle(localValues.sameAsClientAddress !== 'true')}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                handleSameAddressToggle(localValues.sameAsClientAddress !== 'true');
-              }
-            }}
             className={cn(
-              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
+              'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2',
               localValues.sameAsClientAddress === 'true'
-                ? 'border-elec-yellow bg-elec-yellow/10'
-                : 'border-border/30 bg-card/30'
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
             )}
           >
-            <Checkbox
-              checked={localValues.sameAsClientAddress === 'true'}
-              tabIndex={-1}
-              className="h-5 w-5 pointer-events-none data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-            />
-            <div className="flex-1 text-left">
-              <span className="font-medium text-white">Same as client address</span>
-              <p className="text-xs text-white mt-0.5">
-                Use client address for installation
-              </p>
-            </div>
-            <MapPin
-              className={cn(
-                'h-5 w-5',
-                localValues.sameAsClientAddress === 'true'
-                  ? 'text-elec-yellow'
-                  : 'text-white'
-              )}
-            />
-          </div>
+            {localValues.sameAsClientAddress === 'true' && <Check className="h-3.5 w-3.5" />}
+            Same as client address
+          </button>
 
           {localValues.sameAsClientAddress !== 'true' && (
             <FormField label="Installation Address" required>
@@ -333,12 +277,12 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                 value={localValues.installationAddress || ''}
                 onChange={(e) => handleFieldChange('installationAddress', e.target.value)}
                 placeholder="Full address of the installation"
-                className="min-h-[100px] text-base touch-manipulation resize-none"
+                className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
               />
             </FormField>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 items-end">
             <FormField label="Premises Type" required>
               <Select
                 value={localValues.description || ''}
@@ -348,7 +292,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                   flush();
                 }}
               >
-                <SelectTrigger className="h-11 touch-manipulation">
+                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -362,8 +306,8 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                 <Input
                   value={localValues.otherPremisesDescription || ''}
                   onChange={(e) => handleFieldChange('otherPremisesDescription', e.target.value)}
-                  placeholder="Specify premises type"
-                  className="mt-2 h-11 text-base touch-manipulation"
+                  placeholder="Specify type"
+                  className="mt-2 h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
                 />
               )}
             </FormField>
@@ -377,7 +321,7 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                   flush();
                 }}
               >
-                <SelectTrigger className="h-11 touch-manipulation">
+                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -394,37 +338,84 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
 
       {/* Installation History Section */}
       <div>
-        <SectionTitle icon={History} title="Installation History" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <FormField label="Estimated Age">
-            <div className="flex gap-2">
+        <SectionTitle title="Installation History" />
+        <div className="space-y-3 py-3">
+          {/* Age + Records */}
+          <div className="grid grid-cols-3 gap-2">
+            <FormField label="Est. Age">
               <Input
                 type="number"
                 min="0"
                 max="100"
                 value={localValues.estimatedAge || ''}
                 onChange={(e) => handleFieldChange('estimatedAge', e.target.value)}
-                placeholder="0"
-                className="flex-1 h-11 text-base touch-manipulation"
+                placeholder="Years"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                inputMode="numeric"
               />
-              <Select
-                value={localValues.ageUnit || 'years'}
-                onValueChange={(value) => {
-                  handleFieldChange('ageUnit', value);
-                  flush();
-                }}
-              >
-                <SelectTrigger className="w-28 h-11 touch-manipulation">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="years">Years</SelectItem>
-                  <SelectItem value="months">Months</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </FormField>
+            </FormField>
+            <FormField label="Records">
+              <div className="grid grid-cols-2 gap-1.5">
+                {[
+                  { value: 'yes', label: 'Yes' },
+                  { value: 'no', label: 'No' },
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      handleFieldChange('installationRecordsAvailable', localValues.installationRecordsAvailable === option.value ? '' : option.value);
+                      flush();
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                      localValues.installationRecordsAvailable === option.value
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </FormField>
+            <FormField label="Alterations">
+              <div className="grid grid-cols-3 gap-1">
+                {[
+                  { value: 'no', label: 'No' },
+                  { value: 'yes', label: 'Yes' },
+                  { value: 'not-apparent', label: 'N/A' },
+                ].map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      if (localValues.evidenceOfAlterations === option.value) {
+                        setValues({ evidenceOfAlterations: '', alterationsDetails: '', alterationsAge: '' });
+                      } else {
+                        const updates: Partial<ClientSectionFields> = { evidenceOfAlterations: option.value };
+                        if (option.value !== 'yes') { updates.alterationsDetails = ''; updates.alterationsAge = ''; }
+                        setValues(updates);
+                      }
+                      flush();
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                      localValues.evidenceOfAlterations === option.value
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </FormField>
+          </div>
 
+          {/* Last Inspection — full width row */}
           <FormField label="Last Inspection">
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -437,134 +428,63 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
                   type="button"
                   onClick={() => {
                     haptic.light();
-                    // Toggle off if already selected
                     if (localValues.lastInspectionType === option.value) {
                       setValues({ lastInspectionType: '', dateOfLastInspection: '' });
                     } else {
-                      const updates: Partial<ClientSectionFields> = {
-                        lastInspectionType: option.value,
-                      };
+                      const updates: Partial<ClientSectionFields> = { lastInspectionType: option.value };
                       if (option.value !== 'known') updates.dateOfLastInspection = '';
                       setValues(updates);
                     }
-                    flush(); // Immediately commit toggle changes
+                    flush();
                   }}
                   className={cn(
-                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
                     localValues.lastInspectionType === option.value
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
                   )}
                 >
                   {option.label}
                 </button>
               ))}
             </div>
-            {localValues.lastInspectionType === 'known' && (
+          </FormField>
+
+          {/* Conditional fields */}
+          {localValues.lastInspectionType === 'known' && (
+            <FormField label="Date of Last Inspection">
               <Input
                 type="date"
                 value={localValues.dateOfLastInspection || ''}
                 onChange={(e) => handleFieldChange('dateOfLastInspection', e.target.value)}
                 onBlur={flush}
-                className="mt-3 h-11 text-base touch-manipulation"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
               />
-            )}
-          </FormField>
-
-          <FormField label="Evidence of Alterations">
-            <div className="grid grid-cols-3 gap-2">
-              {[
-                { value: 'no', label: 'No' },
-                { value: 'yes', label: 'Yes' },
-                { value: 'not-apparent', label: 'Not Apparent' },
-              ].map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    // Toggle off if already selected
-                    if (localValues.evidenceOfAlterations === option.value) {
-                      setValues({
-                        evidenceOfAlterations: '',
-                        alterationsDetails: '',
-                        alterationsAge: '',
-                      });
-                    } else {
-                      const updates: Partial<ClientSectionFields> = {
-                        evidenceOfAlterations: option.value,
-                      };
-                      if (option.value !== 'yes') {
-                        updates.alterationsDetails = '';
-                        updates.alterationsAge = '';
-                      }
-                      setValues(updates);
-                    }
-                    flush(); // Immediately commit toggle changes
-                  }}
-                  className={cn(
-                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
-                    localValues.evidenceOfAlterations === option.value
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
-                  )}
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-            {localValues.evidenceOfAlterations === 'yes' && (
-              <>
+            </FormField>
+          )}
+          {localValues.evidenceOfAlterations === 'yes' && (
+            <div className="grid grid-cols-2 gap-3 items-end">
+              <FormField label="Alteration Details">
                 <Textarea
                   value={localValues.alterationsDetails || ''}
                   onChange={(e) => handleFieldChange('alterationsDetails', e.target.value)}
-                  placeholder="Describe the alterations observed..."
-                  className="mt-3 min-h-[80px] text-base touch-manipulation resize-none"
+                  placeholder="Describe alterations"
+                  className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
                 />
-                <FormField label="Estimated Age of Alterations (years)">
-                  <Input
-                    type="number"
-                    min="0"
-                    max="100"
-                    value={localValues.alterationsAge || ''}
-                    onChange={(e) => handleFieldChange('alterationsAge', e.target.value)}
-                    placeholder="e.g., 5"
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </FormField>
-              </>
-            )}
-          </FormField>
-
-          <FormField label="Installation Records Available (Reg 651.1)">
-            <div className="grid grid-cols-2 gap-2">
-              {[
-                { value: 'yes', label: 'Yes' },
-                { value: 'no', label: 'No' },
-              ].map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    handleFieldChange(
-                      'installationRecordsAvailable',
-                      localValues.installationRecordsAvailable === option.value ? '' : option.value
-                    );
-                    flush(); // Immediately commit toggle changes
-                  }}
-                  className={cn(
-                    'h-11 rounded-lg font-medium transition-all touch-manipulation',
-                    localValues.installationRecordsAvailable === option.value
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
-                  )}
-                >
-                  {option.label}
-                </button>
-              ))}
+              </FormField>
+              <FormField label="Age of Alterations">
+                <Input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={localValues.alterationsAge || ''}
+                  onChange={(e) => handleFieldChange('alterationsAge', e.target.value)}
+                  placeholder="Years"
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                />
+              </FormField>
             </div>
-          </FormField>
+          )}
         </div>
       </div>
     </div>

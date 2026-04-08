@@ -132,78 +132,27 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
             setIsOpen(open);
           }}
         >
-          {/* Header */}
+          {/* Header — gradient line pattern */}
           <CollapsibleTrigger className="w-full" asChild>
-            <button
-              className={cn(
-                'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
-                'bg-card/50 border-y border-border/30',
-                isOpen && 'bg-card/80',
-                'active:bg-card/90'
-              )}
-            >
-              {/* Icon Badge */}
-              <div
-                className={cn(
-                  'h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0',
-                  hasCritical
-                    ? 'bg-red-500/20'
-                    : hasPotentiallyDangerous
-                      ? 'bg-orange-500/20'
-                      : totalCount > 0
-                        ? 'bg-elec-yellow/20'
-                        : 'bg-white/10'
-                )}
-              >
-                <FileText
-                  className={cn(
-                    'h-5 w-5',
-                    hasCritical
-                      ? 'text-red-500'
-                      : hasPotentiallyDangerous
-                        ? 'text-orange-500'
-                        : totalCount > 0
-                          ? 'text-elec-yellow'
-                          : 'text-white'
-                  )}
-                />
-              </div>
-
-              {/* Title */}
+            <button className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all">
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-foreground">Observations & Defects</h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {totalCount === 0
-                    ? 'No observations recorded'
-                    : `${totalCount} observation${totalCount !== 1 ? 's' : ''} recorded`}
-                </p>
+                <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+                <h2 className="text-xs font-medium text-white uppercase tracking-wider">
+                  Observations & Defects
+                  {totalCount > 0 && <span className="text-white ml-2 normal-case">({totalCount})</span>}
+                </h2>
               </div>
-
               {/* Stats Badges */}
               {totalCount > 0 && (
-                <div className="flex items-center gap-1">
-                  {c1Count > 0 && (
-                    <span className="px-1.5 py-0.5 rounded text-xs font-bold bg-red-500/20 text-red-400">
-                      {c1Count}
-                    </span>
-                  )}
-                  {c2Count > 0 && (
-                    <span className="px-1.5 py-0.5 rounded text-xs font-bold bg-orange-500/20 text-orange-400">
-                      {c2Count}
-                    </span>
-                  )}
-                  {c3Count > 0 && (
-                    <span className="px-1.5 py-0.5 rounded text-xs font-bold bg-yellow-500/20 text-yellow-400">
-                      {c3Count}
-                    </span>
-                  )}
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  {c1Count > 0 && <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-red-500/20 text-red-400">{c1Count}</span>}
+                  {c2Count > 0 && <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-orange-500/20 text-orange-400">{c2Count}</span>}
+                  {c3Count > 0 && <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-yellow-500/20 text-yellow-400">{c3Count}</span>}
                 </div>
               )}
-
-              {/* Chevron */}
               <ChevronDown
                 className={cn(
-                  'h-5 w-5 text-muted-foreground transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200 flex-shrink-0',
                   isOpen && 'rotate-180'
                 )}
               />
@@ -215,7 +164,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
             {totalCount > 0 && (
               <div
                 className={cn(
-                  'flex flex-wrap items-center gap-2 p-3 bg-card/30 border-b border-border/20',
+                  'flex flex-wrap items-center gap-2 p-3 bg-white/[0.02] border-b border-white/[0.06]',
                   isMobile ? 'px-4' : ''
                 )}
               >
@@ -249,24 +198,19 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
             )}
 
             {/* Content */}
-            <div className={cn('bg-card/30', isMobile ? 'p-4' : 'p-4')}>
+            <div className={cn('bg-white/[0.02]', isMobile ? 'p-4' : 'p-4')}>
               {totalCount === 0 ? (
-                <div className="text-center py-8">
-                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-                    <FileText className="h-7 w-7 text-white" />
-                  </div>
-                  <p className="text-sm text-white mb-1">No observations yet</p>
-                  <p className="text-xs text-white mb-5 max-w-[250px] mx-auto">
-                    Observations are auto-created when you mark inspection items as C1, C2, or C3
+                <div className="py-6 space-y-3">
+                  <p className="text-xs text-white text-center">
+                    Auto-created when items are marked C1, C2 or C3
                   </p>
-                  <Button
+                  <button
                     onClick={handleAddObservation}
-                    className="h-12 px-5 bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow
-                               hover:bg-elec-yellow/30 hover:border-elec-yellow/50 touch-manipulation"
+                    className="w-full h-11 rounded-xl border-2 border-dashed border-white/[0.1] flex items-center justify-center gap-2 text-sm font-medium text-white/50 touch-manipulation active:scale-[0.98]"
                   >
-                    <Plus className="h-4 w-4 mr-2" />
+                    <Plus className="h-4 w-4" />
                     Add Manual Observation
-                  </Button>
+                  </button>
                 </div>
               ) : (
                 <>
@@ -282,7 +226,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
                   <Button
                     onClick={handleAddObservation}
                     variant="outline"
-                    className="w-full h-12 mt-4 border-dashed border-white/20 text-white
+                    className="w-full h-11 mt-4 border-dashed border-white/20 text-white rounded-xl
                                hover:bg-white/5 hover:text-white touch-manipulation"
                   >
                     <Plus className="h-4 w-4 mr-2" />

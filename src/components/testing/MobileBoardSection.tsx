@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown, Plus, Trash2, Zap, CheckCircle, Camera, Mic, Check } from 'lucide-react';
 import { DistributionBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
+import { cn } from '@/lib/utils';
 
 export interface MobileBoardToolCallbacks {
   onScanBoard: () => void;
@@ -116,74 +117,50 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
     <Collapsible open={isExpanded} onOpenChange={onToggleExpanded}>
       {/* Board Header */}
       <CollapsibleTrigger className="w-full" asChild>
-        <button className="w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors bg-card/50 border-y border-border/30 active:bg-card/90">
-          {/* Progress Ring */}
-          <div className="relative flex-shrink-0">
-            <svg className="w-12 h-12 -rotate-90">
-              <circle
-                cx="24"
-                cy="24"
-                r="20"
-                strokeWidth="3"
-                stroke="currentColor"
-                fill="none"
-                className="text-border/30"
-              />
-              <circle
-                cx="24"
-                cy="24"
-                r="20"
-                strokeWidth="3"
-                stroke="currentColor"
-                fill="none"
-                strokeDasharray={`${progressPercent * 1.26} 126`}
-                strokeLinecap="round"
-                className={isComplete ? 'text-green-500' : 'text-elec-yellow'}
-              />
-            </svg>
-            <div
-              className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${isComplete ? 'text-green-400' : 'text-elec-yellow'}`}
-            >
-              {isComplete ? <CheckCircle className="h-5 w-5" /> : <Zap className="h-5 w-5" />}
-            </div>
-          </div>
+        <button className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all">
+          {/* Board badge */}
+          <span
+            className={cn(
+              'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0',
+              isComplete
+                ? 'bg-green-500/15 text-green-400'
+                : progressPercent > 0
+                  ? 'bg-elec-yellow/15 text-elec-yellow'
+                  : 'bg-white/[0.06] text-white/50'
+            )}
+          >
+            {isComplete ? <CheckCircle className="h-3.5 w-3.5" /> : isMainBoard ? 'M' : 'S'}
+          </span>
 
           {/* Board Info */}
           <div className="flex-1 min-w-0">
-            <h3
-              className={`font-semibold text-base ${isComplete ? 'text-green-400' : 'text-foreground'}`}
-            >
+            <h3 className={cn('text-sm font-semibold truncate', isComplete ? 'text-green-400' : 'text-white')}>
               {board.name}
             </h3>
-            <div className="flex items-center gap-2 text-xs text-white mt-0.5">
-              <span>
-                {circuitCount} circuit{circuitCount !== 1 ? 's' : ''}
-              </span>
-              <span>·</span>
-              <span
-                className={
-                  isComplete
-                    ? 'text-green-400 font-medium'
-                    : progressPercent > 0
-                      ? 'text-elec-yellow font-medium'
-                      : ''
-                }
-              >
-                {progressPercent}% complete
-              </span>
-            </div>
           </div>
+
+          {/* Progress pill */}
+          <span className={cn(
+            'text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0',
+            isComplete
+              ? 'bg-green-500/15 text-green-400'
+              : progressPercent > 0
+                ? 'bg-white/[0.06] text-elec-yellow'
+                : 'bg-white/[0.04] text-white/30'
+          )}>
+            {circuitCount} · {progressPercent}%
+          </span>
 
           {/* Chevron */}
           <ChevronDown
-            className={`h-5 w-5 text-white transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+            className={cn('h-4 w-4 text-white/30 transition-transform duration-200 flex-shrink-0', isExpanded && 'rotate-180')}
           />
         </button>
       </CollapsibleTrigger>
 
       <CollapsibleContent>
         {/* Board Details */}
-        <div className="p-4 bg-card/30 border-b border-border/20 space-y-3">
+        <div className="p-4 border-b border-white/[0.06] space-y-3">
           {/* Board Reference & Location */}
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -195,7 +172,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                 value={board.reference || ''}
                 onChange={(value) => onUpdateBoard(board.id, 'reference', value)}
                 placeholder={board.name}
-                className="w-full h-11 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                 style={{ fontSize: '16px' }}
               />
             </div>
@@ -208,7 +185,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                 value={board.location || ''}
                 onChange={(value) => onUpdateBoard(board.id, 'location', value)}
                 placeholder="e.g., Garage, Kitchen"
-                className="w-full h-11 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                 style={{ fontSize: '16px' }}
               />
             </div>
@@ -227,7 +204,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                   value={board.zdb || ''}
                   onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
                   placeholder="0.00"
-                  className="w-full h-11 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                  className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                   style={{ fontSize: '16px' }}
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">
@@ -246,7 +223,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                   value={board.ipf || ''}
                   onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
                   placeholder="0.0"
-                  className="w-full h-11 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                  className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
                   style={{ fontSize: '16px' }}
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">
@@ -269,10 +246,10 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                   !board.confirmedCorrectPolarity
                 );
               }}
-              className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+              className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-2 px-3 cursor-pointer select-none ${
                 board.confirmedCorrectPolarity
                   ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                  : 'bg-card border border-border/50 text-white'
+                  : 'bg-white/[0.06] border border-white/[0.08] text-white'
               }`}
             >
               <div
@@ -289,10 +266,10 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                 e.stopPropagation();
                 onUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence);
               }}
-              className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+              className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-2 px-3 cursor-pointer select-none ${
                 board.confirmedPhaseSequence
                   ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                  : 'bg-card border border-border/50 text-white'
+                  : 'bg-white/[0.06] border border-white/[0.08] text-white'
               }`}
             >
               <div
@@ -323,10 +300,10 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                     : {}),
                 });
               }}
-              className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+              className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-2 px-3 cursor-pointer select-none ${
                 board.spdNA
                   ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
-                  : 'bg-card border border-border/50 text-white'
+                  : 'bg-white/[0.06] border border-white/[0.08] text-white'
               }`}
             >
               <div
@@ -348,10 +325,10 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
                     e.stopPropagation();
                     onUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
                   }}
-                  className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
+                  className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center gap-2 px-3 cursor-pointer select-none ${
                     board.spdOperationalStatus
                       ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                      : 'bg-card border border-border/50 text-white'
+                      : 'bg-white/[0.06] border border-white/[0.08] text-white'
                   }`}
                 >
                   <div
@@ -368,23 +345,23 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
 
         {/* Tools Bar - Above Circuit Table */}
         {tools && (
-          <div className="grid grid-cols-[1fr_1fr_44px] gap-2 py-3 bg-background border-y border-border/30">
+          <div className="grid grid-cols-[1fr_1fr_44px] gap-2 py-3 bg-background border-y border-white/[0.06]">
             <Button
-              className="h-11 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
+              className="h-11 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
               onClick={tools.onScanBoard}
             >
               <Camera className="h-5 w-5 mr-2" />
               AI Scan
             </Button>
             <Button
-              className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white font-semibold hover:bg-white/[0.08] touch-manipulation active:scale-95"
+              className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.12] text-white font-semibold hover:bg-white/[0.08] touch-manipulation active:scale-[0.98]"
               onClick={() => onAddCircuit(board.id)}
             >
               <Plus className="h-5 w-5 mr-2" />
               Add Circuit
             </Button>
             <Button
-              className={`h-11 w-11 rounded-xl touch-manipulation active:scale-95 ${
+              className={`h-11 w-11 rounded-xl touch-manipulation active:scale-[0.98] ${
                 tools.voiceActive
                   ? 'bg-green-500 text-white'
                   : tools.voiceConnecting
@@ -402,11 +379,8 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
         {/* Circuit Content (passed as children) */}
         <div className="bg-background">
           {circuitCount === 0 ? (
-            <div className="p-8 text-center">
-              <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
-                <Zap className="h-6 w-6 text-white" />
-              </div>
-              <p className="text-sm text-white mb-3">No circuits yet</p>
+            <div className="p-6 text-center space-y-3">
+              <p className="text-xs text-white/40">No circuits — tap Add Circuit or AI Scan</p>
               <Button
                 onClick={() => onAddCircuit(board.id)}
                 className="h-11 bg-elec-yellow text-black font-medium hover:bg-elec-yellow/90 touch-manipulation"

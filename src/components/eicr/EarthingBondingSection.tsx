@@ -9,10 +9,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Zap, Info, Link2, Cable, CircuitBoard } from 'lucide-react';
+import { Zap, Info, Link2, Cable, CircuitBoard, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
+import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 
 // Fields managed by this section (for memoization comparison)
 const EARTHING_SECTION_FIELDS = [
@@ -43,36 +44,13 @@ interface EarthingBondingSectionProps {
   onToggle?: () => void;
 }
 
-// Section header - MUST be outside main component to prevent focus loss
-const SectionTitle = ({
-  icon: Icon,
-  title,
-  color = 'green',
-  isMobile,
-}: {
-  icon: React.ElementType;
-  title: string;
-  color?: string;
-  isMobile: boolean;
-}) => (
-  <div
-    className={cn(
-      'flex items-center gap-3 py-3',
-      isMobile
-        ? '-mx-4 px-4 bg-card/30 border-y border-border/20'
-        : 'pb-2 border-b border-border/30'
-    )}
-  >
-    <div
-      className={cn('h-8 w-8 rounded-lg flex items-center justify-center', `bg-${color}-500/20`)}
-    >
-      <Icon className={cn('h-4 w-4', `text-${color}-400`)} />
-    </div>
-    <h3 className="font-semibold text-foreground">{title}</h3>
+const SectionTitle = ({ title }: { icon?: any; title: string; color?: string; isMobile?: boolean }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
   </div>
 );
 
-// Input field wrapper - MUST be outside main component to prevent focus loss
 const FormField = ({
   label,
   required,
@@ -84,13 +62,12 @@ const FormField = ({
   hint?: string;
   children: React.ReactNode;
 }) => (
-  <div className="space-y-2">
-    <Label className="text-sm text-foreground/80">
-      {label}
-      {required && <span className="text-elec-yellow ml-1">*</span>}
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">
+      {label}{required && ' *'}
     </Label>
     {children}
-    {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    {hint && <p className="text-[10px] text-white mt-1">{hint}</p>}
   </div>
 );
 
@@ -101,6 +78,7 @@ const FormField = ({
  * Performance optimised with React.memo for selective re-rendering
  */
 const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSectionProps) => {
+  const { getWarningsForField } = useEICRSmartForm(formData);
   const isMobile = useIsMobile();
   const haptic = useHaptic();
 
@@ -201,12 +179,12 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
   ];
 
   return (
-    <div className={cn('space-y-6', isMobile && '-mx-4')}>
+    <div className={cn('space-y-6', '')}>
       {/* Earth Electrode Section */}
       {showEarthElectrodeResistance && (
         <div>
           <SectionTitle icon={Zap} title="Earth Electrode" color="yellow" isMobile={isMobile} />
-          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+          <div className={cn('space-y-4 py-4', '')}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField
                 label="Earth Electrode Resistance (Ω)"
@@ -241,94 +219,69 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
 
       {/* Means of Earthing Section */}
       <div>
-        <SectionTitle icon={Zap} title="Means of Earthing" color="yellow" isMobile={isMobile} />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div
-              role="button"
-              tabIndex={0}
+        <SectionTitle title="Means of Earthing" />
+        <div className="py-3">
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
               onClick={() => {
                 haptic.light();
-                onUpdate(
-                  'meansOfEarthingDistributor',
-                  formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true'
-                );
+                onUpdate('meansOfEarthingDistributor', formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true');
               }}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptic.light(); onUpdate('meansOfEarthingDistributor', formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true'); } }}
               className={cn(
-                'flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
+                'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-2',
                 formData.meansOfEarthingDistributor === 'true'
-                  ? 'border-elec-yellow bg-elec-yellow/10'
-                  : 'border-border/30 bg-card/30'
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
               )}
             >
-              <Checkbox
-                checked={formData.meansOfEarthingDistributor === 'true'}
-                tabIndex={-1}
-                className="h-5 w-5 pointer-events-none data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-              />
-              <span className="font-medium text-sm text-white">Distributor's facility</span>
-            </div>
-            <div
-              role="button"
-              tabIndex={0}
+              {formData.meansOfEarthingDistributor === 'true' && <Check className="h-3.5 w-3.5" />}
+              Distributor
+            </button>
+            <button
+              type="button"
               onClick={() => {
                 haptic.light();
-                onUpdate(
-                  'meansOfEarthingElectrode',
-                  formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true'
-                );
+                onUpdate('meansOfEarthingElectrode', formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true');
               }}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptic.light(); onUpdate('meansOfEarthingElectrode', formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true'); } }}
               className={cn(
-                'flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
+                'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-2',
                 formData.meansOfEarthingElectrode === 'true'
-                  ? 'border-elec-yellow bg-elec-yellow/10'
-                  : 'border-border/30 bg-card/30'
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
               )}
             >
-              <Checkbox
-                checked={formData.meansOfEarthingElectrode === 'true'}
-                tabIndex={-1}
-                className="h-5 w-5 pointer-events-none data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-              />
-              <span className="font-medium text-sm text-white">Installation earth electrode</span>
-            </div>
+              {formData.meansOfEarthingElectrode === 'true' && <Check className="h-3.5 w-3.5" />}
+              Electrode
+            </button>
           </div>
         </div>
       </div>
 
       {/* Main Earthing Conductor Section */}
       <div>
-        <SectionTitle
-          icon={Cable}
-          title="Main Earthing Conductor"
-          color="green"
-          isMobile={isMobile}
-        />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <FormField label="Conductor Material" required>
-              <div className="grid grid-cols-2 gap-2">
+        <SectionTitle title="Main Earthing Conductor" />
+        <div className="space-y-3 py-3">
+          {/* Row 1: Material + Size */}
+          <div className="grid grid-cols-3 gap-2">
+            <FormField label="Material *">
+              <div className="grid grid-cols-2 gap-1">
                 {[
-                  { value: 'Cu', label: 'Copper (Cu)' },
-                  { value: 'Al', label: 'Aluminium (Al)' },
+                  { value: 'Cu', label: 'Cu' },
+                  { value: 'Al', label: 'Al' },
                 ].map((option) => (
                   <button
                     key={option.value}
                     type="button"
                     onClick={() => {
                       haptic.light();
-                      onUpdate(
-                        'mainEarthingConductorType',
-                        formData.mainEarthingConductorType === option.value ? '' : option.value
-                      );
+                      onUpdate('mainEarthingConductorType', formData.mainEarthingConductorType === option.value ? '' : option.value);
                     }}
                     className={cn(
-                      'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
                       formData.mainEarthingConductorType === option.value
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
                     )}
                   >
                     {option.label}
@@ -336,7 +289,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 ))}
               </div>
             </FormField>
-            <FormField label="Conductor Size" required>
+            <FormField label="Size *">
               <Select
                 value={formData.mainEarthingConductorSize || ''}
                 onValueChange={(value) => {
@@ -344,20 +297,36 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   onUpdate('mainEarthingConductorSize', value === '__clear__' ? '' : value);
                 }}
               >
-                <SelectTrigger className="h-11 touch-manipulation">
-                  <SelectValue placeholder="Select size" />
+                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
+                  <SelectValue placeholder="mm²" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="__clear__">
-                    <span className="text-muted-foreground">Clear selection</span>
-                  </SelectItem>
+                  <SelectItem value="__clear__">Clear</SelectItem>
                   {conductorSizes.map((size) => (
                     <SelectItem key={size} value={size}>
-                      {size === 'custom' ? 'Other/Custom' : size === 'none' ? 'None / Not required' : `${size}mm²`}
+                      {size === 'custom' ? 'Custom' : size === 'none' ? 'None' : `${size}mm²`}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+            </FormField>
+            <FormField label="Verified">
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  onUpdate('earthingConductorContinuityVerified', formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true');
+                }}
+                className={cn(
+                  'w-full h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-1.5',
+                  formData.earthingConductorContinuityVerified === 'true'
+                    ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {formData.earthingConductorContinuityVerified === 'true' && <Check className="h-3.5 w-3.5" />}
+                {formData.earthingConductorContinuityVerified === 'true' ? 'Yes' : 'No'}
+              </button>
             </FormField>
           </div>
 
@@ -366,51 +335,21 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
               <Input
                 value={formData.mainEarthingConductorSizeCustom || ''}
                 onChange={(e) => onUpdate('mainEarthingConductorSizeCustom', e.target.value)}
-                placeholder="e.g., 50mm²"
-                className="h-11 text-base touch-manipulation"
+                placeholder="50mm²"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
               />
             </FormField>
           )}
-
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => {
-              haptic.light();
-              onUpdate(
-                'earthingConductorContinuityVerified',
-                formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true'
-              );
-            }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptic.light(); onUpdate('earthingConductorContinuityVerified', formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true'); } }}
-            className={cn(
-              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
-              formData.earthingConductorContinuityVerified === 'true'
-                ? 'border-green-500 bg-green-500/10'
-                : 'border-border/30 bg-card/30'
-            )}
-          >
-            <Checkbox
-              checked={formData.earthingConductorContinuityVerified === 'true'}
-              tabIndex={-1}
-              className="h-5 w-5 pointer-events-none data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-            />
-            <span className="font-medium text-sm text-white">Connection/continuity verified</span>
-          </div>
         </div>
       </div>
 
       {/* Main Protective Bonding Section */}
       <div>
-        <SectionTitle
-          icon={Link2}
-          title="Main Protective Bonding"
-          color="blue"
-          isMobile={isMobile}
-        />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <FormField label="Conductor Material" required>
+        <SectionTitle title="Main Protective Bonding" />
+        <div className="space-y-3 py-3">
+          {/* Row 1: Material + Size */}
+          <div className="grid grid-cols-2 gap-3 items-end">
+            <FormField label="Material *">
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { value: 'Cu', label: 'Copper (Cu)' },
@@ -421,16 +360,13 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                     type="button"
                     onClick={() => {
                       haptic.light();
-                      onUpdate(
-                        'mainBondingConductorType',
-                        formData.mainBondingConductorType === option.value ? '' : option.value
-                      );
+                      onUpdate('mainBondingConductorType', formData.mainBondingConductorType === option.value ? '' : option.value);
                     }}
                     className={cn(
-                      'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
                       formData.mainBondingConductorType === option.value
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
                     )}
                   >
                     {option.label}
@@ -438,7 +374,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 ))}
               </div>
             </FormField>
-            <FormField label="Conductor Size" required hint="Typical: 10mm² copper for domestic">
+            <FormField label="Size *">
               <Select
                 value={formData.mainBondingSize || ''}
                 onValueChange={(value) => {
@@ -446,16 +382,14 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   onUpdate('mainBondingSize', value === '__clear__' ? '' : value);
                 }}
               >
-                <SelectTrigger className="h-11 touch-manipulation">
+                <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
                   <SelectValue placeholder="Select size" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="__clear__">
-                    <span className="text-muted-foreground">Clear selection</span>
-                  </SelectItem>
+                  <SelectItem value="__clear__">Clear</SelectItem>
                   {conductorSizes.map((size) => (
                     <SelectItem key={size} value={size}>
-                      {size === 'custom' ? 'Other/Custom' : size === 'none' ? 'None / Not required' : `${size}mm²`}
+                      {size === 'custom' ? 'Custom' : size === 'none' ? 'None' : `${size}mm²`}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -463,18 +397,8 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             </FormField>
           </div>
 
-          {showCustomMainBonding && (
-            <FormField label="Custom Size">
-              <Input
-                value={formData.mainBondingSizeCustom || ''}
-                onChange={(e) => onUpdate('mainBondingSizeCustom', e.target.value)}
-                placeholder="e.g., 35mm²"
-                className="h-11 text-base touch-manipulation"
-              />
-            </FormField>
-          )}
-
-          <FormField label="Bonding Compliance" required>
+          {/* Row 2: Compliance */}
+          <FormField label="Compliance *">
             <div className="grid grid-cols-3 gap-2">
               {[
                 { value: 'satisfactory', label: 'Satisfactory' },
@@ -486,20 +410,17 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   type="button"
                   onClick={() => {
                     haptic.light();
-                    onUpdate(
-                      'bondingCompliance',
-                      formData.bondingCompliance === option.value ? '' : option.value
-                    );
+                    onUpdate('bondingCompliance', formData.bondingCompliance === option.value ? '' : option.value);
                   }}
                   className={cn(
-                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
                     formData.bondingCompliance === option.value
                       ? option.value === 'satisfactory'
-                        ? 'bg-green-500 text-black'
+                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
                         : option.value === 'unsatisfactory'
-                          ? 'bg-red-500 text-white'
-                          : 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                          ? 'bg-red-500/20 border border-red-500/40 text-red-400'
+                          : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
                   )}
                 >
                   {option.label}
@@ -508,52 +429,55 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             </div>
           </FormField>
 
-          <div
-            role="button"
-            tabIndex={0}
+          {/* Smart validation warnings */}
+          {[...getWarningsForField('mainBondingSize'), ...getWarningsForField('bondingCompliance')].map((w, i) => (
+            <p key={i} className="text-[10px] text-amber-400/80">{w.message}{w.regulation ? ` (${w.regulation})` : ''}</p>
+          ))}
+
+          {showCustomMainBonding && (
+            <FormField label="Custom Size">
+              <Input
+                value={formData.mainBondingSizeCustom || ''}
+                onChange={(e) => onUpdate('mainBondingSizeCustom', e.target.value)}
+                placeholder="35mm²"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+          )}
+
+          {/* Row 2: Continuity verified toggle */}
+          <button
+            type="button"
             onClick={() => {
               haptic.light();
-              onUpdate(
-                'bondingConductorContinuityVerified',
-                formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true'
-              );
+              onUpdate('bondingConductorContinuityVerified', formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true');
             }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); haptic.light(); onUpdate('bondingConductorContinuityVerified', formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true'); } }}
             className={cn(
-              'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation cursor-pointer',
+              'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2',
               formData.bondingConductorContinuityVerified === 'true'
-                ? 'border-green-500 bg-green-500/10'
-                : 'border-border/30 bg-card/30'
+                ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
             )}
           >
-            <Checkbox
-              checked={formData.bondingConductorContinuityVerified === 'true'}
-              tabIndex={-1}
-              className="h-5 w-5 pointer-events-none data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500"
-            />
-            <span className="font-medium text-sm text-white">Connection/continuity verified</span>
-          </div>
+            {formData.bondingConductorContinuityVerified === 'true' && <Check className="h-3.5 w-3.5" />}
+            Continuity Verified
+          </button>
 
-          <FormField
-            label="Bonding Locations"
-            hint="Select all services with main protective bonding"
-          >
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+          {/* Row 3: Bonding Locations — 3x2 grid */}
+          <FormField label="Bonding Locations">
+            <div className="grid grid-cols-3 gap-2">
               {bondingServices.map((service) => (
                 <button
                   key={service.id}
                   type="button"
-                  onClick={() =>
-                    handleBondingLocationChange(service.id, !bondingLocations.has(service.id))
-                  }
+                  onClick={() => handleBondingLocationChange(service.id, !bondingLocations.has(service.id))}
                   className={cn(
-                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm flex items-center justify-center gap-2',
+                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs flex items-center justify-center gap-1.5 active:scale-[0.98]',
                     bondingLocations.has(service.id)
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
                   )}
                 >
-                  {bondingLocations.has(service.id) && <span>✓</span>}
                   {service.label}
                 </button>
               ))}
@@ -564,8 +488,8 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             <Input
               value={otherBonding}
               onChange={(e) => handleOtherBondingChange(e.target.value)}
-              placeholder="e.g., Lightning protection, Metal pipework"
-              className="h-11 text-base touch-manipulation"
+              placeholder="Lightning protection, Metal pipework"
+              className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
             />
           </FormField>
         </div>
@@ -573,17 +497,9 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
 
       {/* Supplementary Bonding Section */}
       <div>
-        <SectionTitle
-          icon={CircuitBoard}
-          title="Supplementary Bonding"
-          color="purple"
-          isMobile={isMobile}
-        />
-        <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-          <FormField
-            label="Supplementary Bonding Conductor Size"
-            hint="Required in locations with increased risk (e.g., bathrooms)"
-          >
+        <SectionTitle title="Supplementary Bonding" />
+        <div className="space-y-3 py-3">
+          <FormField label="Conductor Size">
             <Select
               value={formData.supplementaryBondingSize || ''}
               onValueChange={(value) => {
@@ -591,39 +507,22 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 onUpdate('supplementaryBondingSize', value === '__clear__' ? '' : value);
               }}
             >
-              <SelectTrigger className="h-11 touch-manipulation">
+              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
                 <SelectValue placeholder="Select size" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="__clear__">
-                  <span className="text-muted-foreground">Clear selection</span>
-                </SelectItem>
+                <SelectItem value="__clear__">Clear</SelectItem>
                 {supplementarySizes.map((size) => (
                   <SelectItem key={size} value={size}>
-                    {size === 'custom'
-                      ? 'Other/Custom'
-                      : size === 'not-required'
-                        ? 'Not Required'
-                        : `${size}mm²`}
+                    {size === 'custom' ? 'Custom' : size === 'not-required' ? 'Not Required' : `${size}mm²`}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </FormField>
 
-          {showCustomSupplementaryBonding && (
-            <FormField label="Custom Size">
-              <Input
-                value={formData.supplementaryBondingSizeCustom || ''}
-                onChange={(e) => onUpdate('supplementaryBondingSizeCustom', e.target.value)}
-                placeholder="e.g., 16mm²"
-                className="h-11 text-base touch-manipulation"
-              />
-            </FormField>
-          )}
-
-          <FormField label="Equipotential Bonding Status">
-            <div className="grid grid-cols-2 gap-2">
+          <FormField label="Equipotential Bonding">
+            <div className="grid grid-cols-4 gap-2">
               {[
                 { value: 'present', label: 'Present & OK' },
                 { value: 'present-unsatisfactory', label: 'Unsatisfactory' },
@@ -635,21 +534,17 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                   type="button"
                   onClick={() => {
                     haptic.light();
-                    onUpdate(
-                      'equipotentialBonding',
-                      formData.equipotentialBonding === option.value ? '' : option.value
-                    );
+                    onUpdate('equipotentialBonding', formData.equipotentialBonding === option.value ? '' : option.value);
                   }}
                   className={cn(
-                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
                     formData.equipotentialBonding === option.value
                       ? option.value === 'present'
-                        ? 'bg-green-500 text-black'
-                        : option.value === 'present-unsatisfactory' ||
-                            option.value === 'not-present'
-                          ? 'bg-amber-500 text-black'
-                          : 'bg-elec-yellow text-black'
-                      : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                        : option.value === 'present-unsatisfactory' || option.value === 'not-present'
+                          ? 'bg-amber-500/20 border border-amber-500/40 text-amber-400'
+                          : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
                   )}
                 >
                   {option.label}
@@ -658,18 +553,20 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             </div>
           </FormField>
 
-          <div className="p-3 bg-elec-yellow/5 border border-elec-yellow/20 rounded-lg">
-            <div className="flex items-start gap-2">
-              <Info className="h-4 w-4 text-elec-yellow mt-0.5 shrink-0" />
-              <div>
-                <p className="text-sm text-elec-yellow font-medium">BS 7671 Requirement</p>
-                <p className="text-xs text-elec-yellow/70 mt-1">
-                  Main bonding must be provided to incoming services. Supplementary bonding may be
-                  required in special locations where automatic disconnection times cannot be met.
-                </p>
-              </div>
-            </div>
-          </div>
+          {showCustomSupplementaryBonding && (
+            <FormField label="Custom Size">
+              <Input
+                value={formData.supplementaryBondingSizeCustom || ''}
+                onChange={(e) => onUpdate('supplementaryBondingSizeCustom', e.target.value)}
+                placeholder="16mm²"
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+              />
+            </FormField>
+          )}
+
+          <p className="text-[10px] text-white">
+            Supplementary bonding may be required in special locations (Reg 415.2)
+          </p>
         </div>
       </div>
     </div>

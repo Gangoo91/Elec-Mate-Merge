@@ -291,7 +291,6 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           onChange={(e) => onUpdate(result.id, 'rcdRatingA', e.target.value)}
           className={inputClassName}
           placeholder="A"
-          compact
         />
       </TableCell>
 

@@ -39,6 +39,7 @@ interface EnhancedInspectionSectionCardProps {
   onBulkMarkSatisfactory?: (sectionId: string) => void;
   onBulkClearSection?: (sectionId: string) => void;
   onBulkMarkNotApplicable?: (sectionId: string) => void;
+  quickMarkMode?: boolean;
 }
 
 const EnhancedInspectionSectionCard = ({
@@ -52,6 +53,7 @@ const EnhancedInspectionSectionCard = ({
   onBulkMarkSatisfactory,
   onBulkClearSection,
   onBulkMarkNotApplicable,
+  quickMarkMode,
 }: EnhancedInspectionSectionCardProps) => {
   const isMobile = useIsMobile();
   const haptic = useHaptic();
@@ -115,7 +117,8 @@ const EnhancedInspectionSectionCard = ({
   const isComplete = progressPercent === 100;
 
   return (
-    <div className={cn(isMobile && '-mx-4')}>
+    <div data-section={section.id}>
+      <div className="h-[1px] bg-gradient-to-r from-elec-yellow/30 via-elec-yellow/10 to-transparent" />
       <Collapsible
         open={isExpanded}
         onOpenChange={() => {
@@ -123,85 +126,48 @@ const EnhancedInspectionSectionCard = ({
           onToggle();
         }}
       >
-        {/* Section Header - Edge to edge on mobile */}
+        {/* Section Header — clean compact */}
         <CollapsibleTrigger className="w-full" asChild>
           <button
-            className={cn(
-              'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
-              'bg-card/50 border-y border-border/30',
-              isExpanded && 'bg-card/80',
-              'active:bg-card/90'
-            )}
+            className="w-full flex items-center gap-2.5 p-3 text-left touch-manipulation active:scale-[0.98] transition-all"
           >
-            {/* Section Number Badge with Progress Ring */}
-            <div className="relative flex-shrink-0">
-              {/* Progress ring background */}
-              <svg className="w-12 h-12 -rotate-90">
-                <circle
-                  cx="24"
-                  cy="24"
-                  r="20"
-                  strokeWidth="3"
-                  stroke="currentColor"
-                  fill="none"
-                  className="text-border/30"
-                />
-                <circle
-                  cx="24"
-                  cy="24"
-                  r="20"
-                  strokeWidth="3"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeDasharray={`${progressPercent * 1.26} 126`}
-                  strokeLinecap="round"
-                  className={cn(
-                    'transition-all duration-500',
-                    isComplete ? 'text-green-500' : 'text-elec-yellow'
-                  )}
-                />
-              </svg>
-              {/* Center content */}
-              <div
-                className={cn(
-                  'absolute inset-0 flex items-center justify-center text-sm font-bold',
-                  isComplete ? 'text-green-400' : 'text-elec-yellow'
-                )}
-              >
-                {isComplete ? <CheckCircle className="h-5 w-5" /> : section.sectionNumber}
-              </div>
-            </div>
+            {/* Section number */}
+            <span
+              className={cn(
+                'w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0',
+                isComplete
+                  ? 'bg-green-500/15 text-green-400'
+                  : progressPercent > 0
+                    ? 'bg-elec-yellow/15 text-elec-yellow'
+                    : 'bg-white/[0.06] text-white/80'
+              )}
+            >
+              {isComplete ? <CheckCircle className="h-3.5 w-3.5" /> : section.sectionNumber}
+            </span>
 
-            {/* Title and Meta */}
+            {/* Title */}
             <div className="flex-1 min-w-0">
-              <h3
-                className={cn(
-                  'font-semibold text-base truncate transition-colors',
-                  isComplete ? 'text-green-400' : 'text-foreground'
-                )}
-              >
+              <h3 className={cn('text-sm font-semibold truncate', isComplete ? 'text-green-400' : 'text-white')}>
                 {section.title}
               </h3>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                <span>
-                  {completedCount}/{sectionItems.length} items
-                </span>
-                <span>·</span>
-                <span
-                  className={cn(
-                    'font-medium',
-                    isComplete ? 'text-green-400' : progressPercent > 0 ? 'text-elec-yellow' : ''
-                  )}
-                >
-                  {progressPercent}%
-                </span>
-              </div>
             </div>
+
+            {/* Progress */}
+            <span className={cn(
+              'text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0',
+              isComplete
+                ? 'bg-green-500/15 text-green-400'
+                : progressPercent > 0
+                  ? 'bg-white/[0.06] text-elec-yellow'
+                  : 'bg-white/[0.04] text-white'
+            )}>
+              {completedCount}/{sectionItems.length}
+            </span>
 
             {/* Chevron */}
             <ChevronDown
               className={cn(
-                'h-5 w-5 text-muted-foreground transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200 flex-shrink-0',
                 isExpanded && 'rotate-180'
               )}
             />
@@ -212,8 +178,8 @@ const EnhancedInspectionSectionCard = ({
           {/* Quick Actions Bar */}
           <div
             className={cn(
-              'flex gap-2 p-3 bg-card/30 border-b border-border/20',
-              isMobile ? 'px-4 overflow-x-auto' : ''
+              'flex gap-1.5 p-2 border-b border-white/[0.06]',
+              isMobile ? 'px-3 overflow-x-auto' : ''
             )}
           >
             {onBulkMarkSatisfactory && (
@@ -225,9 +191,8 @@ const EnhancedInspectionSectionCard = ({
                   e.stopPropagation();
                   handleBulkAction('satisfactory');
                 }}
-                className="h-10 px-3 bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20 touch-manipulation whitespace-nowrap"
+                className="h-9 px-3 rounded-lg bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20 touch-manipulation whitespace-nowrap text-xs font-semibold active:scale-[0.98]"
               >
-                <CheckCheck className="h-4 w-4 mr-1.5" />
                 All OK
               </Button>
             )}
@@ -239,9 +204,8 @@ const EnhancedInspectionSectionCard = ({
                 e.stopPropagation();
                 handleBulkAction('na');
               }}
-              className="h-10 px-3 bg-gray-500/10 border-gray-500/30 text-gray-400 hover:bg-gray-500/20 touch-manipulation whitespace-nowrap"
+              className="h-9 px-3 rounded-lg bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.06] touch-manipulation whitespace-nowrap text-xs font-semibold active:scale-[0.98]"
             >
-              <Ban className="h-4 w-4 mr-1.5" />
               All N/A
             </Button>
             {onBulkClearSection && (
@@ -253,16 +217,16 @@ const EnhancedInspectionSectionCard = ({
                   e.stopPropagation();
                   handleBulkAction('clear');
                 }}
-                className="h-10 px-3 bg-white/5 border-white/10 text-white hover:bg-white/10 touch-manipulation whitespace-nowrap"
+                className="h-9 px-3 rounded-lg bg-white/[0.03] border-white/[0.06] text-white hover:bg-white/[0.06] touch-manipulation whitespace-nowrap text-xs font-semibold active:scale-[0.98]"
               >
-                <RotateCcw className="h-4 w-4 mr-1.5" />
                 Clear
               </Button>
             )}
           </div>
 
           {/* Inspection Items */}
-          <div className={cn(isMobile ? 'px-4 py-3' : 'p-4')}>
+          <div className="h-[1px] bg-gradient-to-r from-elec-yellow/20 to-transparent" />
+          <div className={cn(isMobile ? 'px-2 py-2' : 'p-4')}>
             {/* Desktop Table View */}
             <div className="hidden md:block rounded-xl border border-white/10 overflow-hidden">
               <Table>
@@ -305,8 +269,8 @@ const EnhancedInspectionSectionCard = ({
               </Table>
             </div>
 
-            {/* Mobile Card View - Compact with swipe */}
-            <div className="md:hidden space-y-2">
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-1.5">
               {section.items.map((sectionItem) => {
                 const inspectionItem = inspectionItems.find((item) => item.id === sectionItem.id);
                 return (
@@ -317,6 +281,7 @@ const EnhancedInspectionSectionCard = ({
                     onUpdateItem={onUpdateItem}
                     onOutcomeChange={handleOutcomeChange}
                     onNavigateToObservations={onNavigateToObservations}
+                    quickMarkMode={quickMarkMode}
                   />
                 );
               })}
@@ -324,11 +289,9 @@ const EnhancedInspectionSectionCard = ({
 
             {/* Swipe hint for first section */}
             {isMobile && section.sectionNumber === '1' && (
-              <div className="mt-4 p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
-                <p className="text-xs text-elec-yellow text-center">
-                  💡 Swipe right on items to mark OK, tap to expand for more options
-                </p>
-              </div>
+              <p className="mt-3 text-[10px] text-white text-center">
+                Swipe right to mark OK, tap to expand
+              </p>
             )}
           </div>
         </CollapsibleContent>

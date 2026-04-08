@@ -12,7 +12,7 @@ interface EICRDetailsProps {
 
 const EICRDetails = ({ formData, onUpdate }: EICRDetailsProps) => {
   return (
-    <div className="md:max-w-5xl mx-auto space-y-3 pb-20 lg:pb-4">
+    <div className="space-y-4 pb-20 lg:pb-4">
       <ClientDetailsSection formData={formData} onUpdate={onUpdate} />
       <InspectionDetailsSection formData={formData} onUpdate={onUpdate} />
       <SupplyCharacteristicsSection formData={formData} onUpdate={onUpdate} />

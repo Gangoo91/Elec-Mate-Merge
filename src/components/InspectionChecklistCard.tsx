@@ -31,6 +31,7 @@ interface InspectionChecklistCardProps {
   onBulkMarkSatisfactory: (sectionId: string) => void;
   onBulkClearSection: (sectionId: string) => void;
   propertyType?: string;
+  quickMarkMode?: boolean;
 }
 
 const InspectionChecklistCard = ({
@@ -44,6 +45,7 @@ const InspectionChecklistCard = ({
   onBulkMarkSatisfactory,
   onBulkClearSection,
   propertyType,
+  quickMarkMode,
 }: InspectionChecklistCardProps) => {
   const filteredSections = sections;
 
@@ -61,6 +63,7 @@ const InspectionChecklistCard = ({
           onAutoCreateObservation={onAutoCreateObservation}
           onBulkMarkSatisfactory={onBulkMarkSatisfactory}
           onBulkClearSection={onBulkClearSection}
+          quickMarkMode={quickMarkMode}
         />
       ))}
     </div>
