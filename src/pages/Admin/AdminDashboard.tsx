@@ -870,6 +870,165 @@ export default function AdminDashboard() {
           </motion.section>
         )}
 
+        {/* ── Section divider ───────────────────────────────── */}
+        <div className="flex items-center gap-3 pt-2">
+          <div className="h-px flex-1 bg-white/[0.06]" />
+          <span className="text-[10px] text-white/40 font-semibold uppercase tracking-[0.2em]">
+            Activity
+          </span>
+          <div className="h-px flex-1 bg-white/[0.06]" />
+        </div>
+
+        {/* ── Live Users ────────────────────────────────────── */}
+        <motion.section custom={2.3} variants={sectionVariants} initial="hidden" animate="visible">
+          <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 opacity-40" />
+            <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                </div>
+                <span className="font-semibold text-sm text-white">Live Now</span>
+                <span className="text-[11px] text-green-400 font-medium">
+                  {liveUserCount} online
+                </span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-xs h-11 px-3 touch-manipulation text-white hover:text-white"
+                onClick={() => navigate('/admin/users')}
+              >
+                All
+                <ChevronRight className="h-3 w-3 ml-0.5" />
+              </Button>
+            </div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="divide-y divide-white/[0.04]"
+            >
+              {onlineUsers?.slice(0, 5).map((activity) => {
+                const lastSeenMs = new Date(activity.last_seen).getTime();
+                const diffMins = Math.floor((Date.now() - lastSeenMs) / 60000);
+                const isOnline = diffMins < 5;
+                const profile = activity.profiles;
+                const roleColor = getRoleColor(profile?.role);
+
+                return (
+                  <motion.button
+                    key={activity.user_id}
+                    variants={listItemVariants}
+                    onClick={() => {
+                      const matched = baseUsers?.find((u) => u.id === activity.user_id);
+                      if (matched) setSelectedUser(matched);
+                    }}
+                    className="w-full flex items-center gap-3 p-3 hover:bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
+                  >
+                    <div
+                      className={cn(
+                        'w-9 h-9 rounded-lg flex items-center justify-center relative font-semibold text-xs shrink-0',
+                        roleColor.bg,
+                        roleColor.text
+                      )}
+                    >
+                      {getInitials(profile?.full_name)}
+                      <div
+                        className={cn(
+                          'absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-background',
+                          isOnline ? 'bg-green-500' : 'bg-white/20'
+                        )}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <p className="font-medium text-sm truncate text-white">
+                        {profile?.full_name || 'Unknown'}
+                      </p>
+                      <p className="text-xs text-white">
+                        {isOnline ? 'Active now' : `${diffMins}m ago`}
+                        {activity.current_page &&
+                          ` · ${activity.current_page.replace(/^\//, '').split('/')[0] || 'Home'}`}
+                      </p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white shrink-0" />
+                  </motion.button>
+                );
+              })}
+              {(!onlineUsers || onlineUsers.length === 0) && (
+                <div className="p-8 text-center">
+                  <Eye className="h-6 w-6 mx-auto mb-2 text-white" />
+                  <p className="text-sm text-white">No active users</p>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </motion.section>
+
+        {/* ── Recent Signups ────────────────────────────────── */}
+        <motion.section custom={2.4} variants={sectionVariants} initial="hidden" animate="visible">
+          <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 opacity-40" />
+            <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                  <Users className="h-4 w-4 text-amber-400" />
+                </div>
+                <span className="font-semibold text-sm text-white">Recent Signups</span>
+              </div>
+              <span className="text-[11px] text-white font-medium">
+                {stats?.signupsThisWeek} this week
+              </span>
+            </div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="divide-y divide-white/[0.04]"
+            >
+              {stats?.recentSignups?.slice(0, 5).map((user) => {
+                const roleColor = getRoleColor(user.role);
+                return (
+                  <motion.button
+                    key={user.id}
+                    variants={listItemVariants}
+                    onClick={() => setSelectedUser(user)}
+                    className="w-full flex items-center gap-3 p-3 hover:bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
+                  >
+                    <div
+                      className={cn(
+                        'w-9 h-9 rounded-lg flex items-center justify-center font-semibold text-xs shrink-0',
+                        roleColor.bg,
+                        roleColor.text
+                      )}
+                    >
+                      {getInitials(user.full_name)}
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <p className="font-medium text-sm truncate text-white">
+                        {user.full_name || 'Unknown'}
+                      </p>
+                      <p className="text-xs text-white truncate">{user.email}</p>
+                    </div>
+                    <div className="text-right shrink-0 flex items-center gap-2">
+                      {user.subscribed && (
+                        <span className="text-[10px] font-semibold text-green-400 uppercase tracking-wider">
+                          Pro
+                        </span>
+                      )}
+                      <span className="text-xs text-white">
+                        {formatDistanceToNow(new Date(user.created_at), {
+                          addSuffix: true,
+                        }).replace('about ', '')}
+                      </span>
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </motion.div>
+          </div>
+        </motion.section>
+
         {/* ── Mobile Subscribers (App Store / Play Store) ──── */}
         {rcStats?.trialUsers?.length || rcStats?.paidUsers?.length ? (
           <motion.section
@@ -1285,165 +1444,6 @@ export default function AdminDashboard() {
                 <AnimatedCounter value={conversionRate} suffix="%" />
               </p>
               <p className="text-[11px] text-white font-medium mt-0.5">Conversion</p>
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* ── Section divider ───────────────────────────────── */}
-        <div className="flex items-center gap-3 pt-2">
-          <div className="h-px flex-1 bg-white/[0.06]" />
-          <span className="text-[10px] text-white font-semibold uppercase tracking-[0.2em]">
-            Activity
-          </span>
-          <div className="h-px flex-1 bg-white/[0.06]" />
-        </div>
-
-        {/* ── Live Users ────────────────────────────────────── */}
-        <motion.section custom={5} variants={sectionVariants} initial="hidden" animate="visible">
-          <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500 opacity-40" />
-            <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                </div>
-                <span className="font-semibold text-sm text-white">Live Now</span>
-                <span className="text-[11px] text-green-400 font-medium">
-                  {liveUserCount} online
-                </span>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-xs h-11 px-3 touch-manipulation text-white hover:text-white"
-                onClick={() => navigate('/admin/users')}
-              >
-                All
-                <ChevronRight className="h-3 w-3 ml-0.5" />
-              </Button>
-            </div>
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="divide-y divide-white/[0.04]"
-            >
-              {onlineUsers?.slice(0, 5).map((activity) => {
-                const lastSeenMs = new Date(activity.last_seen).getTime();
-                const diffMins = Math.floor((Date.now() - lastSeenMs) / 60000);
-                const isOnline = diffMins < 5;
-                const profile = activity.profiles;
-                const roleColor = getRoleColor(profile?.role);
-
-                return (
-                  <motion.button
-                    key={activity.user_id}
-                    variants={listItemVariants}
-                    onClick={() => {
-                      const matched = baseUsers?.find((u) => u.id === activity.user_id);
-                      if (matched) setSelectedUser(matched);
-                    }}
-                    className="w-full flex items-center gap-3 p-3 hover:bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
-                  >
-                    <div
-                      className={cn(
-                        'w-9 h-9 rounded-lg flex items-center justify-center relative font-semibold text-xs shrink-0',
-                        roleColor.bg,
-                        roleColor.text
-                      )}
-                    >
-                      {getInitials(profile?.full_name)}
-                      <div
-                        className={cn(
-                          'absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-background',
-                          isOnline ? 'bg-green-500' : 'bg-white/20'
-                        )}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0 text-left">
-                      <p className="font-medium text-sm truncate text-white">
-                        {profile?.full_name || 'Unknown'}
-                      </p>
-                      <p className="text-xs text-white">
-                        {isOnline ? 'Active now' : `${diffMins}m ago`}
-                        {activity.current_page &&
-                          ` · ${activity.current_page.replace(/^\//, '').split('/')[0] || 'Home'}`}
-                      </p>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white shrink-0" />
-                  </motion.button>
-                );
-              })}
-              {(!onlineUsers || onlineUsers.length === 0) && (
-                <div className="p-8 text-center">
-                  <Eye className="h-6 w-6 mx-auto mb-2 text-white" />
-                  <p className="text-sm text-white">No active users</p>
-                </div>
-              )}
-            </motion.div>
-          </div>
-        </motion.section>
-
-        {/* ── Recent Signups ────────────────────────────────── */}
-        <motion.section custom={6} variants={sectionVariants} initial="hidden" animate="visible">
-          <div className="relative rounded-2xl bg-white/[0.03] border border-white/[0.08] overflow-hidden">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 opacity-40" />
-            <div className="p-4 border-b border-white/[0.06] flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
-                  <Users className="h-4 w-4 text-amber-400" />
-                </div>
-                <span className="font-semibold text-sm text-white">Recent Signups</span>
-              </div>
-              <span className="text-[11px] text-white font-medium">
-                {stats?.signupsThisWeek} this week
-              </span>
-            </div>
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="divide-y divide-white/[0.04]"
-            >
-              {stats?.recentSignups?.slice(0, 5).map((user) => {
-                const roleColor = getRoleColor(user.role);
-                return (
-                  <motion.button
-                    key={user.id}
-                    variants={listItemVariants}
-                    onClick={() => setSelectedUser(user)}
-                    className="w-full flex items-center gap-3 p-3 hover:bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
-                  >
-                    <div
-                      className={cn(
-                        'w-9 h-9 rounded-lg flex items-center justify-center font-semibold text-xs shrink-0',
-                        roleColor.bg,
-                        roleColor.text
-                      )}
-                    >
-                      {getInitials(user.full_name)}
-                    </div>
-                    <div className="flex-1 min-w-0 text-left">
-                      <p className="font-medium text-sm truncate text-white">
-                        {user.full_name || 'Unknown'}
-                      </p>
-                      <p className="text-xs text-white truncate">{user.email}</p>
-                    </div>
-                    <div className="text-right shrink-0 flex items-center gap-2">
-                      {user.subscribed && (
-                        <span className="text-[10px] font-semibold text-green-400 uppercase tracking-wider">
-                          Pro
-                        </span>
-                      )}
-                      <span className="text-xs text-white">
-                        {formatDistanceToNow(new Date(user.created_at), {
-                          addSuffix: true,
-                        }).replace('about ', '')}
-                      </span>
-                    </div>
-                  </motion.button>
-                );
-              })}
             </motion.div>
           </div>
         </motion.section>
