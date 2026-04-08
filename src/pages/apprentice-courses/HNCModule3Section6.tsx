@@ -26,7 +26,7 @@ const HNCModule3Section6 = () => {
       description:
         'Understanding different types of electrical losses and their impact on system efficiency',
       icon: Zap,
-      href: '../h-n-c-module3-section6-6-1',
+      href: '../h-n-c-module3-section6-1',
     },
     {
       number: 'Subsection 2',
@@ -34,7 +34,7 @@ const HNCModule3Section6 = () => {
       description:
         'Methods for calculating and measuring electrical equipment and system efficiency',
       icon: TrendingDown,
-      href: '../h-n-c-module3-section6-6-2',
+      href: '../h-n-c-module3-section6-2',
     },
     {
       number: 'Subsection 3',
@@ -42,7 +42,7 @@ const HNCModule3Section6 = () => {
       description:
         'Strategies for optimising electrical loads and reducing peak demand in buildings',
       icon: BarChart3,
-      href: '../h-n-c-module3-section6-6-3',
+      href: '../h-n-c-module3-section6-3',
     },
     {
       number: 'Subsection 4',
@@ -50,14 +50,14 @@ const HNCModule3Section6 = () => {
       description:
         'Selection and design of high-efficiency motors and lighting systems for buildings',
       icon: Lightbulb,
-      href: '../h-n-c-module3-section6-6-4',
+      href: '../h-n-c-module3-section6-4',
     },
     {
       number: 'Subsection 5',
       title: 'Smart controls and building automation',
       description: 'Intelligent control systems for optimising energy use in building services',
       icon: Cpu,
-      href: '../h-n-c-module3-section6-6-5',
+      href: '../h-n-c-module3-section6-5',
     },
     {
       number: 'Subsection 6',
@@ -65,7 +65,7 @@ const HNCModule3Section6 = () => {
       description:
         'Regulatory frameworks and standards governing energy efficiency in electrical installations',
       icon: FileText,
-      href: '../h-n-c-module3-section6-6-6',
+      href: '../h-n-c-module3-section6-6',
     },
     {
       number: 'Subsection 7',
@@ -73,7 +73,7 @@ const HNCModule3Section6 = () => {
       description:
         'Incorporating renewable energy sources and energy storage into building electrical systems',
       icon: Leaf,
-      href: '../h-n-c-module3-section6-6-7',
+      href: '../h-n-c-module3-section6-7',
     },
   ];
 
