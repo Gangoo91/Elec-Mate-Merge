@@ -62,7 +62,7 @@ const FormField = ({
       {required && <span className="text-elec-yellow ml-1">*</span>}
     </Label>
     {children}
-    {hint && <p className="text-xs text-white">{hint}</p>}
+    {hint && <span className="text-xs text-white block mt-1">{hint}</span>}
   </div>
 );
 
@@ -250,11 +250,10 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
               ))}
             </div>
             {formData.description && (
-              <p className="text-xs text-elec-yellow/80 flex items-center gap-1 mt-2">
-                <div className="w-1 h-1 rounded-full bg-elec-yellow"></div>
-                Recommended: {getRecommendedInterval(formData.description)} years for this property
-                type
-              </p>
+              <span className="text-xs text-elec-yellow/80 flex items-center gap-1 mt-2">
+                <span className="w-1 h-1 rounded-full bg-elec-yellow inline-block"></span>
+                Recommended: {getRecommendedInterval(formData.description)} years for this property type
+              </span>
             )}
           </FormField>
 

@@ -77,7 +77,7 @@ const FormField = ({
       {required && ' *'}
     </Label>
     {children}
-    {hint && <p className="text-xs text-white">{hint}</p>}
+    {hint && <span className="text-xs text-white block mt-1">{hint}</span>}
   </div>
 );
 

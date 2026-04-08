@@ -439,12 +439,7 @@ const EICRInspectionChecklist = ({
             const item = inspectionItems.find(i => i.id === si.id);
             return item?.outcome && item.outcome !== '';
           });
-          if (prevAllDone && expandedSections[prevSection.id]) {
-            setExpandedSections(prev => ({ ...prev, [prevSection.id]: false, [section.id]: true }));
-            setTimeout(() => {
-              document.querySelector(`[data-section="${section.id}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 200);
-          }
+          // Don't auto-collapse or auto-scroll — user might want to tweak individual items after bulk action
         }
         break;
       }

@@ -67,7 +67,7 @@ const FormField = ({
       {label}{required && ' *'}
     </Label>
     {children}
-    {hint && <p className="text-[10px] text-white mt-1">{hint}</p>}
+    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
   </div>
 );
 
