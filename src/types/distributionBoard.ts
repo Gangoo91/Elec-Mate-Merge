@@ -68,6 +68,12 @@ export interface DistributionBoard {
   spdT2: boolean; // Type 2 SPD installed
   spdT3: boolean; // Type 3 SPD installed
 
+  // SPD Details (make, model, location, rated current)
+  spdMake?: string;
+  spdModel?: string;
+  spdLocation?: string;
+  spdRatedCurrentKa?: string;
+
   // Board details (for wizard collection)
   make?: string; // Manufacturer (from BOARD_MANUFACTURERS)
   model?: string; // Model number/name

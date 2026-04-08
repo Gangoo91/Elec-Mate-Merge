@@ -1291,9 +1291,19 @@
       <div class="inline-form" style="margin-top: 4px">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Limitations:</span>
-          <span class="inline-value wide"
-            >{{ installation_details.limitations_of_inspection }}</span
-          >
+          <span class="inline-value wide">{{ installation_details.limitations_of_inspection }}</span>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Operational Limitations:</span>
+          <span class="inline-value wide">{{ installation_details.operational_limitations }}</span>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Reasons for Interval:</span>
+          <span class="inline-value wide">{{ installation_details.interval_reasons }}</span>
         </div>
       </div>
     </div>
@@ -1419,26 +1429,44 @@
                 <div class="data-field-value">{{ supply_characteristics.phases }}</div>
               </div>
               <div class="data-field">
+                <div class="data-field-label">AC/DC</div>
+                <div class="data-field-value">{{ supply_characteristics.supply_ac_dc }}</div>
+              </div>
+              <div class="data-field">
+                <div class="data-field-label">Conductor Configuration</div>
+                <div class="data-field-value">{{ supply_characteristics.conductor_configuration }}</div>
+              </div>
+              <div class="data-field">
                 <div class="data-field-label">Main Protective Device</div>
                 <div class="data-field-value">{{ main_protective_device.device_type }}</div>
               </div>
               <div class="data-field">
+                <div class="data-field-label">BS EN</div>
+                <div class="data-field-value">{{ main_protective_device.bs_en }}</div>
+              </div>
+              <div class="data-field">
                 <div class="data-field-label">Main Switch Rating</div>
-                <div class="data-field-value">
-                  {{ main_protective_device.main_switch_rating }} A
-                </div>
+                <div class="data-field-value">{{ main_protective_device.main_switch_rating }} A</div>
               </div>
               <div class="data-field">
                 <div class="data-field-label">Breaking Capacity</div>
-                <div class="data-field-value">
-                  {{ main_protective_device.breaking_capacity }} kA
-                </div>
+                <div class="data-field-value">{{ main_protective_device.breaking_capacity }} kA</div>
+              </div>
+              <div class="data-field">
+                <div class="data-field-label">Fuse/Device Rating</div>
+                <div class="data-field-value">{% if main_protective_device.fuse_device_rating %}{{ main_protective_device.fuse_device_rating }} A{% endif %}</div>
+              </div>
+              <div class="data-field">
+                <div class="data-field-label">Voltage Rating</div>
+                <div class="data-field-value">{% if main_protective_device.main_switch_voltage_rating %}{{ main_protective_device.main_switch_voltage_rating }} V{% endif %}</div>
+              </div>
+              <div class="data-field">
+                <div class="data-field-label">Poles</div>
+                <div class="data-field-value">{{ main_protective_device.main_switch_poles }}</div>
               </div>
               <div class="data-field">
                 <div class="data-field-label">Main Switch Location</div>
-                <div class="data-field-value">
-                  {{ main_protective_device.main_switch_location }}
-                </div>
+                <div class="data-field-value">{{ main_protective_device.main_switch_location }}</div>
               </div>
             </td>
           </tr>
@@ -1544,6 +1572,14 @@
               </td>
             </tr>
           </table>
+          {% if distribution_board_verification.spd_make or distribution_board_verification.spd_model %}
+          <div class="inline-form" style="border: none; padding: 2px 0 0 0; background: transparent">
+            <div class="inline-group"><span class="inline-label">SPD Make:</span><span class="inline-value">{{ distribution_board_verification.spd_make }}</span></div>
+            <div class="inline-group"><span class="inline-label">Model:</span><span class="inline-value">{{ distribution_board_verification.spd_model }}</span></div>
+            <div class="inline-group"><span class="inline-label">Location:</span><span class="inline-value">{{ distribution_board_verification.spd_location }}</span></div>
+            <div class="inline-group"><span class="inline-label">kA:</span><span class="inline-value">{{ distribution_board_verification.spd_rated_current_ka }}</span></div>
+          </div>
+          {% endif %}
         </div>
       </div>
 
@@ -2822,6 +2858,18 @@
               {% if declarations.overall_assessment == 'unsatisfactory' %}✓{% endif %}
               <span class="option-label unsatisfactory-label">UNSATISFACTORY</span>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 6px">
+        <div class="inline-group">
+          <span class="inline-label">Satisfactory for Continued Use:</span>
+          <span class="inline-value">{{ declarations.satisfactory_for_continued_use }}</span>
+        </div>
+        <div class="inline-group">
+          <div class="checkbox-item">
+            <span class="checkbox-box {% if declarations.no_remedial_action %}checked{% endif %}">{% if declarations.no_remedial_action %}✓{% endif %}</span>
+            <label>No remedial action required</label>
           </div>
         </div>
       </div>

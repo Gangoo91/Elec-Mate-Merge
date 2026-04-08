@@ -2141,31 +2141,47 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               : 'bg-white/[0.06] text-white/80'
                         )}
                       >
-                        {isComplete ? <CheckCircle className="h-3.5 w-3.5" /> : board.id === MAIN_BOARD_ID || board.order === 0 ? 'M' : 'S'}
+                        {isComplete ? (
+                          <CheckCircle className="h-3.5 w-3.5" />
+                        ) : board.id === MAIN_BOARD_ID || board.order === 0 ? (
+                          'M'
+                        ) : (
+                          'S'
+                        )}
                       </span>
 
                       {/* Board Info */}
                       <div className="flex-1 min-w-0">
-                        <h3 className={cn('text-sm font-semibold truncate', isComplete ? 'text-green-400' : 'text-white')}>
+                        <h3
+                          className={cn(
+                            'text-sm font-semibold truncate',
+                            isComplete ? 'text-green-400' : 'text-white'
+                          )}
+                        >
                           {board.name}
                         </h3>
                       </div>
 
                       {/* Progress pill */}
-                      <span className={cn(
-                        'text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0',
-                        isComplete
-                          ? 'bg-green-500/15 text-green-400'
-                          : boardProgressPercent > 0
-                            ? 'bg-white/[0.06] text-elec-yellow'
-                            : 'bg-white/[0.04] text-white'
-                      )}>
+                      <span
+                        className={cn(
+                          'text-[10px] font-bold px-2 py-0.5 rounded flex-shrink-0',
+                          isComplete
+                            ? 'bg-green-500/15 text-green-400'
+                            : boardProgressPercent > 0
+                              ? 'bg-white/[0.06] text-elec-yellow'
+                              : 'bg-white/[0.04] text-white'
+                        )}
+                      >
                         {boardCircuits.length} · {boardProgressPercent}%
                       </span>
 
                       {/* Chevron */}
                       <ChevronDown
-                        className={cn('h-4 w-4 text-white transition-transform duration-200 flex-shrink-0', expandedBoards.has(board.id) && 'rotate-180')}
+                        className={cn(
+                          'h-4 w-4 text-white transition-transform duration-200 flex-shrink-0',
+                          expandedBoards.has(board.id) && 'rotate-180'
+                        )}
                       />
                     </button>
                   </CollapsibleTrigger>
@@ -2174,7 +2190,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     {/* Board Details */}
                     <div className="p-4 border-b border-white/[0.06] space-y-4">
                       <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-                      <p className="text-xs font-medium text-white uppercase tracking-wider">Board Details</p>
+                      <p className="text-xs font-medium text-white uppercase tracking-wider">
+                        Board Details
+                      </p>
                       {/* Board Reference & Location */}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
@@ -2202,7 +2220,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       </div>
 
                       {/* Measurements */}
-                      <p className="text-xs font-medium text-white uppercase tracking-wider">Measurements</p>
+                      <p className="text-xs font-medium text-white uppercase tracking-wider">
+                        Measurements
+                      </p>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-xs text-white/80 block mb-1">
@@ -2218,7 +2238,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">Ω</span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">
+                              Ω
+                            </span>
                           </div>
                         </div>
                         <div>
@@ -2235,14 +2257,18 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">kA</span>
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">
+                              kA
+                            </span>
                           </div>
                         </div>
                       </div>
 
                       {/* Verification */}
                       <div className="space-y-2">
-                        <p className="text-xs font-medium text-white uppercase tracking-wider">Verification</p>
+                        <p className="text-xs font-medium text-white uppercase tracking-wider">
+                          Verification
+                        </p>
                         <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
                         <div className="grid grid-cols-2 gap-2 relative z-10">
                           {/* Polarity */}
@@ -2251,7 +2277,11 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              handleUpdateBoard(board.id, 'confirmedCorrectPolarity', !board.confirmedCorrectPolarity);
+                              handleUpdateBoard(
+                                board.id,
+                                'confirmedCorrectPolarity',
+                                !board.confirmedCorrectPolarity
+                              );
                             }}
                             className={cn(
                               'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
@@ -2260,8 +2290,17 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                                 : 'bg-white/[0.05] border border-white/[0.08] text-white'
                             )}
                           >
-                            <div className={cn('w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none', board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-white/40')}>
-                              {board.confirmedCorrectPolarity && <Check className="h-3 w-3 text-white" />}
+                            <div
+                              className={cn(
+                                'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
+                                board.confirmedCorrectPolarity
+                                  ? 'bg-green-500 border-green-500'
+                                  : 'border-white/40'
+                              )}
+                            >
+                              {board.confirmedCorrectPolarity && (
+                                <Check className="h-3 w-3 text-white" />
+                              )}
                             </div>
                             <span className="pointer-events-none">Polarity</span>
                           </button>
@@ -2271,7 +2310,11 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                             onClick={(e) => {
                               e.preventDefault();
                               e.stopPropagation();
-                              handleUpdateBoard(board.id, 'confirmedPhaseSequence', !board.confirmedPhaseSequence);
+                              handleUpdateBoard(
+                                board.id,
+                                'confirmedPhaseSequence',
+                                !board.confirmedPhaseSequence
+                              );
                             }}
                             className={cn(
                               'w-full h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer select-none',
@@ -2280,8 +2323,17 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                                 : 'bg-white/[0.05] border border-white/[0.08] text-white'
                             )}
                           >
-                            <div className={cn('w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none', board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-white/40')}>
-                              {board.confirmedPhaseSequence && <Check className="h-3 w-3 text-white" />}
+                            <div
+                              className={cn(
+                                'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
+                                board.confirmedPhaseSequence
+                                  ? 'bg-green-500 border-green-500'
+                                  : 'border-white/40'
+                              )}
+                            >
+                              {board.confirmedPhaseSequence && (
+                                <Check className="h-3 w-3 text-white" />
+                              )}
                             </div>
                             <span className="pointer-events-none">Phase Seq</span>
                           </button>
@@ -2292,7 +2344,11 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               e.preventDefault();
                               e.stopPropagation();
                               if (!board.spdNA) {
-                                handleUpdateBoard(board.id, 'spdOperationalStatus', !board.spdOperationalStatus);
+                                handleUpdateBoard(
+                                  board.id,
+                                  'spdOperationalStatus',
+                                  !board.spdOperationalStatus
+                                );
                               }
                             }}
                             disabled={board.spdNA}
@@ -2304,8 +2360,17 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               board.spdNA && 'opacity-30 cursor-not-allowed'
                             )}
                           >
-                            <div className={cn('w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none', board.spdOperationalStatus && !board.spdNA ? 'bg-green-500 border-green-500' : 'border-white/40')}>
-                              {board.spdOperationalStatus && !board.spdNA && <Check className="h-3 w-3 text-white" />}
+                            <div
+                              className={cn(
+                                'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
+                                board.spdOperationalStatus && !board.spdNA
+                                  ? 'bg-green-500 border-green-500'
+                                  : 'border-white/40'
+                              )}
+                            >
+                              {board.spdOperationalStatus && !board.spdNA && (
+                                <Check className="h-3 w-3 text-white" />
+                              )}
                             </div>
                             <span className="pointer-events-none">SPD OK</span>
                           </button>
@@ -2328,7 +2393,14 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                                 : 'bg-white/[0.05] border border-white/[0.08] text-white'
                             )}
                           >
-                            <div className={cn('w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none', board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-white/40')}>
+                            <div
+                              className={cn(
+                                'w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none',
+                                board.spdNA
+                                  ? 'bg-elec-yellow border-elec-yellow'
+                                  : 'border-white/40'
+                              )}
+                            >
                               {board.spdNA && <Check className="h-3 w-3 text-black" />}
                             </div>
                             <span className="pointer-events-none">SPD N/A</span>
@@ -2363,6 +2435,73 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                                   </button>
                                 );
                               })}
+                            </div>
+
+                            {/* SPD Details */}
+                            <div className="grid grid-cols-2 gap-2 mt-2">
+                              <div>
+                                <label className="text-[10px] text-white block mb-1">
+                                  SPD Make
+                                </label>
+                                <DebouncedInput
+                                  type="text"
+                                  value={(board as any).spdMake || ''}
+                                  onChange={(value) =>
+                                    handleUpdateBoard(board.id, 'spdMake' as any, value)
+                                  }
+                                  placeholder="e.g. Hager"
+                                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
+                                  style={{ fontSize: '16px' }}
+                                />
+                              </div>
+                              <div>
+                                <label className="text-[10px] text-white block mb-1">
+                                  SPD Model
+                                </label>
+                                <DebouncedInput
+                                  type="text"
+                                  value={(board as any).spdModel || ''}
+                                  onChange={(value) =>
+                                    handleUpdateBoard(board.id, 'spdModel' as any, value)
+                                  }
+                                  placeholder="e.g. SPN115"
+                                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
+                                  style={{ fontSize: '16px' }}
+                                />
+                              </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 mt-2">
+                              <div>
+                                <label className="text-[10px] text-white block mb-1">
+                                  SPD Location
+                                </label>
+                                <DebouncedInput
+                                  type="text"
+                                  value={(board as any).spdLocation || ''}
+                                  onChange={(value) =>
+                                    handleUpdateBoard(board.id, 'spdLocation' as any, value)
+                                  }
+                                  placeholder="e.g. Main DB"
+                                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
+                                  style={{ fontSize: '16px' }}
+                                />
+                              </div>
+                              <div>
+                                <label className="text-[10px] text-white block mb-1">
+                                  Rated kA
+                                </label>
+                                <DebouncedInput
+                                  type="text"
+                                  inputMode="decimal"
+                                  value={(board as any).spdRatedCurrentKa || ''}
+                                  onChange={(value) =>
+                                    handleUpdateBoard(board.id, 'spdRatedCurrentKa' as any, value)
+                                  }
+                                  placeholder="e.g. 12.5"
+                                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
+                                  style={{ fontSize: '16px' }}
+                                />
+                              </div>
                             </div>
                           </div>
                         )}
@@ -2412,7 +2551,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     <div className="bg-background">
                       {boardCircuits.length === 0 ? (
                         <div className="p-6 text-center space-y-3">
-                          <p className="text-xs text-white">No circuits — tap Add Circuit or AI Scan</p>
+                          <p className="text-xs text-white">
+                            No circuits — tap Add Circuit or AI Scan
+                          </p>
                           <Button
                             onClick={() => addCircuitToBoard(board.id)}
                             className="h-11 bg-elec-yellow text-black font-medium hover:bg-elec-yellow/90 touch-manipulation"
@@ -2653,7 +2794,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       )}
 
       {/* Info Sections */}
-      <div className={useMobileView ? '-mx-4 pb-24 mt-4 space-y-0 border-t border-white/[0.06]' : 'grid grid-cols-2 gap-4 mt-6'}>
+      <div
+        className={
+          useMobileView
+            ? '-mx-4 pb-24 mt-4 space-y-0 border-t border-white/[0.06]'
+            : 'grid grid-cols-2 gap-4 mt-6'
+        }
+      >
         {/* Test Instruments */}
         <div className={useMobileView ? 'px-4 py-5' : 'p-4'}>
           <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
