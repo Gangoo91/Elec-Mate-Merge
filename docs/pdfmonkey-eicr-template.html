@@ -7,12 +7,12 @@
     <style>
       @page {
         size: A4;
-        margin: 6mm 8mm 6mm 8mm;
+        margin: 3mm 4mm 3mm 4mm;
       }
 
       @page schedule {
         size: A4 landscape;
-        margin: 6mm;
+        margin: 3mm;
       }
 
       .schedule-page {
@@ -28,9 +28,9 @@
 
       body {
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        font-size: 8.5px;
+        font-size: 9.5px;
         line-height: 1.4;
-        color: #1a1a1a;
+        color: #000;
         background: #fff;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
@@ -42,8 +42,8 @@
       .doc-header {
         background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
         color: #fff;
-        padding: 12px 16px;
-        margin-bottom: 10px;
+        padding: 8px 10px;
+        margin-bottom: 6px;
         border-radius: 2px;
         position: relative;
         overflow: hidden;
@@ -77,7 +77,7 @@
       }
 
       .doc-subtitle {
-        font-size: 7.5px;
+        font-size: 8.5px;
         font-weight: 400;
         opacity: 0.85;
         letter-spacing: 0.3px;
@@ -146,7 +146,7 @@
            SECTION STYLING
            ============================================= */
       .section {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
       }
 
       .section-title {
@@ -163,7 +163,7 @@
 
       .section-subtitle {
         background: #f1f5f9;
-        color: #334155;
+        color: #000;
         font-size: 8px;
         font-weight: 600;
         padding: 5px 12px;
@@ -187,9 +187,9 @@
 
       .form-label {
         display: table-cell;
-        font-size: 7.5px;
+        font-size: 8.5px;
         font-weight: 600;
-        color: #475569;
+        color: #000;
         padding: 5px 8px;
         width: 130px;
         vertical-align: middle;
@@ -199,8 +199,8 @@
 
       .form-value {
         display: table-cell;
-        font-size: 8.5px;
-        color: #1e293b;
+        font-size: 9.5px;
+        color: #000;
         padding: 5px 8px;
         vertical-align: middle;
         border: 1px solid #e2e8f0;
@@ -211,8 +211,8 @@
       .form-value select {
         border: none;
         background: transparent;
-        font-size: 8.5px;
-        color: #1e293b;
+        font-size: 9.5px;
+        color: #000;
         width: 100%;
         font-family: inherit;
       }
@@ -235,21 +235,21 @@
       }
 
       .inline-label {
-        font-size: 7.5px;
+        font-size: 8.5px;
         font-weight: 600;
-        color: #64748b;
+        color: #000;
         white-space: nowrap;
       }
 
       .inline-value {
         font-size: 8px;
-        color: #1e293b;
+        color: #000;
         padding: 4px 6px;
         background: #fff;
         border: 1px solid #cbd5e1;
         border-radius: 2px;
         min-width: 60px;
-        min-height: 22px;
+        min-height: 24px;
         line-height: 1.4;
       }
 
@@ -281,8 +281,8 @@
       }
 
       .checkbox-item label {
-        font-size: 7.5px;
-        color: #334155;
+        font-size: 8.5px;
+        color: #000;
       }
 
       .checkbox-box {
@@ -349,15 +349,15 @@
       }
 
       .data-field-label {
-        font-size: 7px;
+        font-size: 8px;
         font-weight: 600;
-        color: #64748b;
+        color: #000;
         margin-bottom: 2px;
       }
 
       .data-field-value {
-        font-size: 8.5px;
-        color: #1e293b;
+        font-size: 9.5px;
+        color: #000;
         padding: 3px 6px;
         background: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -370,7 +370,7 @@
       .board-card {
         border: 1px solid #cbd5e1;
         border-radius: 3px;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         overflow: hidden;
       }
 
@@ -389,7 +389,7 @@
       }
 
       .board-card-badge {
-        font-size: 7px;
+        font-size: 8px;
         background: rgba(255, 255, 255, 0.2);
         padding: 2px 8px;
         border-radius: 10px;
@@ -406,7 +406,7 @@
       .inspection-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 7px;
+        font-size: 8px;
         margin-bottom: 6px;
       }
 
@@ -417,7 +417,7 @@
         padding: 5px 4px;
         text-align: center;
         border: 1px solid #0f172a;
-        font-size: 6.5px;
+        font-size: 7.5px;
       }
 
       .inspection-table thead th.desc-header {
@@ -429,33 +429,33 @@
         padding: 4px;
         border: 1px solid #e2e8f0;
         text-align: center;
-        font-size: 7px;
+        font-size: 8px;
       }
 
       .inspection-table tbody td.item-num {
         width: 35px;
         font-weight: 600;
-        color: #475569;
+        color: #000;
         background: #f8fafc;
       }
 
       .inspection-table tbody td.item-desc {
         text-align: left;
         padding-left: 6px;
-        color: #334155;
+        color: #000;
       }
 
       .inspection-table tbody td.item-desc .item-reg {
-        font-size: 6.5px;
-        color: #64748b;
+        font-size: 7.5px;
+        color: #000;
         font-weight: 500;
         white-space: nowrap;
       }
 
       .inspection-table tbody td.item-clause {
         text-align: center;
-        font-size: 6.5px;
-        color: #64748b;
+        font-size: 7.5px;
+        color: #000;
         width: 70px;
       }
 
@@ -476,10 +476,10 @@
       .inspection-table .section-header-row td {
         background: #e2e8f0;
         font-weight: 700;
-        color: #1e293b;
+        color: #000;
         text-align: left;
         padding: 5px 8px;
-        font-size: 7.5px;
+        font-size: 8.5px;
       }
 
       .inspection-table tbody tr:nth-child(even) td:not(.item-num) {
@@ -508,7 +508,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        font-size: 7.5px;
+        font-size: 8.5px;
         margin-bottom: 4px;
       }
 
@@ -516,7 +516,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        font-size: 7.5px;
+        font-size: 8.5px;
         padding-top: 4px;
         border-top: 1px solid rgba(255, 255, 255, 0.2);
       }
@@ -574,7 +574,7 @@
         text-align: left;
         padding-left: 6px;
         font-style: italic;
-        color: #64748b;
+        color: #000;
         font-size: 8px;
       }
 
@@ -624,9 +624,9 @@
       }
 
       .sig-field-label {
-        font-size: 7px;
+        font-size: 8px;
         font-weight: 600;
-        color: #64748b;
+        color: #000;
         min-width: 65px;
         flex-shrink: 0;
       }
@@ -634,12 +634,12 @@
       .sig-field-value {
         flex: 1;
         font-size: 8px;
-        color: #1e293b;
+        color: #000;
         padding: 4px 6px;
         background: #fff;
         border: 1px solid #e2e8f0;
         border-radius: 2px;
-        min-height: 22px;
+        min-height: 24px;
       }
 
       .sig-field-value.signature {
@@ -675,7 +675,7 @@
         flex: 1;
         padding: 5px 8px;
         font-size: 8px;
-        color: #334155;
+        color: #000;
         background: #fff;
       }
 
@@ -708,7 +708,7 @@
         border-radius: 2px;
         padding: 8px;
         margin-top: 6px;
-        font-size: 7px;
+        font-size: 8px;
         line-height: 1.5;
       }
 
@@ -722,7 +722,7 @@
       .observation-card {
         border: 1px solid #e2e8f0;
         border-radius: 4px;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
         overflow: hidden;
         page-break-inside: avoid;
       }
@@ -754,7 +754,7 @@
       }
 
       .observation-classification {
-        margin-bottom: 10px;
+        margin-bottom: 6px;
       }
 
       .classification-badge {
@@ -792,7 +792,7 @@
       }
 
       .observation-section {
-        margin-bottom: 10px;
+        margin-bottom: 6px;
       }
 
       .observation-section:last-child {
@@ -802,7 +802,7 @@
       .observation-section-title {
         font-size: 8px;
         font-weight: 600;
-        color: #475569;
+        color: #000;
         margin-bottom: 4px;
         padding-bottom: 3px;
         border-bottom: 1px solid #e2e8f0;
@@ -810,7 +810,7 @@
 
       .observation-section-content {
         font-size: 8px;
-        color: #334155;
+        color: #000;
         line-height: 1.5;
         padding: 8px;
         background: #fff;
@@ -849,7 +849,7 @@
       .guidance-intro {
         font-size: 8px;
         font-weight: 600;
-        color: #1e293b;
+        color: #000;
         margin-bottom: 6px;
         padding: 6px 8px;
         background: #f1f5f9;
@@ -863,9 +863,9 @@
 
       .guidance-col {
         flex: 1;
-        font-size: 6.5px;
+        font-size: 7.5px;
         line-height: 1.4;
-        color: #475569;
+        color: #000;
       }
 
       .guidance-col p {
@@ -874,7 +874,7 @@
       }
 
       .guidance-col strong {
-        color: #1e293b;
+        color: #000;
       }
 
       /* =============================================
@@ -889,8 +889,8 @@
       }
 
       .declaration-text {
-        font-size: 7px;
-        color: #475569;
+        font-size: 8px;
+        color: #000;
         line-height: 1.6;
         text-align: justify;
       }
@@ -911,7 +911,7 @@
       .assessment-label {
         font-size: 8px;
         font-weight: 600;
-        color: #475569;
+        color: #000;
       }
 
       .assessment-options {
@@ -947,7 +947,7 @@
       .final-assessment-box {
         border: 2px solid #1e293b;
         border-radius: 4px;
-        padding: 12px 16px;
+        padding: 8px 10px;
         background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
       }
 
@@ -961,7 +961,7 @@
       .final-assessment-label {
         font-size: 9px;
         font-weight: 600;
-        color: #334155;
+        color: #000;
       }
 
       .final-assessment-options {
@@ -1060,17 +1060,17 @@
         margin-top: 8px;
       }
       .mb-2 {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
       }
       .small {
-        font-size: 7px;
+        font-size: 8px;
       }
 
       /* Special list formatting */
       .intake-list {
         margin: 0;
         padding-left: 12px;
-        font-size: 6.5px;
+        font-size: 7.5px;
       }
 
       .intake-list li {
@@ -1110,6 +1110,7 @@
     </div>
 
     <!-- SECTION A: CLIENT DETAILS -->
+
     <div class="section">
       <div class="section-title">Section A: Details of the Client</div>
       <div class="form-grid">
@@ -1452,7 +1453,7 @@
     </div>
 
     <!-- SECTION G: BONDING -->
-    <div class="section">
+    <div class="section avoid-break">
       <div class="section-title">Section G: Main Protective Bonding Conductors</div>
       <div class="inline-form">
         <div class="inline-group">
@@ -1516,78 +1517,33 @@
           <span class="board-card-badge">DB1</span>
         </div>
         <div class="board-card-body">
-          <div class="inline-form" style="border: none; padding: 0; background: transparent">
-            <div class="inline-group">
-              <span class="inline-label">Location:</span>
-              <span class="inline-value">{{ distribution_board.board_location }}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Manufacturer:</span>
-              <span class="inline-value">{{ distribution_board.board_manufacturer }}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Type:</span>
-              <span class="inline-value">{{ distribution_board.board_type }}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Ways:</span>
-              <span class="inline-value"
-                >{{ distribution_board.board_size }}{% if distribution_board.board_ways %} / {{
-                distribution_board.board_ways }}{% endif %}</span
-              >
-            </div>
-          </div>
-          <div
-            class="inline-form"
-            style="border: none; padding: 0; background: transparent; margin-top: 4px"
-          >
-            <div class="inline-group">
-              <span class="inline-label">Zdb (Ω):</span>
-              <span class="inline-value">{{ distribution_board_verification.zdb }}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Ipf (kA):</span>
-              <span class="inline-value">{{ distribution_board_verification.ipf }}</span>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <span
-                  class="checkbox-box {% if distribution_board_verification.confirmed_correct_polarity %}checked{% endif %}"
-                  >{% if distribution_board_verification.confirmed_correct_polarity %}✓{% endif
-                  %}</span
-                >
-                <label>Polarity Confirmed</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <span
-                  class="checkbox-box {% if distribution_board_verification.confirmed_phase_sequence %}checked{% endif %}"
-                  >{% if distribution_board_verification.confirmed_phase_sequence %}✓{% endif
-                  %}</span
-                >
-                <label>Phase Sequence</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <span
-                  class="checkbox-box {% if distribution_board_verification.spd_operational_status %}checked{% endif %}"
-                  >{% if distribution_board_verification.spd_operational_status %}✓{% endif %}</span
-                >
-                <label>SPD Operational</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <span
-                  class="checkbox-box {% if distribution_board_verification.spd_na %}checked{% endif %}"
-                  >{% if distribution_board_verification.spd_na %}✓{% endif %}</span
-                >
-                <label>SPD N/A</label>
-              </div>
-            </div>
-          </div>
+          <!-- Row 1: Board Details -->
+          <table class="data-table" style="margin-bottom: 4px">
+            <tr>
+              <td style="width: 25%"><div class="data-field"><div class="data-field-label">Location</div><div class="data-field-value">{{ distribution_board.board_location }}</div></div></td>
+              <td style="width: 25%"><div class="data-field"><div class="data-field-label">Manufacturer</div><div class="data-field-value">{{ distribution_board.board_manufacturer }}</div></div></td>
+              <td style="width: 25%"><div class="data-field"><div class="data-field-label">Type</div><div class="data-field-value">{{ distribution_board.board_type }}</div></div></td>
+              <td style="width: 25%"><div class="data-field"><div class="data-field-label">Ways</div><div class="data-field-value">{{ distribution_board.board_size }}{% if distribution_board.board_ways %} / {{ distribution_board.board_ways }}{% endif %}</div></div></td>
+            </tr>
+          </table>
+          <!-- Row 2: Verification -->
+          <table class="data-table" style="margin-bottom: 0">
+            <tr>
+              <td style="width: 15%"><div class="data-field"><div class="data-field-label">Zdb (Ω)</div><div class="data-field-value">{{ distribution_board_verification.zdb }}</div></div></td>
+              <td style="width: 15%"><div class="data-field"><div class="data-field-label">Ipf (kA)</div><div class="data-field-value">{{ distribution_board_verification.ipf }}</div></div></td>
+              <td style="width: 70%">
+                <div class="checkbox-row" style="padding: 4px 0">
+                  <div class="checkbox-item"><span class="checkbox-box {% if distribution_board_verification.confirmed_correct_polarity %}checked{% endif %}">{% if distribution_board_verification.confirmed_correct_polarity %}✓{% endif %}</span><label>Polarity</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if distribution_board_verification.confirmed_phase_sequence %}checked{% endif %}">{% if distribution_board_verification.confirmed_phase_sequence %}✓{% endif %}</span><label>Phase Seq</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if distribution_board_verification.spd_operational_status %}checked{% endif %}">{% if distribution_board_verification.spd_operational_status %}✓{% endif %}</span><label>SPD OK</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if distribution_board_verification.spd_na %}checked{% endif %}">{% if distribution_board_verification.spd_na %}✓{% endif %}</span><label>SPD N/A</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if distribution_board_verification.spd_t1 %}checked{% endif %}">{% if distribution_board_verification.spd_t1 %}✓{% endif %}</span><label>T1</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if distribution_board_verification.spd_t2 %}checked{% endif %}">{% if distribution_board_verification.spd_t2 %}✓{% endif %}</span><label>T2</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if distribution_board_verification.spd_t3 %}checked{% endif %}">{% if distribution_board_verification.spd_t3 %}✓{% endif %}</span><label>T3</label></div>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
 
@@ -1599,73 +1555,28 @@
           <span class="board-card-badge">DB{{ forloop.index | plus: 1 }}</span>
         </div>
         <div class="board-card-body">
-          <div class="inline-form" style="border: none; padding: 0; background: transparent">
-            <div class="inline-group">
-              <span class="inline-label">Location:</span>
-              <span class="inline-value">{{ board.location }}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Manufacturer:</span>
-              <span class="inline-value">{{ board.manufacturer }}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Type:</span>
-              <span class="inline-value">{{ board.board_type }}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Ways:</span>
-              <span class="inline-value">{{ board.ways }}</span>
-            </div>
-          </div>
-          <div
-            class="inline-form"
-            style="border: none; padding: 0; background: transparent; margin-top: 4px"
-          >
-            <div class="inline-group">
-              <span class="inline-label">Zdb (Ω):</span>
-              <span class="inline-value">{{ board.zdb }}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Ipf (kA):</span>
-              <span class="inline-value">{{ board.ipf }}</span>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <span
-                  class="checkbox-box {% if board.polarity_confirmed %}checked{% endif %}"
-                  >{% if board.polarity_confirmed %}✓{% endif %}</span
-                >
-                <label>Polarity Confirmed</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <span
-                  class="checkbox-box {% if board.phase_sequence_confirmed %}checked{% endif %}"
-                  >{% if board.phase_sequence_confirmed %}✓{% endif %}</span
-                >
-                <label>Phase Sequence</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <span
-                  class="checkbox-box {% if board.spd_operational %}checked{% endif %}"
-                  >{% if board.spd_operational %}✓{% endif %}</span
-                >
-                <label>SPD Operational</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <span
-                  class="checkbox-box {% if board.spd_na %}checked{% endif %}"
-                  >{% if board.spd_na %}✓{% endif %}</span
-                >
-                <label>SPD N/A</label>
-              </div>
-            </div>
-          </div>
+          <table class="data-table" style="margin-bottom: 4px">
+            <tr>
+              <td style="width: 25%"><div class="data-field"><div class="data-field-label">Location</div><div class="data-field-value">{{ board.location }}</div></div></td>
+              <td style="width: 25%"><div class="data-field"><div class="data-field-label">Manufacturer</div><div class="data-field-value">{{ board.manufacturer }}</div></div></td>
+              <td style="width: 25%"><div class="data-field"><div class="data-field-label">Type</div><div class="data-field-value">{{ board.board_type }}</div></div></td>
+              <td style="width: 25%"><div class="data-field"><div class="data-field-label">Ways</div><div class="data-field-value">{{ board.ways }}</div></div></td>
+            </tr>
+          </table>
+          <table class="data-table" style="margin-bottom: 0">
+            <tr>
+              <td style="width: 15%"><div class="data-field"><div class="data-field-label">Zdb (Ω)</div><div class="data-field-value">{{ board.zdb }}</div></div></td>
+              <td style="width: 15%"><div class="data-field"><div class="data-field-label">Ipf (kA)</div><div class="data-field-value">{{ board.ipf }}</div></div></td>
+              <td style="width: 70%">
+                <div class="checkbox-row" style="padding: 4px 0">
+                  <div class="checkbox-item"><span class="checkbox-box {% if board.polarity_confirmed %}checked{% endif %}">{% if board.polarity_confirmed %}✓{% endif %}</span><label>Polarity</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if board.phase_sequence_confirmed %}checked{% endif %}">{% if board.phase_sequence_confirmed %}✓{% endif %}</span><label>Phase Seq</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if board.spd_operational %}checked{% endif %}">{% if board.spd_operational %}✓{% endif %}</span><label>SPD OK</label></div>
+                  <div class="checkbox-item"><span class="checkbox-box {% if board.spd_na %}checked{% endif %}">{% if board.spd_na %}✓{% endif %}</span><label>SPD N/A</label></div>
+                </div>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
       {% endfor %}
@@ -1684,6 +1595,14 @@
         <div class="inline-group">
           <span class="inline-label">RCD Type:</span>
           <span class="inline-value">{{ rcd_details.rcd_type }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Time Delay (ms):</span>
+          <span class="inline-value">{{ rcd_details.rcd_time_delay }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Measured (ms):</span>
+          <span class="inline-value">{{ rcd_details.rcd_measured_time }}</span>
         </div>
       </div>
 
@@ -2828,7 +2747,7 @@
             <span class="sig-field-value" style="max-width: 80px"
               >{{ declarations.inspected_by.cp_scheme }}</span
             >
-            <span style="font-size: 7px; margin-left: 8px">
+            <span style="font-size: 8px; margin-left: 8px">
               {% if declarations.inspected_by.cp_scheme_na %}N/A{% endif %}
             </span>
           </div>
@@ -3096,7 +3015,7 @@
         </div>
         {% endfor %} {% if observations.size == 0 %}
         <div class="observations-row">
-          <div class="observations-text" style="color: #64748b; font-style: italic">
+          <div class="observations-text" style="color: #000; font-style: italic">
             No observations recorded
           </div>
           <div class="observations-code">-</div>

@@ -15,7 +15,7 @@ import {
 
 interface BoardSetupCardProps {
   board: DistributionBoard;
-  onUpdate: (field: keyof DistributionBoard, value: any) => void;
+  onUpdate: (field: keyof DistributionBoard | Record<string, any>, value?: any) => void;
   onRemove?: () => void;
   isRemovable?: boolean;
   className?: string;
@@ -208,10 +208,8 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 <MobileSelectPicker
                   value={board.incomingDeviceBsEn || ''}
                   onValueChange={(value) => {
-                    onUpdate('incomingDeviceBsEn', value);
-                    // Clear type + rating when BS EN changes (may no longer be valid)
-                    onUpdate('incomingDeviceType', '');
-                    onUpdate('incomingDeviceRating', '');
+                    // Batch update: set BS EN and clear dependent fields
+                    onUpdate({ incomingDeviceBsEn: value, incomingDeviceType: '', incomingDeviceRating: '' });
                   }}
                   options={BS_EN_OPTIONS}
                   placeholder="Select"
@@ -270,9 +268,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 <MobileSelectPicker
                   value={board.mainSwitchBsEn || ''}
                   onValueChange={(value) => {
-                    onUpdate('mainSwitchBsEn', value);
-                    onUpdate('mainSwitchType', '');
-                    onUpdate('mainSwitchRating', '');
+                    onUpdate({ mainSwitchBsEn: value, mainSwitchType: '', mainSwitchRating: '' });
                   }}
                   options={BS_EN_OPTIONS}
                   placeholder="Select"

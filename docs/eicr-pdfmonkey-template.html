@@ -7,12 +7,12 @@
     <style>
       @page {
         size: A4;
-        margin: 8mm 10mm 12mm 10mm;
+        margin: 3mm 4mm 3mm 4mm;
       }
 
       @page schedule {
         size: A4 landscape;
-        margin: 6mm;
+        margin: 3mm;
       }
 
       .schedule-page {
@@ -28,9 +28,9 @@
 
       body {
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        font-size: 8.5px;
+        font-size: 9.5px;
         line-height: 1.4;
-        color: #1a1a1a;
+        color: #000;
         background: #fff;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
@@ -42,8 +42,8 @@
       .doc-header {
         background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
         color: #fff;
-        padding: 12px 16px;
-        margin-bottom: 10px;
+        padding: 8px 10px;
+        margin-bottom: 6px;
         border-radius: 2px;
         position: relative;
         overflow: hidden;
@@ -77,7 +77,7 @@
       }
 
       .doc-subtitle {
-        font-size: 7.5px;
+        font-size: 9.5px;
         font-weight: 400;
         opacity: 0.85;
         letter-spacing: 0.3px;
@@ -123,28 +123,29 @@
            SECTION STYLING
            ============================================= */
       .section {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
       }
 
       .section-title {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
         color: #fff;
-        font-size: 9px;
+        font-size: 9.5px;
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.8px;
-        padding: 6px 12px;
-        margin-bottom: 6px;
+        padding: 5px 8px;
+        margin-bottom: 5px;
         border-left: 3px solid #f59e0b;
       }
 
       .section-subtitle {
         background: #f1f5f9;
-        color: #334155;
-        font-size: 8px;
+        color: #000;
+        font-size: 9px;
         font-weight: 600;
-        padding: 5px 12px;
-        margin-bottom: 4px;
+        padding: 5px 8px;
+        margin-bottom: 5px;
+        margin-top: 6px;
         border-left: 3px solid #64748b;
       }
 
@@ -164,11 +165,11 @@
 
       .form-label {
         display: table-cell;
-        font-size: 7.5px;
+        font-size: 9px;
         font-weight: 600;
-        color: #475569;
+        color: #000;
         padding: 5px 8px;
-        width: 130px;
+        width: 120px;
         vertical-align: middle;
         background: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -176,8 +177,8 @@
 
       .form-value {
         display: table-cell;
-        font-size: 8.5px;
-        color: #1e293b;
+        font-size: 9.5px;
+        color: #000;
         padding: 5px 8px;
         vertical-align: middle;
         border: 1px solid #e2e8f0;
@@ -188,8 +189,8 @@
       .form-value select {
         border: none;
         background: transparent;
-        font-size: 8.5px;
-        color: #1e293b;
+        font-size: 9.5px;
+        color: #000;
         width: 100%;
         font-family: inherit;
       }
@@ -198,7 +199,7 @@
       .inline-form {
         display: flex;
         flex-wrap: wrap;
-        gap: 4px;
+        gap: 6px;
         padding: 6px;
         background: #fafbfc;
         border: 1px solid #e2e8f0;
@@ -208,26 +209,26 @@
       .inline-group {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: 5px;
       }
 
       .inline-label {
-        font-size: 7.5px;
+        font-size: 9.5px;
         font-weight: 600;
-        color: #64748b;
+        color: #000;
         white-space: nowrap;
       }
 
       .inline-value {
-        font-size: 8px;
-        color: #1e293b;
+        font-size: 9.5px;
+        color: #000;
         padding: 4px 6px;
         background: #fff;
         border: 1px solid #cbd5e1;
         border-radius: 2px;
         min-width: 60px;
-        min-height: 22px;
-        line-height: 1.4;
+        min-height: 24px;
+        line-height: 1.5;
       }
 
       .inline-value.wide {
@@ -252,14 +253,14 @@
       }
 
       .checkbox-item input[type='checkbox'] {
-        width: 11px;
-        height: 11px;
+        width: 12px;
+        height: 12px;
         accent-color: #0f172a;
       }
 
       .checkbox-item label {
-        font-size: 7.5px;
-        color: #334155;
+        font-size: 9.5px;
+        color: #000;
       }
 
       /* =============================================
@@ -302,7 +303,7 @@
       }
 
       .data-field {
-        margin-bottom: 6px;
+        margin-bottom: 7px;
       }
 
       .data-field:last-child {
@@ -310,19 +311,20 @@
       }
 
       .data-field-label {
-        font-size: 7px;
+        font-size: 8.5px;
         font-weight: 600;
-        color: #64748b;
-        margin-bottom: 2px;
+        color: #000;
+        margin-bottom: 3px;
       }
 
       .data-field-value {
-        font-size: 8.5px;
-        color: #1e293b;
-        padding: 3px 6px;
+        font-size: 9.5px;
+        color: #000;
+        padding: 4px 6px;
         background: #f8fafc;
         border: 1px solid #e2e8f0;
         border-radius: 2px;
+        min-height: 22px;
       }
 
       /* =============================================
@@ -331,7 +333,7 @@
       .board-card {
         border: 1px solid #cbd5e1;
         border-radius: 3px;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         overflow: hidden;
       }
 
@@ -350,7 +352,7 @@
       }
 
       .board-card-badge {
-        font-size: 7px;
+        font-size: 8px;
         background: rgba(255, 255, 255, 0.2);
         padding: 2px 8px;
         border-radius: 10px;
@@ -367,7 +369,7 @@
       .inspection-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 7px;
+        font-size: 8px;
         margin-bottom: 6px;
       }
 
@@ -390,20 +392,20 @@
         padding: 4px;
         border: 1px solid #e2e8f0;
         text-align: center;
-        font-size: 7px;
+        font-size: 8px;
       }
 
       .inspection-table tbody td.item-num {
         width: 35px;
         font-weight: 600;
-        color: #475569;
+        color: #000;
         background: #f8fafc;
       }
 
       .inspection-table tbody td.item-desc {
         text-align: left;
         padding-left: 6px;
-        color: #334155;
+        color: #000;
       }
 
       .inspection-table tbody td.outcome {
@@ -423,10 +425,10 @@
       .inspection-table .section-header-row td {
         background: #e2e8f0;
         font-weight: 700;
-        color: #1e293b;
+        color: #000;
         text-align: left;
-        padding: 5px 8px;
-        font-size: 7.5px;
+        padding: 3px 6px;
+        font-size: 9.5px;
       }
 
       .inspection-table tbody tr:nth-child(even) td:not(.item-num) {
@@ -439,13 +441,13 @@
       .circuit-table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 8.5px;
+        font-size: 9.5px;
       }
 
       .circuit-table thead tr:first-child th {
         background: #1e293b;
         color: #fff;
-        font-size: 8.5px;
+        font-size: 9.5px;
         padding: 6px 4px;
         border: 1px solid #0f172a;
       }
@@ -453,7 +455,7 @@
       .circuit-table thead tr:nth-child(2) th {
         background: #0f172a;
         color: #fff;
-        font-size: 7.5px;
+        font-size: 9.5px;
         padding: 5px 3px;
         border: 1px solid #0f172a;
         height: 85px;
@@ -465,7 +467,7 @@
         text-orientation: mixed;
         transform: rotate(180deg);
         white-space: nowrap;
-        font-size: 7.5px;
+        font-size: 9.5px;
       }
 
       .circuit-table tbody td {
@@ -486,7 +488,7 @@
         text-align: left;
         padding-left: 5px;
         font-style: italic;
-        color: #64748b;
+        color: #000;
         font-size: 6px;
       }
 
@@ -499,7 +501,7 @@
         background: linear-gradient(135deg, #334155 0%, #475569 100%);
         color: #fff;
         padding: 10px 14px;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         border-radius: 3px;
       }
 
@@ -564,8 +566,8 @@
       .sig-field {
         display: flex;
         align-items: center;
-        margin-bottom: 5px;
-        gap: 6px;
+        margin-bottom: 6px;
+        gap: 8px;
       }
 
       .sig-field:last-child {
@@ -573,22 +575,22 @@
       }
 
       .sig-field-label {
-        font-size: 7px;
+        font-size: 9px;
         font-weight: 600;
-        color: #64748b;
-        min-width: 65px;
+        color: #000;
+        min-width: 75px;
         flex-shrink: 0;
       }
 
       .sig-field-value {
         flex: 1;
-        font-size: 8px;
-        color: #1e293b;
-        padding: 4px 6px;
+        font-size: 9.5px;
+        color: #000;
+        padding: 5px 8px;
         background: #fff;
         border: 1px solid #e2e8f0;
         border-radius: 2px;
-        min-height: 22px;
+        min-height: 24px;
       }
 
       .sig-field-value.signature {
@@ -623,15 +625,15 @@
       .observations-text {
         flex: 1;
         padding: 5px 8px;
-        font-size: 8px;
-        color: #334155;
+        font-size: 9.5px;
+        color: #000;
         background: #fff;
       }
 
       .observations-code {
         width: 60px;
         padding: 5px 8px;
-        font-size: 8px;
+        font-size: 9.5px;
         font-weight: 700;
         text-align: center;
         background: #f8fafc;
@@ -657,7 +659,7 @@
         border-radius: 2px;
         padding: 8px;
         margin-top: 6px;
-        font-size: 7px;
+        font-size: 8px;
         line-height: 1.5;
       }
 
@@ -671,7 +673,7 @@
       .observation-card {
         border: 1px solid #e2e8f0;
         border-radius: 4px;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
         overflow: hidden;
         page-break-inside: avoid;
       }
@@ -703,7 +705,7 @@
       }
 
       .observation-classification {
-        margin-bottom: 10px;
+        margin-bottom: 6px;
       }
 
       .classification-badge {
@@ -741,7 +743,7 @@
       }
 
       .observation-section {
-        margin-bottom: 10px;
+        margin-bottom: 6px;
       }
 
       .observation-section:last-child {
@@ -749,17 +751,17 @@
       }
 
       .observation-section-title {
-        font-size: 8px;
+        font-size: 9px;
         font-weight: 600;
-        color: #475569;
+        color: #000;
         margin-bottom: 4px;
         padding-bottom: 3px;
         border-bottom: 1px solid #e2e8f0;
       }
 
       .observation-section-content {
-        font-size: 8px;
-        color: #334155;
+        font-size: 9.5px;
+        color: #000;
         line-height: 1.5;
         padding: 8px;
         background: #fff;
@@ -798,7 +800,7 @@
       .guidance-intro {
         font-size: 8px;
         font-weight: 600;
-        color: #1e293b;
+        color: #000;
         margin-bottom: 6px;
         padding: 6px 8px;
         background: #f1f5f9;
@@ -812,9 +814,9 @@
 
       .guidance-col {
         flex: 1;
-        font-size: 6.5px;
+        font-size: 7.5px;
         line-height: 1.5;
-        color: #475569;
+        color: #000;
       }
 
       .guidance-col p {
@@ -823,7 +825,7 @@
       }
 
       .guidance-col strong {
-        color: #1e293b;
+        color: #000;
       }
 
       /* =============================================
@@ -838,8 +840,8 @@
       }
 
       .declaration-text {
-        font-size: 7px;
-        color: #475569;
+        font-size: 8.5px;
+        color: #000;
         line-height: 1.6;
         text-align: justify;
       }
@@ -860,7 +862,7 @@
       .assessment-label {
         font-size: 8px;
         font-weight: 600;
-        color: #475569;
+        color: #000;
       }
 
       .assessment-options {
@@ -910,7 +912,7 @@
       .final-assessment-label {
         font-size: 9px;
         font-weight: 600;
-        color: #334155;
+        color: #000;
       }
 
       .final-assessment-options {
@@ -999,10 +1001,10 @@
         margin-top: 8px;
       }
       .mb-2 {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
       }
       .small {
-        font-size: 7px;
+        font-size: 8px;
       }
 
       /* Special list formatting */
@@ -1046,7 +1048,7 @@
     </div>
 
     <!-- SECTION A: CLIENT DETAILS -->
-    <div class="section">
+    <div class="section avoid-break">
       <div class="section-title">Section A: Details of the Client</div>
       <div class="form-grid">
         <div class="form-row">
@@ -1075,7 +1077,7 @@
     </div>
 
     <!-- SECTION B: INSTALLATION ADDRESS -->
-    <div class="section">
+    <div class="section avoid-break">
       <div class="section-title">Section B: Details of the Installation</div>
       <div class="form-grid">
         <div class="form-row">
@@ -1478,7 +1480,7 @@
     </div>
 
     <!-- SECTION G: BONDING -->
-    <div class="section">
+    <div class="section avoid-break">
       <div class="section-title">Section G: Main Protective Bonding Conductors</div>
       <div class="inline-form">
         <div class="inline-group">
@@ -1577,6 +1579,24 @@
                 <label>SPD Operational</label>
               </div>
             </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if distribution_board_verification.spd_t1 %}checked{% endif %} />
+                <label>T1</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if distribution_board_verification.spd_t2 %}checked{% endif %} />
+                <label>T2</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if distribution_board_verification.spd_t3 %}checked{% endif %} />
+                <label>T3</label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1623,6 +1643,31 @@
         </div>
       </div>
       {% endfor %}
+
+      <!-- RCD Details -->
+      <div class="section-subtitle">RCD Details</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">RCD Main Switch:</span>
+          <span class="inline-value">{{ rcd_details.rcd_main_switch }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">RCD Rating:</span>
+          <span class="inline-value">{{ rcd_details.rcd_rating }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">RCD Type:</span>
+          <span class="inline-value">{{ rcd_details.rcd_type }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Time Delay (ms):</span>
+          <span class="inline-value">{{ rcd_details.rcd_time_delay }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Measured Time (ms):</span>
+          <span class="inline-value">{{ rcd_details.rcd_measured_time }}</span>
+        </div>
+      </div>
 
       <!-- Cables -->
       <div class="section-subtitle">Meter & Cable Details</div>
@@ -1998,7 +2043,7 @@
             <span class="sig-field-value" style="max-width: 80px"
               >{{declarations.inspected_by.cp_scheme}}</span
             >
-            <span style="font-size: 7px; margin-left: 8px">
+            <span style="font-size: 8px; margin-left: 8px">
               <input
                 type="checkbox"
                 {%
