@@ -1,4 +1,3 @@
- 
 /**
  * ElectricalHub
  *
@@ -221,12 +220,7 @@ interface PrimaryToolCardProps {
   badge?: boolean;
 }
 
-function PrimaryToolCard({
-  title,
-  description,
-  icon: _Icon,
-  link,
-}: PrimaryToolCardProps) {
+function PrimaryToolCard({ title, description, icon: _Icon, link }: PrimaryToolCardProps) {
   return (
     <Link to={link} className="block group touch-manipulation">
       <motion.div
@@ -388,7 +382,7 @@ const ElectricalHub = () => {
   }, [profile]);
 
   return (
-    <div className="bg-[hsl(240,5.9%,10%)]">
+    <div className="bg-background">
       <div className="mx-auto max-w-6xl">
         <motion.div
           variants={containerVariants}
