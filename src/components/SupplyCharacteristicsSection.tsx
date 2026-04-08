@@ -520,15 +520,6 @@ const SupplyCharacteristicsSectionInner = ({
                 className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
                 inputMode="decimal"
               />
-              {ipfSuggestion && !formData.prospectiveFaultCurrent && (
-                <button
-                  type="button"
-                  onClick={() => onUpdate('prospectiveFaultCurrent', ipfSuggestion.value)}
-                  className="text-[10px] text-elec-yellow mt-1 touch-manipulation"
-                >
-                  Use {ipfSuggestion.value}kA ({ipfSuggestion.reason})
-                </button>
-              )}
             </FormField>
           </div>
 

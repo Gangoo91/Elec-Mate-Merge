@@ -22,6 +22,7 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
   ({ width = 320, height = 160, onSignatureChange, initialSignature, disabled = false }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const isDrawingRef = useRef(false);
+    const debounceRef = useRef<NodeJS.Timeout>();
     const [isEmpty, setIsEmpty] = useState(true);
 
     const getSignatureData = useCallback((): string | null => {
@@ -146,9 +147,13 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       const onEnd = () => {
         if (isDrawingRef.current) {
           isDrawingRef.current = false;
-          // Read signature data directly from canvas
-          const data = canvas.toDataURL('image/png');
-          onSignatureChange?.(data);
+          // Debounce: wait 500ms after last stroke before encoding + propagating
+          // Prevents freeze from encoding PNG + triggering form re-render on every stroke
+          if (debounceRef.current) clearTimeout(debounceRef.current);
+          debounceRef.current = setTimeout(() => {
+            const data = canvas.toDataURL('image/png');
+            onSignatureChange?.(data);
+          }, 500);
         }
       };
 
