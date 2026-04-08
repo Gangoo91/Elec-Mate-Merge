@@ -1429,6 +1429,14 @@
                 <div class="data-field-value">{{ supply_characteristics.phases }}</div>
               </div>
               <div class="data-field">
+                <div class="data-field-label">Prospective Fault Current, I<sub>pf</sub></div>
+                <div class="data-field-value">{% if supply_characteristics.prospective_fault_current %}{{ supply_characteristics.prospective_fault_current }} kA{% endif %}</div>
+              </div>
+              <div class="data-field">
+                <div class="data-field-label">External Earth Fault Loop Impedance, Z<sub>e</sub></div>
+                <div class="data-field-value">{% if supply_characteristics.external_ze %}{{ supply_characteristics.external_ze }} Ω{% endif %}</div>
+              </div>
+              <div class="data-field">
                 <div class="data-field-label">AC/DC</div>
                 <div class="data-field-value">{{ supply_characteristics.supply_ac_dc }}</div>
               </div>
