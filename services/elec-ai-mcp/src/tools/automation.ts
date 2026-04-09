@@ -25,7 +25,9 @@ export async function sendPaymentReminder(args: Record<string, unknown>, user: U
   if (invoice.status === 'paid') return { error: 'Invoice already paid' };
 
   const clientName = (invoice.client_data as Record<string, unknown>)?.name || 'there';
-  const dueDate = invoice.due_date ? new Date(invoice.due_date as string).toLocaleDateString('en-GB') : 'soon';
+  const dueDate = invoice.due_date
+    ? new Date(invoice.due_date as string).toLocaleDateString('en-GB')
+    : 'soon';
   const payLink = invoice.payment_link || '';
 
   const draft = `Hi ${clientName}, just a friendly reminder that invoice ${invoice.invoice_number} for £${Number(invoice.total).toFixed(2)} is due on ${dueDate}.${payLink ? ` You can pay here: ${payLink}` : ''} Thanks!`;
@@ -55,7 +57,7 @@ export async function getJobWeather(args: Record<string, unknown>, user: UserCon
   try {
     const res = await fetch(`https://wttr.in/${encodeURIComponent(postcode)}?format=j1`);
     if (!res.ok) return { error: 'Weather lookup failed' };
-    const data = (await res.json()) as Record<string, any>;
+    const data = (await res.json()) as Record<string, unknown>;
     const current = data.current_condition?.[0];
     const forecast = data.weather?.[0];
 
@@ -139,7 +141,10 @@ export async function suggestUpsell(args: Record<string, unknown>, user: UserCon
   }
 
   // Has domestic work but no EV charger
-  if (certTypes.some((t) => ['eicr', 'eic', 'minor-works'].includes(t)) && !certTypes.includes('ev-charging')) {
+  if (
+    certTypes.some((t) => ['eicr', 'eic', 'minor-works'].includes(t)) &&
+    !certTypes.includes('ev-charging')
+  ) {
     suggestions.push({
       type: 'ev_upsell',
       message: `${client.name} is a domestic client. Ask if they're considering an EV charger — high-margin work.`,
@@ -224,7 +229,7 @@ export async function transcribeVoiceNote(args: Record<string, unknown>, _user: 
       return { error: `Whisper API error: ${res.status} - ${err}` };
     }
 
-    const data = await res.json() as { text: string };
+    const data = (await res.json()) as { text: string };
     return {
       success: true,
       transcript: data.text || '',
@@ -244,7 +249,8 @@ export async function deleteClient(args: Record<string, unknown>, user: UserCont
   const confirmName = args.confirm_name as string;
 
   if (!clientId) return { error: 'client_id is required' };
-  if (!confirmName) return { error: 'confirm_name is required — type the client name to confirm deletion' };
+  if (!confirmName)
+    return { error: 'confirm_name is required — type the client name to confirm deletion' };
 
   // Verify client exists and name matches
   const { data: client } = await supabase
@@ -255,7 +261,9 @@ export async function deleteClient(args: Record<string, unknown>, user: UserCont
 
   if (!client) return { error: 'Client not found' };
   if (client.name.toLowerCase() !== confirmName.toLowerCase()) {
-    return { error: `Name mismatch. You said "${confirmName}" but client is "${client.name}". Type the exact name to confirm.` };
+    return {
+      error: `Name mismatch. You said "${confirmName}" but client is "${client.name}". Type the exact name to confirm.`,
+    };
   }
 
   // Check for linked records
@@ -279,10 +287,7 @@ export async function deleteClient(args: Record<string, unknown>, user: UserCont
   }
 
   // Delete
-  const { error } = await supabase
-    .from('customers')
-    .delete()
-    .eq('id', clientId);
+  const { error } = await supabase.from('customers').delete().eq('id', clientId);
 
   if (error) return { error: `Failed to delete: ${error.message}` };
 
