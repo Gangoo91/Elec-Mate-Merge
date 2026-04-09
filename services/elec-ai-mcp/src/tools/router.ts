@@ -34,6 +34,8 @@ import * as jobProfit from './job-profit.js';
 import * as snagging from './snagging.js';
 import * as photoEstimate from './photo-estimate.js';
 import * as googleApis from './google-apis.js';
+import * as automation from './automation.js';
+import * as integrations from './integrations.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -265,6 +267,18 @@ const handlers: Record<string, ToolHandler> = {
   generate_map_image: googleApis.generateMapImage,
   search_youtube_videos: googleApis.searchYoutubeVideos,
   get_weather: googleApis.getWeather,
+
+  // Automation (proactive business intelligence)
+  send_payment_reminder: automation.sendPaymentReminder,
+  get_job_weather: automation.getJobWeather,
+  suggest_upsell: automation.suggestUpsell,
+  transcribe_voice_note: automation.transcribeVoiceNote,
+  delete_client: automation.deleteClient,
+
+  // Integrations (ElevenLabs, Perplexity, PDF)
+  speak_response: integrations.speakResponse,
+  web_search: integrations.webSearch,
+  read_pdf: integrations.readPdf,
 };
 
 /**

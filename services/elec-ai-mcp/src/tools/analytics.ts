@@ -207,13 +207,13 @@ export async function getBusinessSnapshot(_args: Record<string, unknown>, user: 
       .lte('expiry_date', sevenDaysAhead.toISOString())
       .gte('expiry_date', now.toISOString()),
 
-    // Today's calendar events
+    // Today's calendar events — use start_at (correct column name), avoid mutating `now`
     supabase
       .from('calendar_events')
-      .select('id, title, start_time, event_type')
-      .gte('start_time', new Date(now.setHours(0, 0, 0, 0)).toISOString())
-      .lt('start_time', new Date(now.setHours(23, 59, 59, 999)).toISOString())
-      .order('start_time', { ascending: true }),
+      .select('id, title, start_at, event_type')
+      .gte('start_at', new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0).toISOString())
+      .lt('start_at', new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999).toISOString())
+      .order('start_at', { ascending: true }),
   ]);
 
   const overdueInvoices = overdueInvoicesResult.data || [];
@@ -253,55 +253,61 @@ export async function getInactiveClients(args: Record<string, unknown>, user: Us
   if (clientError) throw new Error(`Failed to get clients: ${clientError.message}`);
   if (!allClients || allClients.length === 0) return { clients: [], total: 0 };
 
-  // Get recent activity per client: quotes/invoices since cutoff
+  // Get recent invoices since cutoff — client_data->>'id' is the customer ID
+  const { data: recentInvoices } = await supabase
+    .from('invoices')
+    .select('client_data, created_at, total, status')
+    .gte('created_at', cutoffDate.toISOString());
+
+  // Get recent quotes since cutoff
   const { data: recentQuotes } = await supabase
     .from('quotes')
-    .select('customer_id, created_at, total, invoice_raised')
+    .select('client_data, created_at, status')
     .gte('created_at', cutoffDate.toISOString());
 
-  // Get recent certs per client (by address match — certs don't have customer_id)
-  const { data: recentCerts } = await supabase
-    .from('reports')
-    .select('id, installation_address, created_at')
-    .gte('created_at', cutoffDate.toISOString());
-
-  // Build a set of recently-active customer IDs
+  // Build a set of recently-active customer IDs from both tables
   const activeClientIds = new Set<string>();
+  for (const inv of recentInvoices || []) {
+    const cid = (inv.client_data as Record<string, unknown>)?.id as string;
+    if (cid) activeClientIds.add(cid);
+  }
   for (const q of recentQuotes || []) {
-    if (q.customer_id) activeClientIds.add(q.customer_id as string);
+    const cid = (q.client_data as Record<string, unknown>)?.id as string;
+    if (cid) activeClientIds.add(cid);
   }
 
-  // Get all-time revenue per client for context
-  const { data: allQuotes } = await supabase
-    .from('quotes')
-    .select('customer_id, total, created_at, invoice_raised')
-    .eq('invoice_raised', true)
-    .eq('invoice_status', 'paid');
+  // All-time revenue from invoices table (paid_at is the actual DB column)
+  const { data: allInvoices } = await supabase
+    .from('invoices')
+    .select('client_data, total, paid_at, status')
+    .eq('status', 'paid');
 
   const clientRevenue: Record<string, { total: number; last_activity: string; last_type: string }> =
     {};
-  for (const q of allQuotes || []) {
-    const cid = q.customer_id as string;
+  for (const inv of allInvoices || []) {
+    const cd = inv.client_data as Record<string, unknown> | null;
+    const cid = (cd?.id as string) || (cd?.name as string);
     if (!cid) continue;
     if (!clientRevenue[cid]) {
       clientRevenue[cid] = { total: 0, last_activity: '', last_type: '' };
     }
-    clientRevenue[cid].total += Number(q.total) || 0;
-    const createdAt = q.created_at as string;
-    if (createdAt > clientRevenue[cid].last_activity) {
-      clientRevenue[cid].last_activity = createdAt;
+    clientRevenue[cid].total += Number(inv.total) || 0;
+    const paidAt = (inv.paid_at as string) || '';
+    if (paidAt > clientRevenue[cid].last_activity) {
+      clientRevenue[cid].last_activity = paidAt;
       clientRevenue[cid].last_type = 'invoice_paid';
     }
   }
 
-  // Also check most recent quote (sent or otherwise) for last activity
+  // Also check most recent quote for last activity
   const { data: allClientQuotes } = await supabase
     .from('quotes')
-    .select('customer_id, created_at, status')
+    .select('client_data, created_at, status')
     .order('created_at', { ascending: false });
 
   for (const q of allClientQuotes || []) {
-    const cid = q.customer_id as string;
+    const cd = q.client_data as Record<string, unknown> | null;
+    const cid = (cd?.id as string) || (cd?.name as string);
     if (!cid) continue;
     if (!clientRevenue[cid]) {
       clientRevenue[cid] = { total: 0, last_activity: '', last_type: '' };
@@ -356,7 +362,7 @@ export async function getTopClients(args: Record<string, unknown>, user: UserCon
     dateFrom.setFullYear(dateFrom.getFullYear() - 1);
   }
 
-  // Get all paid invoices with customer data
+  // Get all paid invoices with customer data (paid_at is the actual DB column)
   const { data: invoices, error } = await supabase
     .from('invoices')
     .select('total, client_data, paid_at')

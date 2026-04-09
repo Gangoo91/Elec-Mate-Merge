@@ -78,6 +78,12 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
 
   // Google APIs (Solar, Geocoding, Address Validation, Maps, YouTube, Weather)
   registerGoogleApiTools(server, user);
+
+  // Automation (proactive business intelligence)
+  registerAutomationTools(server, user);
+
+  // Integrations (ElevenLabs, Perplexity, PDF)
+  registerIntegrationTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -2584,5 +2590,105 @@ function registerGoogleApiTools(server: McpServer, user: UserContext): void {
       lng: z.number().optional().describe('Longitude'),
     },
     callTool('get_weather', user)
+  );
+}
+
+// ─── Automation Tools ──────────────────────────────────────────────────
+
+function registerAutomationTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'send_payment_reminder',
+    'Draft a friendly pre-due payment reminder for an invoice (before it becomes overdue). Different tone from invoice chasing — this is a courtesy heads-up 3 days before due date. Returns a draft message for approval.',
+    {
+      invoice_id: z.string().describe('Invoice ID to send reminder for'),
+    },
+    callTool('send_payment_reminder', user)
+  );
+
+  server.tool(
+    'get_job_weather',
+    'Get weather forecast for a job location. Returns temperature, rain chance, wind, sunrise/sunset. Use in morning briefs and pre-job reminders so the spark knows what to expect on site.',
+    {
+      postcode: z.string().describe('UK postcode for weather lookup (e.g. "B1 1AA")'),
+      date: z.string().optional().describe('Date for forecast (ISO format). Defaults to today.'),
+    },
+    callTool('get_job_weather', user)
+  );
+
+  server.tool(
+    'suggest_upsell',
+    'Analyse a client\'s certificate and invoice history to suggest upsell opportunities. Detects: annual contract candidates (3+ certs), cross-sell (EICR without PAT), EV charger opportunities, referral requests. Returns prioritised suggestions with estimated values.',
+    {
+      client_id: z.string().describe('Customer ID to analyse'),
+    },
+    callTool('suggest_upsell', user)
+  );
+
+  server.tool(
+    'transcribe_voice_note',
+    'Transcribe a WhatsApp voice note to text using OpenAI Whisper. Use when the user sends an audio message — transcribe it, then respond to the content as if they typed it.',
+    {
+      audio_url: z.string().optional().describe('URL to the audio file'),
+      audio_base64: z.string().optional().describe('Base64-encoded audio data'),
+    },
+    callTool('transcribe_voice_note', user)
+  );
+
+  server.tool(
+    'delete_client',
+    'Delete a customer from the database. Requires the client name typed exactly to confirm (safety gate). If the client has quotes or invoices, warns before proceeding. TIER 4 — requires explicit confirmation.',
+    {
+      client_id: z.string().describe('Customer ID to delete'),
+      confirm_name: z.string().describe('Type the exact client name to confirm deletion'),
+    },
+    callTool('delete_client', user)
+  );
+}
+
+// ─── Integration Tools (ElevenLabs, Perplexity, PDF) ─────────────────────
+
+function registerIntegrationTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'speak_response',
+    'Convert text to a voice note using ElevenLabs TTS (British male voice — Daniel). Returns an audio URL that can be sent as a voice note via MEDIA:<url>. Use for morning briefs, important alerts, or when the user explicitly asks for a voice reply. Max 2500 characters.',
+    {
+      text: z.string().describe('Text to convert to speech (max 2500 characters)'),
+      voice_id: z
+        .string()
+        .optional()
+        .describe('ElevenLabs voice ID. Defaults to Daniel (British male). Leave blank for default.'),
+    },
+    callTool('speak_response', user)
+  );
+
+  server.tool(
+    'web_search',
+    'Search the live web via Perplexity Sonar AI. Returns a grounded answer with citations from real web pages — not AI knowledge. Use for: current material prices, regulation updates, product specs, news, anything that may have changed recently. Much more accurate than relying on training data.',
+    {
+      query: z
+        .string()
+        .describe('Search query (e.g. "current price of 6mm T&E cable UK", "BS 7671 2024 amendment changes")'),
+      focus: z
+        .enum(['web', 'news'])
+        .optional()
+        .describe('"web" for general search (default), "news" to filter to recent news only'),
+    },
+    callTool('web_search', user)
+  );
+
+  server.tool(
+    'read_pdf',
+    'Extract text from a PDF document — either from a URL or base64 data. Use when a client sends a spec sheet, planning document, compliance report, or any PDF file. Returns the extracted text, page count, and file size. For scanned (image-based) PDFs, use analyse_photo instead.',
+    {
+      pdf_url: z
+        .string()
+        .optional()
+        .describe('URL to the PDF file to read'),
+      pdf_base64: z
+        .string()
+        .optional()
+        .describe('Base64-encoded PDF data (with or without data: prefix)'),
+    },
+    callTool('read_pdf', user)
   );
 }
