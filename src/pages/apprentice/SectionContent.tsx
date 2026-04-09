@@ -7,27 +7,12 @@ import SectionDisplay from '@/components/apprentice/section/SectionDisplay';
 const SectionContent = () => {
   const { courseSlug = 'level-2-diploma', unitSlug = 'health-safety', sectionId } = useParams();
 
-  // Log current navigation values for debugging
-  console.log('SectionContent params:', {
-    courseSlug,
-    unitSlug,
-    sectionId,
-    pathname: window.location.pathname,
-  });
-
   // Ensure we have valid parameters for all routes
   const effectiveCourseSlug = courseSlug || 'level-2-diploma';
 
   // Check if we're on electrical theory unit
   const isElectricalTheory = window.location.pathname.includes('/elec2-04');
   const effectiveUnitSlug = isElectricalTheory ? 'elec2-04' : unitSlug || 'health-safety';
-
-  console.log(
-    'SectionContent - Using unitSlug:',
-    effectiveUnitSlug,
-    'isElectricalTheory:',
-    isElectricalTheory
-  );
 
   // Check if we're on the quiz route
   const isQuizRoute = window.location.pathname.includes('/quiz');

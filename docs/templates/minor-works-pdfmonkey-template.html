@@ -1,74 +1,4 @@
-/**
- * minor-works.ts
- * HTML template for Minor Electrical Installation Works Certificate.
- * Self-contained — produces the exact same layout as the original PDF Monkey
- * Liquid template (minor-works-template.html) with TypeScript string interpolation.
- *
- * Consumes MinorWorksPayload (Zod-validated).  Zod defaults ensure every field
- * is a concrete string/boolean — no undefined values reach the template.
- */
-
-import type { MinorWorksPayload } from '../minor-works-schema.ts';
-
-/* ─── helpers ──────────────────────────────────────────────────────── */
-
-/** HTML-escape user-supplied text. */
-function esc(value: string | number | boolean | undefined | null): string {
-  const s = String(value ?? '');
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-/** Render a 12 px checkbox square. */
-function checkbox(checked: boolean): string {
-  if (checked) {
-    return '<span class="checkbox-box checked">&#10003;</span>';
-  }
-  return '<span class="checkbox-box"></span>';
-}
-
-/** Wrap a value in .pass / .fail / .na-text depending on content. */
-function passFail(value: string): string {
-  const v = value.trim().toLowerCase();
-  if (['pass', 'correct', 'satisfactory', 'ok', 'no trip'].includes(v)) {
-    return `<span class="pass">${esc(value)}</span>`;
-  }
-  if (['fail', 'incorrect', 'unsatisfactory', 'trip'].includes(v)) {
-    return `<span class="fail">${esc(value)}</span>`;
-  }
-  return esc(value);
-}
-
-/** SPD test button has special true/false → OK / N/A logic. */
-function spdTestButton(value: string | boolean): string {
-  if (value === true || value === 'true' || value === 'Pass' || value === 'pass' || value === 'OK') {
-    return '<span class="pass">OK</span>';
-  }
-  if (value === false || value === 'false' || value === '') {
-    return '<span class="na-text">N/A</span>';
-  }
-  return esc(String(value));
-}
-
-/* ─── main template ────────────────────────────────────────────────── */
-
-export function minorWorksTemplate(data: MinorWorksPayload): string {
-  const accent = data.company.accent_color || '#f59e0b';
-
-  /* ── ring circuit conditional ── */
-  const showRing =
-    (data.tests.ring_ll && data.tests.ring_ll !== '' && data.tests.ring_ll !== 'N/A') ||
-    (data.tests.ring_nn && data.tests.ring_nn !== '' && data.tests.ring_nn !== 'N/A') ||
-    (data.tests.ring_cpc && data.tests.ring_cpc !== '' && data.tests.ring_cpc !== 'N/A');
-
-  const showRingFinal =
-    data.tests.ring_final && data.tests.ring_final !== '' && data.tests.ring_final !== 'N/A';
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -96,7 +26,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         print-color-adjust: exact;
       }
 
-      /* DOCUMENT HEADER */
+      /* =============================================
+         DOCUMENT HEADER
+         ============================================= */
       .doc-header {
         background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
         color: #fff;
@@ -114,7 +46,12 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         left: 0;
         right: 0;
         height: 3px;
-        background: linear-gradient(90deg, ${accent}, #fbbf24, ${accent});
+        background: linear-gradient(
+          90deg,
+          {% if company.accent_color %}{{ company.accent_color }}{% else %}#f59e0b{% endif %},
+          #fbbf24,
+          {% if company.accent_color %}{{ company.accent_color }}{% else %}#f59e0b{% endif %}
+        );
       }
 
       .doc-header-content {
@@ -148,7 +85,7 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       .cert-number {
         font-size: 11px;
         font-weight: 700;
-        color: ${accent === '#d69e2e' ? '#fbbf24' : accent};
+        color: {% if company.accent_color %}{{ company.accent_color }}{% else %}#fbbf24{% endif %};
         letter-spacing: 0.5px;
       }
 
@@ -183,7 +120,7 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       .company-name {
         font-size: 9px;
         font-weight: 600;
-        color: ${accent === '#d69e2e' ? '#fbbf24' : accent};
+        color: {% if company.accent_color %}{{ company.accent_color }}{% else %}#fbbf24{% endif %};
         margin-top: 4px;
         letter-spacing: 0.3px;
       }
@@ -204,7 +141,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         margin-right: 8px;
       }
 
-      /* SECTION STYLING */
+      /* =============================================
+         SECTION STYLING
+         ============================================= */
       .section {
         margin-bottom: 8px;
         page-break-inside: avoid;
@@ -219,7 +158,7 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         letter-spacing: 0.8px;
         padding: 6px 12px;
         margin-bottom: 6px;
-        border-left: 3px solid ${accent};
+        border-left: 3px solid {% if company.accent_color %}{{ company.accent_color }}{% else %}#f59e0b{% endif %};
       }
 
       .section-subtitle {
@@ -232,7 +171,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         border-left: 3px solid #64748b;
       }
 
-      /* INLINE FORM LAYOUT */
+      /* =============================================
+         INLINE FORM LAYOUT
+         ============================================= */
       .inline-form {
         display: flex;
         flex-wrap: wrap;
@@ -274,7 +215,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         flex: 1;
       }
 
-      /* DATA TABLE */
+      /* =============================================
+         DATA TABLE
+         ============================================= */
       .data-table {
         width: 100%;
         border-collapse: collapse;
@@ -304,7 +247,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         background: #f8fafc;
       }
 
-      /* CHECKBOX STYLING */
+      /* =============================================
+         CHECKBOX STYLING
+         ============================================= */
       .checkbox-row {
         display: flex;
         flex-wrap: wrap;
@@ -344,7 +289,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         color: #fff;
       }
 
-      /* PASS / FAIL COLOUR CODING */
+      /* =============================================
+         PASS / FAIL COLOUR CODING
+         ============================================= */
       .pass {
         color: #16a34a;
         font-weight: 700;
@@ -360,7 +307,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         font-style: italic;
       }
 
-      /* SIGNATURE BOXES */
+      /* =============================================
+         SIGNATURE BOXES
+         ============================================= */
       .signature-grid {
         display: flex;
         gap: 10px;
@@ -380,7 +329,7 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         font-size: 8px;
         font-weight: 600;
         padding: 5px 10px;
-        border-bottom: 2px solid ${accent};
+        border-bottom: 2px solid {% if company.accent_color %}{{ company.accent_color }}{% else %}#f59e0b{% endif %};
       }
 
       .signature-box-body {
@@ -428,7 +377,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         max-height: 28px;
       }
 
-      /* DECLARATION BOX */
+      /* =============================================
+         DECLARATION BOX
+         ============================================= */
       .declaration-box {
         background: #f8fafc;
         border: 1px solid #e2e8f0;
@@ -444,7 +395,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         text-align: justify;
       }
 
-      /* GUIDANCE SECTION */
+      /* =============================================
+         GUIDANCE SECTION
+         ============================================= */
       .guidance-intro {
         font-size: 8.5px;
         font-weight: 600;
@@ -452,7 +405,7 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         margin-bottom: 6px;
         padding: 6px 8px;
         background: #f1f5f9;
-        border-left: 3px solid ${accent};
+        border-left: 3px solid {% if company.accent_color %}{{ company.accent_color }}{% else %}#f59e0b{% endif %};
       }
 
       .guidance-columns {
@@ -476,7 +429,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         color: #1e293b;
       }
 
-      /* PAGE FOOTER */
+      /* =============================================
+         PAGE FOOTER
+         ============================================= */
       .page-footer {
         margin-top: 8px;
         padding: 4px 8px;
@@ -492,7 +447,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         font-style: italic;
       }
 
-      /* PAGE BREAKS */
+      /* =============================================
+         PAGE BREAKS
+         ============================================= */
       .page-break-before {
         page-break-before: always;
       }
@@ -501,21 +458,40 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         page-break-inside: avoid;
       }
 
-      /* UTILITIES */
+      /* =============================================
+         UTILITIES
+         ============================================= */
       .text-center { text-align: center; }
       .font-bold { font-weight: 600; }
       .mt-4 { margin-top: 4px; }
       .mt-6 { margin-top: 6px; }
+
+      /* =============================================
+         RING CIRCUIT ROW LABEL
+         ============================================= */
+      .ring-row-label {
+        width: 100%;
+        font-size: 7px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #64748b;
+        margin-bottom: 2px;
+      }
     </style>
   </head>
   <body>
 
-    <!-- DOCUMENT HEADER -->
+    <!-- =============================================
+         DOCUMENT HEADER
+         ============================================= -->
     <div class="doc-header">
       <div class="doc-header-content">
-        ${data.company.logo_url ? `<div class="company-logo">
-          <img src="${esc(data.company.logo_url)}" alt="Company Logo" />
-        </div>` : ''}
+        {% if company.logo_url and company.logo_url != '' %}
+        <div class="company-logo">
+          <img src="{{ company.logo_url }}" alt="Company Logo" />
+        </div>
+        {% endif %}
 
         <div class="doc-title-section">
           <div class="doc-title">MINOR ELECTRICAL INSTALLATION WORKS CERTIFICATE</div>
@@ -525,114 +501,124 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
           <div class="doc-subtitle" style="margin-top: 2px; font-size: 7px;">
             To be used only for minor electrical work which does not include the provision of a new circuit
           </div>
-          <div class="company-name">${esc(data.company.name)}</div>
-          ${data.company.tagline ? `<div class="company-tagline">${esc(data.company.tagline)}</div>` : ''}
+          <div class="company-name">{{ company.name }}</div>
+          {% if company.tagline and company.tagline != '' %}
+          <div class="company-tagline">{{ company.tagline }}</div>
+          {% endif %}
+          {% if company.address and company.address != '' %}
+          <div class="company-contact">{{ company.address }}</div>
+          {% endif %}
           <div class="company-contact">
-            ${data.company.phone ? `<span>${esc(data.company.phone)}</span>` : ''}
-            ${data.company.email ? `<span>${esc(data.company.email)}</span>` : ''}
-            ${data.company.website ? `<span>${esc(data.company.website)}</span>` : ''}
+            {% if company.phone and company.phone != '' %}<span>{{ company.phone }}</span>{% endif %}
+            {% if company.email and company.email != '' %}<span>{{ company.email }}</span>{% endif %}
+            {% if company.website and company.website != '' %}<span>{{ company.website }}</span>{% endif %}
+            {% if company.registration_no and company.registration_no != '' %}<span>{{ company.registration_no }}</span>{% endif %}
           </div>
         </div>
 
         <div class="doc-meta">
-          <div class="cert-number">${esc(data.certificate_number)}</div>
+          <div class="cert-number">{{ certificate_number }}</div>
           <div class="page-number">Page 1 of 1</div>
         </div>
 
-        ${data.company.scheme_logo ? `<div class="scheme-logo">
-          <img src="${esc(data.company.scheme_logo)}" alt="Scheme Logo" />
-        </div>` : ''}
+        {% if company.scheme_logo and company.scheme_logo != '' %}
+        <div class="scheme-logo">
+          <img src="{{ company.scheme_logo }}" alt="Scheme Logo" />
+        </div>
+        {% endif %}
       </div>
     </div>
 
-    <!-- PART 1: DESCRIPTION OF MINOR WORKS -->
+    <!-- =============================================
+         PART 1: DESCRIPTION OF MINOR WORKS
+         ============================================= -->
     <div class="section">
       <div class="section-title">Part 1 &mdash; Description of Minor Works</div>
 
       <div class="inline-form">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Client Name:</span>
-          <span class="inline-value wide">${esc(data.client.name)}</span>
+          <span class="inline-value wide">{{ client.name }}</span>
         </div>
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Client Phone:</span>
-          <span class="inline-value wide">${esc(data.client.phone)}</span>
+          <span class="inline-value wide">{{ client.phone }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Client Email:</span>
-          <span class="inline-value wide">${esc(data.client.email)}</span>
+          <span class="inline-value wide">{{ client.email }}</span>
         </div>
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Person Ordering Work:</span>
-          <span class="inline-value wide">${esc(data.person_ordering_work)}</span>
+          <span class="inline-value wide">{{ person_ordering_work }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Installation Address:</span>
-          <span class="inline-value wide">${esc(data.installation.address)}${data.installation.postcode ? `, ${esc(data.installation.postcode)}` : ''}</span>
+          <span class="inline-value wide">{{ installation.address }}{% if installation.postcode and installation.postcode != '' %}, {{ installation.postcode }}{% endif %}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group">
           <span class="inline-label">Date of Work:</span>
-          <span class="inline-value">${esc(data.work_date)}</span>
+          <span class="inline-value">{{ work_date }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Date of Completion:</span>
-          <span class="inline-value">${esc(data.date_of_completion)}</span>
+          <span class="inline-value">{{ date_of_completion }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Next Inspection Due:</span>
-          <span class="inline-value">${esc(data.next_inspection_due)}</span>
+          <span class="inline-value">{{ next_inspection_due }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Work Type:</span>
-          <span class="inline-value wide">${esc(data.work_type)}</span>
+          <span class="inline-value wide">{{ work_type }}</span>
         </div>
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Work Location:</span>
-          <span class="inline-value wide">${esc(data.work_location)}</span>
+          <span class="inline-value wide">{{ work_location }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Description of Work:</span>
-          <span class="inline-value wide">${esc(data.work_description)}</span>
+          <span class="inline-value wide">{{ work_description }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group">
           <span class="inline-label">Supply Voltage:</span>
-          <span class="inline-value">${esc(data.supply.voltage)}</span>
+          <span class="inline-value">{{ supply.voltage }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Frequency:</span>
-          <span class="inline-value">${esc(data.supply.frequency)}</span>
+          <span class="inline-value">{{ supply.frequency }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Phases:</span>
-          <span class="inline-value">${esc(data.supply.phases)}</span>
+          <span class="inline-value">{{ supply.phases }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Risk Assessment:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              ${checkbox(data.risk_assessment_attached === true)}
+              <span class="checkbox-box {% if risk_assessment_attached == true or risk_assessment_attached == 'true' %}checked{% endif %}">{% if risk_assessment_attached == true or risk_assessment_attached == 'true' %}&#10003;{% endif %}</span>
               <label>Yes</label>
             </div>
             <div class="checkbox-item">
-              ${checkbox(data.risk_assessment_attached !== true)}
+              <span class="checkbox-box {% if risk_assessment_attached == false or risk_assessment_attached == 'false' or risk_assessment_attached == '' %}checked{% endif %}">{% if risk_assessment_attached == false or risk_assessment_attached == 'false' or risk_assessment_attached == '' %}&#10003;{% endif %}</span>
               <label>No</label>
             </div>
           </div>
@@ -642,26 +628,28 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5):</span>
-          <span class="inline-value wide">${esc(data.departures)}</span>
+          <span class="inline-value wide">{{ departures }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Permitted Exceptions (Reg 411.3.3):</span>
-          <span class="inline-value wide">${esc(data.permitted_exceptions)}</span>
+          <span class="inline-value wide">{{ permitted_exceptions }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Comments on Existing Installation (Reg 644.1.2):</span>
-          <span class="inline-value wide">${esc(data.existing_installation_comments)}</span>
+          <span class="inline-value wide">{{ existing_installation_comments }}</span>
         </div>
       </div>
     </div>
 
-    <!-- PART 2: EARTHING & BONDING ARRANGEMENTS -->
+    <!-- =============================================
+         PART 2: EARTHING & BONDING ARRANGEMENTS
+         ============================================= -->
     <div class="section">
       <div class="section-title">Part 2 &mdash; Presence and Adequacy of Installation Earthing &amp; Bonding Arrangements (Regulation 132.16)</div>
 
@@ -670,26 +658,26 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
           <span class="inline-label">Earthing Arrangement:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              ${checkbox(data.earthing.type === 'TN-C')}
+              <span class="checkbox-box {% if earthing.type == 'TN-C' %}checked{% endif %}">{% if earthing.type == 'TN-C' %}&#10003;{% endif %}</span>
               <label>TN-C</label>
             </div>
             <div class="checkbox-item">
-              ${checkbox(data.earthing.type === 'TN-S')}
+              <span class="checkbox-box {% if earthing.type == 'TN-S' %}checked{% endif %}">{% if earthing.type == 'TN-S' %}&#10003;{% endif %}</span>
               <label>TN-S</label>
             </div>
             <div class="checkbox-item">
-              ${checkbox(data.earthing.type === 'TN-C-S')}
+              <span class="checkbox-box {% if earthing.type == 'TN-C-S' %}checked{% endif %}">{% if earthing.type == 'TN-C-S' %}&#10003;{% endif %}</span>
               <label>TN-C-S</label>
             </div>
             <div class="checkbox-item">
-              ${checkbox(data.earthing.type === 'TT')}
+              <span class="checkbox-box {% if earthing.type == 'TT' %}checked{% endif %}">{% if earthing.type == 'TT' %}&#10003;{% endif %}</span>
               <label>TT</label>
             </div>
           </div>
         </div>
         <div class="inline-group">
           <span class="inline-label">Z<sub>db</sub> (&Omega;):</span>
-          <span class="inline-value">${esc(data.earthing.zdb)}</span>
+          <span class="inline-value">{{ earthing.zdb }}</span>
         </div>
       </div>
 
@@ -698,18 +686,18 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
           <span class="inline-label">Earthing Conductor:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              ${checkbox(data.earthing.conductor_present)}
+              <span class="checkbox-box {% if earthing.conductor_present == true or earthing.conductor_present == 'true' %}checked{% endif %}">{% if earthing.conductor_present == true or earthing.conductor_present == 'true' %}&#10003;{% endif %}</span>
               <label>Present</label>
             </div>
           </div>
         </div>
         <div class="inline-group">
           <span class="inline-label">Size:</span>
-          <span class="inline-value">${data.earthing.conductor_size ? `${esc(data.earthing.conductor_size)}mm&sup2;` : ''}</span>
+          <span class="inline-value">{% if earthing.conductor_size %}{{ earthing.conductor_size }}mm&sup2;{% endif %}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Material:</span>
-          <span class="inline-value">${esc(data.earthing.conductor_material)}</span>
+          <span class="inline-value">{{ earthing.conductor_material }}</span>
         </div>
       </div>
 
@@ -717,106 +705,108 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">Main Bonding Size:</span>
-          <span class="inline-value">${data.bonding.size ? `${esc(data.bonding.size)}mm&sup2;` : ''}</span>
+          <span class="inline-value">{% if bonding.size %}{{ bonding.size }}mm&sup2;{% endif %}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.bonding.water)}
+            <span class="checkbox-box {% if bonding.water == true or bonding.water == 'true' %}checked{% endif %}">{% if bonding.water == true or bonding.water == 'true' %}&#10003;{% endif %}</span>
             <label>Water</label>
           </div>
-          ${data.bonding.water_size ? `<span class="inline-value">${esc(data.bonding.water_size)}mm&sup2;</span>` : ''}
+          {% if bonding.water_size %}<span class="inline-value">{{ bonding.water_size }}mm&sup2;</span>{% endif %}
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.bonding.gas)}
+            <span class="checkbox-box {% if bonding.gas == true or bonding.gas == 'true' %}checked{% endif %}">{% if bonding.gas == true or bonding.gas == 'true' %}&#10003;{% endif %}</span>
             <label>Gas</label>
           </div>
-          ${data.bonding.gas_size ? `<span class="inline-value">${esc(data.bonding.gas_size)}mm&sup2;</span>` : ''}
+          {% if bonding.gas_size %}<span class="inline-value">{{ bonding.gas_size }}mm&sup2;</span>{% endif %}
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.bonding.oil)}
+            <span class="checkbox-box {% if bonding.oil == true or bonding.oil == 'true' %}checked{% endif %}">{% if bonding.oil == true or bonding.oil == 'true' %}&#10003;{% endif %}</span>
             <label>Oil</label>
           </div>
-          ${data.bonding.oil_size ? `<span class="inline-value">${esc(data.bonding.oil_size)}mm&sup2;</span>` : ''}
+          {% if bonding.oil_size %}<span class="inline-value">{{ bonding.oil_size }}mm&sup2;</span>{% endif %}
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.bonding.structural)}
+            <span class="checkbox-box {% if bonding.structural == true or bonding.structural == 'true' %}checked{% endif %}">{% if bonding.structural == true or bonding.structural == 'true' %}&#10003;{% endif %}</span>
             <label>Structural</label>
           </div>
-          ${data.bonding.structural_size ? `<span class="inline-value">${esc(data.bonding.structural_size)}mm&sup2;</span>` : ''}
+          {% if bonding.structural_size %}<span class="inline-value">{{ bonding.structural_size }}mm&sup2;</span>{% endif %}
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.bonding.other)}
+            <span class="checkbox-box {% if bonding.other == true or bonding.other == 'true' %}checked{% endif %}">{% if bonding.other == true or bonding.other == 'true' %}&#10003;{% endif %}</span>
             <label>Other</label>
           </div>
-          ${data.bonding.other_specify ? `<span class="inline-value">${esc(data.bonding.other_specify)}</span>` : ''}
+          {% if bonding.other_specify %}<span class="inline-value">{{ bonding.other_specify }}</span>{% endif %}
         </div>
       </div>
     </div>
 
-    <!-- PART 3: CIRCUIT DETAILS -->
+    <!-- =============================================
+         PART 3: CIRCUIT DETAILS
+         ============================================= -->
     <div class="section">
       <div class="section-title">Part 3 &mdash; Circuit Details</div>
 
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">DB Reference:</span>
-          <span class="inline-value">${esc(data.circuit.db_ref)}</span>
+          <span class="inline-value">{{ circuit.db_ref }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">DB Location/Type:</span>
-          <span class="inline-value">${esc(data.circuit.db_location_type)}</span>
+          <span class="inline-value">{{ circuit.db_location_type }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Circuit No:</span>
-          <span class="inline-value">${esc(data.circuit.number)}</span>
+          <span class="inline-value">{{ circuit.number }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Circuit Description:</span>
-          <span class="inline-value wide">${esc(data.circuit.description)}</span>
+          <span class="inline-value wide">{{ circuit.description }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group">
           <span class="inline-label">Circuit Type:</span>
-          <span class="inline-value">${esc(data.circuit.type)}</span>
+          <span class="inline-value">{{ circuit.type }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Ref Method:</span>
-          <span class="inline-value">${esc(data.circuit.reference_method)}</span>
+          <span class="inline-value">{{ circuit.reference_method }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Conductors:</span>
-          <span class="inline-value">${esc(data.circuit.number_of_conductors)}</span>
+          <span class="inline-value">{{ circuit.number_of_conductors }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Cable Type:</span>
-          <span class="inline-value">${esc(data.circuit.cable_type)}</span>
+          <span class="inline-value">{{ circuit.cable_type }}</span>
         </div>
       </div>
 
       <div class="inline-form mt-4">
         <div class="inline-group">
           <span class="inline-label">Live Size:</span>
-          <span class="inline-value">${data.circuit.live_size ? `${esc(data.circuit.live_size)}mm&sup2;` : ''}</span>
+          <span class="inline-value">{% if circuit.live_size %}{{ circuit.live_size }}mm&sup2;{% endif %}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">CPC Size:</span>
-          <span class="inline-value">${data.circuit.cpc_size ? `${esc(data.circuit.cpc_size)}mm&sup2;` : ''}</span>
+          <span class="inline-value">{% if circuit.cpc_size %}{{ circuit.cpc_size }}mm&sup2;{% endif %}</span>
         </div>
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Installation Method:</span>
-          <span class="inline-value wide">${esc(data.circuit.installation_method)}</span>
+          <span class="inline-value wide">{{ circuit.installation_method }}</span>
         </div>
       </div>
 
@@ -834,27 +824,27 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         <tbody>
           <tr>
             <td><strong>OCPD</strong></td>
-            <td>${esc(data.circuit.ocpd.bs_en)}</td>
-            <td>${esc(data.circuit.ocpd.type)} / ${esc(data.circuit.ocpd.rating)} A</td>
-            <td>Breaking capacity: ${esc(data.circuit.ocpd.breaking_capacity)} kA</td>
+            <td>{{ circuit.ocpd.bs_en }}</td>
+            <td>{{ circuit.ocpd.type }} / {{ circuit.ocpd.rating }} A</td>
+            <td>Breaking capacity: {{ circuit.ocpd.breaking_capacity }} kA</td>
           </tr>
           <tr>
             <td><strong>RCD</strong></td>
-            <td>${esc(data.circuit.rcd.bs_en)}</td>
-            <td>${esc(data.circuit.rcd.type)} / ${esc(data.circuit.rcd.rating)} A</td>
-            <td>I&Delta;n: ${esc(data.circuit.rcd.idn)} mA</td>
+            <td>{{ circuit.rcd.bs_en }}</td>
+            <td>{{ circuit.rcd.type }} / {{ circuit.rcd.rating }} A</td>
+            <td>I&Delta;n: {{ circuit.rcd.idn }} mA</td>
           </tr>
           <tr>
             <td><strong>AFDD</strong></td>
-            <td>${esc(data.circuit.afdd.bs_en)}</td>
-            <td>${esc(data.circuit.afdd.rating)} A</td>
+            <td>{{ circuit.afdd.bs_en }}</td>
+            <td>{{ circuit.afdd.rating }} A</td>
             <td></td>
           </tr>
           <tr>
             <td><strong>SPD</strong></td>
-            <td>${esc(data.circuit.spd.bs_en)}</td>
-            <td>Type ${esc(data.circuit.spd.type)}</td>
-            <td>${data.circuit.spd.make ? `${esc(data.circuit.spd.make)}` : ''}${data.circuit.spd.rated_ka ? ` ${esc(data.circuit.spd.rated_ka)}kA` : ''}</td>
+            <td>{{ circuit.spd.bs_en }}</td>
+            <td>Type {{ circuit.spd.type }}</td>
+            <td>{% if circuit.spd.make %}{{ circuit.spd.make }}{% endif %}{% if circuit.spd.rated_ka %} {{ circuit.spd.rated_ka }}kA{% endif %}</td>
           </tr>
         </tbody>
       </table>
@@ -864,19 +854,19 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
           <span class="inline-label">Protection Fitted:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              ${checkbox(data.circuit.protection.rcd)}
+              <span class="checkbox-box {% if circuit.protection.rcd == true or circuit.protection.rcd == 'true' %}checked{% endif %}">{% if circuit.protection.rcd == true or circuit.protection.rcd == 'true' %}&#10003;{% endif %}</span>
               <label>RCD</label>
             </div>
             <div class="checkbox-item">
-              ${checkbox(data.circuit.protection.rcbo)}
+              <span class="checkbox-box {% if circuit.protection.rcbo == true or circuit.protection.rcbo == 'true' %}checked{% endif %}">{% if circuit.protection.rcbo == true or circuit.protection.rcbo == 'true' %}&#10003;{% endif %}</span>
               <label>RCBO</label>
             </div>
             <div class="checkbox-item">
-              ${checkbox(data.circuit.protection.afdd)}
+              <span class="checkbox-box {% if circuit.protection.afdd == true or circuit.protection.afdd == 'true' %}checked{% endif %}">{% if circuit.protection.afdd == true or circuit.protection.afdd == 'true' %}&#10003;{% endif %}</span>
               <label>AFDD</label>
             </div>
             <div class="checkbox-item">
-              ${checkbox(data.circuit.protection.spd)}
+              <span class="checkbox-box {% if circuit.protection.spd == true or circuit.protection.spd == 'true' %}checked{% endif %}">{% if circuit.protection.spd == true or circuit.protection.spd == 'true' %}&#10003;{% endif %}</span>
               <label>SPD</label>
             </div>
           </div>
@@ -884,7 +874,9 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       </div>
     </div>
 
-    <!-- PART 4: TEST RESULTS (force new page) -->
+    <!-- =============================================
+         PART 4: TEST RESULTS (force new page)
+         ============================================= -->
     <div class="section page-break-before">
       <div class="section-title">Part 4 &mdash; Test Results for the Altered or Extended Circuit (where relevant and practicable)</div>
 
@@ -893,82 +885,74 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">R1+R2 (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.r1_r2)}</span>
+          <span class="inline-value">{{ tests.r1_r2 }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">R2 (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.r2)}</span>
+          <span class="inline-value">{{ tests.r2 }}</span>
         </div>
       </div>
 
-      ${showRing ? `<div class="section-subtitle mt-6">Ring Final Circuit Continuity</div>
+      {% if tests.ring_r1_end != 'N/A' or tests.ring_rn_end != 'N/A' or tests.ring_r2_end != 'N/A' %}
+      <div class="section-subtitle mt-6">Ring Final Circuit Continuity</div>
       <div class="inline-form">
+        <div class="ring-row-label">End-to-End</div>
         <div class="inline-group">
-          <span class="inline-label">L&ndash;L (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_ll)}</span>
+          <span class="inline-label">r<sub>1</sub> (L) (&Omega;):</span>
+          <span class="inline-value">{{ tests.ring_r1_end }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">N&ndash;N (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_nn)}</span>
+          <span class="inline-label">r<sub>n</sub> (N) (&Omega;):</span>
+          <span class="inline-value">{{ tests.ring_rn_end }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">CPC (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_cpc)}</span>
-        </div>
-      </div>
-      <div class="inline-form mt-4">
-        <div class="inline-group">
-          <span class="inline-label">R1 End-to-End (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_r1_end)}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">Rn End-to-End (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_rn_end)}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">R2 End-to-End (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_r2_end)}</span>
+          <span class="inline-label">r<sub>2</sub> (CPC) (&Omega;):</span>
+          <span class="inline-value">{{ tests.ring_r2_end }}</span>
         </div>
       </div>
       <div class="inline-form mt-4">
+        <div class="ring-row-label">Cross-Connect</div>
         <div class="inline-group">
-          <span class="inline-label">R1 Cross (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_r1_cross)}</span>
+          <span class="inline-label">r<sub>1</sub> (L) (&Omega;):</span>
+          <span class="inline-value">{{ tests.ring_r1_cross }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">Rn Cross (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_rn_cross)}</span>
+          <span class="inline-label">r<sub>n</sub> (N) (&Omega;):</span>
+          <span class="inline-value">{{ tests.ring_rn_cross }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">R2 Cross (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ring_r2_cross)}</span>
+          <span class="inline-label">r<sub>2</sub> (CPC) (&Omega;):</span>
+          <span class="inline-value">{{ tests.ring_r2_cross }}</span>
         </div>
       </div>
-      ${showRingFinal ? `<div class="inline-form mt-4">
+      {% if tests.ring_final != 'N/A' and tests.ring_final != '' %}
+      <div class="inline-form mt-4">
         <div class="inline-group">
-          <span class="inline-label">Final Ring Continuity:</span>
-          <span class="inline-value">${esc(data.tests.ring_final)}</span>
+          <span class="inline-label">R<sub>1</sub>+R<sub>2</sub> Ring Final (&Omega;):</span>
+          <span class="inline-value">{{ tests.ring_final }}</span>
         </div>
-      </div>` : ''}` : ''}
+      </div>
+      {% endif %}
+      {% endif %}
 
       <!-- Insulation Resistance -->
-      <div class="section-subtitle mt-6">Insulation Resistance (test voltage: ${esc(data.tests.insulation_voltage)} V DC)</div>
+      <div class="section-subtitle mt-6">Insulation Resistance (test voltage: {{ tests.insulation_voltage }} V DC)</div>
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">Live&ndash;Live (M&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ir_live_live)}</span>
+          <span class="inline-value">{{ tests.ir_live_live }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Live&ndash;Neutral (M&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ir_live_neutral)}</span>
+          <span class="inline-value">{{ tests.ir_live_neutral }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Live&ndash;Earth (M&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ir_live_earth)}</span>
+          <span class="inline-value">{{ tests.ir_live_earth }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Neutral&ndash;Earth (M&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.ir_neutral_earth)}</span>
+          <span class="inline-value">{{ tests.ir_neutral_earth }}</span>
         </div>
       </div>
 
@@ -978,28 +962,28 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         <div class="inline-group">
           <span class="inline-label">Polarity:</span>
           <span class="inline-value">
-            ${passFail(data.tests.polarity)}
+            {% if tests.polarity == 'Pass' or tests.polarity == 'pass' or tests.polarity == 'Correct' or tests.polarity == 'correct' %}<span class="pass">{{ tests.polarity }}</span>{% elsif tests.polarity == 'Fail' or tests.polarity == 'fail' or tests.polarity == 'Incorrect' or tests.polarity == 'incorrect' %}<span class="fail">{{ tests.polarity }}</span>{% else %}{{ tests.polarity }}{% endif %}
           </span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Zs (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.zs)}</span>
+          <span class="inline-value">{{ tests.zs }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Max Zs (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.max_zs)}</span>
+          <span class="inline-value">{{ tests.max_zs }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">PFC (kA):</span>
-          <span class="inline-value">${esc(data.tests.pfc)}</span>
+          <span class="inline-value">{{ tests.pfc }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Earth Electrode (&Omega;):</span>
-          <span class="inline-value">${esc(data.tests.earth_electrode)}</span>
+          <span class="inline-value">{{ tests.earth_electrode }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Phase Rotation:</span>
-          <span class="inline-value">${esc(data.tests.phase_rotation)}</span>
+          <span class="inline-value">{{ tests.phase_rotation }}</span>
         </div>
       </div>
 
@@ -1008,31 +992,31 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">RCD Rating (mA):</span>
-          <span class="inline-value">${esc(data.tests.rcd_rating)}</span>
+          <span class="inline-value">{{ tests.rcd_rating }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">1&times; I&Delta;n (ms):</span>
-          <span class="inline-value">${esc(data.tests.rcd_time)}</span>
+          <span class="inline-value">{{ tests.rcd_time }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">5&times; I&Delta;n (ms):</span>
-          <span class="inline-value">${esc(data.tests.rcd_5x_time)}</span>
+          <span class="inline-value">{{ tests.rcd_5x_time }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">&frac12;&times; I&Delta;n:</span>
           <span class="inline-value">
-            ${passFail(data.tests.rcd_half_x)}
+            {% if tests.rcd_half_x == 'Pass' or tests.rcd_half_x == 'pass' or tests.rcd_half_x == 'No Trip' %}<span class="pass">{{ tests.rcd_half_x }}</span>{% elsif tests.rcd_half_x == 'Fail' or tests.rcd_half_x == 'fail' or tests.rcd_half_x == 'Trip' %}<span class="fail">{{ tests.rcd_half_x }}</span>{% else %}{{ tests.rcd_half_x }}{% endif %}
           </span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Test Button:</span>
           <span class="inline-value">
-            ${passFail(data.tests.rcd_test_button)}
+            {% if tests.rcd_test_button == 'Pass' or tests.rcd_test_button == 'pass' or tests.rcd_test_button == 'OK' %}<span class="pass">{{ tests.rcd_test_button }}</span>{% elsif tests.rcd_test_button == 'Fail' or tests.rcd_test_button == 'fail' %}<span class="fail">{{ tests.rcd_test_button }}</span>{% else %}{{ tests.rcd_test_button }}{% endif %}
           </span>
         </div>
         <div class="inline-group">
           <span class="inline-label">RCBO Trip (ms):</span>
-          <span class="inline-value">${esc(data.tests.rcbo_trip_time)}</span>
+          <span class="inline-value">{{ tests.rcbo_trip_time }}</span>
         </div>
       </div>
 
@@ -1042,27 +1026,27 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         <div class="inline-group">
           <span class="inline-label">AFDD Test Button:</span>
           <span class="inline-value">
-            ${passFail(data.tests.afdd_test_button)}
+            {% if tests.afdd_test_button == 'Pass' or tests.afdd_test_button == 'pass' or tests.afdd_test_button == 'OK' %}<span class="pass">{{ tests.afdd_test_button }}</span>{% elsif tests.afdd_test_button == 'Fail' or tests.afdd_test_button == 'fail' %}<span class="fail">{{ tests.afdd_test_button }}</span>{% else %}{{ tests.afdd_test_button }}{% endif %}
           </span>
         </div>
         <div class="inline-group">
           <span class="inline-label">AFDD Trip (ms):</span>
-          <span class="inline-value">${esc(data.tests.afdd_trip_time)}</span>
+          <span class="inline-value">{{ tests.afdd_trip_time }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">SPD Visual:</span>
           <span class="inline-value">
-            ${passFail(data.tests.spd_visual)}
+            {% if tests.spd_visual == 'Pass' or tests.spd_visual == 'pass' or tests.spd_visual == 'OK' %}<span class="pass">{{ tests.spd_visual }}</span>{% elsif tests.spd_visual == 'Fail' or tests.spd_visual == 'fail' %}<span class="fail">{{ tests.spd_visual }}</span>{% else %}{{ tests.spd_visual }}{% endif %}
           </span>
         </div>
         <div class="inline-group">
           <span class="inline-label">SPD Indicator:</span>
-          <span class="inline-value">${esc(data.tests.spd_indicator)}</span>
+          <span class="inline-value">{{ tests.spd_indicator }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">SPD Test Btn:</span>
           <span class="inline-value">
-            ${spdTestButton(data.tests.spd_test_button)}
+            {% if tests.spd_test_button == true or tests.spd_test_button == 'true' or tests.spd_test_button == 'Pass' or tests.spd_test_button == 'pass' or tests.spd_test_button == 'OK' %}<span class="pass">OK</span>{% elsif tests.spd_test_button == false or tests.spd_test_button == 'false' or tests.spd_test_button == '' %}<span class="na-text">N/A</span>{% else %}{{ tests.spd_test_button }}{% endif %}
           </span>
         </div>
       </div>
@@ -1070,12 +1054,12 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       <div class="inline-form mt-4">
         <div class="inline-group">
           <span class="inline-label">Temperature (&deg;C):</span>
-          <span class="inline-value">${esc(data.tests.temperature)}</span>
+          <span class="inline-value">{{ tests.temperature }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Functional Testing:</span>
           <span class="inline-value">
-            ${passFail(data.tests.functional_test)}
+            {% if tests.functional_test == 'Pass' or tests.functional_test == 'pass' or tests.functional_test == 'Satisfactory' %}<span class="pass">{{ tests.functional_test }}</span>{% elsif tests.functional_test == 'Fail' or tests.functional_test == 'fail' or tests.functional_test == 'Unsatisfactory' %}<span class="fail">{{ tests.functional_test }}</span>{% else %}{{ tests.functional_test }}{% endif %}
           </span>
         </div>
       </div>
@@ -1085,24 +1069,28 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       <div class="inline-form">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Instrument:</span>
-          <span class="inline-value wide">${esc(data.test_equipment.model)}</span>
+          <span class="inline-value wide">{{ test_equipment.model }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Serial No:</span>
-          <span class="inline-value">${esc(data.test_equipment.serial)}</span>
+          <span class="inline-value">{{ test_equipment.serial }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Calibration:</span>
-          <span class="inline-value">${esc(data.test_equipment.calibration_date)}</span>
+          <span class="inline-value">{{ test_equipment.calibration_date }}</span>
         </div>
-        ${data.test_equipment.custom ? `<div class="inline-group">
+        {% if test_equipment.custom and test_equipment.custom != '' %}
+        <div class="inline-group">
           <span class="inline-label">Other:</span>
-          <span class="inline-value">${esc(data.test_equipment.custom)}</span>
-        </div>` : ''}
+          <span class="inline-value">{{ test_equipment.custom }}</span>
+        </div>
+        {% endif %}
       </div>
     </div>
 
-    <!-- PART 5: DECLARATION -->
+    <!-- =============================================
+         PART 5: DECLARATION
+         ============================================= -->
     <div class="section">
       <div class="section-title">Part 5 &mdash; Declaration</div>
 
@@ -1120,31 +1108,31 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       <div class="inline-form mt-4">
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.declaration.bs7671_compliance)}
+            <span class="checkbox-box {% if declaration.bs7671_compliance == true or declaration.bs7671_compliance == 'true' %}checked{% endif %}">{% if declaration.bs7671_compliance == true or declaration.bs7671_compliance == 'true' %}&#10003;{% endif %}</span>
             <label>Complies with BS 7671:2018+A3:2024</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.declaration.test_results_accurate)}
+            <span class="checkbox-box {% if declaration.test_results_accurate == true or declaration.test_results_accurate == 'true' %}checked{% endif %}">{% if declaration.test_results_accurate == true or declaration.test_results_accurate == 'true' %}&#10003;{% endif %}</span>
             <label>Test results accurate</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.declaration.work_safety)}
+            <span class="checkbox-box {% if declaration.work_safety == true or declaration.work_safety == 'true' %}checked{% endif %}">{% if declaration.work_safety == true or declaration.work_safety == 'true' %}&#10003;{% endif %}</span>
             <label>Safe for continued use</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.declaration.part_p_notification)}
+            <span class="checkbox-box {% if declaration.part_p_notification == true or declaration.part_p_notification == 'true' %}checked{% endif %}">{% if declaration.part_p_notification == true or declaration.part_p_notification == 'true' %}&#10003;{% endif %}</span>
             <label>Part P notification required</label>
           </div>
         </div>
         <div class="inline-group">
           <div class="checkbox-item">
-            ${checkbox(data.declaration.copy_provided)}
+            <span class="checkbox-box {% if declaration.copy_provided == true or declaration.copy_provided == 'true' %}checked{% endif %}">{% if declaration.copy_provided == true or declaration.copy_provided == 'true' %}&#10003;{% endif %}</span>
             <label>Copy provided to person ordering the work</label>
           </div>
         </div>
@@ -1157,25 +1145,27 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
           <div class="signature-box-body">
             <div class="sig-field">
               <span class="sig-field-label">Name</span>
-              <span class="sig-field-value">${esc(data.declaration.name)}</span>
+              <span class="sig-field-value">{{ declaration.name }}</span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">Signature</span>
               <span class="sig-field-value signature">
-                ${data.declaration.signature ? `<img src="${esc(data.declaration.signature)}" style="max-height: 28px" />` : ''}
+                {% if declaration.signature and declaration.signature != '' %}
+                <img src="{{ declaration.signature }}" style="max-height: 28px" />
+                {% endif %}
               </span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">For/on behalf of</span>
-              <span class="sig-field-value">${esc(data.declaration.company)}</span>
+              <span class="sig-field-value">{{ declaration.company }}</span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">Position</span>
-              <span class="sig-field-value">${esc(data.declaration.position)}</span>
+              <span class="sig-field-value">{{ declaration.position }}</span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">Date</span>
-              <span class="sig-field-value">${esc(data.declaration.date)}</span>
+              <span class="sig-field-value">{{ declaration.date }}</span>
             </div>
           </div>
         </div>
@@ -1185,41 +1175,45 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
           <div class="signature-box-body">
             <div class="sig-field">
               <span class="sig-field-label">Address</span>
-              <span class="sig-field-value">${esc(data.declaration.address)}</span>
+              <span class="sig-field-value">{{ declaration.address }}</span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">Phone</span>
-              <span class="sig-field-value">${esc(data.declaration.phone)}</span>
+              <span class="sig-field-value">{{ declaration.phone }}</span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">Email</span>
-              <span class="sig-field-value">${esc(data.declaration.email)}</span>
+              <span class="sig-field-value">{{ declaration.email }}</span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">Qualification</span>
-              <span class="sig-field-value">${esc(data.declaration.qualification)}</span>
+              <span class="sig-field-value">{{ declaration.qualification }}</span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">Scheme Provider</span>
-              <span class="sig-field-value">${esc(data.declaration.scheme_provider)}</span>
+              <span class="sig-field-value">{{ declaration.scheme_provider }}</span>
             </div>
             <div class="sig-field">
               <span class="sig-field-label">Registration No</span>
-              <span class="sig-field-value">${esc(data.declaration.registration_number)}</span>
+              <span class="sig-field-value">{{ declaration.registration_number }}</span>
             </div>
           </div>
         </div>
       </div>
 
-      ${data.declaration.additional_notes ? `<div class="inline-form mt-6">
+      {% if declaration.additional_notes and declaration.additional_notes != '' %}
+      <div class="inline-form mt-6">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Additional Notes:</span>
-          <span class="inline-value wide" style="min-height: 28px">${esc(data.declaration.additional_notes)}</span>
+          <span class="inline-value wide" style="min-height: 28px">{{ declaration.additional_notes }}</span>
         </div>
-      </div>` : ''}
+      </div>
+      {% endif %}
     </div>
 
-    <!-- GUIDANCE FOR RECIPIENTS -->
+    <!-- =============================================
+         GUIDANCE FOR RECIPIENTS
+         ============================================= -->
     <div class="section avoid-break">
       <div class="section-title">Guidance for Recipients</div>
       <div class="guidance-intro">
@@ -1274,12 +1268,13 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
       </div>
     </div>
 
-    <!-- PAGE FOOTER -->
+    <!-- =============================================
+         PAGE FOOTER
+         ============================================= -->
     <div class="page-footer">
       <span>BS 7671:2018+A3:2024 &middot; Minor Electrical Installation Works Certificate</span>
       <span class="watermark">Generated by Elec-Mate</span>
     </div>
 
   </body>
-</html>`;
-}
+</html>

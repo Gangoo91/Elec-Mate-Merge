@@ -166,7 +166,7 @@ const BusinessHub = () => {
               description="To-dos & reminders"
               icon={ClipboardCheck}
               href="/electrician/tasks"
-              variant="hero"
+              variant="compact"
               accentColor="from-elec-yellow via-amber-400 to-orange-400"
               iconColor="text-elec-yellow"
               iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
@@ -177,7 +177,7 @@ const BusinessHub = () => {
               description="Jobs & appointments"
               icon={CalendarDays}
               href="/electrician/business/calendar"
-              variant="hero"
+              variant="compact"
               accentColor="from-blue-500 via-blue-400 to-cyan-400"
               iconColor="text-blue-400"
               iconBg="bg-blue-500/10 border border-blue-500/20"
@@ -188,7 +188,7 @@ const BusinessHub = () => {
               description="Log hours on site"
               icon={Timer}
               href="/electrician/time-tracker"
-              variant="hero"
+              variant="compact"
               accentColor="from-amber-500 via-orange-400 to-orange-500"
               iconColor="text-amber-400"
               iconBg="bg-amber-500/10 border border-amber-500/20"

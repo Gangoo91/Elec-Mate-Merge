@@ -1,19 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import SectionHeader from '@/components/ui/section-header';
+import { Check } from 'lucide-react';
+import { useHaptic } from '@/hooks/useHaptic';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { FieldTooltip } from '@/components/ui/field-tooltip';
-import { Users, FileText, Zap } from 'lucide-react';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
 import {
   EARTHING_ARRANGEMENTS,
@@ -29,17 +21,26 @@ interface MWDetailsTabProps {
   isMobile?: boolean;
 }
 
-const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobile = false }) => {
-  const [openSections, setOpenSections] = useState({
-    client: true,
-    work: true,
-    supply: true,
-  });
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-2 mt-2">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
 
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
+const FormField = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    {children}
+  </div>
+);
 
+const inputClass = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]';
+const textareaClass = 'text-base touch-manipulation bg-white/[0.06] border-white/[0.08] resize-none';
+
+const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
+  const [clientType, setClientType] = useState<'new' | 'existing'>('new');
+  const haptic = useHaptic();
   // Work description templates based on work type
   const WORK_DESCRIPTION_TEMPLATES: Record<string, string> = {
     addition: 'Addition of socket outlet/lighting point to existing circuit',
@@ -72,593 +73,411 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
     }
   };
 
-  // Helper for conditional section card styling - no card on mobile, full card on desktop
-  const sectionCardClass = cn(isMobile ? '' : 'eicr-section-card');
+  const earthingOptions = ['TN-S', 'TN-C-S', 'TT', 'IT'];
+  const voltageOptions = ['230V', '400V'];
+  const phaseOptions = ['Single', 'Three'];
+  const conductorMaterialOptions = ['Copper', 'Aluminium'];
+
+  const ToggleButtons = ({
+    options,
+    value,
+    onSelect,
+  }: {
+    options: string[];
+    value: string;
+    onSelect: (v: string) => void;
+  }) => (
+    <div className="flex gap-1.5">
+      {options.map((opt) => {
+        const isActive = value === opt || value === opt.toLowerCase();
+        return (
+          <button
+            key={opt}
+            type="button"
+            onClick={() => onSelect(opt)}
+            className={cn(
+              'flex-1 h-11 rounded-lg text-sm font-medium touch-manipulation transition-all',
+              isActive
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+            )}
+          >
+            {opt}
+          </button>
+        );
+      })}
+    </div>
+  );
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      {/* Client & Installation */}
-      <div className={sectionCardClass}>
-        <Collapsible open={openSections.client} onOpenChange={() => toggleSection('client')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Client & Installation"
-              icon={Users}
-              isOpen={openSections.client}
-              color="amber-500"
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              {/* Certificate Number (Read-only) */}
-              {formData.certificateNumber && (
-                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/30">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-blue-300">Certificate Number</span>
-                    <span className="font-mono text-sm text-white">
-                      {formData.certificateNumber}
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {/* Client Selector */}
-              <ClientSelector onSelectCustomer={handleSelectCustomer} />
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Client Name *
-                  </label>
-                  <Input
-                    value={formData.clientName || ''}
-                    onChange={(e) => onUpdate('clientName', e.target.value)}
-                    placeholder="Full name"
-                    className={cn(
-                      'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
-                      !formData.clientName && 'border-red-500/30'
-                    )}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Client Phone
-                  </label>
-                  <Input
-                    type="tel"
-                    value={formData.clientPhone || ''}
-                    onChange={(e) => onUpdate('clientPhone', e.target.value)}
-                    placeholder="e.g., 07700 900000"
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Client Email
-                </label>
-                <Input
-                  type="email"
-                  value={formData.clientEmail || ''}
-                  onChange={(e) => onUpdate('clientEmail', e.target.value)}
-                  placeholder="client@email.com"
-                  className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Person Ordering Work
-                  </label>
-                  {formData.clientName && !formData.personOrderingWork && (
-                    <button
-                      type="button"
-                      onClick={() => onUpdate('personOrderingWork', formData.clientName as string)}
-                      className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 touch-manipulation active:scale-95 transition-transform"
-                    >
-                      Same as client
-                    </button>
-                  )}
-                </div>
-                <Input
-                  value={formData.personOrderingWork || ''}
-                  onChange={(e) => onUpdate('personOrderingWork', e.target.value)}
-                  placeholder="If different from client"
-                  className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Property Address *
-                </label>
-                <Textarea
-                  value={formData.propertyAddress || ''}
-                  onChange={(e) => onUpdate('propertyAddress', e.target.value)}
-                  placeholder="Full installation address"
-                  rows={2}
-                  className={cn(
-                    'min-h-[80px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none',
-                    !formData.propertyAddress && 'border-red-500/30'
-                  )}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Postcode
-                  </label>
-                  <Input
-                    value={formData.postcode || ''}
-                    onChange={(e) => onUpdate('postcode', e.target.value.toUpperCase())}
-                    placeholder="e.g., SW1A 1AA"
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 uppercase"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Date of Work *
-                  </label>
-                  <Input
-                    type="date"
-                    value={formData.workDate || ''}
-                    onChange={(e) => onUpdate('workDate', e.target.value)}
-                    className={cn(
-                      'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
-                      !formData.workDate && 'border-red-500/30'
-                    )}
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Date of Completion
-                  </label>
-                  <Input
-                    type="date"
-                    value={formData.dateOfCompletion || ''}
-                    onChange={(e) => onUpdate('dateOfCompletion', e.target.value)}
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Next Inspection Due
-                  </label>
-                  <Input
-                    type="date"
-                    value={formData.nextInspectionDue || ''}
-                    onChange={(e) => onUpdate('nextInspectionDue', e.target.value)}
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Contractor Name
-                </label>
-                <Input
-                  value={formData.contractorName || ''}
-                  onChange={(e) => onUpdate('contractorName', e.target.value)}
-                  placeholder="Company name"
-                  className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                />
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+    <div className="space-y-3 pb-20 lg:pb-4">
+      {/* Client Type Toggle */}
+      <div className="flex gap-1.5">
+        {[
+          { val: 'new' as const, label: 'New Client' },
+          { val: 'existing' as const, label: 'Existing' },
+        ].map((opt) => (
+          <button
+            key={opt.val}
+            type="button"
+            onClick={() => { haptic.light(); setClientType(opt.val); }}
+            className={cn(
+              'flex-1 h-11 rounded-xl border text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
+              clientType === opt.val
+                ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
+                : 'bg-white/[0.03] border-white/[0.06] text-white'
+            )}
+          >
+            {opt.label}
+          </button>
+        ))}
       </div>
+
+      {clientType === 'existing' && (
+        <ClientSelector onSelectCustomer={handleSelectCustomer} />
+      )}
+
+      {/* Client Details */}
+      <SectionTitle title="Client Details" />
+
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Client Name" required>
+          <Input
+            value={(formData.clientName as string) || ''}
+            onChange={(e) => onUpdate('clientName', e.target.value)}
+            placeholder="Full name"
+            className={inputClass}
+          />
+        </FormField>
+        <FormField label="Person Ordering Work">
+          <Input
+            value={(formData.personOrderingWork as string) || ''}
+            onChange={(e) => onUpdate('personOrderingWork', e.target.value)}
+            placeholder="If different"
+            className={inputClass}
+          />
+        </FormField>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Phone">
+          <Input
+            type="tel"
+            value={(formData.clientPhone as string) || ''}
+            onChange={(e) => onUpdate('clientPhone', e.target.value)}
+            placeholder="Contact number"
+            className={inputClass}
+          />
+        </FormField>
+        <FormField label="Email">
+          <Input
+            type="email"
+            value={(formData.clientEmail as string) || ''}
+            onChange={(e) => onUpdate('clientEmail', e.target.value)}
+            placeholder="Email address"
+            className={inputClass}
+          />
+        </FormField>
+      </div>
+
+      {/* Installation Address */}
+      <SectionTitle title="Installation Address" />
+
+      <FormField label="Property Address" required>
+        <Input
+          value={(formData.propertyAddress as string) || ''}
+          onChange={(e) => onUpdate('propertyAddress', e.target.value)}
+          placeholder="Full installation address including postcode"
+          className={inputClass}
+        />
+      </FormField>
+
+      {/* Dates */}
+      <SectionTitle title="Dates" />
+
+      <button
+        type="button"
+        onClick={() => {
+          haptic.light();
+          const today = new Date().toISOString().split('T')[0];
+          onUpdate('workDate', today);
+          onUpdate('dateOfCompletion', today);
+          // Auto-set next inspection to 10 years from today
+          const nextInsp = new Date();
+          nextInsp.setFullYear(nextInsp.getFullYear() + 10);
+          onUpdate('nextInspectionDue', nextInsp.toISOString().split('T')[0]);
+        }}
+        className="w-full h-9 rounded-lg text-xs font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
+      >
+        Set dates (today + 10yr inspection)
+      </button>
+
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Date of Work *">
+          <Input
+            type="date"
+            value={(formData.workDate as string) || ''}
+            onChange={(e) => onUpdate('workDate', e.target.value)}
+            className={cn(inputClass, 'text-xs')}
+            style={{ fontSize: '12px' }}
+          />
+        </FormField>
+        <FormField label="Completion">
+          <Input
+            type="date"
+            value={(formData.dateOfCompletion as string) || ''}
+            onChange={(e) => onUpdate('dateOfCompletion', e.target.value)}
+            className={cn(inputClass, 'text-xs')}
+            style={{ fontSize: '12px' }}
+          />
+        </FormField>
+      </div>
+
+      <FormField label="Next Inspection Due">
+        <div className="grid grid-cols-4 gap-1 mb-2">
+          {[1, 3, 5, 10].map((years) => (
+            <button
+              key={years}
+              type="button"
+              onClick={() => {
+                haptic.light();
+                const d = new Date();
+                d.setFullYear(d.getFullYear() + years);
+                onUpdate('nextInspectionDue', d.toISOString().split('T')[0]);
+              }}
+              className={cn(
+                'h-9 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                (() => {
+                  if (!formData.nextInspectionDue) return false;
+                  const d = new Date();
+                  d.setFullYear(d.getFullYear() + years);
+                  return (formData.nextInspectionDue as string) === d.toISOString().split('T')[0];
+                })()
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {years} {years === 1 ? 'year' : 'years'}
+            </button>
+          ))}
+        </div>
+        <Input
+          type="date"
+          value={(formData.nextInspectionDue as string) || ''}
+          onChange={(e) => onUpdate('nextInspectionDue', e.target.value)}
+          className={cn(inputClass, 'text-xs')}
+          style={{ fontSize: '12px' }}
+        />
+      </FormField>
+
+      <FormField label="Contractor Name">
+        <Input
+          value={(formData.contractorName as string) || ''}
+          onChange={(e) => onUpdate('contractorName', e.target.value)}
+          placeholder="Company name"
+          className={inputClass}
+        />
+      </FormField>
 
       {/* Description of Work */}
-      <div className={sectionCardClass}>
-        <Collapsible open={openSections.work} onOpenChange={() => toggleSection('work')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Description of Work"
-              icon={FileText}
-              isOpen={openSections.work}
-              color="blue-500"
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Type of Work *
-                  </label>
-                  <Select
-                    value={formData.workType || ''}
-                    onValueChange={(v) => onUpdate('workType', v === '__clear__' ? '' : v)}
-                  >
-                    <SelectTrigger
-                      className={cn(
-                        'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
-                        !formData.workType && 'border-red-500/30'
-                      )}
-                    >
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {WORK_TYPES.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Location of Work
-                  </label>
-                  <Input
-                    value={formData.workLocation || ''}
-                    onChange={(e) => onUpdate('workLocation', e.target.value)}
-                    placeholder="e.g., Kitchen, Garage"
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                  />
-                </div>
-              </div>
+      <SectionTitle title="Description of Work" />
 
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Description of Work *
-                  </label>
-                  {formData.workType &&
-                    !formData.workDescription &&
-                    WORK_DESCRIPTION_TEMPLATES[formData.workType as string] && (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          onUpdate(
-                            'workDescription',
-                            WORK_DESCRIPTION_TEMPLATES[formData.workType as string]
-                          )
-                        }
-                        className="text-xs px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 touch-manipulation active:scale-95 transition-transform"
-                      >
-                        Use template
-                      </button>
-                    )}
-                </div>
-                <Textarea
-                  value={formData.workDescription || ''}
-                  onChange={(e) => onUpdate('workDescription', e.target.value)}
-                  placeholder="Describe the electrical work carried out..."
-                  rows={3}
-                  className={cn(
-                    'min-h-[100px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none',
-                    !formData.workDescription && 'border-red-500/30'
-                  )}
-                />
-              </div>
+      {/* Work type as toggle buttons */}
+      <FormField label="Type of Work" required>
+        <div className="grid grid-cols-3 gap-1">
+          {WORK_TYPES.slice(0, 6).map((wt) => (
+            <button
+              key={wt.value}
+              type="button"
+              onClick={() => {
+                haptic.light();
+                onUpdate('workType', wt.value);
+                if (WORK_DESCRIPTION_TEMPLATES[wt.value] && !formData.workDescription) {
+                  onUpdate('workDescription', WORK_DESCRIPTION_TEMPLATES[wt.value]);
+                }
+              }}
+              className={cn(
+                'h-9 rounded-lg font-medium transition-all touch-manipulation text-[9px] active:scale-[0.98]',
+                formData.workType === wt.value
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {wt.label}
+            </button>
+          ))}
+        </div>
+      </FormField>
 
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5)
-                  </label>
-                  {!formData.departuresFromBS7671 && (
-                    <button
-                      type="button"
-                      onClick={() => onUpdate('departuresFromBS7671', 'None')}
-                      className="text-xs px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 touch-manipulation active:scale-95 transition-transform"
-                    >
-                      None
-                    </button>
-                  )}
-                </div>
-                <Textarea
-                  value={formData.departuresFromBS7671 || ''}
-                  onChange={(e) => onUpdate('departuresFromBS7671', e.target.value)}
-                  placeholder="Detail any departures from the standard and reasons, or enter 'None'..."
-                  rows={2}
-                  className="min-h-[80px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none"
-                />
-              </div>
-
-              <div className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Permitted Exceptions (Reg 411.3.3)
-                  </label>
-                  {!formData.permittedExceptions && (
-                    <button
-                      type="button"
-                      onClick={() => onUpdate('permittedExceptions', 'None')}
-                      className="text-xs px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 touch-manipulation active:scale-95 transition-transform"
-                    >
-                      None
-                    </button>
-                  )}
-                </div>
-                <Textarea
-                  value={formData.permittedExceptions || ''}
-                  onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
-                  placeholder="Detail any permitted exceptions under Regulation 411.3.3, or enter 'None'..."
-                  rows={2}
-                  className="min-h-[80px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none"
-                />
-              </div>
-
-              {/* Risk Assessment Attached */}
-              <div className="flex items-center gap-3 p-4 min-h-[52px] rounded-xl bg-amber-500/5 border border-amber-500/20">
-                <Checkbox
-                  id="riskAssessmentAttached"
-                  checked={formData.riskAssessmentAttached || false}
-                  onCheckedChange={(c) => onUpdate('riskAssessmentAttached', c)}
-                  className="h-6 w-6 border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500 touch-manipulation"
-                />
-                <Label
-                  htmlFor="riskAssessmentAttached"
-                  className="text-sm font-medium cursor-pointer"
-                >
-                  Risk assessment attached (where applicable)
-                </Label>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Comments on Existing Installation (Reg 644.1.2)
-                </label>
-                <Textarea
-                  value={formData.commentsOnExistingInstallation || ''}
-                  onChange={(e) => onUpdate('commentsOnExistingInstallation', e.target.value)}
-                  placeholder="Enter any comments regarding the condition of the existing installation that may affect the safety of the new work..."
-                  rows={3}
-                  className="min-h-[100px] text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 resize-none"
-                />
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Location">
+          <Input
+            value={(formData.workLocation as string) || ''}
+            onChange={(e) => onUpdate('workLocation', e.target.value)}
+            placeholder="e.g., Kitchen"
+            className={inputClass}
+          />
+        </FormField>
+        <FormField label="Description *">
+          <Input
+            value={(formData.workDescription as string) || ''}
+            onChange={(e) => onUpdate('workDescription', e.target.value)}
+            placeholder="Work carried out"
+            className={inputClass}
+          />
+        </FormField>
       </div>
+
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Departures (Reg 120.3, 133.5)">
+          <Input
+            value={(formData.departuresFromBS7671 as string) || ''}
+            onChange={(e) => onUpdate('departuresFromBS7671', e.target.value)}
+            placeholder="None"
+            className={inputClass}
+          />
+        </FormField>
+        <FormField label="Exceptions (Reg 411.3.3)">
+          <Input
+            value={(formData.permittedExceptions as string) || ''}
+            onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
+            placeholder="None"
+            className={inputClass}
+          />
+        </FormField>
+      </div>
+
+      {/* Risk Assessment toggle */}
+      <button
+        type="button"
+        onClick={() => { haptic.light(); onUpdate('riskAssessmentAttached', !formData.riskAssessmentAttached); }}
+        className={cn(
+          'w-full h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
+          formData.riskAssessmentAttached
+            ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+            : 'bg-white/[0.05] border border-white/[0.08] text-white'
+        )}
+      >
+        {formData.riskAssessmentAttached && <Check className="h-3.5 w-3.5" />}
+        Risk Assessment Attached
+      </button>
+
+      <FormField label="Comments on Existing Installation (Reg 644.1.2)">
+        <Input
+          value={(formData.commentsOnExistingInstallation as string) || ''}
+          onChange={(e) => onUpdate('commentsOnExistingInstallation', e.target.value)}
+          placeholder="Any comments or 'None'"
+          className={inputClass}
+        />
+      </FormField>
 
       {/* Supply & Earthing */}
-      <div className={sectionCardClass}>
-        <Collapsible open={openSections.supply} onOpenChange={() => toggleSection('supply')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Supply & Earthing"
-              icon={Zap}
-              isOpen={openSections.supply}
-              color="yellow-500"
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-1">
-                    <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                      Earthing Arrangement *
-                    </label>
-                    <FieldTooltip
-                      content="The type of earthing system determines how protective and neutral conductors are arranged between the supply and installation."
-                      regulation="312.2"
-                      example="Most UK domestic supplies are TN-C-S (PME). TT systems require an earth electrode."
-                    />
-                  </div>
-                  <Select
-                    value={formData.earthingArrangement || ''}
-                    onValueChange={(v) =>
-                      onUpdate('earthingArrangement', v === '__clear__' ? '' : v)
-                    }
-                  >
-                    <SelectTrigger
-                      className={cn(
-                        'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
-                        !formData.earthingArrangement && 'border-red-500/30'
-                      )}
-                    >
-                      <SelectValue placeholder="Select earthing type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {EARTHING_ARRANGEMENTS.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          <div className="flex flex-col gap-1">
-                            <span className="font-semibold text-white">{opt.label}</span>
-                            {opt.description && (
-                              <span className="text-[13px] text-white leading-snug">
-                                {opt.description}
-                              </span>
-                            )}
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {formData.earthingArrangement && (
-                    <p className="text-xs text-white mt-1">
-                      {
-                        EARTHING_ARRANGEMENTS.find((e) => e.value === formData.earthingArrangement)
-                          ?.description
-                      }
-                    </p>
-                  )}
-                </div>
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-1">
-                    <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                      Zdb - Earth fault loop at DB (Ω)
-                    </label>
-                    <FieldTooltip
-                      content="Earth fault loop impedance measured at the distribution board (Ze + internal cable impedance). Used to verify that protective devices can disconnect within the required time."
-                      regulation="643.7.3"
-                      example="Typical Zdb: TN-C-S: 0.25-0.45Ω, TN-S: 0.40-0.90Ω, TT: depends on electrode resistance"
-                    />
-                  </div>
-                  <Input
-                    type="number"
-                    step="0.01"
-                    value={formData.zdb || ''}
-                    onChange={(e) => onUpdate('zdb', e.target.value)}
-                    placeholder={zdbPlaceholder}
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                  />
-                </div>
-              </div>
+      <SectionTitle title="Supply & Earthing" />
 
-              <div className="flex items-center gap-3 p-4 min-h-[52px] rounded-xl bg-white/5 border border-white/10">
-                <Checkbox
-                  id="earthingConductorPresent"
-                  checked={formData.earthingConductorPresent || false}
-                  onCheckedChange={(checked) => onUpdate('earthingConductorPresent', checked)}
-                  className="h-6 w-6 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
-                />
-                <Label
-                  htmlFor="earthingConductorPresent"
-                  className="text-sm font-medium cursor-pointer"
-                >
-                  Earthing conductor present
-                </Label>
-              </div>
+      <FormField label="Earthing Arrangement" required>
+        <ToggleButtons
+          options={earthingOptions}
+          value={(formData.earthingArrangement as string) || ''}
+          onSelect={(v) => onUpdate('earthingArrangement', v)}
+        />
+      </FormField>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Main Earthing Conductor Size
-                  </label>
-                  <Select
-                    value={formData.mainEarthingConductorSize || ''}
-                    onValueChange={(v) =>
-                      onUpdate('mainEarthingConductorSize', v === '__clear__' ? '' : v)
-                    }
-                  >
-                    <SelectTrigger className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20">
-                      <SelectValue placeholder="Select size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {EARTHING_CONDUCTOR_SIZES.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Earthing Conductor Material
-                  </label>
-                  <Select
-                    value={formData.mainEarthingConductorMaterial || 'copper'}
-                    onValueChange={(v) => onUpdate('mainEarthingConductorMaterial', v)}
-                  >
-                    <SelectTrigger className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20">
-                      <SelectValue placeholder="Select material" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="copper">Copper</SelectItem>
-                      <SelectItem value="aluminium">Aluminium</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Main Bonding Conductor Size
-                  </label>
-                  <Select
-                    value={formData.mainBondingConductorSize || ''}
-                    onValueChange={(v) =>
-                      onUpdate('mainBondingConductorSize', v === '__clear__' ? '' : v)
-                    }
-                  >
-                    <SelectTrigger className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20">
-                      <SelectValue placeholder="Select size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {EARTHING_CONDUCTOR_SIZES.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {/* Bonding Connections */}
-              <div className="space-y-3">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Bonding Connections
-                </label>
-                <div className="flex flex-wrap gap-3">
-                  {['Water', 'Gas', 'Oil', 'Structural', 'Other'].map((item) => {
-                    const fieldName = `bonding${item}`;
-                    const sizeField = `bonding${item}Size`;
-                    const isChecked = formData[fieldName] || false;
-                    return (
-                      <div key={item} className="space-y-2">
-                        <div className="flex items-center gap-2 p-3 min-h-[48px] rounded-xl bg-white/5 border border-white/10">
-                          <Checkbox
-                            id={fieldName}
-                            checked={isChecked}
-                            onCheckedChange={(c) => onUpdate(fieldName, c)}
-                            className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation"
-                          />
-                          <Label htmlFor={fieldName} className="text-sm font-medium cursor-pointer flex-1">
-                            {item}
-                          </Label>
-                        </div>
-                        {isChecked && item !== 'Other' && (
-                          <div className="relative pl-7">
-                            <Input
-                              value={formData[sizeField] || ''}
-                              onChange={(e) => onUpdate(sizeField, e.target.value)}
-                              placeholder={formData.mainBondingConductorSize || '10'}
-                              className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20 pr-12"
-                            />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">mm²</span>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* Other Bonding Specification - shown when Other is checked */}
-                {formData.bondingOther && (
-                  <div className="space-y-1.5 mt-2">
-                    <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                      Other Bonding - Specify
-                    </label>
-                    <Input
-                      value={formData.bondingOtherSpecify || ''}
-                      onChange={(e) => onUpdate('bondingOtherSpecify', e.target.value)}
-                      placeholder="e.g., Incoming metallic services, extraneous conductive parts"
-                      className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Voltage">
+          <ToggleButtons
+            options={voltageOptions}
+            value={(formData.supplyVoltage as string) || ''}
+            onSelect={(v) => onUpdate('supplyVoltage', v)}
+          />
+        </FormField>
+        <FormField label="Phases">
+          <ToggleButtons
+            options={phaseOptions}
+            value={(formData.supplyPhases as string) || ''}
+            onSelect={(v) => onUpdate('supplyPhases', v)}
+          />
+        </FormField>
       </div>
+
+      <FormField label="Zdb — Earth fault loop at DB (Ω)">
+        <Input
+          type="text"
+          inputMode="decimal"
+          value={(formData.zdb as string) || ''}
+          onChange={(e) => onUpdate('zdb', e.target.value)}
+          placeholder={zdbPlaceholder}
+          className={inputClass}
+        />
+      </FormField>
+
+      <button
+        type="button"
+        onClick={() => { haptic.light(); onUpdate('earthingConductorPresent', !formData.earthingConductorPresent); }}
+        className={cn(
+          'w-full h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1.5',
+          formData.earthingConductorPresent
+            ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+            : 'bg-white/[0.05] border border-white/[0.08] text-white'
+        )}
+      >
+        {formData.earthingConductorPresent && <Check className="h-3.5 w-3.5" />}
+        Earthing Conductor Present
+      </button>
+
+      <div className="grid grid-cols-2 gap-2 items-end">
+        <FormField label="Earthing Conductor Size">
+          <MobileSelectPicker
+            value={(formData.mainEarthingConductorSize as string) || ''}
+            onValueChange={(v) => onUpdate('mainEarthingConductorSize', v)}
+            options={EARTHING_CONDUCTOR_SIZES}
+            placeholder="Select size"
+            title="Earthing Conductor Size"
+          />
+        </FormField>
+        <FormField label="Material">
+          <ToggleButtons
+            options={conductorMaterialOptions}
+            value={(formData.mainEarthingConductorMaterial as string) || 'Copper'}
+            onSelect={(v) => onUpdate('mainEarthingConductorMaterial', v.toLowerCase())}
+          />
+        </FormField>
+      </div>
+
+      <FormField label="Main Bonding Conductor Size">
+        <MobileSelectPicker
+          value={(formData.mainBondingConductorSize as string) || ''}
+          onValueChange={(v) => onUpdate('mainBondingConductorSize', v)}
+          options={EARTHING_CONDUCTOR_SIZES}
+          placeholder="Select size"
+          title="Bonding Conductor Size"
+        />
+      </FormField>
+
+      {/* Bonding Connections */}
+      <FormField label="Bonding Connections">
+        <div className="grid grid-cols-3 gap-1">
+          {['Water', 'Gas', 'Oil', 'Steel', 'Other'].map((item) => {
+            const fieldName = item === 'Steel' ? 'bondingStructural' : `bonding${item}`;
+            const isChecked = (formData[fieldName] as boolean) || false;
+            return (
+              <button
+                key={item}
+                type="button"
+                onClick={() => { haptic.light(); onUpdate(fieldName, !isChecked); }}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
+                  isChecked
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {isChecked && <Check className="h-3 w-3" />}
+                {item}
+              </button>
+            );
+          })}
+        </div>
+      </FormField>
     </div>
   );
 };

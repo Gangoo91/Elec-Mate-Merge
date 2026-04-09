@@ -27,7 +27,7 @@ export const CircuitJustificationSheet = ({
   const justifications = circuit.justifications;
 
   return (
-    <Drawer.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Drawer.Root shouldScaleBackground={false} noBodyStyles open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/60 z-40" />
         <Drawer.Content className="bg-card fixed bottom-0 left-0 right-0 max-h-[90vh] rounded-t-2xl z-50 border-t-4 border-elec-yellow flex flex-col">

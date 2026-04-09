@@ -323,6 +323,8 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
       spd: {
         bs_en: formData.spdBsEn || '',
         type: formData.spdType || '',
+        make: formData.spdMake || '',
+        rated_ka: formData.spdRatedKa || '',
       },
     },
 

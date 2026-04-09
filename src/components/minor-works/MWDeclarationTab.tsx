@@ -1,73 +1,64 @@
-import React, { useState } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import SectionHeader from '@/components/ui/section-header';
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { User, CheckSquare, PenTool, UserCircle, CheckCircle, Loader2 } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { QUALIFICATION_LEVELS, SCHEME_PROVIDERS } from '@/constants/minorWorksOptions';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FormField = ({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    {children}
+  </div>
+);
+
+const inputClass = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]';
 
 interface MWDeclarationTabProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   isMobile?: boolean;
 }
 
+const POSITION_PRESETS = [
+  'Qualified Supervisor',
+  'Approved Electrician',
+  'Installation Electrician',
+  'Electrical Engineer',
+  'Site Manager',
+];
+
 const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
   formData,
   onUpdate,
-  isMobile = false,
 }) => {
   const { toast } = useToast();
-  const [openSections, setOpenSections] = useState({
-    electrician: true,
-    compliance: true,
-    signature: true,
-  });
-
-  // Smart form hook for auto-fill from Business Settings
+  const haptic = useHaptic();
   const {
     loading: smartFormLoading,
     hasSavedElectricianDetails,
     loadElectricianDetails,
   } = useMinorWorksSmartForm();
 
-  // Helper for conditional section card styling - no card on mobile, full card on desktop
-  const sectionCardClass = cn(isMobile ? '' : 'eicr-section-card');
-
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  // Handler to load user profile data from Business Settings
   const handleUseMyProfile = () => {
     const details = loadElectricianDetails();
-
     if (!details) {
-      toast({
-        title: 'No Profile Found',
-        description: 'Set up your details in Business Settings to auto-fill.',
-        variant: 'destructive',
-      });
+      toast({ title: 'No Profile Found', description: 'Set up your details in Business Settings.', variant: 'destructive' });
       return;
     }
-
-    // Apply all electrician details
+    haptic.success();
     if (details.electricianName) onUpdate('electricianName', details.electricianName);
     if (details.forAndOnBehalfOf) onUpdate('forAndOnBehalfOf', details.forAndOnBehalfOf);
     if (details.position) onUpdate('position', details.position);
@@ -79,389 +70,187 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
     if (details.electricianEmail) onUpdate('electricianEmail', details.electricianEmail);
     if (details.signature) onUpdate('signature', details.signature);
     if (details.signatureDate) onUpdate('signatureDate', details.signatureDate);
-
-    toast({
-      title: 'Profile Applied',
-      description: 'Your details have been filled from Business Settings.',
-      variant: 'success',
-    });
+    toast({ title: 'Profile Applied', description: 'Your details have been filled.' });
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-6">
+      {/* Load from Business Settings */}
+      <button
+        type="button"
+        onClick={handleUseMyProfile}
+        disabled={smartFormLoading}
+        className="w-full h-10 rounded-lg font-semibold text-xs bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow touch-manipulation active:scale-[0.98]"
+      >
+        Load from Business Settings
+      </button>
+
       {/* Electrician Details */}
-      <div className={sectionCardClass}>
-        <Collapsible
-          open={openSections.electrician}
-          onOpenChange={() => toggleSection('electrician')}
-        >
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Electrician Details"
-              icon={User}
-              isOpen={openSections.electrician}
-              color="amber-500"
+      <div className="space-y-3">
+        <SectionTitle title="Electrician Details" />
+
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <FormField label="Name" required>
+            <Input
+              value={formData.electricianName || ''}
+              onChange={(e) => onUpdate('electricianName', e.target.value)}
+              placeholder="Full name"
+              className={inputClass}
             />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-5">
-              {/* Use My Profile Button - Premium Style */}
+          </FormField>
+          <FormField label="Company">
+            <Input
+              value={formData.forAndOnBehalfOf || ''}
+              onChange={(e) => onUpdate('forAndOnBehalfOf', e.target.value)}
+              placeholder="Company"
+              className={inputClass}
+            />
+          </FormField>
+        </div>
+
+        {/* Position presets */}
+        <FormField label="Position" required>
+          <div className="grid grid-cols-3 gap-1">
+            {POSITION_PRESETS.map((pos) => (
               <button
+                key={pos}
                 type="button"
-                onClick={handleUseMyProfile}
-                disabled={smartFormLoading}
+                onClick={() => { haptic.light(); onUpdate('position', pos); }}
                 className={cn(
-                  'w-full h-14 rounded-xl border-2 border-dashed transition-all flex items-center justify-center gap-3 ios-pressable touch-manipulation',
-                  hasSavedElectricianDetails
-                    ? 'border-green-500/30 bg-green-500/5 hover:bg-green-500/10 hover:border-green-500/50'
-                    : 'border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 hover:border-amber-500/50'
+                  'h-8 rounded-md font-medium text-[9px] touch-manipulation transition-all active:scale-[0.98]',
+                  formData.position === pos
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
                 )}
               >
-                {smartFormLoading ? (
-                  <Loader2 className="h-5 w-5 text-amber-400 animate-spin" />
-                ) : (
-                  <>
-                    <div
-                      className={cn(
-                        'p-2 rounded-lg',
-                        hasSavedElectricianDetails ? 'bg-green-500/20' : 'bg-amber-500/20'
-                      )}
-                    >
-                      {hasSavedElectricianDetails ? (
-                        <CheckCircle className="h-5 w-5 text-green-400" />
-                      ) : (
-                        <UserCircle className="h-5 w-5 text-amber-400" />
-                      )}
-                    </div>
-                    <span
-                      className={cn(
-                        'font-medium',
-                        hasSavedElectricianDetails ? 'text-green-400' : 'text-amber-400'
-                      )}
-                    >
-                      {hasSavedElectricianDetails
-                        ? 'Use My Profile Details'
-                        : 'Set Up Profile in Settings'}
-                    </span>
-                  </>
-                )}
+                {pos}
               </button>
+            ))}
+          </div>
+        </FormField>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Electrician Name *
-                  </label>
-                  <Input
-                    value={formData.electricianName || ''}
-                    onChange={(e) => onUpdate('electricianName', e.target.value)}
-                    placeholder="Full name"
-                    className={cn(
-                      'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
-                      !formData.electricianName && 'border-red-500/30'
-                    )}
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Company Name
-                  </label>
-                  <Input
-                    value={formData.forAndOnBehalfOf || ''}
-                    onChange={(e) => onUpdate('forAndOnBehalfOf', e.target.value)}
-                    placeholder="Company or trading name"
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                  />
-                </div>
-              </div>
+        <div className="grid grid-cols-3 gap-2 items-end">
+          <FormField label="Qualification">
+            <MobileSelectPicker
+              value={formData.qualificationLevel || ''}
+              onValueChange={(v) => onUpdate('qualificationLevel', v)}
+              options={QUALIFICATION_LEVELS.map((o) => ({ value: o.value, label: o.label }))}
+              placeholder="Level"
+              title="Qualification Level"
+            />
+          </FormField>
+          <FormField label="Scheme">
+            <MobileSelectPicker
+              value={formData.schemeProvider || ''}
+              onValueChange={(v) => onUpdate('schemeProvider', v)}
+              options={SCHEME_PROVIDERS.map((o) => ({ value: o.value, label: o.label }))}
+              placeholder="Provider"
+              title="Scheme Provider"
+            />
+          </FormField>
+          <FormField label="Reg No.">
+            <Input
+              value={formData.registrationNumber || ''}
+              onChange={(e) => onUpdate('registrationNumber', e.target.value)}
+              placeholder="Number"
+              className={inputClass}
+            />
+          </FormField>
+        </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Position *
-                </label>
-                <Input
-                  value={formData.position || ''}
-                  onChange={(e) => onUpdate('position', e.target.value)}
-                  placeholder="e.g., Qualified Electrician"
-                  className={cn(
-                    'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
-                    !formData.position && 'border-red-500/30'
-                  )}
-                />
-              </div>
+        <FormField label="Business Address">
+          <Input
+            value={formData.contractorAddress || ''}
+            onChange={(e) => onUpdate('contractorAddress', e.target.value)}
+            placeholder="Full business address including postcode"
+            className={inputClass}
+          />
+        </FormField>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Qualification Level
-                  </label>
-                  <Select
-                    value={formData.qualificationLevel || ''}
-                    onValueChange={(v) => onUpdate('qualificationLevel', v)}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Select level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {QUALIFICATION_LEVELS.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Scheme Provider
-                  </label>
-                  <Select
-                    value={formData.schemeProvider || ''}
-                    onValueChange={(v) => onUpdate('schemeProvider', v)}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Select provider" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {SCHEME_PROVIDERS.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Registration Number
-                </label>
-                <Input
-                  value={formData.registrationNumber || ''}
-                  onChange={(e) => onUpdate('registrationNumber', e.target.value)}
-                  placeholder="Scheme registration number"
-                  className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                />
-              </div>
-
-              {/* Contractor Address */}
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Contractor Address
-                </label>
-                <Textarea
-                  value={formData.contractorAddress || ''}
-                  onChange={(e) => onUpdate('contractorAddress', e.target.value)}
-                  placeholder="Business address"
-                  rows={2}
-                  className="text-base bg-white/5 border-white/10 rounded-xl min-h-[80px] focus:border-amber-500/50 focus:ring-amber-500/20"
-                />
-              </div>
-
-              {/* Contact Details */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Contact Telephone
-                  </label>
-                  <Input
-                    type="tel"
-                    value={formData.electricianPhone || ''}
-                    onChange={(e) => onUpdate('electricianPhone', e.target.value)}
-                    placeholder="e.g., 07123 456789"
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                    Email Address
-                  </label>
-                  <Input
-                    type="email"
-                    value={formData.electricianEmail || ''}
-                    onChange={(e) => onUpdate('electricianEmail', e.target.value)}
-                    placeholder="e.g., name@company.co.uk"
-                    className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20"
-                  />
-                </div>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <FormField label="Tel">
+            <Input
+              type="tel"
+              value={formData.electricianPhone || ''}
+              onChange={(e) => onUpdate('electricianPhone', e.target.value)}
+              placeholder="Phone"
+              className={inputClass}
+            />
+          </FormField>
+          <FormField label="Email">
+            <Input
+              type="email"
+              value={formData.electricianEmail || ''}
+              onChange={(e) => onUpdate('electricianEmail', e.target.value)}
+              placeholder="Email"
+              className={inputClass}
+            />
+          </FormField>
+        </div>
       </div>
 
-      {/* Compliance Declarations */}
-      <div className={sectionCardClass}>
-        <Collapsible
-          open={openSections.compliance}
-          onOpenChange={() => toggleSection('compliance')}
-        >
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Compliance Declarations"
-              icon={CheckSquare}
-              isOpen={openSections.compliance}
-              color="green-500"
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-5">
-              {/* IET Official Declaration - Consolidated */}
-              <div className="space-y-4">
-                <div className="p-4 rounded-xl bg-green-500/5 border-l-2 border-l-green-500 border border-white/10">
-                  <div className="flex items-start gap-3">
-                    <Checkbox
-                      id="ietDeclaration"
-                      checked={formData.ietDeclaration || false}
-                      onCheckedChange={(c) => onUpdate('ietDeclaration', c)}
-                      className="mt-0.5 h-6 w-6 rounded-lg border-white/30 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 touch-manipulation flex-shrink-0"
-                    />
-                    <label
-                      htmlFor="ietDeclaration"
-                      className="text-sm cursor-pointer leading-relaxed text-white text-left"
-                    >
-                      I <span className="text-green-400 font-medium">CERTIFY</span> that the work
-                      covered by this certificate does not impair the safety of the existing
-                      installation and the work has been designed, constructed, inspected and tested
-                      in accordance with{' '}
-                      <span className="text-white font-medium">BS 7671:2018</span> amended to{' '}
-                      <span className="text-white font-medium">A3:2024</span> and that to the best
-                      of my knowledge and belief, at the time of my inspection, complied with BS
-                      7671 except as detailed in Part 1 above.{' '}
-                      <span className="text-red-400">*</span>
-                    </label>
-                  </div>
-                </div>
+      {/* Compliance */}
+      <div className="space-y-3">
+        <SectionTitle title="Compliance" />
 
-                {/* Optional Additional Declarations */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <Checkbox
-                        id="partPNotification"
-                        checked={formData.partPNotification || false}
-                        onCheckedChange={(c) => onUpdate('partPNotification', c)}
-                        className="h-5 w-5 rounded-md border-white/30 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500 touch-manipulation"
-                      />
-                      <label
-                        htmlFor="partPNotification"
-                        className="text-sm cursor-pointer text-white"
-                      >
-                        Part P notification made
-                      </label>
-                    </div>
-                  </div>
+        <p className="text-[10px] text-white leading-relaxed">
+          I CERTIFY that the work covered by this certificate does not impair the safety of the existing
+          installation and has been designed, constructed, inspected and tested in accordance with
+          BS 7671:2018+A3:2024.
+        </p>
 
-                  <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/8 transition-colors">
-                    <div className="flex items-center gap-3">
-                      <Checkbox
-                        id="copyProvided"
-                        checked={formData.copyProvided || false}
-                        onCheckedChange={(c) => onUpdate('copyProvided', c)}
-                        className="h-5 w-5 rounded-md border-white/30 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 touch-manipulation"
-                      />
-                      <label htmlFor="copyProvided" className="text-sm cursor-pointer text-white">
-                        Copy provided to client
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div className="grid grid-cols-3 gap-1">
+          {[
+            { field: 'ietDeclaration', label: 'BS 7671 *' },
+            { field: 'partPNotification', label: 'Part P' },
+            { field: 'copyProvided', label: 'Copy Given' },
+          ].map(({ field, label }) => (
+            <button
+              key={field}
+              type="button"
+              onClick={() => { haptic.light(); onUpdate(field, !formData[field]); }}
+              className={cn(
+                'h-10 rounded-lg font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98] flex items-center justify-center gap-1',
+                formData[field]
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {formData[field] && <Check className="h-3 w-3" />}
+              {label}
+            </button>
+          ))}
+        </div>
 
-              {/* Additional Notes */}
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Additional Notes
-                </label>
-                <Textarea
-                  value={formData.additionalNotes || ''}
-                  onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-                  placeholder="Any additional notes, comments or recommendations..."
-                  rows={3}
-                  className="text-base bg-white/5 border-white/10 rounded-xl min-h-[100px] focus:border-green-500/50 focus:ring-green-500/20"
-                />
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+        <FormField label="Additional Notes">
+          <Input
+            value={formData.additionalNotes || ''}
+            onChange={(e) => onUpdate('additionalNotes', e.target.value)}
+            placeholder="Notes, comments or recommendations..."
+            className={inputClass}
+          />
+        </FormField>
       </div>
 
       {/* Signature */}
-      <div className={sectionCardClass}>
-        <Collapsible open={openSections.signature} onOpenChange={() => toggleSection('signature')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Signature"
-              icon={PenTool}
-              isOpen={openSections.signature}
-              color="purple-500"
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-5">
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Signature Date *
-                </label>
-                <Input
-                  type="date"
-                  value={formData.signatureDate || ''}
-                  onChange={(e) => onUpdate('signatureDate', e.target.value)}
-                  className={cn(
-                    'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-purple-500/50 focus:ring-purple-500/20',
-                    !formData.signatureDate && 'border-red-500/30'
-                  )}
-                />
-              </div>
+      <div className="space-y-3">
+        <SectionTitle title="Signature" />
 
-              <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                  Signature *
-                </label>
-                <SignatureInput
-                  value={formData.signature || ''}
-                  onChange={(v) => onUpdate('signature', v)}
-                  placeholder="Sign here"
-                  className={cn('rounded-xl', !formData.signature && 'border-red-500/30')}
-                />
-              </div>
+        <FormField label="Date" required>
+          <Input
+            type="date"
+            value={formData.signatureDate || ''}
+            onChange={(e) => onUpdate('signatureDate', e.target.value)}
+            className={cn(inputClass, 'text-xs')}
+            style={{ fontSize: '12px' }}
+          />
+        </FormField>
 
-              {/* Summary info - Premium card */}
-              {formData.electricianName && formData.signatureDate && (
-                <div className="p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-purple-500/5 border border-purple-500/20">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="p-1.5 rounded-lg bg-purple-500/20">
-                      <PenTool className="h-4 w-4 text-purple-400" />
-                    </div>
-                    <span className="text-xs uppercase tracking-wide text-purple-400 font-medium">
-                      Certificate Signed
-                    </span>
-                  </div>
-                  <div className="text-sm text-white">
-                    Signed by{' '}
-                    <span className="text-white font-medium">{formData.electricianName}</span>
-                    {formData.position && (
-                      <span className="text-white"> ({formData.position})</span>
-                    )}{' '}
-                    on{' '}
-                    <span className="text-white font-medium">
-                      {new Date(formData.signatureDate).toLocaleDateString('en-GB')}
-                    </span>
-                    {formData.schemeProvider && formData.schemeProvider !== 'none' && (
-                      <span className="text-white">
-                        {' '}
-                        •{' '}
-                        {SCHEME_PROVIDERS.find((s) => s.value === formData.schemeProvider)?.label ||
-                          formData.schemeProvider}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+        <SignatureInput
+          value={formData.signature || ''}
+          onChange={(v) => onUpdate('signature', v)}
+          placeholder="Sign here"
+        />
       </div>
     </div>
   );

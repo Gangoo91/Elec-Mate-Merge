@@ -75,7 +75,7 @@ export function useCourseProgress() {
             last_accessed_at: now,
             updated_at: now,
           },
-          { onConflict: 'user_id,course_key' }
+          { onConflict: 'user_id,course_key,section_key' }
         );
 
         if (error) {

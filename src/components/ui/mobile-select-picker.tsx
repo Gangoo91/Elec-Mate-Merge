@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
@@ -42,6 +43,8 @@ export const MobileSelectPicker = ({
   disabled = false,
 }: MobileSelectPickerProps) => {
   const [open, setOpen] = useState(false);
+  const [customValue, setCustomValue] = useState('');
+  const customInputRef = useRef<HTMLInputElement>(null);
   const isMobile = useIsMobile();
 
   const selectedOption = options.find((o) => o.value === value);
@@ -80,6 +83,10 @@ export const MobileSelectPicker = ({
     );
   }
 
+  // Check if current value is custom (not in options list)
+  const isCustom = value && !options.some((o) => o.value === value);
+  const displayLabel = selectedOption?.label || (isCustom ? value : placeholder);
+
   // On mobile, use bottom sheet picker
   return (
     <>
@@ -97,30 +104,31 @@ export const MobileSelectPicker = ({
           triggerClassName
         )}
       >
-        <span className={cn('truncate', !selectedOption && 'text-white/60')}>
-          {selectedOption?.label || placeholder}
+        <span className={cn('truncate', !selectedOption && !isCustom && 'text-white')}>
+          {displayLabel}
         </span>
-        <ChevronDown className="h-4 w-4 text-white/60 flex-shrink-0 ml-2" />
+        <ChevronDown className="h-4 w-4 text-white flex-shrink-0 ml-2" />
       </button>
 
       <SwipeableBottomSheet
         open={open}
         onOpenChange={setOpen}
         title={title}
-        contentClassName="pb-8 max-h-[60vh] overflow-y-auto"
+        contentClassName="pb-8 max-h-[80vh] overflow-y-auto"
       >
-        <div className="space-y-1">
+        <div className={cn(options.length > 4 ? 'grid grid-cols-2 gap-1' : 'space-y-1')}>
           {options.map((option) => (
             <button
               key={option.value}
               type="button"
               onClick={() => {
                 onValueChange(option.value);
+                setCustomValue('');
                 setOpen(false);
               }}
               className={cn(
                 'w-full flex items-center justify-between',
-                'h-11 px-4 rounded-lg',
+                'h-11 px-3 rounded-lg',
                 'touch-manipulation active:scale-[0.98]',
                 'transition-all duration-150',
                 value === option.value
@@ -128,10 +136,44 @@ export const MobileSelectPicker = ({
                   : 'bg-white/[0.05] hover:bg-white/[0.08] border border-transparent'
               )}
             >
-              <span className="text-sm font-medium truncate">{option.label}</span>
-              {value === option.value && <Check className="h-4 w-4 flex-shrink-0 ml-2" />}
+              <span className="text-xs font-medium truncate">{option.label}</span>
+              {value === option.value && <Check className="h-3.5 w-3.5 flex-shrink-0 ml-1" />}
             </button>
           ))}
+        </div>
+
+        {/* Custom value input */}
+        <div className="mt-3 pt-3 border-t border-white/[0.06]">
+          <div className="flex gap-2">
+            <Input
+              ref={customInputRef}
+              value={customValue}
+              onChange={(e) => setCustomValue(e.target.value)}
+              placeholder="Or type custom value..."
+              className="h-11 text-sm bg-white/[0.06] border-white/[0.08] flex-1"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && customValue.trim()) {
+                  onValueChange(customValue.trim());
+                  setCustomValue('');
+                  setOpen(false);
+                }
+              }}
+            />
+            <button
+              type="button"
+              disabled={!customValue.trim()}
+              onClick={() => {
+                if (customValue.trim()) {
+                  onValueChange(customValue.trim());
+                  setCustomValue('');
+                  setOpen(false);
+                }
+              }}
+              className="h-11 px-4 rounded-lg font-semibold text-xs bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow touch-manipulation active:scale-[0.98] disabled:opacity-30"
+            >
+              Use
+            </button>
+          </div>
         </div>
       </SwipeableBottomSheet>
     </>

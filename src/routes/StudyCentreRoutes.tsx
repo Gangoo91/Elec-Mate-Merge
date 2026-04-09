@@ -5,6 +5,7 @@ import { CourseSkeleton } from '@/components/ui/page-skeleton';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { useLearningXP } from '@/hooks/useLearningXP';
+import { useLocalStorageMigration } from '@/hooks/useLocalStorageMigration';
 
 // Lazy load with retry for chunk failures
 const StudyCentreIndex = lazyWithRetry(() => import('@/pages/study-centre/StudyCentreIndex'));
@@ -39,6 +40,35 @@ const LoadingFallback = CourseSkeleton;
  * 2. Records course progress from URL path (zero per-page edits)
  * 3. Auto-completes previous section when user navigates forward (10s+ engagement)
  */
+/**
+ * Extract the real course name and section from a study centre URL path segment.
+ * Handles category-prefixed routes like general-upskilling/fire-safety-module-1-section-2.
+ */
+const CATEGORY_PREFIXES = ['general-upskilling', 'personal-development', 'upskilling'];
+
+function extractCourseAndSection(parts: string[]): { courseKey: string; sectionKey: string } {
+  const category = parts[0] || '';
+  const rest = parts.length > 1 ? parts.slice(1).join('/') : '';
+
+  // If first segment is a category prefix, extract the real course from the second segment
+  if (CATEGORY_PREFIXES.includes(category) && rest) {
+    // e.g. rest = "fire-safety-module-1-section-2" → courseKey = "fire-safety", sectionKey = "module-1-section-2"
+    // or rest = "fire-safety/module-1/section-2" → courseKey = "fire-safety", sectionKey = "module-1/section-2"
+    const subParts = rest.split('/');
+    const firstSeg = subParts[0];
+    // Try to split on -module- pattern: "fire-safety-module-1-section-2" → ["fire-safety", "module-1-section-2"]
+    const moduleMatch = firstSeg.match(/^(.+?)-(module-\d+.*)$/);
+    if (moduleMatch) {
+      return { courseKey: moduleMatch[1], sectionKey: moduleMatch[2] + (subParts.length > 1 ? '/' + subParts.slice(1).join('/') : '') };
+    }
+    // No module pattern — first sub-segment is the course, rest is the section
+    return { courseKey: subParts[0], sectionKey: subParts.slice(1).join('/') };
+  }
+
+  // Direct course route: e.g. /study-centre/apprentice/module-1/section-2
+  return { courseKey: category, sectionKey: rest };
+}
+
 function StudyCentreTracker() {
   const location = useLocation();
   const { updateLastLocation } = useLastStudyLocation();
@@ -48,22 +78,22 @@ function StudyCentreTracker() {
   const prevPathRef = useRef('');
   const pageEntryRef = useRef(Date.now());
 
+  // One-time migration of localStorage completion data to DB
+  useLocalStorageMigration();
+
   useEffect(() => {
     const path = location.pathname;
     // Don't track the index page itself
     if (path === '/study-centre' || path === '/study-centre/') return;
 
-    // Parse course and section from URL
-    // e.g. /study-centre/fire-safety/module-1/section-3 → courseKey: "fire-safety", sectionKey: "module-1/section-3"
+    // Parse course and section from URL with smart extraction
     const parts = path.replace('/study-centre/', '').split('/');
-    const courseKey = parts[0] || '';
-    const sectionKey = parts.length > 1 ? parts.slice(1).join('/') : '';
+    const { courseKey, sectionKey } = extractCourseAndSection(parts);
 
     // Auto-complete previous CONTENT section if user navigated away after 10+ seconds
     if (prevContentPathRef.current && prevContentPathRef.current !== path) {
       const prevParts = prevContentPathRef.current.replace('/study-centre/', '').split('/');
-      const prevCourse = prevParts[0] || '';
-      const prevSection = prevParts.length > 1 ? prevParts.slice(1).join('/') : '';
+      const { courseKey: prevCourse, sectionKey: prevSection } = extractCourseAndSection(prevParts);
 
       if (prevCourse && prevSection) {
         const timeOnPage = Date.now() - pageEntryRef.current;

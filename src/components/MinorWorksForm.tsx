@@ -870,6 +870,58 @@ const MinorWorksForm = ({
     });
   };
 
+  // Duplicate for next circuit — keeps client/address/earthing/declaration, clears circuit + tests
+  const handleDuplicateForNextCircuit = async () => {
+    const { generateCertificateNumber } = await import('@/utils/certificateNumbering');
+    const certificateNumber = await generateCertificateNumber('minor-works');
+
+    // Fields to KEEP from the current cert
+    const keepFields = [
+      // Client details
+      'clientName', 'clientPhone', 'clientEmail', 'personOrderingWork',
+      'propertyAddress', 'postcode',
+      // Work dates
+      'workDate', 'dateOfCompletion', 'nextInspectionDue',
+      // Supply & earthing — same installation
+      'supplyVoltage', 'supplyPhases', 'frequency',
+      'earthingArrangement', 'zdb', 'earthingConductorPresent',
+      'mainEarthingConductorSize', 'mainEarthingConductorMaterial',
+      'mainBondingConductorSize',
+      'bondingWater', 'bondingGas', 'bondingOil', 'bondingStructural', 'bondingOther',
+      'bondingOtherSpecify',
+      // Declaration — same electrician
+      'electricianName', 'forAndOnBehalfOf', 'position',
+      'qualificationLevel', 'schemeProvider', 'registrationNumber',
+      'contractorAddress', 'electricianPhone', 'electricianEmail',
+      'signature', 'signatureDate',
+      'ietDeclaration', 'partPNotification', 'copyProvided',
+      // Test equipment — same instrument
+      'testEquipmentModel', 'testEquipmentSerial', 'testEquipmentCalDate', 'testTemperature',
+      // Branding
+      'companyLogo', 'companyName', 'companyAddress', 'companyPhone', 'companyEmail',
+      'brandingTagline', 'brandingAccentColor', 'brandingWebsite', 'schemeLogo',
+    ];
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const newData: any = {};
+    for (const field of keepFields) {
+      if (formData[field] !== undefined) {
+        newData[field] = formData[field];
+      }
+    }
+    newData.certificateNumber = certificateNumber;
+    newData.status = 'draft';
+
+    setFormData(newData);
+    setCurrentReportId(null);
+    setTab('circuit');
+
+    toast({
+      title: 'New circuit certificate created',
+      description: `Client & earthing details kept. Fill in the new circuit details.`,
+    });
+  };
+
   // Handle PDF generation success
   const handlePdfSuccess = async () => {
     try {
@@ -1002,6 +1054,7 @@ const MinorWorksForm = ({
               userId={userId || undefined}
               onSuccess={handlePdfSuccess}
               onSaveDraft={handleSaveDraft}
+              onDuplicateForNextCircuit={handleDuplicateForNextCircuit}
             />
           </div>
 
@@ -1027,23 +1080,24 @@ const MinorWorksForm = ({
       installationAddress={formData.installationAddress || formData.clientAddress || ''}
     >
       <div className="min-h-screen bg-background prevent-shortcuts">
-        {/* Header */}
-        <MWFormHeader
-          onBack={onBack}
-          isSaving={isSaving}
-          hasUnsavedChanges={hasUnsavedChanges}
-          onManualSave={handleSaveDraft}
-          onStartNew={handleStartNew}
-          formData={formData}
-          syncState={syncState}
-          isOnline={isOnline}
-          isAuthenticated={isAuthenticated}
-          currentTabLabel={getCurrentTabLabel()}
-          progressPercentage={getProgressPercentage()}
-        />
+        {/* Header — EICR pattern */}
+        <div className="bg-background">
+          <div className="px-2 py-2.5">
+            <MWFormHeader
+              onBack={onBack}
+              isSaving={isSaving}
+              onManualSave={handleSaveDraft}
+              formData={formData}
+              syncState={syncState}
+              isOnline={isOnline}
+              isAuthenticated={isAuthenticated}
+            />
+          </div>
+          <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
+        </div>
 
-        {/* Main Content - Edge-to-edge on mobile, contained on desktop */}
-        <div className={cn('pb-6', isMobile ? '' : 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8')}>
+        {/* Main Content — full-width mobile */}
+        <div className="py-4 pb-48 sm:px-4 sm:pb-8">
           <SmartTabs
             tabs={smartTabs}
             value={currentTab}

@@ -4,6 +4,7 @@ import { electricalTheorySections } from '@/data/electricalTheory';
 import { legislationSection } from '@/data/electricalTheory/section1-legislation';
 import type { SectionData } from '@/data/courseTypes';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
 
 interface UseSectionContentDataProps {
   courseSlug: string;
@@ -25,13 +26,17 @@ export const useSectionContentData = ({
   const isElectricalTheory = unitSlug === 'elec2-04';
 
   useEffect(() => {
-    // Skip if on quiz route or no section ID
-    if (isQuizRoute || !sectionId) return;
+    if (!sectionId) return;
 
-    console.log(
-      `Loading section data for ${isElectricalTheory ? 'Electrical Theory' : 'Health & Safety'} section: ${sectionId}`
-    );
-    console.log(`Current unit: ${unitSlug}, isElectricalTheory: ${isElectricalTheory}`);
+    // On quiz routes, still load completion status but skip section data
+    if (isQuizRoute) {
+      const storageKey = `completion_${isElectricalTheory ? 'elec' : 'hs'}_section_${sectionId}`;
+      const storedCompletion = storageGetSync(storageKey);
+      setIsCompleted(storedCompletion === 'true');
+      return;
+    }
+
+    // Load section data based on unit type
 
     // Load data based on unit type
     let section;
@@ -45,14 +50,14 @@ export const useSectionContentData = ({
         section = electricalTheorySections[sectionIndex] || null;
       }
 
-      console.log('Loaded electrical theory section:', section?.title || 'Not found');
+      // Electrical theory section loaded
     } else {
       // For health & safety, use the existing function
       section = getHealthSafetySectionById(sectionId);
     }
 
     if (section) {
-      console.log('Section data loaded:', section.title);
+      // Section data loaded
       setSectionData(section);
 
       // Check completion status
@@ -62,14 +67,20 @@ export const useSectionContentData = ({
     }
   }, [sectionId, unitSlug, isQuizRoute, isElectricalTheory]);
 
-  // Function to mark section as complete
+  const { recordProgress } = useCourseProgress();
+
+  // Function to mark section as complete (dual-write: localStorage + DB)
   const markAsComplete = () => {
     if (!sectionId) return;
 
+    // localStorage (legacy)
     const storageKey = `completion_${isElectricalTheory ? 'elec' : 'hs'}_section_${sectionId}`;
     storageSetSync(storageKey, 'true');
     setIsCompleted(true);
-    console.log(`Section ${sectionId} marked as complete with key: ${storageKey}`);
+
+    // DB sync
+    const courseKey = isElectricalTheory ? 'electrical-theory' : 'health-safety';
+    recordProgress(courseKey, `section-${sectionId}`, 100, true);
   };
 
   return {

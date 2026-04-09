@@ -27,7 +27,7 @@ export const CircuitWorkingsSheet = ({
   const Ze = incomingSupply?.Ze ?? 0.35; // Default Ze if not available
 
   return (
-    <Drawer.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Drawer.Root shouldScaleBackground={false} noBodyStyles open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/60 z-40" />
         <Drawer.Content className="bg-card fixed bottom-0 left-0 right-0 max-h-[90vh] rounded-t-2xl z-50 border-t-4 border-elec-yellow flex flex-col">

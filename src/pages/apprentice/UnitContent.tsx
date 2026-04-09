@@ -24,6 +24,7 @@ import InstallationMethodsUnit from '@/components/apprentice/units/InstallationM
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
 import { storageGetSync } from '@/utils/storage';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
 
 const UnitContent = () => {
   const { unitId } = useParams();
@@ -31,6 +32,7 @@ const UnitContent = () => {
   const { user } = useAuth();
   const [completedSections, setCompletedSections] = useState<Record<string, boolean>>({});
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const { allProgress } = useCourseProgress();
 
   // Get course unit data
   const unitData = unitId ? getCourseUnitById(unitId) : null;
@@ -41,18 +43,32 @@ const UnitContent = () => {
   const isInstallationMethodsUnit = unitId === 'elec2-05a';
   const unitCode = unitData?.code || '';
 
-  // Load any completed sections and quiz status from storage (user-scoped)
+  // Load completed sections from DB + localStorage quiz status
   useEffect(() => {
-    if (unitId && unitData?.code) {
-      const code = unitData.code;
-      const storedQuizStatus = storageGetSync(
-        userKey(user?.id, `unit_${code}_quiz_completed`)
-      );
-      if (storedQuizStatus === 'true') {
-        setQuizCompleted(true);
-      }
+    if (!unitId || !unitData?.code) return;
+    const code = unitData.code;
+
+    // Quiz status from localStorage (user-scoped)
+    const storedQuizStatus = storageGetSync(
+      userKey(user?.id, `unit_${code}_quiz_completed`)
+    );
+    if (storedQuizStatus === 'true') {
+      setQuizCompleted(true);
     }
-  }, [unitId, unitData, user?.id]);
+
+    // Section completion from course_progress DB
+    const courseKey = isElectricalTheoryUnit ? 'electrical-theory'
+      : isHealthSafetyUnit ? 'health-safety'
+      : code;
+
+    const completed: Record<string, boolean> = {};
+    allProgress
+      .filter((p) => p.course_key === courseKey && p.completed && p.section_key)
+      .forEach((p) => {
+        completed[p.section_key!] = true;
+      });
+    setCompletedSections(completed);
+  }, [unitId, unitData, user?.id, allProgress, isElectricalTheoryUnit, isHealthSafetyUnit]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
@@ -73,21 +89,21 @@ const UnitContent = () => {
       {isHealthSafetyUnit && (
         <HealthSafetyUnit
           unitCode={unitCode}
-          onResourceClick={() => console.log('Resource clicked')}
+          onResourceClick={() => {}}
         />
       )}
 
       {isElectricalTheoryUnit && (
         <ElectricalTheoryUnit
           unitCode={unitCode}
-          onResourceClick={() => console.log('Resource clicked')}
+          onResourceClick={() => {}}
         />
       )}
 
       {isInstallationMethodsUnit && (
         <InstallationMethodsUnit
           unitCode={unitCode}
-          onResourceClick={() => console.log('Resource clicked')}
+          onResourceClick={() => {}}
         />
       )}
 

@@ -1,7 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, CheckCircle2 } from 'lucide-react';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
 
 interface SectionCardProps {
   to: string;
@@ -19,9 +20,35 @@ export const SectionCard: React.FC<SectionCardProps> = ({
   title,
   description,
   icon: Icon,
-  isCompleted = false,
+  isCompleted: isCompletedProp = false,
   index = 0,
 }) => {
+  const { allProgress } = useCourseProgress();
+  const location = useLocation();
+
+  // Auto-detect completion from course_progress DB (same pattern as ModuleCard)
+  const autoCompleted = useMemo(() => {
+    if (!allProgress.length) return false;
+
+    const basePath = location.pathname.replace(/\/[^/]*$/, '');
+    const resolvedPath = to.startsWith('../')
+      ? basePath.replace(/\/[^/]*$/, '') + '/' + to.replace('../', '')
+      : to.startsWith('/')
+        ? to
+        : basePath + '/' + to;
+
+    const studyCentrePath = resolvedPath.replace(/.*\/study-centre\//, '');
+
+    return allProgress.some(
+      (p) =>
+        p.completed &&
+        (p.section_key === studyCentrePath ||
+         p.course_key + '/' + p.section_key === studyCentrePath ||
+         p.section_key?.includes(studyCentrePath))
+    );
+  }, [allProgress, to, location.pathname]);
+
+  const isCompleted = isCompletedProp || autoCompleted;
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}

@@ -1,18 +1,9 @@
-import React, { useState, useMemo } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import SectionHeader from '@/components/ui/section-header';
+import React, { useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { CircuitBoard, Shield, Cable } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import MWSmartDefaults from './MWSmartDefaults';
 import {
   PROTECTIVE_DEVICE_TYPES,
@@ -35,27 +26,56 @@ import {
   getDeviceCategory,
 } from '@/constants/deviceMappings';
 
+// ---------------------------------------------------------------------------
+// Local UI helpers (matching EIC pattern)
+// ---------------------------------------------------------------------------
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FormField = ({
+  label,
+  required,
+  hint,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  hint?: string;
+  children: React.ReactNode;
+}) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">
+      {label}
+      {required && ' *'}
+    </Label>
+    {children}
+    {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
+  </div>
+);
+
+// ---------------------------------------------------------------------------
+// Component
+// ---------------------------------------------------------------------------
+
 interface MWCircuitTabProps {
   formData: Record<string, string | boolean>;
   onUpdate: (field: string, value: string | boolean) => void;
   isMobile?: boolean;
 }
 
-const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobile = false }) => {
-  const [openSections, setOpenSections] = useState({
-    circuit: true,
-    protection: true,
-    cable: true,
-  });
+const inputClass =
+  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]';
 
-  // Helper for conditional section card styling - no card on mobile, full card on desktop
-  const sectionCardClass = cn(isMobile ? '' : 'eicr-section-card');
+const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
+  // ============================================================================
+  // Smart defaults
+  // ============================================================================
 
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  // Handle smart defaults application
   const handleSmartDefaultApply = (values: SmartDefault['values']) => {
     Object.entries(values).forEach(([key, value]) => {
       if (value !== undefined) {
@@ -64,13 +84,14 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     });
   };
 
+  // ============================================================================
   // Auto-fill reference method based on installation method
-  const handleInstallationMethodChange = (value: string) => {
-    const actualValue = value === '__clear__' ? '' : value;
-    onUpdate('installationMethod', actualValue);
-    if (!actualValue) return;
+  // ============================================================================
 
-    // Auto-suggest reference method based on installation method
+  const handleInstallationMethodChange = (value: string) => {
+    onUpdate('installationMethod', value);
+    if (!value) return;
+
     const methodMapping: { [key: string]: string } = {
       'clipped-direct': 'C',
       'surface-conduit': 'B',
@@ -96,18 +117,16 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
   // Cascading Protective Device Selectors
   // ============================================================================
 
-  // Get filtered device types based on selected BS EN standard
   const filteredDeviceTypes = useMemo(() => {
     if (!formData.overcurrentDeviceBsEn) return PROTECTIVE_DEVICE_TYPES;
-    const allowedTypes = STANDARD_TO_DEVICE_TYPES[formData.overcurrentDeviceBsEn];
+    const allowedTypes = STANDARD_TO_DEVICE_TYPES[formData.overcurrentDeviceBsEn as string];
     if (!allowedTypes || allowedTypes.length === 0) return PROTECTIVE_DEVICE_TYPES;
     return PROTECTIVE_DEVICE_TYPES.filter((d) => allowedTypes.includes(d.value));
   }, [formData.overcurrentDeviceBsEn]);
 
-  // Get filtered ratings based on selected device type
   const filteredRatings = useMemo(() => {
     if (!formData.protectiveDeviceType) return DEVICE_RATINGS;
-    const deviceKey = getDeviceCategory(formData.protectiveDeviceType);
+    const deviceKey = getDeviceCategory(formData.protectiveDeviceType as string);
     const allowedRatings = DEVICE_TYPE_RATINGS[deviceKey];
     if (!allowedRatings) return DEVICE_RATINGS;
     return DEVICE_RATINGS.filter(
@@ -115,44 +134,29 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     );
   }, [formData.protectiveDeviceType]);
 
-  // Get filtered kA ratings based on selected device type
   const filteredKaRatings = useMemo(() => {
     if (!formData.protectiveDeviceType) return BREAKING_CAPACITIES;
-    const deviceKey = getDeviceCategory(formData.protectiveDeviceType);
+    const deviceKey = getDeviceCategory(formData.protectiveDeviceType as string);
     const allowedKa = DEVICE_TYPE_KA_RATINGS[deviceKey];
     if (!allowedKa) return BREAKING_CAPACITIES;
     return BREAKING_CAPACITIES.filter((k) => allowedKa.includes(parseFloat(k.value)));
   }, [formData.protectiveDeviceType]);
 
-  // Get filtered CPC sizes based on live conductor (BS 7671 Table 54.7)
-  // CPC size is typically related to live conductor size:
-  // - S ≤ 16mm²: CPC can equal S
-  // - 16 < S ≤ 35mm²: CPC minimum 16mm²
-  // - S > 35mm²: CPC minimum S/2
-  // We show all sizes up to and including live conductor size (plus minimum 16mm² floor)
+  // CPC sizes based on live conductor (BS 7671 Table 54.7)
   const filteredCpcSizes = useMemo(() => {
     if (!formData.liveConductorSize) return CONDUCTOR_SIZES;
-
-    const liveSize = parseFloat(formData.liveConductorSize);
-
-    // Allow CPC sizes up to the live conductor size
-    // But always show at least up to 16mm² as minimum practical range
+    const liveSize = parseFloat(formData.liveConductorSize as string);
     const maxCpc = Math.max(liveSize, 16);
-
     return CONDUCTOR_SIZES.filter((o) => parseFloat(o.value) <= maxCpc);
   }, [formData.liveConductorSize]);
 
   // Handle BS EN standard change with cascading reset
   const handleStandardChange = (value: string) => {
-    const actualValue = value === '__clear__' ? '' : value;
-    onUpdate('overcurrentDeviceBsEn', actualValue);
-
-    // Check if current device type is still valid for the new standard
-    if (actualValue) {
-      const allowedTypes = STANDARD_TO_DEVICE_TYPES[actualValue];
+    onUpdate('overcurrentDeviceBsEn', value);
+    if (value) {
+      const allowedTypes = STANDARD_TO_DEVICE_TYPES[value];
       if (allowedTypes && allowedTypes.length > 0 && formData.protectiveDeviceType) {
-        if (!allowedTypes.includes(formData.protectiveDeviceType)) {
-          // Reset device type and dependent fields
+        if (!allowedTypes.includes(formData.protectiveDeviceType as string)) {
           onUpdate('protectiveDeviceType', '');
           onUpdate('protectiveDeviceRating', '');
           onUpdate('protectiveDeviceKaRating', '');
@@ -163,24 +167,20 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
 
   // Handle device type change with cascading reset
   const handleDeviceTypeChange = (value: string) => {
-    const actualValue = value === '__clear__' ? '' : value;
-    onUpdate('protectiveDeviceType', actualValue);
+    onUpdate('protectiveDeviceType', value);
+    if (!value) return;
+    const deviceKey = getDeviceCategory(value);
 
-    if (!actualValue) return;
-    const deviceKey = getDeviceCategory(actualValue);
-
-    // Check if current rating is still valid for the new device type
     const allowedRatings = DEVICE_TYPE_RATINGS[deviceKey];
     if (allowedRatings && formData.protectiveDeviceRating) {
-      if (!allowedRatings.includes(parseInt(formData.protectiveDeviceRating, 10))) {
+      if (!allowedRatings.includes(parseInt(formData.protectiveDeviceRating as string, 10))) {
         onUpdate('protectiveDeviceRating', '');
       }
     }
 
-    // Check if current kA rating is still valid for the new device type
     const allowedKa = DEVICE_TYPE_KA_RATINGS[deviceKey];
     if (allowedKa && formData.protectiveDeviceKaRating) {
-      if (!allowedKa.includes(parseFloat(formData.protectiveDeviceKaRating))) {
+      if (!allowedKa.includes(parseFloat(formData.protectiveDeviceKaRating as string))) {
         onUpdate('protectiveDeviceKaRating', '');
       }
     }
@@ -189,7 +189,6 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
   // Auto-fill RCD defaults when protection type is toggled on
   const handleProtectionToggle = (field: string, checked: boolean) => {
     onUpdate(field, checked);
-
     if (checked && (field === 'protectionRcbo' || field === 'protectionRcd')) {
       if (!formData.rcdType) onUpdate('rcdType', 'A');
       if (!formData.rcdIdn) onUpdate('rcdIdn', '30');
@@ -199,680 +198,450 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
     }
   };
 
+  // ============================================================================
+  // Toggle button helper
+  // ============================================================================
+
+  const ToggleButton = ({
+    selected,
+    label,
+    onClick,
+  }: {
+    selected: boolean;
+    label: string;
+    onClick: () => void;
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
+        selected
+          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+          : 'bg-white/[0.05] border border-white/[0.08] text-white'
+      )}
+    >
+      {selected && <Check className="h-3.5 w-3.5" />}
+      {label}
+    </button>
+  );
+
+  // ============================================================================
+  // Conductor size toggle grid (common sizes)
+  // ============================================================================
+
+  const COMMON_CABLE_SIZES = ['1.5', '2.5', '4.0', '6.0', '10.0', '16.0'];
+
+  // ============================================================================
+  // Render
+  // ============================================================================
+
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-4">
       {/* Smart Defaults Quick Fill */}
       <MWSmartDefaults onApply={handleSmartDefaultApply} />
 
-      {/* Circuit Details */}
-      <div className={sectionCardClass}>
-        <Collapsible open={openSections.circuit} onOpenChange={() => toggleSection('circuit')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Circuit Details"
-              icon={CircuitBoard}
-              isOpen={openSections.circuit}
-              color="purple-500"
+      {/* ------------------------------------------------------------------ */}
+      {/* CIRCUIT DETAILS                                                     */}
+      {/* ------------------------------------------------------------------ */}
+      <SectionTitle title="Circuit Details" />
+      <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <FormField label="Distribution Board">
+            <Input
+              value={(formData.distributionBoard as string) || ''}
+              onChange={(e) => onUpdate('distributionBoard', e.target.value)}
+              placeholder="e.g., Main DB"
+              className={inputClass}
             />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">Distribution Board</Label>
-                  <Input
-                    value={formData.distributionBoard || ''}
-                    onChange={(e) => onUpdate('distributionBoard', e.target.value)}
-                    placeholder="e.g., Main DB, Sub DB"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">DB Location & Type</Label>
-                  <Input
-                    value={formData.dbLocationType || ''}
-                    onChange={(e) => onUpdate('dbLocationType', e.target.value)}
-                    placeholder="e.g., Under stairs, Split-load CU"
-                  />
-                </div>
-              </div>
+          </FormField>
+          <FormField label="DB Location & Type">
+            <Input
+              value={(formData.dbLocationType as string) || ''}
+              onChange={(e) => onUpdate('dbLocationType', e.target.value)}
+              placeholder="e.g., Under stairs"
+              className={inputClass}
+            />
+          </FormField>
+        </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">Circuit Designation *</Label>
-                  <Input
-                    value={formData.circuitDesignation || ''}
-                    onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
-                    placeholder="e.g., Circuit 1, MCB 5"
-                    className={cn(
-                      'h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500',
-                      !formData.circuitDesignation && 'border-red-500/50'
-                    )}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Circuit Description</Label>
-                  <Input
-                    value={formData.circuitDescription || ''}
-                    onChange={(e) => onUpdate('circuitDescription', e.target.value)}
-                    placeholder="e.g., Kitchen sockets, Lighting circuit"
-                  />
-                </div>
-              </div>
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <FormField label="Circuit Designation" required>
+            <Input
+              value={(formData.circuitDesignation as string) || ''}
+              onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
+              placeholder="e.g., Circuit 1"
+              className={inputClass}
+            />
+          </FormField>
+          <FormField label="Circuit Description">
+            <Input
+              value={(formData.circuitDescription as string) || ''}
+              onChange={(e) => onUpdate('circuitDescription', e.target.value)}
+              placeholder="e.g., Kitchen sockets"
+              className={inputClass}
+            />
+          </FormField>
+        </div>
 
-              <div className="space-y-2">
-                <Label className="text-sm">Circuit Type</Label>
-                <Select
-                  value={formData.circuitType || 'radial'}
-                  onValueChange={(v) => onUpdate('circuitType', v === '__clear__' ? '' : v)}
-                >
-                  <SelectTrigger className="">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="__clear__">
-                      <span className="text-white">Clear selection</span>
-                    </SelectItem>
-                    {CIRCUIT_TYPES.map((opt) => (
-                      <SelectItem key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+        <FormField label="Circuit Type">
+          <div className="grid grid-cols-2 gap-1">
+            {CIRCUIT_TYPES.map((opt) => (
+              <ToggleButton
+                key={opt.value}
+                selected={formData.circuitType === opt.value}
+                label={opt.label}
+                onClick={() => onUpdate('circuitType', opt.value)}
+              />
+            ))}
+          </div>
+        </FormField>
       </div>
 
-      {/* Protective Device */}
-      <div className={sectionCardClass}>
-        <Collapsible
-          open={openSections.protection}
-          onOpenChange={() => toggleSection('protection')}
-        >
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Protective Device"
-              icon={Shield}
-              isOpen={openSections.protection}
-              color="red-500"
+      {/* ------------------------------------------------------------------ */}
+      {/* PROTECTIVE DEVICE                                                   */}
+      {/* ------------------------------------------------------------------ */}
+      <SectionTitle title="Protective Device" />
+      <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <FormField label="BS (EN) Standard">
+            <MobileSelectPicker
+              value={(formData.overcurrentDeviceBsEn as string) || ''}
+              onValueChange={handleStandardChange}
+              options={BS_EN_STANDARDS}
+              placeholder="Select standard"
+              title="BS (EN) Standard"
             />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">BS (EN) Standard</Label>
-                  <Select
-                    value={formData.overcurrentDeviceBsEn || ''}
-                    onValueChange={handleStandardChange}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {BS_EN_STANDARDS.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Device Type *</Label>
-                  <Select
-                    value={formData.protectiveDeviceType || ''}
-                    onValueChange={handleDeviceTypeChange}
-                  >
-                    <SelectTrigger
-                      className={cn('', !formData.protectiveDeviceType && 'border-red-500/50')}
-                    >
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {filteredDeviceTypes.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {formData.overcurrentDeviceBsEn &&
-                    filteredDeviceTypes.length < PROTECTIVE_DEVICE_TYPES.length && (
-                      <p className="text-xs text-white mt-1">
-                        Filtered for {formData.overcurrentDeviceBsEn}
-                      </p>
-                    )}
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Rating (A) *</Label>
-                  <Select
-                    value={formData.protectiveDeviceRating || ''}
-                    onValueChange={(v) =>
-                      onUpdate('protectiveDeviceRating', v === '__clear__' ? '' : v)
-                    }
-                  >
-                    <SelectTrigger
-                      className={cn('', !formData.protectiveDeviceRating && 'border-red-500/50')}
-                    >
-                      <SelectValue placeholder="Rating" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {filteredRatings.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {formData.protectiveDeviceType &&
-                    filteredRatings.length < DEVICE_RATINGS.length && (
-                      <p className="text-xs text-white mt-1">
-                        BS 7671 ratings for{' '}
-                        {PROTECTIVE_DEVICE_TYPES.find(
-                          (d) => d.value === formData.protectiveDeviceType
-                        )?.label || formData.protectiveDeviceType}
-                      </p>
-                    )}
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Breaking Capacity (kA)</Label>
-                  <Select
-                    value={formData.protectiveDeviceKaRating || ''}
-                    onValueChange={(v) =>
-                      onUpdate('protectiveDeviceKaRating', v === '__clear__' ? '' : v)
-                    }
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="kA rating" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {filteredKaRatings.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {formData.protectiveDeviceType &&
-                    filteredKaRatings.length < BREAKING_CAPACITIES.length && (
-                      <p className="text-xs text-white mt-1">
-                        Typical for{' '}
-                        {PROTECTIVE_DEVICE_TYPES.find(
-                          (d) => d.value === formData.protectiveDeviceType
-                        )?.label || formData.protectiveDeviceType}
-                      </p>
-                    )}
-                </div>
-              </div>
+          </FormField>
+          <FormField label="Device Type" required>
+            <MobileSelectPicker
+              value={(formData.protectiveDeviceType as string) || ''}
+              onValueChange={handleDeviceTypeChange}
+              options={filteredDeviceTypes}
+              placeholder="Select type"
+              title="Device Type"
+              
+            />
+          </FormField>
+        </div>
+        {formData.overcurrentDeviceBsEn &&
+          filteredDeviceTypes.length < PROTECTIVE_DEVICE_TYPES.length && (
+            <span className="text-[10px] text-white block">
+              Filtered for {formData.overcurrentDeviceBsEn as string}
+            </span>
+          )}
 
-              {/* Protection Types */}
-              <div className="space-y-3">
-                <Label className="text-sm">Additional Protection</Label>
-                <div className="flex flex-wrap gap-4">
-                  {[
-                    { id: 'protectionRcd', label: 'RCD' },
-                    { id: 'protectionRcbo', label: 'RCBO' },
-                    { id: 'protectionAfdd', label: 'AFDD' },
-                    { id: 'protectionSpd', label: 'SPD' },
-                  ].map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex items-center gap-2 p-3 min-h-[44px] rounded-lg bg-card/50"
-                    >
-                      <Checkbox
-                        id={item.id}
-                        checked={formData[item.id] || false}
-                        onCheckedChange={(c) =>
-                          item.id === 'protectionRcd' || item.id === 'protectionRcbo'
-                            ? handleProtectionToggle(item.id, !!c)
-                            : onUpdate(item.id, c)
-                        }
-                        className="h-5 w-5 border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500 touch-manipulation"
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <FormField label="Rating (A)" required>
+            <MobileSelectPicker
+              value={(formData.protectiveDeviceRating as string) || ''}
+              onValueChange={(v) => onUpdate('protectiveDeviceRating', v)}
+              options={filteredRatings}
+              placeholder="Rating"
+              title="Device Rating (A)"
+              
+            />
+          </FormField>
+          <FormField label="Breaking Capacity (kA)">
+            <MobileSelectPicker
+              value={(formData.protectiveDeviceKaRating as string) || ''}
+              onValueChange={(v) => onUpdate('protectiveDeviceKaRating', v)}
+              options={filteredKaRatings}
+              placeholder="kA rating"
+              title="Breaking Capacity (kA)"
+            />
+          </FormField>
+        </div>
+        {formData.protectiveDeviceType && filteredRatings.length < DEVICE_RATINGS.length && (
+          <span className="text-[10px] text-white block">
+            BS 7671 ratings for{' '}
+            {PROTECTIVE_DEVICE_TYPES.find((d) => d.value === formData.protectiveDeviceType)
+              ?.label || (formData.protectiveDeviceType as string)}
+          </span>
+        )}
+
+        {/* Additional Protection toggles */}
+        <FormField label="Additional Protection">
+          <div className="grid grid-cols-4 gap-1">
+            {[
+              { id: 'protectionRcd', label: 'RCD' },
+              { id: 'protectionRcbo', label: 'RCBO' },
+              { id: 'protectionAfdd', label: 'AFDD' },
+              { id: 'protectionSpd', label: 'SPD' },
+            ].map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => {
+                  const next = !formData[item.id];
+                  if (item.id === 'protectionRcd' || item.id === 'protectionRcbo') {
+                    handleProtectionToggle(item.id, next);
+                  } else {
+                    onUpdate(item.id, next);
+                  }
+                }}
+                className={cn(
+                  'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
+                  formData[item.id]
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {formData[item.id] && <Check className="h-3.5 w-3.5" />}
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </FormField>
+
+        {/* RCD Details sub-panel */}
+        {(formData.protectionRcd || formData.protectionRcbo) && (
+          <div className="rounded-xl border border-white/10 bg-blue-500/5 border-l-2 border-l-blue-500 overflow-hidden">
+            <div className="px-3 py-2 bg-blue-500/10 border-b border-white/5">
+              <span className="text-sm font-medium text-white">RCD Details</span>
+            </div>
+            <div className="p-3 space-y-3">
+              <div className="grid grid-cols-2 gap-2 items-end">
+                <FormField label="BS (EN) Standard">
+                  <MobileSelectPicker
+                    value={(formData.rcdBsEn as string) || ''}
+                    onValueChange={(v) => onUpdate('rcdBsEn', v)}
+                    options={[
+                      { value: 'BS EN 61008', label: 'BS EN 61008', description: 'RCDs without overcurrent protection' },
+                      { value: 'BS EN 61009', label: 'BS EN 61009', description: 'RCBOs' },
+                      { value: 'BS EN 62423', label: 'BS EN 62423', description: 'Type F and Type B RCDs' },
+                    ]}
+                    placeholder="Select standard"
+                    title="RCD BS (EN) Standard"
+                  />
+                </FormField>
+                <FormField label="IΔn (mA)">
+                  <MobileSelectPicker
+                    value={(formData.rcdIdn as string) || ''}
+                    onValueChange={(v) => onUpdate('rcdIdn', v)}
+                    options={RCD_RATINGS}
+                    placeholder="Select rating"
+                    title="RCD Rating (mA)"
+                  />
+                </FormField>
+              </div>
+              <div className="grid grid-cols-2 gap-2 items-end">
+                <FormField label="Type">
+                  <div className="grid grid-cols-4 gap-1">
+                    {RCD_TYPES.map((opt) => (
+                      <ToggleButton
+                        key={opt.value}
+                        selected={formData.rcdType === opt.value}
+                        label={opt.label.replace('Type ', '')}
+                        onClick={() => onUpdate('rcdType', opt.value)}
                       />
-                      <Label htmlFor={item.id} className="text-sm cursor-pointer">
-                        {item.label}
-                      </Label>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </FormField>
+                <FormField label="Rating (A)">
+                  <Input
+                    type="number"
+                    value={(formData.rcdRatingAmps as string) || ''}
+                    onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
+                    placeholder="63"
+                    className={inputClass}
+                  />
+                </FormField>
               </div>
-
-              {/* RCD Details */}
-              {(formData.protectionRcd || formData.protectionRcbo) && (
-                <div className="rounded-xl border border-white/10 bg-blue-500/5 border-l-2 border-l-blue-500 overflow-hidden">
-                  <div className="px-3 py-2 bg-blue-500/10 border-b border-white/5">
-                    <span className="text-sm font-medium text-blue-400">RCD Details</span>
-                  </div>
-                  <div className="p-3 space-y-3">
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          BS (EN) Standard
-                        </label>
-                        <Select
-                          value={formData.rcdBsEn || ''}
-                          onValueChange={(v) => onUpdate('rcdBsEn', v === '__clear__' ? '' : v)}
-                        >
-                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
-                            <SelectValue placeholder="Select standard" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="__clear__">
-                              <span className="text-white">Clear selection</span>
-                            </SelectItem>
-                            <SelectItem value="BS EN 61008">
-                              <div className="flex flex-col">
-                                <span>BS EN 61008</span>
-                                <span className="text-xs text-white">
-                                  RCDs without overcurrent protection
-                                </span>
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="BS EN 61009">
-                              <div className="flex flex-col">
-                                <span>BS EN 61009</span>
-                                <span className="text-xs text-white">RCBOs</span>
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="BS EN 62423">
-                              <div className="flex flex-col">
-                                <span>BS EN 62423</span>
-                                <span className="text-xs text-white">Type F and Type B RCDs</span>
-                              </div>
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          IΔn (mA)
-                        </label>
-                        <Select
-                          value={formData.rcdIdn || ''}
-                          onValueChange={(v) => onUpdate('rcdIdn', v === '__clear__' ? '' : v)}
-                        >
-                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
-                            <SelectValue placeholder="Select rating" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="__clear__">
-                              <span className="text-white">Clear selection</span>
-                            </SelectItem>
-                            {RCD_RATINGS.map((opt) => (
-                              <SelectItem key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          Type
-                        </label>
-                        <Select
-                          value={formData.rcdType || ''}
-                          onValueChange={(v) => onUpdate('rcdType', v === '__clear__' ? '' : v)}
-                        >
-                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
-                            <SelectValue placeholder="Select" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="__clear__">
-                              <span className="text-white">Clear selection</span>
-                            </SelectItem>
-                            {RCD_TYPES.map((opt) => (
-                              <SelectItem key={opt.value} value={opt.value}>
-                                {opt.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          Rating (A)
-                        </label>
-                        <Input
-                          type="number"
-                          value={formData.rcdRatingAmps || ''}
-                          onChange={(e) => onUpdate('rcdRatingAmps', e.target.value)}
-                          placeholder="63"
-                          className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-blue-500/50"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* AFDD Details */}
-              {formData.protectionAfdd && (
-                <div className="rounded-xl border border-white/10 bg-purple-500/5 border-l-2 border-l-purple-500 overflow-hidden">
-                  <div className="px-3 py-2 bg-purple-500/10 border-b border-white/5">
-                    <span className="text-sm font-medium text-purple-400">AFDD Details</span>
-                  </div>
-                  <div className="p-3">
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          BS (EN) Standard
-                        </label>
-                        <Select
-                          value={formData.afddBsEn || ''}
-                          onValueChange={(v) => onUpdate('afddBsEn', v === '__clear__' ? '' : v)}
-                        >
-                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
-                            <SelectValue placeholder="Select standard" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="__clear__">
-                              <span className="text-white">Clear selection</span>
-                            </SelectItem>
-                            <SelectItem value="BS EN 62606">
-                              <div className="flex flex-col">
-                                <span>BS EN 62606</span>
-                                <span className="text-xs text-white">
-                                  Arc Fault Detection Devices
-                                </span>
-                              </div>
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          Rating (A)
-                        </label>
-                        <Input
-                          type="number"
-                          value={formData.afddRating || ''}
-                          onChange={(e) => onUpdate('afddRating', e.target.value)}
-                          placeholder="16"
-                          className="h-11 text-base touch-manipulation bg-white/5 border-white/20 rounded-xl focus:border-purple-500/50"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* SPD Details */}
-              {formData.protectionSpd && (
-                <div className="rounded-xl border border-white/10 bg-green-500/5 border-l-2 border-l-green-500 overflow-hidden">
-                  <div className="px-3 py-2 bg-green-500/10 border-b border-white/5">
-                    <span className="text-sm font-medium text-green-400">SPD Details</span>
-                  </div>
-                  <div className="p-3">
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          BS (EN) Standard
-                        </label>
-                        <Select
-                          value={formData.spdBsEn || ''}
-                          onValueChange={(v) => onUpdate('spdBsEn', v === '__clear__' ? '' : v)}
-                        >
-                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
-                            <SelectValue placeholder="Select standard" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="__clear__">
-                              <span className="text-white">Clear selection</span>
-                            </SelectItem>
-                            <SelectItem value="BS EN 61643-11">
-                              <div className="flex flex-col">
-                                <span>BS EN 61643-11</span>
-                                <span className="text-xs text-white">Surge Protective Devices</span>
-                              </div>
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
-                          Type
-                        </label>
-                        <Select
-                          value={formData.spdType || ''}
-                          onValueChange={(v) => onUpdate('spdType', v === '__clear__' ? '' : v)}
-                        >
-                          <SelectTrigger className="h-11 touch-manipulation bg-white/5 border-white/20 rounded-xl">
-                            <SelectValue placeholder="Select type" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="__clear__">
-                              <span className="text-white">Clear selection</span>
-                            </SelectItem>
-                            <SelectItem value="1">
-                              <div className="flex flex-col">
-                                <span>Type 1</span>
-                                <span className="text-xs text-white">Lightning current arrestor</span>
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="2">
-                              <div className="flex flex-col">
-                                <span>Type 2</span>
-                                <span className="text-xs text-white">
-                                  Overvoltage limiting device
-                                </span>
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="3">
-                              <div className="flex flex-col">
-                                <span>Type 3</span>
-                                <span className="text-xs text-white">Equipment protection</span>
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="1+2">
-                              <div className="flex flex-col">
-                                <span>Type 1+2</span>
-                                <span className="text-xs text-white">Combined Type 1 and 2</span>
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="2+3">
-                              <div className="flex flex-col">
-                                <span>Type 2+3</span>
-                                <span className="text-xs text-white">Combined Type 2 and 3</span>
-                              </div>
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+          </div>
+        )}
+
+        {/* AFDD Details */}
+        {formData.protectionAfdd && (
+          <div className="grid grid-cols-2 gap-2 items-end">
+            <FormField label="AFDD BS (EN)">
+              <MobileSelectPicker
+                value={(formData.afddBsEn as string) || ''}
+                onValueChange={(v) => onUpdate('afddBsEn', v)}
+                options={[
+                  { value: 'BS EN 62606', label: 'BS EN 62606' },
+                ]}
+                placeholder="Standard"
+                title="AFDD BS (EN)"
+              />
+            </FormField>
+            <FormField label="AFDD Rating (A)">
+              <Input
+                type="number"
+                value={(formData.afddRating as string) || ''}
+                onChange={(e) => onUpdate('afddRating', e.target.value)}
+                placeholder="16"
+                className={inputClass}
+              />
+            </FormField>
+          </div>
+        )}
+
+        {/* SPD Details */}
+        {formData.protectionSpd && (
+          <div className="space-y-2">
+            <FormField label="SPD Type">
+              <div className="grid grid-cols-5 gap-1">
+                {['1', '2', '3', '1+2', '2+3'].map((t) => (
+                  <ToggleButton
+                    key={t}
+                    selected={formData.spdType === t}
+                    label={`T${t}`}
+                    onClick={() => onUpdate('spdType', t)}
+                  />
+                ))}
+              </div>
+            </FormField>
+            <div className="grid grid-cols-3 gap-2 items-end">
+              <FormField label="SPD BS (EN)">
+                <MobileSelectPicker
+                  value={(formData.spdBsEn as string) || ''}
+                  onValueChange={(v) => onUpdate('spdBsEn', v)}
+                  options={[
+                    { value: 'BS EN 61643-11', label: 'BS EN 61643-11' },
+                    { value: 'BS EN 61643-21', label: 'BS EN 61643-21' },
+                  ]}
+                  placeholder="Standard"
+                  title="SPD BS (EN)"
+                />
+              </FormField>
+              <FormField label="SPD Make">
+                <Input
+                  value={(formData.spdMake as string) || ''}
+                  onChange={(e) => onUpdate('spdMake', e.target.value)}
+                  placeholder="Make"
+                  className={inputClass}
+                />
+              </FormField>
+              <FormField label="Rated kA">
+                <Input
+                  value={(formData.spdRatedKa as string) || ''}
+                  onChange={(e) => onUpdate('spdRatedKa', e.target.value)}
+                  placeholder="kA"
+                  className={inputClass}
+                />
+              </FormField>
+            </div>
+          </div>
+        )}
       </div>
 
-      {/* Cable & Installation */}
-      <div className={sectionCardClass}>
-        <Collapsible open={openSections.cable} onOpenChange={() => toggleSection('cable')}>
-          <CollapsibleTrigger className="w-full">
-            <SectionHeader
-              title="Cable & Installation"
-              icon={Cable}
-              isOpen={openSections.cable}
-              color="green-500"
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">No. of Conductors</Label>
-                  <Select
-                    value={formData.numberOfConductors || ''}
-                    onValueChange={(v) =>
-                      onUpdate('numberOfConductors', v === '__clear__' ? '' : v)
-                    }
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Cores" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      <SelectItem value="2">2-core</SelectItem>
-                      <SelectItem value="3">3-core</SelectItem>
-                      <SelectItem value="4">4-core</SelectItem>
-                      <SelectItem value="5">5-core</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Live Conductor Size *</Label>
-                  <Select
-                    value={formData.liveConductorSize || ''}
-                    onValueChange={(v) => onUpdate('liveConductorSize', v === '__clear__' ? '' : v)}
-                  >
-                    <SelectTrigger
-                      className={cn('', !formData.liveConductorSize && 'border-red-500/50')}
-                    >
-                      <SelectValue placeholder="Size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {CONDUCTOR_SIZES.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">CPC Size</Label>
-                  <Select
-                    value={formData.cpcSize || ''}
-                    onValueChange={(v) => onUpdate('cpcSize', v === '__clear__' ? '' : v)}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {filteredCpcSizes.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {formData.liveConductorSize && parseFloat(formData.liveConductorSize) > 16 && (
-                    <p className="text-xs text-white mt-1">
-                      Sizes shown up to {formData.liveConductorSize}mm² (per BS 7671)
-                    </p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Cable Type</Label>
-                  <Select
-                    value={formData.cableType || ''}
-                    onValueChange={(v) => onUpdate('cableType', v === '__clear__' ? '' : v)}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {CABLE_TYPES.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm">Installation Method</Label>
-                  <Select
-                    value={formData.installationMethod || ''}
-                    onValueChange={handleInstallationMethodChange}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="Method" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {INSTALLATION_METHODS.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          {opt.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-sm">Reference Method</Label>
-                  <Select
-                    value={formData.referenceMethod || ''}
-                    onValueChange={(v) => onUpdate('referenceMethod', v === '__clear__' ? '' : v)}
-                  >
-                    <SelectTrigger className="">
-                      <SelectValue placeholder="e.g., A, B, C" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__clear__">
-                        <span className="text-white">Clear selection</span>
-                      </SelectItem>
-                      {REFERENCE_METHODS.map((opt) => (
-                        <SelectItem key={opt.value} value={opt.value}>
-                          <div className="flex flex-col">
-                            <span>{opt.label}</span>
-                            {opt.description && (
-                              <span className="text-xs text-white">{opt.description}</span>
-                            )}
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {formData.referenceMethod && (
-                    <p className="text-xs text-white mt-1">
-                      {
-                        REFERENCE_METHODS.find((r) => r.value === formData.referenceMethod)
-                          ?.description
-                      }
-                    </p>
-                  )}
-                </div>
-              </div>
+      {/* ------------------------------------------------------------------ */}
+      {/* CABLE & INSTALLATION                                                */}
+      {/* ------------------------------------------------------------------ */}
+      <SectionTitle title="Cable & Installation" />
+      <div className="space-y-3">
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <FormField label="No. of Conductors">
+            <div className="grid grid-cols-4 gap-1">
+              {['2', '3', '4', '5'].map((n) => (
+                <ToggleButton
+                  key={n}
+                  selected={formData.numberOfConductors === n}
+                  label={`${n}C`}
+                  onClick={() => onUpdate('numberOfConductors', n)}
+                />
+              ))}
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+          </FormField>
+          <FormField label="Cable Type">
+            <MobileSelectPicker
+              value={(formData.cableType as string) || ''}
+              onValueChange={(v) => onUpdate('cableType', v)}
+              options={CABLE_TYPES}
+              placeholder="Type"
+              title="Cable Type"
+            />
+          </FormField>
+        </div>
+
+        {/* Live Conductor Size — toggle grid for common, picker for all */}
+        <FormField label="Live Conductor Size" required>
+          <div className="grid grid-cols-6 gap-1">
+            {COMMON_CABLE_SIZES.map((size) => (
+              <ToggleButton
+                key={size}
+                selected={formData.liveConductorSize === size}
+                label={`${size}`}
+                onClick={() => onUpdate('liveConductorSize', size)}
+              />
+            ))}
+          </div>
+          {!COMMON_CABLE_SIZES.includes(formData.liveConductorSize as string) &&
+            formData.liveConductorSize && (
+              <span className="text-[10px] text-elec-yellow mt-1 block">
+                Selected: {(formData.liveConductorSize as string)}mm²
+              </span>
+            )}
+          <MobileSelectPicker
+            value={(formData.liveConductorSize as string) || ''}
+            onValueChange={(v) => onUpdate('liveConductorSize', v)}
+            options={CONDUCTOR_SIZES}
+            placeholder="All sizes..."
+            title="Live Conductor Size (mm²)"
+            triggerClassName={cn(
+              'mt-1',
+              false
+            )}
+          />
+        </FormField>
+
+        <FormField label="CPC Size">
+          <div className="grid grid-cols-6 gap-1">
+            {COMMON_CABLE_SIZES.map((size) => {
+              const allowed = filteredCpcSizes.some((o) => o.value === size);
+              return (
+                <ToggleButton
+                  key={size}
+                  selected={formData.cpcSize === size}
+                  label={`${size}`}
+                  onClick={() => allowed && onUpdate('cpcSize', size)}
+                />
+              );
+            })}
+          </div>
+          <MobileSelectPicker
+            value={(formData.cpcSize as string) || ''}
+            onValueChange={(v) => onUpdate('cpcSize', v)}
+            options={filteredCpcSizes}
+            placeholder="All sizes..."
+            title="CPC Size (mm²)"
+            triggerClassName="mt-1"
+          />
+          {formData.liveConductorSize &&
+            parseFloat(formData.liveConductorSize as string) > 16 && (
+              <span className="text-[10px] text-white block mt-1">
+                Sizes shown up to {formData.liveConductorSize as string}mm² (per BS 7671)
+              </span>
+            )}
+        </FormField>
+
+        <div className="grid grid-cols-2 gap-2 items-end">
+          <FormField label="Installation Method">
+            <MobileSelectPicker
+              value={(formData.installationMethod as string) || ''}
+              onValueChange={handleInstallationMethodChange}
+              options={INSTALLATION_METHODS}
+              placeholder="Method"
+              title="Installation Method"
+            />
+          </FormField>
+          <FormField label="Reference Method">
+            <MobileSelectPicker
+              value={(formData.referenceMethod as string) || ''}
+              onValueChange={(v) => onUpdate('referenceMethod', v)}
+              options={REFERENCE_METHODS}
+              placeholder="e.g., A, B, C"
+              title="Reference Method (BS 7671)"
+            />
+          </FormField>
+        </div>
+        {formData.referenceMethod && (
+          <span className="text-[10px] text-white block">
+            {REFERENCE_METHODS.find((r) => r.value === formData.referenceMethod)?.description}
+          </span>
+        )}
       </div>
     </div>
   );

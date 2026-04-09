@@ -118,71 +118,46 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center p-4 bg-background">
-          <Card className="max-w-2xl w-full border-destructive">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <AlertTriangle className="h-8 w-8 text-destructive" />
-                <div>
-                  <CardTitle className="text-destructive">Something went wrong</CardTitle>
-                  <CardDescription>The application encountered an unexpected error</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Error message — always visible */}
-              <div className="bg-muted p-4 rounded-lg">
-                <p className="text-sm font-medium mb-2 text-white">Error Details:</p>
-                <p className="text-sm text-white font-mono break-all">
+        <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-background">
+          <div className="w-full max-w-md space-y-6">
+            {/* Header */}
+            <div className="text-center space-y-2">
+              <h1 className="text-lg font-bold text-white">Something went wrong</h1>
+              <p className="text-xs text-white">Your data is safe — any unsaved changes are in local storage.</p>
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex gap-2">
+              <button
+                onClick={this.handleReset}
+                className="flex-1 h-12 rounded-lg font-semibold text-sm bg-elec-yellow text-black touch-manipulation active:scale-[0.98]"
+              >
+                Refresh Page
+              </button>
+              <button
+                onClick={this.handleGoHome}
+                className="flex-1 h-12 rounded-lg font-semibold text-sm bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
+              >
+                Go Home
+              </button>
+            </div>
+
+            {/* Error details — collapsed by default in prod */}
+            <div className="space-y-2">
+              <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+                <p className="text-[10px] text-white font-mono break-all">
                   {this.state.error?.message || 'Unknown error'}
                 </p>
               </div>
 
-              {/* Stack trace — always visible in dev, collapsed in prod */}
-              {this.state.error?.stack && (
-                <div className="bg-muted p-4 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-white">Stack Trace:</p>
-                    <Button variant="ghost" size="sm" onClick={this.handleCopyError} className="h-7 px-2 text-xs">
-                      <Copy className="h-3 w-3 mr-1" />
-                      Copy
-                    </Button>
-                  </div>
-                  <pre className="text-xs text-white font-mono break-all whitespace-pre-wrap overflow-auto max-h-48">
-                    {this.state.error.stack}
-                  </pre>
-                </div>
-              )}
-
-              {/* Component stack — always visible in dev */}
-              {this.state.errorInfo?.componentStack && (
-                <div className="bg-muted p-4 rounded-lg">
-                  <p className="text-sm font-medium mb-2 text-white">Component Stack:</p>
-                  <pre className="text-xs text-white font-mono break-all whitespace-pre-wrap overflow-auto max-h-48">
-                    {this.state.errorInfo.componentStack}
-                  </pre>
-                </div>
-              )}
-
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 p-4 rounded-lg">
-                <p className="text-sm text-amber-900 dark:text-amber-200">
-                  <strong>Your data is safe.</strong> Any unsaved changes may be in local storage.
-                  {import.meta.env.DEV && ' Check the console for full error details before refreshing.'}
-                </p>
-              </div>
-
-              <div className="flex gap-3">
-                <Button onClick={this.handleReset} className="flex-1">
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Refresh Page
-                </Button>
-                <Button onClick={this.handleGoHome} variant="outline" className="flex-1">
-                  <Home className="h-4 w-4 mr-2" />
-                  Go Home
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+              <button
+                onClick={this.handleCopyError}
+                className="w-full h-9 rounded-lg text-[10px] font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
+              >
+                Copy Error Details
+              </button>
+            </div>
+          </div>
         </div>
       );
     }

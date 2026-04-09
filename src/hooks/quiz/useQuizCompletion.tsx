@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { userKey } from '@/lib/userStorage';
 import { storageGetSync, storageSetSync, storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
 
 interface UseQuizCompletionProps {
   courseSlug?: string;
@@ -14,6 +15,7 @@ export const useQuizCompletion = ({ courseSlug, unitCode }: UseQuizCompletionPro
   const { toast } = useToast();
   const { user } = useAuth();
   const uid = user?.id;
+  const { recordProgress } = useCourseProgress();
 
   const handleQuizComplete = useCallback(
     async (score: number, totalQuestions: number, timeSpent: number) => {
@@ -57,13 +59,15 @@ export const useQuizCompletion = ({ courseSlug, unitCode }: UseQuizCompletionPro
           });
 
           if (error) {
-            console.error('Error saving quiz attempt to Supabase:', error);
             // Still show success toast as we've saved locally
             toast({
               title: 'Quiz Results Saved Locally',
               description: `You scored ${score} out of ${totalQuestions}. ${minutesTaken} minutes has been added to your off-the-job training.`,
             });
           } else {
+            // Also record to unified course_progress table
+            recordProgress(unitCode, 'quiz', 100, true);
+
             toast({
               title: 'Quiz Completed',
               description: `You scored ${score} out of ${totalQuestions}. ${minutesTaken} minutes has been added to your off-the-job training.`,
@@ -88,7 +92,7 @@ export const useQuizCompletion = ({ courseSlug, unitCode }: UseQuizCompletionPro
         return false;
       }
     },
-    [courseSlug, unitCode, uid, user, toast]
+    [courseSlug, unitCode, uid, user, toast, recordProgress]
   );
 
   const checkQuizCompletion = useCallback(() => {

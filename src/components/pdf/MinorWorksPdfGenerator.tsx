@@ -47,6 +47,7 @@ interface MinorWorksPdfGeneratorProps {
   isFormValid: boolean;
   onSuccess?: () => void;
   onSaveDraft?: () => void;
+  onDuplicateForNextCircuit?: () => void;
   reportId?: string;
   userId?: string;
 }
@@ -56,6 +57,7 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
   isFormValid,
   onSuccess,
   onSaveDraft,
+  onDuplicateForNextCircuit,
   reportId,
   userId,
 }) => {
@@ -599,128 +601,78 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           isMobile ? '' : 'rounded-xl border border-white/10 bg-white/[0.02] p-5'
         )}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
-              <FileText className="h-5 w-5 text-elec-yellow" />
+        {/* Section completion — compact row */}
+        <div className="grid grid-cols-4 gap-1">
+          {completionSections.map((section) => (
+            <div
+              key={section.label}
+              className={cn(
+                'h-9 rounded-lg flex items-center justify-center text-[9px] font-semibold',
+                section.done
+                  ? 'bg-green-500/20 border border-green-500/30 text-green-400'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              {section.done ? '✓' : '○'} {section.label.split(' ')[0]}
             </div>
-            <h3 className="font-semibold text-white">Certificate Actions</h3>
-          </div>
-          <Badge
-            className={cn(
-              'gap-1.5 border',
-              isFullyComplete
-                ? 'bg-green-500/15 text-green-400 border-green-500/30'
-                : canGenerateCertificate
-                  ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-                  : 'bg-white/5 text-white border-white/20'
-            )}
-          >
-            {isFullyComplete ? (
-              <>
-                <CheckCircle className="h-3 w-3" /> Complete
-              </>
-            ) : canGenerateCertificate ? (
-              <>
-                <Clock className="h-3 w-3" /> Ready
-              </>
-            ) : (
-              <>
-                <AlertTriangle className="h-3 w-3" /> Incomplete
-              </>
-            )}
-          </Badge>
+          ))}
         </div>
 
-        {/* Section Completion */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-semibold text-white">Section Completion</h4>
-          <div className="space-y-2">
-            {completionSections.map((section) => (
-              <div key={section.label} className="flex items-center gap-2.5">
-                {section.done ? (
-                  <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                ) : (
-                  <Clock className="h-4 w-4 text-amber-400 shrink-0" />
-                )}
-                <span className={cn('text-sm', section.done ? 'text-green-400' : 'text-white')}>
-                  {section.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Validation Warning */}
+        {/* Validation — inline */}
         {!canGenerateCertificate && (
-          <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-4">
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 shrink-0" />
-              <div>
-                <p className="text-sm font-semibold text-amber-400 mb-2">
-                  Required sections incomplete:
-                </p>
-                <ul className="space-y-1.5">
-                  {!hasClientAndDetails && (
-                    <li className="text-sm text-white flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                      Complete client name, property address, and work date
-                    </li>
-                  )}
-                  {!hasDeclaration && (
-                    <li className="text-sm text-white flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                      Complete electrician name and signature
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </div>
-          </div>
+          <p className="text-[10px] text-elec-yellow">
+            {!hasClientAndDetails && 'Complete client details. '}
+            {!hasDeclaration && 'Complete declaration with signature.'}
+          </p>
         )}
 
-        {/* Primary Action */}
-        <Button
+        {/* Generate button */}
+        <button
+          type="button"
           onClick={handleGeneratePDF}
           disabled={!canGenerateCertificate || isExporting}
-          className="h-14 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+          className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold text-sm rounded-lg active:scale-[0.98] transition-transform disabled:opacity-50 flex items-center justify-center gap-2"
         >
-          <Download className="h-5 w-5 mr-2" />
           {isExporting ? 'Generating...' : 'Generate Minor Works PDF'}
-        </Button>
+        </button>
 
         {/* Secondary Actions */}
-        <div className="space-y-3">
-          <Button
+        <div className="grid grid-cols-3 gap-1">
+          <button
+            type="button"
             onClick={handleSaveDraft}
-            variant="outline"
-            className="w-full h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform"
+            className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] flex items-center justify-center text-[10px] font-semibold"
           >
-            <Save className="h-4 w-4 mr-2" />
-            Save Draft
-          </Button>
-
-          <Button
+            Save
+          </button>
+          <button
+            type="button"
             onClick={handleEmailCertificate}
-            variant="outline"
             disabled={!canGenerateCertificate}
-            className="w-full h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+            className="h-10 touch-manipulation bg-white/[0.05] border border-white/[0.08] text-white rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
           >
-            <Mail className="h-4 w-4 mr-2" />
-            Email Certificate
-          </Button>
-
-          <Button
+            Email
+          </button>
+          <button
+            type="button"
             onClick={handleCreateInvoice}
-            variant="outline"
             disabled={!canGenerateCertificate}
-            className="w-full h-12 touch-manipulation border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+            className="h-10 touch-manipulation bg-white/[0.05] border border-elec-yellow/30 text-elec-yellow rounded-lg active:scale-[0.98] disabled:opacity-50 flex items-center justify-center text-[10px] font-semibold"
           >
-            <Receipt className="h-4 w-4 mr-2" />
-            Create Invoice
-          </Button>
+            Invoice
+          </button>
         </div>
+
+        {/* Duplicate for next circuit */}
+        {onDuplicateForNextCircuit && (
+          <button
+            type="button"
+            onClick={onDuplicateForNextCircuit}
+            className="w-full h-10 rounded-lg font-semibold text-xs bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
+          >
+            New Cert for Another Circuit (Same Job)
+          </button>
+        )}
       </div>
 
       <PDFExportProgress

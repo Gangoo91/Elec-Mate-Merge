@@ -50,6 +50,8 @@ export const SwipeableBottomSheet: React.FC<SwipeableBottomSheetProps> = ({
     <Drawer.Root
       open={open}
       onOpenChange={onOpenChange}
+      shouldScaleBackground={false}
+      noBodyStyles
       snapPoints={snapPoints}
       activeSnapPoint={defaultSnapPoint}
       modal={modal}

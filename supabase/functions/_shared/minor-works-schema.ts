@@ -156,6 +156,8 @@ export const minorWorksSchema = z.object({
         .object({
           bs_en: z.string().default(''),
           type: z.string().default(''),
+          make: z.string().default(''),
+          rated_ka: z.string().default(''),
         })
         .default({}),
     })
