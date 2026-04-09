@@ -2,44 +2,74 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, Zap, Cable, Shield, AlertTriangle, Globe, Info } from 'lucide-react';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
+import EVCircuitPresets from './EVCircuitPresets';
 
 interface EVChargingSupplyDetailsProps {
   formData: Record<string, unknown>;
   onUpdate: (field: string, value: unknown) => void;
 }
 
+/* ------------------------------------------------------------------ */
+/*  Reusable bits                                                      */
+/* ------------------------------------------------------------------ */
+
+const SectionHeading = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const FieldLabel = ({ htmlFor, children }: { htmlFor?: string; children: React.ReactNode }) => (
+  <Label htmlFor={htmlFor} className="text-white text-xs mb-1.5 block">
+    {children}
+  </Label>
+);
+
+const inputClass =
+  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow text-white [color-scheme:dark]';
+
+/** Toggle-button row — selects exactly one value */
+const ToggleRow = ({
+  options,
+  value,
+  onChange,
+}: {
+  options: { label: string; value: string }[];
+  value: string;
+  onChange: (v: string) => void;
+}) => (
+  <div className="flex gap-2">
+    {options.map((opt) => (
+      <button
+        key={opt.value}
+        type="button"
+        onClick={() => onChange(opt.value)}
+        className={cn(
+          'flex-1 h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+          value === opt.value
+            ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+            : 'bg-white/[0.05] border border-white/[0.08] text-white'
+        )}
+      >
+        {opt.label}
+      </button>
+    ))}
+  </div>
+);
+
+/* ------------------------------------------------------------------ */
+/*  Component                                                          */
+/* ------------------------------------------------------------------ */
+
 const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
   formData,
   onUpdate,
 }) => {
-  const isMobile = useIsMobile();
   const { lookupMaxZs, checkDNORequirements } = useEVChargingSmartForm();
-
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
-    supply: true,
-    pme: true,
-    circuit: true,
-    protection: true,
-    dno: true,
-  });
-
-  const toggleSection = (section: string) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
 
   // Auto-lookup Max Zs when protection device details change
   const maxZsLookup = useMemo(() => {
@@ -74,895 +104,732 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
     return checkDNORequirements(power, phases);
   }, [formData.powerRating, formData.phases, checkDNORequirements]);
 
+  // Auto-fill DNO notification date when checkbox is ticked and date is empty
+  useEffect(() => {
+    if (formData.dnoNotified && !formData.dnoNotificationDate) {
+      onUpdate('dnoNotificationDate', new Date().toISOString().split('T')[0]);
+    }
+  }, [formData.dnoNotified]);
+
+  // Compute G98 deadline (installationDate + 28 days)
+  const g98Deadline = useMemo(() => {
+    if (!formData.installationDate) return null;
+    const d = new Date(formData.installationDate as string);
+    if (isNaN(d.getTime())) return null;
+    d.setDate(d.getDate() + 28);
+    return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }, [formData.installationDate]);
+
   // Check if PME section should show warning
   const isPME = formData.earthingArrangement === 'TN-C-S' || formData.isPME;
 
   return (
-    <div className={cn(isMobile ? 'space-y-0' : 'space-y-0 divide-y divide-white/[0.06]')}>
-      {/* Supply Characteristics */}
-      <div>
-        <Collapsible open={openSections.supply} onOpenChange={() => toggleSection('supply')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
-                  <Zap className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Supply Characteristics</h3>
-                  <span className="text-xs text-white">Voltage, phases, earthing</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.supply && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
-                    <Zap className="h-4 w-4 text-elec-yellow" />
-                  </div>
-                  <span className="text-white font-semibold">Supply Characteristics</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.supply && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="supplyVoltage">Voltage (V)</Label>
-                  <Input
-                    id="supplyVoltage"
-                    type="number"
-                    value={formData.supplyVoltage ?? ''}
-                    onChange={(e) =>
-                      onUpdate(
-                        'supplyVoltage',
-                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
-                      )
-                    }
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="supplyPhases">Phases</Label>
-                  <Select
-                    value={formData.supplyPhases || 'single'}
-                    onValueChange={(value) => onUpdate('supplyPhases', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="single">Single Phase</SelectItem>
-                      <SelectItem value="three">Three Phase</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="earthingArrangement">Earthing *</Label>
-                  <Select
-                    value={formData.earthingArrangement || ''}
-                    onValueChange={(value) => {
-                      onUpdate('earthingArrangement', value);
-                      // Auto-set isPME based on earthing selection
-                      onUpdate('isPME', value === 'TN-C-S');
-                    }}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="TN-C-S">TN-C-S (PME)</SelectItem>
-                      <SelectItem value="TN-S">TN-S</SelectItem>
-                      <SelectItem value="TT">TT</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+    <div className="space-y-5 px-4 py-2">
+      {/* EV Circuit Presets */}
+      <EVCircuitPresets
+        onApplyPreset={(preset) => {
+          Object.entries(preset).forEach(([key, value]) => {
+            onUpdate(key, value);
+          });
+        }}
+      />
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="ze">Ze (Ω)</Label>
-                  <Input
-                    id="ze"
-                    placeholder="e.g., 0.35"
-                    inputMode="decimal"
-                    step="0.01"
-                    value={formData.ze || ''}
-                    onChange={(e) => onUpdate('ze', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="prospectiveFaultCurrent">PSCC (kA)</Label>
-                  <Input
-                    id="prospectiveFaultCurrent"
-                    placeholder="e.g., 2.5"
-                    inputMode="decimal"
-                    step="0.01"
-                    value={formData.prospectiveFaultCurrent || ''}
-                    onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="externalLoopImpedance">Zs at Origin (Ω)</Label>
-                  <Input
-                    id="externalLoopImpedance"
-                    placeholder="e.g., 0.35"
-                    inputMode="decimal"
-                    step="0.01"
-                    value={formData.externalLoopImpedance || ''}
-                    onChange={(e) => onUpdate('externalLoopImpedance', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-              </div>
+      {/* ========== Supply Characteristics ========== */}
+      <section>
+        <SectionHeading title="Supply Characteristics" />
+
+        <div className="space-y-4">
+          {/* Earthing type — toggle buttons */}
+          <div>
+            <FieldLabel>Earthing Arrangement *</FieldLabel>
+            <ToggleRow
+              options={[
+                { label: 'TN-S', value: 'TN-S' },
+                { label: 'TN-C-S (PME)', value: 'TN-C-S' },
+                { label: 'TT', value: 'TT' },
+              ]}
+              value={(formData.earthingArrangement as string) || ''}
+              onChange={(v) => {
+                onUpdate('earthingArrangement', v);
+                onUpdate('isPME', v === 'TN-C-S');
+              }}
+            />
+          </div>
+
+          {/* Phases — toggle buttons */}
+          <div>
+            <FieldLabel>Supply Phases</FieldLabel>
+            <ToggleRow
+              options={[
+                { label: 'Single Phase', value: 'single' },
+                { label: 'Three Phase', value: 'three' },
+              ]}
+              value={(formData.supplyPhases as string) || 'single'}
+              onChange={(v) => onUpdate('supplyPhases', v)}
+            />
+          </div>
+
+          {/* Voltage + Ze — 2-col */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel htmlFor="supplyVoltage">Voltage (V)</FieldLabel>
+              <Input
+                id="supplyVoltage"
+                type="number"
+                value={formData.supplyVoltage ?? ''}
+                onChange={(e) =>
+                  onUpdate(
+                    'supplyVoltage',
+                    e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                  )
+                }
+                className={inputClass}
+              />
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
-
-      {/* PME Considerations */}
-      <div>
-        <Collapsible open={openSections.pme} onOpenChange={() => toggleSection('pme')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div
-                  className={cn(
-                    'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
-                    isPME ? 'bg-amber-500/20' : 'bg-white/20'
-                  )}
-                >
-                  <AlertTriangle
-                    className={cn('h-5 w-5', isPME ? 'text-amber-400' : 'text-white')}
-                  />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">PME Considerations</h3>
-                  <span className="text-xs text-white">
-                    {isPME ? 'PME detected - review earthing' : 'Earthing measures'}
-                  </span>
-                </div>
-                {isPME && (
-                  <Badge
-                    variant="outline"
-                    className="text-[10px] px-1.5 py-0 border-amber-500/30 text-amber-400 shrink-0 mr-2"
-                  >
-                    PME
-                  </Badge>
-                )}
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.pme && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div
-                    className={cn(
-                      'w-9 h-9 rounded-xl flex items-center justify-center',
-                      isPME ? 'bg-amber-500/15' : 'bg-white/15'
-                    )}
-                  >
-                    <AlertTriangle
-                      className={cn('h-4 w-4', isPME ? 'text-amber-400' : 'text-white')}
-                    />
-                  </div>
-                  <span className="text-white font-semibold">PME Earthing Considerations</span>
-                  {isPME && (
-                    <Badge
-                      variant="outline"
-                      className="text-[10px] px-1.5 py-0 border-amber-500/30 text-amber-400"
-                    >
-                      PME Detected
-                    </Badge>
-                  )}
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.pme && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {isPME && (
-                <Alert className="border-amber-500/30 bg-amber-500/10">
-                  <AlertTriangle className="h-4 w-4 text-amber-400" />
-                  <AlertDescription className="text-amber-200 text-xs sm:text-sm">
-                    <strong>IET Code of Practice:</strong> Special earthing arrangements may be
-                    required for EV chargers connected to PME supplies. Ensure compliance with
-                    Section 722 and the IET CoP for EV charging.
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
-                <Checkbox
-                  id="isPME"
-                  checked={formData.isPME || false}
-                  onCheckedChange={(checked) => onUpdate('isPME', checked)}
-                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label htmlFor="isPME" className="cursor-pointer text-base leading-relaxed">
-                  Installation is connected to a PME (TN-C-S) supply
-                </Label>
-              </div>
-
-              {formData.isPME && (
-                <>
-                  <div className="space-y-2">
-                    <Label htmlFor="pmeEarthingMeasures">PME Earthing Measures Applied</Label>
-                    <Select
-                      value={formData.pmeEarthingMeasures || ''}
-                      onValueChange={(value) => onUpdate('pmeEarthingMeasures', value)}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                        <SelectValue placeholder="Select measures" />
-                      </SelectTrigger>
-                      <SelectContent className="z-[100] bg-background border-border text-foreground">
-                        <SelectItem value="integral-rcd">
-                          Integral RCD protection in charger
-                        </SelectItem>
-                        <SelectItem value="earth-electrode">
-                          Additional earth electrode installed
-                        </SelectItem>
-                        <SelectItem value="class-ii">Class II charger used</SelectItem>
-                        <SelectItem value="separated-extra-low">
-                          Separated extra-low voltage
-                        </SelectItem>
-                        <SelectItem value="protective-bonding">
-                          Additional protective bonding
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
-                    <Checkbox
-                      id="earthElectrodeInstalled"
-                      checked={formData.earthElectrodeInstalled || false}
-                      onCheckedChange={(checked) => onUpdate('earthElectrodeInstalled', checked)}
-                      className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                    />
-                    <Label
-                      htmlFor="earthElectrodeInstalled"
-                      className="cursor-pointer text-base leading-relaxed"
-                    >
-                      Additional earth electrode installed
-                    </Label>
-                  </div>
-
-                  {formData.earthElectrodeInstalled && (
-                    <div className="space-y-2">
-                      <Label htmlFor="earthElectrodeResistance">
-                        Earth Electrode Resistance Ra (Ω)
-                      </Label>
-                      <Input
-                        id="earthElectrodeResistance"
-                        placeholder="e.g., 150"
-                        inputMode="decimal"
-                        step="0.01"
-                        value={formData.earthElectrodeResistance || ''}
-                        onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
-                        className="h-11 text-base touch-manipulation w-full sm:w-48 border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                      />
-                    </div>
-                  )}
-                </>
-              )}
+            <div>
+              <FieldLabel htmlFor="ze">Ze (Ohm)</FieldLabel>
+              <Input
+                id="ze"
+                placeholder="e.g., 0.35"
+                inputMode="decimal"
+                step="0.01"
+                value={formData.ze || ''}
+                onChange={(e) => onUpdate('ze', e.target.value)}
+                className={inputClass}
+              />
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
+          </div>
 
-      {/* Circuit Details */}
-      <div>
-        <Collapsible open={openSections.circuit} onOpenChange={() => toggleSection('circuit')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
-                  <Cable className="h-5 w-5 text-blue-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Circuit Details</h3>
-                  <span className="text-xs text-white">Cable type & size</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.circuit && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-500/15 flex items-center justify-center">
-                    <Cable className="h-4 w-4 text-blue-400" />
-                  </div>
-                  <span className="text-white font-semibold">Circuit Details</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.circuit && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="circuitDesignation">Circuit Designation</Label>
-                  <Input
-                    id="circuitDesignation"
-                    placeholder="e.g., EV Charger"
-                    value={formData.circuitDesignation || ''}
-                    onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="cableType">Cable Type *</Label>
-                  <Select
-                    value={formData.cableType || ''}
-                    onValueChange={(value) => onUpdate('cableType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="n/a">N/A</SelectItem>
-                      <SelectItem value="6242Y">6242Y Twin & Earth</SelectItem>
-                      <SelectItem value="6243Y">6243Y (3C + E)</SelectItem>
-                      <SelectItem value="SWA">SWA Armoured Cable</SelectItem>
-                      <SelectItem value="H07RN-F">H07RN-F Flex</SelectItem>
-                      <SelectItem value="singles-conduit">Singles in Conduit</SelectItem>
-                      <SelectItem value="singles-trunking">Singles in Trunking</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="cableSize">Size (mm²)</Label>
-                  <Select
-                    value={formData.cableSize?.toString() || '6'}
-                    onValueChange={(value) => onUpdate('cableSize', parseFloat(value))}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="2.5">2.5mm²</SelectItem>
-                      <SelectItem value="4">4mm²</SelectItem>
-                      <SelectItem value="6">6mm²</SelectItem>
-                      <SelectItem value="10">10mm²</SelectItem>
-                      <SelectItem value="16">16mm²</SelectItem>
-                      <SelectItem value="25">25mm²</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="cableLength">Length (m)</Label>
-                  <Input
-                    id="cableLength"
-                    type="number"
-                    inputMode="decimal"
-                    step="0.01"
-                    placeholder="metres"
-                    value={formData.cableLength || ''}
-                    onChange={(e) => onUpdate('cableLength', parseFloat(e.target.value) || 0)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="col-span-2 space-y-2">
-                  <Label htmlFor="installationMethod">Installation Method</Label>
-                  <Select
-                    value={formData.installationMethod || ''}
-                    onValueChange={(value) => onUpdate('installationMethod', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="n/a">N/A</SelectItem>
-                      <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
-                      <SelectItem value="trunking">In Trunking</SelectItem>
-                      <SelectItem value="conduit">In Conduit</SelectItem>
-                      <SelectItem value="buried">Buried Direct</SelectItem>
-                      <SelectItem value="ducting">In Ducting Underground</SelectItem>
-                      <SelectItem value="cable-tray">On Cable Tray</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+          {/* PSCC + Zs at origin — 2-col */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel htmlFor="prospectiveFaultCurrent">PSCC (kA)</FieldLabel>
+              <Input
+                id="prospectiveFaultCurrent"
+                placeholder="e.g., 2.5"
+                inputMode="decimal"
+                step="0.01"
+                value={formData.prospectiveFaultCurrent || ''}
+                onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
+                className={inputClass}
+              />
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
-
-      {/* Protection */}
-      <div>
-        <Collapsible
-          open={openSections.protection}
-          onOpenChange={() => toggleSection('protection')}
-        >
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-red-500/20 flex items-center justify-center shrink-0">
-                  <Shield className="h-5 w-5 text-red-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Circuit Protection</h3>
-                  <span className="text-xs text-white">MCB/RCBO & RCD</span>
-                </div>
-                {maxZsLookup && (
-                  <Badge
-                    variant="outline"
-                    className="text-[10px] px-1.5 py-0 border-elec-yellow/30 text-elec-yellow shrink-0 mr-2"
-                  >
-                    Max Zs: {maxZsLookup.maxZs}Ω
-                  </Badge>
-                )}
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.protection && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-red-500/15 flex items-center justify-center">
-                    <Shield className="h-4 w-4 text-red-400" />
-                  </div>
-                  <span className="text-white font-semibold">Circuit Protection</span>
-                  {maxZsLookup && (
-                    <Badge
-                      variant="outline"
-                      className="text-[10px] px-1.5 py-0 border-elec-yellow/30 text-elec-yellow"
-                    >
-                      Max Zs: {maxZsLookup.maxZs}Ω
-                    </Badge>
-                  )}
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.protection && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="protectionDeviceType">Type *</Label>
-                  <Select
-                    value={formData.protectionDeviceType || ''}
-                    onValueChange={(value) => onUpdate('protectionDeviceType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="MCB">MCB</SelectItem>
-                      <SelectItem value="RCBO">RCBO</SelectItem>
-                      <SelectItem value="MCCB">MCCB</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="protectionDeviceRating">Rating (A)</Label>
-                  <Select
-                    value={formData.protectionDeviceRating?.toString() || '32'}
-                    onValueChange={(value) => onUpdate('protectionDeviceRating', parseInt(value))}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="16">16A</SelectItem>
-                      <SelectItem value="20">20A</SelectItem>
-                      <SelectItem value="32">32A</SelectItem>
-                      <SelectItem value="40">40A</SelectItem>
-                      <SelectItem value="50">50A</SelectItem>
-                      <SelectItem value="63">63A</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="protectionDeviceCurve">Curve</Label>
-                  <Select
-                    value={formData.protectionDeviceCurve || 'B'}
-                    onValueChange={(value) => onUpdate('protectionDeviceCurve', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="B">Type B</SelectItem>
-                      <SelectItem value="C">Type C</SelectItem>
-                      <SelectItem value="D">Type D</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {/* Max Zs Auto-lookup Display */}
-              {maxZsLookup && (
-                <div className="flex items-center gap-3 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] px-4 py-3">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <span className="text-2xl font-semibold text-elec-yellow tabular-nums">
-                      {maxZsLookup.maxZs}Ω
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-xs font-medium text-white">Max Zs</p>
-                      <p className="text-[10px] text-white">{maxZsLookup.source}</p>
-                    </div>
-                  </div>
-                  <Badge
-                    variant="outline"
-                    className="text-[10px] px-2 py-0.5 border-elec-yellow/30 text-elec-yellow shrink-0"
-                  >
-                    Auto
-                  </Badge>
-                </div>
-              )}
-
-              {/* RCD Protection */}
-              <div className="space-y-3 pt-2">
-                <h4 className="text-sm font-medium text-white flex items-center gap-2 px-0.5">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-400"></div>
-                  RCD Protection
-                </h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="rcdType">RCD Type</Label>
-                    <Select
-                      value={formData.rcdType || ''}
-                      onValueChange={(value) => onUpdate('rcdType', value)}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent className="z-[100] bg-background border-border text-foreground">
-                        <SelectItem value="Type A">Type A</SelectItem>
-                        <SelectItem value="Type B">Type B</SelectItem>
-                        <SelectItem value="Type A + 6mA DC">Type A + 6mA DC</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="rcdRating">Rating (mA)</Label>
-                    <Select
-                      value={formData.rcdRating?.toString() || '30'}
-                      onValueChange={(value) => onUpdate('rcdRating', parseInt(value))}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                        <SelectValue placeholder="Select" />
-                      </SelectTrigger>
-                      <SelectContent className="z-[100] bg-background border-border text-foreground">
-                        <SelectItem value="30">30mA</SelectItem>
-                        <SelectItem value="100">100mA</SelectItem>
-                        <SelectItem value="300">300mA</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="col-span-2 sm:col-span-1 flex items-end">
-                    <label
-                      htmlFor="rcdIntegral"
-                      className={cn(
-                        'flex items-center gap-3 p-3 rounded-xl border w-full cursor-pointer transition-colors touch-manipulation',
-                        formData.rcdIntegral
-                          ? 'border-green-500/40 bg-green-500/10'
-                          : 'border-white/10 bg-black/30 hover:bg-white/5'
-                      )}
-                    >
-                      <Checkbox
-                        id="rcdIntegral"
-                        checked={formData.rcdIntegral || false}
-                        onCheckedChange={(checked) => onUpdate('rcdIntegral', checked)}
-                        className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
-                      />
-                      <span className="text-sm text-white">Integral RCD</span>
-                    </label>
-                  </div>
-                </div>
-              </div>
+            <div>
+              <FieldLabel htmlFor="externalLoopImpedance">Zs at Origin (Ohm)</FieldLabel>
+              <Input
+                id="externalLoopImpedance"
+                placeholder="e.g., 0.35"
+                inputMode="decimal"
+                step="0.01"
+                value={formData.externalLoopImpedance || ''}
+                onChange={(e) => onUpdate('externalLoopImpedance', e.target.value)}
+                className={inputClass}
+              />
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
+          </div>
+        </div>
+      </section>
 
-      {/* DNO Notification */}
-      <div>
-        <Collapsible open={openSections.dno} onOpenChange={() => toggleSection('dno')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div
-                  className={cn(
-                    'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
-                    dnoRequirement.required ? 'bg-orange-500/20' : 'bg-green-500/20'
-                  )}
-                >
-                  <Globe
-                    className={cn(
-                      'h-5 w-5',
-                      dnoRequirement.required ? 'text-orange-400' : 'text-green-400'
-                    )}
-                  />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">DNO Notification</h3>
-                  <span className="text-xs text-white">
-                    {dnoRequirement.required ? dnoRequirement.type : 'G98/G99 compliance'}
-                  </span>
-                </div>
-                {dnoRequirement.required && (
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      'text-[10px] px-1.5 py-0 shrink-0 mr-2',
-                      dnoRequirement.type === 'G99'
-                        ? 'border-red-500/30 text-red-400'
-                        : 'border-orange-500/30 text-orange-400'
-                    )}
-                  >
-                    {dnoRequirement.type}
-                  </Badge>
-                )}
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.dno && 'rotate-180'
-                  )}
+      {/* ========== PME Considerations ========== */}
+      <section>
+        <SectionHeading title="PME Considerations" />
+
+        <div className="space-y-4">
+          {isPME && (
+            <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
+              <p className="text-[11px] text-white leading-relaxed">
+                <span className="font-bold">IET CoP:</span> Special earthing arrangements may be required for EV chargers on PME supplies. Ensure compliance with Section 722.
+              </p>
+            </div>
+          )}
+
+          {/* PME toggle */}
+          <div>
+            <FieldLabel>PME Supply</FieldLabel>
+            <ToggleRow
+              options={[
+                { label: 'Yes', value: 'true' },
+                { label: 'No', value: 'false' },
+              ]}
+              value={formData.isPME ? 'true' : 'false'}
+              onChange={(v) => onUpdate('isPME', v === 'true')}
+            />
+          </div>
+
+          {formData.isPME && (
+            <>
+              <div>
+                <FieldLabel htmlFor="pmeEarthingMeasures">PME Earthing Measures Applied</FieldLabel>
+                <MobileSelectPicker
+                  label="PME Earthing Measures Applied"
+                  value={(formData.pmeEarthingMeasures as string) || ''}
+                  onChange={(value) => onUpdate('pmeEarthingMeasures', value)}
+                  options={[
+                    { value: 'integral-rcd', label: 'Integral RCD protection in charger' },
+                    { value: 'earth-electrode', label: 'Additional earth electrode installed' },
+                    { value: 'class-ii', label: 'Class II charger used' },
+                    { value: 'separated-extra-low', label: 'Separated extra-low voltage' },
+                    { value: 'protective-bonding', label: 'Additional protective bonding' },
+                  ]}
+                  placeholder="Select measures"
                 />
               </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div
-                    className={cn(
-                      'w-9 h-9 rounded-xl flex items-center justify-center',
-                      dnoRequirement.required ? 'bg-orange-500/15' : 'bg-green-500/15'
-                    )}
-                  >
-                    <Globe
-                      className={cn(
-                        'h-4 w-4',
-                        dnoRequirement.required ? 'text-orange-400' : 'text-green-400'
-                      )}
-                    />
-                  </div>
-                  <span className="text-white font-semibold">DNO Notification</span>
-                  {dnoRequirement.required && (
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        'text-[10px] px-1.5 py-0',
-                        dnoRequirement.type === 'G99'
-                          ? 'border-red-500/30 text-red-400'
-                          : 'border-orange-500/30 text-orange-400'
-                      )}
-                    >
-                      {dnoRequirement.type} Required
-                    </Badge>
-                  )}
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.dno && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {/* Dynamic DNO Requirement — compact info strip */}
-              <div
-                className={cn(
-                  'flex items-center gap-3 rounded-xl px-4 py-3 border',
-                  dnoRequirement.type === 'G99'
-                    ? 'border-red-500/30 bg-red-500/[0.06]'
-                    : dnoRequirement.type === 'G98'
-                      ? 'border-orange-500/30 bg-orange-500/[0.06]'
-                      : 'border-green-500/30 bg-green-500/[0.06]'
-                )}
-              >
-                <div
-                  className={cn(
-                    'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
-                    dnoRequirement.type === 'G99'
-                      ? 'bg-red-500/15'
-                      : dnoRequirement.type === 'G98'
-                        ? 'bg-orange-500/15'
-                        : 'bg-green-500/15'
-                  )}
-                >
-                  {dnoRequirement.type === 'G99' ? (
-                    <AlertTriangle className="h-5 w-5 text-red-400" />
-                  ) : dnoRequirement.type === 'G98' ? (
-                    <Info className="h-5 w-5 text-orange-400" />
-                  ) : (
-                    <Info className="h-5 w-5 text-green-400" />
-                  )}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p
-                    className={cn(
-                      'text-sm font-medium',
-                      dnoRequirement.type === 'G99'
-                        ? 'text-red-400'
-                        : dnoRequirement.type === 'G98'
-                          ? 'text-orange-400'
-                          : 'text-green-400'
-                    )}
-                  >
-                    {dnoRequirement.message}
-                  </p>
-                  <p className="text-xs text-white mt-0.5">{dnoRequirement.details}</p>
-                </div>
-              </div>
 
-              {/* G98 / G99 toggle cards */}
-              <div className="grid grid-cols-2 gap-3">
-                <label
-                  htmlFor="g98Notification"
-                  className={cn(
-                    'flex flex-col items-center justify-center gap-1.5 p-4 rounded-xl border cursor-pointer transition-all touch-manipulation text-center',
-                    formData.g98Notification
-                      ? 'border-orange-500/50 bg-orange-500/10 ring-1 ring-orange-500/20'
-                      : 'border-white/10 bg-white/[0.02] hover:bg-white/5'
-                  )}
-                >
-                  <Checkbox
-                    id="g98Notification"
-                    checked={formData.g98Notification || false}
-                    onCheckedChange={(checked) => onUpdate('g98Notification', checked)}
-                    className="sr-only"
-                  />
-                  <span
-                    className={cn(
-                      'text-lg font-bold',
-                      formData.g98Notification ? 'text-orange-400' : 'text-white'
-                    )}
-                  >
-                    G98
-                  </span>
-                  <span
-                    className={cn(
-                      'text-xs',
-                      formData.g98Notification ? 'text-orange-300' : 'text-white'
-                    )}
-                  >
-                    Notification
-                  </span>
-                  {formData.g98Notification && (
-                    <div className="w-2 h-2 rounded-full bg-orange-400 mt-0.5" />
-                  )}
-                </label>
-                <label
-                  htmlFor="g99Application"
-                  className={cn(
-                    'flex flex-col items-center justify-center gap-1.5 p-4 rounded-xl border cursor-pointer transition-all touch-manipulation text-center',
-                    formData.g99Application
-                      ? 'border-red-500/50 bg-red-500/10 ring-1 ring-red-500/20'
-                      : 'border-white/10 bg-white/[0.02] hover:bg-white/5'
-                  )}
-                >
-                  <Checkbox
-                    id="g99Application"
-                    checked={formData.g99Application || false}
-                    onCheckedChange={(checked) => onUpdate('g99Application', checked)}
-                    className="sr-only"
-                  />
-                  <span
-                    className={cn(
-                      'text-lg font-bold',
-                      formData.g99Application ? 'text-red-400' : 'text-white'
-                    )}
-                  >
-                    G99
-                  </span>
-                  <span
-                    className={cn(
-                      'text-xs',
-                      formData.g99Application ? 'text-red-300' : 'text-white'
-                    )}
-                  >
-                    Application
-                  </span>
-                  {formData.g99Application && (
-                    <div className="w-2 h-2 rounded-full bg-red-400 mt-0.5" />
-                  )}
-                </label>
-              </div>
-
-              {/* DNO notified toggle */}
               <label
-                htmlFor="dnoNotified"
+                htmlFor="earthElectrodeInstalled"
                 className={cn(
-                  'flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all touch-manipulation',
-                  formData.dnoNotified
-                    ? 'border-green-500/40 bg-green-500/[0.06]'
-                    : 'border-white/10 bg-white/[0.02] hover:bg-white/5'
+                  'flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors touch-manipulation',
+                  formData.earthElectrodeInstalled
+                    ? 'border-elec-yellow/40 bg-elec-yellow/[0.06]'
+                    : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]'
                 )}
               >
                 <Checkbox
-                  id="dnoNotified"
-                  checked={formData.dnoNotified || false}
-                  onCheckedChange={(checked) => onUpdate('dnoNotified', checked)}
-                  className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
+                  id="earthElectrodeInstalled"
+                  checked={formData.earthElectrodeInstalled || false}
+                  onCheckedChange={(checked) => onUpdate('earthElectrodeInstalled', checked)}
+                  className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                 />
-                <div className="flex-1">
-                  <span className="text-sm font-medium text-white">DNO has been notified</span>
-                  <p className="text-xs text-white">
-                    Confirm notification sent to distribution network operator
-                  </p>
-                </div>
+                <span className="text-sm text-white">Additional earth electrode installed</span>
               </label>
 
-              {formData.dnoNotified && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="dnoNotificationDate">Notification Date</Label>
+              {formData.earthElectrodeInstalled && (
+                <div>
+                  <FieldLabel htmlFor="earthElectrodeResistance">
+                    Earth Electrode Resistance Ra (Ohm)
+                  </FieldLabel>
+                  <Input
+                    id="earthElectrodeResistance"
+                    placeholder="e.g., 150"
+                    inputMode="decimal"
+                    step="0.01"
+                    value={formData.earthElectrodeResistance || ''}
+                    onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
+                    className={cn(inputClass, 'w-full sm:w-48')}
+                  />
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </section>
+
+      {/* ========== O-PEN Protection (TN-C-S only) ========== */}
+      {formData.earthingArrangement === 'TN-C-S' && (
+        <section>
+          <SectionHeading title="O-PEN Protection (IET01:2024)" />
+
+          <div className="space-y-4">
+            <label
+              htmlFor="openPENDeviceFitted"
+              className={cn(
+                'flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors touch-manipulation',
+                formData.openPENDeviceFitted
+                  ? 'border-elec-yellow/40 bg-elec-yellow/[0.06]'
+                  : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]'
+              )}
+            >
+              <Checkbox
+                id="openPENDeviceFitted"
+                checked={formData.openPENDeviceFitted || false}
+                onCheckedChange={(checked) => onUpdate('openPENDeviceFitted', checked)}
+                className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+              />
+              <span className="text-sm text-white">O-PEN detection device fitted</span>
+            </label>
+
+            {formData.openPENDeviceFitted && (
+              <>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <FieldLabel htmlFor="openPENManufacturer">Manufacturer</FieldLabel>
                     <Input
-                      id="dnoNotificationDate"
-                      type="date"
-                      value={formData.dnoNotificationDate || ''}
-                      onChange={(e) => onUpdate('dnoNotificationDate', e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      id="openPENManufacturer"
+                      placeholder="e.g., Matt:e"
+                      value={formData.openPENManufacturer || ''}
+                      onChange={(e) => onUpdate('openPENManufacturer', e.target.value)}
+                      className={inputClass}
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="dnoReference">Reference Number</Label>
+                  <div>
+                    <FieldLabel htmlFor="openPENModel">Model</FieldLabel>
                     <Input
-                      id="dnoReference"
-                      placeholder="DNO reference"
-                      value={formData.dnoReference || ''}
-                      onChange={(e) => onUpdate('dnoReference', e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      id="openPENModel"
+                      placeholder="e.g., OPD-01"
+                      value={formData.openPENModel || ''}
+                      onChange={(e) => onUpdate('openPENModel', e.target.value)}
+                      className={inputClass}
                     />
                   </div>
                 </div>
-              )}
+
+                <div>
+                  <FieldLabel htmlFor="openPENSerial">Serial Number</FieldLabel>
+                  <Input
+                    id="openPENSerial"
+                    placeholder="Serial number"
+                    value={formData.openPENSerial || ''}
+                    onChange={(e) => onUpdate('openPENSerial', e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+
+                <label
+                  htmlFor="openPENTestVerified"
+                  className={cn(
+                    'flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors touch-manipulation',
+                    formData.openPENTestVerified
+                      ? 'border-green-500/40 bg-green-500/[0.06]'
+                      : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]'
+                  )}
+                >
+                  <Checkbox
+                    id="openPENTestVerified"
+                    checked={formData.openPENTestVerified || false}
+                    onCheckedChange={(checked) => onUpdate('openPENTestVerified', checked)}
+                    className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
+                  />
+                  <span className="text-sm text-white">Test button operation verified</span>
+                </label>
+              </>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* ========== Distribution Board ========== */}
+      <section>
+        <SectionHeading title="Distribution Board" />
+
+        <div className="space-y-4">
+          <div>
+            <FieldLabel htmlFor="dbLocation">DB Location</FieldLabel>
+            <Input
+              id="dbLocation"
+              placeholder="e.g., Under stairs cupboard"
+              value={formData.dbLocation || ''}
+              onChange={(e) => onUpdate('dbLocation', e.target.value)}
+              className={inputClass}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel htmlFor="dbManufacturer">DB Manufacturer</FieldLabel>
+              <Input
+                id="dbManufacturer"
+                placeholder="e.g., Hager"
+                value={formData.dbManufacturer || ''}
+                onChange={(e) => onUpdate('dbManufacturer', e.target.value)}
+                className={inputClass}
+              />
             </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
+            <div>
+              <FieldLabel htmlFor="dbMainSwitchRating">Main Switch Rating</FieldLabel>
+              <Input
+                id="dbMainSwitchRating"
+                placeholder="e.g., 100A"
+                value={formData.dbMainSwitchRating || ''}
+                onChange={(e) => onUpdate('dbMainSwitchRating', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== Circuit Details ========== */}
+      <section>
+        <SectionHeading title="Circuit Details" />
+
+        <div className="space-y-4">
+          {/* Dedicated circuit checkbox */}
+          <label
+            htmlFor="dedicatedCircuit"
+            className={cn(
+              'flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors touch-manipulation',
+              formData.dedicatedCircuit !== false
+                ? 'border-green-500/40 bg-green-500/[0.06]'
+                : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]'
+            )}
+          >
+            <Checkbox
+              id="dedicatedCircuit"
+              checked={formData.dedicatedCircuit !== false}
+              onCheckedChange={(checked) => onUpdate('dedicatedCircuit', checked)}
+              className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
+            />
+            <span className="text-sm text-white">Dedicated circuit for EV charger</span>
+          </label>
+
+          {/* Cable Route helper */}
+          <div>
+            <FieldLabel>Cable Route</FieldLabel>
+            <div className="flex gap-2 flex-wrap">
+              {[
+                { label: 'Buried Underground', value: 'buried', suggestedCable: 'SWA' },
+                { label: 'External Wall', value: 'external', suggestedCable: 'SWA' },
+                { label: 'Internal', value: 'internal', suggestedCable: '6242Y' },
+                { label: 'In Duct/Trunking', value: 'duct', suggestedCable: 'singles-conduit' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
+                    onUpdate('cableRoute', opt.value);
+                    onUpdate('cableType', opt.suggestedCable);
+                  }}
+                  className={cn(
+                    'flex-1 min-w-[calc(50%-0.25rem)] h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                    (formData.cableRoute as string) === opt.value
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Circuit designation + cable type — 2-col */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel htmlFor="circuitDesignation">Circuit Designation</FieldLabel>
+              <Input
+                id="circuitDesignation"
+                placeholder="e.g., EV Charger"
+                value={formData.circuitDesignation || ''}
+                onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <FieldLabel htmlFor="cableType">Cable Type *</FieldLabel>
+              <MobileSelectPicker
+                label="Cable Type"
+                value={(formData.cableType as string) || ''}
+                onChange={(value) => onUpdate('cableType', value)}
+                options={[
+                  { value: 'n/a', label: 'N/A' },
+                  { value: '6242Y', label: '6242Y Twin & Earth' },
+                  { value: '6243Y', label: '6243Y (3C + E)' },
+                  { value: 'SWA', label: 'SWA Armoured Cable' },
+                  { value: 'H07RN-F', label: 'H07RN-F Flex' },
+                  { value: 'singles-conduit', label: 'Singles in Conduit' },
+                  { value: 'singles-trunking', label: 'Singles in Trunking' },
+                ]}
+                placeholder="Select"
+              />
+            </div>
+          </div>
+
+          {/* Cable size — toggle grid */}
+          <div>
+            <FieldLabel>Cable Size (mm2)</FieldLabel>
+            <div className="grid grid-cols-5 gap-1.5">
+              {['2.5', '4', '6', '10', '16', '25', '35', '50', '70', '95', '120'].map((size) => (
+                <button
+                  key={size}
+                  type="button"
+                  onClick={() => onUpdate('cableSize', parseFloat(size))}
+                  className={cn(
+                    'h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                    formData.cableSize?.toString() === size || (!formData.cableSize && size === '6')
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Cable length + installation method — 2-col */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel htmlFor="cableLength">Cable Length (m)</FieldLabel>
+              <Input
+                id="cableLength"
+                type="number"
+                inputMode="decimal"
+                step="0.01"
+                placeholder="metres"
+                value={formData.cableLength || ''}
+                onChange={(e) => onUpdate('cableLength', parseFloat(e.target.value) || 0)}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <FieldLabel htmlFor="installationMethod">Installation Method</FieldLabel>
+              <MobileSelectPicker
+                label="Installation Method"
+                value={(formData.installationMethod as string) || ''}
+                onChange={(value) => onUpdate('installationMethod', value)}
+                options={[
+                  { value: 'n/a', label: 'N/A' },
+                  { value: 'clipped-direct', label: 'Clipped Direct' },
+                  { value: 'trunking', label: 'In Trunking' },
+                  { value: 'conduit', label: 'In Conduit' },
+                  { value: 'buried', label: 'Buried Direct' },
+                  { value: 'ducting', label: 'In Ducting Underground' },
+                  { value: 'cable-tray', label: 'On Cable Tray' },
+                ]}
+                placeholder="Select"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== Circuit Protection ========== */}
+      <section>
+        <SectionHeading title="Circuit Protection" />
+
+        <div className="space-y-4">
+          {/* Protection device type — toggle buttons */}
+          <div>
+            <FieldLabel>Device Type *</FieldLabel>
+            <div className="flex gap-2 flex-wrap">
+              {[
+                { label: 'MCB', value: 'MCB' },
+                { label: 'RCBO', value: 'RCBO' },
+                { label: 'MCCB', value: 'MCCB' },
+                { label: 'BS 88 Fuse', value: 'BS88' },
+                { label: 'BS 3036 Fuse', value: 'BS3036' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
+                    onUpdate('protectionDeviceType', opt.value);
+                    // Clear curve for fuses (not applicable)
+                    if (opt.value === 'BS88' || opt.value === 'BS3036') {
+                      onUpdate('protectionDeviceCurve', '');
+                    }
+                  }}
+                  className={cn(
+                    'h-10 px-3 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                    (formData.protectionDeviceType as string) === opt.value
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Rating — dynamic based on device type */}
+          <div>
+            <FieldLabel>Rating (A)</FieldLabel>
+            <div className="grid grid-cols-5 gap-1.5">
+              {(formData.protectionDeviceType === 'BS88'
+                ? ['16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200']
+                : formData.protectionDeviceType === 'BS3036'
+                  ? ['5', '15', '20', '30', '45', '60']
+                  : formData.protectionDeviceType === 'MCCB'
+                    ? ['16', '20', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250']
+                    : ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100']
+              ).map((rating) => (
+                <button
+                  key={rating}
+                  type="button"
+                  onClick={() => onUpdate('protectionDeviceRating', parseInt(rating))}
+                  className={cn(
+                    'h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                    formData.protectionDeviceRating?.toString() === rating
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {rating}A
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Curve — only for MCB/RCBO/MCCB (not fuses) */}
+          {formData.protectionDeviceType !== 'BS88' && formData.protectionDeviceType !== 'BS3036' && (
+            <div>
+              <FieldLabel>Curve</FieldLabel>
+              <ToggleRow
+                options={[
+                  { label: 'Type B', value: 'B' },
+                  { label: 'Type C', value: 'C' },
+                  { label: 'Type D', value: 'D' },
+                ]}
+                value={(formData.protectionDeviceCurve as string) || 'B'}
+                onChange={(v) => onUpdate('protectionDeviceCurve', v)}
+              />
+            </div>
+          )}
+
+          {/* Max Zs Auto-lookup Display */}
+          {maxZsLookup && (
+            <div className="flex items-center gap-3 rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.04] px-4 py-3">
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <span className="text-2xl font-semibold text-elec-yellow tabular-nums">
+                  {maxZsLookup.maxZs}Ohm
+                </span>
+                <div className="min-w-0">
+                  <p className="text-xs font-medium text-white">Max Zs</p>
+                  <p className="text-[10px] text-white/60">{maxZsLookup.source}</p>
+                </div>
+              </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full border border-elec-yellow/30 text-elec-yellow shrink-0">
+                Auto
+              </span>
+            </div>
+          )}
+
+          {/* RCD Protection sub-heading */}
+          <div className="border-b border-white/[0.06] pb-1 mb-3 mt-2">
+            <div className="h-[1px] w-full rounded-full bg-gradient-to-r from-white/10 to-transparent mb-2" />
+            <h3 className="text-[11px] font-medium text-white uppercase tracking-wider">
+              RCD Protection
+            </h3>
+          </div>
+
+          {/* RCD type + rating — 2-col */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel htmlFor="rcdType">RCD Type</FieldLabel>
+              <MobileSelectPicker
+                label="RCD Type"
+                value={(formData.rcdType as string) || ''}
+                onChange={(value) => onUpdate('rcdType', value)}
+                options={[
+                  { value: 'Type A', label: 'Type A' },
+                  { value: 'Type B', label: 'Type B' },
+                  { value: 'Type A + 6mA DC', label: 'Type A + 6mA DC' },
+                ]}
+                placeholder="Select"
+              />
+            </div>
+            <div>
+              <FieldLabel>RCD Rating (mA)</FieldLabel>
+              <ToggleRow
+                options={[
+                  { label: '30', value: '30' },
+                  { label: '100', value: '100' },
+                  { label: '300', value: '300' },
+                ]}
+                value={formData.rcdRating?.toString() || '30'}
+                onChange={(v) => onUpdate('rcdRating', parseInt(v))}
+              />
+            </div>
+          </div>
+
+          {/* Integral RCD toggle */}
+          <label
+            htmlFor="rcdIntegral"
+            className={cn(
+              'flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors touch-manipulation',
+              formData.rcdIntegral
+                ? 'border-green-500/40 bg-green-500/[0.06]'
+                : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]'
+            )}
+          >
+            <Checkbox
+              id="rcdIntegral"
+              checked={formData.rcdIntegral || false}
+              onCheckedChange={(checked) => onUpdate('rcdIntegral', checked)}
+              className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
+            />
+            <span className="text-sm text-white">Integral RCD in charger</span>
+          </label>
+        </div>
+      </section>
+
+      {/* ========== DNO Notification ========== */}
+      <section>
+        <SectionHeading title="DNO Notification" />
+
+        <div className="space-y-4">
+          {/* DNO requirement info */}
+          <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
+            <p className="text-xs font-bold text-white">{dnoRequirement.message}</p>
+            <p className="text-[11px] text-white mt-0.5">{dnoRequirement.details}</p>
+          </div>
+
+          {/* G98 / G99 toggles */}
+          <div>
+            <FieldLabel>Notification Type</FieldLabel>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => onUpdate('g98Notification', !formData.g98Notification)}
+                className={cn(
+                  'h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                  formData.g98Notification
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                G98 Notification
+              </button>
+              <button
+                type="button"
+                onClick={() => onUpdate('g99Application', !formData.g99Application)}
+                className={cn(
+                  'h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
+                  formData.g99Application
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                G99 Application
+              </button>
+            </div>
+          </div>
+
+          {/* DNO notified */}
+          <label htmlFor="dnoNotified" className="flex items-center gap-3 cursor-pointer touch-manipulation">
+            <Checkbox
+              id="dnoNotified"
+              checked={formData.dnoNotified || false}
+              onCheckedChange={(checked) => onUpdate('dnoNotified', checked)}
+              className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+            />
+            <span className="text-xs text-white">DNO has been notified</span>
+          </label>
+
+          {formData.dnoNotified && (
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <FieldLabel htmlFor="dnoNotificationDate">Notification Date</FieldLabel>
+                <Input
+                  id="dnoNotificationDate"
+                  type="date"
+                  value={formData.dnoNotificationDate || ''}
+                  onChange={(e) => onUpdate('dnoNotificationDate', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <FieldLabel htmlFor="dnoReference">Reference Number</FieldLabel>
+                <Input
+                  id="dnoReference"
+                  placeholder="DNO reference"
+                  value={formData.dnoReference || ''}
+                  onChange={(e) => onUpdate('dnoReference', e.target.value)}
+                  className={inputClass}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* G98 deadline info */}
+          {formData.dnoNotified && g98Deadline && (
+            <p className="text-[11px] text-white/60 px-1">
+              G98 deadline: {g98Deadline}
+            </p>
+          )}
+        </div>
+      </section>
     </div>
   );
 };

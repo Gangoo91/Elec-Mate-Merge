@@ -72,7 +72,26 @@ const pmeDetailsSchema = z.object({
   earth_electrode_resistance: z.string().default(''),
 }).default({});
 
+const openPenSchema = z.object({
+  device_fitted: z.boolean().default(false),
+  device_fitted_display: z.string().default(''),
+  manufacturer: z.string().default(''),
+  model: z.string().default(''),
+  serial: z.string().default(''),
+  test_verified: z.boolean().default(false),
+  test_verified_display: z.string().default(''),
+}).default({});
+
+const distributionBoardSchema = z.object({
+  location: z.string().default(''),
+  manufacturer: z.string().default(''),
+  main_switch_rating: z.string().default(''),
+}).default({});
+
 const circuitDetailsSchema = z.object({
+  dedicated_circuit: z.boolean().default(true),
+  dedicated_circuit_display: z.string().default(''),
+  cable_route: z.string().default(''),
   designation: z.string().default(''),
   cable_type: z.string().default(''),
   cable_size_mm2: z.string().default(''),
@@ -116,6 +135,33 @@ const testResultsSchema = z.object({
   continuity_pe: z.string().default(''),
   rcd_test_button: z.string().default(''),
   rcd_test_button_display: z.string().default(''),
+  ambient_temperature: z.string().default(''),
+}).default({});
+
+const testEquipmentSchema = z.object({
+  model: z.string().default(''),
+  serial: z.string().default(''),
+  calibration_date: z.string().default(''),
+}).default({});
+
+const verificationSchema = z.object({
+  charger_power_up: z.boolean().default(false),
+  charger_power_up_display: z.string().default(''),
+  led_indicators: z.boolean().default(false),
+  led_indicators_display: z.string().default(''),
+  cable_secure: z.boolean().default(false),
+  cable_secure_display: z.string().default(''),
+  earth_continuity: z.boolean().default(false),
+  earth_continuity_display: z.string().default(''),
+}).default({});
+
+const buildingRegsNotificationSchema = z.object({
+  required: z.boolean().default(false),
+  required_display: z.string().default(''),
+  via_scheme: z.boolean().default(false),
+  via_scheme_display: z.string().default(''),
+  submitted: z.boolean().default(false),
+  submitted_display: z.string().default(''),
 }).default({});
 
 const dnoNotificationSchema = z.object({
@@ -198,15 +244,20 @@ export const evChargingPayloadSchema = z.object({
   charger_details: chargerDetailsSchema,
   supply_details: supplyDetailsSchema,
   pme_details: pmeDetailsSchema,
+  open_pen: openPenSchema,
+  distribution_board: distributionBoardSchema,
   circuit_details: circuitDetailsSchema,
   protection_details: protectionDetailsSchema,
   test_results: testResultsSchema,
+  test_equipment: testEquipmentSchema,
+  verification: verificationSchema,
   dno_notification: dnoNotificationSchema,
   ozev_details: ozevDetailsSchema,
   smart_features: smartFeaturesSchema,
   handover: handoverSchema,
   installer: installerSchema,
   compliance: complianceSchema,
+  building_regs_notification: buildingRegsNotificationSchema,
   company_details: companyDetailsSchema,
 
   // Root-level text fields

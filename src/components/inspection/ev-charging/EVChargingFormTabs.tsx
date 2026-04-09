@@ -6,9 +6,6 @@ import EVChargingSupplyDetails from './EVChargingSupplyDetails';
 import EVChargingTestSchedule from './EVChargingTestSchedule';
 import EVChargingDeclarations from './EVChargingDeclarations';
 import EVChargingTabNavigation from './EVChargingTabNavigation';
-import { Car, Zap, TestTube, FileText } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
 
 interface EVChargingFormTabsProps {
   currentTab: EVChargingTabValue;
@@ -58,28 +55,14 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
   canGenerateCertificate = true,
   reportId,
 }) => {
-  const isMobile = useIsMobile();
-
-  // Mobile: no max-width, no horizontal spacing - edge-to-edge
-  // Desktop: constrained width inside a single premium card
-  // pb-24 on mobile ensures content isn't hidden behind sticky nav
-  const contentWrapperClass = cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6');
-
   const smartTabs: SmartTab[] = [
     {
       value: 'installation',
-      label: 'Installation',
+      label: 'Install',
       shortLabel: 'Install',
-      icon: <Car className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
-          {!isMobile ? (
-            <div className="eicr-section-card overflow-hidden">
-              <EVChargingInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} />
-            </div>
-          ) : (
-            <EVChargingInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} />
-          )}
+        <div className="pt-2 pb-48 sm:px-4">
+          <EVChargingInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} />
           <EVChargingTabNavigation {...tabNavigationProps} />
         </div>
       ),
@@ -88,52 +71,31 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       value: 'supply',
       label: 'Supply',
       shortLabel: 'Supply',
-      icon: <Zap className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
-          {!isMobile ? (
-            <div className="eicr-section-card overflow-hidden">
-              <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />
-            </div>
-          ) : (
-            <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />
-          )}
+        <div className="pt-2 pb-48 sm:px-4">
+          <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />
           <EVChargingTabNavigation {...tabNavigationProps} />
         </div>
       ),
     },
     {
       value: 'testing',
-      label: 'Testing',
+      label: 'Test',
       shortLabel: 'Test',
-      icon: <TestTube className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
-          {!isMobile ? (
-            <div className="eicr-section-card overflow-hidden">
-              <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />
-            </div>
-          ) : (
-            <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />
-          )}
+        <div className="pt-2 pb-48 sm:px-4">
+          <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />
           <EVChargingTabNavigation {...tabNavigationProps} />
         </div>
       ),
     },
     {
       value: 'declarations',
-      label: 'Declarations',
+      label: 'Declare',
       shortLabel: 'Sign',
-      icon: <FileText className="h-4 w-4" />,
       content: (
-        <div className={contentWrapperClass}>
-          {!isMobile ? (
-            <div className="eicr-section-card overflow-hidden">
-              <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />
-            </div>
-          ) : (
-            <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />
-          )}
+        <div className="pt-2 pb-48 sm:px-4">
+          <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />
           <EVChargingTabNavigation
             {...tabNavigationProps}
             onGenerateCertificate={onGenerateCertificate}
@@ -148,15 +110,11 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
   ];
 
   return (
-    <div className="space-y-2 sm:space-y-4">
-      <SmartTabs
-        tabs={smartTabs}
-        value={currentTab}
-        onValueChange={onTabChange}
-        className="space-y-4"
-        breakpoint={3}
-      />
-    </div>
+    <SmartTabs
+      tabs={smartTabs}
+      value={currentTab}
+      onValueChange={onTabChange}
+    />
   );
 };
 

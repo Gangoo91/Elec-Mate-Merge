@@ -3,29 +3,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  ChevronDown,
-  User,
-  Car,
-  Zap,
-  Building2,
-  Sparkles,
-  ArrowRightLeft,
-  X,
-  CheckCircle2,
-} from 'lucide-react';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import ChargerAutocomplete from './ChargerAutocomplete';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
@@ -34,7 +15,7 @@ import {
   calculateCurrentFromPower,
   calculatePowerFromCurrent,
 } from '@/data/evChargerDatabase';
-import { getVehicleMakes, getVehicleModels } from '@/data/evVehicleDatabase';
+import { getVehicleMakes, getVehicleModels, findVehicle } from '@/data/evVehicleDatabase';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
 
 interface EVChargingInstallationDetailsProps {
@@ -44,30 +25,52 @@ interface EVChargingInstallationDetailsProps {
   onCustomerIdChange?: (id: string | undefined) => void;
 }
 
+const SectionHeader = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const ToggleButton = ({
+  label,
+  isActive,
+  onClick,
+}: {
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={cn(
+      'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex-1',
+      isActive
+        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+    )}
+  >
+    {label}
+  </button>
+);
+
+const inputClass = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const labelClass = 'text-white text-xs mb-1.5 block';
+const textareaClass = 'text-base touch-manipulation min-h-[80px] bg-white/[0.06] border-white/[0.08]';
+
 const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps> = ({
   formData,
   onUpdate,
   customerId,
   onCustomerIdChange,
 }) => {
-  const isMobile = useIsMobile();
   const { applyChargerDefaults, powerToCurrent, currentToPower } = useEVChargingSmartForm();
 
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
-    client: true,
-    vehicle: false,
-    installation: true,
-    charger: true,
-  });
-
   // Track if power/current was auto-filled from charger selection
   const [chargerAutoFilled, setChargerAutoFilled] = useState(false);
-
-  const toggleSection = (section: string) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
 
   // Handle customer selection from ClientSelector
   const handleCustomerSelect = useCallback(
@@ -148,583 +151,400 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
   };
 
   return (
-    <div className={cn(isMobile ? 'space-y-0' : 'space-y-0 divide-y divide-white/[0.06]')}>
+    <div className="space-y-6 px-4 py-4">
       {/* Client Details */}
       <div>
-        <Collapsible open={openSections.client} onOpenChange={() => toggleSection('client')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
-                  <User className="h-5 w-5 text-blue-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Client Details</h3>
-                  <span className="text-xs text-white">Name, contact & address</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.client && 'rotate-180'
-                  )}
-                />
+        <SectionHeader title="Client Details" />
+        <div className="space-y-4">
+          {/* Client Selection */}
+          {selectedCustomer ? (
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+              <div className="flex-1 min-w-0">
+                <p className="font-medium text-white">{selectedCustomer.name}</p>
+                <p className="text-sm text-white truncate">
+                  {[selectedCustomer.email, selectedCustomer.phone].filter(Boolean).join(' · ')}
+                </p>
               </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-500/15 flex items-center justify-center">
-                    <User className="h-4 w-4 text-blue-400" />
-                  </div>
-                  <span className="text-white font-semibold">Client Details</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.client && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {/* Client Selection */}
-              {selectedCustomer ? (
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-white">{selectedCustomer.name}</p>
-                    <p className="text-sm text-white truncate">
-                      {[selectedCustomer.email, selectedCustomer.phone].filter(Boolean).join(' · ')}
-                    </p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleCustomerSelect(null)}
-                    className="h-9 w-9 touch-manipulation shrink-0"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
-                </div>
-              ) : (
-                <ClientSelector
-                  onSelectCustomer={handleCustomerSelect}
-                  selectedCustomerId={customerId}
-                />
-              )}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="clientName">Client Name *</Label>
-                  <Input
-                    id="clientName"
-                    placeholder="Enter client name"
-                    value={formData.clientName || ''}
-                    onChange={(e) => onUpdate('clientName', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="clientTelephone">Telephone</Label>
-                  <Input
-                    id="clientTelephone"
-                    type="tel"
-                    placeholder="Contact number"
-                    value={formData.clientTelephone || ''}
-                    onChange={(e) => onUpdate('clientTelephone', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="clientAddress">Client Address</Label>
-                <Textarea
-                  id="clientAddress"
-                  placeholder="Full address"
-                  value={formData.clientAddress || ''}
-                  onChange={(e) => onUpdate('clientAddress', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="clientEmail">Email</Label>
-                <Input
-                  id="clientEmail"
-                  type="email"
-                  placeholder="Email address"
-                  value={formData.clientEmail || ''}
-                  onChange={(e) => onUpdate('clientEmail', e.target.value)}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                />
-              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => handleCustomerSelect(null)}
+                className="h-9 w-9 touch-manipulation shrink-0"
+              >
+                <X className="h-4 w-4" />
+              </Button>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+          ) : (
+            <ClientSelector
+              onSelectCustomer={handleCustomerSelect}
+              selectedCustomerId={customerId}
+            />
+          )}
+
+          <div>
+            <Label htmlFor="clientName" className={labelClass}>Client Name *</Label>
+            <Input
+              id="clientName"
+              placeholder="Enter client name"
+              value={formData.clientName || ''}
+              onChange={(e) => onUpdate('clientName', e.target.value)}
+              className={inputClass}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="clientTelephone" className={labelClass}>Telephone</Label>
+              <Input
+                id="clientTelephone"
+                type="tel"
+                placeholder="Contact number"
+                value={formData.clientTelephone || ''}
+                onChange={(e) => onUpdate('clientTelephone', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <Label htmlFor="clientEmail" className={labelClass}>Email</Label>
+              <Input
+                id="clientEmail"
+                type="email"
+                placeholder="Email address"
+                value={formData.clientEmail || ''}
+                onChange={(e) => onUpdate('clientEmail', e.target.value)}
+                className={inputClass}
+              />
+            </div>
+          </div>
+          <div>
+            <Label htmlFor="clientAddress" className={labelClass}>Address</Label>
+            <Input
+              id="clientAddress"
+              placeholder="Full address"
+              value={formData.clientAddress || ''}
+              onChange={(e) => onUpdate('clientAddress', e.target.value)}
+              className={inputClass}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Vehicle Details (Optional) */}
       <div>
-        <Collapsible open={openSections.vehicle} onOpenChange={() => toggleSection('vehicle')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center shrink-0">
-                  <Car className="h-5 w-5 text-green-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Vehicle Details</h3>
-                  <span className="text-xs text-white">Optional - make, model, reg</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.vehicle && 'rotate-180'
-                  )}
+        <SectionHeader title="Vehicle Details (Optional)" />
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="vehicleMake" className={labelClass}>Vehicle Make</Label>
+              <MobileSelectPicker
+                value={(formData.vehicleMake as string) || ''}
+                onValueChange={(value) => {
+                  onUpdate('vehicleMake', value);
+                  if (value !== formData.vehicleMake) {
+                    onUpdate('vehicleModel', '');
+                  }
+                }}
+                options={[
+                  ...getVehicleMakes().map((make) => ({ value: make, label: make })),
+                  { value: '__other', label: 'Other (type below)' },
+                ]}
+                placeholder="Select make"
+                title="Vehicle Make"
+              />
+              {formData.vehicleMake === '__other' && (
+                <Input
+                  placeholder="Enter make"
+                  value={formData.vehicleMakeCustom || ''}
+                  onChange={(e) => {
+                    onUpdate('vehicleMakeCustom', e.target.value);
+                    onUpdate('vehicleMake', e.target.value || '__other');
+                  }}
+                  className={cn(inputClass, 'mt-2')}
                 />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-green-500/15 flex items-center justify-center">
-                    <Car className="h-4 w-4 text-green-400" />
-                  </div>
-                  <span className="text-white font-semibold">Vehicle Details (Optional)</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.vehicle && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="vehicleMake">Vehicle Make</Label>
-                  <Select
-                    value={formData.vehicleMake || ''}
-                    onValueChange={(value) => {
-                      onUpdate('vehicleMake', value);
-                      // Clear model when make changes (model list depends on make)
-                      if (value !== formData.vehicleMake) {
-                        onUpdate('vehicleModel', '');
-                      }
-                    }}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select make" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-h-60 bg-background border-border text-foreground">
-                      {getVehicleMakes().map((make) => (
-                        <SelectItem key={make} value={make}>
-                          {make}
-                        </SelectItem>
-                      ))}
-                      <SelectItem value="__other">Other (type below)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {formData.vehicleMake === '__other' && (
-                    <Input
-                      placeholder="Enter make"
-                      value={formData.vehicleMakeCustom || ''}
-                      onChange={(e) => {
-                        onUpdate('vehicleMakeCustom', e.target.value);
-                        onUpdate('vehicleMake', e.target.value || '__other');
-                      }}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow mt-2"
-                    />
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="vehicleModel">Vehicle Model</Label>
-                  {formData.vehicleMake &&
-                  formData.vehicleMake !== '__other' &&
-                  getVehicleModels(formData.vehicleMake).length > 0 ? (
-                    <Select
-                      value={formData.vehicleModel || ''}
-                      onValueChange={(value) => {
-                        if (value === '__other') {
-                          onUpdate('vehicleModel', '');
-                        } else {
-                          onUpdate('vehicleModel', value);
-                        }
-                      }}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                        <SelectValue placeholder="Select model" />
-                      </SelectTrigger>
-                      <SelectContent className="z-[100] max-h-60 bg-background border-border text-foreground">
-                        {getVehicleModels(formData.vehicleMake).map((model) => (
-                          <SelectItem key={model} value={model}>
-                            {model}
-                          </SelectItem>
-                        ))}
-                        <SelectItem value="__other">Other (type below)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  ) : (
-                    <Input
-                      id="vehicleModel"
-                      placeholder="e.g., Model 3, iX3"
-                      value={formData.vehicleModel || ''}
-                      onChange={(e) => onUpdate('vehicleModel', e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                    />
-                  )}
-                  {formData.vehicleMake &&
-                    formData.vehicleMake !== '__other' &&
-                    formData.vehicleModel === '' &&
-                    getVehicleModels(formData.vehicleMake).length > 0 && (
-                      <Input
-                        placeholder="Or type model"
-                        onChange={(e) => onUpdate('vehicleModel', e.target.value)}
-                        className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow mt-2"
-                      />
-                    )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="vehicleRegistration">Registration</Label>
-                  <Input
-                    id="vehicleRegistration"
-                    placeholder="e.g., AB12 CDE"
-                    value={formData.vehicleRegistration || ''}
-                    onChange={(e) => onUpdate('vehicleRegistration', e.target.value)}
-                    className="h-11 text-base touch-manipulation uppercase border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-              </div>
+              )}
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+            <div>
+              <Label htmlFor="vehicleModel" className={labelClass}>Vehicle Model</Label>
+              {formData.vehicleMake &&
+              formData.vehicleMake !== '__other' &&
+              getVehicleModels(formData.vehicleMake as string).length > 0 ? (
+                <MobileSelectPicker
+                  value={(formData.vehicleModel as string) || ''}
+                  onValueChange={(value) => onUpdate('vehicleModel', value)}
+                  options={getVehicleModels(formData.vehicleMake as string).map((model) => ({ value: model, label: model }))}
+                  placeholder="Select model"
+                  title="Vehicle Model"
+                />
+              ) : (
+                <Input
+                  id="vehicleModel"
+                  placeholder="e.g., Model 3, iX3"
+                  value={(formData.vehicleModel as string) || ''}
+                  onChange={(e) => onUpdate('vehicleModel', e.target.value)}
+                  className={inputClass}
+                />
+              )}
+            </div>
+          </div>
+          <div>
+            <Label htmlFor="vehicleRegistration" className={labelClass}>Registration</Label>
+            <Input
+              id="vehicleRegistration"
+              placeholder="e.g., AB12 CDE"
+              value={formData.vehicleRegistration || ''}
+              onChange={(e) => onUpdate('vehicleRegistration', e.target.value)}
+              className={cn(inputClass, 'uppercase')}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Installation Details */}
       <div>
-        <Collapsible
-          open={openSections.installation}
-          onOpenChange={() => toggleSection('installation')}
-        >
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
-                  <Building2 className="h-5 w-5 text-purple-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Installation Details</h3>
-                  <span className="text-xs text-white">Address & type</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.installation && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-purple-500/15 flex items-center justify-center">
-                    <Building2 className="h-4 w-4 text-purple-400" />
-                  </div>
-                  <span className="text-white font-semibold">Installation Details</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.installation && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {/* Same as client address checkbox */}
-              <div className="flex items-center gap-3 p-3 bg-black/40 rounded-lg">
-                <Checkbox
-                  id="sameAsClientAddress"
-                  checked={formData.sameAsClientAddress || false}
-                  onCheckedChange={handleSameAddressChange}
-                  className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label htmlFor="sameAsClientAddress" className="cursor-pointer text-sm">
-                  Same as client address
-                </Label>
-              </div>
+        <SectionHeader title="Installation Details" />
+        <div className="space-y-4">
+          {/* Same as client address */}
+          <label className="flex items-center gap-3 cursor-pointer touch-manipulation">
+            <Checkbox
+              id="sameAsClientAddress"
+              checked={formData.sameAsClientAddress || false}
+              onCheckedChange={handleSameAddressChange}
+              className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+            />
+            <span className="text-white text-xs">Same as client address</span>
+          </label>
 
-              <div className="space-y-2">
-                <Label htmlFor="installationAddress">Installation Address *</Label>
-                <Textarea
-                  id="installationAddress"
-                  placeholder="Full address where charger is installed"
-                  value={formData.installationAddress || ''}
-                  onChange={(e) => onUpdate('installationAddress', e.target.value)}
-                  disabled={formData.sameAsClientAddress}
-                  className={cn(
-                    'text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
-                    formData.sameAsClientAddress && 'bg-muted/50 cursor-not-allowed'
-                  )}
+          <div>
+            <Label htmlFor="installationAddress" className={labelClass}>Installation Address *</Label>
+            <Input
+              id="installationAddress"
+              placeholder="Full address where charger is installed"
+              value={formData.installationAddress || ''}
+              onChange={(e) => onUpdate('installationAddress', e.target.value)}
+              disabled={formData.sameAsClientAddress}
+              className={cn(inputClass, formData.sameAsClientAddress && 'opacity-50 cursor-not-allowed')}
+            />
+          </div>
+
+          <div>
+            <Label className={labelClass}>Installation Type</Label>
+            <div className="flex gap-2">
+              {[
+                { value: 'domestic', label: 'Domestic' },
+                { value: 'commercial', label: 'Commercial' },
+                { value: 'public', label: 'Public' },
+              ].map((opt) => (
+                <ToggleButton
+                  key={opt.value}
+                  label={opt.label}
+                  isActive={(formData.installationType || 'domestic') === opt.value}
+                  onClick={() => onUpdate('installationType', opt.value)}
                 />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="installationType">Installation Type</Label>
-                  <Select
-                    value={formData.installationType || 'domestic'}
-                    onValueChange={(value) => onUpdate('installationType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="domestic">Domestic</SelectItem>
-                      <SelectItem value="commercial">Commercial</SelectItem>
-                      <SelectItem value="public">Public</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="installationDate">Installation Date *</Label>
-                  <Input
-                    id="installationDate"
-                    type="date"
-                    value={formData.installationDate || ''}
-                    onChange={(e) => onUpdate('installationDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+          </div>
+
+          <div>
+            <Label htmlFor="installationDate" className={labelClass}>Installation Date *</Label>
+            <Input
+              id="installationDate"
+              type="date"
+              value={formData.installationDate || ''}
+              onChange={(e) => onUpdate('installationDate', e.target.value)}
+              className={inputClass}
+            />
+          </div>
+        </div>
       </div>
 
       {/* Charger Details */}
       <div>
-        <Collapsible open={openSections.charger} onOpenChange={() => toggleSection('charger')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
-                  <Zap className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Charger Details</h3>
-                  <span className="text-xs text-white">Make, model & specs</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.charger && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
-                    <Zap className="h-4 w-4 text-elec-yellow" />
-                  </div>
-                  <span className="text-white font-semibold">Charger Details</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.charger && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {/* Charger Selection with Auto-fill */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label className="text-white">Charger Make & Model *</Label>
-                  {chargerAutoFilled ? (
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                      <Sparkles className="h-3 w-3 mr-1" />
-                      Auto-filled
-                    </Badge>
-                  ) : (
-                    <span className="text-xs text-elec-yellow flex items-center gap-1">
-                      <Sparkles className="h-3 w-3" />
-                      Auto-fills specs
-                    </span>
-                  )}
-                </div>
-                <ChargerAutocomplete
-                  value={{ make: formData.chargerMake || '', model: formData.chargerModel || '' }}
-                  onChange={handleChargerSelect}
-                />
-              </div>
+        <SectionHeader title="Charger Details" />
+        <div className="space-y-4">
+          {/* Charger Search */}
+          <div>
+            <Label className={labelClass}>Search Charger Database</Label>
+            <ChargerAutocomplete
+              value={{ make: formData.chargerMake || '', model: formData.chargerModel || '' }}
+              onChange={handleChargerSelect}
+            />
+          </div>
 
-              {/* Manual entry fallback for make/model */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="chargerMake">Make</Label>
-                  <Input
-                    id="chargerMake"
-                    placeholder="e.g., Myenergi"
-                    value={formData.chargerMake || ''}
-                    onChange={(e) => {
-                      onUpdate('chargerMake', e.target.value);
-                      setChargerAutoFilled(false);
-                    }}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="chargerModel">Model</Label>
-                  <Input
-                    id="chargerModel"
-                    placeholder="e.g., Zappi V2.1"
-                    value={formData.chargerModel || ''}
-                    onChange={(e) => {
-                      onUpdate('chargerModel', e.target.value);
-                      setChargerAutoFilled(false);
-                    }}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="chargerSerial">Serial Number</Label>
-                  <Input
-                    id="chargerSerial"
-                    placeholder="Serial number"
-                    value={formData.chargerSerial || ''}
-                    onChange={(e) => onUpdate('chargerSerial', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
-                </div>
-              </div>
+          {/* Manual entry fallback for make/model */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="chargerMake" className={labelClass}>Make</Label>
+              <Input
+                id="chargerMake"
+                placeholder="e.g., Myenergi"
+                value={formData.chargerMake || ''}
+                onChange={(e) => {
+                  onUpdate('chargerMake', e.target.value);
+                  setChargerAutoFilled(false);
+                }}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <Label htmlFor="chargerModel" className={labelClass}>Model</Label>
+              <Input
+                id="chargerModel"
+                placeholder="e.g., Zappi V2.1"
+                value={formData.chargerModel || ''}
+                onChange={(e) => {
+                  onUpdate('chargerModel', e.target.value);
+                  setChargerAutoFilled(false);
+                }}
+                className={inputClass}
+              />
+            </div>
+          </div>
+          <div>
+            <Label htmlFor="chargerSerial" className={labelClass}>Serial Number</Label>
+            <Input
+              id="chargerSerial"
+              placeholder="Serial number"
+              value={formData.chargerSerial || ''}
+              onChange={(e) => onUpdate('chargerSerial', e.target.value)}
+              className={inputClass}
+            />
+          </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="chargerType">Charging Mode</Label>
-                  <Select
-                    value={formData.chargerType || ''}
-                    onValueChange={(value) => onUpdate('chargerType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="Mode2">Mode 2 (Slow)</SelectItem>
-                      <SelectItem value="Mode3">Mode 3 (Fast)</SelectItem>
-                      <SelectItem value="Mode4">Mode 4 (Rapid DC)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="chargerConnection">Connection</Label>
-                  <Select
-                    value={formData.chargerConnection || ''}
-                    onValueChange={(value) => onUpdate('chargerConnection', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="tethered">Tethered</SelectItem>
-                      <SelectItem value="socketed">Socketed</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phases">Phases</Label>
-                  <Select
-                    value={formData.phases?.toString() || '1'}
-                    onValueChange={(value) => handlePhasesChange(parseInt(value))}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="1">Single Phase</SelectItem>
-                      <SelectItem value="3">Three Phase</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="socketType">Socket Type</Label>
-                  <Select
-                    value={formData.socketType || 'Type 2'}
-                    onValueChange={(value) => onUpdate('socketType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
-                      <SelectItem value="n/a">N/A</SelectItem>
-                      <SelectItem value="Type 1">Type 1 (J1772)</SelectItem>
-                      <SelectItem value="Type 2">Type 2 (Mennekes)</SelectItem>
-                      <SelectItem value="CCS">CCS (Combo)</SelectItem>
-                      <SelectItem value="CHAdeMO">CHAdeMO</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+          {/* Charging Mode - toggle buttons */}
+          <div>
+            <Label className={labelClass}>Charging Mode</Label>
+            <div className="flex gap-2">
+              {[
+                { value: 'Mode2', label: 'Mode 2' },
+                { value: 'Mode3', label: 'Mode 3' },
+                { value: 'Mode4', label: 'Mode 4' },
+              ].map((opt) => (
+                <ToggleButton
+                  key={opt.value}
+                  label={opt.label}
+                  isActive={formData.chargerType === opt.value}
+                  onClick={() => onUpdate('chargerType', opt.value)}
+                />
+              ))}
+            </div>
+          </div>
 
-              {/* Power and Current with bidirectional sync */}
-              <div className="bg-black/40 rounded-xl p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <ArrowRightLeft className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm font-medium text-elec-yellow">Power & Current</span>
-                  <Badge
-                    variant="outline"
-                    className="text-[10px] px-1.5 py-0 border-elec-yellow/30 text-elec-yellow"
-                  >
-                    Auto-synced
-                  </Badge>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="powerRating">Power (kW)</Label>
-                    <Input
-                      id="powerRating"
-                      type="number"
-                      step="0.1"
-                      value={formData.powerRating ?? ''}
-                      onChange={(e) =>
-                        handlePowerChange(
-                          e.target.value === '' ? 0 : parseFloat(e.target.value) || 0
-                        )
-                      }
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                    />
-                    <p className="text-[10px] text-white">
-                      {formData.phases === 3 ? 'P = √3 × 400V × I' : 'P = 230V × I'}
-                    </p>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="ratedCurrent">Current (A)</Label>
-                    <Input
-                      id="ratedCurrent"
-                      type="number"
-                      value={formData.ratedCurrent ?? ''}
-                      onChange={(e) =>
-                        handleCurrentChange(
-                          e.target.value === '' ? 0 : parseInt(e.target.value) || 0
-                        )
-                      }
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                    />
-                    <p className="text-[10px] text-white">
-                      {formData.phases === 3 ? 'I = P / (√3 × 400V)' : 'I = P / 230V'}
-                    </p>
-                  </div>
-                </div>
+          {/* Connection - toggle buttons */}
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label className={labelClass}>Connection</Label>
+              <div className="flex gap-2">
+                {[
+                  { value: 'tethered', label: 'Tethered' },
+                  { value: 'socketed', label: 'Socketed' },
+                ].map((opt) => (
+                  <ToggleButton
+                    key={opt.value}
+                    label={opt.label}
+                    isActive={formData.chargerConnection === opt.value}
+                    onClick={() => onUpdate('chargerConnection', opt.value)}
+                  />
+                ))}
               </div>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+            <div>
+              <Label className={labelClass}>Phases</Label>
+              <div className="flex gap-2">
+                {[
+                  { value: 1, label: 'Single' },
+                  { value: 3, label: 'Three' },
+                ].map((opt) => (
+                  <ToggleButton
+                    key={opt.value}
+                    label={opt.label}
+                    isActive={(formData.phases || 1) === opt.value}
+                    onClick={() => handlePhasesChange(opt.value)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Socket Type */}
+          <div>
+            <Label className={labelClass}>Socket Type</Label>
+            <div className="flex gap-2 flex-wrap">
+              {[
+                { value: 'n/a', label: 'N/A' },
+                { value: 'Type 1', label: 'Type 1' },
+                { value: 'Type 2', label: 'Type 2' },
+                { value: 'CCS', label: 'CCS' },
+                { value: 'CHAdeMO', label: 'CHAdeMO' },
+              ].map((opt) => (
+                <ToggleButton
+                  key={opt.value}
+                  label={opt.label}
+                  isActive={(formData.socketType || 'Type 2') === opt.value}
+                  onClick={() => onUpdate('socketType', opt.value)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Connector compatibility check */}
+          {formData.vehicleMake && formData.vehicleMake !== '__other' && formData.socketType && formData.socketType !== 'n/a' && (() => {
+            const vehicle = findVehicle(formData.vehicleMake as string, formData.vehicleModel as string);
+            if (!vehicle?.connectorType) return null;
+            const chargerSocket = formData.socketType as string;
+            const vc = vehicle.connectorType;
+            const compatible = vc === chargerSocket || (vc === 'CCS' && chargerSocket === 'Type 2') || (chargerSocket === 'CCS' && vc === 'Type 2');
+            if (compatible) return null;
+            return (
+              <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
+                <p className="text-[11px] text-white">
+                  <span className="font-bold">Note:</span> Vehicle uses {vc} connector but charger socket is {chargerSocket}. Verify compatibility.
+                </p>
+              </div>
+            );
+          })()}
+
+          {/* Power and Current with bidirectional sync */}
+          <div className="border-b border-white/[0.06] pb-1 mb-3 mt-4">
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Power & Current</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label htmlFor="powerRating" className={labelClass}>Power (kW)</Label>
+              <Input
+                id="powerRating"
+                type="number"
+                step="0.1"
+                value={formData.powerRating ?? ''}
+                onChange={(e) =>
+                  handlePowerChange(
+                    e.target.value === '' ? 0 : parseFloat(e.target.value) || 0
+                  )
+                }
+                className={inputClass}
+              />
+              <p className="text-[10px] text-white mt-1">
+                {formData.phases === 3 ? 'P = \u221A3 \u00D7 400V \u00D7 I' : 'P = 230V \u00D7 I'}
+              </p>
+            </div>
+            <div>
+              <Label htmlFor="ratedCurrent" className={labelClass}>Current (A)</Label>
+              <Input
+                id="ratedCurrent"
+                type="number"
+                value={formData.ratedCurrent ?? ''}
+                onChange={(e) =>
+                  handleCurrentChange(
+                    e.target.value === '' ? 0 : parseInt(e.target.value) || 0
+                  )
+                }
+                className={inputClass}
+              />
+              <p className="text-[10px] text-white mt-1">
+                {formData.phases === 3 ? 'I = P / (\u221A3 \u00D7 400V)' : 'I = P / 230V'}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

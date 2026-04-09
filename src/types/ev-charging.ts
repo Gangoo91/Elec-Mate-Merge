@@ -9,7 +9,7 @@ export type ChargerConnection = 'tethered' | 'socketed';
 export type PhaseType = 1 | 3;
 
 // Protection device types
-export type ProtectionDeviceType = 'MCB' | 'RCBO' | 'MCCB';
+export type ProtectionDeviceType = 'MCB' | 'RCBO' | 'MCCB' | 'BS88' | 'BS3036';
 export type ProtectionDeviceCurve = 'B' | 'C' | 'D';
 
 // Earthing arrangements
@@ -28,11 +28,13 @@ export interface EVChargingFormData {
 
   // Vehicle details (optional)
   vehicleMake: string;
+  vehicleMakeCustom: string;
   vehicleModel: string;
   vehicleRegistration: string;
 
   // Installation address
   installationAddress: string;
+  sameAsClientAddress: boolean;
   installationType: 'domestic' | 'commercial' | 'public';
 
   // Charger details
@@ -60,7 +62,21 @@ export interface EVChargingFormData {
   earthElectrodeInstalled: boolean;
   earthElectrodeResistance: string;
 
+  // O-PEN device (IET01:2024 — mandatory for PME/TN-C-S)
+  openPENDeviceFitted: boolean;
+  openPENManufacturer: string;
+  openPENModel: string;
+  openPENSerial: string;
+  openPENTestVerified: boolean;
+
+  // Distribution board details
+  dbLocation: string;
+  dbManufacturer: string;
+  dbMainSwitchRating: string;
+
   // Circuit details
+  dedicatedCircuit: boolean;
+  cableRoute: string; // buried, external, internal, duct
   circuitDesignation: string;
   cableType: string;
   cableSize: number; // mm²
@@ -95,7 +111,13 @@ export interface EVChargingFormData {
     phaseRotation?: 'L1-L2-L3' | 'L1-L3-L2' | 'N/A' | '';
     continuityPE?: string;
     rcdTestButton?: 'pass' | 'fail' | '';
+    ambientTemperature?: string;
   };
+
+  // Test equipment
+  testInstrumentModel: string;
+  testInstrumentSerial: string;
+  testInstrumentCalDate: string;
 
   // OZEV Grant details
   ozevGrantApplicable: boolean;
@@ -132,6 +154,17 @@ export interface EVChargingFormData {
   ietCopCompliance: boolean;
   buildingRegsCompliance: boolean;
 
+  // Building regulations
+  buildingRegsRequired: boolean;
+  buildingRegsViaScheme: boolean;
+  buildingRegsSubmitted: boolean;
+
+  // Verification checklist
+  chargerPowerUpVerified: boolean;
+  ledIndicatorsVerified: boolean;
+  cableSecureVerified: boolean;
+  earthContinuityVerified: boolean;
+
   // Additional notes
   additionalNotes: string;
   specialConditions: string;
@@ -152,10 +185,12 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
   clientEmail: '',
 
   vehicleMake: '',
+  vehicleMakeCustom: '',
   vehicleModel: '',
   vehicleRegistration: '',
 
   installationAddress: '',
+  sameAsClientAddress: false,
   installationType: 'domestic',
 
   chargerMake: '',
@@ -180,6 +215,18 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
   earthElectrodeInstalled: false,
   earthElectrodeResistance: '',
 
+  openPENDeviceFitted: false,
+  openPENManufacturer: '',
+  openPENModel: '',
+  openPENSerial: '',
+  openPENTestVerified: false,
+
+  dbLocation: '',
+  dbManufacturer: '',
+  dbMainSwitchRating: '',
+
+  dedicatedCircuit: true,
+  cableRoute: '',
   circuitDesignation: 'EV Charger',
   cableType: '',
   cableSize: 6,
@@ -211,7 +258,12 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
     phaseRotation: '',
     continuityPE: '',
     rcdTestButton: '',
+    ambientTemperature: '',
   },
+
+  testInstrumentModel: '',
+  testInstrumentSerial: '',
+  testInstrumentCalDate: '',
 
   ozevGrantApplicable: false,
   ozevGrantRef: '',
@@ -241,6 +293,15 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
   bs7671Compliance: false,
   ietCopCompliance: false,
   buildingRegsCompliance: false,
+
+  chargerPowerUpVerified: false,
+  ledIndicatorsVerified: false,
+  cableSecureVerified: false,
+  earthContinuityVerified: false,
+
+  buildingRegsRequired: false,
+  buildingRegsViaScheme: false,
+  buildingRegsSubmitted: false,
 
   additionalNotes: '',
   specialConditions: '',

@@ -118,8 +118,29 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       earth_electrode_resistance: get('earthElectrodeResistance'),
     },
 
+    // O-PEN Device (IET01:2024)
+    open_pen: {
+      device_fitted: getBool('openPENDeviceFitted'),
+      device_fitted_display: getBool('openPENDeviceFitted') ? 'Yes' : 'No',
+      manufacturer: get('openPENManufacturer'),
+      model: get('openPENModel'),
+      serial: get('openPENSerial'),
+      test_verified: getBool('openPENTestVerified'),
+      test_verified_display: getBool('openPENTestVerified') ? 'Yes' : 'No',
+    },
+
+    // Distribution Board
+    distribution_board: {
+      location: get('dbLocation'),
+      manufacturer: get('dbManufacturer'),
+      main_switch_rating: get('dbMainSwitchRating'),
+    },
+
     // Circuit Details
     circuit_details: {
+      dedicated_circuit: getBool('dedicatedCircuit'),
+      dedicated_circuit_display: getBool('dedicatedCircuit') ? 'Yes' : 'No',
+      cable_route: get('cableRoute'),
       designation: get('circuitDesignation'),
       cable_type: get('cableType'),
       cable_size_mm2: get('cableSize'),
@@ -185,6 +206,14 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
           : getTestResult('rcdTestButton') === 'fail'
             ? 'Fail'
             : '',
+      ambient_temperature: getTestResult('ambientTemperature'),
+    },
+
+    // Test Equipment
+    test_equipment: {
+      model: get('testInstrumentModel'),
+      serial: get('testInstrumentSerial'),
+      calibration_date: get('testInstrumentCalDate'),
     },
 
     // DNO Notification
@@ -253,6 +282,28 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>): EVC
       iet_cop_display: getBool('ietCopCompliance') ? '✓' : '',
       building_regs: getBool('buildingRegsCompliance'),
       building_regs_display: getBool('buildingRegsCompliance') ? '✓' : '',
+    },
+
+    // Verification Checklist
+    verification: {
+      charger_power_up: getBool('chargerPowerUpVerified'),
+      charger_power_up_display: getBool('chargerPowerUpVerified') ? '✓' : '',
+      led_indicators: getBool('ledIndicatorsVerified'),
+      led_indicators_display: getBool('ledIndicatorsVerified') ? '✓' : '',
+      cable_secure: getBool('cableSecureVerified'),
+      cable_secure_display: getBool('cableSecureVerified') ? '✓' : '',
+      earth_continuity: getBool('earthContinuityVerified'),
+      earth_continuity_display: getBool('earthContinuityVerified') ? '✓' : '',
+    },
+
+    // Building Regulations Notification
+    building_regs_notification: {
+      required: getBool('buildingRegsRequired'),
+      required_display: getBool('buildingRegsRequired') ? 'Yes' : 'No',
+      via_scheme: getBool('buildingRegsViaScheme'),
+      via_scheme_display: getBool('buildingRegsViaScheme') ? 'Yes' : 'No',
+      submitted: getBool('buildingRegsSubmitted'),
+      submitted_display: getBool('buildingRegsSubmitted') ? 'Yes' : 'No',
     },
 
     // Additional Notes

@@ -864,9 +864,81 @@
     {% endif %}
 </div>
 
+<!-- SECTION F2: O-PEN PROTECTION (IET01:2024) -->
+{% if open_pen.device_fitted %}
+<div class="section">
+    <div class="section-subtitle">O-PEN Protection Device (IET01:2024)</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">O-PEN Device Fitted:</span>
+            <span class="checkbox-box checked">&#10003;</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Manufacturer:</span>
+            <span class="inline-value">{{ open_pen.manufacturer }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Model:</span>
+            <span class="inline-value">{{ open_pen.model }}</span>
+        </div>
+    </div>
+    <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group">
+            <span class="inline-label">Serial No:</span>
+            <span class="inline-value">{{ open_pen.serial }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Test Button Verified:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if open_pen.test_verified %}checked{% endif %}">{% if open_pen.test_verified %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- SECTION F3: DISTRIBUTION BOARD -->
+<div class="section">
+    <div class="section-subtitle">Distribution Board Details</div>
+    <div class="inline-form">
+        <div class="inline-group" style="flex: 1;">
+            <span class="inline-label">Location:</span>
+            <span class="inline-value wide">{{ distribution_board.location }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Manufacturer:</span>
+            <span class="inline-value">{{ distribution_board.manufacturer }}</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Main Switch:</span>
+            <span class="inline-value">{{ distribution_board.main_switch_rating }}</span>
+        </div>
+    </div>
+</div>
+
 <!-- SECTION G: CIRCUIT DETAILS -->
 <div class="section">
     <div class="section-title">Section G: Circuit Details</div>
+    <div class="inline-form" style="margin-bottom: 3px;">
+        <div class="inline-group">
+            <span class="inline-label">Dedicated Circuit:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if circuit_details.dedicated_circuit %}checked{% endif %}">{% if circuit_details.dedicated_circuit %}&#10003;{% endif %}</span>
+                    <label>Yes</label>
+                </div>
+            </div>
+        </div>
+        {% if circuit_details.cable_route and circuit_details.cable_route != '' %}
+        <div class="inline-group">
+            <span class="inline-label">Cable Route:</span>
+            <span class="inline-value">{{ circuit_details.cable_route }}</span>
+        </div>
+        {% endif %}
+    </div>
     <div class="two-col">
         <div class="col">
             <div class="section-subtitle">Cable Installation</div>
@@ -1051,6 +1123,57 @@
             </tr>
         </tbody>
     </table>
+
+    <!-- Test Environment & Equipment -->
+    <div class="inline-form" style="margin-top: 3px;">
+        {% if test_results.ambient_temperature and test_results.ambient_temperature != '' %}
+        <div class="inline-group">
+            <span class="inline-label">Ambient Temp:</span>
+            <span class="inline-value">{{ test_results.ambient_temperature }}&deg;C</span>
+        </div>
+        {% endif %}
+        {% if test_equipment.model and test_equipment.model != '' %}
+        <div class="inline-group">
+            <span class="inline-label">Instrument:</span>
+            <span class="inline-value">{{ test_equipment.model }}</span>
+        </div>
+        {% endif %}
+        {% if test_equipment.serial and test_equipment.serial != '' %}
+        <div class="inline-group">
+            <span class="inline-label">Serial No:</span>
+            <span class="inline-value">{{ test_equipment.serial }}</span>
+        </div>
+        {% endif %}
+        {% if test_equipment.calibration_date and test_equipment.calibration_date != '' %}
+        <div class="inline-group">
+            <span class="inline-label">Calibration:</span>
+            <span class="inline-value">{{ test_equipment.calibration_date }}</span>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Verification Checklist -->
+    <div class="section-subtitle" style="margin-top: 3px;">Verification Checklist</div>
+    <div class="inline-form">
+        <div class="checkbox-row">
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if verification.charger_power_up %}checked{% endif %}">{% if verification.charger_power_up %}&#10003;{% endif %}</span>
+                <label>Charger powers up</label>
+            </div>
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if verification.led_indicators %}checked{% endif %}">{% if verification.led_indicators %}&#10003;{% endif %}</span>
+                <label>LED indicators OK</label>
+            </div>
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if verification.cable_secure %}checked{% endif %}">{% if verification.cable_secure %}&#10003;{% endif %}</span>
+                <label>Cable/connector secure</label>
+            </div>
+            <div class="checkbox-item">
+                <span class="checkbox-box {% if verification.earth_continuity %}checked{% endif %}">{% if verification.earth_continuity %}&#10003;{% endif %}</span>
+                <label>Earth continuity</label>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- SECTION I: DNO NOTIFICATION -->
@@ -1233,6 +1356,39 @@
     </div>
     {% endif %}
 </div>
+
+<!-- SECTION M2: BUILDING REGULATIONS NOTIFICATION -->
+{% if building_regs_notification.required %}
+<div class="section">
+    <div class="section-subtitle">Building Regulations Notification</div>
+    <div class="inline-form">
+        <div class="inline-group">
+            <span class="inline-label">Notification Required:</span>
+            <span class="checkbox-box checked">&#10003;</span>
+        </div>
+        <div class="inline-group">
+            <span class="inline-label">Via Scheme:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if building_regs_notification.via_scheme %}checked{% endif %}">{% if building_regs_notification.via_scheme %}&#10003;{% endif %}</span>
+                    <label>{{ building_regs_notification.via_scheme_display }}</label>
+                </div>
+            </div>
+        </div>
+        {% unless building_regs_notification.via_scheme %}
+        <div class="inline-group">
+            <span class="inline-label">Submitted to Building Control:</span>
+            <div class="checkbox-row">
+                <div class="checkbox-item">
+                    <span class="checkbox-box {% if building_regs_notification.submitted %}checked{% endif %}">{% if building_regs_notification.submitted %}&#10003;{% endif %}</span>
+                    <label>{{ building_regs_notification.submitted_display }}</label>
+                </div>
+            </div>
+        </div>
+        {% endunless %}
+    </div>
+</div>
+{% endif %}
 
 <!-- SECTION N: INSTALLER DECLARATION -->
 <div class="section">

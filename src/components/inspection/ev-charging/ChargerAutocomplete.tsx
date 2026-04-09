@@ -1,16 +1,13 @@
 /**
  * ChargerAutocomplete.tsx
- *
- * Searchable combobox for selecting EV charger make/model from the database.
- * Auto-fills charger specifications on selection.
+ * Searchable EV charger picker — bottom sheet on mobile, popover on desktop.
+ * No icons, clean dark design matching EICR/EIC pattern.
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Check, ChevronsUpDown, Zap, Search, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import {
   Command,
   CommandEmpty,
@@ -46,15 +43,11 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const isMobile = useIsMobile();
 
-  // Filter chargers based on search query
   const filteredChargers = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return EV_CHARGERS.slice(0, 15); // Show first 15 when empty
-    }
+    if (!searchQuery.trim()) return EV_CHARGERS.slice(0, 15);
     return searchChargers(searchQuery);
   }, [searchQuery]);
 
-  // Find currently selected charger
   const selectedCharger = useMemo(() => {
     if (!value?.make || !value?.model) return null;
     return EV_CHARGERS.find(
@@ -64,7 +57,6 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
     );
   }, [value]);
 
-  // Handle charger selection
   const handleSelect = useCallback(
     (charger: EVCharger) => {
       onChange(charger);
@@ -74,7 +66,6 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
     [onChange]
   );
 
-  // Handle clear selection
   const handleClear = useCallback(
     (e: React.MouseEvent) => {
       e.stopPropagation();
@@ -84,14 +75,13 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
     [onChange]
   );
 
-  // Get display label
   const displayLabel = selectedCharger
     ? getChargerLabel(selectedCharger)
     : value?.make && value?.model
       ? `${value.make} ${value.model}`
       : null;
 
-  // Shared charger list item renderer
+  // Charger list item — clean card style
   const renderChargerItem = (charger: EVCharger, forMobile = false) => {
     const isSelected = selectedCharger?.id === charger.id;
     return (
@@ -99,154 +89,113 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
         key={charger.id}
         onClick={() => handleSelect(charger)}
         className={cn(
-          'rounded-xl cursor-pointer transition-all touch-manipulation',
+          'group relative overflow-hidden rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]',
           forMobile ? 'p-3.5' : 'p-2.5 mx-1',
           isSelected
-            ? 'bg-elec-yellow/15 border border-elec-yellow/30'
-            : 'border border-transparent hover:bg-white/5 active:bg-white/10'
+            ? 'bg-elec-yellow/10 border border-elec-yellow/30'
+            : 'bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06]'
         )}
       >
-        <div className="flex items-start gap-3 w-full">
-          <div
-            className={cn(
-              'rounded-xl flex items-center justify-center shrink-0',
-              forMobile ? 'w-11 h-11' : 'w-8 h-8 mt-0.5',
-              isSelected ? 'bg-elec-yellow/25' : 'bg-white/[0.06]'
-            )}
-          >
-            {isSelected ? (
-              <Check className={cn('text-elec-yellow', forMobile ? 'h-5 w-5' : 'h-4 w-4')} />
-            ) : (
-              <Zap className={cn('text-white', forMobile ? 'h-5 w-5' : 'h-4 w-4')} />
+        {/* Accent line */}
+        <div className={cn(
+          'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-0 group-hover:opacity-60 transition-opacity',
+          isSelected ? 'from-elec-yellow to-amber-400 opacity-60' : 'from-elec-yellow/40 to-elec-yellow/10'
+        )} />
+
+        <div className="relative z-10">
+          {/* Make + Model */}
+          <div className="flex items-baseline gap-1.5 mb-1.5">
+            <span className={cn('font-bold text-white', forMobile ? 'text-[15px]' : 'text-sm')}>
+              {charger.make}
+            </span>
+            <span className={cn('text-white', forMobile ? 'text-[15px]' : 'text-sm')}>
+              {charger.model}
+            </span>
+          </div>
+
+          {/* Spec badges — no icons, just coloured text badges */}
+          <div className={cn('flex items-center gap-1.5 flex-wrap', forMobile ? '' : '')}>
+            <span className={cn(
+              'font-bold px-1.5 py-0.5 rounded bg-elec-yellow/15 text-elec-yellow',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}>
+              {getPowerOptionsLabel(charger)}
+            </span>
+            <span className={cn(
+              'font-medium px-1.5 py-0.5 rounded bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}>
+              {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
+            </span>
+            <span className={cn(
+              'font-medium px-1.5 py-0.5 rounded bg-white/[0.06] text-white',
+              forMobile ? 'text-[11px]' : 'text-[10px]'
+            )}>
+              {charger.socketType}
+            </span>
+            {charger.rcdIntegral && (
+              <span className={cn(
+                'font-bold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400',
+                forMobile ? 'text-[11px]' : 'text-[10px]'
+              )}>
+                RCD Built-in
+              </span>
             )}
           </div>
 
-          <div className="flex-1 min-w-0">
-            <div className="flex items-baseline gap-1.5">
-              <span className={cn('font-semibold text-white', forMobile ? 'text-[15px]' : 'text-sm')}>
-                {charger.make}
-              </span>
-              <span className={cn('text-white', forMobile ? 'text-[15px]' : 'text-sm')}>
-                {charger.model}
-              </span>
-            </div>
-
-            <div className={cn('flex items-center gap-1.5 flex-wrap', forMobile ? 'mt-1.5' : 'mt-1')}>
-              <Badge
-                variant="outline"
-                className={cn(
-                  'px-2 py-0.5 border-elec-yellow/40 text-elec-yellow font-medium',
-                  forMobile ? 'text-xs' : 'text-[10px]'
-                )}
-              >
-                {getPowerOptionsLabel(charger)}
-              </Badge>
-              <Badge
-                variant="outline"
-                className={cn(
-                  'px-2 py-0.5 border-white/20 text-white',
-                  forMobile ? 'text-xs' : 'text-[10px]'
-                )}
-              >
-                {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
-              </Badge>
-              <Badge
-                variant="outline"
-                className={cn(
-                  'px-2 py-0.5 border-white/20 text-white',
-                  forMobile ? 'text-xs' : 'text-[10px]'
-                )}
-              >
-                {charger.socketType}
-              </Badge>
-              {charger.rcdIntegral && (
-                <Badge
-                  variant="outline"
-                  className={cn(
-                    'px-2 py-0.5 border-green-500/40 text-green-400 font-medium',
-                    forMobile ? 'text-xs' : 'text-[10px]'
-                  )}
-                >
-                  RCD Built-in
-                </Badge>
-              )}
-            </div>
-
-            {charger.notes && (
-              <p className={cn('text-white mt-1 line-clamp-1', forMobile ? 'text-xs' : 'text-[10px]')}>
-                {charger.notes}
-              </p>
-            )}
-          </div>
+          {/* Notes */}
+          {charger.notes && (
+            <p className={cn('text-white mt-1.5 line-clamp-1', forMobile ? 'text-[11px]' : 'text-[10px]')}>
+              {charger.notes}
+            </p>
+          )}
         </div>
       </div>
     );
   };
 
-  // Trigger button (shared between mobile and desktop)
+  // Trigger button — clean, no icons
   const triggerButton = (
-    <Button
-      variant="outline"
-      role="combobox"
-      aria-expanded={open}
+    <button
+      type="button"
       disabled={disabled}
       onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        'w-full justify-between h-12 touch-manipulation',
-        'bg-elec-gray border-white/30 text-foreground',
-        'hover:bg-elec-gray/80 hover:border-elec-yellow',
-        'focus:border-elec-yellow focus:ring-elec-yellow',
-        'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
-        !displayLabel && 'text-white',
+        'w-full h-11 px-3 flex items-center justify-between rounded-lg text-left touch-manipulation active:scale-[0.98] transition-all',
+        'bg-white/[0.06] border border-white/[0.08]',
+        disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <div className="flex items-center gap-2.5 flex-1 min-w-0">
-        {selectedCharger ? (
-          <>
-            <div className="h-7 w-7 rounded-lg bg-elec-yellow/20 flex items-center justify-center shrink-0">
-              <Zap className="h-3.5 w-3.5 text-elec-yellow" />
-            </div>
-            <div className="flex flex-col items-start min-w-0 flex-1">
-              <span className="text-sm font-medium text-white truncate w-full text-left">
-                {displayLabel}
-              </span>
-              <span className="text-xs text-elec-yellow">
-                {getPowerOptionsLabel(selectedCharger)}
-              </span>
-            </div>
-          </>
+      <div className="flex-1 min-w-0">
+        {displayLabel ? (
+          <div>
+            <span className="text-sm font-medium text-white truncate block">{displayLabel}</span>
+            {selectedCharger && (
+              <span className="text-[10px] text-elec-yellow">{getPowerOptionsLabel(selectedCharger)}</span>
+            )}
+          </div>
         ) : (
-          <>
-            <Search className="h-4 w-4 shrink-0 text-white" />
-            <span className="text-sm">Search UK chargers...</span>
-          </>
+          <span className="text-sm text-white/40">Search UK chargers...</span>
         )}
       </div>
-      <div className="flex items-center gap-1 shrink-0">
-        {selectedCharger && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleClear(e);
-            }}
-            className="h-9 w-9 flex items-center justify-center hover:bg-white/10 rounded-full touch-manipulation"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        )}
-        <ChevronsUpDown className="h-4 w-4 opacity-50" />
-      </div>
-    </Button>
+      {selectedCharger && (
+        <button
+          type="button"
+          onClick={handleClear}
+          className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation flex-shrink-0"
+        >
+          <X className="h-3.5 w-3.5 text-white/40" />
+        </button>
+      )}
+    </button>
   );
 
-  // Mobile: Use SwipeableBottomSheet
+  // Mobile: SwipeableBottomSheet
   if (isMobile) {
     return (
       <>
         {triggerButton}
-
         <SwipeableBottomSheet
           open={open}
           onOpenChange={setOpen}
@@ -254,47 +203,35 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
           contentClassName="p-0"
         >
           <div className="flex flex-col max-h-[70vh]">
-            {/* Search input */}
-            <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06] bg-background sticky top-0">
-              <Search className="h-5 w-5 text-white shrink-0" />
+            {/* Search */}
+            <div className="px-4 py-3 border-b border-white/[0.06] sticky top-0 bg-background">
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search UK chargers..."
-                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base text-white placeholder:text-white"
+                placeholder="Search by make or model..."
+                className="h-11 text-base bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/30"
                 autoFocus
               />
-              {searchQuery && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSearchQuery('')}
-                  className="h-9 w-9 p-0 touch-manipulation"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              )}
             </div>
 
-            {/* Charger list */}
+            {/* List */}
             <div className="flex-1 overflow-y-auto momentum-scroll-y px-3 py-2">
               {filteredChargers.length === 0 ? (
                 <div className="py-12 text-center">
-                  <Zap className="h-12 w-12 mx-auto mb-3 text-white" />
-                  <p className="text-base text-white">No chargers found</p>
-                  <p className="text-sm text-white mt-1">Try searching by make or model</p>
+                  <p className="text-sm font-semibold text-white">No chargers found</p>
+                  <p className="text-xs text-white mt-1">Try a different make or model</p>
                 </div>
               ) : (
-                <div className="space-y-1.5">
+                <div className="space-y-2">
                   {filteredChargers.map((charger) => renderChargerItem(charger, true))}
                 </div>
               )}
             </div>
 
             {/* Footer */}
-            <div className="border-t border-white/[0.06] px-4 py-3 bg-card/30">
-              <p className="text-xs text-white text-center">
-                {EV_CHARGERS.length} UK chargers in database (2025/2026)
+            <div className="border-t border-white/[0.06] px-4 py-2.5">
+              <p className="text-[10px] text-white text-center">
+                {EV_CHARGERS.length} UK chargers · 2025/2026
               </p>
             </div>
           </div>
@@ -303,44 +240,30 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
     );
   }
 
-  // Desktop: Use Popover
+  // Desktop: Popover
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
-
       <PopoverContent
-        className="w-[calc(100vw-2rem)] sm:w-[420px] p-0 bg-background border-border shadow-xl z-[100]"
+        className="w-[calc(100vw-2rem)] sm:w-[420px] p-0 bg-background border-white/[0.08] shadow-xl z-[100]"
         align="start"
         sideOffset={4}
       >
         <Command className="bg-background" shouldFilter={false}>
-          <div className="flex items-center gap-2 px-3 py-2.5 border-b border-white/[0.06]">
-            <Search className="h-4 w-4 text-white shrink-0" />
+          <div className="px-3 py-2.5 border-b border-white/[0.06]">
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Type to search UK chargers..."
-              className="h-9 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
+              placeholder="Search chargers..."
+              className="h-9 border-0 bg-transparent focus-visible:ring-0 px-0 text-base text-white placeholder:text-white/30"
               autoFocus
             />
-            {searchQuery && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSearchQuery('')}
-                className="h-7 w-7 p-0"
-              >
-                <X className="h-3 w-3" />
-              </Button>
-            )}
           </div>
 
           <CommandList className="max-h-[320px]">
             {filteredChargers.length === 0 ? (
               <CommandEmpty className="py-6 text-center">
-                <Zap className="h-8 w-8 mx-auto mb-2 text-white" />
-                <p className="text-white">No chargers found</p>
-                <p className="text-xs text-white mt-1">Try searching by make or model</p>
+                <p className="text-white text-sm">No chargers found</p>
               </CommandEmpty>
             ) : (
               <CommandGroup className="py-2">
@@ -351,62 +274,9 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
                       key={charger.id}
                       value={charger.id}
                       onSelect={() => handleSelect(charger)}
-                      className={cn(
-                        'mx-1 rounded-lg cursor-pointer py-2.5',
-                        'hover:bg-white/5',
-                        isSelected && 'bg-elec-yellow/15'
-                      )}
+                      className="mx-1 rounded-lg cursor-pointer py-0 px-0 hover:bg-transparent"
                     >
-                      <div className="flex items-start gap-3 w-full">
-                        <div
-                          className={cn(
-                            'w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5',
-                            isSelected ? 'bg-elec-yellow/25' : 'bg-white/[0.06]'
-                          )}
-                        >
-                          {isSelected ? (
-                            <Check className="h-4 w-4 text-elec-yellow" />
-                          ) : (
-                            <Zap className="h-4 w-4 text-white" />
-                          )}
-                        </div>
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-baseline gap-1.5">
-                            <span className="font-semibold text-white text-sm">{charger.make}</span>
-                            <span className="text-white text-sm">{charger.model}</span>
-                          </div>
-
-                          <div className="flex items-center gap-1.5 mt-1 flex-wrap">
-                            <Badge
-                              variant="outline"
-                              className="text-[10px] px-1.5 py-0 border-elec-yellow/40 text-elec-yellow font-medium"
-                            >
-                              {getPowerOptionsLabel(charger)}
-                            </Badge>
-                            <span className="text-[10px] text-white">
-                              {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
-                            </span>
-                            <span className="text-[10px] text-white">
-                              {charger.socketType}
-                            </span>
-                            {charger.rcdIntegral && (
-                              <Badge
-                                variant="outline"
-                                className="text-[10px] px-1.5 py-0 border-green-500/40 text-green-400"
-                              >
-                                RCD Built-in
-                              </Badge>
-                            )}
-                          </div>
-
-                          {charger.notes && (
-                            <p className="text-[10px] text-white mt-1 line-clamp-1">
-                              {charger.notes}
-                            </p>
-                          )}
-                        </div>
-                      </div>
+                      {renderChargerItem(charger, false)}
                     </CommandItem>
                   );
                 })}
@@ -414,9 +284,9 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             )}
           </CommandList>
 
-          <div className="border-t border-white/[0.06] px-3 py-2 bg-card/30">
+          <div className="border-t border-white/[0.06] px-3 py-2">
             <p className="text-[10px] text-white text-center">
-              {EV_CHARGERS.length} UK chargers in database (2025/2026)
+              {EV_CHARGERS.length} UK chargers · 2025/2026
             </p>
           </div>
         </Command>

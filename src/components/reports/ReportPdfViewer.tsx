@@ -318,15 +318,26 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
       const reportType = reportData.report_type.toLowerCase();
       let edgeFunctionName = '';
 
-      if (reportType === 'eic') {
-        edgeFunctionName = 'generate-eic-pdf';
-      } else if (reportType === 'eicr') {
-        edgeFunctionName = 'generate-eicr-pdf';
-      } else if (reportType === 'minor works' || reportType === 'minor-works') {
-        edgeFunctionName = 'generate-minor-works-pdf';
-      } else {
-        throw new Error('Unsupported report type');
-      }
+      const rt = reportType.replace(/\s+/g, '-');
+      if (rt === 'eic') edgeFunctionName = 'generate-eic-pdf';
+      else if (rt === 'eicr') edgeFunctionName = 'generate-eicr-pdf';
+      else if (rt === 'minor-works') edgeFunctionName = 'generate-minor-works-pdf';
+      else if (rt === 'ev-charging') edgeFunctionName = 'generate-ev-charging-pdf';
+      else if (rt === 'solar-pv') edgeFunctionName = 'generate-solar-pv-pdf';
+      else if (rt === 'pat-testing') edgeFunctionName = 'generate-pat-testing-pdf';
+      else if (rt === 'emergency-lighting') edgeFunctionName = 'generate-emergency-lighting-pdf';
+      else if (rt.startsWith('fire-alarm')) edgeFunctionName = 'generate-fire-alarm-pdf';
+      else if (rt === 'g98-commissioning') edgeFunctionName = 'generate-g98-commissioning-pdf';
+      else if (rt === 'g99-commissioning') edgeFunctionName = 'generate-g99-commissioning-pdf';
+      else if (rt === 'bess') edgeFunctionName = 'generate-bess-pdf';
+      else if (rt === 'smoke-co-alarm') edgeFunctionName = 'generate-smoke-co-alarm-pdf';
+      else if (rt === 'danger-notice') edgeFunctionName = 'generate-danger-notice-pdf';
+      else if (rt === 'isolation-cert') edgeFunctionName = 'generate-isolation-cert-pdf';
+      else if (rt === 'permit-to-work') edgeFunctionName = 'generate-permit-to-work-pdf';
+      else if (rt === 'limitation-notice') edgeFunctionName = 'generate-limitation-notice-pdf';
+      else if (rt === 'non-compliance-notice') edgeFunctionName = 'generate-non-compliance-notice-pdf';
+      else if (rt === 'completion-notice') edgeFunctionName = 'generate-completion-notice-pdf';
+      else edgeFunctionName = `generate-${rt}-pdf`;
 
       // Load template IDs from storage
       const { offlineStorage } = await import('@/utils/offlineStorage');

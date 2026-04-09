@@ -29,17 +29,41 @@ interface PdfBlobData {
  * Get the correct edge function name based on report type
  */
 const getEdgeFunctionForReportType = (reportType: string): string => {
-  const normalizedType = reportType.toLowerCase();
+  const t = reportType.toLowerCase().replace(/\s+/g, '-');
 
-  if (normalizedType === 'eic') {
-    return 'generate-eic-pdf';
-  } else if (normalizedType === 'eicr') {
-    return 'generate-eicr-pdf';
-  } else if (normalizedType === 'minor works' || normalizedType === 'minor-works') {
-    return 'generate-minor-works-pdf';
-  }
+  // Core electrical certificates
+  if (t === 'eic') return 'generate-eic-pdf';
+  if (t === 'eicr') return 'generate-eicr-pdf';
+  if (t === 'minor-works') return 'generate-minor-works-pdf';
+  if (t === 'ev-charging') return 'generate-ev-charging-pdf';
+  if (t === 'solar-pv') return 'generate-solar-pv-pdf';
+  if (t === 'pat-testing') return 'generate-pat-testing-pdf';
+  if (t === 'emergency-lighting') return 'generate-emergency-lighting-pdf';
 
-  throw new Error(`Unsupported report type: ${reportType}`);
+  // Fire alarm variants — all use same edge function
+  if (t.startsWith('fire-alarm')) return 'generate-fire-alarm-pdf';
+
+  // Commissioning
+  if (t === 'g98-commissioning') return 'generate-g98-commissioning-pdf';
+  if (t === 'g99-commissioning') return 'generate-g99-commissioning-pdf';
+
+  // Specialist
+  if (t === 'bess') return 'generate-bess-pdf';
+  if (t === 'lightning-protection') return 'generate-lightning-protection-pdf';
+  if (t === 'smoke-co-alarm') return 'generate-smoke-co-alarm-pdf';
+
+  // Notices & documents
+  if (t === 'danger-notice') return 'generate-danger-notice-pdf';
+  if (t === 'isolation-cert') return 'generate-isolation-cert-pdf';
+  if (t === 'permit-to-work') return 'generate-permit-to-work-pdf';
+  if (t === 'safe-isolation') return 'generate-safe-isolation-pdf';
+  if (t === 'limitation-notice') return 'generate-limitation-notice-pdf';
+  if (t === 'non-compliance-notice') return 'generate-non-compliance-notice-pdf';
+  if (t === 'completion-notice') return 'generate-completion-notice-pdf';
+
+  // Fallback — try generic pattern
+  console.warn(`[bulkPdfExport] Unknown report type "${reportType}", trying generate-${t}-pdf`);
+  return `generate-${t}-pdf`;
 };
 
 /**
@@ -93,6 +117,22 @@ const downloadBlob = (blob: Blob, filename: string): void => {
  * Validate and enrich report data with required fields
  * Falls back to top-level database fields if data fields are missing
  */
+/** Human-readable field names for error messages */
+const FIELD_LABELS: Record<string, string> = {
+  clientName: 'Client Name',
+  installationAddress: 'Installation Address',
+  inspectorName: 'Inspector Name',
+  electricianName: 'Electrician Name',
+  installerName: 'Installer Name',
+  installerSignature: 'Installer Signature',
+  inspectorSignature: 'Inspector Signature',
+  designerSignature: 'Designer Signature',
+  constructorSignature: 'Constructor Signature',
+  signature: 'Signature',
+  installationDate: 'Installation Date',
+  dateOfInspection: 'Inspection Date',
+};
+
 const validateAndEnrichReportData = (
   report: CloudReport
 ): {
@@ -102,39 +142,46 @@ const validateAndEnrichReportData = (
 } => {
   const data = { ...report.data };
   const missingFields: string[] = [];
-  const reportType = report.report_type.toLowerCase();
+  const rt = report.report_type.toLowerCase().replace(/\s+/g, '-');
 
-  // clientName is always required for all certificate types
-  if (!data.clientName || data.clientName.trim() === '') {
+  // Enrich from top-level DB fields
+  if (!data.clientName || (typeof data.clientName === 'string' && data.clientName.trim() === '')) {
     if (report.client_name) {
       data.clientName = report.client_name;
-      console.log(`[bulkPdfExport] Enriched clientName from database: ${report.client_name}`);
-    } else {
-      missingFields.push('clientName');
     }
   }
-
-  // installationAddress - required for EICR/EIC, optional for Minor Works
-  if (!data.installationAddress || data.installationAddress.trim() === '') {
+  if (!data.installationAddress || (typeof data.installationAddress === 'string' && data.installationAddress.trim() === '')) {
     if (report.installation_address) {
       data.installationAddress = report.installation_address;
-      console.log(
-        `[bulkPdfExport] Enriched installationAddress from database: ${report.installation_address}`
-      );
-    } else if (reportType === 'eicr' || reportType === 'eic') {
-      missingFields.push('installationAddress');
+    }
+  }
+  if (!data.inspectorName || (typeof data.inspectorName === 'string' && data.inspectorName.trim() === '')) {
+    if (report.inspector_name) {
+      data.inspectorName = report.inspector_name;
     }
   }
 
-  // inspectorName - required for EICR/EIC, optional for Minor Works
-  if (!data.inspectorName || data.inspectorName.trim() === '') {
-    if (report.inspector_name) {
-      data.inspectorName = report.inspector_name;
-      console.log(`[bulkPdfExport] Enriched inspectorName from database: ${report.inspector_name}`);
-    } else if (reportType === 'eicr' || reportType === 'eic') {
-      missingFields.push('inspectorName');
-    }
+  // Cert-type-specific required fields
+  if (rt === 'eicr') {
+    if (!data.clientName) missingFields.push('Client Name');
+    if (!data.installationAddress) missingFields.push('Installation Address');
+  } else if (rt === 'eic') {
+    if (!data.clientName) missingFields.push('Client Name');
+    if (!data.installationAddress) missingFields.push('Installation Address');
+  } else if (rt === 'minor-works') {
+    if (!data.clientName) missingFields.push('Client Name');
+  } else if (rt === 'ev-charging') {
+    if (!data.clientName) missingFields.push('Client Name');
+  } else if (rt.startsWith('fire-alarm')) {
+    if (!data.clientName && !data.premisesName) missingFields.push('Client / Premises Name');
+  } else if (rt === 'emergency-lighting') {
+    if (!data.clientName && !data.premisesName) missingFields.push('Client / Premises Name');
+  } else if (rt === 'pat-testing') {
+    if (!data.clientName && !data.customerName) missingFields.push('Client Name');
+  } else if (rt === 'solar-pv') {
+    if (!data.clientName) missingFields.push('Client Name');
   }
+  // Notices/permits: no mandatory fields for PDF generation
 
   const isValid = missingFields.length === 0;
   return { isValid, data, missingFields };
@@ -220,7 +267,7 @@ export const generateBulkPDFs = async (
           `[bulkPdfExport] Validation failed for ${reportId}:`,
           validation.missingFields
         );
-        throw new Error(`Missing required fields: ${fieldsStr}`);
+        throw new Error(`Please complete: ${fieldsStr}. Open the certificate and fill in the missing fields before downloading.`);
       }
 
       // Get edge function name based on report type
@@ -240,20 +287,26 @@ export const generateBulkPDFs = async (
         if (rtLower === 'eicr') {
           const { formatEICRJson } = await import('./eicrJsonFormatter');
           dataForPdf = await formatEICRJson(validation.data, report.report_id);
+        } else if (rtLower === 'eic') {
+          const { formatEicJson } = await import('./eicJsonFormatter');
+          dataForPdf = await formatEicJson(validation.data, null, report.report_id);
         } else if (rtLower === 'ev-charging') {
           const { formatEVChargingJson } = await import('./evChargingJsonFormatter');
           dataForPdf = formatEVChargingJson(validation.data);
         } else if (rtLower === 'pat-testing') {
           const { formatPATTestingJson } = await import('./patTestingJsonFormatter');
           dataForPdf = formatPATTestingJson(validation.data);
-        } else if (rtLower === 'fire-alarm') {
+        } else if (rtLower.startsWith('fire-alarm')) {
           const { formatFireAlarmJson } = await import('./fireAlarmJsonFormatter');
           dataForPdf = formatFireAlarmJson(validation.data);
         } else if (rtLower === 'emergency-lighting') {
           const { formatEmergencyLightingJson } = await import('./emergencyLightingJsonFormatter');
           dataForPdf = formatEmergencyLightingJson(validation.data);
+        } else if (rtLower === 'solar-pv') {
+          const { formatSolarPVJson } = await import('./solarPVJsonFormatter');
+          dataForPdf = formatSolarPVJson(validation.data);
         }
-        // EIC and Minor Works: no standalone formatter available, fall through with raw data
+        // Minor Works, BESS, G98/99, notices: edge function handles transform internally
       }
 
       // Optimise data before sending (use enriched data)
