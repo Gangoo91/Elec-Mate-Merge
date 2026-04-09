@@ -24,7 +24,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Plug, Save, Download, Loader2, Mail } from 'lucide-react';
+import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
@@ -444,11 +444,8 @@ export default function PATTestingCertificate() {
   // ─── Loading state ──────────────────────────────────────────────────────
   if (isLoading) {
     return (
-      <div className="bg-background min-h-screen">
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <Skeleton className="h-12 w-48 mb-4" />
-          <Skeleton className="h-64 w-full" />
-        </div>
+      <div className="bg-background min-h-screen flex items-center justify-center">
+        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
       </div>
     );
   }
@@ -457,101 +454,63 @@ export default function PATTestingCertificate() {
     <div className="bg-background min-h-screen">
       {/* Draft Recovery Dialog */}
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Recover Unsaved Work?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white text-base font-bold">Recover Unsaved Work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">
               We found an unsaved PAT Testing certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
               {recoveryDraft?.data?.clientName && (
-                <span className="block mt-2 font-medium">
+                <span className="block mt-2 font-medium text-elec-yellow">
                   Client: {recoveryDraft.data.clientName}
                 </span>
               )}
-              {recoveryDraft?.data?.siteAddress && (
-                <span className="block mt-1 text-sm">Site: {recoveryDraft.data.siteAddress}</span>
-              )}
-              Would you like to recover this work?
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+            <AlertDialogAction onClick={handleRecoverDraft} className="w-full h-11 rounded-xl bg-elec-yellow/15 border border-elec-yellow/25 text-elec-yellow font-medium hover:bg-elec-yellow/25 active:scale-[0.98] transition-all touch-manipulation">Recover Draft</AlertDialogAction>
+            <AlertDialogCancel onClick={handleDiscardDraft} className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Start Fresh</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Mobile-First Header */}
-      <div className="bg-[#242428] border-b border-blue-500/20 sticky top-0 z-10">
-        <div className="px-4 py-3">
-          {/* Top Row - Back & Actions */}
-          <div className="flex items-center justify-between mb-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white hover:text-white hover:bg-white/10 -ml-2 h-9 px-2 touch-manipulation"
-              onClick={() => navigate('/electrician/inspection-testing?section=specialist')}
-            >
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              Back
-            </Button>
-
+      {/* Header — matches EICR/EIC/MW/EV pattern */}
+      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm">
+        <div className="px-2 py-2.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <button
+                onClick={() => navigate(-1)}
+                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+              <div>
+                <h1 className="text-sm font-bold text-white leading-tight">PAT Testing</h1>
+                {formData.certificateNumber && (
+                  <p className="text-[10px] text-white font-mono mt-0.5">
+                    {formData.certificateNumber}
+                  </p>
+                )}
+              </div>
+            </div>
             <div className="flex items-center gap-2">
               <SyncStatusBadge status={syncStatus} />
-
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setShowEmailDialog(true)}
-                disabled={!savedReportId}
-                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
-              >
-                <Mail className="h-4 w-4" />
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
+              <button
                 onClick={handleSaveDraft}
-                disabled={isSaving}
-                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
+                disabled={isSaving || syncStatus.cloud === 'syncing'}
+                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
               >
                 {isSaving ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <Save className="h-4 w-4" />
                 )}
-              </Button>
-
-              <Button
-                size="sm"
-                onClick={handleGenerateCertificate}
-                disabled={isGenerating}
-                className="bg-blue-500 hover:bg-blue-600 text-white h-9 px-3 font-semibold rounded-lg touch-manipulation"
-              >
-                {isGenerating ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Download className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center">
-              <Plug className="h-5 w-5 text-blue-400" />
-            </div>
-            <div>
-              <h1 className="text-base font-bold text-white">
-                {isNew ? 'New PAT Testing' : 'PAT Testing'}
-              </h1>
-              <h1 className="text-base font-bold text-white -mt-0.5">Certificate</h1>
-              <p className="text-[11px] text-white">IET Code of Practice</p>
+              </button>
             </div>
           </div>
         </div>
+        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       {/* Main Content - Edge-to-edge on mobile, padded on desktop */}

@@ -17,6 +17,14 @@ export type ApplianceCategory =
  * PAT repair codes — these describe what physical repair was done.
  * NOT the same as EICR C1/C2/C3 severity/observation codes.
  */
+/** Standard fuse ratings for BS 1362 plug fuses */
+export const PAT_FUSE_RATINGS = [
+  { value: '3', label: '3A (Red)' },
+  { value: '5', label: '5A (Black)' },
+  { value: '13', label: '13A (Brown)' },
+  { value: 'other', label: 'Other' },
+] as const;
+
 export const PAT_REPAIR_CODES = [
   { value: '', label: 'N/A — No repair needed' },
   { value: 'RP', label: 'Replaced 13A plug' },
@@ -77,7 +85,7 @@ export interface Appliance {
     };
     polarity: TestResult;
     functionalCheck: TestResult;
-    leakageCurrent?: {
+    leakageCurrent: {
       result: TestResult;
       reading: string; // mA
       limit: string;
@@ -117,6 +125,9 @@ export interface PATTestingFormData {
   siteAddress: string;
   siteContactName: string;
   siteContactPhone: string;
+
+  // Test environment
+  testTemperature: string; // °C — affects IR limits
 
   // Test equipment
   testEquipment: {
@@ -209,6 +220,11 @@ export const getDefaultAppliance = (): Appliance => ({
     },
     polarity: '',
     functionalCheck: '',
+    leakageCurrent: {
+      result: '',
+      reading: '',
+      limit: '5.0',
+    },
   },
 
   overallResult: '',
@@ -238,6 +254,8 @@ export const getDefaultPATTestingFormData = (): PATTestingFormData => ({
   siteAddress: '',
   siteContactName: '',
   siteContactPhone: '',
+
+  testTemperature: '',
 
   testEquipment: {
     make: '',

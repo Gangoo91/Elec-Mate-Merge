@@ -200,6 +200,9 @@ export const formatPATTestingJson = (
       site_contact_phone: formData.siteContactPhone || '',
     },
 
+    // Test environment
+    test_temperature: formData.testTemperature || '',
+
     // Test equipment
     test_equipment: {
       make: formData.testEquipment?.make || '',

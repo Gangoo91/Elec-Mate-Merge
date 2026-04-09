@@ -5,9 +5,6 @@ import PATTestingClientDetails from './PATTestingClientDetails';
 import PATTestingApplianceList from './PATTestingApplianceList';
 import PATTestingDeclarations from './PATTestingDeclarations';
 import PATTestingTabNavigation from './PATTestingTabNavigation';
-import { User, Plug, FileText } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { Appliance } from '@/types/pat-testing';
 
 interface PATTestingFormTabsProps {
@@ -52,13 +49,11 @@ interface PATTestingFormTabsProps {
 const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
   currentTab,
   onTabChange,
-  canAccessTab,
   formData,
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
   onCreateInvoice,
-  onSaveDraft,
   canGenerateCertificate = true,
   activeApplianceId,
   onOpenAppliance,
@@ -66,16 +61,13 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
   copiedApplianceData,
   onCopyApplianceData,
 }) => {
-  const isMobile = useIsMobile();
-
   const smartTabs: SmartTab[] = [
     {
       value: 'client',
       label: 'Client',
       shortLabel: 'Client',
-      icon: <User className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>
+        <div className="pt-2 pb-48 sm:px-4">
           <PATTestingClientDetails formData={formData} onUpdate={onUpdate} />
           <PATTestingTabNavigation {...tabNavigationProps} />
         </div>
@@ -83,11 +75,10 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
     },
     {
       value: 'appliances',
-      label: 'Appliances',
+      label: 'Items',
       shortLabel: 'Items',
-      icon: <Plug className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>
+        <div className="pt-2 pb-48 sm:px-4">
           <PATTestingApplianceList
             formData={formData}
             onUpdate={onUpdate}
@@ -103,11 +94,10 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
     },
     {
       value: 'declarations',
-      label: 'Summary',
+      label: 'Sign',
       shortLabel: 'Sign',
-      icon: <FileText className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>
+        <div className="pt-2 pb-48 sm:px-4">
           <PATTestingDeclarations formData={formData} onUpdate={onUpdate} />
           <PATTestingTabNavigation
             {...tabNavigationProps}
@@ -121,15 +111,11 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
   ];
 
   return (
-    <div className="space-y-2 sm:space-y-4">
-      <SmartTabs
-        tabs={smartTabs}
-        value={currentTab}
-        onValueChange={onTabChange}
-        className="space-y-4"
-        breakpoint={3}
-      />
-    </div>
+    <SmartTabs
+      tabs={smartTabs}
+      value={currentTab}
+      onValueChange={onTabChange}
+    />
   );
 };
 

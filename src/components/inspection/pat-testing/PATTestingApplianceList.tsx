@@ -9,7 +9,6 @@
 import React, { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plug, Plus, ScanBarcode, Hash, X } from 'lucide-react';
 import { getDefaultAppliance, Appliance } from '@/types/pat-testing';
 import { cn } from '@/lib/utils';
 import PATApplianceCard from './PATApplianceCard';
@@ -98,21 +97,17 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
     <div className="space-y-4">
       {/* Header */}
       <div className="px-4 sm:px-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
-              <Plug className="h-5 w-5 text-blue-500" />
-            </div>
-            <div>
-              <span className="font-semibold text-lg text-white">Appliance Register</span>
-              <div className="flex items-center gap-2 mt-0.5">
-                <span className="text-xs text-white">{appliances.length} total</span>
-                {passCount > 0 && <span className="text-xs text-green-400">{passCount} pass</span>}
-                {failCount > 0 && <span className="text-xs text-red-400">{failCount} fail</span>}
-                {untestedCount > 0 && (
-                  <span className="text-xs text-white">{untestedCount} untested</span>
-                )}
-              </div>
+        <div className="border-b border-white/[0.06] pb-1 mb-3">
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+          <div className="flex items-center justify-between">
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Appliance Register</h2>
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-white">{appliances.length} total</span>
+              {passCount > 0 && <span className="text-xs text-green-400">{passCount} pass</span>}
+              {failCount > 0 && <span className="text-xs text-red-400">{failCount} fail</span>}
+              {untestedCount > 0 && (
+                <span className="text-xs text-white">{untestedCount} untested</span>
+              )}
             </div>
           </div>
         </div>
@@ -120,128 +115,98 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
 
       {/* Action Buttons */}
       <div className="flex gap-2 px-4 sm:px-0">
-        <Button
-          variant="outline"
+        <button
+          type="button"
           onClick={addAndOpen}
-          className="flex-1 h-11 touch-manipulation border-dashed"
+          className="flex-1 h-11 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow"
         >
-          <Plus className="h-4 w-4 mr-2" />
           Add Appliance
-        </Button>
-        <Button
-          variant="outline"
+        </button>
+        <button
+          type="button"
           onClick={() => setShowBulkAdd(!showBulkAdd)}
           className={cn(
-            'h-11 touch-manipulation',
-            showBulkAdd && 'bg-blue-500/15 border-blue-500/30 text-blue-400'
+            'h-11 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
+            showBulkAdd
+              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+              : 'bg-white/[0.05] border border-white/[0.08] text-white'
           )}
         >
-          <Hash className="h-4 w-4 mr-2" />
           Multiple
-        </Button>
-        <Button
-          variant="outline"
+        </button>
+        <button
+          type="button"
           onClick={() => {
             const newAppliance = getDefaultAppliance();
             onUpdate('appliances', [...appliances, newAppliance]);
             setTimeout(() => onOpenAppliance(newAppliance.id), 0);
           }}
-          className="h-11 touch-manipulation"
+          className="h-11 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all bg-white/[0.05] border border-white/[0.08] text-white"
         >
-          <ScanBarcode className="h-4 w-4" />
-        </Button>
+          Scan
+        </button>
       </div>
 
       {/* Bulk Add Panel */}
       {showBulkAdd && (
         <div className="px-4 sm:px-0">
-          <div className="bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden">
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 pt-4 pb-2">
-              <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                  <Hash className="h-4 w-4 text-blue-400" />
-                </div>
+          <div className="relative overflow-hidden card-surface-interactive rounded-xl">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+            <div className="relative z-10 p-4 space-y-3">
+              {/* Header */}
+              <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="font-semibold text-white text-sm">Add Multiple</h4>
-                  <p className="text-white text-xs">Select how many to add</p>
+                  <h4 className="font-bold text-white text-sm">Add Multiple</h4>
+                  <p className="text-white text-[10px]">Select how many to add</p>
                 </div>
+                <button
+                  type="button"
+                  onClick={() => { setShowBulkAdd(false); setBulkCount(''); }}
+                  className="w-7 h-7 flex items-center justify-center rounded-lg bg-white/[0.06] hover:bg-white/10 touch-manipulation text-white text-xs active:scale-[0.98]"
+                >
+                  ✕
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setShowBulkAdd(false);
-                  setBulkCount('');
-                }}
-                className="h-9 w-9 flex items-center justify-center rounded-xl bg-white/[0.06] hover:bg-white/10 touch-manipulation"
-              >
-                <X className="h-4 w-4 text-white" />
-              </button>
-            </div>
 
-            {/* Quick Presets — primary interaction */}
-            <div className="px-4 pt-2 pb-3">
-              <div className="grid grid-cols-5 gap-2">
+              {/* Quick Presets */}
+              <div className="grid grid-cols-5 gap-1.5">
                 {[5, 10, 25, 50, 100].map((n) => (
                   <button
                     key={n}
                     type="button"
                     onClick={() => setBulkCount(String(n))}
                     className={cn(
-                      'h-12 rounded-xl text-sm font-bold border-2 transition-all touch-manipulation',
+                      'h-10 rounded-lg text-xs font-bold transition-all touch-manipulation active:scale-[0.98]',
                       bulkCount === String(n)
-                        ? 'bg-blue-500/20 text-blue-400 border-blue-500/40 scale-[1.02]'
-                        : 'bg-white/[0.04] text-white border-white/[0.08] active:scale-95'
+                        ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
+                        : 'bg-white/[0.04] text-white border border-white/[0.08]'
                     )}
                   >
                     {n}
                   </button>
                 ))}
               </div>
-            </div>
 
-            {/* Divider with "or" */}
-            <div className="flex items-center gap-3 px-4">
-              <div className="flex-1 h-px bg-white/[0.08]" />
-              <span className="text-xs text-white font-medium">or custom</span>
-              <div className="flex-1 h-px bg-white/[0.08]" />
-            </div>
-
-            {/* Custom number input */}
-            <div className="px-4 pt-3 pb-4">
+              {/* Custom input + Add button in one row */}
               <div className="flex gap-2">
                 <Input
                   type="text"
                   pattern="[0-9]*"
-                  min="1"
-                  max="500"
-                  placeholder="Enter number..."
+                  placeholder="Custom..."
                   value={bulkCount}
-                  onChange={(e) => {
-                    const v = e.target.value.replace(/[^0-9]/g, '');
-                    setBulkCount(v);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleBulkAdd();
-                  }}
-                  className="h-11 text-base touch-manipulation flex-1"
+                  onChange={(e) => setBulkCount(e.target.value.replace(/[^0-9]/g, ''))}
+                  onKeyDown={(e) => { if (e.key === 'Enter') handleBulkAdd(); }}
+                  className="h-10 text-sm touch-manipulation bg-white/[0.06] border-white/[0.08] text-white flex-1"
                   inputMode="numeric"
                 />
+                <button
+                  onClick={handleBulkAdd}
+                  disabled={!bulkCount || parseInt(bulkCount) < 1}
+                  className="h-10 px-4 rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow text-xs font-bold touch-manipulation active:scale-[0.98] disabled:opacity-40 shrink-0"
+                >
+                  {bulkCount && parseInt(bulkCount) > 0 ? `Add ${bulkCount}` : 'Add'}
+                </button>
               </div>
-            </div>
-
-            {/* Add button — full width CTA */}
-            <div className="px-4 pb-4">
-              <Button
-                onClick={handleBulkAdd}
-                disabled={!bulkCount || parseInt(bulkCount) < 1}
-                className="w-full h-12 bg-blue-500 hover:bg-blue-600 text-white font-semibold text-base rounded-xl touch-manipulation disabled:opacity-40"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                {bulkCount && parseInt(bulkCount) > 0
-                  ? `Add ${parseInt(bulkCount)} Appliance${parseInt(bulkCount) > 1 ? 's' : ''}`
-                  : 'Add Appliances'}
-              </Button>
             </div>
           </div>
         </div>
@@ -251,9 +216,6 @@ const PATTestingApplianceList: React.FC<PATTestingApplianceListProps> = ({
       <div className="px-4 sm:px-0 space-y-2">
         {appliances.length === 0 ? (
           <div className="text-center py-12">
-            <div className="w-16 h-16 rounded-2xl bg-white/[0.06] flex items-center justify-center mx-auto mb-4">
-              <Plug className="h-8 w-8 text-white" />
-            </div>
             <p className="text-white font-medium">No appliances added yet</p>
             <p className="text-white text-sm mt-1">
               Tap "Add Appliance" for one, or "Multiple" to add a batch

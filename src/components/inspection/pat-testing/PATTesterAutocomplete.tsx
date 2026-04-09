@@ -9,7 +9,7 @@
  */
 
 import * as React from 'react';
-import { Check, ChevronsUpDown, Sparkles, Search, X, Zap } from 'lucide-react';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -202,16 +202,13 @@ export function PATTesterAutocomplete({
       onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
         'w-full justify-between h-11 touch-manipulation',
-        'bg-elec-gray border-white/30 text-foreground',
-        'hover:bg-gray-700 hover:border-white/40',
-        'focus:border-yellow-500 focus:ring-yellow-500',
-        'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
+        'bg-white/[0.06] border-white/[0.08] text-white',
+        'hover:bg-white/[0.09]',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
     >
-      <span className={cn('truncate', !hasValue && 'text-muted-foreground')}>{displayValue}</span>
-      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      <span className={cn('truncate', !hasValue && 'text-white/40')}>{displayValue}</span>
     </Button>
   );
 
@@ -233,13 +230,7 @@ export function PATTesterAutocomplete({
           isSelected && 'bg-elec-yellow/20'
         )}
       >
-        <Check
-          className={cn(
-            'shrink-0',
-            forMobile ? 'mr-3 h-5 w-5' : 'mr-2 h-4 w-4',
-            isSelected ? 'opacity-100 text-elec-yellow' : 'opacity-0'
-          )}
-        />
+        <span className={cn('shrink-0 text-elec-yellow font-bold', forMobile ? 'mr-3 text-sm' : 'mr-2 text-xs', isSelected ? 'opacity-100' : 'opacity-0')}>✓</span>
         <div className="flex flex-col flex-1 min-w-0">
           <span className={cn('font-medium truncate text-white', forMobile && 'text-base')}>
             {showManufacturer ? `${tester.make} ${tester.model}` : tester.model}
@@ -268,8 +259,7 @@ export function PATTesterAutocomplete({
         >
           <div className="flex flex-col max-h-[70vh]">
             {/* Search */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
-              <Search className="h-5 w-5 text-white shrink-0" />
+            <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-background sticky top-0">
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -300,7 +290,6 @@ export function PATTesterAutocomplete({
                 </div>
               ) : search.trim() ? (
                 <div className="py-12 text-center text-white">
-                  <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
                   <p className="text-base">No testers found</p>
                   <p className="text-sm mt-1">Try a different search term</p>
                 </div>
@@ -321,9 +310,8 @@ export function PATTesterAutocomplete({
             </div>
 
             {/* Footer */}
-            <div className="border-t border-border/50 px-4 py-3 bg-card/30">
+            <div className="border-t border-white/[0.06] px-4 py-3 bg-background">
               <p className="text-xs text-white text-center flex items-center justify-center gap-1">
-                <Sparkles className="h-3 w-3 text-elec-yellow" />
                 Selecting fills make &amp; model fields
               </p>
             </div>
@@ -339,37 +327,30 @@ export function PATTesterAutocomplete({
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
         <PopoverContent
-          className="w-[var(--radix-popover-trigger-width)] p-0 bg-elec-gray border border-white/20 shadow-lg z-[100]"
+          className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border border-white/20 shadow-lg z-[100]"
           align="start"
           sideOffset={4}
         >
-          <Command className="bg-elec-gray" shouldFilter={false}>
+          <Command className="bg-background" shouldFilter={false}>
             <CommandInput
               placeholder="Search testers..."
               value={search}
               onValueChange={setSearch}
-              className="border-none bg-elec-gray text-foreground placeholder:text-gray-400"
+              className="border-none bg-background text-white placeholder:text-gray-400"
             />
-            <CommandList className="bg-elec-gray max-h-[300px]">
+            <CommandList className="bg-background max-h-[300px]">
               <CommandEmpty className="p-4 text-sm text-white">No testers found.</CommandEmpty>
 
               {filteredTesters && filteredTesters.length > 0 ? (
-                <CommandGroup heading="Search Results" className="bg-elec-gray">
+                <CommandGroup heading="Search Results" className="bg-background">
                   {filteredTesters.map((tester) => (
                     <CommandItem
                       key={tester.id}
                       value={tester.id}
                       onSelect={() => handleSelect(tester)}
-                      className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2"
+                      className="bg-background hover:bg-white/[0.06] cursor-pointer text-white py-2"
                     >
-                      <Check
-                        className={cn(
-                          'mr-2 h-4 w-4 shrink-0',
-                          selectedTester?.id === tester.id
-                            ? 'opacity-100 text-elec-yellow'
-                            : 'opacity-0'
-                        )}
-                      />
+                      <span className={cn('mr-2 text-xs font-bold text-elec-yellow shrink-0', selectedTester?.id === tester.id ? 'opacity-100' : 'opacity-0')}>✓</span>
                       <div className="flex flex-col flex-1 min-w-0">
                         <span className="font-medium truncate text-white">
                           {tester.make} {tester.model}
@@ -383,22 +364,15 @@ export function PATTesterAutocomplete({
                 </CommandGroup>
               ) : (
                 Object.entries(testersGrouped).map(([manufacturer, testers]) => (
-                  <CommandGroup key={manufacturer} heading={manufacturer} className="bg-elec-gray">
+                  <CommandGroup key={manufacturer} heading={manufacturer} className="bg-background">
                     {testers.map((tester) => (
                       <CommandItem
                         key={tester.id}
                         value={tester.id}
                         onSelect={() => handleSelect(tester)}
-                        className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-foreground py-2"
+                        className="bg-background hover:bg-white/[0.06] cursor-pointer text-white py-2"
                       >
-                        <Check
-                          className={cn(
-                            'mr-2 h-4 w-4 shrink-0',
-                            selectedTester?.id === tester.id
-                              ? 'opacity-100 text-elec-yellow'
-                              : 'opacity-0'
-                          )}
-                        />
+                        <span className={cn('mr-2 text-xs font-bold text-elec-yellow shrink-0', selectedTester?.id === tester.id ? 'opacity-100' : 'opacity-0')}>✓</span>
                         <div className="flex flex-col flex-1 min-w-0">
                           <span className="font-medium truncate text-white">{tester.model}</span>
                           {tester.features && (
@@ -414,10 +388,9 @@ export function PATTesterAutocomplete({
           </Command>
 
           {/* Footer */}
-          <div className="border-t border-border px-3 py-2 bg-muted/30">
-            <p className="text-xs text-white flex items-center gap-1">
-              <Sparkles className="h-3 w-3 text-elec-yellow" />
-              Selecting fills make &amp; model fields
+          <div className="border-t border-white/[0.06] px-3 py-2">
+            <p className="text-[10px] text-white text-center">
+              Selecting fills make & model fields
             </p>
           </div>
         </PopoverContent>

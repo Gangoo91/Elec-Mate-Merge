@@ -133,6 +133,9 @@ const declarationsSchema = z.object({
 // ── Root Schema ─────────────────────────────────────────────────────────────
 
 export const patTestingPayloadSchema = z.object({
+  // Test environment
+  test_temperature: z.string().default(''),
+
   // Nested objects
   metadata: metadataSchema,
   client_details: clientDetailsSchema,

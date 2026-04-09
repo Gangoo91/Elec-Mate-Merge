@@ -11,7 +11,7 @@
 import React, { useState, useEffect } from 'react';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { User, Users, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
@@ -100,7 +100,7 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
           className={cn(
             'flex-1 flex items-center justify-center h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98]',
             mode === 'new'
-              ? 'bg-white/[0.1] text-white shadow-sm'
+              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
               : 'text-white'
           )}
         >
@@ -112,7 +112,7 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
           className={cn(
             'flex-1 flex items-center justify-center h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98]',
             mode === 'existing'
-              ? 'bg-blue-500/20 text-blue-400 shadow-sm'
+              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
               : 'text-white'
           )}
         >
@@ -130,9 +130,8 @@ const CertificateClientSection: React.FC<CertificateClientSectionProps> = ({
 
       {/* Show linked customer badge when in "new" mode but we have a linked ID (from nav state) */}
       {mode === 'new' && formData.selectedCustomerId && (
-        <div className="flex items-center gap-2 p-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg text-sm">
-          <Users className="h-4 w-4 text-elec-yellow shrink-0" />
-          <span className="text-elec-yellow flex-1">Linked to CRM customer</span>
+        <div className="flex items-center gap-2 p-2 bg-white/[0.04] border border-white/[0.06] rounded-lg text-sm">
+          <span className="text-white flex-1 text-xs">Linked to CRM customer</span>
           <Button
             type="button"
             variant="ghost"

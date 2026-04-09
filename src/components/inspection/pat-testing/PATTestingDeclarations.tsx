@@ -5,30 +5,12 @@
  * signature sign-off.
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  ChevronDown,
-  Shield,
-  Calendar,
-  CheckCircle2,
-  AlertTriangle,
-  BarChart3,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import SignatureInput from '@/components/signature/SignatureInput';
-import { useIsMobile } from '@/hooks/use-mobile';
 import PATTestSummary from './PATTestSummary';
 
 interface PATTestingDeclarationsProps {
@@ -38,18 +20,14 @@ interface PATTestingDeclarationsProps {
   onUpdate: (field: string, value: any) => void;
 }
 
+const SectionHeader = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
 const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({ formData, onUpdate }) => {
-  const isMobile = useIsMobile();
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
-    summary: true,
-    declaration: true,
-    retest: true,
-  });
-
-  const toggleSection = (section: string) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
-
   const isComplete = formData.testerName && formData.testerSignature;
 
   // Calculate next test date based on suggested interval
@@ -87,265 +65,164 @@ const PATTestingDeclarations: React.FC<PATTestingDeclarationsProps> = ({ formDat
   }, [totalTested, totalPassed, totalFailed, onUpdate]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5 px-4 sm:px-0">
       {/* Test Summary */}
-      <Collapsible open={openSections.summary} onOpenChange={() => toggleSection('summary')}>
-        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-          <CollapsibleTrigger asChild>
-            <div
-              className={cn(
-                'cursor-pointer transition-colors p-4 touch-manipulation',
-                isMobile ? 'bg-card/30 border-y border-border/20' : 'hover:bg-muted/50'
-              )}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center">
-                    <BarChart3 className="h-5 w-5 text-green-500" />
-                  </div>
-                  <span className="font-semibold text-lg text-white">Test Summary</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.summary && 'rotate-180'
-                  )}
-                />
-              </div>
-            </div>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4">
-              <PATTestSummary appliances={appliances} />
-            </div>
-          </CollapsibleContent>
-        </div>
-      </Collapsible>
+      <div>
+        <SectionHeader title="Test Summary" />
+        <PATTestSummary appliances={appliances} />
+      </div>
 
       {/* Tester Declaration & Signature */}
-      <Collapsible
-        open={openSections.declaration}
-        onOpenChange={() => toggleSection('declaration')}
-      >
-        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-          <CollapsibleTrigger asChild>
-            <div
-              className={cn(
-                'cursor-pointer transition-colors p-4 touch-manipulation',
-                isMobile ? 'bg-card/30 border-y border-border/20' : 'hover:bg-muted/50'
+      <div>
+        <SectionHeader title="Tester Declaration" />
+        <div className="space-y-4">
+          <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3">
+            <p className="text-white text-sm">
+              <strong>Declaration:</strong> I certify that the appliances listed in this
+              report have been inspected and tested in accordance with the IET Code of
+              Practice for In-Service Inspection and Testing of Electrical Equipment, and the
+              results are as recorded.
+            </p>
+          </div>
+
+          {/* Tester info (read-only if set from Tab 1 profile) */}
+          {formData.testerName && (
+            <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-3 space-y-1">
+              <p className="text-white text-sm font-medium">{formData.testerName}</p>
+              {formData.testerCompany && (
+                <p className="text-white text-xs">{formData.testerCompany}</p>
               )}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
-                    <Shield className="h-5 w-5 text-purple-500" />
-                  </div>
-                  <span className="font-semibold text-lg text-white">Tester Declaration</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.declaration && 'rotate-180'
-                  )}
+              {formData.testerQualifications && (
+                <p className="text-white text-xs">{formData.testerQualifications}</p>
+              )}
+              <p className="text-white text-xs">
+                Date: {formData.testerDate || new Date().toISOString().split('T')[0]}
+              </p>
+            </div>
+          )}
+
+          {/* Manual entry if no profile was selected */}
+          {!formData.testerName && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <Label className="text-white text-xs mb-1.5 block" htmlFor="testerName">
+                  Tester Name *
+                </Label>
+                <Input
+                  id="testerName"
+                  placeholder="Full name"
+                  value={formData.testerName || ''}
+                  onChange={(e) => onUpdate('testerName', e.target.value)}
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-xs mb-1.5 block" htmlFor="testerDate">
+                  Date
+                </Label>
+                <input
+                  id="testerDate"
+                  type="date"
+                  value={formData.testerDate || new Date().toISOString().split('T')[0]}
+                  onChange={(e) => onUpdate('testerDate', e.target.value)}
+                  className="flex h-11 w-full rounded-md px-3 py-2 text-sm touch-manipulation bg-white/[0.06] border border-white/[0.08] text-white [color-scheme:dark] [-webkit-appearance:none] [&::-webkit-date-and-time-value]:text-white [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:invert"
                 />
               </div>
             </div>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 space-y-4">
-              <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-3">
-                <div className="flex gap-2">
-                  <Shield className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-                  <p className="text-white text-sm">
-                    <strong>Declaration:</strong> I certify that the appliances listed in this
-                    report have been inspected and tested in accordance with the IET Code of
-                    Practice for In-Service Inspection and Testing of Electrical Equipment, and the
-                    results are as recorded.
-                  </p>
-                </div>
-              </div>
+          )}
 
-              {/* Tester info (read-only if set from Tab 1 profile) */}
-              {formData.testerName && (
-                <div className="bg-white/[0.06] border border-white/[0.08] rounded-2xl p-3 space-y-1">
-                  <p className="text-white text-sm font-medium">{formData.testerName}</p>
-                  {formData.testerCompany && (
-                    <p className="text-white text-xs">{formData.testerCompany}</p>
-                  )}
-                  {formData.testerQualifications && (
-                    <p className="text-white text-xs">{formData.testerQualifications}</p>
-                  )}
-                  <p className="text-white text-xs">
-                    Date: {formData.testerDate || new Date().toISOString().split('T')[0]}
-                  </p>
-                </div>
-              )}
-
-              {/* Manual entry if no profile was selected */}
-              {!formData.testerName && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-white text-sm" htmlFor="testerName">
-                      Tester Name *
-                    </Label>
-                    <Input
-                      id="testerName"
-                      placeholder="Full name"
-                      value={formData.testerName || ''}
-                      onChange={(e) => onUpdate('testerName', e.target.value)}
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-white text-sm" htmlFor="testerDate">
-                      Date
-                    </Label>
-                    <Input
-                      id="testerDate"
-                      type="date"
-                      value={formData.testerDate || new Date().toISOString().split('T')[0]}
-                      onChange={(e) => onUpdate('testerDate', e.target.value)}
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                </div>
-              )}
-
-              <SignatureInput
-                label="Tester Signature *"
-                value={formData.testerSignature}
-                onChange={(sig) => onUpdate('testerSignature', sig)}
-                placeholder="Draw or type signature"
-                required
-              />
-            </div>
-          </CollapsibleContent>
+          <SignatureInput
+            label="Tester Signature *"
+            value={formData.testerSignature}
+            onChange={(sig) => onUpdate('testerSignature', sig)}
+            placeholder="Draw or type signature"
+            required
+          />
         </div>
-      </Collapsible>
+      </div>
 
       {/* Retest Schedule */}
-      <Collapsible open={openSections.retest} onOpenChange={() => toggleSection('retest')}>
-        <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-          <CollapsibleTrigger asChild>
-            <div
-              className={cn(
-                'cursor-pointer transition-colors p-4 touch-manipulation',
-                isMobile ? 'border-b border-border/20' : 'hover:bg-muted/50'
-              )}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
-                    <Calendar className="h-5 w-5 text-blue-500" />
-                  </div>
-                  <span className="font-semibold text-lg text-white">Retest Schedule</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.retest && 'rotate-180'
-                  )}
-                />
-              </div>
+      <div>
+        <SectionHeader title="Retest Schedule" />
+        <div className="space-y-4">
+          <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
+            <p className="text-[11px] text-white leading-relaxed">
+              <span className="font-bold">IET CoP:</span> Retest intervals depend on equipment type and environment. Construction sites: 3 months. Office IT: up to 48 months.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label className="text-white text-xs mb-1.5 block">Retest Interval</Label>
+              <MobileSelectPicker
+                value={formData.suggestedRetestInterval || '12'}
+                onValueChange={(v) => {
+                  onUpdate('suggestedRetestInterval', v);
+                  const testDate = formData.testDate || new Date().toISOString().split('T')[0];
+                  const date = new Date(testDate);
+                  date.setMonth(date.getMonth() + parseInt(v));
+                  onUpdate('nextTestDue', date.toISOString().split('T')[0]);
+                }}
+                options={[
+                  { value: '3', label: '3 Months' },
+                  { value: '6', label: '6 Months' },
+                  { value: '12', label: '12 Months' },
+                  { value: '24', label: '24 Months' },
+                  { value: '48', label: '48 Months' },
+                ]}
+                placeholder="Select"
+                title="Retest Interval"
+              />
             </div>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className="p-4 space-y-4">
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-3">
-                <p className="text-white text-sm">
-                  <strong>IET CoP Guidance:</strong> Suggested retest intervals depend on equipment
-                  type and environment. Construction sites may need 3-monthly tests; office IT
-                  equipment may be 48 months.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-white text-sm" htmlFor="suggestedRetestInterval">
-                    Suggested Retest Interval
-                  </Label>
-                  <Select
-                    value={formData.suggestedRetestInterval || '12'}
-                    onValueChange={(v) => {
-                      onUpdate('suggestedRetestInterval', v);
-                      const testDate = formData.testDate || new Date().toISOString().split('T')[0];
-                      const date = new Date(testDate);
-                      date.setMonth(date.getMonth() + parseInt(v));
-                      onUpdate('nextTestDue', date.toISOString().split('T')[0]);
-                    }}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select interval" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100]">
-                      <SelectItem value="3">3 Months (Construction)</SelectItem>
-                      <SelectItem value="6">6 Months (Industrial)</SelectItem>
-                      <SelectItem value="12">12 Months (General)</SelectItem>
-                      <SelectItem value="24">24 Months (Office)</SelectItem>
-                      <SelectItem value="48">48 Months (IT Equipment)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label className="text-white text-sm" htmlFor="nextTestDue">
-                    Next Test Due
-                  </Label>
-                  <Input
-                    id="nextTestDue"
-                    type="date"
-                    value={formData.nextTestDue || calculateNextTestDate()}
-                    onChange={(e) => onUpdate('nextTestDue', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <Label className="text-white text-sm" htmlFor="recommendations">
-                  Recommendations
-                </Label>
-                <Textarea
-                  id="recommendations"
-                  placeholder="Any recommendations for the client..."
-                  value={formData.recommendations || ''}
-                  onChange={(e) => onUpdate('recommendations', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px]"
-                />
-              </div>
-
-              <div>
-                <Label className="text-white text-sm" htmlFor="additionalNotes">
-                  Additional Notes
-                </Label>
-                <Textarea
-                  id="additionalNotes"
-                  placeholder="Any additional notes or comments..."
-                  value={formData.additionalNotes || ''}
-                  onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-                  className="text-base touch-manipulation min-h-[100px]"
-                />
-              </div>
+            <div>
+              <Label className="text-white text-xs mb-1.5 block">Next Test Due</Label>
+              <input
+                type="date"
+                value={formData.nextTestDue || calculateNextTestDate()}
+                onChange={(e) => onUpdate('nextTestDue', e.target.value)}
+                className="flex h-11 w-full rounded-md px-3 py-2 text-sm touch-manipulation bg-white/[0.06] border border-white/[0.08] text-white [color-scheme:dark] [-webkit-appearance:none] [&::-webkit-date-and-time-value]:text-white [&::-webkit-calendar-picker-indicator]:opacity-60 [&::-webkit-calendar-picker-indicator]:invert"
+              />
             </div>
-          </CollapsibleContent>
+          </div>
+
+          <div>
+            <Label className="text-white text-xs mb-1.5 block">Recommendations</Label>
+            <Textarea
+              placeholder="Any recommendations for the client..."
+              value={formData.recommendations || ''}
+              onChange={(e) => onUpdate('recommendations', e.target.value)}
+              className="text-base touch-manipulation min-h-[60px] bg-white/[0.06] border-white/[0.08] text-white"
+            />
+          </div>
+
+          <div>
+            <Label className="text-white text-xs mb-1.5 block">Additional Notes</Label>
+            <Textarea
+              placeholder="Any additional notes..."
+              value={formData.additionalNotes || ''}
+              onChange={(e) => onUpdate('additionalNotes', e.target.value)}
+              className="text-base touch-manipulation min-h-[60px] bg-white/[0.06] border-white/[0.08] text-white"
+            />
+          </div>
         </div>
-      </Collapsible>
+      </div>
 
       {/* Final Status */}
       {isComplete ? (
-        <div className="bg-green-500/10 border border-green-500/20 rounded-2xl p-4 flex items-center gap-3 mx-4 sm:mx-0">
-          <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0" />
-          <p className="text-white text-sm">
-            <strong>Certificate ready for generation.</strong> All required fields have been
-            completed.
-          </p>
+        <div className="relative overflow-hidden card-surface-interactive rounded-xl">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-emerald-400 to-green-400 opacity-60" />
+          <div className="relative z-10 p-3">
+            <p className="text-emerald-400 text-sm font-bold">Ready to generate</p>
+            <p className="text-white text-xs mt-0.5">All required fields completed</p>
+          </div>
         </div>
       ) : (
-        <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 flex items-center gap-3 mx-4 sm:mx-0">
-          <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
-          <p className="text-white text-sm">
-            <strong>Incomplete declaration.</strong> Tester name and signature are required before
-            the certificate can be generated.
-          </p>
+        <div className="relative overflow-hidden card-surface-interactive rounded-xl">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 opacity-60" />
+          <div className="relative z-10 p-3">
+            <p className="text-amber-400 text-sm font-bold">Incomplete declaration</p>
+            <p className="text-white text-xs mt-0.5">Tester name and signature required</p>
+          </div>
         </div>
       )}
     </div>

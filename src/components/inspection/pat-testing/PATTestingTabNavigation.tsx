@@ -1,8 +1,5 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, CheckCircle2, PoundSterling } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface PATTestingTabNavigationProps {
   currentTab: string;
@@ -20,7 +17,6 @@ interface PATTestingTabNavigationProps {
 }
 
 const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
-  currentTab,
   currentTabIndex,
   totalTabs,
   canNavigateNext,
@@ -28,93 +24,80 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
   navigateNext,
   navigatePrevious,
   getProgressPercentage,
-  isCurrentTabComplete,
   onGenerateCertificate,
   canGenerateCertificate = true,
   onCreateInvoice,
 }) => {
-  const isMobile = useIsMobile();
   const progress = getProgressPercentage();
   const isLastTab = currentTabIndex === totalTabs - 1;
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
   return (
-    <div
-      className={cn(
-        'sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border',
-        isMobile ? 'p-3 mt-2' : 'p-4 mt-6'
-      )}
-    >
-      <div className={cn(isMobile ? '' : 'max-w-6xl mx-auto')}>
-        {/* Progress bar */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-sm text-white">
-              Section {currentTabIndex + 1} of {totalTabs}
-            </span>
-            <span className="text-sm font-medium text-white">{progress}% complete</span>
-          </div>
-          <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
-            <div
-              className="h-full bg-blue-500 transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+    <div className="sticky bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-white/[0.08] p-4">
+      {/* Progress bar */}
+      <div className="mb-3">
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-[10px] text-white">
+            {currentTabIndex + 1}/{totalTabs}
+          </span>
+          <span className="text-[10px] font-medium text-white">{progress}%</span>
         </div>
-
-        {/* Navigation buttons */}
-        <div className="flex items-center justify-between gap-3">
-          <Button
-            variant="outline"
-            onClick={navigatePrevious}
-            disabled={!canNavigatePrevious}
-            className="h-12 px-6 touch-manipulation"
-          >
-            <ChevronLeft className="h-5 w-5 mr-2" />
-            Previous
-          </Button>
-
-          <div className="flex items-center gap-2">
-            {isCurrentTabComplete && (
-              <div className="flex items-center gap-1 text-green-400 text-sm">
-                <CheckCircle2 className="h-4 w-4" />
-                <span className="hidden sm:inline">Complete</span>
-              </div>
-            )}
-          </div>
-
-          {isLastTab ? (
-            <div className="flex items-center gap-2">
-              {onCreateInvoice && (
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={onCreateInvoice}
-                  className="h-11 w-11 touch-manipulation bg-emerald-500/10 border-emerald-500/30 hover:bg-emerald-500/20 text-emerald-400 active:scale-[0.98] transition-transform"
-                  aria-label="Create invoice"
-                >
-                  <PoundSterling className="h-5 w-5" />
-                </Button>
-              )}
-              <Button
-                onClick={onGenerateCertificate}
-                disabled={!canGenerateCertificate}
-                className="h-12 px-6 touch-manipulation bg-blue-600 hover:bg-blue-700"
-              >
-                Generate Certificate
-              </Button>
-            </div>
-          ) : (
-            <Button
-              onClick={navigateNext}
-              disabled={!canNavigateNext}
-              className="h-12 px-6 touch-manipulation"
-            >
-              Next
-              <ChevronRight className="h-5 w-5 ml-2" />
-            </Button>
-          )}
+        <div className="h-1 bg-white/[0.12] rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow transition-all duration-300 rounded-full"
+            style={{ width: `${progress}%` }}
+          />
         </div>
       </div>
+
+      {isLastTab ? (
+        <div className="space-y-2">
+          <Button
+            onClick={onGenerateCertificate}
+            disabled={!canGenerateCertificate}
+            className="w-full h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow"
+          >
+            Generate Certificate
+          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => { navigatePrevious(); scrollToTop(); }}
+              disabled={!canNavigatePrevious}
+              className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg border-white/[0.12] text-white"
+            >
+              Previous
+            </Button>
+            {onCreateInvoice && (
+              <button
+                onClick={onCreateInvoice}
+                className="flex-1 h-11 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-medium text-white hover:bg-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Invoice
+              </button>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={() => { navigatePrevious(); scrollToTop(); }}
+            disabled={!canNavigatePrevious}
+            className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg border-white/[0.12] text-white"
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={() => { navigateNext(); scrollToTop(); }}
+            disabled={!canNavigateNext}
+            className="flex-1 h-11 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow"
+          >
+            Next
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

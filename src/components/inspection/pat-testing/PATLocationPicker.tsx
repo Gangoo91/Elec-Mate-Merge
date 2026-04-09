@@ -8,7 +8,6 @@
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { MapPin, ClipboardPaste } from 'lucide-react';
 
 interface PATLocationPickerProps {
   value: string;
@@ -45,7 +44,7 @@ const PATLocationPicker: React.FC<PATLocationPickerProps> = ({
             onFocus={() => {
               if (uniqueRecent.length > 0) setShowRecent(true);
             }}
-            className="h-11 text-base touch-manipulation"
+            className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]"
           />
         </div>
         {uniqueRecent.length > 0 && (
@@ -58,10 +57,10 @@ const PATLocationPicker: React.FC<PATLocationPickerProps> = ({
                 onChange(uniqueRecent[0]);
               }
             }}
-            className="h-11 w-11 shrink-0 touch-manipulation"
+            className="h-11 w-11 shrink-0 touch-manipulation text-white"
             title="Paste last location"
           >
-            <ClipboardPaste className="h-4 w-4" />
+            Paste
           </Button>
         )}
       </div>
@@ -78,7 +77,6 @@ const PATLocationPicker: React.FC<PATLocationPickerProps> = ({
               }}
               className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-xs touch-manipulation hover:bg-white/[0.1] transition-colors"
             >
-              <MapPin className="h-3 w-3" />
               {loc}
             </button>
           ))}
