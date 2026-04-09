@@ -509,7 +509,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         const issues: string[] = [];
         testResults.forEach((circuit, idx) => {
           const num = idx + 1;
-          const ir = parseFloat(circuit.insulationLiveEarth || circuit.insulationResistance || '0');
+          const irRaw = circuit.insulationLiveEarth || circuit.insulationResistance || '0';
+          const ir = irRaw.includes('>') ? 999 : parseFloat(irRaw.replace('<', '').trim()) || 0;
           if (ir > 0 && ir < 1.0) issues.push(`C${num}: IR too low`);
           const zs = parseFloat(circuit.zs || '0');
           const maxZs = parseFloat(circuit.maxZs || '0');

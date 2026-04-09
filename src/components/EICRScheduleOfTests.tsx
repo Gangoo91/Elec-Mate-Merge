@@ -517,7 +517,8 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         const issues: string[] = [];
         testResults.forEach((circuit, idx) => {
           const num = idx + 1;
-          const ir = parseFloat(circuit.insulationLiveEarth || circuit.insulationResistance || '0');
+          const irRaw = circuit.insulationLiveEarth || circuit.insulationResistance || '0';
+          const ir = irRaw.includes('>') ? 999 : parseFloat(irRaw.replace('<', '').trim()) || 0;
           if (ir > 0 && ir < 1.0) issues.push(`C${num}: IR too low`);
           const zs = parseFloat(circuit.zs || '0');
           const maxZs = parseFloat(circuit.maxZs || '0');
@@ -837,9 +838,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               const num = idx + 1;
 
               // Check insulation resistance (min 1.0 MΩ per BS7671)
-              const irLE = parseFloat(circuit.insulationLiveEarth || '0');
-              const irLN = parseFloat(circuit.insulationLiveNeutral || '0');
-              const ir = irLE || irLN || parseFloat(circuit.insulationResistance || '0');
+              // Values starting with '>' (e.g. '>200') mean meter max — always pass
+              const irLERaw = circuit.insulationLiveEarth || '0';
+              const irLNRaw = circuit.insulationLiveNeutral || '0';
+              const irResRaw = circuit.insulationResistance || '0';
+              const irLE = irLERaw.includes('>') ? 999 : parseFloat(irLERaw.replace('<', '').trim()) || 0;
+              const irLN = irLNRaw.includes('>') ? 999 : parseFloat(irLNRaw.replace('<', '').trim()) || 0;
+              const ir = irLE || irLN || (irResRaw.includes('>') ? 999 : parseFloat(irResRaw.replace('<', '').trim()) || 0);
               if (ir > 0 && ir < 1.0) {
                 issues.push(
                   `C${num}: IR ${ir}MΩ too low (<1.0MΩ). Check for moisture or damaged insulation.`

@@ -59,20 +59,10 @@ export const checkCableProtectiveDeviceMatch = (result: TestResult): RegulationW
     });
   }
 
-  // Skip oversized cable warning for auto-filled circuits, ring circuits, and lighting circuits (which are typically standard)
-  if (!result.autoFilled && !isRing && !isLighting) {
-    // Warning for oversized cable (more than 50% over required)
-    const minRequiredCapacity = deviceRating * 1.25; // Allow 25% margin
-    if (cableCapacity > minRequiredCapacity * 1.5) {
-      warnings.push({
-        severity: 'warning',
-        title: 'Cable May Be Oversized',
-        description: `${result.liveSize} cable appears oversized for ${deviceRating}A protection. Consider cable cost optimisation.`,
-        regulation: 'BS 7671 Section 433',
-        suggestion: `${getCableSizeForRating(deviceRating, 'method_c', isRing)} may be sufficient for this application.`,
-      });
-    }
-  }
+  // "Cable May Be Oversized" warning REMOVED (ELE-709).
+  // BS 7671 Section 433 defines MINIMUM cable size — using a larger cable is always
+  // safer and never a compliance issue. The warning confused electricians doing
+  // standard work (e.g. 1.5mm/6A lighting circuits) and provided no safety value.
 
   return warnings;
 };

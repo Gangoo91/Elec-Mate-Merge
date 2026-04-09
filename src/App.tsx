@@ -10,7 +10,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/queryClient';
 import ScrollToTop from '@/components/ScrollToTop';
 import { PWAUpdatePrompt } from '@/components/PWAUpdatePrompt';
-import { OfflineIndicator } from '@/components/OfflineIndicator';
+// OfflineIndicator removed — sync pill navigated to 404 (ELE-707)
 import { CookieConsent } from '@/components/CookieConsent';
 import { useNativeApp, useNativePushNotifications } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
@@ -58,7 +58,7 @@ function App() {
                 </Suspense>
                 <TrainingActivityMonitor />
                 <AppRouter />
-                <OfflineIndicator />
+                {/* OfflineIndicator removed (ELE-707) */}
                 <SonnerToaster />
                 {/* Web-only components — not needed in native app */}
                 {!Capacitor.isNativePlatform() && (

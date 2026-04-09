@@ -35,10 +35,8 @@ export const OfflineIndicator = () => {
 
   return (
     <div
-      onClick={() => queuedChanges > 0 && navigate('/sync-status')}
       className={cn(
         'fixed bottom-4 right-4 z-50 px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 text-sm font-medium transition-all',
-        queuedChanges > 0 && 'cursor-pointer hover:scale-105',
         !isOnline ? 'bg-red-500 text-foreground' : 'bg-amber-500 text-foreground'
       )}
     >
