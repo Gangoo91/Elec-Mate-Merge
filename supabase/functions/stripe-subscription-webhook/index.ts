@@ -8,7 +8,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
-import { Resend } from 'npm:resend@2.0.0';
+import { Resend } from 'https://esm.sh/resend@2.0.0';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -567,11 +567,20 @@ serve(async (req) => {
     // Verify webhook signature if secret is configured
     if (webhookSecret && signature) {
       try {
-        event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
+        // Use constructEventAsync for Deno Deploy compatibility (async SubtleCrypto)
+        event = await stripe.webhooks.constructEventAsync(
+          body,
+          signature,
+          webhookSecret,
+          undefined,
+          Stripe.createSubtleCryptoProvider()
+        );
         logger.info('Webhook signature verified');
       } catch (err: unknown) {
         logger.error('Webhook signature verification failed', {
           error: (err as Error).message,
+          signaturePresent: !!signature,
+          secretLength: webhookSecret.length,
         });
         return new Response(JSON.stringify({ error: 'Invalid signature' }), {
           status: 400,
@@ -626,15 +635,13 @@ serve(async (req) => {
           return null;
         }
 
-        // List users with pagination (default only returns 50!)
+        // Look up user by email via auth admin API (single user, not full scan)
         const { data: usersData } = await supabase.auth.admin.listUsers({
           page: 1,
-          perPage: 1000,
+          perPage: 1,
+          filter: `email.eq.${customer.email}`,
         });
-        const customerEmailLower = customer.email.toLowerCase();
-        const authUser = usersData?.users?.find(
-          (u: { email?: string }) => u.email?.toLowerCase() === customerEmailLower
-        );
+        const authUser = usersData?.users?.[0];
 
         if (authUser?.id) {
           // Backfill stripe_customer_id for future lookups
@@ -993,7 +1000,11 @@ serve(async (req) => {
               const isYearly = tier.includes('yearly');
               const userName = customer.name || customer.email.split('@')[0];
 
-              await sendWelcomeEmail(customer.email, userName, tierName, isYearly, tier);
+              // Fire-and-forget — don't block webhook response for email
+              sendWelcomeEmail(customer.email, userName, tierName, isYearly, tier).catch(
+                (err: Error) =>
+                  logger.warn('Welcome email failed (non-fatal)', { error: err.message })
+              );
 
               // Also create in-app notification
               await supabase.from('notifications').insert({
@@ -1320,7 +1331,11 @@ serve(async (req) => {
               const payUrl =
                 invoice.hosted_invoice_url || 'https://www.elec-mate.com/subscriptions';
 
-              await sendPaymentFailedEmail(failedCustomer.email, userName, amountFormatted, payUrl);
+              // Fire-and-forget — don't block webhook response for email
+              sendPaymentFailedEmail(failedCustomer.email, userName, amountFormatted, payUrl).catch(
+                (err: Error) =>
+                  logger.warn('Dunning email failed (non-fatal)', { error: err.message })
+              );
 
               // Update tracking row
               await supabase
@@ -1409,11 +1424,10 @@ serve(async (req) => {
           if (checkoutEmail) {
             const { data: usersData } = await supabase.auth.admin.listUsers({
               page: 1,
-              perPage: 1000,
+              perPage: 1,
+              filter: `email.eq.${checkoutEmail}`,
             });
-            const authUser = usersData?.users?.find(
-              (u: { email?: string }) => u.email?.toLowerCase() === checkoutEmail
-            );
+            const authUser = usersData?.users?.[0];
 
             if (authUser) {
               linkedUserId = authUser.id;
