@@ -13,7 +13,7 @@ import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
 import { StartCertificateDialog } from '@/components/customers/StartCertificateDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, Plus, Upload, Download, Users, ArrowLeft, Loader2, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Plus, Upload, Download, ArrowLeft, Loader2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -167,21 +167,21 @@ export default function CustomersPage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      {/* Sticky Header — Business Hub pattern */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="px-4 py-2">
           {showSearch ? (
             <div className="flex items-center h-11 gap-2">
               <div className="relative flex-1">
                 {!searchTerm && (
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
                 )}
                 <Input
                   placeholder="Search customers..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={cn(
-                    'h-11 pr-9 text-base touch-manipulation rounded-xl bg-white/[0.05] border-white/[0.06] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20',
+                    'h-11 pr-9 text-base touch-manipulation rounded-xl bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/30',
                     !searchTerm && 'pl-9'
                   )}
                   autoFocus
@@ -195,35 +195,32 @@ export default function CustomersPage() {
                   </button>
                 )}
               </div>
-              <button onClick={() => { setShowSearch(false); setSearchTerm(''); }} className="text-sm text-elec-yellow font-medium px-2 touch-manipulation">
+              <button onClick={() => { setShowSearch(false); setSearchTerm(''); }} className="text-xs font-medium text-elec-yellow px-2 touch-manipulation">
                 Cancel
               </button>
             </div>
           ) : (
-            <div className="flex items-center justify-between h-11">
-              <div className="flex items-center gap-2.5">
-                <Button variant="ghost" size="icon" onClick={() => navigate('/electrician/business')} className="text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
-                  <ArrowLeft className="h-5 w-5" />
-                </Button>
-                <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                  <Users className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <h1 className="text-base font-semibold text-white">Customers</h1>
-              </div>
-              <div className="flex items-center gap-1">
-                <button onClick={() => setShowSearch(true)} className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] touch-manipulation transition-all">
-                  <Search className="h-5 w-5 text-white" />
-                </button>
-                <button
-                  onClick={() => { setEditingCustomer(null); setShowAddDialog(true); }}
-                  className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation shadow-lg shadow-elec-yellow/25"
-                >
-                  <Plus className="h-5 w-5 text-black" />
-                </button>
-              </div>
+            <div className="flex items-center gap-2 h-11">
+              <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-lg w-9 h-9 flex-shrink-0 touch-manipulation active:scale-[0.98]">
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <h1 className="text-sm font-bold text-white tracking-wide uppercase flex-1 min-w-0">
+                Customers
+                <span className="text-white/30 font-normal tracking-normal normal-case text-xs ml-1.5">{totalCount || customers.length}</span>
+              </h1>
+              <button onClick={() => setShowSearch(true)} className="w-9 h-9 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors flex-shrink-0">
+                <Search className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => { setEditingCustomer(null); setShowAddDialog(true); }}
+                className="w-9 h-9 rounded-full bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation flex-shrink-0"
+              >
+                <Plus className="h-4 w-4 text-black" />
+              </button>
             </div>
           )}
         </div>
+        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <PullToRefresh onRefresh={refreshCustomers} isRefreshing={isLoading}>
@@ -233,58 +230,56 @@ export default function CustomersPage() {
         animate="visible"
         className="px-4 py-4 space-y-4 max-w-4xl mx-auto"
       >
-        {/* KPI Strip */}
+        {/* KPI Cards — HubCard style */}
         {customers.length > 0 && (
-          <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            <div className="card-surface p-3.5">
-              <p className="text-2xl font-bold text-white">{totalCount || customers.length}</p>
-              <p className="text-[11px] font-medium text-white mt-0.5">Total Customers</p>
-            </div>
-            <div className="card-surface p-3.5">
-              <p className="text-2xl font-bold text-emerald-400">{kpiData.withCerts}</p>
-              <p className="text-[11px] font-medium text-white mt-0.5">With Certificates</p>
-            </div>
-            <div className="card-surface p-3.5">
-              <p className="text-2xl font-bold text-elec-yellow">{kpiData.thisMonth}</p>
-              <p className="text-[11px] font-medium text-white mt-0.5">Added This Month</p>
-            </div>
-            <div className="card-surface p-3.5">
-              <p className="text-2xl font-bold text-blue-400">{kpiData.reliable}</p>
-              <p className="text-[11px] font-medium text-white mt-0.5">Reliable Payers</p>
-            </div>
+          <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { label: 'Total', value: totalCount || customers.length, accent: 'from-elec-yellow via-amber-400 to-orange-400', color: 'text-white' },
+              { label: 'With Certs', value: kpiData.withCerts, accent: 'from-emerald-500 via-emerald-400 to-green-400', color: 'text-emerald-400' },
+              { label: 'This Month', value: kpiData.thisMonth, accent: 'from-blue-500 via-blue-400 to-cyan-400', color: 'text-blue-400' },
+              { label: 'Reliable', value: kpiData.reliable, accent: 'from-violet-500 via-purple-400 to-indigo-400', color: 'text-violet-400' },
+            ].map((kpi) => (
+              <div key={kpi.label} className="group relative overflow-hidden card-surface-interactive rounded-xl">
+                <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40', kpi.accent)} />
+                <div className="relative z-10 p-3">
+                  <p className="text-[11px] font-medium text-white leading-tight">{kpi.label}</p>
+                  <p className={cn('text-xl font-bold leading-tight mt-1', kpi.color)}>{kpi.value}</p>
+                </div>
+              </div>
+            ))}
           </motion.div>
         )}
 
-        {/* Sort + Actions row */}
+        {/* Sort tabs + actions */}
         {!showSearch && customers.length > 0 && (
           <motion.div variants={itemVariants} className="flex items-center justify-between">
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+            <div className="flex gap-1.5 overflow-x-auto scrollbar-hide">
               {sortTabs.map((tab) => (
                 <button
                   key={tab.value}
                   onClick={() => handleSortChange(tab.value)}
                   className={cn(
-                    'shrink-0 h-9 px-4 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                    'shrink-0 h-8 px-3 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.98]',
                     sortField === tab.value
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-white/[0.06] text-white'
+                      ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                      : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
                   )}
                 >
                   {tab.label}
                   {sortField === tab.value && (
-                    <span className="ml-1 text-[11px] opacity-80">
-                      {sortDirection === 'asc' ? '\u2191' : '\u2193'}
+                    <span className="ml-1 text-[10px]">
+                      {sortDirection === 'asc' ? '↑' : '↓'}
                     </span>
                   )}
                 </button>
               ))}
             </div>
             <div className="flex items-center gap-1 shrink-0 ml-2">
-              <button onClick={() => setShowImportDialog(true)} className="h-11 w-11 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] touch-manipulation" aria-label="Import">
-                <Upload className="h-4 w-4 text-white" />
+              <button onClick={() => setShowImportDialog(true)} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/[0.06] active:scale-[0.97] touch-manipulation text-white/60 hover:text-white transition-colors" aria-label="Import">
+                <Upload className="h-4 w-4" />
               </button>
-              <button onClick={exportCustomers} disabled={customers.length === 0} className="h-11 w-11 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.97] touch-manipulation disabled:opacity-40" aria-label="Export">
-                <Download className="h-4 w-4 text-white" />
+              <button onClick={exportCustomers} disabled={customers.length === 0} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/[0.06] active:scale-[0.97] touch-manipulation text-white/60 hover:text-white transition-colors disabled:opacity-40" aria-label="Export">
+                <Download className="h-4 w-4" />
               </button>
             </div>
           </motion.div>
@@ -293,34 +288,28 @@ export default function CustomersPage() {
         {/* Customer List */}
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+            <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
           </div>
         ) : customers.length === 0 ? (
           <motion.div variants={itemVariants} className="text-center py-12">
             <div className="max-w-sm mx-auto space-y-5">
               {searchTerm ? (
-                <div className="card-surface p-6 text-center">
-                  <Search className="h-10 w-10 text-white mx-auto mb-3" />
+                <div className="card-surface-interactive p-6 text-center rounded-2xl">
                   <p className="text-base font-semibold text-white mb-1">No customers found</p>
                   <p className="text-sm text-white">Try a different name or postcode</p>
                 </div>
               ) : (
                 <>
                   <div className="text-center space-y-3">
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20 mx-auto">
-                      <Users className="h-8 w-8 text-elec-yellow" />
-                    </div>
-                    <div>
-                      <p className="text-lg font-bold text-white">Build Your Customer Base</p>
-                      <p className="text-sm text-white mt-1">Store clients, track jobs, and send quotes all in one place</p>
-                    </div>
+                    <p className="text-lg font-bold text-white">Build Your Customer Base</p>
+                    <p className="text-sm text-white">Store clients, track jobs, and send quotes all in one place</p>
                   </div>
                   <div className="grid grid-cols-1 gap-3">
-                    <Button onClick={() => setShowAddDialog(true)} className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation">
+                    <Button onClick={() => setShowAddDialog(true)} className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation active:scale-[0.98]">
                       <Plus className="w-4 h-4 mr-2" />
                       Add First Customer
                     </Button>
-                    <Button onClick={() => setShowImportDialog(true)} variant="outline" className="w-full h-12 border-white/10 bg-white/5 text-white font-medium rounded-xl touch-manipulation">
+                    <Button onClick={() => setShowImportDialog(true)} variant="outline" className="w-full h-12 border-white/[0.08] bg-white/[0.04] text-white font-medium rounded-xl touch-manipulation active:scale-[0.98]">
                       <Upload className="w-4 h-4 mr-2" />
                       Import from Contacts
                     </Button>
@@ -354,12 +343,12 @@ export default function CustomersPage() {
                   Showing {((currentPage - 1) * 50) + 1}–{Math.min(currentPage * 50, totalCount)} of {totalCount}
                 </p>
                 <div className="flex items-center gap-2">
-                  <button onClick={prevPage} disabled={!hasPrevPage} className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center disabled:opacity-30 hover:bg-white/10 transition-colors touch-manipulation">
-                    <ChevronLeft className="h-4 w-4" />
+                  <button onClick={prevPage} disabled={!hasPrevPage} className="h-9 w-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center disabled:opacity-30 hover:bg-white/[0.07] transition-colors touch-manipulation">
+                    <ChevronLeft className="h-4 w-4 text-white" />
                   </button>
                   <span className="text-sm font-medium text-white min-w-[60px] text-center">{currentPage} / {totalPages}</span>
-                  <button onClick={nextPage} disabled={!hasNextPage} className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center disabled:opacity-30 hover:bg-white/10 transition-colors touch-manipulation">
-                    <ChevronRight className="h-4 w-4" />
+                  <button onClick={nextPage} disabled={!hasNextPage} className="h-9 w-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center disabled:opacity-30 hover:bg-white/[0.07] transition-colors touch-manipulation">
+                    <ChevronRight className="h-4 w-4 text-white" />
                   </button>
                 </div>
               </div>
@@ -375,14 +364,14 @@ export default function CustomersPage() {
       {certificateCustomer && <StartCertificateDialog open={!!certificateCustomer} onOpenChange={(open) => !open && setCertificateCustomer(null)} customer={certificateCustomer} />}
 
       <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
-        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-card/95 backdrop-blur-xl border-white/10 rounded-2xl">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">Delete Customer?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">This will permanently remove this customer and cannot be undone.</AlertDialogDescription>
+            <AlertDialogTitle className="text-white text-base font-bold">Delete Customer?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white text-sm">This will permanently remove this customer and cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl touch-manipulation">Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700 min-h-[44px] rounded-xl touch-manipulation">Delete</AlertDialogAction>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
+            <AlertDialogAction onClick={handleDelete} className="w-full h-11 rounded-xl bg-red-500/15 border border-red-500/25 text-red-400 font-medium hover:bg-red-500/25 active:scale-[0.98] transition-all touch-manipulation">Delete</AlertDialogAction>
+            <AlertDialogCancel className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0">Cancel</AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

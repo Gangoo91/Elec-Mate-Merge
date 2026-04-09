@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { FileText, Plus, Calendar, Loader2, ExternalLink } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface CustomerQuotesCardProps {
@@ -62,45 +59,37 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
     }).format(amount || 0);
   };
 
-  const getStatusVariant = (status: string) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case 'approved':
-        return 'default';
+        return 'bg-emerald-500/15 text-emerald-400';
       case 'sent':
       case 'pending':
-        return 'secondary';
+        return 'bg-blue-500/15 text-blue-400';
       default:
-        return 'outline';
+        return 'bg-white/10 text-white';
     }
   };
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base flex items-center justify-between">
-          <span className="flex items-center gap-2">
-            <FileText className="h-4 w-4 text-emerald-400" />
-            Quotes
-          </span>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() =>
-              navigate('/electrician/quotes/new', {
-                state: { prefillCustomer: customerName, customerId },
-              })
-            }
-            className="h-8 text-xs touch-manipulation text-elec-yellow"
-          >
-            <Plus className="h-3.5 w-3.5 mr-1" />
-            New
-          </Button>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div className="card-surface-interactive rounded-2xl overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+        <h3 className="text-sm font-bold text-white">Quotes</h3>
+        <button
+          onClick={() =>
+            navigate('/electrician/quotes/new', {
+              state: { prefillCustomer: customerName, customerId },
+            })
+          }
+          className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+        >
+          + New
+        </button>
+      </div>
+      <div className="p-4">
         {isLoading ? (
           <div className="flex justify-center py-4">
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
           </div>
         ) : quotes.length > 0 ? (
           <div className="space-y-2">
@@ -108,25 +97,22 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
               <div
                 key={quote.id}
                 onClick={() => navigate(`/electrician/quotes?quoteId=${quote.id}`)}
-                className="flex items-center gap-3 p-3 rounded-lg bg-card/50 border border-border hover:border-emerald-500/30 active:bg-emerald-500/10 cursor-pointer transition-all touch-manipulation"
+                className="flex items-center gap-3 p-3 bg-white/[0.04] border border-white/[0.06] rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]"
               >
-                <FileText className="h-5 w-5 text-emerald-400 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm truncate">
+                  <p className="font-medium text-sm text-white truncate">
                     {quote.quote_number || quote.title || 'Quote'}
                   </p>
                   <p className="text-xs text-white">{formatCurrency(quote.total)}</p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <Badge variant={getStatusVariant(quote.status)} className="text-[10px]">
+                  <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${getStatusBadge(quote.status)}`}>
                     {quote.status}
-                  </Badge>
-                  <p className="text-[10px] text-white mt-1 flex items-center justify-end gap-1">
-                    <Calendar className="h-3 w-3" />
+                  </span>
+                  <p className="text-[10px] text-white mt-1">
                     {formatDate(quote.created_at)}
                   </p>
                 </div>
-                <ExternalLink className="h-4 w-4 text-white" />
               </div>
             ))}
           </div>
@@ -135,7 +121,7 @@ export const CustomerQuotesCard = ({ customerId, customerName }: CustomerQuotesC
             No quotes linked to this customer yet
           </p>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

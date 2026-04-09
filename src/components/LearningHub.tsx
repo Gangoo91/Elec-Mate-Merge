@@ -39,37 +39,44 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
     }
   };
 
+  if (currentSection !== 'overview') {
+    return (
+      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+        <div className="px-4">
+          {renderCurrentSection()}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Native-style sticky header */}
-      {currentSection === 'overview' && (
-        <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
-          <div className="flex items-center gap-3 px-4 h-14 max-w-6xl mx-auto lg:h-16 lg:px-6">
+    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="px-4 py-2">
+          <div className="flex items-center gap-3 h-11">
             <Button
               variant="ghost"
               size="icon"
               onClick={onBack}
-              className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="w-9 h-9 lg:w-11 lg:h-11 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-600 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
-              <Zap className="h-5 w-5 lg:h-6 lg:w-6 text-black" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h1 className="text-base lg:text-xl font-semibold text-white truncate">I&T Hub</h1>
-              <p className="text-[11px] lg:text-sm text-white">BS 7671:2018+A3:2024</p>
+            <div className="flex items-center gap-2.5">
+              <div className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                <Zap className="h-4 w-4 text-amber-400" />
+              </div>
+              <div>
+                <h1 className="text-base font-semibold text-white">I&T Hub</h1>
+                <p className="text-[10px] text-white">BS 7671:2018+A3:2024</p>
+              </div>
             </div>
           </div>
-        </header>
-      )}
-
-      {/* Content */}
-      <div
-        className={`p-4 mx-auto lg:px-8 ${currentSection === 'testing' ? 'max-w-7xl' : 'max-w-6xl'}`}
-      >
-        {renderCurrentSection()}
+        </div>
       </div>
+
+      {renderCurrentSection()}
     </div>
   );
 };

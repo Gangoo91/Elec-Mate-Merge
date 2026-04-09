@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ClipboardCheck, Plus, Calendar, Loader2, ChevronRight } from 'lucide-react';
+import { Loader2, ChevronRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface CustomerTasksCardProps {
@@ -94,39 +91,29 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
   };
 
   const openTasks = tasks.filter((t) => t.status === 'open');
-  const doneTasks = tasks.filter((t) => t.status === 'done');
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base flex items-center justify-between">
-          <span className="flex items-center gap-2">
-            <ClipboardCheck className="h-4 w-4 text-elec-yellow" />
-            Tasks
-            {openTasks.length > 0 && (
-              <Badge
-                variant="outline"
-                className="text-[10px] bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow"
-              >
-                {openTasks.length} open
-              </Badge>
-            )}
-          </span>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate('/electrician/tasks')}
-            className="h-8 text-xs touch-manipulation text-elec-yellow"
-          >
-            <Plus className="h-3.5 w-3.5 mr-1" />
-            New
-          </Button>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div className="card-surface-interactive rounded-2xl overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-bold text-white">Tasks</h3>
+          {openTasks.length > 0 && (
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-elec-yellow/15 text-elec-yellow">
+              {openTasks.length} open
+            </span>
+          )}
+        </div>
+        <button
+          onClick={() => navigate('/electrician/tasks')}
+          className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+        >
+          + New
+        </button>
+      </div>
+      <div className="p-4">
         {isLoading ? (
           <div className="flex justify-center py-4">
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
           </div>
         ) : tasks.length > 0 ? (
           <div className="space-y-2">
@@ -136,7 +123,7 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
                 <div
                   key={task.id}
                   onClick={() => navigate('/electrician/tasks')}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-card/50 border border-border hover:border-elec-yellow/30 active:bg-elec-yellow/10 cursor-pointer transition-all touch-manipulation"
+                  className="flex items-center gap-3 p-3 bg-white/[0.04] border border-white/[0.06] rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]"
                 >
                   {/* Priority dot */}
                   <div
@@ -144,26 +131,28 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
                   />
                   <div className="flex-1 min-w-0">
                     <p
-                      className={`font-medium text-sm truncate ${task.status === 'done' ? 'line-through text-white' : ''}`}
+                      className={`font-medium text-sm text-white truncate ${task.status === 'done' ? 'line-through' : ''}`}
                     >
                       {task.title}
                     </p>
                     {task.due_at && (
                       <p
-                        className={`text-xs mt-0.5 flex items-center gap-1 ${overdue ? 'text-red-400' : 'text-white'}`}
+                        className={`text-xs mt-0.5 ${overdue ? 'text-red-400' : 'text-white'}`}
                       >
-                        <Calendar className="h-3 w-3" />
                         {overdue ? 'Overdue — ' : ''}
                         {formatDate(task.due_at)}
                       </p>
                     )}
                   </div>
-                  <Badge
-                    variant={task.status === 'done' ? 'default' : 'outline'}
-                    className="text-[10px] flex-shrink-0"
+                  <span
+                    className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
+                      task.status === 'done'
+                        ? 'bg-emerald-500/15 text-emerald-400'
+                        : 'bg-white/10 text-white'
+                    }`}
                   >
                     {task.status === 'done' ? 'Done' : task.priority}
-                  </Badge>
+                  </span>
                   <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                 </div>
               );
@@ -183,7 +172,7 @@ export const CustomerTasksCard = ({ customerId, customerName }: CustomerTasksCar
             No tasks linked to this customer yet
           </p>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };

@@ -2,19 +2,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCustomerReports } from '@/hooks/inspection/useCustomerReports';
 import { Customer } from '@/hooks/inspection/useCustomers';
-import { Badge } from '@/components/ui/badge';
 import {
-  FileText,
-  Calendar,
   Loader2,
   ChevronRight,
-  Shield,
-  Zap,
-  Receipt,
-  ClipboardCheck,
-  MapPin,
   StickyNote,
+  Unlink,
 } from 'lucide-react';
+import { unlinkCustomerFromReport } from '@/utils/customerHelper';
+import { toast } from 'sonner';
 import { CustomerQuotesCard } from './CustomerQuotesCard';
 import { CustomerInvoicesCard } from './CustomerInvoicesCard';
 import { CustomerPaymentStatsCard } from './CustomerPaymentStatsCard';
@@ -60,26 +55,67 @@ export const CustomerOverviewTab = ({
     const labels: Record<string, string> = {
       eicr: 'EICR',
       eic: 'EIC',
-      'minor-works': 'Minor Works',
-      'fire-alarm': 'Fire Alarm',
-      'ev-charging': 'EV Charging',
-      'emergency-lighting': 'Emergency Lighting',
-      'solar-pv': 'Solar PV',
-      pat: 'PAT',
+      'minor-works': 'MW',
+      'fire-alarm': 'FA G1',
+      'fire-alarm-commissioning': 'FA G2',
+      'fire-alarm-inspection': 'FA G7',
+      'fire-alarm-modification': 'FA G4',
+      'ev-charging': 'EV',
+      'emergency-lighting': 'EM LTG',
+      'solar-pv': 'SOLAR PV',
+      'pat-testing': 'PAT',
+      bess: 'BESS',
+      'smoke-co-alarm': 'SMOKE/CO',
     };
-    return labels[type] || type.toUpperCase();
+    return labels[type] || type.toUpperCase().replace(/-/g, ' ').slice(0, 8);
   };
 
-  const getReportColor = (type: string) => {
-    const colors: Record<string, string> = {
-      eicr: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
-      eic: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-      'minor-works': 'text-amber-400 bg-amber-500/10 border-amber-500/20',
-      'fire-alarm': 'text-red-400 bg-red-500/10 border-red-500/20',
-      'ev-charging': 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
-      'solar-pv': 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20',
-    };
-    return colors[type] || 'text-white bg-white/10 border-white/20';
+  const getTypeBadgeStyle = (type: string) => {
+    if (type.startsWith('fire-alarm')) return 'bg-red-500/15 text-red-400';
+    if (type === 'eicr') return 'bg-blue-500/15 text-blue-400';
+    if (type === 'eic') return 'bg-emerald-500/15 text-emerald-400';
+    if (type === 'minor-works') return 'bg-orange-500/15 text-orange-400';
+    if (type === 'ev-charging') return 'bg-cyan-500/15 text-cyan-400';
+    if (type === 'emergency-lighting') return 'bg-violet-500/15 text-violet-400';
+    if (type === 'pat-testing') return 'bg-amber-500/15 text-amber-400';
+    if (type === 'solar-pv') return 'bg-yellow-500/15 text-yellow-400';
+    return 'bg-elec-yellow/15 text-elec-yellow';
+  };
+
+  const getTypeAccent = (type: string) => {
+    if (type.startsWith('fire-alarm')) return 'from-red-500 via-rose-400 to-pink-400';
+    if (type === 'eicr') return 'from-blue-500 via-blue-400 to-cyan-400';
+    if (type === 'eic') return 'from-emerald-500 via-emerald-400 to-green-400';
+    if (type === 'minor-works') return 'from-orange-500 via-amber-400 to-yellow-400';
+    if (type === 'ev-charging') return 'from-cyan-500 via-cyan-400 to-blue-400';
+    if (type === 'emergency-lighting') return 'from-violet-500 via-purple-400 to-indigo-400';
+    if (type === 'pat-testing') return 'from-amber-500 via-amber-400 to-yellow-400';
+    if (type === 'solar-pv') return 'from-yellow-500 via-yellow-400 to-orange-400';
+    return 'from-elec-yellow via-amber-400 to-orange-400';
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'completed': return { label: 'Done', style: 'bg-green-500/15 text-green-400' };
+      case 'in-progress': return { label: 'In Progress', style: 'bg-blue-500/15 text-blue-400' };
+      default: return { label: status || 'Draft', style: 'bg-white/10 text-white/50' };
+    }
+  };
+
+  const handleUnlink = async (reportId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      const result = await unlinkCustomerFromReport(reportId);
+      if (result.success) {
+        toast.success('Certificate unlinked from customer');
+        // Trigger a refetch by navigating away and back, or just reload
+        window.location.reload();
+      } else {
+        toast.error('Failed to unlink certificate');
+      }
+    } catch {
+      toast.error('Failed to unlink certificate');
+    }
   };
 
   return (
@@ -108,43 +144,50 @@ export const CustomerOverviewTab = ({
             <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
           </div>
         ) : reports && reports.length > 0 ? (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {reports.map((report) => {
-              const colorClass = getReportColor(report.report_type);
+              const statusBadge = getStatusBadge(report.status);
               return (
                 <div
                   key={report.id}
                   onClick={() => handleViewCertificate(report.id, report.report_type)}
-                  className="group card-surface-interactive cursor-pointer active:scale-[0.98] transition-all duration-200 touch-manipulation"
+                  className="group relative overflow-hidden card-surface-interactive cursor-pointer active:scale-[0.98] transition-all duration-200 touch-manipulation rounded-2xl"
                 >
-                  <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500 via-emerald-400 to-teal-400 opacity-0 group-hover:opacity-60 transition-opacity duration-200" />
-                  <div className="relative z-10 flex items-center gap-3.5 p-3.5">
-                    <div className={`p-2 rounded-xl border ${colorClass}`}>
-                      <FileText className="h-4 w-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[14px] font-semibold text-white group-hover:text-elec-yellow transition-colors">
+                  <div className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity duration-200 ${getTypeAccent(report.report_type)}`} />
+                  <div className="relative z-10 p-4">
+                    {/* Badges row */}
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${getTypeBadgeStyle(report.report_type)}`}>
                         {getReportLabel(report.report_type)}
-                      </p>
-                      <div className="flex items-center gap-2 mt-0.5">
-                        <span className="text-[12px] text-white flex items-center gap-1">
-                          <Calendar className="h-3 w-3 text-white/50" />
-                          {formatDate(report.created_at)}
-                        </span>
-                        {report.address && (
-                          <span className="text-[12px] text-white flex items-center gap-1 truncate">
-                            <MapPin className="h-3 w-3 text-white/50" />
-                            <span className="truncate">{report.address}</span>
-                          </span>
-                        )}
-                      </div>
+                      </span>
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${statusBadge.style}`}>
+                        {statusBadge.label}
+                      </span>
+                      <span className="text-[11px] text-white/40 ml-auto">
+                        {formatDate(report.created_at)}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <Badge className={`text-[10px] border ${colorClass}`}>
-                        {report.status || 'Draft'}
-                      </Badge>
-                      <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-white/[0.06] flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all">
-                        <ChevronRight className="w-3 h-3 text-white group-hover:text-black transition-all" />
+
+                    {/* Address */}
+                    <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors truncate">
+                      {report.address || 'No address'}
+                    </h3>
+
+                    {/* Bottom row */}
+                    <div className="flex items-center justify-between mt-3">
+                      <span className="text-[11px] font-medium text-elec-yellow">View</span>
+                      <div className="flex items-center gap-1">
+                        {/* Unlink button */}
+                        <button
+                          onClick={(e) => handleUnlink(report.id, e)}
+                          className="w-7 h-7 rounded-full flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+                          title="Unlink from customer"
+                        >
+                          <Unlink className="h-3.5 w-3.5" />
+                        </button>
+                        <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                          <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -153,10 +196,7 @@ export const CustomerOverviewTab = ({
             })}
           </div>
         ) : (
-          <div className="card-surface p-6 text-center">
-            <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit mx-auto mb-3">
-              <FileText className="h-5 w-5 text-emerald-400" />
-            </div>
+          <div className="card-surface-interactive p-6 text-center rounded-2xl">
             <p className="text-sm font-medium text-white">No certificates yet</p>
             <p className="text-[12px] text-white mt-1">Start a certificate from the actions above</p>
           </div>

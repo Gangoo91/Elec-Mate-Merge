@@ -1,14 +1,8 @@
 import { useState } from 'react';
 import {
-  FileText,
-  Building2,
   MoreVertical,
-  ExternalLink,
-  Eye,
   Trash2,
   ChevronRight,
-  CheckCircle2,
-  Mail,
   Loader2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -171,176 +165,164 @@ export const NotificationCard = ({
 
   return (
     <>
-      <div className="group relative overflow-hidden card-surface">
+      <div className="group relative overflow-hidden card-surface-interactive rounded-2xl">
         {/* Top accent line */}
-        <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-80 transition-opacity', accentGradient)} />
+        <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50 group-hover:opacity-100 transition-opacity', accentGradient)} />
 
-        <div className="p-4 sm:p-5 space-y-4">
-          {/* Header: Icon + Type + Status + Menu */}
+        <div className="relative z-10 p-4 space-y-3">
+          {/* Header: Type + Work Type + Status + Menu */}
           <div className="flex items-start justify-between">
-            <div className="flex items-start gap-3 flex-1 min-w-0">
-              <div className={cn('p-2.5 rounded-xl flex-shrink-0', config.iconBg)}>
-                <FileText className={cn('h-5 w-5', config.iconColor)} />
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5 mb-1">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/[0.06] text-white">{config.label}</span>
+                <StatusBadge status={notification.notification_status} />
               </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                  <span className="text-[15px] font-semibold text-white">{config.label}</span>
-                  <StatusBadge status={notification.notification_status} />
-                </div>
-                <p className="text-[13px] text-white">{formatWorkType(notification.work_type)}</p>
-              </div>
+              <p className="text-[13px] font-medium text-white">{formatWorkType(notification.work_type)}</p>
             </div>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-10 w-10 flex-shrink-0 touch-manipulation rounded-xl hover:bg-white/10">
-                  <MoreVertical className="w-5 h-5 text-white" />
-                </Button>
+                <button className="w-9 h-9 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors flex-shrink-0">
+                  <MoreVertical className="w-4 h-4" />
+                </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52">
-                <DropdownMenuItem onClick={() => onViewDetails(notification)} className="h-12 gap-3">
-                  <Eye className="w-4 h-4" /> View Full Details
+              <DropdownMenuContent align="end" className="w-52 bg-[hsl(240_5.9%_12%)] border-white/10">
+                <DropdownMenuItem onClick={() => onViewDetails(notification)} className="h-11 text-white focus:text-white focus:bg-white/10">
+                  View Full Details
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setShowPdfViewer(true)} className="h-12 gap-3">
-                  <FileText className="w-4 h-4" /> Open Certificate
+                <DropdownMenuItem onClick={() => setShowPdfViewer(true)} className="h-11 text-white focus:text-white focus:bg-white/10">
+                  Open Certificate
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleEmailCertificate} disabled={isSendingEmail || !clientEmail} className="h-12 gap-3">
-                  {isSendingEmail ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mail className="w-4 h-4" />}
-                  Email to Client
+                <DropdownMenuItem onClick={handleEmailCertificate} disabled={isSendingEmail || !clientEmail} className="h-11 text-white focus:text-white focus:bg-white/10">
+                  {isSendingEmail ? 'Sending...' : 'Email to Client'}
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => onDelete(notification.id)} className="h-12 gap-3 text-red-400 focus:text-red-400">
-                  <Trash2 className="w-4 h-4" /> Delete
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem onClick={() => onDelete(notification.id)} className="h-11 text-red-400 focus:text-red-400 focus:bg-red-500/10">
+                  Delete
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
 
           {/* Client & Address */}
-          <div className="pl-[52px]">
-            {clientName && <p className="text-sm font-medium text-white">{clientName}</p>}
-            {address && <p className="text-[13px] text-white">{address}</p>}
+          <div>
+            {clientName && <h3 className="text-[15px] font-semibold text-white">{clientName}</h3>}
+            {address && <p className="text-[12px] text-white mt-0.5">{address}</p>}
             {certNumber && (
-              <button onClick={() => setShowPdfViewer(true)} className="text-xs font-mono text-elec-yellow hover:underline mt-1">
+              <button onClick={() => setShowPdfViewer(true)} className="text-[11px] font-mono text-elec-yellow hover:underline mt-1">
                 {certNumber}
               </button>
             )}
           </div>
 
-          {/* Deadline — KPI style card */}
+          {/* Deadline — accent line card */}
           {deadlineText && (
-            <div className={cn('flex items-center justify-between rounded-xl border px-3 py-2 h-14', deadlineHighlight)}>
-              <div>
-                <span className="text-[11px] font-medium text-white leading-tight block">Submission Deadline</span>
-                <span className={cn('text-sm font-bold leading-tight', deadlineValueColor)}>{deadlineText}</span>
+            <div className="relative overflow-hidden rounded-xl bg-white/[0.04] border border-white/[0.06]">
+              <div className={cn('absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r', isOverdue ? 'from-red-500 to-red-400' : isUrgent ? 'from-orange-500 to-amber-400' : 'from-emerald-500 to-green-400')} />
+              <div className="flex items-center justify-between px-3 py-2.5">
+                <div>
+                  <span className="text-[11px] font-medium text-white leading-tight block">Submission Deadline</span>
+                  <span className={cn('text-sm font-bold leading-tight', deadlineValueColor)}>{deadlineText}</span>
+                </div>
+                <span className={cn('text-2xl font-bold', deadlineValueColor)}>
+                  {Math.abs(daysRemaining!)}
+                </span>
               </div>
-              <span className={cn('text-2xl font-bold', deadlineValueColor)}>
-                {Math.abs(daysRemaining!)}
-              </span>
             </div>
           )}
 
           {/* Submission Tracking */}
           <div>
-            <div className="flex items-center justify-between mb-2.5">
-              <p className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wider">
                 Submission Tracking
               </p>
               {isFullySubmitted && (
-                <span className="text-[11px] font-medium text-green-400 px-2 py-0.5 rounded-full bg-green-500/15 border border-green-500/20 flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3" /> Complete
+                <span className="text-[10px] font-bold text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/15">
+                  Complete
                 </span>
               )}
             </div>
 
             <div className="space-y-1.5">
               {showNapit && (
-                <div className={cn(
-                  'flex items-center justify-between p-3 rounded-xl border transition-colors',
+                <label className={cn(
+                  'flex items-center gap-3 p-3 rounded-xl border cursor-pointer touch-manipulation transition-colors',
                   notification.napit_submitted ? 'bg-blue-500/8 border-blue-500/20' : 'bg-white/[0.02] border-white/[0.06]'
                 )}>
-                  <label className="flex items-center gap-3 flex-1 cursor-pointer touch-manipulation">
-                    <Checkbox
-                      checked={notification.napit_submitted}
-                      onCheckedChange={(checked) => onUpdate(notification.id, { napit_submitted: checked })}
-                      className="h-5 w-5 rounded border-white/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
-                    />
-                    <div>
-                      <span className="text-sm font-medium text-white block">NAPIT</span>
-                      <span className="text-xs text-white">Direct Portal</span>
-                    </div>
-                  </label>
-                  <Button variant="ghost" size="sm" onClick={() => openExternalUrl(PORTAL_LINKS.napit.url)} className="h-9 w-9 rounded-lg text-white hover:bg-white/10">
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </Button>
-                </div>
+                  <Checkbox
+                    checked={notification.napit_submitted}
+                    onCheckedChange={(checked) => onUpdate(notification.id, { napit_submitted: checked })}
+                    className="h-5 w-5 rounded border-white/40 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                  />
+                  <div className="flex-1">
+                    <span className="text-sm font-medium text-white block">NAPIT</span>
+                    <span className="text-[11px] text-white">Direct Portal</span>
+                  </div>
+                  <button onClick={(e) => { e.preventDefault(); openExternalUrl(PORTAL_LINKS.napit.url); }} className="text-[11px] font-medium text-elec-yellow touch-manipulation">
+                    Open
+                  </button>
+                </label>
               )}
 
               {showNiceic && (
-                <div className={cn(
-                  'flex items-center justify-between p-3 rounded-xl border transition-colors',
+                <label className={cn(
+                  'flex items-center gap-3 p-3 rounded-xl border cursor-pointer touch-manipulation transition-colors',
                   notification.niceic_submitted ? 'bg-yellow-500/8 border-yellow-500/20' : 'bg-white/[0.02] border-white/[0.06]'
                 )}>
-                  <label className="flex items-center gap-3 flex-1 cursor-pointer touch-manipulation">
-                    <Checkbox
-                      checked={notification.niceic_submitted}
-                      onCheckedChange={(checked) => onUpdate(notification.id, { niceic_submitted: checked })}
-                      className="h-5 w-5 rounded border-white/40 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500 data-[state=checked]:text-black"
-                    />
-                    <div>
-                      <span className="text-sm font-medium text-white block">NICEIC</span>
-                      <span className="text-xs text-white">Certification Portal</span>
-                    </div>
-                  </label>
-                  <Button variant="ghost" size="sm" onClick={() => openExternalUrl(PORTAL_LINKS.niceic.url)} className="h-9 w-9 rounded-lg text-white hover:bg-white/10">
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </Button>
-                </div>
+                  <Checkbox
+                    checked={notification.niceic_submitted}
+                    onCheckedChange={(checked) => onUpdate(notification.id, { niceic_submitted: checked })}
+                    className="h-5 w-5 rounded border-white/40 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500 data-[state=checked]:text-black"
+                  />
+                  <div className="flex-1">
+                    <span className="text-sm font-medium text-white block">NICEIC</span>
+                    <span className="text-[11px] text-white">Certification Portal</span>
+                  </div>
+                  <button onClick={(e) => { e.preventDefault(); openExternalUrl(PORTAL_LINKS.niceic.url); }} className="text-[11px] font-medium text-elec-yellow touch-manipulation">
+                    Open
+                  </button>
+                </label>
               )}
 
-              <div className={cn(
-                'flex items-center justify-between p-3 rounded-xl border transition-colors',
-                notification.local_authority_submitted ? 'bg-green-500/8 border-green-500/20' : 'bg-white/[0.02] border-white/[0.06]'
+              <label className={cn(
+                'flex items-center gap-3 p-3 rounded-xl border cursor-pointer touch-manipulation transition-colors',
+                notification.local_authority_submitted ? 'bg-emerald-500/8 border-emerald-500/20' : 'bg-white/[0.02] border-white/[0.06]'
               )}>
-                <label className="flex items-center gap-3 flex-1 cursor-pointer touch-manipulation">
-                  <Checkbox
-                    checked={notification.local_authority_submitted}
-                    onCheckedChange={(checked) => onUpdate(notification.id, { local_authority_submitted: checked })}
-                    className="h-5 w-5 rounded border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-black"
-                  />
-                  <div>
-                    <span className="text-sm font-medium text-white block">Building Control</span>
-                    <span className="text-xs text-white">{notification.building_control_authority || 'Find your council'}</span>
-                  </div>
-                </label>
-                <Button variant="ghost" size="sm" onClick={() => setShowBuildingControlFinder(true)} className="h-9 w-9 rounded-lg text-white hover:bg-white/10">
-                  <Building2 className="w-3.5 h-3.5" />
-                </Button>
-              </div>
+                <Checkbox
+                  checked={notification.local_authority_submitted}
+                  onCheckedChange={(checked) => onUpdate(notification.id, { local_authority_submitted: checked })}
+                  className="h-5 w-5 rounded border-white/40 data-[state=checked]:bg-emerald-500 data-[state=checked]:border-emerald-500 data-[state=checked]:text-black"
+                />
+                <div className="flex-1">
+                  <span className="text-sm font-medium text-white block">Building Control</span>
+                  <span className="text-[11px] text-white">{notification.building_control_authority || 'Find your council'}</span>
+                </div>
+                <button onClick={(e) => { e.preventDefault(); setShowBuildingControlFinder(true); }} className="text-[11px] font-medium text-elec-yellow touch-manipulation">
+                  Find
+                </button>
+              </label>
             </div>
           </div>
 
-          {/* Bottom action — matches BusinessCard pattern */}
+          {/* Bottom action */}
           <div className="flex items-center justify-between pt-1">
-            <button
-              onClick={() => setShowPdfViewer(true)}
-              className="text-[13px] font-medium text-elec-yellow hover:text-yellow-300 transition-colors touch-manipulation"
-            >
-              Open Certificate
-            </button>
-            <div className="flex items-center gap-2">
+            <span className="text-[11px] font-medium text-elec-yellow">
+              {clientEmail ? 'Open · Email' : 'Open Certificate'}
+            </span>
+            <div className="flex items-center gap-1.5">
               {clientEmail && (
                 <button
                   onClick={handleEmailCertificate}
                   disabled={isSendingEmail}
-                  className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center hover:bg-white/[0.08] transition-all touch-manipulation disabled:opacity-40"
+                  className="h-8 px-3 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[11px] font-medium text-white hover:bg-white/[0.08] transition-all touch-manipulation active:scale-[0.98] disabled:opacity-40"
                 >
-                  {isSendingEmail ? <Loader2 className="w-3.5 h-3.5 text-white animate-spin" /> : <Mail className="w-3.5 h-3.5 text-white" />}
+                  {isSendingEmail ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : 'Email'}
                 </button>
               )}
               <button
                 onClick={() => setShowPdfViewer(true)}
-                className="w-8 h-8 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center hover:bg-elec-yellow hover:border-elec-yellow group/btn transition-all touch-manipulation"
+                className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center hover:bg-elec-yellow hover:border-elec-yellow group/btn transition-all touch-manipulation"
               >
                 <ChevronRight className="w-3.5 h-3.5 text-white group-hover/btn:text-black transition-colors" />
               </button>

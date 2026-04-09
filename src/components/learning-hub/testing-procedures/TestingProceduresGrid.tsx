@@ -1,19 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TestingProcedure } from './TestingProcedureData';
-import {
-  Shield,
-  Zap,
-  RotateCcw,
-  Target,
-  Settings,
-  Activity,
-  FileText,
-  ClipboardList,
-  ChevronRight,
-  AlertTriangle,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Zap, Wrench, BookOpen, Shield, Activity, Settings, FileText, ClipboardList, AlertTriangle, Target } from 'lucide-react';
+import { BusinessCard } from '@/components/business-hub';
 
 interface TestingProceduresGridProps {
   procedures: TestingProcedure[];
@@ -35,64 +24,13 @@ interface TestingProceduresGridProps {
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.04 },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, x: -10 },
-  show: {
-    opacity: 1,
-    x: 0,
-    transition: { type: 'spring', stiffness: 500, damping: 30 },
-  },
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
 };
-
-interface ProcedureItemProps {
-  icon: React.ElementType;
-  iconBg: string;
-  title: string;
-  subtitle: string;
-  duration: string;
-  onClick: () => void;
-  isLive?: boolean;
-}
-
-const ProcedureItem = ({
-  icon: Icon,
-  iconBg,
-  title,
-  subtitle,
-  duration,
-  onClick,
-  isLive,
-}: ProcedureItemProps) => (
-  <motion.div
-    variants={itemVariants}
-    onClick={onClick}
-    className="flex items-center gap-3 p-3.5 cursor-pointer touch-manipulation active:bg-white/[0.04] transition-colors"
-  >
-    <div
-      className={cn(
-        'w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0',
-        iconBg
-      )}
-    >
-      <Icon className="h-5 w-5 text-white" />
-    </div>
-    <div className="flex-1 min-w-0">
-      <h3 className="text-[15px] font-medium text-white leading-tight">{title}</h3>
-      <p className="text-[13px] text-white leading-tight mt-0.5">{subtitle}</p>
-    </div>
-    <div className="flex items-center gap-2 flex-shrink-0">
-      {isLive && <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />}
-      <span className="text-[13px] text-white">{duration}</span>
-      <ChevronRight className="h-4 w-4 text-white" />
-    </div>
-  </motion.div>
-);
 
 const TestingProceduresGrid = ({
   procedures,
@@ -108,167 +46,172 @@ const TestingProceduresGrid = ({
   onStartSupplementaryTesting,
   onStartCertificateGuide,
   onStartScheduleGuide,
-  onPreviewProcedure,
-  onClearFilters,
 }: TestingProceduresGridProps) => {
   return (
-    <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
-      {/* Safety Procedure - Critical */}
-      <div>
-        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
-          Safety Critical
-        </p>
-        <div className="rounded-2xl bg-white/[0.03] border border-red-500/20 overflow-hidden">
-          <ProcedureItem
-            icon={Shield}
-            iconBg="bg-red-500"
-            title="Safe Isolation"
-            subtitle="BS 7671 Regulation 612.1"
-            duration="15-20 min"
-            onClick={onStartSafeIsolation}
-          />
-        </div>
-      </div>
+    <motion.div className="space-y-5" variants={containerVariants} initial="hidden" animate="visible">
+      {/* Safety Critical */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <h2 className="text-xs font-medium text-red-400 uppercase tracking-wider px-0.5">Safety Critical</h2>
+        <BusinessCard
+          title="Safe Isolation"
+          description="GS38 compliant procedure · 15-20 min"
+          icon={Shield}
+          onClick={onStartSafeIsolation}
+          variant="hero"
+          accentColor="from-red-500 via-rose-400 to-red-500"
+          iconColor="text-red-400"
+          iconBg="bg-red-500/10 border border-red-500/20"
+        />
+      </motion.section>
 
       {/* Dead Tests */}
-      <div>
-        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
-          Dead Tests
-        </p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-          <ProcedureItem
+      <motion.section variants={itemVariants} className="space-y-3">
+        <h2 className="text-xs font-medium text-amber-400 uppercase tracking-wider px-0.5">Dead Tests</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <BusinessCard
+            title="Continuity"
+            description="CPC & R1+R2 · 20-30 min"
             icon={Zap}
-            iconBg="bg-blue-500"
-            title="Continuity Testing"
-            subtitle="BS 7671 Section 612.2"
-            duration="20-30 min"
             onClick={onStartContinuityTesting}
+            variant="hero"
+            accentColor="from-blue-500 via-blue-400 to-cyan-400"
+            iconColor="text-blue-400"
+            iconBg="bg-blue-500/10 border border-blue-500/20"
           />
-          <ProcedureItem
-            icon={Zap}
-            iconBg="bg-purple-500"
-            title="Insulation Resistance"
-            subtitle="BS 7671 Section 612.3"
-            duration="15-25 min"
+          <BusinessCard
+            title="Insulation"
+            description="IR testing · 15-25 min"
+            icon={Activity}
             onClick={onStartInsulationTesting}
+            variant="hero"
+            accentColor="from-purple-500 via-violet-400 to-purple-400"
+            iconColor="text-purple-400"
+            iconBg="bg-purple-500/10 border border-purple-500/20"
           />
-          <ProcedureItem
-            icon={RotateCcw}
-            iconBg="bg-indigo-500"
-            title="Polarity Testing"
-            subtitle="BS 7671 Section 612.6"
-            duration="10-20 min"
+          <BusinessCard
+            title="Polarity"
+            description="Dead polarity · 10-20 min"
+            icon={Target}
             onClick={onStartPolarityTesting}
+            variant="hero"
+            accentColor="from-indigo-500 via-blue-400 to-indigo-500"
+            iconColor="text-indigo-400"
+            iconBg="bg-indigo-500/10 border border-indigo-500/20"
           />
         </div>
-      </div>
+      </motion.section>
 
       {/* Live Tests */}
-      <div>
-        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
-          Live Tests
-        </p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-          <ProcedureItem
-            icon={Target}
-            iconBg="bg-red-500"
+      <motion.section variants={itemVariants} className="space-y-3">
+        <h2 className="text-xs font-medium text-emerald-400 uppercase tracking-wider px-0.5">Live Tests</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <BusinessCard
             title="Zs Testing"
-            subtitle="BS 7671 Sections 612.9 & 411.4.5"
-            duration="15-25 min"
+            description="Ze & Zs loops · 15-25 min"
+            icon={Zap}
             onClick={onStartZsTesting}
-            isLive
+            variant="hero"
+            accentColor="from-emerald-500 via-green-400 to-emerald-500"
+            iconColor="text-emerald-400"
+            iconBg="bg-emerald-500/10 border border-emerald-500/20"
           />
-          <ProcedureItem
-            icon={Shield}
-            iconBg="bg-teal-500"
+          <BusinessCard
             title="RCD Testing"
-            subtitle="BS 7671 Sections 612.10 & 612.13"
-            duration="10-15 min"
+            description="Trip times · 10-15 min"
+            icon={Shield}
             onClick={onStartRcdTesting}
-            isLive
+            variant="hero"
+            accentColor="from-teal-500 via-cyan-400 to-teal-500"
+            iconColor="text-teal-400"
+            iconBg="bg-teal-500/10 border border-teal-500/20"
           />
-          <ProcedureItem
-            icon={Target}
-            iconBg="bg-orange-500"
+          <BusinessCard
             title="PFC Testing"
-            subtitle="BS 7671 Sections 612.11 & 434.5.2"
-            duration="10-20 min"
+            description="Ipf testing · 10-20 min"
+            icon={AlertTriangle}
             onClick={onStartPfcTesting}
-            isLive
+            variant="hero"
+            accentColor="from-orange-500 via-amber-400 to-orange-500"
+            iconColor="text-orange-400"
+            iconBg="bg-orange-500/10 border border-orange-500/20"
           />
         </div>
-      </div>
+      </motion.section>
 
       {/* Functional & Additional */}
-      <div>
-        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
-          Functional & Additional
-        </p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-          <ProcedureItem
+      <motion.section variants={itemVariants} className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Functional & Additional</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <BusinessCard
+            title="Functional"
+            description="Op. checks · 20-30 min"
             icon={Settings}
-            iconBg="bg-green-500"
-            title="Functional Testing"
-            subtitle="BS 7671 Section 612.13"
-            duration="20-30 min"
             onClick={onStartFunctionalTesting}
+            variant="hero"
+            accentColor="from-green-500 via-emerald-400 to-green-500"
+            iconColor="text-green-400"
+            iconBg="bg-green-500/10 border border-green-500/20"
           />
-          <ProcedureItem
-            icon={Activity}
-            iconBg="bg-violet-500"
-            title="Supplementary Testing"
-            subtitle="BS 7671 Various Sections"
-            duration="Varies"
+          <BusinessCard
+            title="Supplementary"
+            description="Extra tests · Varies"
+            icon={Wrench}
             onClick={onStartSupplementaryTesting}
+            variant="hero"
+            accentColor="from-violet-500 via-purple-400 to-violet-500"
+            iconColor="text-violet-400"
+            iconBg="bg-violet-500/10 border border-violet-500/20"
           />
         </div>
-      </div>
+      </motion.section>
 
-      {/* Documentation Guides */}
-      <div>
-        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
-          Documentation
-        </p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-          <ProcedureItem
+      {/* Documentation */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Documentation</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <BusinessCard
+            title="Certificates"
+            description="BS 7671 compliance guide"
             icon={FileText}
-            iconBg="bg-cyan-500"
-            title="Certificate Guide"
-            subtitle="BS 7671 Compliance"
-            duration="Reference"
             onClick={() => onStartCertificateGuide?.()}
+            variant="hero"
+            accentColor="from-cyan-500 via-blue-400 to-cyan-500"
+            iconColor="text-cyan-400"
+            iconBg="bg-cyan-500/10 border border-cyan-500/20"
           />
-          <ProcedureItem
+          <BusinessCard
+            title="Schedules"
+            description="Testing standards reference"
             icon={ClipboardList}
-            iconBg="bg-emerald-500"
-            title="Schedule Guide"
-            subtitle="Testing Standards"
-            duration="Reference"
             onClick={() => onStartScheduleGuide?.()}
+            variant="hero"
+            accentColor="from-emerald-500 via-green-400 to-emerald-500"
+            iconColor="text-emerald-400"
+            iconBg="bg-emerald-500/10 border border-emerald-500/20"
           />
         </div>
-      </div>
+      </motion.section>
 
       {/* Additional Procedures from props */}
       {procedures.length > 0 && (
-        <div>
-          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
-            Additional Procedures
-          </p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+        <motion.section variants={itemVariants} className="space-y-3">
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Additional</h2>
+          <div className="grid grid-cols-2 gap-3">
             {procedures.map((procedure) => (
-              <ProcedureItem
+              <BusinessCard
                 key={procedure.id}
-                icon={Zap}
-                iconBg="bg-amber-500"
                 title={procedure.title}
-                subtitle={procedure.regulation || 'BS 7671'}
-                duration={procedure.estimatedTime || 'Varies'}
+                description={`${procedure.regulation || 'BS 7671'} · ${procedure.estimatedTime || 'Varies'}`}
+                icon={Zap}
                 onClick={() => onStartProcedure(procedure)}
+                variant="hero"
+                accentColor="from-amber-500 via-yellow-400 to-amber-500"
+                iconColor="text-amber-400"
+                iconBg="bg-amber-500/10 border border-amber-500/20"
               />
             ))}
           </div>
-        </div>
+        </motion.section>
       )}
     </motion.div>
   );

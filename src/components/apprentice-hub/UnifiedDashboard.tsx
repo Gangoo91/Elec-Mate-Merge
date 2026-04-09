@@ -224,11 +224,13 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
   if (!userSelection && !qualLoading) {
     return (
       <div className="px-5 py-6 space-y-6 lg:px-6 lg:max-w-4xl lg:mx-auto">
-        <div>
-          <h2 className="text-xl font-bold text-white">
-            {getGreeting()}, {firstName}
-          </h2>
-          <p className="text-sm text-white mt-1">Select your qualification to get started</p>
+        <div className="relative overflow-hidden glass-premium rounded-2xl">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-400 opacity-60" />
+          <div className="relative z-10 px-5 py-4">
+            <p className="text-[13px] text-white mb-0.5">{getGreeting()},</p>
+            <h2 className="text-xl font-bold text-blue-400 tracking-tight">{firstName}</h2>
+            <p className="text-[13px] text-white mt-2">Select your qualification to get started</p>
+          </div>
         </div>
         <QualificationSelector />
       </div>
@@ -237,50 +239,61 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
   return (
     <div className="px-5 py-6 space-y-6 lg:px-6 lg:max-w-4xl lg:mx-auto">
-      {/* Greeting + Course header — compact */}
-      <div className="flex items-center justify-between">
+      {/* Compact header — greeting + inline stats */}
+      <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h2 className="text-xl font-bold text-white truncate">
-            {getGreeting()}, {firstName}
-          </h2>
+          <p className="text-[13px] text-white">{getGreeting()},</p>
+          <h2 className="text-xl font-bold text-white tracking-tight truncate">{firstName}</h2>
           {userSelection && (
             <button
               onClick={() => setShowCourseSelector(true)}
-              className="flex items-center gap-1.5 mt-1 text-xs text-white touch-manipulation active:opacity-70"
+              className="mt-1 text-[12px] text-elec-yellow font-medium touch-manipulation active:opacity-70"
             >
-              <GraduationCap className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
-              <span className="line-clamp-2">
-                {userSelection.qualification?.title}
-              </span>
+              {userSelection.qualification?.title} →
             </button>
           )}
         </div>
-        <XPProgressRing
-          size={40}
-          compact
-          xpToday={xp.xpToday ?? 0}
-          dailyGoal={xp.dailyGoal ?? 50}
-          level={xp.level ?? 1}
-          levelTitle={xp.levelTitle ?? ''}
-          totalXP={xp.totalXP ?? 0}
-        />
+        <div className="flex items-center gap-4 flex-shrink-0 pt-1">
+          <button onClick={() => onNavigate('work')} className="text-center touch-manipulation active:opacity-70">
+            <p className="text-lg font-bold text-white leading-none">
+              {tree.totalACs > 0 ? evidencedCount : portfolioCompleted}/{tree.totalACs > 0 ? tree.totalACs : portfolioTotal}
+            </p>
+            <p className="text-[10px] text-white mt-0.5 uppercase tracking-wider">{tree.totalACs > 0 ? 'ACs' : 'Portfolio'}</p>
+          </button>
+          <button onClick={() => onNavigate('hours')} className="text-center touch-manipulation active:opacity-70">
+            <p className={cn('text-lg font-bold leading-none', weeklyPercent >= 100 ? 'text-green-400' : 'text-white')}>
+              {weeklyHours.toFixed(1)}h
+            </p>
+            <p className="text-[10px] text-white mt-0.5 uppercase tracking-wider">Week</p>
+          </button>
+          <button onClick={() => onNavigate('hours')} className="text-center touch-manipulation active:opacity-70">
+            <p className="text-lg font-bold text-white leading-none">{yearlyHours}h</p>
+            <p className="text-[10px] text-white mt-0.5 uppercase tracking-wider">Year</p>
+          </button>
+          <XPProgressRing
+            size={36}
+            compact
+            xpToday={xp.xpToday ?? 0}
+            dailyGoal={xp.dailyGoal ?? 50}
+            level={xp.level ?? 1}
+            levelTitle={xp.levelTitle ?? ''}
+            totalXP={xp.totalXP ?? 0}
+          />
+        </div>
       </div>
 
       {/* No-data guard */}
       {userSelection && !acLoading && !qualLoading && tree.totalACs === 0 && (
-        <div className="flex items-start gap-3 p-4 rounded-2xl border border-orange-500/30 bg-orange-500/10">
-          <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
-          <div className="flex-1">
-            <p className="text-sm font-medium text-white">
-              No curriculum data for this course yet.
-            </p>
-            <button
-              onClick={() => setShowCourseSelector(true)}
-              className="text-sm text-orange-300 font-semibold mt-1.5 touch-manipulation"
-            >
-              Switch to a supported course
-            </button>
-          </div>
+        <div className="p-4 rounded-2xl border border-orange-500/30 bg-orange-500/10">
+          <p className="text-sm font-medium text-white">
+            No curriculum data for this course yet.
+          </p>
+          <button
+            onClick={() => setShowCourseSelector(true)}
+            className="text-sm text-orange-300 font-semibold mt-1.5 touch-manipulation"
+          >
+            Switch to a supported course
+          </button>
         </div>
       )}
 
@@ -288,16 +301,15 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       <div className="grid grid-cols-3 gap-3">
         <Button
           onClick={onCapture}
-          className="h-14 rounded-2xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform shadow-lg shadow-elec-yellow/20"
+          className="h-12 rounded-2xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform shadow-lg shadow-elec-yellow/20"
         >
           Add Evidence
         </Button>
         <Button
           variant="outline"
           onClick={() => onNavigate('hours')}
-          className="h-14 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
+          className="h-12 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
         >
-          <Timer className="h-5 w-5 mr-2" />
           Log Time
         </Button>
         <Button
@@ -306,49 +318,10 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
             haptic.light();
             setShowShareSheet(true);
           }}
-          className="h-14 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
+          className="h-12 rounded-2xl font-semibold text-sm touch-manipulation active:scale-[0.97] transition-transform border-white/15 bg-white/[0.04]"
         >
-          <Share2 className="h-5 w-5 mr-2" />
           Share
         </Button>
-      </div>
-
-      {/* Progress Overview — stats row */}
-      <div className="grid grid-cols-3 gap-3">
-        <button
-          onClick={() => onNavigate('work')}
-          className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] text-left touch-manipulation active:scale-[0.97] transition-all"
-        >
-          <Briefcase className="h-5 w-5 text-elec-yellow mb-2" />
-          <p className="text-lg font-bold text-white">
-            {tree.totalACs > 0 ? evidencedCount : portfolioCompleted}/
-            {tree.totalACs > 0 ? tree.totalACs : portfolioTotal}
-          </p>
-          <p className="text-xs text-white">
-            {tree.totalACs > 0 ? 'ACs Covered' : 'Portfolio'}
-          </p>
-        </button>
-        <button
-          onClick={() => onNavigate('hours')}
-          className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] text-left touch-manipulation active:scale-[0.97] transition-all"
-        >
-          <Clock
-            className={cn(
-              'h-5 w-5 mb-2',
-              weeklyPercent >= 100 ? 'text-green-400' : 'text-blue-400'
-            )}
-          />
-          <p className="text-lg font-bold text-white">{weeklyHours.toFixed(1)}h</p>
-          <p className="text-xs text-white">This Week</p>
-        </button>
-        <button
-          onClick={() => onNavigate('hours')}
-          className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] text-left touch-manipulation active:scale-[0.97] transition-all"
-        >
-          <Target className="h-5 w-5 text-blue-400 mb-2" />
-          <p className="text-lg font-bold text-white">{yearlyHours}h</p>
-          <p className="text-xs text-white">Yearly OJT</p>
-        </button>
       </div>
 
       {/* Next AC to Target — smart nudge */}
@@ -361,9 +334,6 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
           className="w-full p-4 rounded-2xl bg-gradient-to-r from-elec-yellow/[0.08] to-transparent border border-elec-yellow/20 text-left touch-manipulation active:scale-[0.99] transition-transform"
         >
           <div className="flex items-start gap-3">
-            <div className="p-2 rounded-xl bg-elec-yellow/15 flex-shrink-0">
-              <Target className="h-5 w-5 text-elec-yellow" />
-            </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs text-white font-medium mb-0.5">Next AC to Target</p>
               <p className="text-sm font-semibold text-white leading-snug">
@@ -371,10 +341,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
               </p>
               <p className="text-xs text-white mt-0.5 line-clamp-3">{nextAC.acText}</p>
             </div>
-            <div className="flex-shrink-0 flex items-center gap-1 mt-1">
-              <Plus className="h-4 w-4 text-elec-yellow" />
-              <span className="text-xs font-semibold text-elec-yellow">Add</span>
-            </div>
+            <span className="text-xs font-semibold text-elec-yellow flex-shrink-0 mt-1">Add →</span>
           </div>
           {/* Thin progress bar */}
           <div className="mt-3 flex items-center gap-2">

@@ -78,23 +78,14 @@ function ElectricalHero() {
   };
 
   return (
-    <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-      <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+    <div className="relative overflow-hidden glass-premium rounded-2xl">
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow opacity-60" />
 
-      <div className="relative z-10 p-5 sm:p-6">
-        <div className="flex items-center gap-4">
-          <div className="flex-shrink-0 p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-            <Zap className="h-7 w-7 text-elec-yellow" />
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <p className="text-sm text-white mb-0.5">{getGreeting()}</p>
-            <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow tracking-tight">
-              {firstName}
-            </h1>
-          </div>
-        </div>
+      <div className="relative z-10 px-5 py-4 sm:px-6 sm:py-5">
+        <p className="text-[13px] text-white mb-0.5">{getGreeting()}</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow tracking-tight">
+          {firstName}
+        </h1>
       </div>
     </div>
   );
@@ -171,36 +162,24 @@ function ElectricalStatsBar() {
             key={stat.label}
             onClick={() => navigate(stat.navigateTo)}
             variants={itemVariants}
-            whileTap={{ scale: 0.96 }}
+            whileTap={{ scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-            className="touch-manipulation cursor-pointer group w-full"
+            className="touch-manipulation cursor-pointer group w-full text-left"
             aria-label={`View ${stat.label}`}
           >
-            <div
-              className={cn(
-                'rounded-xl p-3 sm:p-4',
-                'bg-white/[0.04] border border-white/[0.06]',
-                'group-active:bg-white/[0.06]',
-                'transition-colors duration-150'
+            <div className="rounded-2xl px-4 py-3 sm:py-4 bg-white/[0.03] border border-white/[0.06] group-active:bg-white/[0.06] transition-colors duration-150">
+              <p className="text-[11px] text-white mb-1 uppercase tracking-wider font-medium">{stat.label}</p>
+              {stat.formatAsCurrency ? (
+                <span className={cn('text-2xl sm:text-3xl font-bold tracking-tight', accentColor)}>
+                  {business.formattedQuoteValue}
+                </span>
+              ) : (
+                <AnimatedCounter
+                  value={stat.value}
+                  prefix={stat.prefix}
+                  className={cn('text-2xl sm:text-3xl font-bold tracking-tight', accentColor)}
+                />
               )}
-            >
-              <div className="flex flex-col items-start text-left">
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <Icon className={cn('h-3.5 w-3.5', accentColor)} />
-                  <p className="text-[11px] sm:text-xs text-white">{stat.label}</p>
-                </div>
-                {stat.formatAsCurrency ? (
-                  <span className={cn('text-xl sm:text-2xl font-bold tracking-tight', accentColor)}>
-                    {business.formattedQuoteValue}
-                  </span>
-                ) : (
-                  <AnimatedCounter
-                    value={stat.value}
-                    prefix={stat.prefix}
-                    className={cn('text-xl sm:text-2xl font-bold tracking-tight', accentColor)}
-                  />
-                )}
-              </div>
             </div>
           </motion.button>
         );
@@ -220,7 +199,7 @@ interface PrimaryToolCardProps {
   badge?: boolean;
 }
 
-function PrimaryToolCard({ title, description, icon: _Icon, link }: PrimaryToolCardProps) {
+function PrimaryToolCard({ title, description, link }: PrimaryToolCardProps) {
   return (
     <Link to={link} className="block group touch-manipulation">
       <motion.div
@@ -262,7 +241,7 @@ interface ToolCardProps {
   link: string;
 }
 
-function CompactToolCard({ title, description, icon: _Icon, link }: ToolCardProps) {
+function CompactToolCard({ title, description, link }: ToolCardProps) {
   return (
     <Link to={link} className="block group touch-manipulation">
       <motion.div

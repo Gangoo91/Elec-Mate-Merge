@@ -7,15 +7,7 @@ import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-  CircuitBoard,
-  Zap,
-  ChevronRight,
-  FileCheck,
-  AlertCircle,
-  Archive,
-  Trash2,
-} from 'lucide-react';
+import { ChevronRight, Trash2 } from 'lucide-react';
 import {
   useDesignedCircuits,
   useDeleteDesignedCircuit,
@@ -100,23 +92,42 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
     return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   };
 
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'pending':
+      case 'in-progress':
+        return { label: 'Pending', style: 'bg-amber-500/15 text-amber-400' };
+      case 'completed':
+        return { label: 'Done', style: 'bg-green-500/15 text-green-400' };
+      case 'archived':
+        return { label: 'Archived', style: 'bg-white/10 text-white/50' };
+      default:
+        return { label: status, style: 'bg-white/10 text-white/50' };
+    }
+  };
+
   if (isLoading) {
     return (
       <div>
-        <div className="flex items-center gap-2.5 mb-4">
-          <CircuitBoard className="h-5 w-5 text-elec-yellow" />
-          <span className="text-base font-semibold text-white">Designed Circuits</span>
+        <div className="border-b border-white/[0.06] pb-1 mb-4">
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-cyan-500/40 to-cyan-500/10 mb-2" />
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider">Circuit Designer</h2>
         </div>
-        <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
+        <Skeleton className="h-24 w-full rounded-2xl bg-white/[0.03]" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center gap-3 p-4 bg-red-500/8 border border-red-500/15 rounded-2xl text-red-400">
-        <AlertCircle className="h-5 w-5 flex-shrink-0" />
-        <p className="text-sm font-medium">Failed to load designed circuits</p>
+      <div>
+        <div className="border-b border-white/[0.06] pb-1 mb-4">
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-cyan-500/40 to-cyan-500/10 mb-2" />
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider">Circuit Designer</h2>
+        </div>
+        <div className="card-surface-interactive p-4 rounded-2xl">
+          <p className="text-sm font-medium text-red-400">Failed to load designed circuits</p>
+        </div>
       </div>
     );
   }
@@ -126,22 +137,30 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
   if (totalCount === 0) {
     return (
       <div>
-        <div className="flex items-center gap-2.5 mb-4">
-          <CircuitBoard className="h-5 w-5 text-elec-yellow" />
-          <span className="text-base font-semibold text-white">Designed Circuits</span>
+        <div className="border-b border-white/[0.06] pb-1 mb-4">
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-cyan-500/40 to-cyan-500/10 mb-2" />
+          <h2 className="text-xs font-medium text-white uppercase tracking-wider">Circuit Designer</h2>
         </div>
         <button
           onClick={() => navigate('/electrician/circuit-designer')}
-          className="group w-full flex items-center gap-3.5 p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation text-left"
+          className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
         >
-          <div className="w-11 h-11 rounded-xl bg-elec-yellow/12 flex items-center justify-center flex-shrink-0">
-            <Zap className="h-5 w-5 text-elec-yellow" />
+          <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-cyan-500 via-cyan-400 to-blue-400 opacity-30 group-hover:opacity-80 transition-opacity duration-200" />
+            <div className="relative z-10 flex flex-col p-4">
+              <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
+                No designs yet
+              </h3>
+              <p className="mt-1 text-[12px] text-white leading-tight">Tap to open Circuit Designer</p>
+              <div className="flex-grow min-h-[8px]" />
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-[11px] font-medium text-elec-yellow">Open</span>
+                <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                  <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-white">No designs yet</p>
-            <p className="text-sm text-white mt-0.5">Tap to open Circuit Designer</p>
-          </div>
-          <ChevronRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
         </button>
       </div>
     );
@@ -151,19 +170,21 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
     <>
       <div>
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2.5">
-            <CircuitBoard className="h-5 w-5 text-elec-yellow" />
-            <span className="text-base font-semibold text-white">Designed Circuits</span>
-            {pendingDesigns.length > 0 && (
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-elec-yellow/15 text-elec-yellow">
-                {pendingDesigns.length} pending
-              </span>
-            )}
+        <div className="flex items-center justify-between mb-3">
+          <div className="border-b border-white/[0.06] pb-1 flex-1">
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-cyan-500/40 to-cyan-500/10 mb-2" />
+            <div className="flex items-center gap-2.5">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider">Circuit Designer</h2>
+              {pendingDesigns.length > 0 && (
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-elec-yellow/15 text-elec-yellow">
+                  {pendingDesigns.length} pending
+                </span>
+              )}
+            </div>
           </div>
           {currentDesigns.length > 3 && (
             <button
-              className="text-sm font-medium text-elec-yellow hover:underline touch-manipulation h-11 flex items-center"
+              className="text-xs font-medium text-elec-yellow hover:underline touch-manipulation h-11 flex items-center ml-3"
               onClick={() => navigate('/electrician/circuit-designer')}
             >
               View All
@@ -172,7 +193,7 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-3">
           {(['pending', 'completed', 'archived'] as StatusTab[]).map((tab) => {
             const count =
               tab === 'pending'
@@ -185,10 +206,10 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={cn(
-                  'h-11 px-4 text-sm font-medium rounded-xl transition-all touch-manipulation capitalize',
+                  'h-9 px-3.5 text-xs font-medium rounded-lg transition-all touch-manipulation capitalize active:scale-[0.98]',
                   activeTab === tab
-                    ? 'bg-elec-yellow/12 text-elec-yellow border border-elec-yellow/20'
-                    : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.09]'
+                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                    : 'bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.07]'
                 )}
               >
                 {tab === 'completed' ? 'Done' : tab} {count > 0 && `(${count})`}
@@ -199,22 +220,20 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
         {/* Empty state for tab */}
         {currentDesigns.length === 0 && (
-          <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08]">
-            <div className="w-11 h-11 rounded-xl bg-white/[0.06] flex items-center justify-center flex-shrink-0">
-              <CircuitBoard className="h-5 w-5 text-white" />
-            </div>
-            <p className="text-sm text-white text-left">No {activeTab} designs</p>
+          <div className="card-surface-interactive p-4 rounded-2xl">
+            <p className="text-sm text-white/50 text-left">No {activeTab} designs</p>
           </div>
         )}
 
-        {/* Design List */}
-        <div className="space-y-2">
+        {/* Design List — HubCard style */}
+        <div className="space-y-3">
           <AnimatePresence mode="popLayout">
             {currentDesigns.slice(0, 3).map((design, index) => {
               const circuitCount = design.schedule_data?.circuits?.length || 0;
               const projectName =
                 design.schedule_data?.projectInfo?.projectName || design.installation_address;
               const isClickable = design.status === 'pending' || design.status === 'in-progress';
+              const badge = getStatusBadge(design.status);
 
               return (
                 <motion.div
@@ -223,49 +242,58 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ delay: index * 0.03 }}
-                  className={cn(
-                    'flex items-center gap-3.5 p-4 rounded-2xl',
-                    'bg-white/[0.06] border border-white/[0.08]',
-                    isClickable &&
-                      'cursor-pointer hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation'
-                  )}
-                  onClick={() => isClickable && handleUseDesign(design)}
                 >
                   <div
                     className={cn(
-                      'flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center',
-                      design.status === 'completed' ? 'bg-green-500/12' : 'bg-elec-yellow/12'
+                      'group relative overflow-hidden card-surface-interactive rounded-2xl',
+                      isClickable && 'cursor-pointer active:scale-[0.98] transition-all duration-200'
                     )}
+                    onClick={() => isClickable && handleUseDesign(design)}
                   >
-                    {design.status === 'completed' ? (
-                      <FileCheck className="h-5 w-5 text-green-400" />
-                    ) : design.status === 'archived' ? (
-                      <Archive className="h-5 w-5 text-white" />
-                    ) : (
-                      <Zap className="h-5 w-5 text-elec-yellow" />
-                    )}
-                  </div>
+                    {/* Gradient accent line */}
+                    <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-cyan-500 via-cyan-400 to-blue-400 opacity-30 group-hover:opacity-80 transition-opacity duration-200" />
+                    <div className="relative z-10 p-4">
+                      {/* Top row: badges + date */}
+                      <div className="flex items-center gap-1.5 mb-2">
+                        <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded', badge.style)}>
+                          {badge.label}
+                        </span>
+                        <span className="text-[10px] font-medium text-white/30 px-2 py-0.5 rounded bg-white/[0.04]">
+                          {circuitCount} circuit{circuitCount !== 1 ? 's' : ''}
+                        </span>
+                        <span className="text-[11px] text-white/40 ml-auto">
+                          {formatDate(design.created_at)}
+                        </span>
+                      </div>
 
-                  <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-semibold text-white truncate">{projectName}</h4>
-                    <div className="flex items-center gap-2 text-sm text-white mt-0.5">
-                      <span>{circuitCount} circuits</span>
-                      <span>·</span>
-                      <span>{formatDate(design.created_at)}</span>
+                      {/* Project name */}
+                      <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors truncate">
+                        {projectName || 'Untitled'}
+                      </h3>
+
+                      {/* Bottom row: action + delete + chevron */}
+                      <div className="flex items-center justify-between mt-3">
+                        <span className="text-[11px] font-medium text-elec-yellow">
+                          {isClickable ? 'Use in EIC' : design.status === 'completed' ? 'Done' : 'Archived'}
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDeleteId(design.id);
+                            }}
+                            className="w-7 h-7 rounded-full flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                          {isClickable && (
+                            <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                              <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="flex items-center gap-1 flex-shrink-0">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setDeleteId(design.id);
-                      }}
-                      className="w-11 h-11 rounded-xl flex items-center justify-center text-white hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                    {isClickable && <ChevronRight className="h-5 w-5 text-elec-yellow" />}
                   </div>
                 </motion.div>
               );
@@ -279,7 +307,7 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
         <AlertDialogContent className="bg-[hsl(240_5.9%_12%)] border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete Design?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
+            <AlertDialogDescription className="text-white/60">
               This will permanently delete this circuit design.
             </AlertDialogDescription>
           </AlertDialogHeader>

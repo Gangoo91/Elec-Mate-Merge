@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Zap, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -152,7 +152,7 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11">
             <Button
@@ -163,14 +163,10 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                <Zap className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Specialist Certificates</h1>
-            </div>
+            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Specialist Certificates</h1>
           </div>
         </div>
+        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <motion.main
@@ -188,9 +184,17 @@ const SpecialistSection = ({ onBack }: SpecialistSectionProps) => {
           if (certs.length === 0) return null;
           return (
             <motion.section key={group.key} variants={itemVariants} className="space-y-3">
-              <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-                {group.label}
-              </h2>
+              <div className="border-b border-white/[0.06] pb-1">
+                <div className={cn(
+                  'h-[2px] w-full rounded-full bg-gradient-to-r mb-2',
+                  group.key === 'electrical' ? 'from-blue-500/40 to-blue-500/10' :
+                  group.key === 'renewables' ? 'from-emerald-500/40 to-emerald-500/10' :
+                  'from-red-500/40 to-red-500/10'
+                )} />
+                <h2 className="text-xs font-medium text-white uppercase tracking-wider">
+                  {group.label}
+                </h2>
+              </div>
               <div className="grid grid-cols-2 gap-3 auto-rows-fr">
                 {certs.map((cert) => (
                   <motion.div key={cert.id} variants={itemVariants} className="h-full">

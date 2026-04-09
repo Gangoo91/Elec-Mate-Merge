@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Zap, HelpCircle, ChevronRight, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import DashboardStatsBar from './dashboard/DashboardStatsBar';
@@ -104,10 +104,16 @@ interface ContinueCardProps {
 
 const getTypeLabel = (type: string) => {
   const labels: Record<string, string> = {
-    eicr: 'EICR', eic: 'EIC', 'minor-works': 'MW', 'fire-alarm': 'FIRE',
-    'ev-charging': 'EV', 'emergency-lighting': 'EM LTG', 'pat-testing': 'PAT', 'solar-pv': 'SOLAR',
+    eicr: 'EICR', eic: 'EIC', 'minor-works': 'MW',
+    'fire-alarm': 'FA G1', 'fire-alarm-commissioning': 'FA G2',
+    'fire-alarm-inspection': 'FA G7', 'fire-alarm-modification': 'FA G4',
+    'ev-charging': 'EV', 'emergency-lighting': 'EM LTG',
+    'pat-testing': 'PAT', 'solar-pv': 'SOLAR PV',
+    'bess': 'BESS', 'lightning-protection': 'LPS',
+    'g98-commissioning': 'G98', 'g99-commissioning': 'G99',
+    'smoke-co-alarm': 'SMOKE/CO',
   };
-  return labels[type] || type.toUpperCase().slice(0, 5);
+  return labels[type] || type.toUpperCase().replace(/-/g, ' ').slice(0, 8);
 };
 
 const ContinueCard = ({ reportType, clientName, address, onClick }: ContinueCardProps) => (
@@ -250,7 +256,7 @@ const Dashboard = ({
     <>
       <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
         {/* Sticky Header */}
-        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
           <div className="px-4 py-2">
             <div className="flex items-center gap-3 h-11">
               <Button
@@ -261,23 +267,10 @@ const Dashboard = ({
               >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
-              <div className="flex items-center gap-2.5">
-                <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                  <Zap className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <h1 className="text-base font-semibold text-white">Inspection & Testing</h1>
-              </div>
-              <div className="flex-1" />
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsHelpOpen(true)}
-                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-              >
-                <HelpCircle className="h-5 w-5" />
-              </Button>
+              <h1 className="text-sm font-bold text-white tracking-wide uppercase">Inspection & Testing</h1>
             </div>
           </div>
+          <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
         </div>
 
         {/* Main Content */}

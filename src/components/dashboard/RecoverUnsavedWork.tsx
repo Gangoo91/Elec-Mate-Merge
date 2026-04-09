@@ -5,19 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import {
-  FileText,
-  ChevronRight,
-  Trash2,
-  X,
-  Clock,
-  MapPin,
-  ClipboardCheck,
-  Zap,
-  Flame,
-  Sun,
-  Car,
-} from 'lucide-react';
+import { ChevronRight, Trash2, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
@@ -41,75 +29,39 @@ interface RecoverUnsavedWorkProps {
   className?: string;
 }
 
-interface TypeInfo {
-  label: string;
-  color: string;
-  accent: string;
-  iconBg: string;
-  iconColor: string;
-  icon: React.ElementType;
-}
-
-const TYPE_LABELS: Record<string, TypeInfo> = {
-  eic: {
-    label: 'EIC',
-    color: 'bg-green-500/15 text-green-400',
-    accent: 'bg-green-500',
-    iconBg: 'bg-green-500/12',
-    iconColor: 'text-green-400',
-    icon: ClipboardCheck,
-  },
-  eicr: {
-    label: 'EICR',
-    color: 'bg-blue-500/15 text-blue-400',
-    accent: 'bg-blue-500',
-    iconBg: 'bg-blue-500/12',
-    iconColor: 'text-blue-400',
-    icon: ClipboardCheck,
-  },
-  'minor-works': {
-    label: 'MW',
-    color: 'bg-orange-500/15 text-orange-400',
-    accent: 'bg-orange-500',
-    iconBg: 'bg-orange-500/12',
-    iconColor: 'text-orange-400',
-    icon: Zap,
-  },
-  'solar-pv': {
-    label: 'Solar',
-    color: 'bg-yellow-500/15 text-yellow-400',
-    accent: 'bg-yellow-500',
-    iconBg: 'bg-yellow-500/12',
-    iconColor: 'text-yellow-400',
-    icon: Sun,
-  },
-  'ev-charging': {
-    label: 'EV',
-    color: 'bg-purple-500/15 text-purple-400',
-    accent: 'bg-purple-500',
-    iconBg: 'bg-purple-500/12',
-    iconColor: 'text-purple-400',
-    icon: Car,
-  },
-  'fire-alarm': {
-    label: 'Fire',
-    color: 'bg-red-500/15 text-red-400',
-    accent: 'bg-red-500',
-    iconBg: 'bg-red-500/12',
-    iconColor: 'text-red-400',
-    icon: Flame,
-  },
+const getTypeLabel = (type: string) => {
+  const labels: Record<string, string> = {
+    eicr: 'EICR', eic: 'EIC', 'minor-works': 'MW',
+    'fire-alarm': 'FA G1', 'fire-alarm-commissioning': 'FA G2',
+    'fire-alarm-inspection': 'FA G7', 'fire-alarm-modification': 'FA G4',
+    'ev-charging': 'EV', 'emergency-lighting': 'EM LTG',
+    'solar-pv': 'SOLAR PV', 'pat-testing': 'PAT',
+    'smoke-co-alarm': 'SMOKE/CO', bess: 'BESS',
+  };
+  return labels[type] || type.toUpperCase().replace(/-/g, ' ').slice(0, 6);
 };
 
-const getTypeInfo = (type: string): TypeInfo =>
-  TYPE_LABELS[type?.toLowerCase()] ?? {
-    label: 'CERT',
-    color: 'bg-amber-500/15 text-amber-400',
-    accent: 'bg-amber-500',
-    iconBg: 'bg-amber-500/12',
-    iconColor: 'text-amber-400',
-    icon: FileText,
-  };
+const getTypeBadgeStyle = (type: string) => {
+  if (type.startsWith('fire-alarm')) return 'bg-red-500/15 text-red-400';
+  if (type === 'eicr') return 'bg-blue-500/15 text-blue-400';
+  if (type === 'eic') return 'bg-emerald-500/15 text-emerald-400';
+  if (type === 'minor-works') return 'bg-orange-500/15 text-orange-400';
+  if (type === 'ev-charging') return 'bg-cyan-500/15 text-cyan-400';
+  if (type === 'emergency-lighting') return 'bg-violet-500/15 text-violet-400';
+  if (type === 'pat-testing') return 'bg-amber-500/15 text-amber-400';
+  if (type === 'solar-pv') return 'bg-yellow-500/15 text-yellow-400';
+  return 'bg-elec-yellow/15 text-elec-yellow';
+};
+
+const getTypeAccent = (type: string) => {
+  if (type.startsWith('fire-alarm')) return 'from-red-500 via-rose-400 to-pink-400';
+  if (type === 'eicr') return 'from-blue-500 via-blue-400 to-cyan-400';
+  if (type === 'eic') return 'from-emerald-500 via-emerald-400 to-green-400';
+  if (type === 'minor-works') return 'from-orange-500 via-amber-400 to-yellow-400';
+  if (type === 'ev-charging') return 'from-cyan-500 via-cyan-400 to-blue-400';
+  if (type === 'emergency-lighting') return 'from-violet-500 via-purple-400 to-indigo-400';
+  return 'from-amber-500 via-amber-400 to-yellow-400';
+};
 
 const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, className }) => {
   const { toast } = useToast();
@@ -180,73 +132,65 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
 
   if (isDismissed || isLoading || !autoDrafts || autoDrafts.length === 0) return null;
 
-  const firstDraft = autoDrafts[0];
-  const firstType = getTypeInfo(firstDraft.report_type);
-
-  // Unique type labels for the banner badge
-  const uniqueTypes = [...new Set(autoDrafts.map((d) => getTypeInfo(d.report_type).label))];
+  // Unique type labels for the banner badges
+  const uniqueTypes = [...new Set(autoDrafts.map((d) => d.report_type))];
 
   return (
     <>
+      {/* Banner card */}
       <motion.div
         initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -6 }}
         transition={{ duration: 0.2 }}
         className={cn(
-          'rounded-2xl bg-white/[0.06] border border-white/[0.08] overflow-hidden',
+          'group relative overflow-hidden card-surface-interactive rounded-2xl',
           className
         )}
       >
-        {/* Main tappable row — opens sheet, not individual draft */}
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 opacity-50" />
+
+        {/* Main tappable row */}
         <button
           onClick={() => setShowSheet(true)}
-          className="w-full flex items-center gap-3.5 p-4 text-left hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation"
+          className="w-full flex items-center gap-3.5 p-4 text-left active:scale-[0.98] transition-all touch-manipulation"
         >
-          <div className="w-11 h-11 rounded-xl bg-amber-500/15 flex items-center justify-center flex-shrink-0">
-            <FileText className="h-5 w-5 text-amber-400" />
-          </div>
-
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+            <div className="flex items-center gap-2 mb-1 flex-wrap">
               <span className="text-sm font-semibold text-white">
                 {autoDrafts.length} unsaved draft{autoDrafts.length !== 1 ? 's' : ''}
               </span>
-              {uniqueTypes.slice(0, 4).map((label) => (
+              {uniqueTypes.slice(0, 4).map((type) => (
                 <span
-                  key={label}
-                  className={cn(
-                    'text-[11px] font-bold px-2 py-0.5 rounded-md',
-                    getTypeInfo(
-                      Object.entries(TYPE_LABELS).find(([, v]) => v.label === label)?.[0] ?? ''
-                    ).color
-                  )}
+                  key={type}
+                  className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded', getTypeBadgeStyle(type))}
                 >
-                  {label}
+                  {getTypeLabel(type)}
                 </span>
               ))}
             </div>
-            <p className="text-sm text-white truncate">Tap to see all and choose one</p>
+            <p className="text-[12px] text-white">Tap to see all and choose one</p>
           </div>
-
-          <ChevronRight className="h-5 w-5 text-amber-400 flex-shrink-0" />
+          <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200 flex-shrink-0">
+            <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
+          </div>
         </button>
 
         {/* Actions bar */}
         <div className="flex items-center border-t border-white/[0.06] px-4">
           <button
             onClick={() => setDeleteAll(true)}
-            className="h-11 flex items-center gap-1.5 text-sm text-white hover:text-red-400 transition-colors touch-manipulation"
+            className="h-10 flex items-center gap-1.5 text-xs font-medium text-white hover:text-red-400 transition-colors touch-manipulation"
           >
-            <Trash2 className="h-3.5 w-3.5" />
+            <Trash2 className="h-3 w-3" />
             Delete all
           </button>
           <button
             onClick={() => setIsDismissed(true)}
-            className="h-11 flex items-center gap-1.5 text-sm text-white ml-auto hover:text-white transition-colors touch-manipulation"
+            className="h-10 flex items-center gap-1.5 text-xs font-medium text-white ml-auto hover:text-white/80 transition-colors touch-manipulation"
           >
             Dismiss
-            <X className="h-3.5 w-3.5" />
+            <X className="h-3 w-3" />
           </button>
         </div>
       </motion.div>
@@ -255,26 +199,23 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
       <Sheet open={showSheet} onOpenChange={setShowSheet}>
         <SheetContent
           side="bottom"
-          className="bg-[#1a1a1e] border-white/10 rounded-t-2xl max-h-[80vh] flex flex-col p-0"
+          className="bg-background border-white/[0.06] rounded-t-2xl max-h-[80vh] flex flex-col p-0"
         >
-          {/* Header with count badge */}
-          <SheetHeader className="px-5 pt-5 pb-4 border-b border-white/[0.07] flex-shrink-0">
+          <SheetHeader className="px-5 pt-5 pb-4 border-b border-white/[0.06] flex-shrink-0">
             <div className="flex items-center gap-3">
-              <SheetTitle className="text-white text-lg font-semibold text-left">
+              <SheetTitle className="text-white text-base font-semibold text-left">
                 Unsaved Drafts
               </SheetTitle>
-              <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-500/15 text-amber-400">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400">
                 {autoDrafts.length}
               </span>
             </div>
-            <p className="text-sm text-white text-left">Tap a draft to continue editing</p>
+            <p className="text-xs text-white text-left">Tap a draft to continue editing</p>
           </SheetHeader>
 
-          {/* Draft list — scrollable, card-style */}
-          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2.5">
+          {/* Draft list */}
+          <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
             {autoDrafts.map((draft) => {
-              const typeInfo = getTypeInfo(draft.report_type);
-              const IconComp = typeInfo.icon;
               const updatedAgo = draft.updated_at
                 ? formatDistanceToNow(new Date(draft.updated_at), { addSuffix: true })
                 : 'Unknown';
@@ -282,73 +223,48 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
               return (
                 <div
                   key={draft.report_id}
-                  className="relative flex items-center gap-3 rounded-xl bg-white/[0.04] border border-white/[0.06] overflow-hidden"
+                  className="group relative overflow-hidden card-surface-interactive rounded-xl"
                 >
-                  {/* Coloured left accent bar */}
-                  <div
-                    className={cn(
-                      'absolute left-0 top-0 bottom-0 w-1 rounded-l-xl',
-                      typeInfo.accent
-                    )}
-                  />
+                  <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity', getTypeAccent(draft.report_type))} />
 
-                  {/* Draft info — tappable */}
-                  <button
-                    onClick={() => handleRecover(draft)}
-                    className="flex-1 flex items-center gap-3 text-left active:bg-white/[0.06] transition-colors min-w-0 pl-4 pr-2 py-3.5"
-                  >
-                    <div
-                      className={cn(
-                        'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
-                        typeInfo.iconBg
-                      )}
+                  <div className="relative z-10 flex items-center gap-2">
+                    {/* Draft info — tappable */}
+                    <button
+                      onClick={() => handleRecover(draft)}
+                      className="flex-1 text-left active:bg-white/[0.06] transition-colors min-w-0 p-3.5"
                     >
-                      <IconComp className={cn('h-5 w-5', typeInfo.iconColor)} />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span
-                          className={cn(
-                            'text-[11px] font-bold px-2 py-0.5 rounded-md flex-shrink-0',
-                            typeInfo.color
-                          )}
-                        >
-                          {typeInfo.label}
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <span className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded', getTypeBadgeStyle(draft.report_type))}>
+                          {getTypeLabel(draft.report_type)}
                         </span>
-                        <span className="text-sm font-medium text-white truncate">
-                          {draft.client_name || 'Untitled'}
-                        </span>
+                        <span className="text-[11px] text-white/40 ml-auto">{updatedAgo}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-xs text-white">
-                        {draft.installation_address && (
-                          <span className="flex items-center gap-1 truncate">
-                            <MapPin className="h-3 w-3 flex-shrink-0" />
-                            <span className="truncate">{draft.installation_address}</span>
-                          </span>
-                        )}
-                        <span className="flex items-center gap-1 flex-shrink-0">
-                          <Clock className="h-3 w-3" />
-                          {updatedAgo}
-                        </span>
-                      </div>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                  </button>
+                      <h4 className="text-[13px] font-semibold text-white truncate group-hover:text-elec-yellow transition-colors">
+                        {draft.client_name || 'Untitled'}
+                      </h4>
+                      {draft.installation_address && (
+                        <p className="text-[12px] text-white truncate mt-0.5">{draft.installation_address}</p>
+                      )}
+                    </button>
 
-                  {/* Individual delete */}
-                  <button
-                    onClick={() => setDeleteTarget(draft)}
-                    className="w-10 h-10 rounded-lg flex items-center justify-center text-white hover:text-red-400 hover:bg-red-500/10 transition-colors flex-shrink-0 touch-manipulation mr-2"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
+                    {/* Delete + chevron */}
+                    <div className="flex items-center gap-0.5 pr-2 flex-shrink-0">
+                      <button
+                        onClick={() => setDeleteTarget(draft)}
+                        className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                      <ChevronRight className="h-4 w-4 text-white/20" />
+                    </div>
+                  </div>
                 </div>
               );
             })}
           </div>
 
           {/* Sheet footer */}
-          <div className="flex-shrink-0 px-5 py-4 border-t border-white/[0.07]">
+          <div className="flex-shrink-0 px-5 py-4 border-t border-white/[0.06]">
             <button
               onClick={() => setDeleteAll(true)}
               className="w-full h-11 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium flex items-center justify-center gap-2 active:scale-[0.98] transition-all touch-manipulation"
@@ -368,31 +284,31 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
           setDeleteAll(false);
         }}
       >
-        <AlertDialogContent className="bg-[#1a1a1e] border-white/10">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[#111114] border border-white/[0.08] rounded-2xl shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">
+            <AlertDialogTitle className="text-white text-base font-bold">
               {deleteAll ? 'Delete all drafts?' : 'Delete draft?'}
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-white">
+            <AlertDialogDescription className="text-white text-sm">
               {deleteAll
-                ? `This will permanently delete all ${autoDrafts.length} unsaved drafts. This cannot be undone.`
-                : `This will permanently delete "${deleteTarget?.client_name || 'Untitled'}". This cannot be undone.`}
+                ? `This will permanently delete all ${autoDrafts.length} unsaved drafts.`
+                : `This will permanently delete "${deleteTarget?.client_name || 'Untitled'}".`}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel
-              disabled={isDeleting}
-              className="bg-white/5 border-white/10 text-white hover:bg-white/10"
-            >
-              Cancel
-            </AlertDialogCancel>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
-              className="bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30"
+              className="w-full h-11 rounded-xl bg-red-500/15 border border-red-500/25 text-red-400 font-medium hover:bg-red-500/25 active:scale-[0.98] transition-all touch-manipulation"
             >
               {isDeleting ? 'Deleting...' : 'Delete'}
             </AlertDialogAction>
+            <AlertDialogCancel
+              disabled={isDeleting}
+              className="w-full h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white font-medium hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation mt-0"
+            >
+              Cancel
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

@@ -6,23 +6,17 @@
  */
 
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Home, Briefcase, Clock, User, Plus, TrendingUp } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type ApprenticeHubTab = 'home' | 'work' | 'hours' | 'progress' | 'me';
 
-interface NavItem {
-  id: ApprenticeHubTab;
-  label: string;
-  icon: typeof Home;
-}
-
-const navItems: NavItem[] = [
-  { id: 'home', label: 'Home', icon: Home },
-  { id: 'work', label: 'My Work', icon: Briefcase },
-  { id: 'hours', label: 'Hours', icon: Clock },
-  { id: 'progress', label: 'Progress', icon: TrendingUp },
-  { id: 'me', label: 'Me', icon: User },
+const navItems: { id: ApprenticeHubTab; label: string }[] = [
+  { id: 'home', label: 'Home' },
+  { id: 'work', label: 'My Work' },
+  { id: 'hours', label: 'Hours' },
+  { id: 'progress', label: 'Progress' },
+  { id: 'me', label: 'Me' },
 ];
 
 interface ApprenticeHubNavProps {
@@ -49,7 +43,6 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
         {/* Tab pills — scrollable row */}
         <div className="flex-1 flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
           {navItems.map((item) => {
-            const Icon = item.icon;
             const isActive = activeTab === item.id;
 
             return (
@@ -57,15 +50,14 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
                 className={cn(
-                  'flex items-center gap-1.5 px-3.5 h-9 rounded-full whitespace-nowrap text-sm font-medium',
+                  'px-4 h-9 rounded-full whitespace-nowrap text-[13px] font-semibold',
                   'touch-manipulation active:scale-95 transition-all',
                   isActive
                     ? 'bg-elec-yellow text-black'
-                    : 'text-white hover:text-white hover:bg-white/[0.06]'
+                    : 'text-white hover:bg-white/[0.06]'
                 )}
               >
-                <Icon className="h-4 w-4" />
-                <span>{item.label}</span>
+                {item.label}
               </button>
             );
           })}

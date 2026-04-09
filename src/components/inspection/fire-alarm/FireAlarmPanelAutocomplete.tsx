@@ -129,7 +129,7 @@ export function FireAlarmPanelAutocomplete({
         className
       )}
     >
-      <span className={cn('truncate', !selectedPanel && 'text-white/40')}>
+      <span className={cn('truncate', !selectedPanel && 'text-white')}>
         {displayValue}
       </span>
       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-40" />

@@ -182,18 +182,14 @@ function PremiumHubCard({
   return (
     <motion.div
       variants={cardVariants}
-      whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
       onClick={() => navigate(hub.path)}
       className={cn(
-        // Base
         'group relative cursor-pointer h-full',
-        // Solid surface
         'card-surface-interactive',
-        // Touch optimization
         'touch-manipulation',
-        // Overflow for gradient line
-        'overflow-hidden'
+        'overflow-hidden',
+        'active:scale-[0.98] transition-all duration-200'
       )}
     >
       {/* Gradient accent line at top */}
@@ -202,88 +198,39 @@ function PremiumHubCard({
           'absolute inset-x-0 top-0 h-[2px]',
           'bg-gradient-to-r',
           hub.accentGradient,
-          'opacity-40 group-hover:opacity-100',
+          'opacity-30 group-hover:opacity-80',
           'transition-opacity duration-200'
         )}
       />
 
       {/* Content */}
-      <div className="relative z-10 p-4 sm:p-5 flex flex-col h-full min-h-[160px] sm:min-h-[180px]">
-        {/* Top row - badge */}
-        <div className="flex items-start justify-end mb-3">
-          <span
-            className={cn(
-              'text-[10px] sm:text-xs font-medium',
-              'text-white uppercase tracking-wider',
-              'px-2 py-1 rounded-md bg-white/[0.04]'
-            )}
-          >
-            {hub.subtitle}
-          </span>
-        </div>
+      <div className="relative z-10 p-3.5 sm:p-4 flex flex-col h-full min-h-[130px]">
+        {/* Title */}
+        <h3 className="text-[13px] sm:text-sm font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
+          {hub.title}
+        </h3>
 
-        {/* Text content */}
-        <div className="flex-grow">
-          <h3
-            className={cn(
-              'text-base sm:text-lg font-semibold text-white mb-1',
-              'group-hover:text-elec-yellow transition-colors'
-            )}
-          >
-            {hub.title}
-          </h3>
-          <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-2">
-            {hub.description}
-          </p>
-        </div>
+        {/* Description */}
+        <p className="mt-0.5 text-[11px] sm:text-[12px] text-white leading-tight line-clamp-2">
+          {hub.description}
+        </p>
 
-        {/* Stat badge (if available) */}
+        {/* Spacer */}
+        <div className="flex-grow" />
+
+        {/* Stat (if available) */}
         {stat && (
-          <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className={cn(
-              'inline-flex items-center gap-1.5 self-start',
-              'mt-3 px-2.5 py-1 rounded-full',
-              'bg-white/[0.05] border border-white/[0.08]'
-            )}
-          >
-            <stat.icon className="h-3 w-3 text-white" />
-            <span className="text-[10px] sm:text-xs text-white">{stat.label}:</span>
-            <span className={cn('text-[10px] sm:text-xs font-semibold', hub.iconColor)}>
-              {stat.value}
-            </span>
-          </motion.div>
+          <p className="mt-2 text-[11px] text-white">
+            <span className={cn('font-semibold', hub.iconColor)}>{stat.value}</span>
+            {' '}{stat.label}
+          </p>
         )}
 
-        {/* Bottom action row */}
-        <div className="mt-3 flex items-center justify-between">
-          <span
-            className={cn(
-              'text-xs sm:text-sm font-medium',
-              'text-elec-yellow',
-              'transition-colors'
-            )}
-          >
-            Open
-          </span>
-          <div
-            className={cn(
-              'w-7 h-7 sm:w-8 sm:h-8 rounded-full',
-              'bg-white/[0.05] border border-elec-yellow/20',
-              'flex items-center justify-center',
-              'group-hover:bg-elec-yellow group-hover:border-elec-yellow',
-              'transition-all duration-200'
-            )}
-          >
-            <ChevronRight
-              className={cn(
-                'w-4 h-4 text-white',
-                'group-hover:text-black group-hover:translate-x-0.5',
-                'transition-all'
-              )}
-            />
+        {/* Bottom action */}
+        <div className="mt-2 flex items-center justify-between">
+          <span className="text-[11px] sm:text-xs font-medium text-elec-yellow">Open</span>
+          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+            <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
           </div>
         </div>
       </div>

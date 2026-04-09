@@ -1,4 +1,4 @@
-import { Building2, ExternalLink, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 
 interface NonRegisteredUserGuideProps {
@@ -15,20 +15,15 @@ export const NonRegisteredUserGuide = ({ onFindBuildingControl }: NonRegisteredU
   return (
     <div className="space-y-3">
       {/* Main card */}
-      <div className="group relative overflow-hidden card-surface">
+      <div className="relative overflow-hidden card-surface-interactive rounded-2xl">
         {/* Top accent line */}
         <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-orange-400 to-red-400 opacity-40" />
 
         <div className="p-4 sm:p-5">
           {/* Header */}
-          <div className="flex items-start gap-3 mb-4">
-            <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <Building2 className="h-5 w-5 text-amber-400" />
-            </div>
-            <div>
-              <h3 className="text-[15px] font-semibold text-white">Building Control Required</h3>
-              <p className="text-[13px] text-white">Submit directly to your local authority</p>
-            </div>
+          <div className="mb-4">
+            <h3 className="text-[15px] font-bold text-white">Building Control Required</h3>
+            <p className="text-[12px] text-white mt-0.5">Submit directly to your local authority</p>
           </div>
 
           {/* Info pills */}
@@ -75,34 +70,34 @@ export const NonRegisteredUserGuide = ({ onFindBuildingControl }: NonRegisteredU
           href="https://www.gov.uk/find-local-council"
           target="_blank"
           rel="noopener noreferrer"
-          className="card-surface-interactive flex items-center justify-between p-4"
+          className="card-surface-interactive rounded-xl flex items-center justify-between p-4"
         >
           <div>
             <p className="text-sm font-medium text-white">Gov.uk Council Finder</p>
-            <p className="text-[13px] text-white">Find by postcode</p>
+            <p className="text-[12px] text-white">Find by postcode</p>
           </div>
-          <ExternalLink className="w-4 h-4 text-white flex-shrink-0" />
+          <ChevronRight className="w-4 h-4 text-white/30 flex-shrink-0" />
         </a>
         <a
           href="https://www.gov.uk/building-regulations-approval"
           target="_blank"
           rel="noopener noreferrer"
-          className="card-surface-interactive flex items-center justify-between p-4"
+          className="card-surface-interactive rounded-xl flex items-center justify-between p-4"
         >
           <div>
             <p className="text-sm font-medium text-white">Building Regs Guide</p>
-            <p className="text-[13px] text-white">Official Gov.uk guidance</p>
+            <p className="text-[12px] text-white">Official Gov.uk guidance</p>
           </div>
-          <ExternalLink className="w-4 h-4 text-white flex-shrink-0" />
+          <ChevronRight className="w-4 h-4 text-white/30 flex-shrink-0" />
         </a>
       </div>
 
       {/* Tip card */}
-      <div className="relative overflow-hidden card-surface">
+      <div className="relative overflow-hidden card-surface-interactive rounded-2xl">
         <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-indigo-400 to-violet-400 opacity-30" />
-        <div className="p-4">
-          <p className="text-sm font-medium text-white mb-1">Save Money on Future Jobs</p>
-          <p className="text-[13px] text-white leading-relaxed">
+        <div className="relative z-10 p-4">
+          <p className="text-sm font-bold text-white mb-1">Save Money on Future Jobs</p>
+          <p className="text-[12px] text-white leading-relaxed">
             Join NICEIC or NAPIT to self-certify work and skip Building Control fees entirely.
             Membership pays for itself after just a few notifiable jobs.
           </p>

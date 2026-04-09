@@ -202,6 +202,7 @@ export default function AdminDashboard() {
   const [showTrials, setShowTrials] = useState(true);
   const [showCancelled, setShowCancelled] = useState(false);
   const [showChurned, setShowChurned] = useState(false);
+  const [showAllSignups, setShowAllSignups] = useState(false);
   const [syncing, setSyncing] = useState(false);
 
   // Fetch RevenueCat stats (App Store + Play Store data)
@@ -337,7 +338,7 @@ export default function AdminDashboard() {
         signupsThisWeek: signupsWeekRes.count || 0,
         activeToday: activeTodayRes.count || 0,
         trialUsers: trialData.length,
-        recentSignups: usersWithEmails.slice(0, 5),
+        recentSignups: usersWithEmails.slice(0, 50),
       };
     },
   });
@@ -986,7 +987,7 @@ export default function AdminDashboard() {
               animate="visible"
               className="divide-y divide-white/[0.04]"
             >
-              {stats?.recentSignups?.slice(0, 5).map((user) => {
+              {stats?.recentSignups?.slice(0, showAllSignups ? 50 : 5).map((user) => {
                 const roleColor = getRoleColor(user.role);
                 return (
                   <motion.button
@@ -1011,9 +1012,17 @@ export default function AdminDashboard() {
                       <p className="text-xs text-white truncate">{user.email}</p>
                     </div>
                     <div className="text-right shrink-0 flex items-center gap-2">
-                      {user.subscribed && (
+                      {user.subscribed ? (
                         <span className="text-[10px] font-semibold text-green-400 uppercase tracking-wider">
                           Pro
+                        </span>
+                      ) : user.stripe_customer_id ? (
+                        <span className="text-[10px] font-semibold text-orange-400 uppercase tracking-wider">
+                          Checkout
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-semibold text-white uppercase tracking-wider">
+                          Free
                         </span>
                       )}
                       <span className="text-xs text-white">
@@ -1026,6 +1035,14 @@ export default function AdminDashboard() {
                 );
               })}
             </motion.div>
+            {(stats?.recentSignups?.length || 0) > 5 && (
+              <button
+                onClick={() => setShowAllSignups(!showAllSignups)}
+                className="w-full py-2.5 border-t border-white/[0.04] text-xs font-medium text-amber-400 touch-manipulation active:bg-white/[0.03] transition-colors"
+              >
+                {showAllSignups ? 'Show Less' : `Show All ${stats?.recentSignups?.length}`}
+              </button>
+            )}
           </div>
         </motion.section>
 

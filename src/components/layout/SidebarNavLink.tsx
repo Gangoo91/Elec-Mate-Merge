@@ -35,34 +35,29 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         className={cn(
-          'flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium touch-manipulation',
-          'transition-all duration-150 ease-out',
-          isActive ? 'bg-elec-yellow/[0.12] text-white' : 'text-white hover:bg-white/5'
+          'group flex items-center justify-between px-4 py-3 rounded-2xl text-[15px] touch-manipulation',
+          'transition-all duration-200 ease-out active:scale-[0.98]',
+          isActive
+            ? 'bg-white/[0.08] border border-white/[0.1]'
+            : 'hover:bg-white/[0.03]'
         )}
       >
-        <span
-          className={cn(
-            'shrink-0 transition-colors duration-150',
-            isActive ? 'text-elec-yellow' : 'text-white'
-          )}
-        >
-          {item.icon}
+        <span className={cn(
+          'transition-colors duration-200',
+          isActive ? 'text-elec-yellow font-semibold tracking-tight' : 'text-white font-medium'
+        )}>
+          {item.name}
         </span>
-        <span className={isActive ? 'font-semibold' : ''}>{item.name}</span>
-        {isActive && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-elec-yellow" />}
+        {isActive && (
+          <span className="w-1.5 h-5 rounded-full bg-elec-yellow" />
+        )}
       </SafeLink>
     );
   } catch (error) {
     console.warn('SidebarNavLink: Router context not available', error);
     // Fallback: render without Link functionality
     return (
-      <div
-        className={cn(
-          'flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium',
-          'text-white hover:bg-white/5'
-        )}
-      >
-        <span className="shrink-0 text-white">{item.icon}</span>
+      <div className="flex items-center px-4 py-3 rounded-2xl text-[15px] font-medium text-white">
         <span>{item.name}</span>
       </div>
     );

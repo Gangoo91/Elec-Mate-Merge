@@ -75,42 +75,14 @@ function ApprenticeHero() {
   };
 
   return (
-    <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-      <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+    <div className="relative overflow-hidden glass-premium rounded-2xl">
+      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow opacity-60" />
 
-      <div className="relative z-10 p-5 sm:p-6">
-        <div className="flex items-center gap-4">
-          <div className="flex-shrink-0 p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-            <GraduationCap className="h-7 w-7 text-elec-yellow" />
-          </div>
-
-          <div className="flex-1 min-w-0">
-            <p className="text-sm text-white mb-0.5">{getGreeting()}</p>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow tracking-tight">
-                {user.firstName}
-              </h1>
-              {user.apprenticeYear && (
-                <Badge
-                  variant="outline"
-                  className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[11px]"
-                >
-                  Year {user.apprenticeYear}
-                </Badge>
-              )}
-              {stats.learning.currentStreak > 0 && (
-                <Badge
-                  variant="outline"
-                  className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[11px]"
-                >
-                  <Flame className="w-3 h-3 mr-1" />
-                  {stats.learning.currentStreak}d
-                </Badge>
-              )}
-            </div>
-          </div>
-        </div>
+      <div className="relative z-10 px-5 py-4 sm:px-6 sm:py-5">
+        <p className="text-[13px] text-white mb-0.5">{getGreeting()}</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow tracking-tight">
+          {user.firstName}
+        </h1>
       </div>
     </div>
   );
@@ -187,34 +159,22 @@ function ApprenticeStatsBar() {
             <motion.button
               key={stat.label}
               variants={itemVariants}
-              whileTap={{ scale: 0.96 }}
+              whileTap={{ scale: 0.97 }}
               transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               onClick={stat.onTap}
-              className="touch-manipulation cursor-pointer group w-full"
+              className="touch-manipulation cursor-pointer group w-full text-left"
               aria-label={`View ${stat.label}`}
             >
-              <div
-                className={cn(
-                  'rounded-xl p-3 sm:p-4',
-                  'bg-white/[0.04] border border-white/[0.06]',
-                  'group-active:bg-white/[0.06]',
-                  'transition-colors duration-150'
-                )}
-              >
-                <div className="flex flex-col items-start text-left">
-                  <div className="flex items-center gap-1.5 mb-1.5">
-                    <Icon className={cn('h-3.5 w-3.5', stat.accentColor)} />
-                    <p className="text-[11px] sm:text-xs text-white">{stat.label}</p>
-                  </div>
-                  <div className="flex items-baseline">
-                    <AnimatedCounter
-                      value={stat.value}
-                      className={cn('text-xl sm:text-2xl font-bold tracking-tight', stat.accentColor)}
-                    />
-                    {stat.suffix && (
-                      <span className="text-xs text-white ml-0.5">{stat.suffix}</span>
-                    )}
-                  </div>
+              <div className="rounded-2xl px-4 py-3 sm:py-4 bg-white/[0.03] border border-white/[0.06] group-active:bg-white/[0.06] transition-colors duration-150">
+                <p className="text-[11px] text-white mb-1 uppercase tracking-wider font-medium">{stat.label}</p>
+                <div className="flex items-baseline">
+                  <AnimatedCounter
+                    value={stat.value}
+                    className={cn('text-2xl sm:text-3xl font-bold tracking-tight', stat.accentColor)}
+                  />
+                  {stat.suffix && (
+                    <span className="text-xs text-white ml-0.5">{stat.suffix}</span>
+                  )}
                 </div>
               </div>
             </motion.button>

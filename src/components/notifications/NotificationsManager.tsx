@@ -19,13 +19,14 @@ import { useFinanceAlerts } from '@/hooks/useFinanceAlerts';
 import { useTaskAlerts } from '@/hooks/useTaskAlerts';
 import { useSafetyEquipmentAlerts } from '@/hooks/useSafetyEquipmentAlerts';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, CalendarClock, ShieldAlert, AlertCircle, Clock, CheckSquare, Wrench, CheckCircle2, Banknote, ChevronDown, ChevronUp, FileText } from 'lucide-react';
+import { Loader2, ChevronDown, ChevronUp } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { differenceInDays, parseISO } from 'date-fns';
 import { getDaysUntilDeadline } from '@/utils/notificationHelper';
+import { cn } from '@/lib/utils';
 
 // Maps logical section names to real app routes
 const CROSS_APP_ROUTES: Record<string, string> = {
@@ -37,7 +38,7 @@ const CROSS_APP_ROUTES: Record<string, string> = {
   'safety-equipment': '/electrician-tools/site-safety',
 };
 
-// ── KPI Card (matches BusinessKPIStrip) ──────────────────────────────
+// ── KPI Card (HubCard pattern) ──────────────────────────────────────
 interface KPICardProps {
   label: string;
   value: string;
@@ -45,11 +46,11 @@ interface KPICardProps {
   isLoading: boolean;
 }
 
-const highlightClasses: Record<KPICardProps['highlight'], string> = {
-  green: 'border-emerald-500/30 bg-emerald-500/10',
-  amber: 'border-amber-500/30 bg-amber-500/10',
-  red: 'border-red-500/30 bg-red-500/10',
-  neutral: 'border-white/10 bg-white/5',
+const accentGradients: Record<KPICardProps['highlight'], string> = {
+  green: 'from-emerald-400 to-emerald-600',
+  amber: 'from-amber-400 to-amber-600',
+  red: 'from-red-400 to-red-600',
+  neutral: 'from-white/20 to-white/5',
 };
 
 const valueColourClasses: Record<KPICardProps['highlight'], string> = {
@@ -61,18 +62,36 @@ const valueColourClasses: Record<KPICardProps['highlight'], string> = {
 
 function KPICard({ label, value, highlight, isLoading }: KPICardProps) {
   return (
-    <div className={`flex flex-col items-start justify-center rounded-xl border px-3 py-2 h-14 ${highlightClasses[highlight]}`}>
-      {isLoading ? (
-        <>
-          <Skeleton className="h-3 w-16 mb-1.5" />
-          <Skeleton className="h-5 w-12" />
-        </>
-      ) : (
-        <>
-          <span className="text-[11px] font-medium text-white leading-tight">{label}</span>
-          <span className={`text-base font-bold leading-tight ${valueColourClasses[highlight]}`}>{value}</span>
-        </>
-      )}
+    <div className="group relative overflow-hidden card-surface-interactive rounded-xl">
+      <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40', accentGradients[highlight])} />
+      <div className="relative z-10 p-3">
+        {isLoading ? (
+          <>
+            <Skeleton className="h-3 w-16 mb-1.5" />
+            <Skeleton className="h-5 w-12" />
+          </>
+        ) : (
+          <>
+            <p className="text-[11px] font-medium text-white leading-tight">{label}</p>
+            <p className={cn('text-xl font-bold leading-tight mt-1', valueColourClasses[highlight])}>{value}</p>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Section Header (gradient line pattern) ──────────────────────────
+function SectionHeading({ title, count }: { title: string; count?: number }) {
+  return (
+    <div className="border-b border-white/[0.06] pb-1">
+      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+      <div className="flex items-center justify-between">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+        {count !== undefined && count > 0 && (
+          <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-white/60">{count}</span>
+        )}
+      </div>
     </div>
   );
 }
@@ -216,9 +235,7 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
         {/* YOUR SCHEME */}
         {!compact && isRegistered !== null && (
           <motion.section variants={iv} className="space-y-3">
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-              Your Scheme
-            </h2>
+            <SectionHeading title="Your Scheme" />
             {isRegistered ? (
               <RegisteredUserGuide showNiceic={showNiceic} showNapit={showNapit} />
             ) : (
@@ -229,9 +246,7 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
 
         {/* NOTIFICATIONS */}
         <motion.section variants={iv} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Notifications
-          </h2>
+          <SectionHeading title="Notifications" />
           <NotificationsList
             notifications={notifications}
             onUpdate={updateNotification}
@@ -246,20 +261,13 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
         {/* RESOURCES */}
         {!compact && (
           <motion.section variants={iv} className="space-y-3">
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-              Resources
-            </h2>
+            <SectionHeading title="Resources" />
             <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen}>
               <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between card-surface-interactive p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
-                      <FileText className="h-5 w-5 text-elec-yellow" />
-                    </div>
-                    <div className="text-left">
-                      <p className="text-[15px] font-semibold text-white">Building Control Guide</p>
-                      <p className="text-[13px] text-white">What to submit</p>
-                    </div>
+                <button className="w-full flex items-center justify-between card-surface-interactive rounded-2xl p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
+                  <div className="text-left">
+                    <p className="text-[15px] font-semibold text-white">Building Control Guide</p>
+                    <p className="text-[13px] text-white/40">What to submit</p>
                   </div>
                   {isFormGuideOpen ? (
                     <ChevronUp className="h-5 w-5 text-white" />
@@ -269,7 +277,7 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent className="mt-3">
-                <div className="card-surface p-4">
+                <div className="card-surface rounded-2xl p-4">
                   <ScrollArea className="h-[400px]">
                     <BuildingControlFormGuide />
                   </ScrollArea>
@@ -305,121 +313,71 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
     <>
       {expiryAlerts.length > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <CalendarClock className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-semibold text-white">Re-Inspections Due</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">{expiryAlerts.length}</span>
-          </div>
+          <SectionHeading title="Re-Inspections Due" count={expiryAlerts.length} />
           {expiryAlerts.map((reminder) => (<CertExpiryCard key={reminder.id} reminder={reminder} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {elecIdAlerts.length > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <ShieldAlert className="w-4 h-4 text-yellow-400" />
-            <h3 className="text-sm font-semibold text-white">Elec-ID Expiry</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-yellow-500/15 text-yellow-400">{elecIdAlerts.length}</span>
-          </div>
+          <SectionHeading title="Elec-ID Expiry" count={elecIdAlerts.length} />
           {elecIdAlerts.map((alert) => (<ElecIdExpiryCard key={alert.id} alert={alert} onNavigate={() => handleNav('elec-id')} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {equipmentAlerts.length > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <Wrench className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-semibold text-white">Equipment Due</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">{equipmentAlerts.length}</span>
-          </div>
+          <SectionHeading title="Equipment Due" count={equipmentAlerts.length} />
           {equipmentAlerts.map((alert) => (<SafetyEquipmentCard key={alert.id} alert={alert} onNavigate={() => handleNav('safety-equipment')} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {(taskAlerts?.overdueTasks.length ?? 0) > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <CheckSquare className="w-4 h-4 text-orange-400" />
-            <h3 className="text-sm font-semibold text-white">Overdue Tasks</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-orange-500/15 text-orange-400">{taskAlerts!.overdueTasks.length}</span>
-          </div>
+          <SectionHeading title="Overdue Tasks" count={taskAlerts!.overdueTasks.length} />
           <OverdueTasksCard tasks={taskAlerts!.overdueTasks} onNavigate={() => handleNav('tasks')} />
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {(taskAlerts?.jobsDueToday.length ?? 0) > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <Clock className="w-4 h-4 text-primary" />
-            <h3 className="text-sm font-semibold text-white">Today's Jobs</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-primary/15 text-primary">{taskAlerts!.jobsDueToday.length}</span>
-          </div>
+          <SectionHeading title="Today's Jobs" count={taskAlerts!.jobsDueToday.length} />
           {taskAlerts!.jobsDueToday.map((job) => (<JobDueCard key={job.id} job={job} onNavigate={() => handleNav('calendar')} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {(taskAlerts?.jobsDueTomorrow.length ?? 0) > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <Clock className="w-4 h-4 text-blue-400" />
-            <h3 className="text-sm font-semibold text-white">Tomorrow's Jobs</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-400">{taskAlerts!.jobsDueTomorrow.length}</span>
-          </div>
+          <SectionHeading title="Tomorrow's Jobs" count={taskAlerts!.jobsDueTomorrow.length} />
           {taskAlerts!.jobsDueTomorrow.map((job) => (<JobDueCard key={job.id} job={job} onNavigate={() => handleNav('calendar')} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {(financeAlerts?.overdueInvoices.length ?? 0) > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <AlertCircle className="w-4 h-4 text-red-400" />
-            <h3 className="text-sm font-semibold text-white">Overdue Invoices</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-red-500/15 text-red-400">{financeAlerts!.overdueInvoices.length}</span>
-          </div>
+          <SectionHeading title="Overdue Invoices" count={financeAlerts!.overdueInvoices.length} />
           {financeAlerts!.overdueInvoices.map((invoice) => (<OverdueInvoiceCard key={invoice.id} invoice={invoice} onNavigate={() => handleNav('invoices')} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {(financeAlerts?.expiringQuotes.length ?? 0) > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <Clock className="w-4 h-4 text-amber-400" />
-            <h3 className="text-sm font-semibold text-white">Quotes Expiring Soon</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400">{financeAlerts!.expiringQuotes.length}</span>
-          </div>
+          <SectionHeading title="Quotes Expiring Soon" count={financeAlerts!.expiringQuotes.length} />
           {financeAlerts!.expiringQuotes.map((quote) => (<ExpiringQuoteCard key={quote.id} quote={quote} onNavigate={() => handleNav('quotes')} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {(financeAlerts?.recentPaidInvoices.length ?? 0) > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <Banknote className="w-4 h-4 text-green-400" />
-            <h3 className="text-sm font-semibold text-white">Payments Received</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-green-500/15 text-green-400">{financeAlerts!.recentPaidInvoices.length}</span>
-          </div>
+          <SectionHeading title="Payments Received" count={financeAlerts!.recentPaidInvoices.length} />
           {financeAlerts!.recentPaidInvoices.map((invoice) => (<InvoicePaidCard key={invoice.id} invoice={invoice} onNavigate={() => handleNav('invoices')} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
       {(financeAlerts?.recentQuoteActivity.length ?? 0) > 0 && (
         <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-2 px-1">
-            <CheckCircle2 className="w-4 h-4 text-green-400" />
-            <h3 className="text-sm font-semibold text-white">Quote Activity</h3>
-            <span className="ml-auto text-xs font-medium px-2 py-0.5 rounded-full bg-green-500/15 text-green-400">{financeAlerts!.recentQuoteActivity.length}</span>
-          </div>
+          <SectionHeading title="Quote Activity" count={financeAlerts!.recentQuoteActivity.length} />
           {financeAlerts!.recentQuoteActivity.map((activity) => (<QuoteActivityCard key={activity.id} activity={activity} onNavigate={() => handleNav('quotes')} />))}
-          <div className="border-b border-border/30 pt-2" />
         </div>
       )}
 
@@ -433,21 +391,16 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
       {!compact && (
         <Collapsible open={isFormGuideOpen} onOpenChange={setIsFormGuideOpen} className="mb-6">
           <CollapsibleTrigger asChild>
-            <button className="w-full flex items-center justify-between card-surface-interactive p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
-                  <FileText className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div className="text-left">
-                  <p className="text-[15px] font-semibold text-white">Building Control Guide</p>
-                  <p className="text-[13px] text-white">What to submit</p>
-                </div>
+            <button className="w-full flex items-center justify-between card-surface-interactive rounded-2xl p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
+              <div className="text-left">
+                <p className="text-[15px] font-semibold text-white">Building Control Guide</p>
+                <p className="text-[13px] text-white/40">What to submit</p>
               </div>
               {isFormGuideOpen ? <ChevronUp className="h-5 w-5 text-white" /> : <ChevronDown className="h-5 w-5 text-white" />}
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent className="mt-3">
-            <div className="card-surface p-4">
+            <div className="card-surface rounded-2xl p-4">
               <ScrollArea className="h-[400px]">
                 <BuildingControlFormGuide />
               </ScrollArea>

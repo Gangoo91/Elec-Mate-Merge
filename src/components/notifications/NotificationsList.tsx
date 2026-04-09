@@ -3,7 +3,7 @@ import { NotificationCard } from './NotificationCard';
 import { NotificationFilters } from './NotificationFilters';
 import { Notification, NotificationStatus } from '@/hooks/useNotifications';
 import { getDaysUntilDeadline } from '@/utils/notificationHelper';
-import { FileCheck, ClipboardList, CheckCircle2 } from 'lucide-react';
+// Icons removed — clean text-only design
 
 interface NotificationsListProps {
   notifications: Notification[];
@@ -92,37 +92,41 @@ export const NotificationsList = ({
   // ── Empty state ──
   if (notifications.length === 0) {
     return (
-      <div className="card-surface p-6 sm:p-8">
-        <div className="text-center mb-8">
-          <p className="text-lg font-semibold text-white mb-1">All Clear</p>
-          <p className="text-[13px] text-white max-w-sm mx-auto">
-            No Part P notifications pending. When you complete notifiable work, it will appear here.
-          </p>
-        </div>
+      <div className="relative overflow-hidden card-surface-interactive rounded-2xl p-6">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500/50 via-emerald-500/25 to-transparent" />
+        <div className="relative z-10">
+          <div className="text-center mb-6">
+            <p className="text-base font-bold text-emerald-400 mb-1">All Clear</p>
+            <p className="text-[12px] text-white max-w-sm mx-auto">
+              No Part P notifications pending. When you complete notifiable work, it will appear here.
+            </p>
+          </div>
 
-        <p className="text-xs font-medium text-white uppercase tracking-wider text-center mb-4">
-          How Part P Tracking Works
-        </p>
+          <div className="border-b border-white/[0.06] pb-1 mb-3">
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+            <p className="text-xs font-medium text-white uppercase tracking-wider text-center">How It Works</p>
+          </div>
 
-        <div className="space-y-2 max-w-md mx-auto">
-          {[
-            { icon: ClipboardList, title: 'Create EIC or Minor Works', desc: 'Tick "Part P notification required"', accent: 'from-elec-yellow via-amber-400 to-orange-400', iconColor: 'text-elec-yellow', iconBg: 'bg-elec-yellow/10 border border-elec-yellow/20' },
-            { icon: FileCheck, title: 'Generate Certificate', desc: 'Notification auto-created with 30-day deadline', accent: 'from-blue-500 via-blue-400 to-cyan-400', iconColor: 'text-blue-400', iconBg: 'bg-blue-500/10 border border-blue-500/20' },
-            { icon: CheckCircle2, title: 'Submit to Scheme / Building Control', desc: 'Track submissions and stay compliant', accent: 'from-emerald-500 via-green-400 to-teal-400', iconColor: 'text-emerald-400', iconBg: 'bg-emerald-500/10 border border-emerald-500/20' },
-          ].map(({ icon: Icon, title, desc, iconColor, iconBg, accent }) => (
-            <div key={title} className="relative overflow-hidden card-surface">
-              <div className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${accent} opacity-30`} />
-              <div className="flex items-center gap-3 p-3.5">
-                <div className={`p-2 rounded-xl flex-shrink-0 ${iconBg}`}>
-                  <Icon className={`w-4 h-4 ${iconColor}`} />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-white">{title}</p>
-                  <p className="text-xs text-white">{desc}</p>
+          <div className="space-y-2 max-w-md mx-auto">
+            {[
+              { step: '1', title: 'Create EIC or Minor Works', desc: 'Tick "Part P notification required"', accent: 'from-elec-yellow via-amber-400 to-orange-400' },
+              { step: '2', title: 'Generate Certificate', desc: 'Notification auto-created with 30-day deadline', accent: 'from-blue-500 via-blue-400 to-cyan-400' },
+              { step: '3', title: 'Submit to Scheme / Building Control', desc: 'Track submissions and stay compliant', accent: 'from-emerald-500 via-green-400 to-teal-400' },
+            ].map(({ step, title, desc, accent }) => (
+              <div key={title} className="relative overflow-hidden card-surface-interactive rounded-xl">
+                <div className={`absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r ${accent} opacity-30`} />
+                <div className="relative z-10 flex items-center gap-3 p-3">
+                  <div className="w-7 h-7 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
+                    <span className="text-[11px] font-bold text-white">{step}</span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white">{title}</p>
+                    <p className="text-[11px] text-white">{desc}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     );

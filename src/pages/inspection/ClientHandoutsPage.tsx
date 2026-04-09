@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Zap, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-// PDF Monkey handouts — no jsPDF imports needed
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
 const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
@@ -19,6 +18,7 @@ interface HandoutDef {
   description: string;
   accentColor: string;
   filename: string;
+  pages: string;
   category: 'essential' | 'coming-soon';
 }
 
@@ -26,83 +26,87 @@ const handouts: HandoutDef[] = [
   {
     id: 'electrical-safety',
     title: 'Electrical Safety Guide',
-    description: '4-page guide — consumer unit explained, RCD testing, warning signs, socket safety, wattage guide, bathroom/outdoor rules, smoke alarms, children\'s safety, emergencies, Amendment 4 updates.',
-    accentColor: 'from-emerald-500 to-green-400',
+    description: 'Consumer unit explained, RCD testing, warning signs, socket safety, wattage guide, bathroom/outdoor rules, smoke alarms, emergencies.',
+    accentColor: 'from-emerald-500 via-emerald-400 to-green-400',
     filename: 'Electrical-Safety-Guide',
+    pages: '4 pages',
     category: 'essential',
   },
   {
     id: 'energy-saving',
     title: 'Energy Saving Tips',
-    description: '3-page guide — LED savings, heating tips, standby costs, kitchen appliances, smart home tech, solar PV, battery storage, EV charging, tariff advice. Real numbers on every tip.',
-    accentColor: 'from-elec-yellow to-amber-400',
+    description: 'LED savings, heating tips, standby costs, smart home tech, solar PV, battery storage, EV charging, tariff advice.',
+    accentColor: 'from-elec-yellow via-amber-400 to-orange-400',
     filename: 'Energy-Saving-Tips',
+    pages: '3 pages',
     category: 'essential',
   },
   {
     id: 'eicr-explained',
     title: 'Your EICR Explained',
-    description: '2-page guide — classification codes explained, satisfactory vs unsatisfactory, landlord legal obligations, common findings in plain English, what to do next.',
-    accentColor: 'from-blue-500 to-cyan-400',
+    description: 'Classification codes, satisfactory vs unsatisfactory, landlord obligations, common findings in plain English.',
+    accentColor: 'from-blue-500 via-blue-400 to-cyan-400',
     filename: 'Your-EICR-Explained',
+    pages: '2 pages',
     category: 'essential',
   },
   {
     id: 'landlord-guide',
     title: 'Landlord EICR Guide',
-    description: '3-page guide — legal obligations, £30k penalties, 28-day rule, HMO requirements, smoke/CO alarms, insurance, managing agents, tenant changeover checklist, Scotland/Wales/NI.',
-    accentColor: 'from-amber-500 to-yellow-400',
+    description: 'Legal obligations, £30k penalties, 28-day rule, HMO requirements, smoke/CO alarms, insurance, tenant changeover checklist.',
+    accentColor: 'from-amber-500 via-amber-400 to-yellow-400',
     filename: 'Landlord-EICR-Guide',
+    pages: '3 pages',
     category: 'essential',
   },
   {
     id: 'new-build-handover',
     title: 'New Build Handover',
-    description: '4-page guide — consumer unit explained, isolator locations, socket/lighting/alarm guidance, maintenance schedule, future-proofing (EV/solar/smart), troubleshooting, emergencies.',
-    accentColor: 'from-cyan-500 to-blue-400',
+    description: 'Consumer unit explained, isolator locations, socket/lighting/alarm guidance, maintenance schedule, future-proofing, troubleshooting.',
+    accentColor: 'from-cyan-500 via-cyan-400 to-blue-400',
     filename: 'New-Build-Handover',
+    pages: '4 pages',
     category: 'essential',
   },
   {
     id: 'ev-charging-guide',
     title: 'EV Charging Guide',
-    description: '3-page guide — smart charging, tariff comparison, LED indicators, maintenance, troubleshooting, cold weather care, OZEV grants April 2026, solar + EV, public charging apps.',
-    accentColor: 'from-emerald-500 to-teal-400',
+    description: 'Smart charging, tariff comparison, LED indicators, maintenance, troubleshooting, cold weather care, OZEV grants, solar + EV.',
+    accentColor: 'from-emerald-500 via-teal-400 to-cyan-400',
     filename: 'EV-Charging-Guide',
+    pages: '3 pages',
     category: 'essential',
   },
   {
     id: 'fire-safety-tenants',
     title: 'Fire Safety for Tenants',
-    description: '3-page guide — alarm testing, fire prevention (cooking, e-bikes, candles), escape planning, fire doors, CO poisoning, night-time checklist, your legal rights, fire extinguisher use.',
-    accentColor: 'from-red-500 to-rose-400',
+    description: 'Alarm testing, fire prevention, escape planning, fire doors, CO poisoning, night-time checklist, legal rights.',
+    accentColor: 'from-red-500 via-rose-400 to-pink-400',
     filename: 'Fire-Safety-Tenants',
+    pages: '3 pages',
     category: 'essential',
   },
   {
     id: 'fire-alarm-guide',
     title: 'Fire Alarm System Guide',
-    description: '4-page commercial guide — panel signals, system categories (L1-M), BS 5839-1:2025 changes, detector types, weekly testing, log book, false alarms, premises-specific guidance, emergency lighting.',
-    accentColor: 'from-red-500 to-orange-400',
+    description: 'Panel signals, system categories L1-M, BS 5839-1:2025 changes, detector types, weekly testing, log book, false alarms.',
+    accentColor: 'from-red-500 via-orange-400 to-amber-400',
     filename: 'Fire-Alarm-Guide',
+    pages: '4 pages',
     category: 'essential',
   },
   {
     id: 'pat-testing-explained',
     title: 'PAT Testing Explained',
-    description: '3-page guide — equipment classes, test types, label meanings, frequency table by environment, legal duties, daily user checks, common failures, personal items policy.',
-    accentColor: 'from-cyan-500 to-blue-400',
+    description: 'Equipment classes, test types, label meanings, frequency table, legal duties, daily user checks, common failures.',
+    accentColor: 'from-violet-500 via-purple-400 to-indigo-400',
     filename: 'PAT-Testing-Explained',
+    pages: '3 pages',
     category: 'essential',
   },
 ];
 
-const categories = [
-  { key: 'essential' as const, title: 'Ready to Download', description: 'Professionally branded with your company details' },
-  { key: 'coming-soon' as const, title: 'Coming Soon', description: 'More templates being added' },
-];
-
-const inputCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/30 focus:border-yellow-500 focus:ring-yellow-500';
 
 export default function ClientHandoutsPage() {
   const navigate = useNavigate();
@@ -125,7 +129,6 @@ export default function ClientHandoutsPage() {
 
     setGeneratingId(handout.id);
     try {
-      // Get company branding
       const { data: cpData } = await supabase.rpc('get_my_company_profile');
       const cp = Array.isArray(cpData) ? cpData[0] : cpData;
 
@@ -141,7 +144,6 @@ export default function ClientHandoutsPage() {
         registration_number: cp?.registration_number || '',
       };
 
-      // Add location fields for new-build-handover
       if (handout.id === 'new-build-handover') {
         Object.entries(locations).forEach(([key, value]) => {
           if (value) payload[key] = value;
@@ -156,12 +158,10 @@ export default function ClientHandoutsPage() {
       );
 
       if (pdfError || !pdfResult?.download_url) {
-        console.error('PDF generation error:', pdfError);
         toast.error('Failed to generate — please try again');
         return;
       }
 
-      // Download via native-aware utility (Capacitor share sheet / browser download)
       const { openOrDownloadPdf } = await import('@/utils/pdf-download');
       await openOrDownloadPdf(pdfResult.download_url, `${handout.filename}.pdf`);
       toast.success(`${handout.title} ready`);
@@ -175,91 +175,126 @@ export default function ClientHandoutsPage() {
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+      {/* Header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-lg w-9 h-9 flex-shrink-0 touch-manipulation active:scale-[0.98]">
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                <Zap className="h-4 w-4 text-emerald-400" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Client Handouts</h1>
-            </div>
+            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Client Handouts</h1>
           </div>
         </div>
+        <div className="h-[2px] bg-gradient-to-r from-emerald-500/40 via-emerald-500/20 to-transparent" />
       </div>
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-5 max-w-3xl mx-auto">
-        <motion.div variants={itemVariants} className="border-b border-white/[0.06] pb-3">
-          <p className="text-sm font-semibold text-white">Professional Client Handouts</p>
-          <p className="text-xs text-white mt-1">Branded documents to leave with your clients. Your company name, logo, phone, and email are added automatically from your Business Settings. Leave them after jobs — it builds trust and keeps your details to hand.</p>
+      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-4 max-w-3xl mx-auto">
+        {/* Intro */}
+        <motion.div variants={itemVariants} className="relative overflow-hidden card-surface-interactive rounded-2xl">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-500/50 via-emerald-500/25 to-transparent" />
+          <div className="relative z-10 p-4">
+            <p className="text-sm font-bold text-white">Professional branded documents</p>
+            <p className="text-xs text-white mt-1 leading-relaxed">
+              Your company name, logo, phone and email are added automatically from Business Settings. Leave them with clients after jobs.
+            </p>
+          </div>
         </motion.div>
 
-        {categories.map((cat) => {
-          const catHandouts = handouts.filter((h) => h.category === cat.key);
-          return (
-            <motion.section key={cat.key} variants={itemVariants} className="space-y-3">
-              <div className="border-b border-white/[0.06] pb-1">
-                <h2 className="text-xs font-medium text-white uppercase tracking-wider">{cat.title}</h2>
-                <p className="text-[11px] text-white mt-0.5">{cat.description}</p>
-              </div>
-              {catHandouts.map((handout) => (
-                <motion.div key={handout.id} variants={itemVariants}>
-                  <div className={cn('rounded-2xl border overflow-hidden', handout.category === 'coming-soon' ? 'border-white/[0.04] opacity-60' : 'border-white/[0.06]')}>
-                    <div className="p-4 space-y-3">
-                      <div>
-                        <div className={cn('h-[2px] w-full rounded-full bg-gradient-to-r mb-3', handout.accentColor)} />
-                        <h3 className="text-sm font-semibold text-white">{handout.title}</h3>
-                        <p className="text-xs text-white mt-1 leading-relaxed">{handout.description}</p>
-                      </div>
-                      {/* Location fields for New Build Handover */}
-                      {handout.id === 'new-build-handover' && handout.category === 'essential' && (
-                        <div className="space-y-3 mt-2">
-                          <button
-                            onClick={(e) => { e.stopPropagation(); setShowLocationFields(!showLocationFields); }}
-                            className="text-[11px] font-medium text-elec-yellow touch-manipulation"
-                          >
-                            {showLocationFields ? 'Hide location fields' : 'Add isolator locations (optional)'}
-                          </button>
-                          {showLocationFields && (
-                            <div className="space-y-2">
-                              <div><Label className="text-white text-[10px]">Consumer unit location</Label><Input value={locations.cu_location} onChange={(e) => setLocations(p => ({ ...p, cu_location: e.target.value }))} className={inputCn} placeholder="e.g. Under stairs cupboard" /></div>
-                              <div><Label className="text-white text-[10px]">Main switch rating</Label><Input value={locations.main_switch_rating} onChange={(e) => setLocations(p => ({ ...p, main_switch_rating: e.target.value }))} className={inputCn} placeholder="e.g. 100A" /></div>
-                              <div><Label className="text-white text-[10px]">Gas valve location</Label><Input value={locations.gas_valve_location} onChange={(e) => setLocations(p => ({ ...p, gas_valve_location: e.target.value }))} className={inputCn} placeholder="e.g. Next to gas meter, utility room" /></div>
-                              <div><Label className="text-white text-[10px]">Water stopcock location</Label><Input value={locations.water_stopcock_location} onChange={(e) => setLocations(p => ({ ...p, water_stopcock_location: e.target.value }))} className={inputCn} placeholder="e.g. Under kitchen sink" /></div>
-                              <div><Label className="text-white text-[10px]">Boiler isolator location</Label><Input value={locations.boiler_location} onChange={(e) => setLocations(p => ({ ...p, boiler_location: e.target.value }))} className={inputCn} placeholder="e.g. Airing cupboard, first floor" /></div>
-                              <div><Label className="text-white text-[10px]">Immersion heater location (if fitted)</Label><Input value={locations.immersion_location} onChange={(e) => setLocations(p => ({ ...p, immersion_location: e.target.value }))} className={inputCn} placeholder="e.g. Hot press, landing" /></div>
+        {/* Handout cards */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="border-b border-white/[0.06] pb-1">
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-emerald-500/40 to-emerald-500/10 mb-2" />
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">
+              {handouts.length} Templates
+            </h2>
+          </div>
+
+          {handouts.map((handout) => (
+            <motion.div key={handout.id} variants={itemVariants}>
+              <div className="group relative overflow-hidden card-surface-interactive rounded-2xl">
+                <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity', handout.accentColor)} />
+                <div className="relative z-10 p-4">
+                  {/* Title row */}
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
+                        {handout.title}
+                      </h3>
+                    </div>
+                    <span className="text-[10px] font-bold text-white/30 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded flex-shrink-0">
+                      {handout.pages}
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-[12px] text-white leading-relaxed mb-3">{handout.description}</p>
+
+                  {/* Location fields for New Build Handover */}
+                  {handout.id === 'new-build-handover' && (
+                    <div className="mb-3">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setShowLocationFields(!showLocationFields); }}
+                        className="text-[11px] font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+                      >
+                        {showLocationFields ? 'Hide location fields' : 'Add isolator locations (optional)'}
+                      </button>
+                      {showLocationFields && (
+                        <div className="space-y-2 mt-2">
+                          {[
+                            { key: 'cu_location', label: 'Consumer unit location', placeholder: 'e.g. Under stairs cupboard' },
+                            { key: 'main_switch_rating', label: 'Main switch rating', placeholder: 'e.g. 100A' },
+                            { key: 'gas_valve_location', label: 'Gas valve location', placeholder: 'e.g. Next to gas meter' },
+                            { key: 'water_stopcock_location', label: 'Water stopcock location', placeholder: 'e.g. Under kitchen sink' },
+                            { key: 'boiler_location', label: 'Boiler isolator location', placeholder: 'e.g. Airing cupboard' },
+                            { key: 'immersion_location', label: 'Immersion heater (if fitted)', placeholder: 'e.g. Hot press, landing' },
+                          ].map(({ key, label, placeholder }) => (
+                            <div key={key}>
+                              <Label className="text-white text-[10px] mb-1 block">{label}</Label>
+                              <Input
+                                value={locations[key as keyof typeof locations]}
+                                onChange={(e) => setLocations(p => ({ ...p, [key]: e.target.value }))}
+                                className={inputCn}
+                                placeholder={placeholder}
+                              />
                             </div>
-                          )}
+                          ))}
                         </div>
                       )}
-                      <Button
-                        className={cn(
-                          'w-full h-11 text-sm font-medium touch-manipulation active:scale-[0.98]',
-                          handout.category === 'coming-soon'
-                            ? 'bg-white/[0.06] border border-white/[0.08] text-white cursor-not-allowed'
-                            : 'bg-white/[0.06] border border-white/[0.08] text-white hover:bg-white/[0.1]'
-                        )}
-                        onClick={() => handleGenerate(handout)}
-                        disabled={generatingId === handout.id || handout.category === 'coming-soon'}
-                      >
-                        {generatingId === handout.id ? (
-                          <><Loader2 className="h-4 w-4 animate-spin mr-2" />Generating...</>
-                        ) : handout.category === 'coming-soon' ? (
-                          'Coming Soon'
-                        ) : (
-                          'Download PDF'
-                        )}
-                      </Button>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.section>
-          );
-        })}
+                  )}
+
+                  {/* Download button */}
+                  <button
+                    className={cn(
+                      'w-full flex items-center justify-between h-11 px-4 rounded-xl text-sm font-medium touch-manipulation active:scale-[0.98] transition-all',
+                      handout.category === 'coming-soon'
+                        ? 'bg-white/[0.04] border border-white/[0.06] text-white/40 cursor-not-allowed'
+                        : 'bg-white/[0.06] border border-white/[0.08] text-white hover:bg-white/[0.1]'
+                    )}
+                    onClick={() => handleGenerate(handout)}
+                    disabled={generatingId === handout.id || handout.category === 'coming-soon'}
+                  >
+                    <span>
+                      {generatingId === handout.id ? (
+                        <span className="flex items-center gap-2">
+                          <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                          Generating...
+                        </span>
+                      ) : handout.category === 'coming-soon' ? (
+                        'Coming Soon'
+                      ) : (
+                        'Download PDF'
+                      )}
+                    </span>
+                    {handout.category !== 'coming-soon' && generatingId !== handout.id && (
+                      <ChevronRight className="h-4 w-4 text-white/30" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.section>
       </motion.main>
     </div>
   );

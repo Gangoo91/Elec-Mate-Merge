@@ -77,16 +77,7 @@ interface MyReportsProps {
 }
 
 type StatusFilter = 'all' | 'draft' | 'in-progress' | 'completed';
-type TypeFilter =
-  | 'all'
-  | 'eicr'
-  | 'eic'
-  | 'minor-works'
-  | 'solar-pv'
-  | 'ev-charging'
-  | 'fire-alarm'
-  | 'emergency-lighting'
-  | 'pat-testing';
+type TypeFilter = 'all' | string;
 
 const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport }) => {
   const { toast } = useToast();
@@ -663,28 +654,26 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   if (!user || isLoadingReports) {
     return (
       <div className="min-h-screen bg-background text-foreground pb-8">
-        <div className="bg-background border-b border-border">
-          <div className="max-w-6xl mx-auto px-4 py-4">
-            <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onBack}
-                className="h-10 w-10 touch-manipulation"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <div>
-                <h1 className="text-xl font-semibold">My Certificates</h1>
-                <p className="text-sm text-white">Loading...</p>
-              </div>
+        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+          <div className="flex items-center gap-3 h-11 px-4 py-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div>
+              <h1 className="text-base font-semibold text-white">My Certificates</h1>
+              <p className="text-[11px] text-white">Loading...</p>
             </div>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto px-4 py-8">
-          <div className="space-y-4">
+        <div className="px-4 py-6">
+          <div className="space-y-3">
             {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-32 w-full" />
+              <Skeleton key={i} className="h-28 w-full rounded-2xl bg-white/[0.03]" />
             ))}
           </div>
         </div>
@@ -695,63 +684,64 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   return (
     <>
       <div className="min-h-screen bg-background text-foreground pb-24 prevent-shortcuts">
-        {/* Header - Simplified Native App Style */}
-        <header className="sticky top-0 z-50 bg-sidebar/95 backdrop-blur supports-[backdrop-filter]:bg-sidebar/80 border-b border-elec-yellow/20">
-          <div className="flex items-center h-14 px-3">
+        {/* Header */}
+        <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
+          <div className="flex items-center gap-2 px-3 py-2">
             {/* Back */}
             <Button
               variant="ghost"
               size="icon"
               onClick={onBack}
-              className="-ml-2 text-white touch-manipulation"
+              className="text-white hover:text-white hover:bg-white/10 rounded-lg w-9 h-9 flex-shrink-0 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
 
-            {/* Title */}
-            <div className="flex-1 ml-2">
-              <h1 className="text-base font-semibold text-white">My Certificates</h1>
-              <p className="text-xs text-white">
-                {totalCount} certificate{totalCount !== 1 ? 's' : ''}
-              </p>
-            </div>
+            {/* Title — single line with count */}
+            <h1 className="text-sm font-bold text-white tracking-wide uppercase flex-1 min-w-0 truncate">
+              My Certificates
+              <span className="text-white/30 font-normal tracking-normal normal-case text-xs ml-1.5">{totalCount}</span>
+            </h1>
 
             {/* Search Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
               onClick={() => {
                 navigator.vibrate?.(10);
                 setShowSearch(!showSearch);
               }}
-              className={cn('touch-manipulation', showSearch ? 'text-elec-yellow' : 'text-white')}
+              className={cn(
+                'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 touch-manipulation active:scale-[0.98] transition-colors',
+                showSearch ? 'text-elec-yellow bg-elec-yellow/10' : 'text-white/60 hover:text-white hover:bg-white/10'
+              )}
             >
-              <Search className="h-5 w-5" />
-            </Button>
+              <Search className="h-4 w-4" />
+            </button>
 
             {/* Overflow Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-white touch-manipulation">
-                  <MoreVertical className="h-5 w-5" />
-                </Button>
+                <button className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors">
+                  <MoreVertical className="h-4 w-4" />
+                </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuContent align="end" className="w-48 bg-[hsl(240_5.9%_12%)] border-white/10">
                 <DropdownMenuItem
                   onClick={() => {
                     navigator.vibrate?.(10);
                     toggleBulkMode();
                   }}
+                  className="text-white focus:text-white focus:bg-white/10"
                 >
                   <CheckSquare className="h-4 w-4 mr-2" />
                   {isBulkMode ? 'Cancel Selection' : 'Select Multiple'}
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-white/10" />
                 <DropdownMenuItem
                   onClick={() => {
                     navigator.vibrate?.(10);
                     setShowImportDialog(true);
                   }}
+                  className="text-white focus:text-white focus:bg-white/10"
                 >
                   <Upload className="h-4 w-4 mr-2" />
                   Import CSV
@@ -761,11 +751,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     navigator.vibrate?.(10);
                     navigate('/electrician/inspection-testing/legacy-certificates');
                   }}
+                  className="text-white focus:text-white focus:bg-white/10"
                 >
                   <Archive className="h-4 w-4 mr-2" />
                   Legacy PDFs
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-white/10" />
                 <div className="px-2 py-1.5">
                   <SortDropdown sortBy={sortBy} onSortChange={setSortBy} />
                 </div>
@@ -773,16 +764,15 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             </DropdownMenu>
 
             {/* New Certificate */}
-            <Button
-              size="icon"
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black h-9 w-9 rounded-full ml-1 touch-manipulation"
+            <button
+              className="w-9 h-9 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black flex items-center justify-center flex-shrink-0 touch-manipulation active:scale-[0.98] transition-colors"
               onClick={() => {
                 navigator.vibrate?.(10);
                 setShowNewCertSheet(true);
               }}
             >
-              <Plus className="h-5 w-5" />
-            </Button>
+              <Plus className="h-4 w-4" />
+            </button>
           </div>
 
           {/* Collapsible Search */}
@@ -793,22 +783,22 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="px-3 pb-3 overflow-hidden"
+                className="px-4 pb-3 overflow-hidden"
               >
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
                   <Input
                     placeholder="Search by name, address, or certificate..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 h-11 bg-white/5 border-elec-yellow/20 text-base touch-manipulation"
+                    className="pl-10 h-11 bg-white/[0.06] border-white/[0.08] text-base touch-manipulation text-white placeholder:text-white/30"
                     autoFocus
                   />
                   {searchQuery && (
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 touch-manipulation"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 touch-manipulation text-white/40"
                       onClick={() => {
                         navigator.vibrate?.(10);
                         setSearchQuery('');
@@ -822,17 +812,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             )}
           </AnimatePresence>
 
-          {/* Filter Chips - Single Scrollable Row */}
-          <div className="flex gap-2 px-3 py-2 overflow-x-auto scrollbar-hide border-t border-elec-yellow/10">
-            {/* Status chips */}
+          {/* Status filter row */}
+          <div className="flex gap-2 px-4 py-2 overflow-x-auto scrollbar-hide">
             {[
               { value: 'all' as StatusFilter, label: 'All', count: statusCounts.all },
               { value: 'draft' as StatusFilter, label: 'Drafts', count: statusCounts.draft },
-              {
-                value: 'in-progress' as StatusFilter,
-                label: 'Progress',
-                count: statusCounts['in-progress'],
-              },
+              { value: 'in-progress' as StatusFilter, label: 'In Progress', count: statusCounts['in-progress'] },
               { value: 'completed' as StatusFilter, label: 'Done', count: statusCounts.completed },
             ].map(({ value, label, count }) => (
               <button
@@ -842,30 +827,37 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   setStatusFilter(value);
                 }}
                 className={cn(
-                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-all touch-manipulation',
+                  'flex-shrink-0 h-8 px-3 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.98]',
                   statusFilter === value
-                    ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 active:bg-elec-yellow/20'
+                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                    : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
                 )}
               >
-                {label} {count > 0 && <span className="ml-1 opacity-70">{count}</span>}
+                {label} {count > 0 && <span className="ml-1 text-white/50">{count}</span>}
               </button>
             ))}
+          </div>
 
-            {/* Divider */}
-            <div className="w-px bg-elec-yellow/20 mx-1 self-stretch flex-shrink-0" />
-
-            {/* Type chips */}
+          {/* Type filter row */}
+          <div className="flex gap-1.5 px-4 pb-2.5 overflow-x-auto scrollbar-hide">
             {[
-              { value: 'all' as TypeFilter, label: 'All Types' },
-              { value: 'eicr' as TypeFilter, label: 'EICR' },
-              { value: 'eic' as TypeFilter, label: 'EIC' },
-              { value: 'minor-works' as TypeFilter, label: 'MW' },
-              { value: 'solar-pv' as TypeFilter, label: 'Solar' },
-              { value: 'ev-charging' as TypeFilter, label: 'EV' },
-              { value: 'fire-alarm' as TypeFilter, label: 'Fire' },
-              { value: 'emergency-lighting' as TypeFilter, label: 'EmLt' },
-              { value: 'pat-testing' as TypeFilter, label: 'PAT' },
+              { value: 'all', label: 'All' },
+              { value: 'eicr', label: 'EICR' },
+              { value: 'eic', label: 'EIC' },
+              { value: 'minor-works', label: 'MW' },
+              { value: 'fire-alarm', label: 'FA G1' },
+              { value: 'fire-alarm-commissioning', label: 'FA G2' },
+              { value: 'fire-alarm-inspection', label: 'FA G7' },
+              { value: 'fire-alarm-modification', label: 'FA G4' },
+              { value: 'ev-charging', label: 'EV' },
+              { value: 'emergency-lighting', label: 'EM LTG' },
+              { value: 'solar-pv', label: 'Solar PV' },
+              { value: 'pat-testing', label: 'PAT' },
+              { value: 'smoke-co-alarm', label: 'Smoke/CO' },
+              { value: 'bess', label: 'BESS' },
+              { value: 'danger-notice', label: 'Danger' },
+              { value: 'isolation-cert', label: 'Isolation' },
+              { value: 'permit-to-work', label: 'Permit' },
             ].map(({ value, label }) => (
               <button
                 key={value}
@@ -874,10 +866,10 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   setTypeFilter(value);
                 }}
                 className={cn(
-                  'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-all touch-manipulation',
+                  'flex-shrink-0 h-7 px-2.5 rounded-md text-[11px] font-medium transition-all touch-manipulation active:scale-[0.98]',
                   typeFilter === value
-                    ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 active:bg-elec-yellow/20'
+                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                    : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.06]'
                 )}
               >
                 {label}
@@ -885,9 +877,11 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             ))}
           </div>
 
+          <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
+
           {/* Bulk Actions Bar */}
           {isBulkMode && selectedReports.size > 0 && (
-            <div className="px-3 pb-3">
+            <div className="px-4 pb-3">
               <BulkActionsBar
                 selectedCount={selectedReports.size}
                 onBulkDelete={() => setShowBulkDeleteDialog(true)}
@@ -974,20 +968,16 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
 
       {/* New Certificate Bottom Sheet */}
       <Sheet open={showNewCertSheet} onOpenChange={setShowNewCertSheet}>
-        <SheetContent side="bottom" className="h-auto rounded-t-2xl">
+        <SheetContent side="bottom" className="h-auto rounded-t-2xl bg-background border-white/[0.06]">
           <SheetHeader className="pb-4">
-            <SheetTitle>New Certificate</SheetTitle>
+            <SheetTitle className="text-white">New Certificate</SheetTitle>
           </SheetHeader>
           <div className="space-y-2 pb-6">
             {[
-              { type: 'eicr', label: 'EICR', desc: 'Electrical Installation Condition Report' },
-              { type: 'eic', label: 'EIC', desc: 'Electrical Installation Certificate' },
-              {
-                type: 'minor-works',
-                label: 'Minor Works',
-                desc: 'Minor Electrical Installation Works',
-              },
-            ].map(({ type, label, desc }) => (
+              { type: 'eicr', label: 'EICR', desc: 'Electrical Installation Condition Report', accent: 'from-blue-500 via-blue-400 to-cyan-400' },
+              { type: 'eic', label: 'EIC', desc: 'Electrical Installation Certificate', accent: 'from-emerald-500 via-emerald-400 to-green-400' },
+              { type: 'minor-works', label: 'Minor Works', desc: 'Minor Electrical Installation Works', accent: 'from-orange-500 via-amber-400 to-yellow-400' },
+            ].map(({ type, label, desc, accent }) => (
               <button
                 key={type}
                 onClick={() => {
@@ -995,16 +985,18 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                   setShowNewCertSheet(false);
                   onNavigate(type);
                 }}
-                className="w-full flex items-center gap-4 p-4 rounded-xl bg-elec-yellow/5 border border-elec-yellow/20 hover:bg-elec-yellow/10 active:scale-[0.98] transition-all touch-manipulation"
+                className="group w-full relative overflow-hidden rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.07] active:scale-[0.98] transition-all touch-manipulation text-left"
               >
-                <div className="w-12 h-12 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-elec-yellow" />
+                <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50 group-hover:opacity-100 transition-opacity', accent)} />
+                <div className="flex items-center gap-4 p-4">
+                  <div className="flex-1">
+                    <p className="font-semibold text-white group-hover:text-elec-yellow transition-colors">{label}</p>
+                    <p className="text-xs text-white/50 mt-0.5">{desc}</p>
+                  </div>
+                  <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                    <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
+                  </div>
                 </div>
-                <div className="flex-1 text-left">
-                  <p className="font-semibold text-white">{label}</p>
-                  <p className="text-xs text-white">{desc}</p>
-                </div>
-                <ChevronRight className="h-5 w-5 text-elec-yellow/40" />
               </button>
             ))}
           </div>
@@ -1137,36 +1129,31 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         }}
       />
 
-      {/* Link Customer Sheet (bottom sheet for mobile compatibility) */}
+      {/* Link Customer Sheet */}
       <Sheet open={linkCustomerDialogOpen} onOpenChange={setLinkCustomerDialogOpen}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-          <div className="flex flex-col h-full bg-background">
-            <SheetHeader className="px-6 py-4 border-b border-white/[0.06]">
-              <SheetTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-elec-yellow" />
-                Link to Customer
-              </SheetTitle>
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-background border-white/[0.06]">
+          <div className="flex flex-col h-full">
+            <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
+              <SheetTitle className="text-white text-base font-semibold">Link to Customer</SheetTitle>
               {reportToLink && (
-                <p className="text-sm text-white">
-                  Link certificate{' '}
-                  <span className="font-mono text-elec-yellow">{reportToLink.report_id}</span> to a customer
+                <p className="text-xs text-white/40 mt-0.5">
+                  Certificate <span className="font-mono text-elec-yellow">{reportToLink.report_id.split('-').slice(-1)[0]}</span>
                 </p>
               )}
             </SheetHeader>
 
             <div className="flex-1 overflow-hidden">
-              <Command className="h-full border-0">
+              <Command className="h-full border-0 bg-transparent">
                 <CommandInput
                   placeholder="Search customers..."
                   value={customerSearchQuery}
                   onValueChange={setCustomerSearchQuery}
-                  className="h-12 text-base"
+                  className="h-12 text-base bg-transparent border-white/[0.06] text-white placeholder:text-white/30"
                 />
                 <CommandList className="flex-1 max-h-none overflow-y-auto">
                   <CommandEmpty>
-                    <div className="py-6 text-center">
-                      <Users className="h-8 w-8 mx-auto text-white mb-2" />
-                      <p className="text-sm text-white">
+                    <div className="py-8 text-center">
+                      <p className="text-sm text-white/40">
                         {isLoadingCustomers ? 'Loading customers...' : 'No customers found'}
                       </p>
                     </div>
@@ -1177,19 +1164,20 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                         key={customer.id}
                         value={customer.name}
                         onSelect={() => confirmLinkCustomer(customer.id)}
-                        className="cursor-pointer py-3 touch-manipulation"
+                        className="cursor-pointer py-3 px-5 touch-manipulation active:bg-white/[0.06] rounded-xl mx-2"
                         disabled={isLinking}
                       >
                         <div className="flex items-center gap-3 w-full">
-                          <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                            <Users className="h-4 w-4 text-elec-yellow" />
+                          <div className="w-9 h-9 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
+                            <span className="text-xs font-bold text-white">{customer.name.charAt(0).toUpperCase()}</span>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm truncate">{customer.name}</p>
+                            <p className="font-semibold text-[13px] text-white truncate">{customer.name}</p>
                             {customer.address && (
-                              <p className="text-xs text-white truncate">{customer.address}</p>
+                              <p className="text-[11px] text-white/40 truncate">{customer.address}</p>
                             )}
                           </div>
+                          <ChevronRight className="h-4 w-4 text-white/20 flex-shrink-0" />
                         </div>
                       </CommandItem>
                     ))}
@@ -1200,8 +1188,8 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
 
             {isLinking && (
               <div className="flex items-center justify-center gap-2 py-3 border-t border-white/[0.06]">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="text-sm text-white">Linking...</span>
+                <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                <span className="text-sm text-white/60">Linking...</span>
               </div>
             )}
           </div>

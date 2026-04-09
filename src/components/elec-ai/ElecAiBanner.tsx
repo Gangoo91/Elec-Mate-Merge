@@ -1,30 +1,30 @@
 import { Link } from 'react-router-dom';
-import { Brain, ChevronRight, Sparkles } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { ChevronRight } from 'lucide-react';
 
 export const ElecAiBanner = () => {
   return (
-    <Link to="/electrician-tools/ai-tooling/assistant">
-      <Card className="border border-purple-500/20 bg-gradient-to-r from-purple-500/5 via-transparent to-transparent hover:border-purple-500/40 hover:from-purple-500/10 transition-all duration-300 group">
-        <div className="flex items-center justify-between p-2.5 sm:p-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 group-hover:bg-purple-500/15 transition-colors">
-              <Brain className="h-5 w-5 text-purple-400" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-semibold text-sm text-white">Elec-AI</h3>
-                <span className="px-1.5 py-0.5 text-[10px] font-bold bg-purple-500/20 text-purple-400 rounded-full flex items-center gap-1">
-                  <Sparkles className="h-2.5 w-2.5" />
-                  AI
-                </span>
-              </div>
-              <p className="text-xs text-white">Your personal electrical advisor</p>
+    <Link to="/electrician-tools/ai-tooling/assistant" className="block group touch-manipulation">
+      <div className="relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-400 via-violet-400 to-indigo-400 opacity-30 group-hover:opacity-80 transition-opacity duration-200" />
+
+        <div className="relative z-10 flex flex-col h-full p-3.5 sm:p-4 min-h-[110px]">
+          <h3 className="text-[13px] sm:text-sm font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
+            Elec-AI
+          </h3>
+          <p className="mt-0.5 text-[11px] sm:text-[12px] text-white leading-tight">
+            Your personal electrical advisor
+          </p>
+
+          <div className="flex-grow" />
+
+          <div className="mt-2 flex items-center justify-between">
+            <span className="text-[11px] sm:text-xs font-medium text-elec-yellow">Open</span>
+            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+              <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
             </div>
           </div>
-          <ChevronRight className="h-4 w-4 text-white group-hover:text-purple-400 group-hover:translate-x-0.5 transition-all" />
         </div>
-      </Card>
+      </div>
     </Link>
   );
 };

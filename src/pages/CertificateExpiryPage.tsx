@@ -20,11 +20,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-  ArrowLeft,
-  Zap,
-  ChevronRight,
-} from 'lucide-react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type TimeFilter = 'all' | 'overdue' | '30days' | '60days' | '90days';
@@ -112,19 +108,28 @@ export default function CertificateExpiryPage() {
     }
   };
 
-  const getUrgencyStyles = (urgency: string) => {
+  const getUrgencyAccent = (urgency: string) => {
     switch (urgency) {
-      case 'expired': return { bg: 'bg-red-500/8', border: 'border-red-500/15', badge: 'bg-red-500/15 text-red-400', dot: 'bg-red-400' };
-      case 'critical': return { bg: 'bg-orange-500/8', border: 'border-orange-500/15', badge: 'bg-orange-500/15 text-orange-400', dot: 'bg-orange-400' };
-      case 'warning': return { bg: 'bg-amber-500/8', border: 'border-amber-500/15', badge: 'bg-amber-500/15 text-amber-400', dot: 'bg-amber-400' };
-      default: return { bg: 'bg-white/[0.04]', border: 'border-white/[0.06]', badge: 'bg-emerald-500/15 text-emerald-400', dot: 'bg-emerald-400' };
+      case 'expired': return 'from-red-500 via-rose-400 to-pink-400';
+      case 'critical': return 'from-orange-500 via-amber-400 to-yellow-400';
+      case 'warning': return 'from-amber-500 via-amber-400 to-yellow-400';
+      default: return 'from-emerald-500 via-emerald-400 to-green-400';
+    }
+  };
+
+  const getUrgencyBadge = (urgency: string) => {
+    switch (urgency) {
+      case 'expired': return 'bg-red-500/15 text-red-400';
+      case 'critical': return 'bg-orange-500/15 text-orange-400';
+      case 'warning': return 'bg-amber-500/15 text-amber-400';
+      default: return 'bg-emerald-500/15 text-emerald-400';
     }
   };
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11">
             <Button
@@ -135,14 +140,10 @@ export default function CertificateExpiryPage() {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                <Zap className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Expiring Certificates</h1>
-            </div>
+            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Expiring Certificates</h1>
           </div>
         </div>
+        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <motion.main
@@ -151,59 +152,26 @@ export default function CertificateExpiryPage() {
         animate="visible"
         className="px-4 py-4 space-y-5"
       >
-        {/* KPI Strip */}
-        <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-          <button
-            onClick={() => setTimeFilter('overdue')}
-            className={cn(
-              'flex flex-col items-start justify-center rounded-xl border px-3 py-2 h-14',
-              'touch-manipulation active:scale-[0.97] transition-all',
-              stats.overdue > 0
-                ? 'border-red-500/30 bg-red-500/10'
-                : 'border-white/10 bg-white/5'
-            )}
-          >
-            <span className="text-[11px] font-medium text-white leading-tight">Overdue</span>
-            <span className={cn('text-base font-bold leading-tight', stats.overdue > 0 ? 'text-red-400' : 'text-white')}>
-              {stats.overdue}
-            </span>
-          </button>
-          <button
-            onClick={() => setTimeFilter('30days')}
-            className={cn(
-              'flex flex-col items-start justify-center rounded-xl border px-3 py-2 h-14',
-              'touch-manipulation active:scale-[0.97] transition-all',
-              stats.urgent > 0
-                ? 'border-orange-500/30 bg-orange-500/10'
-                : 'border-white/10 bg-white/5'
-            )}
-          >
-            <span className="text-[11px] font-medium text-white leading-tight">Within 30 days</span>
-            <span className={cn('text-base font-bold leading-tight', stats.urgent > 0 ? 'text-orange-400' : 'text-white')}>
-              {stats.urgent}
-            </span>
-          </button>
-          <button
-            onClick={() => setTimeFilter('60days')}
-            className={cn(
-              'flex flex-col items-start justify-center rounded-xl border px-3 py-2 h-14',
-              'touch-manipulation active:scale-[0.97] transition-all',
-              stats.warning > 0
-                ? 'border-amber-500/30 bg-amber-500/10'
-                : 'border-white/10 bg-white/5'
-            )}
-          >
-            <span className="text-[11px] font-medium text-white leading-tight">30-60 days</span>
-            <span className={cn('text-base font-bold leading-tight', stats.warning > 0 ? 'text-amber-400' : 'text-white')}>
-              {stats.warning}
-            </span>
-          </button>
-          <div className="flex flex-col items-start justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 h-14">
-            <span className="text-[11px] font-medium text-white leading-tight">Revenue opportunity</span>
-            <span className="text-base font-bold text-emerald-400 leading-tight">
-              £{stats.revenue.toLocaleString()}
-            </span>
-          </div>
+        {/* KPI Cards — HubCard style */}
+        <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {[
+            { label: 'Overdue', value: stats.overdue, filter: 'overdue' as TimeFilter, accent: 'from-red-500 via-rose-400 to-pink-400', color: stats.overdue > 0 ? 'text-red-400' : 'text-white' },
+            { label: 'Within 30 days', value: stats.urgent, filter: '30days' as TimeFilter, accent: 'from-orange-500 via-amber-400 to-yellow-400', color: stats.urgent > 0 ? 'text-orange-400' : 'text-white' },
+            { label: '30-60 days', value: stats.warning, filter: '60days' as TimeFilter, accent: 'from-amber-500 via-amber-400 to-yellow-400', color: stats.warning > 0 ? 'text-amber-400' : 'text-white' },
+            { label: 'Revenue opportunity', value: `£${stats.revenue.toLocaleString()}`, filter: 'all' as TimeFilter, accent: 'from-emerald-500 via-emerald-400 to-green-400', color: 'text-emerald-400' },
+          ].map((kpi) => (
+            <button
+              key={kpi.label}
+              onClick={() => setTimeFilter(kpi.filter)}
+              className="group relative overflow-hidden card-surface-interactive rounded-xl active:scale-[0.97] transition-all touch-manipulation text-left"
+            >
+              <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity', kpi.accent)} />
+              <div className="relative z-10 p-3">
+                <p className="text-[11px] font-medium text-white leading-tight">{kpi.label}</p>
+                <p className={cn('text-xl font-bold leading-tight mt-1', kpi.color)}>{kpi.value}</p>
+              </div>
+            </button>
+          ))}
         </motion.div>
 
         {/* Filter pills */}
@@ -213,10 +181,10 @@ export default function CertificateExpiryPage() {
               key={opt.value}
               onClick={() => setTimeFilter(opt.value)}
               className={cn(
-                'h-9 px-4 text-xs font-medium rounded-lg touch-manipulation transition-all whitespace-nowrap flex-shrink-0',
+                'h-8 px-3 text-xs font-medium rounded-lg touch-manipulation transition-all whitespace-nowrap flex-shrink-0 active:scale-[0.98]',
                 timeFilter === opt.value
-                  ? 'bg-elec-yellow/12 text-elec-yellow border border-elec-yellow/20'
-                  : 'bg-white/[0.06] text-white border border-white/[0.08]'
+                  ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                  : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
               )}
             >
               {opt.label}
@@ -230,12 +198,12 @@ export default function CertificateExpiryPage() {
         {/* Certificate list */}
         {isLoading ? (
           <div className="space-y-3">
-            <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
-            <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
-            <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
+            <Skeleton className="h-28 w-full rounded-2xl bg-white/[0.03]" />
+            <Skeleton className="h-28 w-full rounded-2xl bg-white/[0.03]" />
+            <Skeleton className="h-28 w-full rounded-2xl bg-white/[0.03]" />
           </div>
         ) : filteredReminders.length === 0 ? (
-          <motion.div variants={itemVariants} className="flex flex-col items-center justify-center py-16 space-y-3">
+          <motion.div variants={itemVariants} className="flex flex-col items-center justify-center py-16 space-y-2">
             <p className="text-sm font-semibold text-white">
               {reminders?.length === 0 ? 'No expiring certificates' : 'No certificates match filter'}
             </p>
@@ -246,10 +214,9 @@ export default function CertificateExpiryPage() {
             </p>
           </motion.div>
         ) : (
-          <motion.div variants={itemVariants} className="space-y-2">
+          <motion.div variants={itemVariants} className="space-y-3">
             {filteredReminders.map((reminder, index) => {
               const urgency = getExpiryUrgency(reminder.expiry_date);
-              const styles = getUrgencyStyles(urgency);
               const days = getDaysUntilExpiry(reminder.expiry_date);
               const isExpired = urgency === 'expired';
 
@@ -259,43 +226,48 @@ export default function CertificateExpiryPage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: index * 0.03 }}
-                  className={cn(
-                    'flex items-center gap-3.5 p-4 rounded-2xl cursor-pointer',
-                    'border transition-all touch-manipulation active:scale-[0.98]',
-                    styles.bg,
-                    styles.border,
-                    'hover:bg-white/[0.06]'
-                  )}
-                  onClick={() => setSelectedReminder(reminder)}
                 >
-                  <div className={cn('w-2.5 h-2.5 rounded-full flex-shrink-0', styles.dot)} />
+                  <button
+                    onClick={() => setSelectedReminder(reminder)}
+                    className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
+                  >
+                    <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
+                      <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-50 group-hover:opacity-100 transition-opacity', getUrgencyAccent(urgency))} />
+                      <div className="relative z-10 p-4">
+                        {/* Badges row */}
+                        <div className="flex items-center gap-1.5 mb-2">
+                          <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded', getUrgencyBadge(urgency))}>
+                            {isExpired ? `${Math.abs(days)}d overdue` : `${days}d left`}
+                          </span>
+                          {reminder.reminder_status !== 'pending' && (
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400">
+                              {reminder.reminder_status}
+                            </span>
+                          )}
+                          <span className="text-[11px] text-white ml-auto flex-shrink-0">
+                            {formatDate(reminder.expiry_date)}
+                          </span>
+                        </div>
 
-                  <div className="flex-1 min-w-0">
-                    {/* Badges row */}
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded', styles.badge)}>
-                        {isExpired ? `${Math.abs(days)}d overdue` : `${days}d left`}
-                      </span>
-                      {reminder.reminder_status !== 'pending' && (
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-white/[0.06] text-white">
-                          {reminder.reminder_status}
-                        </span>
-                      )}
-                      <span className="text-[11px] text-white ml-auto flex-shrink-0">
-                        {formatDate(reminder.expiry_date)}
-                      </span>
+                        {/* Client name */}
+                        <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors truncate">
+                          {reminder.client_name || 'Unknown Client'}
+                        </h3>
+                        {/* Address */}
+                        <p className="mt-0.5 text-[12px] text-white leading-tight truncate">
+                          {reminder.installation_address || 'No address'}
+                        </p>
+
+                        {/* Bottom row */}
+                        <div className="flex items-center justify-between mt-3">
+                          <span className="text-[11px] font-medium text-elec-yellow">Details</span>
+                          <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                            <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    {/* Client name */}
-                    <h4 className="text-sm font-semibold text-white truncate text-left">
-                      {reminder.client_name || 'Unknown Client'}
-                    </h4>
-                    {/* Address */}
-                    <p className="text-sm text-white truncate mt-0.5 text-left">
-                      {reminder.installation_address || 'No address'}
-                    </p>
-                  </div>
-
-                  <ChevronRight className={cn('h-5 w-5 flex-shrink-0', isExpired ? 'text-red-400' : 'text-elec-yellow')} />
+                  </button>
                 </motion.div>
               );
             })}
@@ -311,7 +283,6 @@ export default function CertificateExpiryPage() {
         <SheetContent side="bottom" className="h-[75vh] rounded-t-2xl p-0 overflow-hidden bg-background border-white/[0.06]">
           {selectedReminder && (() => {
             const urgency = getExpiryUrgency(selectedReminder.expiry_date);
-            const styles = getUrgencyStyles(urgency);
             const days = getDaysUntilExpiry(selectedReminder.expiry_date);
 
             return (
@@ -319,11 +290,11 @@ export default function CertificateExpiryPage() {
                 {/* Sheet header */}
                 <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pt-5 pb-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className={cn('text-[11px] font-bold px-2.5 py-1 rounded-lg', styles.badge)}>
+                    <span className={cn('text-[11px] font-bold px-2.5 py-1 rounded-lg', getUrgencyBadge(urgency))}>
                       {days < 0 ? `${Math.abs(days)} days overdue` : `${days} days left`}
                     </span>
                     {selectedReminder.reminder_status !== 'pending' && (
-                      <span className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-white/[0.06] text-white">
+                      <span className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-400">
                         {selectedReminder.reminder_status}
                       </span>
                     )}

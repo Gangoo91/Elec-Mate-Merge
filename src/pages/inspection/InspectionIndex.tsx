@@ -155,7 +155,7 @@ const InspectionIndex = () => {
           <div className="bg-background text-foreground">
             <ErrorBoundary>
               <EICRForm
-                onBack={() => handleNavigate('dashboard')}
+                onBack={() => handleNavigate('certificates')}
                 initialReportId={currentReportId}
               />
             </ErrorBoundary>
@@ -166,7 +166,7 @@ const InspectionIndex = () => {
           <div className="bg-background text-foreground">
             <ErrorBoundary>
               <EICForm
-                onBack={() => handleNavigate('dashboard')}
+                onBack={() => handleNavigate('certificates')}
                 initialReportId={currentReportId}
                 designId={currentDesignId}
               />
@@ -178,7 +178,7 @@ const InspectionIndex = () => {
           <div className="bg-background text-foreground">
             <ErrorBoundary>
               <MinorWorksForm
-                onBack={() => handleNavigate('dashboard')}
+                onBack={() => handleNavigate('certificates')}
                 initialReportId={currentReportId}
               />
             </ErrorBoundary>
@@ -217,25 +217,21 @@ const InspectionIndex = () => {
         return (
           <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
             {/* Sticky Header — matches Business Hub */}
-            <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+            <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
               <div className="px-4 py-2">
                 <div className="flex items-center gap-3 h-11">
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => handleNavigate('dashboard')}
-                    className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+                    className="text-white hover:text-white hover:bg-white/10 rounded-lg w-9 h-9 flex-shrink-0 touch-manipulation active:scale-[0.98]"
                   >
                     <ArrowLeft className="h-5 w-5" />
                   </Button>
-                  <div className="flex items-center gap-2.5">
-                    <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                      <FileCheck className="h-4 w-4 text-elec-yellow" />
-                    </div>
-                    <h1 className="text-base font-semibold text-white">Part P Notifications</h1>
-                  </div>
+                  <h1 className="text-sm font-bold text-white tracking-wide uppercase">Part P Notifications</h1>
                 </div>
               </div>
+              <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
             </div>
 
             {/* Main Content — motion stagger like Business Hub */}

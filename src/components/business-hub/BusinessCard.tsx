@@ -97,7 +97,8 @@ const BusinessCard = ({
         {!isCompact && subtitle && (
           <p
             className={cn(
-              'mt-0.5 leading-tight line-clamp-1',
+              'mt-0.5 leading-tight',
+              isHero ? 'line-clamp-2' : 'line-clamp-1',
               isHero ? 'text-[12px] sm:text-[13px]' : 'text-[11px] sm:text-[12px]',
               isOverdue ? 'text-red-400 font-semibold' : 'text-white'
             )}

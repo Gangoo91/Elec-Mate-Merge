@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Settings } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -93,53 +92,43 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
         </div>
 
         {/* Mobile: premium branded header */}
-        <div className="lg:hidden bg-gradient-to-b from-elec-yellow/[0.06] to-transparent">
+        <div className="lg:hidden">
           {/* Brand row */}
-          <div className="flex items-center justify-between px-4 pt-3 pb-2">
-            <div className="flex items-center gap-2">
-              <div className="rounded-lg overflow-hidden h-7 w-7 border border-elec-yellow/20">
-                <img src="/logo.jpg" alt="" className="h-7 w-7 object-cover" />
+          <div className="flex items-center px-5 pt-4 pb-2">
+            <div className="flex items-center gap-2.5">
+              <div className="rounded-xl overflow-hidden h-8 w-8 border border-elec-yellow/20">
+                <img src="/logo.jpg" alt="" className="h-8 w-8 object-cover" />
               </div>
-              <span className="font-bold text-base">
+              <span className="font-bold text-lg tracking-tight">
                 <span className="bg-gradient-to-r from-elec-yellow to-amber-400 bg-clip-text text-transparent">
                   Elec
                 </span>
                 <span className="text-white">Mate</span>
               </span>
             </div>
-            <SafeLink
-              to="/settings"
-              onClick={() => setOpen(false)}
-              className="p-2 rounded-lg hover:bg-white/5 transition-colors touch-manipulation"
-              aria-label="Settings"
-            >
-              <Settings className="h-5 w-5 text-white" />
-            </SafeLink>
           </div>
           {/* Profile row */}
-          <div className="flex items-center gap-3 px-4 pb-3">
-            <div className="relative shrink-0">
-              <Avatar className="h-10 w-10 ring-2 ring-elec-yellow/25 ring-offset-2 ring-offset-elec-dark">
-                <AvatarImage src={profile?.avatar_url || ''} className="object-cover" />
-                <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-elec-dark font-bold text-sm">
-                  {getInitials()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-green-500 border-2 border-elec-dark" />
-            </div>
+          <div className="flex items-center gap-3 px-5 pb-4 pt-1">
+            <Avatar className="h-9 w-9">
+              <AvatarImage src={profile?.avatar_url || ''} className="object-cover" />
+              <AvatarFallback className="bg-elec-yellow/15 text-elec-yellow font-bold text-xs">
+                {getInitials()}
+              </AvatarFallback>
+            </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-white text-[15px] font-semibold truncate leading-tight">
+              <p className="text-white text-[14px] font-semibold truncate leading-tight">
                 {profile?.full_name || 'Welcome'}
               </p>
-              <p className="text-elec-yellow text-xs capitalize truncate leading-tight mt-0.5">
+              <p className="text-white text-[11px] capitalize truncate leading-tight mt-0.5">
                 {profile?.role || 'User'}
               </p>
             </div>
           </div>
+          <div className="border-t border-white/[0.06] mx-5" />
         </div>
 
         {/* Navigation with custom scrollbar */}
-        <nav className="flex-1 overflow-y-auto pt-2 pb-4 px-3 custom-scrollbar">
+        <nav className="flex-1 overflow-y-auto pt-3 pb-4 px-3 custom-scrollbar">
           <SidebarNavSection
             items={mainNavItems}
             userRole={userRole}

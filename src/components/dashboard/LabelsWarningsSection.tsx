@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Zap, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -288,7 +288,7 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11">
             <Button
@@ -299,14 +299,10 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                <Zap className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Labels & Warnings</h1>
-            </div>
+            <h1 className="text-sm font-bold text-white tracking-wide uppercase">Labels & Warnings</h1>
           </div>
         </div>
+        <div className="h-[2px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       <motion.main
@@ -315,13 +311,66 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
         animate="visible"
         className="px-4 py-4 space-y-5"
       >
-        {/* Recent Documents */}
+        {/* Client Documents — first */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="border-b border-white/[0.06] pb-1">
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-emerald-500/40 to-emerald-500/10 mb-2" />
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Client Documents</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+            {clientHandouts.map((doc) => (
+              <DocCard key={doc.id} doc={doc} />
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Notices & Permits */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="border-b border-white/[0.06] pb-1">
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-red-500/40 to-red-500/10 mb-2" />
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Notices & Permits</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+            {noticesAndPermits.map((doc) => (
+              <DocCard key={doc.id} doc={doc} />
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Site Records */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="border-b border-white/[0.06] pb-1">
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-emerald-500/40 to-emerald-500/10 mb-2" />
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Site Records</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+            {siteRecords.map((doc) => (
+              <DocCard key={doc.id} doc={doc} />
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Printables */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="border-b border-white/[0.06] pb-1">
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-amber-500/40 to-amber-500/10 mb-2" />
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Printables</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
+            {printables.map((doc) => (
+              <DocCard key={doc.id} doc={doc} />
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Recent Documents — at the bottom */}
         {savedDocs && savedDocs.length > 0 && (
           <motion.section variants={itemVariants} className="space-y-3">
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-              Recent Documents
-            </h2>
-            <div className="space-y-2">
+            <div className="border-b border-white/[0.06] pb-1">
+              <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider">Recent Documents</h2>
+            </div>
+            <div className="space-y-3">
               <AnimatePresence mode="popLayout">
                 {savedDocs.map((doc, index) => {
                   const typeInfo = DOC_TYPE_LABELS[doc.report_type] || { label: 'DOC', color: 'bg-white/[0.06] text-white' };
@@ -333,31 +382,42 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: index * 0.03 }}
-                      className="flex items-center gap-3.5 p-4 rounded-2xl cursor-pointer bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.06] active:scale-[0.98] transition-all touch-manipulation"
-                      onClick={() => route && navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)}
                     >
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded', typeInfo.color)}>
-                            {typeInfo.label}
-                          </span>
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400">
-                            Issued
-                          </span>
-                          <span className="text-[11px] text-white ml-auto flex-shrink-0">
-                            {formatTimeAgo(doc.updated_at)}
-                          </span>
+                      <button
+                        onClick={() => route && navigate(`/electrician/inspection-testing/${route}/${doc.report_id}`)}
+                        className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
+                      >
+                        <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
+                          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400 opacity-30 group-hover:opacity-80 transition-opacity duration-200" />
+                          <div className="relative z-10 p-4">
+                            <div className="flex items-center gap-1.5 mb-2">
+                              <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded', typeInfo.color)}>
+                                {typeInfo.label}
+                              </span>
+                              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400">
+                                Issued
+                              </span>
+                              <span className="text-[11px] text-white/40 ml-auto flex-shrink-0">
+                                {formatTimeAgo(doc.updated_at)}
+                              </span>
+                            </div>
+                            <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors truncate">
+                              {doc.client_name || doc.installation_address || 'Untitled'}
+                            </h3>
+                            {doc.installation_address && doc.client_name && (
+                              <p className="mt-0.5 text-[12px] text-white leading-tight truncate">
+                                {doc.installation_address}
+                              </p>
+                            )}
+                            <div className="flex items-center justify-between mt-3">
+                              <span className="text-[11px] font-medium text-elec-yellow">View</span>
+                              <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                                <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <h4 className="text-sm font-semibold text-white truncate text-left">
-                          {doc.client_name || doc.installation_address || 'Untitled'}
-                        </h4>
-                        {doc.installation_address && doc.client_name && (
-                          <p className="text-sm text-white truncate mt-0.5 text-left">
-                            {doc.installation_address}
-                          </p>
-                        )}
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                      </button>
                     </motion.div>
                   );
                 })}
@@ -365,54 +425,6 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
             </div>
           </motion.section>
         )}
-
-        {/* Client Documents — top of page */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Client Documents
-          </h2>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {clientHandouts.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Notices & Permits */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Notices & Permits
-          </h2>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {noticesAndPermits.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Printables */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Printables
-          </h2>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {printables.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Site Records */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Site Records
-          </h2>
-          <div className="grid grid-cols-2 gap-3 auto-rows-fr">
-            {siteRecords.map((doc) => (
-              <DocCard key={doc.id} doc={doc} />
-            ))}
-          </div>
-        </motion.section>
       </motion.main>
     </div>
   );

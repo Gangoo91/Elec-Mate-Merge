@@ -1,20 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import {
-  Cpu,
-  Plus,
-  Calendar,
-  Loader2,
-  ExternalLink,
-  PoundSterling,
-  Zap,
-  Wrench,
-  CheckCircle2,
-} from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 
 interface CustomerDesignConsultationCardProps {
@@ -29,39 +16,23 @@ interface AgentJob {
   created_at: string;
 }
 
-const AGENT_META = {
+const AGENT_META: Record<string, { label: string; route: string; section: string }> = {
   'cost-engineer': {
-    icon: PoundSterling,
-    color: 'text-emerald-400',
-    hoverBorder: 'hover:border-emerald-500/30',
-    activeBg: 'active:bg-emerald-500/10',
     label: 'Cost Engineer',
     route: '/electrician/design-consultation',
     section: 'cost-engineer',
   },
   'circuit-designer': {
-    icon: Zap,
-    color: 'text-blue-400',
-    hoverBorder: 'hover:border-blue-500/30',
-    activeBg: 'active:bg-blue-500/10',
     label: 'Circuit Designer',
     route: '/electrician/design-consultation',
     section: 'circuit-designer',
   },
   installation: {
-    icon: Wrench,
-    color: 'text-elec-yellow',
-    hoverBorder: 'hover:border-elec-yellow/30',
-    activeBg: 'active:bg-elec-yellow/10',
     label: 'Installation',
     route: '/electrician/design-consultation',
     section: 'installation-specialist',
   },
   commissioning: {
-    icon: CheckCircle2,
-    color: 'text-cyan-400',
-    hoverBorder: 'hover:border-cyan-500/30',
-    activeBg: 'active:bg-cyan-500/10',
     label: 'Commissioning',
     route: '/electrician/design-consultation',
     section: 'commissioning',
@@ -180,16 +151,16 @@ export const CustomerDesignConsultationCard = ({
     });
   };
 
-  const getStatusVariant = (status: string) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
       case 'complete':
       case 'completed':
-        return 'default' as const;
+        return 'bg-emerald-500/15 text-emerald-400';
       case 'processing':
       case 'pending':
-        return 'secondary' as const;
+        return 'bg-blue-500/15 text-blue-400';
       default:
-        return 'outline' as const;
+        return 'bg-white/10 text-white';
     }
   };
 
@@ -201,55 +172,43 @@ export const CustomerDesignConsultationCard = ({
   };
 
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base flex items-center justify-between">
-          <span className="flex items-center gap-2">
-            <Cpu className="h-4 w-4 text-elec-yellow" />
-            AI Design Consultation
-          </span>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate('/electrician/design-consultation')}
-            className="h-8 text-xs touch-manipulation text-elec-yellow"
-          >
-            <Plus className="h-3.5 w-3.5 mr-1" />
-            New
-          </Button>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
+    <div className="card-surface-interactive rounded-2xl overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+        <h3 className="text-sm font-bold text-white">AI Design Consultation</h3>
+        <button
+          onClick={() => navigate('/electrician/design-consultation')}
+          className="text-xs font-medium text-elec-yellow touch-manipulation active:scale-[0.98]"
+        >
+          + New
+        </button>
+      </div>
+      <div className="p-4">
         {isLoading ? (
           <div className="flex justify-center py-4">
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
           </div>
         ) : jobs.length > 0 ? (
           <div className="space-y-2">
             {jobs.map((job) => {
               const meta = AGENT_META[job.type];
-              const Icon = meta.icon;
               return (
                 <div
                   key={`${job.type}-${job.id}`}
                   onClick={() => handleNavigate(job)}
-                  className={`flex items-center gap-3 p-3 rounded-lg bg-card/50 border border-border ${meta.hoverBorder} ${meta.activeBg} cursor-pointer transition-all touch-manipulation`}
+                  className="flex items-center gap-3 p-3 bg-white/[0.04] border border-white/[0.06] rounded-xl cursor-pointer transition-all touch-manipulation active:scale-[0.98]"
                 >
-                  <Icon className={`h-5 w-5 ${meta.color} flex-shrink-0`} />
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{job.title}</p>
+                    <p className="font-medium text-sm text-white truncate">{job.title}</p>
                     <p className="text-xs text-white">{meta.label}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <Badge variant={getStatusVariant(job.status)} className="text-[10px]">
+                    <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${getStatusBadge(job.status)}`}>
                       {job.status}
-                    </Badge>
-                    <p className="text-[10px] text-white mt-1 flex items-center justify-end gap-1">
-                      <Calendar className="h-3 w-3" />
+                    </span>
+                    <p className="text-[10px] text-white mt-1">
                       {formatDate(job.created_at)}
                     </p>
                   </div>
-                  <ExternalLink className="h-4 w-4 text-white" />
                 </div>
               );
             })}
@@ -259,7 +218,7 @@ export const CustomerDesignConsultationCard = ({
             No AI consultations linked to this customer yet
           </p>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
