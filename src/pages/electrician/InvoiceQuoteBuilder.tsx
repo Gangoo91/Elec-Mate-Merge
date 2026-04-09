@@ -151,40 +151,36 @@ export default function InvoiceQuoteBuilder() {
   }
 
   return (
-    <div className="bg-background  ">
+    <div className="min-h-screen bg-background animate-fade-in">
       <Helmet>
-        <title>Adjust Invoice Costs - Electrical Hub</title>
-        <meta name="description" content="Adjust costs and items before generating your invoice" />
+        <title>{quote?.invoice_raised ? 'Edit Invoice' : 'Create Invoice'} | Elec-Mate</title>
+        <meta name="description" content="Create professional invoices with our guided invoice builder." />
       </Helmet>
 
-      <div className="px-4 py-4 sm:py-6 animate-fade-in">
-        <div className="mb-6">
-          {/* Back Button */}
-          <Button
-            variant="ghost"
-            size="sm"
+      {/* Header — matching QuoteBuilderCreate */}
+      <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="flex items-center gap-3 px-4 h-14">
+          <button
             onClick={() => {
-              if (quote?.invoice_raised) {
-                navigate('/electrician/invoices');
-              } else {
-                navigate('/electrician/quotes');
-              }
+              if (quote?.invoice_raised) navigate('/electrician/invoices');
+              else navigate('/electrician/quotes');
             }}
-            className="h-10 mb-3 -ml-2 touch-manipulation"
+            className="h-11 w-11 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] touch-manipulation"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            {quote?.invoice_raised ? 'Back to Invoices' : 'Back to Quotes'}
-          </Button>
-
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">
-            {quote?.invoice_raised ? 'Edit Invoice' : 'Create Invoice'}
-          </h1>
-          <p className="text-white">
-            {quote?.invoice_raised
-              ? `Editing ${quote.invoice_number}`
-              : 'Review and modify the quote items before generating the final invoice'}
-          </p>
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base font-semibold text-white">
+              {quote?.invoice_raised ? 'Edit Invoice' : 'Create Invoice'}
+            </h1>
+            {quote?.invoice_number && (
+              <p className="text-[11px] text-white font-mono">{quote.invoice_number}</p>
+            )}
+          </div>
         </div>
+      </header>
+
+      <div className="px-4 py-6 animate-fade-in">
 
         {quote && quote.invoice_raised && quote.invoice_number ? (
           <InvoiceWizard

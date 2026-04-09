@@ -202,237 +202,73 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
             >
               <button
                 onClick={() => onInvoiceAction(invoice)}
-                className={cn(
-                  'w-full text-left rounded-2xl overflow-hidden touch-manipulation active:scale-[0.99] transition-all',
-                  'bg-gradient-to-br from-[#1e1e1e] to-[#161616]',
-                  'border',
-                  isPaid
-                    ? 'border-emerald-500/20'
-                    : isOverdue
-                      ? 'border-red-500/20'
-                      : 'border-white/[0.08]'
-                )}
+                className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation cursor-pointer"
               >
-                {/* Main Content */}
-                <div className="p-4">
-                  {/* Amount - Hero element */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      {/* Status Badge */}
-                      <div
-                        className={cn(
-                          'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold mb-2',
-                          statusConfig.bg,
-                          statusConfig.border,
-                          statusConfig.text,
-                          'border'
-                        )}
-                      >
-                        <div className={cn('w-1.5 h-1.5 rounded-full', statusConfig.dot)} />
-                        {statusConfig.label}
-                      </div>
-                      {/* Invoice Number */}
-                      <p className="text-[13px] text-white font-medium">
-                        {invoice.invoice_number}
-                      </p>
-                    </div>
-                    {/* Amount */}
-                    <div className="text-right">
-                      <p
-                        className={cn(
-                          'text-[26px] font-bold tracking-tight',
-                          isPaid ? 'text-emerald-400' : isOverdue ? 'text-red-400' : 'text-white'
-                        )}
-                      >
-                        {formatCurrency(invoice.total)}
-                      </p>
-                    </div>
-                  </div>
+                <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200 rounded-2xl">
+                  {/* Gradient accent — status-coloured */}
+                  <div className={cn(
+                    'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity duration-200',
+                    isPaid ? 'from-emerald-500 via-emerald-400 to-green-400'
+                      : isOverdue ? 'from-red-500 via-rose-400 to-pink-400'
+                      : statusConfig.label === 'Sent' ? 'from-blue-500 via-blue-400 to-cyan-400'
+                      : 'from-slate-400 via-slate-300 to-gray-400'
+                  )} />
 
-                  {/* Client Info */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-                      <User className="h-5 w-5 text-elec-yellow" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[15px] font-semibold text-white truncate">
-                        {clientData?.name || 'Unknown Client'}
-                      </p>
-                      {clientData?.email && (
-                        <p className="text-[13px] text-white truncate">{clientData.email}</p>
+                  <div className="relative z-10 p-4">
+                    {/* Row 1: Badges + date */}
+                    <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+                      <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded', statusConfig.bg, statusConfig.text)}>
+                        {statusConfig.label.toUpperCase()}
+                      </span>
+                      {invoice.invoice_number && (
+                        <span className="font-mono text-[10px] text-white/50 px-1.5 py-0.5 rounded bg-white/[0.04]">
+                          {invoice.invoice_number}
+                        </span>
                       )}
-                    </div>
-                  </div>
-
-                  {/* Meta Row */}
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <div className="flex items-center gap-1.5 text-[12px] text-white bg-white/[0.05] px-2.5 py-1.5 rounded-lg">
-                      <Calendar className="h-3.5 w-3.5" />
-                      <span>
-                        {invoice.invoice_date
-                          ? format(new Date(invoice.invoice_date), 'dd MMM yy')
-                          : 'N/A'}
+                      {isOverdue && overdueInfo && (
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-red-500/15 text-red-400">
+                          {overdueInfo.daysOverdue}d Overdue
+                        </span>
+                      )}
+                      <span className="text-[11px] text-white/50 ml-auto flex-shrink-0">
+                        {invoice.invoice_date ? format(new Date(invoice.invoice_date), 'd MMM') : ''}
                       </span>
                     </div>
 
-                    {invoice.invoice_due_date && (
-                      <div
-                        className={cn(
-                          'flex items-center gap-1.5 text-[12px] px-2.5 py-1.5 rounded-lg',
-                          isOverdue
-                            ? 'bg-red-500/10 text-red-400 font-medium'
-                            : 'bg-white/[0.05] text-white'
-                        )}
-                      >
-                        <Clock className="h-3.5 w-3.5" />
-                        <span>
-                          {isOverdue && overdueInfo
-                            ? `${overdueInfo.daysOverdue}d overdue`
-                            : `Due ${format(new Date(invoice.invoice_due_date), 'dd MMM')}`}
-                        </span>
-                      </div>
-                    )}
+                    {/* Row 2: Client name */}
+                    <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors truncate">
+                      {clientData?.name || 'Unknown Client'}
+                    </h3>
 
-                    <div className="flex items-center gap-1.5 text-[12px] text-white bg-white/[0.05] px-2.5 py-1.5 rounded-lg">
-                      <FileText className="h-3.5 w-3.5" />
-                      <span>{invoice.items.length} items</span>
+                    {/* Row 3: Items count */}
+                    <p className="mt-0.5 text-[12px] text-white leading-tight truncate">
+                      {invoice.items.length} item{invoice.items.length !== 1 ? 's' : ''}
+                      {invoice.invoice_due_date && !isPaid && (
+                        <span> · Due {format(new Date(invoice.invoice_due_date), 'd MMM')}</span>
+                      )}
+                    </p>
+
+                    {/* Row 4: Amount */}
+                    <div className="flex items-center justify-between mt-2">
+                      <span className={cn(
+                        'text-[15px] font-bold',
+                        isPaid ? 'text-emerald-400' : isOverdue ? 'text-red-400' : 'text-elec-yellow'
+                      )}>
+                        {formatCurrency(invoice.total)}
+                      </span>
+                    </div>
+
+                    {/* Row 5: Footer CTA */}
+                    <div className="flex items-center justify-between mt-3">
+                      <span className="text-[11px] font-medium text-elec-yellow">
+                        {isPaid ? 'View' : invoice.invoice_status === 'draft' ? 'Continue Editing' : 'View Invoice'}
+                      </span>
+                      <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                        <Eye className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                {/* Action Bar - For unpaid invoices */}
-                {!isPaid && (
-                  <div
-                    className="flex items-center gap-2 p-3 border-t border-white/[0.06]"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {/* Download PDF */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onDownloadPDF(invoice);
-                      }}
-                      disabled={downloadingPdfId === invoice.id}
-                      className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-white/[0.08] hover:bg-white/[0.12] text-[13px] font-medium text-white touch-manipulation transition-all active:scale-[0.96]"
-                    >
-                      {downloadingPdfId === invoice.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Download className="h-4 w-4" />
-                      )}
-                      <span>PDF</span>
-                    </button>
-
-                    {/* Send */}
-                    <div className="flex-1">
-                      <InvoiceSendDropdown
-                        invoice={invoice}
-                        onSuccess={onSendSuccess}
-                        disabled={!clientData?.email}
-                        refreshKey={stripeRefreshKey}
-                        compact
-                      />
-                    </div>
-
-                    {canMarkPaid && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onMarkAsPaid(invoice);
-                        }}
-                        disabled={markingPaidId === invoice.id}
-                        className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-[13px] font-semibold text-emerald-400 touch-manipulation transition-all active:scale-[0.96]"
-                      >
-                        {markingPaidId === invoice.id ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <CheckCircle className="h-4 w-4" />
-                        )}
-                        <span>Paid</span>
-                      </button>
-                    )}
-
-                    {/* More Actions */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActionsSheetInvoice(invoice);
-                      }}
-                      className="flex items-center justify-center h-10 w-10 rounded-xl bg-white/[0.08] hover:bg-white/[0.12] text-white touch-manipulation transition-all active:scale-[0.96]"
-                    >
-                      <MoreHorizontal className="h-5 w-5" />
-                    </button>
-                  </div>
-                )}
-
-                {/* Action Bar - For PAID invoices (sync to accounting) */}
-                {isPaid && (
-                  <div
-                    className="flex items-center gap-2 p-3 border-t border-emerald-500/20 bg-emerald-500/5"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {/* Paid Status */}
-                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-500/15">
-                      <CheckCircle className="h-4 w-4 text-emerald-400" />
-                      <span className="text-[13px] font-semibold text-emerald-400">Paid</span>
-                    </div>
-
-                    <div className="flex-1" />
-
-                    {/* Download PDF */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onDownloadPDF(invoice);
-                      }}
-                      disabled={downloadingPdfId === invoice.id}
-                      className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-white/[0.08] hover:bg-white/[0.12] text-[13px] font-medium text-white touch-manipulation transition-all active:scale-[0.96]"
-                    >
-                      {downloadingPdfId === invoice.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Download className="h-4 w-4" />
-                      )}
-                      <span>PDF</span>
-                    </button>
-
-                    {/* Sync to Accounting - Show for connected provider */}
-                    {hasAccountingConnected && connectedProvider ? (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleSyncToAccounting(invoice.id);
-                        }}
-                        disabled={syncingInvoiceId === invoice.id}
-                        className={cn(
-                          'flex items-center justify-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold touch-manipulation transition-all active:scale-[0.96]',
-                          connectedProvider.provider === 'xero'
-                            ? 'bg-[#13B5EA]/20 hover:bg-[#13B5EA]/30 text-[#13B5EA]'
-                            : 'bg-[#2CA01C]/20 hover:bg-[#2CA01C]/30 text-[#2CA01C]'
-                        )}
-                      >
-                        {syncingInvoiceId === invoice.id ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <RefreshCw className="h-4 w-4" />
-                        )}
-                        <span>{ACCOUNTING_PROVIDERS[connectedProvider.provider].name}</span>
-                      </button>
-                    ) : (
-                      /* Not connected - show connect prompt */
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate('/settings?tab=business');
-                        }}
-                        className="flex items-center justify-center gap-2 h-10 px-4 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 text-[13px] font-medium text-purple-400 touch-manipulation transition-all active:scale-[0.96]"
-                      >
-                        <RefreshCw className="h-4 w-4" />
-                        <span>Sync</span>
-                      </button>
-                    )}
-                  </div>
-                )}
               </button>
             </SwipeableCard>
           </div>

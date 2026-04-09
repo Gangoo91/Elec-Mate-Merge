@@ -112,61 +112,43 @@ const InvoiceBuilderCreate = () => {
 
   return (
     <VoiceFormProvider>
-      <div className="bg-background   animate-fade-in">
+      <div className="min-h-screen bg-background animate-fade-in">
         <Helmet>
           <title>Create Invoice | Elec-Mate</title>
-          <meta
-            name="description"
-            content="Create professional invoices with our guided invoice builder."
-          />
+          <meta name="description" content="Create professional invoices with our guided invoice builder." />
           <link rel="canonical" href={canonical} />
         </Helmet>
 
-        {/* Minimal Header */}
-        <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
-          <div className="flex items-center justify-between h-14 px-4">
-            {/* Close Button */}
+        {/* Header — matching QuoteBuilderCreate */}
+        <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
+          <div className="flex items-center gap-3 px-4 h-14">
             <button
               onClick={handleBack}
-              className="h-11 w-11 flex items-center justify-center rounded-full hover:bg-elec-gray/50 active:scale-95 transition-all touch-manipulation -ml-1"
+              className="h-11 w-11 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] touch-manipulation"
             >
               <X className="h-5 w-5" />
             </button>
-
-            {/* Title */}
-            <h1 className="text-base font-semibold">New Invoice</h1>
-
-            {/* Spacer */}
-            <div className="w-10" />
+            <div className="flex-1 min-w-0">
+              <h1 className="text-base font-semibold text-white">New Invoice</h1>
+            </div>
           </div>
         </header>
 
-        {/* Quote Import Banner */}
+        {/* Context banners */}
         {quoteContext && (
-          <div className="mx-4 mt-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-              <CheckCircle className="h-5 w-5 text-emerald-400" />
-            </div>
-            <div>
-              <p className="text-sm font-medium">Quote Data Imported</p>
-              <p className="text-xs text-white">
-                Client and items pre-filled from quote
-              </p>
+          <div className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-semibold text-emerald-400">Quote data imported</p>
+              <p className="text-[11px] text-white mt-0.5">Client and items pre-filled</p>
             </div>
           </div>
         )}
 
-        {/* Certificate Import Banner */}
         {certificateContext && (
-          <div className="mx-4 mt-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-              <ClipboardCheck className="h-5 w-5 text-blue-400" />
-            </div>
-            <div>
-              <p className="text-sm font-medium">Certificate Data Imported</p>
-              <p className="text-xs text-white">
-                Client details pre-filled from certificate
-              </p>
+          <div className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-semibold text-blue-400">Certificate data imported</p>
+              <p className="text-[11px] text-white mt-0.5">Client details pre-filled</p>
             </div>
           </div>
         )}
@@ -175,7 +157,7 @@ const InvoiceBuilderCreate = () => {
         <main className="px-4 py-6 pb-32">
           {isLoadingContext ? (
             <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-2 border-elec-yellow border-t-transparent" />
             </div>
           ) : (
             <InvoiceWizard

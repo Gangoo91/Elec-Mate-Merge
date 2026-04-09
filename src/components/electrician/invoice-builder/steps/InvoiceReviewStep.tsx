@@ -68,9 +68,6 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
             <div className="flex items-center gap-3 p-4">
-              <div className="w-9 h-9 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <User className="h-4 w-4 text-elec-yellow" />
-              </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[12px] text-white">Name</p>
                 <p className="text-[14px] font-medium text-white">
@@ -220,9 +217,6 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
             className="w-full flex items-center justify-between p-4 touch-manipulation"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-                <User className="h-4 w-4 text-elec-yellow" />
-              </div>
               <span className="text-[14px] font-medium text-white">Client Information</span>
             </div>
             {expandedSections.includes('client') ? (
@@ -271,9 +265,6 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
             className="w-full flex items-center justify-between p-4 touch-manipulation"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-              </div>
               <span className="text-[14px] font-medium text-white">Invoice Details</span>
             </div>
             {expandedSections.includes('details') ? (
@@ -332,9 +323,6 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
             className="w-full flex items-center justify-between p-4 touch-manipulation"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-                <Banknote className="h-4 w-4 text-elec-yellow" />
-              </div>
               <span className="text-[14px] font-medium text-white">
                 Invoice Items{' '}
                 {invoice.settings?.showSummaryView ? '(Summary)' : `(${allItems.length})`}

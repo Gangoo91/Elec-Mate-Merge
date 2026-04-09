@@ -1,41 +1,33 @@
 import React from 'react';
-import {
-  CheckCircle2,
-  AlertTriangle,
-  Crosshair,
-  ShieldAlert,
-  CircleDot,
-  Zap,
-  Cable,
-  Ruler,
-} from 'lucide-react';
+import { ArrowLeft, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const probeSpecs = [
-  { label: 'Exposed tip', value: 'Max 4mm', icon: Crosshair, iconColour: 'text-red-400' },
-  { label: 'Finger guard', value: 'Required', icon: ShieldAlert, iconColour: 'text-yellow-400' },
-  {
-    label: 'Tip type',
-    value: 'Shrouded or retractable',
-    icon: CircleDot,
-    iconColour: 'text-blue-400',
-  },
-  { label: 'Insulation', value: 'Min 1000V rating', icon: Zap, iconColour: 'text-purple-400' },
-  {
-    label: 'Fused leads',
-    value: 'HBC fuse, max 500mA',
-    icon: Cable,
-    iconColour: 'text-orange-400',
-  },
-  {
-    label: 'Lead size',
-    value: 'Min 0.75mm\u00B2',
-    icon: Ruler,
-    iconColour: 'text-green-400',
-  },
+  { label: 'Exposed tip', value: 'Max 4mm', accent: 'bg-red-500/50' },
+  { label: 'Finger guard', value: 'Required', accent: 'bg-yellow-500/50' },
+  { label: 'Tip type', value: 'Shrouded or retractable', accent: 'bg-blue-500/50' },
+  { label: 'Insulation', value: 'Min 1000V rating', accent: 'bg-purple-500/50' },
+  { label: 'Fused leads', value: 'HBC fuse, max 500mA', accent: 'bg-orange-500/50' },
+  { label: 'Lead size', value: 'Min 0.75mm\u00B2', accent: 'bg-green-500/50' },
 ];
 
-const EquipmentTab = () => (
+const EquipmentTab = ({ onBack }: { onBack: () => void }) => (
   <div className="space-y-4 sm:space-y-5">
+    {/* Back button header */}
+    <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+      <div className="py-2">
+        <div className="flex items-center gap-3 h-11">
+          <Button variant="ghost" size="icon" onClick={onBack}
+            className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+          <div>
+            <h1 className="text-base font-semibold text-white">Equipment &amp; GS38</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {/* Reference note */}
     <p className="text-xs text-white">
       Verified against the practical work intelligence database — all test instruments and leads
@@ -43,35 +35,26 @@ const EquipmentTab = () => (
     </p>
 
     {/* GS38 Probe Specs */}
-    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-      <div className="px-4 py-3.5">
-        <h4 className="font-semibold text-white text-sm sm:text-base">GS38 Compliant Test Probe</h4>
-        <p className="text-xs text-white mt-0.5">
-          GS38 specifies 4mm max exposed tip — some references incorrectly state 2mm
-        </p>
-      </div>
-      {probeSpecs.map((spec) => {
-        const Icon = spec.icon;
-        return (
-          <div key={spec.label} className="flex items-center gap-3 px-4 py-3">
-            <div className="w-8 h-8 rounded-lg bg-white/[0.06] flex items-center justify-center flex-shrink-0">
-              <Icon className={`h-4 w-4 ${spec.iconColour}`} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <span className="text-sm font-medium text-white">{spec.label}</span>
-              <p className="text-xs text-white mt-0.5">{spec.value}</p>
-            </div>
+    <div className="space-y-3">
+      <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">GS38 Compliant Test Probe</h2>
+      <p className="text-xs text-white px-0.5">
+        GS38 specifies 4mm max exposed tip — some references incorrectly state 2mm
+      </p>
+      <div className="grid grid-cols-2 gap-2">
+        {probeSpecs.map((spec) => (
+          <div key={spec.label} className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] p-4 overflow-hidden">
+            <div className={`absolute left-0 top-0 bottom-0 w-1 ${spec.accent} rounded-l-2xl`} />
+            <span className="text-sm font-medium text-white block">{spec.label}</span>
+            <p className="text-xs text-white mt-0.5">{spec.value}</p>
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
 
-    {/* GS38 Before-Use Checks */}
-    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-      <div className="px-4 py-3.5">
-        <h4 className="font-semibold text-white text-sm sm:text-base">Before-Use Checks</h4>
-        <p className="text-xs text-white mt-0.5">Required every time before testing</p>
-      </div>
+    {/* Before-Use Checks */}
+    <div className="space-y-3">
+      <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Before-Use Checks</h2>
+      <p className="text-xs text-white px-0.5">Required every time before testing</p>
       {[
         {
           num: '1',
@@ -89,23 +72,17 @@ const EquipmentTab = () => (
           desc: 'Prove the proving unit or voltage indicator on a known live source before and after every dead test',
         },
       ].map((step) => (
-        <div key={step.num} className="flex items-center gap-3 px-4 py-3">
-          <div className="w-8 h-8 rounded-lg bg-white/[0.06] flex items-center justify-center flex-shrink-0">
-            <span className="text-sm font-bold text-white">{step.num}</span>
-          </div>
-          <div className="flex-1 min-w-0">
-            <span className="text-sm font-medium text-white">{step.title}</span>
-            <p className="text-xs text-white mt-0.5">{step.desc}</p>
-          </div>
+        <div key={step.num} className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] p-4 overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/50 rounded-l-2xl" />
+          <span className="text-sm font-semibold text-white block">{step.num}. {step.title}</span>
+          <p className="text-xs text-white mt-0.5">{step.desc}</p>
         </div>
       ))}
     </div>
 
     {/* Equipment checklist */}
-    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-      <div className="px-4 py-3.5">
-        <h4 className="font-semibold text-white text-sm sm:text-base">Equipment Checklist</h4>
-      </div>
+    <div className="space-y-3">
+      <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Equipment Checklist</h2>
       {[
         {
           item: 'Proving unit / voltage indicator',
@@ -135,58 +112,53 @@ const EquipmentTab = () => (
           detail: 'Insulated gloves and safety glasses — check for damage before each use',
         },
       ].map((entry) => (
-        <div key={entry.item} className="flex items-center gap-3 px-4 py-3">
-          <CheckCircle2 className="h-4 w-4 text-green-400 flex-shrink-0" />
-          <div className="flex-1 min-w-0">
-            <span className="text-sm font-medium text-white">{entry.item}</span>
-            <p className="text-xs text-white mt-0.5">{entry.detail}</p>
-          </div>
+        <div key={entry.item} className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] p-4 overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/50 rounded-l-2xl" />
+          <span className="text-sm font-medium text-white block">{entry.item}</span>
+          <p className="text-xs text-white mt-0.5">{entry.detail}</p>
         </div>
       ))}
     </div>
 
     {/* CAT Ratings */}
-    <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-      <div className="px-4 py-3.5">
-        <h4 className="font-semibold text-white text-sm sm:text-base">CAT Ratings</h4>
-        <p className="text-xs text-white mt-0.5">Where you work determines the rating</p>
-      </div>
+    <div className="space-y-3">
+      <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">CAT Ratings</h2>
+      <p className="text-xs text-white px-0.5">Where you work determines the rating</p>
       {[
         {
           cat: 'CAT II',
-          accent: 'text-green-400',
-          dot: 'bg-green-400',
+          accent: 'bg-green-500/50',
+          titleColour: 'text-green-400',
           description: 'Equipment supplied from building wiring',
           examples: 'Appliances, portable tools, plug-in equipment',
         },
         {
           cat: 'CAT III',
-          accent: 'text-orange-400',
-          dot: 'bg-orange-400',
+          accent: 'bg-orange-500/50',
+          titleColour: 'text-orange-400',
           description: 'Part of building wiring',
           examples: 'Socket outlets, distribution boards, sub-mains',
         },
         {
           cat: 'CAT IV',
-          accent: 'text-red-400',
-          dot: 'bg-red-400',
+          accent: 'bg-red-500/50',
+          titleColour: 'text-red-400',
           description: 'At or near the origin of supply',
           examples: 'Building entrance to primary DB, meter tails',
         },
       ].map((entry) => (
-        <div key={entry.cat} className="flex items-center gap-3 px-4 py-3">
-          <div className={`w-2 h-2 rounded-full ${entry.dot} flex-shrink-0`} />
-          <div className="flex-1 min-w-0">
-            <span className={`text-sm font-bold ${entry.accent}`}>{entry.cat}</span>
-            <span className="text-sm text-white ml-2">{entry.description}</span>
-            <p className="text-xs text-white mt-0.5">{entry.examples}</p>
-          </div>
+        <div key={entry.cat} className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] p-4 overflow-hidden">
+          <div className={`absolute left-0 top-0 bottom-0 w-1 ${entry.accent} rounded-l-2xl`} />
+          <span className={`text-sm font-bold ${entry.titleColour} block`}>{entry.cat}</span>
+          <span className="text-sm text-white">{entry.description}</span>
+          <p className="text-xs text-white mt-0.5">{entry.examples}</p>
         </div>
       ))}
     </div>
 
     {/* CAT warning */}
-    <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-3.5">
+    <div className="relative rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-4 overflow-hidden">
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-yellow-500/50 rounded-l-2xl" />
       <div className="flex items-start gap-2">
         <AlertTriangle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
         <p className="text-xs text-white">

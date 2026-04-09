@@ -59,13 +59,6 @@ export const InvoiceSettingsStep = ({
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
           {/* Summary View Toggle */}
           <div className="flex items-center gap-3 p-4">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-              {settings?.showSummaryView ? (
-                <LayoutGrid className="h-5 w-5 text-black" />
-              ) : (
-                <LayoutList className="h-5 w-5 text-black" />
-              )}
-            </div>
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-white">Summary View</p>
               <p className="text-[12px] text-white">
@@ -95,9 +88,6 @@ export const InvoiceSettingsStep = ({
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
           {/* VAT Toggle Row */}
           <div className="flex items-center gap-3 p-4">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-              <Receipt className="h-5 w-5 text-black" />
-            </div>
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-white">VAT Registered</p>
               <p className="text-[12px] text-white">Add VAT to this invoice</p>
@@ -243,13 +233,7 @@ export const InvoiceSettingsStep = ({
 
               {/* Value Input */}
               <div className="flex items-center gap-3 p-3.5">
-                <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                  {(settings?.discountType || 'percentage') === 'percentage' ? (
-                    <Percent className="h-5 w-5 text-black" />
-                  ) : (
-                    <PoundSterling className="h-5 w-5 text-black" />
-                  )}
-                </div>
+                
                 <div className="flex-1 min-w-0">
                   <label className="text-[12px] text-white block">
                     {(settings?.discountType || 'percentage') === 'percentage'
@@ -279,9 +263,6 @@ export const InvoiceSettingsStep = ({
 
               {/* Label Input */}
               <div className="flex items-center gap-3 p-3.5">
-                <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                  <Settings className="h-5 w-5 text-black" />
-                </div>
                 <div className="flex-1 min-w-0">
                   <label className="text-[12px] text-white block">Label (shown on PDF)</label>
                   <input
@@ -307,9 +288,6 @@ export const InvoiceSettingsStep = ({
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
           {/* Payment Terms Select */}
           <div className="flex items-center gap-3 p-4">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-              <CalendarIcon className="h-5 w-5 text-black" />
-            </div>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Payment Terms</label>
               <Select
@@ -407,9 +385,6 @@ export const InvoiceSettingsStep = ({
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
           {/* Bank Name */}
           <div className="flex items-center gap-3 p-4">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-              <Building className="h-5 w-5 text-black" />
-            </div>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Bank Name</label>
               <input
@@ -528,9 +503,6 @@ export const InvoiceSettingsStep = ({
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
           <div className="flex items-start gap-3 p-4">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-              <FileText className="h-5 w-5 text-black" />
-            </div>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Notes (Optional)</label>
               <textarea

@@ -625,9 +625,6 @@ export const InvoiceItemsStep = ({
                 className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
-                    <Wrench className="h-5 w-5 text-black" />
-                  </div>
                   <div className="text-left">
                     <p className="text-[11px] text-white uppercase tracking-wide">Worker Type</p>
                     <p className="text-[15px] font-medium text-white">
@@ -701,9 +698,6 @@ export const InvoiceItemsStep = ({
                 className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
-                    <Package className="h-5 w-5 text-black" />
-                  </div>
                   <div className="text-left">
                     <p className="text-[11px] text-white uppercase tracking-wide">Category</p>
                     <p className="text-[15px] font-medium text-white">
@@ -771,9 +765,6 @@ export const InvoiceItemsStep = ({
                 className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
-                    <Zap className="h-5 w-5 text-black" />
-                  </div>
                   <div className="text-left">
                     <p className="text-[11px] text-white uppercase tracking-wide">Category</p>
                     <p className="text-[15px] font-medium text-white">
@@ -972,9 +963,6 @@ export const InvoiceItemsStep = ({
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <div className="w-7 h-7 rounded-lg bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                      {getCategoryIcon(item.category)}
-                    </div>
                     <p className="text-[13px] font-medium text-white truncate">
                       {item.description}
                     </p>

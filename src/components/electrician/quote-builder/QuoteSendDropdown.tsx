@@ -407,34 +407,21 @@ ${companyName}`;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant={isResendVariant ? 'default' : 'outline'}
-          size="sm"
+        <button
           disabled={disabled || isLoading}
           className={cn(
-            'flex-1 text-xs touch-manipulation',
+            'w-full h-12 rounded-xl text-[13px] font-medium touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50',
             isResendVariant
-              ? 'h-10 bg-amber-500 hover:bg-amber-600 text-black font-semibold gap-1.5'
-              : 'border border-elec-yellow/20 hover:bg-elec-yellow/10'
+              ? 'bg-amber-500/15 border border-amber-500/20 text-amber-400'
+              : 'bg-white/[0.06] border border-white/[0.1] text-white active:bg-white/[0.1]'
           )}
         >
-          {isLoading ? (
-            <>
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
-              {isSendingEmail ? 'Sending...' : 'Loading...'}
-            </>
-          ) : isResendVariant ? (
-            <>
-              <RefreshCw className="h-3.5 w-3.5" />
-              Resend Quote
-            </>
-          ) : (
-            <>
-              <Mail className="h-3 w-3" />
-              Send
-            </>
-          )}
-        </Button>
+          {isLoading
+            ? (isSendingEmail ? 'Sending...' : 'Loading...')
+            : isResendVariant
+              ? 'Resend'
+              : 'Send'}
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="center"

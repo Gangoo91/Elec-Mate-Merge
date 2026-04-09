@@ -10,7 +10,6 @@ import { QRCodeSVG } from 'qrcode.react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { openExternalUrl } from '@/utils/open-external-url';
 import {
   ShieldCheck,
   Copy,

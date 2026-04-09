@@ -1,220 +1,379 @@
-import React from 'react';
-import { Calculator, TrendingUp, AlertTriangle, CheckCircle2 } from 'lucide-react';
-import { ModernTableCard, DataGrid } from '@/components/ui/responsive-table';
+import React, { useState } from 'react';
+import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const InsulationTablesSection = () => (
-  <div className="space-y-6">
-    <ModernTableCard
-      title="BS 7671 Minimum Insulation Resistance Values"
-      icon={<Calculator />}
-      variant="info"
-    >
-      <div className="space-y-4">
-        <DataGrid
-          headers={['Circuit Voltage', 'Test Voltage', 'Min Resistance']}
-          rows={[
-            ['SELV (≤50V)', '250V DC', '0.5 MΩ'],
-            ['LV (50V-500V)', '500V DC', '1.0 MΩ'],
-            ['LV (500V-1000V)', '1000V DC', '1.0 MΩ'],
-          ]}
-        />
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
-        <DataGrid
-          headers={['Test Type', 'Duration']}
-          rows={[
-            ['Standard Test', '1 minute'],
-            ['Periodic Test', '1 minute'],
-            ['Initial Verification', '1 minute'],
-            ['Fault Investigation', 'As required'],
-          ]}
-        />
+interface Props {
+  onBack: () => void;
+}
 
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
-          <p className="text-yellow-400 font-medium text-sm">
-            <strong>Note:</strong> Reading must be stable for final 15 seconds
-          </p>
-        </div>
-      </div>
-    </ModernTableCard>
+const minimumValues = [
+  { circuit: 'SELV/PELV (\u226450V)', test: '250V DC', min: '0.25 M\u03a9' },
+  { circuit: 'Up to 500V (inc. 230V)', test: '500V DC', min: '0.5 M\u03a9' },
+  { circuit: 'Above 500V', test: '1000V DC', min: '1.0 M\u03a9' },
+];
 
-    <ModernTableCard title="Temperature Correction Factors" icon={<TrendingUp />} variant="success">
-      <div className="space-y-4">
-        <DataGrid
-          headers={['Temperature (°C)', 'Correction Factor']}
-          rows={[
-            ['0', '4.438'],
-            ['5', '2.105'],
-            ['10', '1.403'],
-            ['15', '1.184'],
-            ['20', '1.000'],
-            ['25', '0.847'],
-            ['30', '0.718'],
-            ['35', '0.609'],
-            ['40', '0.516'],
-          ]}
-        />
+const testDurations = [
+  { type: 'Standard Test', duration: '1 minute' },
+  { type: 'Periodic Test', duration: '1 minute' },
+  { type: 'Initial Verification', duration: '1 minute' },
+  { type: 'Fault Investigation', duration: 'As required' },
+];
 
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="font-medium text-foreground mb-3">Correction Formula:</h5>
-          <div className="bg-muted rounded-lg p-3 text-sm space-y-2">
-            <p className="font-mono text-foreground">R₂₀ = R_measured × 1.07^(20-T_measured)</p>
-            <div className="text-muted-foreground space-y-1">
-              <p>
-                <strong>Where:</strong>
-              </p>
-              <p>• R₂₀ = Resistance corrected to 20°C</p>
-              <p>• R_measured = Actual measured resistance</p>
-              <p>• T_measured = Temperature during test</p>
-              <p>• 1.07 = Temperature coefficient for typical insulation</p>
-            </div>
-            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-2 mt-3">
-              <p className="text-yellow-400 font-medium text-sm">
-                <strong>Example:</strong> 500MΩ at 5°C = 500 × 0.475 = 238MΩ at 20°C
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ModernTableCard>
+const correctionFactors = [
+  { temp: '0', factor: '4.438' },
+  { temp: '5', factor: '2.105' },
+  { temp: '10', factor: '1.403' },
+  { temp: '15', factor: '1.184' },
+  { temp: '20', factor: '1.000' },
+  { temp: '25', factor: '0.847' },
+  { temp: '30', factor: '0.718' },
+  { temp: '35', factor: '0.609' },
+  { temp: '40', factor: '0.516' },
+];
 
-    <ModernTableCard
-      title="Typical Insulation Resistance Values"
-      icon={<CheckCircle2 />}
-      variant="info"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="font-medium text-foreground mb-3">New Installations</h5>
-          <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Typical readings:</p>
-            <div className="space-y-1">
-              <p>• New PVC cables: &gt; 999MΩ</p>
-              <p>• XLPE cables: &gt; 999MΩ</p>
-              <p>• Rubber cables: 100-999MΩ</p>
-              <p>• MICC cables: &gt; 999MΩ</p>
-            </div>
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-2 mt-3">
-              <p className="text-green-400 font-medium text-sm">All should exceed 1.0MΩ minimum</p>
-            </div>
-          </div>
-        </div>
+const typicalNewItems = [
+  'New PVC cables: > 999M\u03a9',
+  'XLPE cables: > 999M\u03a9',
+  'Rubber cables: 100\u2013999M\u03a9',
+  'MICC cables: > 999M\u03a9',
+];
 
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="font-medium text-foreground mb-3">Aged Installations</h5>
-          <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Acceptable ranges:</p>
-            <div className="space-y-1">
-              <p>• 10-20 years: 10-100MΩ</p>
-              <p>• 20-30 years: 2-50MΩ</p>
-              <p>• 30+ years: 1-10MΩ</p>
-              <p>• Damp conditions: 0.5-5MΩ</p>
-            </div>
-            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-2 mt-3">
-              <p className="text-yellow-400 font-medium text-sm">Must still meet 1.0MΩ minimum</p>
-            </div>
-          </div>
-        </div>
+const typicalAgedItems = [
+  '10\u201320 years: 10\u2013100M\u03a9',
+  '20\u201330 years: 2\u201350M\u03a9',
+  '30+ years: 1\u201310M\u03a9',
+  'Damp conditions: 0.5\u20135M\u03a9',
+];
 
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="font-medium text-foreground mb-3">Problem Indicators</h5>
-          <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Investigation required:</p>
-            <div className="space-y-1">
-              <p>• &lt; 1.0MΩ (new installation)</p>
-              <p>• &lt; 0.5MΩ (existing installation)</p>
-              <p>• Rapidly declining readings</p>
-              <p>• Inconsistent phase readings</p>
-            </div>
-            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-2 mt-3">
-              <p className="text-red-400 font-medium text-sm">May indicate insulation failure</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ModernTableCard>
+const problemItems = [
+  '< 1.0M\u03a9 on a new installation',
+  '< 0.5M\u03a9 on an existing installation',
+  'Rapidly declining readings over time',
+  'Inconsistent phase-to-phase readings',
+];
 
-    <ModernTableCard
-      title="Environmental Factors Affecting Results"
-      icon={<AlertTriangle />}
-      variant="warning"
-    >
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card border border-border rounded-lg p-4">
-            <h5 className="font-medium text-foreground mb-3">Temperature Effects</h5>
-            <div className="space-y-2 text-sm">
-              <p>
-                • <strong>Cold weather:</strong> Increases resistance readings
-              </p>
-              <p>
-                • <strong>Hot weather:</strong> Decreases resistance readings
-              </p>
-              <p>
-                • <strong>Correction needed:</strong> When test temperature ≠ 20°C
-              </p>
-              <p>
-                • <strong>Seasonal variation:</strong> Can be 10:1 ratio winter to summer
-              </p>
-              <p>
-                • <strong>Thermal cycling:</strong> Affects cable ageing rate
-              </p>
-            </div>
-          </div>
+const benchmarkItems = [
+  { label: 'New installation typical', value: '> 200M\u03a9', colour: 'text-green-400' },
+  { label: 'Aged installation acceptable', value: '> 2M\u03a9', colour: 'text-amber-400' },
+  { label: 'Investigate below', value: '< 1M\u03a9', colour: 'text-red-400' },
+];
 
-          <div className="bg-card border border-border rounded-lg p-4">
-            <h5 className="font-medium text-foreground mb-3">Humidity & Contamination</h5>
-            <div className="space-y-2 text-sm">
-              <p>
-                • <strong>High humidity:</strong> Reduces surface resistance
-              </p>
-              <p>
-                • <strong>Condensation:</strong> Can cause very low readings
-              </p>
-              <p>
-                • <strong>Dirt/dust:</strong> Creates conductive paths
-              </p>
-              <p>
-                • <strong>Salt contamination:</strong> Particularly problematic
-              </p>
-              <p>
-                • <strong>Chemical exposure:</strong> Degrades insulation materials
-              </p>
-            </div>
-          </div>
-        </div>
+const environmentalTempItems = [
+  'Cold weather increases resistance readings (flattering result)',
+  'Hot weather decreases resistance readings (harsher result)',
+  'Correction needed when test temperature \u2260 20\u00b0C',
+  'Seasonal variation can be 10:1 ratio winter to summer',
+  'Thermal cycling over years affects cable ageing rate',
+];
 
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
-          <h5 className="font-medium text-red-400 mb-3">Test Conditions Best Practice</h5>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div>
-              <h6 className="font-medium text-foreground mb-2">Before Testing:</h6>
-              <div className="space-y-1">
-                <p>• Allow cables to reach ambient temperature</p>
-                <p>• Clean terminations and connections</p>
-                <p>• Check for visible moisture or contamination</p>
-              </div>
-            </div>
-            <div>
-              <h6 className="font-medium text-foreground mb-2">During Testing:</h6>
-              <div className="space-y-1">
-                <p>• Record ambient temperature</p>
-                <p>• Note humidity conditions</p>
-                <p>• Apply test voltage for full duration</p>
-              </div>
-            </div>
-            <div>
-              <h6 className="font-medium text-foreground mb-2">After Testing:</h6>
-              <div className="space-y-1">
-                <p>• Apply temperature correction</p>
-                <p>• Consider environmental factors</p>
-                <p>• Document any unusual conditions</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ModernTableCard>
+const environmentalHumidityItems = [
+  'High humidity reduces surface resistance',
+  'Condensation can cause very low readings',
+  'Dirt and dust create conductive paths',
+  'Salt contamination is particularly problematic',
+  'Chemical exposure degrades insulation materials',
+];
+
+const beforeTestingItems = [
+  'Allow cables to reach ambient temperature',
+  'Clean terminations and connections',
+  'Check for visible moisture or contamination',
+];
+
+const duringTestingItems = [
+  'Record ambient temperature',
+  'Note humidity conditions',
+  'Apply test voltage for full 1 minute duration',
+];
+
+const afterTestingItems = [
+  'Apply temperature correction if not at 20\u00b0C',
+  'Consider environmental factors in assessment',
+  'Document any unusual conditions',
+];
+
+const Bullet = ({ text, accent = 'white' }: { text: string; accent?: string }) => (
+  <div className="flex gap-2">
+    <div className={`w-1 h-1 rounded-full bg-${accent}/60 mt-2 shrink-0`} />
+    <p className="text-[13px] text-white leading-relaxed">{text}</p>
   </div>
 );
+
+const InsulationTablesSection = ({ onBack }: Props) => {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  const toggle = (id: string) => setExpanded((prev) => (prev === id ? null : id));
+
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">IR Values & Tables</h1>
+          </div>
+        </div>
+      </div>
+
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+        {/* BS 7671 Minimum Values */}
+        <motion.div variants={itemVariants}>
+          <div className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-emerald-500/50" />
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500/50 rounded-l-2xl" />
+            <div className="p-4">
+              <p className="text-[15px] font-bold text-emerald-400 mb-3">BS 7671 Minimum Insulation Resistance (Table 61)</p>
+              <div className="rounded-xl bg-white/[0.05] overflow-hidden">
+                <table className="w-full text-[13px]">
+                  <thead>
+                    <tr className="border-b border-white/[0.08]">
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Circuit Voltage</th>
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Test Voltage</th>
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Min IR</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.06]">
+                    {minimumValues.map((row, i) => (
+                      <tr key={i}>
+                        <td className="px-3 py-2.5 text-white">{row.circuit}</td>
+                        <td className="px-3 py-2.5 text-white">{row.test}</td>
+                        <td className="px-3 py-2.5 text-white font-semibold">{row.min}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-3 rounded-xl bg-white/[0.05] overflow-hidden">
+                <table className="w-full text-[13px]">
+                  <thead>
+                    <tr className="border-b border-white/[0.08]">
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Test Type</th>
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Duration</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.06]">
+                    {testDurations.map((row, i) => (
+                      <tr key={i}>
+                        <td className="px-3 py-2.5 text-white">{row.type}</td>
+                        <td className="px-3 py-2.5 text-white">{row.duration}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-[11px] text-amber-400 font-medium mt-3">Note: Reading must be stable for final 15 seconds</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Quick Benchmarks */}
+        <motion.div variants={itemVariants}>
+          <div className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-emerald-500/50" />
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500/50 rounded-l-2xl" />
+            <div className="p-4">
+              <p className="text-[15px] font-bold text-emerald-400 mb-3">Quick Benchmarks</p>
+              <div className="rounded-xl bg-white/[0.05] overflow-hidden">
+                <table className="w-full text-[13px]">
+                  <thead>
+                    <tr className="border-b border-white/[0.08]">
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Condition</th>
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Value</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.06]">
+                    {benchmarkItems.map((row, i) => (
+                      <tr key={i}>
+                        <td className="px-3 py-2.5 text-white">{row.label}</td>
+                        <td className={`px-3 py-2.5 font-semibold ${row.colour}`}>{row.value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Temperature Correction Factors */}
+        <motion.div variants={itemVariants}>
+          <div className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-emerald-500/50" />
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500/50 rounded-l-2xl" />
+            <div className="p-4">
+              <p className="text-[15px] font-bold text-emerald-400 mb-3">Temperature Correction Factors</p>
+              <div className="rounded-xl bg-white/[0.05] overflow-hidden">
+                <table className="w-full text-[13px]">
+                  <thead>
+                    <tr className="border-b border-white/[0.08]">
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Temperature (\u00b0C)</th>
+                      <th className="px-3 py-2.5 text-left text-[11px] font-medium text-white uppercase tracking-wider">Correction Factor</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/[0.06]">
+                    {correctionFactors.map((row, i) => (
+                      <tr key={i} className={row.temp === '20' ? 'bg-emerald-500/10' : ''}>
+                        <td className={`px-3 py-2.5 text-white ${row.temp === '20' ? 'font-semibold' : ''}`}>{row.temp}\u00b0C</td>
+                        <td className={`px-3 py-2.5 text-white ${row.temp === '20' ? 'font-semibold' : ''}`}>{row.factor}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-3 rounded-xl bg-white/[0.05] p-3 space-y-3">
+                <div>
+                  <p className="text-[13px] font-semibold text-white mb-1">Correction Formula</p>
+                  <p className="text-[13px] font-mono text-emerald-400">R&#x2082;&#x2080; = R_measured \u00d7 1.07^(20\u2013T)</p>
+                </div>
+                <div className="h-px bg-white/[0.06]" />
+                <div className="space-y-2">
+                  <Bullet text="R\u2082\u2080 = Resistance corrected to 20\u00b0C" accent="emerald-400" />
+                  <Bullet text="R_measured = Actual measured resistance" accent="emerald-400" />
+                  <Bullet text="T = Temperature during test (\u00b0C)" accent="emerald-400" />
+                  <Bullet text="1.07 = Temperature coefficient for typical insulation" accent="emerald-400" />
+                </div>
+                <p className="text-[11px] text-amber-400 font-medium">Example: 500M\u03a9 at 5\u00b0C = 500 \u00d7 0.475 = 238M\u03a9 at 20\u00b0C</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Typical Values */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-emerald-400 uppercase tracking-wider px-0.5 mb-2">Typical Insulation Resistance Values</p>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="grid grid-cols-1 gap-3">
+          {/* New Installations */}
+          <div className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] overflow-hidden p-4">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/50 rounded-l-2xl" />
+            <p className="text-[13px] font-semibold text-green-400 mb-2">New Installations</p>
+            <div className="space-y-2">
+              {typicalNewItems.map((item, i) => (
+                <Bullet key={i} text={item} accent="green-400" />
+              ))}
+            </div>
+            <p className="text-[11px] text-green-400 font-medium mt-2">Typical new install: {'>'} 200M\u03a9 per circuit</p>
+          </div>
+
+          {/* Aged Installations */}
+          <div className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] overflow-hidden p-4">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/50 rounded-l-2xl" />
+            <p className="text-[13px] font-semibold text-amber-400 mb-2">Aged Installations</p>
+            <div className="space-y-2">
+              {typicalAgedItems.map((item, i) => (
+                <Bullet key={i} text={item} accent="amber-400" />
+              ))}
+            </div>
+            <p className="text-[11px] text-amber-400 font-medium mt-2">Acceptable if {'>'} 2M\u03a9 with stable readings</p>
+          </div>
+
+          {/* Problem Indicators */}
+          <div className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] overflow-hidden p-4">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500/50 rounded-l-2xl" />
+            <p className="text-[13px] font-semibold text-red-400 mb-2">Problem Indicators</p>
+            <div className="space-y-2">
+              {problemItems.map((item, i) => (
+                <Bullet key={i} text={item} accent="red-400" />
+              ))}
+            </div>
+            <p className="text-[11px] text-red-400 font-medium mt-2">Investigate any reading below 1M\u03a9</p>
+          </div>
+        </motion.div>
+
+        {/* Environmental Factors */}
+        <motion.div variants={itemVariants}>
+          <button
+            type="button"
+            onClick={() => toggle('environmental')}
+            className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
+          >
+            <div className={`relative rounded-2xl bg-white/[0.07] border ${expanded === 'environmental' ? 'border-amber-500/20' : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-amber-500/50" />
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/50 rounded-l-2xl" />
+              <div className="p-4 flex items-center gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[15px] font-bold text-amber-400">Environmental Factors Affecting Results</p>
+                </div>
+                <motion.div animate={{ rotate: expanded === 'environmental' ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                  <ChevronDown className="h-4 w-4 text-white shrink-0" />
+                </motion.div>
+              </div>
+            </div>
+          </button>
+          <AnimatePresence>
+            {expanded === 'environmental' && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="overflow-hidden"
+              >
+                <div className="pt-2 px-1 pb-1 space-y-3">
+                  <div className="h-px bg-white/[0.06]" />
+                  <div className="rounded-xl bg-white/[0.05] p-3">
+                    <p className="text-[13px] font-semibold text-amber-400 mb-2">Temperature Effects</p>
+                    <div className="space-y-2">
+                      {environmentalTempItems.map((item, i) => (
+                        <Bullet key={i} text={item} accent="amber-400" />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="rounded-xl bg-white/[0.05] p-3">
+                    <p className="text-[13px] font-semibold text-amber-400 mb-2">Humidity & Contamination</p>
+                    <div className="space-y-2">
+                      {environmentalHumidityItems.map((item, i) => (
+                        <Bullet key={i} text={item} accent="amber-400" />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="rounded-xl bg-white/[0.05] p-3 space-y-3">
+                    <p className="text-[13px] font-semibold text-red-400">Test Conditions Best Practice</p>
+                    <div>
+                      <p className="text-[13px] font-semibold text-white mb-1.5">Before Testing</p>
+                      <div className="space-y-2">
+                        {beforeTestingItems.map((item, i) => (
+                          <Bullet key={i} text={item} accent="white" />
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[13px] font-semibold text-white mb-1.5">During Testing</p>
+                      <div className="space-y-2">
+                        {duringTestingItems.map((item, i) => (
+                          <Bullet key={i} text={item} accent="white" />
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-[13px] font-semibold text-white mb-1.5">After Testing</p>
+                      <div className="space-y-2">
+                        {afterTestingItems.map((item, i) => (
+                          <Bullet key={i} text={item} accent="white" />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+};
 
 export default InsulationTablesSection;

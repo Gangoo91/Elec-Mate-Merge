@@ -222,8 +222,6 @@ serve(async (req) => {
   }
 
   try {
-    console.log('[PDF-MONKEY] Request started');
-
     // Verify PDF Monkey API key is configured
     if (!PDFMONKEY_API_KEY) {
       console.error('[PDF-MONKEY] API key not configured');
@@ -244,11 +242,6 @@ serve(async (req) => {
       mode,
       force_regenerate,
     } = await req.json();
-    console.log(
-      '[PDF-MONKEY] Received request - Mode:',
-      invoice_mode ? 'invoice' : briefing_mode ? 'briefing' : requestDocumentId ? 'status' : 'quote'
-    );
-
     // Use data passed directly from the update - it's already fresh from database
     // No need to re-fetch - the quote passed in is returned immediately after transaction commits
     const freshQuote = quote;
@@ -262,8 +255,6 @@ serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
-
-    console.log('[PDF-MONKEY] Using data passed from client (fresh from database update)');
 
     // Status-only polling mode: skip creation and just check an existing document
     if (requestDocumentId && (mode === 'status' || (!quote && !briefing))) {
@@ -320,16 +311,6 @@ serve(async (req) => {
     }
 
     if (briefing_mode) {
-      console.log('[PDF-MONKEY] Briefing data:', {
-        title: briefing?.briefing_name,
-        date: briefing?.briefing_date,
-        location: briefing?.location,
-        hasDescription: !!briefing?.briefing_description,
-        hasHazards: !!briefing?.hazards,
-        hasWarning: !!briefing?.safety_warning,
-        photosCount: (briefing?.photos || []).length,
-      });
-
       if (!briefing || !briefing.briefing_name) {
         console.error('[PDF-MONKEY] Invalid briefing data - missing required fields');
         return new Response(
@@ -344,9 +325,6 @@ serve(async (req) => {
         );
       }
     } else {
-      console.log('[PDF-MONKEY] Quote/Invoice items count:', freshQuote?.items?.length || 0);
-      console.log('[PDF-MONKEY] Settings:', JSON.stringify(freshQuote?.settings, null, 2));
-
       if (!freshQuote) {
         return new Response(JSON.stringify({ error: 'Quote/Invoice data is required' }), {
           status: 400,
@@ -362,20 +340,8 @@ serve(async (req) => {
       TEMPLATE_ID =
         BRIEFING_TEMPLATES[briefingType as keyof typeof BRIEFING_TEMPLATES] ||
         BRIEFING_TEMPLATES['general'];
-      console.log(
-        '[PDF-MONKEY] Using briefing template for type:',
-        briefingType,
-        'Template ID:',
-        TEMPLATE_ID
-      );
     } else {
       TEMPLATE_ID = invoice_mode ? INVOICE_TEMPLATE_ID : QUOTE_TEMPLATE_ID;
-      console.log(
-        '[PDF-MONKEY] Using template:',
-        TEMPLATE_ID,
-        'for',
-        invoice_mode ? 'invoice' : 'quote'
-      );
     }
 
     // Transform data based on mode
@@ -480,13 +446,6 @@ serve(async (req) => {
       };
 
       payload = transformedBriefing;
-      console.log('[PDF-MONKEY] Transformed briefing payload with structured data:', {
-        hasBriefingOverview: !!transformedBriefing.briefing_overview.paragraphs?.length,
-        hazardsCount: transformedBriefing.hazards_and_controls.count,
-        safetyWarningLevel: transformedBriefing.safety_warning.level,
-        equipmentCount: transformedBriefing.equipment_required.length,
-        regulationsCount: transformedBriefing.key_regulations.length,
-      });
     } else if (invoice_mode) {
       // Transform to invoice format - USE FRESH DATA
       // Use bank details from invoice settings first, fallback to company profile
@@ -514,21 +473,6 @@ serve(async (req) => {
         payment_terms: freshQuote?.settings?.paymentTerms || '30 days',
         company_registration: freshCompanyProfile?.company_registration || '',
       };
-
-      console.log('[PDF-MONKEY] Bank details for invoice:', {
-        source: quote?.settings?.bankDetails ? 'invoice settings' : 'company profile',
-        account_name: transformedCompanyProfile.account_name,
-        account_number: transformedCompanyProfile.account_number,
-        sort_code: transformedCompanyProfile.sort_code,
-      });
-
-      // DEBUG: Log raw client data to diagnose update issues
-      console.log('[PDF-MONKEY] Raw client data sources:', {
-        'freshQuote.client': freshQuote?.client,
-        'freshQuote.client_data': freshQuote?.client_data,
-        hasClient: !!freshQuote?.client,
-        hasClientData: !!freshQuote?.client_data,
-      });
 
       // Use client_data from database (snake_case) as primary source since that's what's saved
       const clientData = freshQuote?.client_data || freshQuote?.client || {};
@@ -575,7 +519,6 @@ serve(async (req) => {
             unitPrice: categoryTotals[category],
           }));
 
-        console.log('[PDF-MONKEY] Summary view enabled - grouped items:', processedItems.length);
       } else {
         // Detailed view: Show all items individually
         processedItems = (freshQuote?.items || []).map((item: any) => ({
@@ -637,17 +580,6 @@ serve(async (req) => {
         showSummaryView: showSummaryView,
       };
 
-      console.log(
-        '[PDF-MONKEY] Transformed invoice client:',
-        JSON.stringify(transformedInvoice.client, null, 2)
-      );
-      console.log(
-        '[PDF-MONKEY] Transformed invoice items:',
-        transformedInvoice.items.length,
-        'items'
-      );
-      console.log('[PDF-MONKEY] Items detail:', JSON.stringify(transformedInvoice.items, null, 2));
-
       // Calculate totals from items
       const itemsSubtotal = transformedInvoice.items.reduce(
         (sum, item) => sum + item.quantity * item.unitPrice,
@@ -677,15 +609,6 @@ serve(async (req) => {
         ? invNetAfterDiscount * ((settings.vatRate || 20) / 100)
         : 0;
       const total = invNetAfterDiscount + vatAmount;
-
-      console.log('[PDF-MONKEY] Recalculated totals:', {
-        itemsSubtotal,
-        overhead,
-        profit,
-        vatAmount,
-        total,
-        originalTotal: freshQuote?.total,
-      });
 
       payload = {
         companyProfile: transformedCompanyProfile,
@@ -739,34 +662,12 @@ serve(async (req) => {
         _generated_at: new Date().toISOString(),
       };
 
-      console.log('[PDF-MONKEY] Transformed invoice payload for template');
     } else {
-      // DEBUG: Log raw input data to diagnose missing fields
-      console.log('[PDF-MONKEY] RAW freshQuote:', JSON.stringify(freshQuote, null, 2));
-      console.log(
-        '[PDF-MONKEY] RAW freshCompanyProfile:',
-        JSON.stringify(freshCompanyProfile, null, 2)
-      );
-      console.log(
-        '[PDF-MONKEY] freshQuote.items type:',
-        typeof freshQuote?.items,
-        'isArray:',
-        Array.isArray(freshQuote?.items)
-      );
-      console.log('[PDF-MONKEY] freshQuote.items length:', freshQuote?.items?.length || 0);
-      console.log('[PDF-MONKEY] freshCompanyProfile.logo_url:', freshCompanyProfile?.logo_url);
-
       // Get items from quote - handle both camelCase and snake_case
       const quoteItems = freshQuote?.items || [];
       const jobDetails = freshQuote?.jobDetails || freshQuote?.job_details || {};
       const clientData = freshQuote?.client || freshQuote?.client_data || {};
       const quoteSettings = freshQuote?.settings || {};
-
-      console.log('[PDF-MONKEY] Extracted quoteItems:', quoteItems.length, 'items');
-      console.log(
-        '[PDF-MONKEY] First item (if any):',
-        quoteItems[0] ? JSON.stringify(quoteItems[0]) : 'NONE'
-      );
 
       // Transform items to ensure consistent format for PDF template
       const transformedItems = quoteItems.map((item: any) => ({
@@ -840,19 +741,6 @@ serve(async (req) => {
         freshQuote?.created_at || freshQuote?.createdAt
           ? new Date(freshQuote.created_at || freshQuote.createdAt)
           : new Date();
-
-      console.log('[PDF-MONKEY] Quote items breakdown:', {
-        total: transformedItems.length,
-        labour: labourItems.length,
-        materials: materialItems.length,
-        equipment: equipmentItems.length,
-        manual: manualItems.length,
-        itemsSubtotal,
-        overhead,
-        profit,
-        vatAmount,
-        total,
-      });
 
       payload = {
         // Company details
@@ -985,21 +873,20 @@ serve(async (req) => {
         // VAT settings
         useVat: quoteSettings.vatRegistered === true,
         vatRate: quoteSettings.vatRate || 20,
+        // Linked certificate (if quote was created from an EICR/EIC/Minor Works cert)
+        linkedCertificate: (freshQuote?.linked_certificate_id || freshQuote?.linked_certificate_type)
+          ? {
+              id: freshQuote?.linked_certificate_id || null,
+              type: freshQuote?.linked_certificate_type || null,
+              reference: freshQuote?.linked_certificate_reference || null,
+              pdfUrl: freshQuote?.linked_certificate_pdf_url || null,
+            }
+          : null,
         // Cache busting timestamp
         _cache_bust: Date.now(),
         _generated_at: new Date().toISOString(),
       };
-      console.log('[PDF-MONKEY] Quote payload prepared:', {
-        hasLogo: !!payload.companyProfile.logo_url,
-        hasClient: !!payload.client.name,
-        hasJobTitle: !!payload.jobDetails.title,
-        itemsCount: payload.items.length,
-        total: payload.totals.total,
-        termsCount: payload.terms.length,
-      });
     }
-
-    console.log('[PDF-MONKEY] Calling PDF Monkey API');
 
     // Call PDF Monkey API
     const pdfMonkeyResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
@@ -1034,7 +921,6 @@ serve(async (req) => {
     }
 
     const pdfData = await pdfMonkeyResponse.json();
-    console.log('[PDF-MONKEY] PDF generation initiated, document ID:', pdfData.document?.id);
 
     // Poll for document completion (PDF Monkey processes async)
     const createdDocumentId = pdfData.document?.id;
@@ -1057,7 +943,6 @@ serve(async (req) => {
       if (statusResponse.ok) {
         const statusData = await statusResponse.json();
         documentStatus = statusData.document?.status;
-        console.log('[PDF-MONKEY] Status check attempt', attempts + 1, '- Status:', documentStatus);
 
         if (documentStatus === 'success') {
           return new Response(
@@ -1087,7 +972,6 @@ serve(async (req) => {
     }
 
     // Timeout - return document ID for manual status checking
-    console.log('[PDF-MONKEY] Timeout waiting for PDF, returning document ID');
     return new Response(
       JSON.stringify({
         success: false,

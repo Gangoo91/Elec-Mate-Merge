@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, createElement } from 'react';
+import { useState, useCallback, useEffect, useRef, createElement } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings, JobDetails } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from '@/hooks/use-toast';
@@ -50,21 +50,11 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   }, [quote.quoteNumber]);
 
   const updateClient = useCallback((client: QuoteClient) => {
-    console.log('updateClient called with:', client);
-    setQuote((prev) => {
-      const updated = { ...prev, client, updatedAt: new Date() };
-      console.log('Quote updated to:', updated);
-      return updated;
-    });
+    setQuote((prev) => ({ ...prev, client, updatedAt: new Date() }));
   }, []);
 
   const updateJobDetails = useCallback((jobDetails: JobDetails) => {
-    console.log('updateJobDetails called with:', jobDetails);
-    setQuote((prev) => {
-      const updated = { ...prev, jobDetails, updatedAt: new Date() };
-      console.log('Quote updated to:', updated);
-      return updated;
-    });
+    setQuote((prev) => ({ ...prev, jobDetails, updatedAt: new Date() }));
   }, []);
 
   const updateSettings = useCallback((settings: QuoteSettings) => {
@@ -110,70 +100,133 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     }));
   }, []);
 
-  const processItemsForDisplay = useCallback(
-    (items: QuoteItem[], settings: QuoteSettings): QuoteItem[] => {
-      if (!settings.showMaterialsBreakdown) {
-        // Group all materials into one line
-        const materialsItems = items.filter((item) => item.category === 'materials');
-        const nonMaterialsItems = items.filter((item) => item.category !== 'materials');
-
-        if (materialsItems.length > 0) {
-          const totalMaterialsCost = materialsItems.reduce((sum, item) => sum + item.totalPrice, 0);
-
-          const groupedMaterial: QuoteItem = {
-            id: 'materials-grouped',
-            description: 'Materials & Supplies',
-            quantity: 1,
-            unit: 'lot',
-            unitPrice: totalMaterialsCost,
-            totalPrice: totalMaterialsCost,
-            category: 'materials',
-            notes: `Includes ${materialsItems.length} items`,
-          };
-
-          return [...nonMaterialsItems, groupedMaterial];
-        }
-      }
-
-      return items; // Return as-is if breakdown enabled
-    },
-    []
-  );
-
   const calculateTotals = useCallback(() => {
-    if (!quote.items || !quote.settings) return quote;
+    const items = quote.items || [];
+    const settings = quote.settings;
 
-    // Process items based on materials breakdown setting
-    const displayItems = processItemsForDisplay(quote.items, quote.settings);
+    // Always use raw items in state — grouping is only for PDF/display, not for state management
+    // This ensures removeItem/updateItem always work on real item IDs
+    const subtotal = items.reduce((sum, item) => {
+      const price = typeof item.totalPrice === 'number' ? item.totalPrice : (item.quantity || 0) * (item.unitPrice || 0);
+      return sum + price;
+    }, 0);
 
-    // Calculate subtotal - profit and overhead are now built into unit prices
-    const subtotal = displayItems.reduce((sum, item) => sum + item.totalPrice, 0);
-
-    // Discount/deduction (CIS, OAP, etc.)
-    const discountAmount = quote.settings.discountEnabled
-      ? quote.settings.discountType === 'percentage'
-        ? subtotal * ((quote.settings.discountValue || 0) / 100)
-        : Math.min(quote.settings.discountValue || 0, subtotal)
+    // Discount/deduction — only if settings configured
+    const discountAmount = settings?.discountEnabled
+      ? settings.discountType === 'percentage'
+        ? subtotal * ((settings.discountValue || 0) / 100)
+        : Math.min(settings.discountValue || 0, subtotal)
       : 0;
     const netAfterDiscount = subtotal - discountAmount;
 
     // VAT applies AFTER discount (CIS-correct: HMRC says VAT on net amount)
-    const vatAmount = quote.settings.vatRegistered
-      ? netAfterDiscount * (quote.settings.vatRate / 100)
+    const vatRate = settings?.vatRate ?? 20;
+    const vatAmount = settings?.vatRegistered
+      ? netAfterDiscount * (vatRate / 100)
       : 0;
     const total = netAfterDiscount + vatAmount;
 
     return {
       ...quote,
-      items: displayItems,
+      items,
       subtotal,
-      overhead: 0, // No longer calculated separately
-      profit: 0, // No longer calculated separately
+      overhead: 0,
+      profit: 0,
       discountAmount,
       vatAmount,
       total,
     };
-  }, [quote, processItemsForDisplay]);
+  }, [quote]);
+
+  // Cloud auto-save — upserts draft to Supabase every 10s when data changes
+  const lastSavedRef = useRef<string>('');
+  const [cloudSaveStatus, setCloudSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+
+  useEffect(() => {
+    if (!quote.client?.name && (!quote.items || quote.items.length === 0)) return;
+
+    const timer = setInterval(async () => {
+      const snapshot = JSON.stringify({ client: quote.client, jobDetails: quote.jobDetails, items: quote.items, settings: quote.settings });
+      if (snapshot === lastSavedRef.current) return; // No changes
+
+      try {
+        setCloudSaveStatus('saving');
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const finalQuote = calculateTotals();
+        const dbData: Record<string, unknown> = {
+          id: quote.id,
+          user_id: user.id,
+          quote_number: quote.quoteNumber || null,
+          client_data: quote.client || {},
+          job_details: quote.jobDetails || {},
+          items: quote.items || [],
+          settings: quote.settings || { vatRate: 20, vatRegistered: false },
+          subtotal: finalQuote.subtotal || 0,
+          overhead: 0,
+          profit: 0,
+          discount_amount: finalQuote.discountAmount || 0,
+          vat_amount: finalQuote.vatAmount || 0,
+          total: finalQuote.total || 0,
+          status: 'draft',
+          notes: quote.notes || null,
+          updated_at: new Date().toISOString(),
+        };
+
+        // Only set created_at and expiry on first save
+        if (!lastSavedRef.current) {
+          dbData.created_at = new Date().toISOString();
+          dbData.expiry_date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+        }
+
+        const { error } = await supabase.from('quotes').upsert(dbData, { onConflict: 'id' });
+        if (error) throw error;
+
+        lastSavedRef.current = snapshot;
+        setCloudSaveStatus('saved');
+      } catch (err) {
+        console.warn('[QuoteBuilder] Cloud auto-save failed:', err);
+        setCloudSaveStatus('error');
+      }
+    }, 10000);
+
+    return () => clearInterval(timer);
+  }, [quote, calculateTotals]);
+
+  // Also save on unmount (beforeunload)
+  useEffect(() => {
+    const handleBeforeUnload = async () => {
+      if (!quote.client?.name) return;
+      const snapshot = JSON.stringify({ client: quote.client, jobDetails: quote.jobDetails, items: quote.items, settings: quote.settings });
+      if (snapshot === lastSavedRef.current) return;
+
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const finalQuote = calculateTotals();
+      await supabase.from('quotes').upsert({
+        id: quote.id,
+        user_id: user.id,
+        quote_number: quote.quoteNumber || null,
+        client_data: quote.client || {},
+        job_details: quote.jobDetails || {},
+        items: quote.items || [],
+        settings: quote.settings || { vatRate: 20, vatRegistered: false },
+        subtotal: finalQuote.subtotal || 0,
+        overhead: 0,
+        profit: 0,
+        discount_amount: finalQuote.discountAmount || 0,
+        vat_amount: finalQuote.vatAmount || 0,
+        total: finalQuote.total || 0,
+        status: 'draft',
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'id' });
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [quote, calculateTotals]);
 
   const nextStep = useCallback(() => {
     setCurrentStep((prev) => Math.min(prev + 1, 2));
@@ -214,43 +267,13 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     try {
       const finalQuote = calculateTotals();
 
-      // Validate quote before generation
-      if (
-        !finalQuote.client ||
-        !finalQuote.items ||
-        finalQuote.items.length === 0 ||
-        !finalQuote.settings
-      ) {
-        logger.warn('Quote validation failed', {
-          hasClient: !!finalQuote.client,
-          hasJobDetails: !!finalQuote.jobDetails,
-          itemCount: finalQuote.items?.length || 0,
-          hasSettings: !!finalQuote.settings,
-        });
-        toast({
-          title: 'Cannot Generate Quote',
-          description: 'Please complete all required fields before generating the quote.',
-          variant: 'destructive',
-        });
+      // Validate quote before generation — only require client name and at least one item
+      if (!finalQuote.client?.name) {
+        toast({ title: 'Missing Client', description: 'Please enter a client name.', variant: 'destructive' });
         return;
       }
-
-      // Validate job details
-      if (
-        !finalQuote.jobDetails ||
-        !finalQuote.jobDetails.title ||
-        !finalQuote.jobDetails.description
-      ) {
-        logger.warn('Quote job details validation failed', {
-          hasJobDetails: !!finalQuote.jobDetails,
-          hasTitle: !!finalQuote.jobDetails?.title,
-          hasDescription: !!finalQuote.jobDetails?.description,
-        });
-        toast({
-          title: 'Missing Job Details',
-          description: 'Please complete the Job Title and Job Description in the Job Details step.',
-          variant: 'destructive',
-        });
+      if (!finalQuote.items || finalQuote.items.length === 0) {
+        toast({ title: 'No Items', description: 'Please add at least one item to the quote.', variant: 'destructive' });
         return;
       }
 
@@ -271,16 +294,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         updatedAt: new Date(),
       };
 
-      console.log('Quote Generation - Quote updated with draft status', {
-        id: updatedQuote.id,
-        status: updatedQuote.status,
-        expiryDate: updatedQuote.expiryDate,
-      });
-
       setQuote(updatedQuote);
 
       // Fetch FRESH company profile directly - don't rely on React state which has stale closure
-      console.log('PDF Generation - Fetching fresh company profile from database');
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -298,25 +314,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         }
       }
 
-      console.log('PDF Generation - Fresh Company Profile:', {
-        name: freshCompanyProfile?.company_name,
-        email: freshCompanyProfile?.company_email,
-        hasLogo: !!freshCompanyProfile?.logo_url,
-        logoUrl: freshCompanyProfile?.logo_url?.substring(0, 50) + '...',
-      });
-
       // Generate PDF using PDF Monkey
       try {
         logger.api('generate-pdf-monkey', requestId).start({ quoteId: updatedQuote.id });
-
-        console.log('PDF Generation - Sending to edge function:', {
-          quoteId: updatedQuote.id,
-          quoteNumber: updatedQuote.quoteNumber,
-          itemsCount: updatedQuote.items?.length,
-          hasClient: !!updatedQuote.client?.name,
-          hasJobDetails: !!updatedQuote.jobDetails?.title,
-          total: updatedQuote.total,
-        });
 
         const { data, error } = await supabase.functions.invoke('generate-pdf-monkey', {
           body: {
@@ -460,6 +460,6 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     generateQuote,
     resetQuote,
     isGenerating,
-    processItemsForDisplay,
+    cloudSaveStatus,
   };
 };

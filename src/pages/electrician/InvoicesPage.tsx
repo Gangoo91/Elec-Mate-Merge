@@ -1,6 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppReview } from '@/hooks/useAppReview';
 import { Helmet } from 'react-helmet';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -21,6 +22,7 @@ import {
   LayoutGrid,
   List,
   PoundSterling,
+  ChevronRight,
 } from 'lucide-react';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { isPast, addHours } from 'date-fns';
@@ -531,125 +533,61 @@ const InvoicesPage = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Native Mobile App Header - Stacked Layout */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-border/50">
-        {/* Search Mode */}
-        {isSearchOpen ? (
-          <div className="flex items-center h-14 px-4 gap-2">
-            <div className="flex-1 relative">
-              <Input
-                autoFocus
-                placeholder="Search invoices..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-11 pl-4 pr-10 bg-elec-gray/50 border-0 rounded-full text-base touch-manipulation"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  aria-label="Clear search"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center"
-                >
-                  <X className="h-4 w-4 text-white" />
-                </button>
-              )}
-            </div>
-            <button
-              onClick={() => {
-                setIsSearchOpen(false);
-                setSearchQuery('');
-              }}
-              className="text-sm text-white font-medium px-2"
-            >
-              Cancel
-            </button>
-          </div>
-        ) : (
-          <>
-            {/* Row 1: Navigation bar */}
-            <div className="flex items-center h-14 px-4 gap-2">
+      {/* Header — exact QuotesPage pattern */}
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-white/[0.06]">
+        <div className="flex items-center h-14 px-4 gap-2">
+          {isSearchOpen ? (
+            <>
+              <div className="flex-1 relative">
+                <Input
+                  autoFocus
+                  placeholder="Search invoices..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="h-11 pl-4 pr-10 bg-white/[0.06] border-0 rounded-full text-base touch-manipulation"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center"
+                  >
+                    <X className="h-4 w-4 text-white" />
+                  </button>
+                )}
+              </div>
+              <button
+                onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                className="text-sm text-white font-medium px-2 touch-manipulation"
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
               <button
                 onClick={() => navigate('/electrician/business')}
-                aria-label="Go back"
-                className="h-11 w-11 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
+                className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
-              <h1 className="flex-1 text-xl font-bold">Invoices</h1>
+              <h1 className="flex-1 text-lg font-semibold text-white">Invoices</h1>
               <button
                 onClick={() => setIsSearchOpen(true)}
-                aria-label="Search invoices"
-                className="h-11 w-11 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
+                className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Search className="h-5 w-5 text-white" />
               </button>
               <button
                 onClick={() => navigate('/electrician/invoice-builder/create')}
-                aria-label="Create invoice"
-                className="h-11 w-11 flex items-center justify-center rounded-xl bg-elec-yellow active:scale-[0.98] transition-all touch-manipulation"
+                className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
               >
                 <Plus className="h-5 w-5 text-black" />
               </button>
+            </>
+          )}
+        </div>
 
-              {/* Desktop View Toggle */}
-              <div className="hidden lg:flex items-center gap-1 bg-white/[0.06] rounded-lg p-1 ml-2">
-                <button
-                  onClick={() => setViewMode('card')}
-                  aria-label="Card view"
-                  className={cn(
-                    'h-9 w-9 flex items-center justify-center rounded-md transition-all',
-                    viewMode === 'card'
-                      ? 'bg-elec-yellow/20 text-elec-yellow'
-                      : 'text-white hover:text-foreground'
-                  )}
-                >
-                  <LayoutGrid className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => setViewMode('table')}
-                  aria-label="Table view"
-                  className={cn(
-                    'h-9 w-9 flex items-center justify-center rounded-md transition-all',
-                    viewMode === 'table'
-                      ? 'bg-elec-yellow/20 text-elec-yellow'
-                      : 'text-white hover:text-foreground'
-                  )}
-                >
-                  <List className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Row 2: Quick actions */}
-            <div className="flex items-center gap-3 px-4 pb-3">
-              <button
-                onClick={() => navigate('/electrician/quotes')}
-                className="flex items-center gap-2 text-elec-yellow active:opacity-70 transition-opacity touch-manipulation"
-              >
-                <FileText className="h-4 w-4" />
-                <span className="text-[14px] font-medium">Quotes</span>
-              </button>
-              <div className="flex-1" />
-              <button
-                onClick={handleRefresh}
-                disabled={isRefreshing}
-                aria-label="Refresh invoices"
-                className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
-              >
-                <RefreshCw
-                  className={cn('h-4 w-4 text-white', isRefreshing && 'animate-spin')}
-                />
-              </button>
-              <VoiceHeaderButton
-                hint="Send invoice"
-                currentSection="invoices"
-                onToolResult={handleRefresh}
-              />
-            </div>
-          </>
-        )}
-
-        {/* Row 3: Filter pills - compact, no icons */}
+        {/* Filter pills */}
         {!isSearchOpen && (
           <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
             {filters.map((filter) => (
@@ -657,228 +595,189 @@ const InvoicesPage = () => {
                 key={filter.id}
                 onClick={() => handleFilterChange(filter.id)}
                 className={cn(
-                  'shrink-0 flex items-center gap-1.5 h-9 px-3.5 rounded-full text-[13px] font-medium transition-all active:scale-[0.98] touch-manipulation',
+                  'flex-shrink-0 h-8 px-3 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.98]',
                   activeFilter === filter.id
-                    ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.08] text-white'
+                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                    : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
                 )}
               >
                 {filter.label}
-                <span
-                  className={cn(
-                    'text-[11px] px-1.5 py-0.5 rounded-full min-w-[18px] text-center font-semibold',
-                    activeFilter === filter.id
-                      ? 'bg-black/20 text-black'
-                      : 'bg-white/[0.12] text-white'
-                  )}
-                >
-                  {filter.count}
-                </span>
+                {filter.count > 0 && (
+                  <span className="ml-1.5 text-white/50">{filter.count}</span>
+                )}
               </button>
             ))}
           </div>
         )}
       </header>
 
-      {/* Main Content */}
-      <main className="px-4 py-4 space-y-4">
-        {/* Stripe Connect Banner - Prompt to enable card payments */}
+      {/* Content */}
+      <main className="px-4 py-4 space-y-4 pb-24">
+        {/* Stripe Connect Banner */}
         <StripeConnectBanner refreshKey={stripeRefreshKey} />
 
-        {/* Chase task prompt for overdue invoices */}
-        {stats.overdue > 0 && (
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-purple-500/[0.08] border border-purple-500/20">
-            <ClipboardCheck className="h-5 w-5 text-purple-400 shrink-0" />
-            <p className="text-sm text-white flex-1">
-              {stats.overdue} overdue — create chase tasks?
-            </p>
-            <button
-              type="button"
-              onClick={handleCreateChaseTasks}
-              disabled={creatingChaseTasks}
-              className="px-3 h-9 rounded-lg bg-purple-500/20 text-purple-400 text-sm font-semibold touch-manipulation active:bg-purple-500/30 transition-colors disabled:opacity-50"
-            >
-              {creatingChaseTasks ? 'Creating...' : 'Create'}
-            </button>
-          </div>
-        )}
-
-        {/* Financial Snapshot Card - Clean iOS Design */}
-        <section className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-          {/* Main Value Section */}
-          <div className="p-5">
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center">
-                <PoundSterling className="h-5 w-5 text-black" />
-              </div>
+        {/* Revenue hero card — matching QuotesPage pipeline card */}
+        <div className="relative rounded-2xl bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.08] overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-orange-400 opacity-60" />
+          <div className="p-4">
+            {/* Main value */}
+            <div className="flex items-baseline justify-between mb-4">
               <div>
-                <p className="text-[12px] text-white">Total Paid Revenue</p>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <span className="text-[11px] text-white">Live</span>
-                </div>
+                <p className="text-[11px] text-white uppercase tracking-wider">Total Revenue</p>
+                <p className="text-[28px] font-bold text-elec-yellow leading-tight mt-0.5">
+                  £{stats.monthlyTotal.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-[11px] text-white">Paid</p>
+                <p className="text-[20px] font-bold text-emerald-400 leading-tight">{stats.paid}</p>
               </div>
             </div>
-            <p className="text-4xl font-bold text-elec-yellow mt-4">
-              £
-              {stats.monthlyTotal.toLocaleString('en-GB', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-              })}
-            </p>
-            <p className="text-[13px] text-white mt-1">
-              {stats.total} invoices • {stats.paid} paid
-            </p>
+            {/* Secondary stats */}
+            <div className="flex gap-0 rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+              <button
+                onClick={() => handleFilterChange('overdue')}
+                className="flex-1 py-2.5 text-center touch-manipulation active:bg-white/[0.04] transition-colors"
+              >
+                <p className="text-[10px] text-white">Overdue</p>
+                <p className={cn('text-[14px] font-bold', stats.overdue > 0 ? 'text-red-400' : 'text-white')}>{stats.overdue}</p>
+              </button>
+              <div className="w-px h-10 self-center bg-white/[0.06]" />
+              <button
+                onClick={() => handleFilterChange('sent')}
+                className="flex-1 py-2.5 text-center touch-manipulation active:bg-white/[0.04] transition-colors"
+              >
+                <p className="text-[10px] text-white">Sent</p>
+                <p className="text-[14px] font-bold text-blue-400">{stats.sent}</p>
+              </button>
+              <div className="w-px h-10 self-center bg-white/[0.06]" />
+              <button
+                onClick={() => handleFilterChange('draft')}
+                className="flex-1 py-2.5 text-center touch-manipulation active:bg-white/[0.04] transition-colors"
+              >
+                <p className="text-[10px] text-white">Drafts</p>
+                <p className="text-[14px] font-bold text-white">{stats.draft}</p>
+              </button>
+              <div className="w-px h-10 self-center bg-white/[0.06]" />
+              <button
+                onClick={() => handleFilterChange('all')}
+                className="flex-1 py-2.5 text-center touch-manipulation active:bg-white/[0.04] transition-colors"
+              >
+                <p className="text-[10px] text-white">Total</p>
+                <p className="text-[14px] font-bold text-white">{stats.total}</p>
+              </button>
+            </div>
           </div>
+        </div>
 
-          {/* Status Grid - Unified elec-yellow */}
-          <div className="grid grid-cols-3 divide-x divide-white/[0.06] border-t border-white/[0.06]">
-            <button
-              onClick={() => handleFilterChange('overdue')}
-              className={cn(
-                'p-4 flex flex-col items-center gap-2 active:bg-white/[0.04] transition-all touch-manipulation',
-                activeFilter === 'overdue' && 'bg-white/[0.04]'
-              )}
-            >
-              <div className="w-9 h-9 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                <AlertCircle className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <span className="text-[11px] text-white font-medium">Overdue</span>
-              <span className="text-lg font-bold text-elec-yellow">{stats.overdue}</span>
-            </button>
+        {/* Chase alert — matching QuotesPage stale quote alert */}
+        {stats.overdue > 0 && (
+          <button
+            type="button"
+            onClick={handleCreateChaseTasks}
+            disabled={creatingChaseTasks}
+            className="w-full flex items-center justify-between p-3.5 rounded-xl bg-purple-500/[0.06] border border-purple-500/15 touch-manipulation active:bg-purple-500/10 transition-colors disabled:opacity-50"
+          >
+            <div>
+              <p className="text-[13px] font-semibold text-purple-300">
+                {stats.overdue} invoice{stats.overdue !== 1 && 's'} need chasing
+              </p>
+              <p className="text-[11px] text-white mt-0.5">Overdue and unpaid</p>
+            </div>
+            <span className="text-[12px] font-semibold text-purple-400 flex-shrink-0 ml-3">
+              {creatingChaseTasks ? 'Creating...' : 'Create Tasks'}
+            </span>
+          </button>
+        )}
 
-            <button
-              onClick={() => handleFilterChange('sent')}
-              className={cn(
-                'p-4 flex flex-col items-center gap-2 active:bg-white/[0.04] transition-all touch-manipulation',
-                activeFilter === 'sent' && 'bg-white/[0.04]'
-              )}
-            >
-              <div className="w-9 h-9 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                <Send className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <span className="text-[11px] text-white font-medium">Sent</span>
-              <span className="text-lg font-bold text-elec-yellow">{stats.sent}</span>
-            </button>
-
-            <button
-              onClick={() => handleFilterChange('paid')}
-              className={cn(
-                'p-4 flex flex-col items-center gap-2 active:bg-white/[0.04] transition-all touch-manipulation',
-                activeFilter === 'paid' && 'bg-white/[0.04]'
-              )}
-            >
-              <div className="w-9 h-9 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                <CheckCircle className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <span className="text-[11px] text-white font-medium">Paid</span>
-              <span className="text-lg font-bold text-elec-yellow">{stats.paid}</span>
-            </button>
-          </div>
-        </section>
-
-        {/* Analytics Dashboard */}
+        {/* Analytics — collapsed by default */}
         {invoices.length > 0 && (
-          <QuoteInvoiceAnalytics
-            quotes={[]}
-            invoices={invoices}
-            formatCurrency={formatCurrency}
-            lastUpdated={lastUpdated}
-            onRefresh={fetchInvoices}
-            isLoading={isLoading}
-          />
+          <details>
+            <summary className="flex items-center justify-between cursor-pointer touch-manipulation py-2 list-none">
+              <span className="text-xs font-medium text-white uppercase tracking-wider">Analytics</span>
+              <ChevronRight className="w-4 h-4 text-white transition-transform [details[open]>&]:rotate-90" />
+            </summary>
+            <div className="mt-2">
+              <QuoteInvoiceAnalytics
+                quotes={[]}
+                invoices={invoices}
+                formatCurrency={formatCurrency}
+                lastUpdated={lastUpdated}
+                onRefresh={fetchInvoices}
+                isLoading={isLoading}
+              />
+            </div>
+          </details>
         )}
 
         {/* Invoices List */}
-        <section>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-white uppercase tracking-wide">
+        <section className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">
               {activeFilter === 'all'
                 ? 'All Invoices'
                 : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} Invoices`}
             </h2>
-            <span className="text-xs text-white">
+            <span className="text-[11px] text-white/50">
               {filteredInvoices.length} {filteredInvoices.length === 1 ? 'invoice' : 'invoices'}
             </span>
           </div>
 
           {isLoading ? (
-            <div className="space-y-3">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-32 bg-elec-gray/30 rounded-xl animate-pulse" />
-              ))}
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-2 border-elec-yellow border-t-transparent" />
             </div>
           ) : filteredInvoices.length === 0 ? (
             searchQuery ? (
-              <Card className="bg-elec-gray/20 border-dashed">
-                <CardContent className="py-10 text-center">
-                  <Search className="h-10 w-10 mx-auto text-white mb-3" />
-                  <p className="font-medium">No results found</p>
-                  <p className="text-sm text-white mt-1">Try a different search term</p>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="mt-3"
-                    onClick={() => setSearchQuery('')}
-                  >
-                    Clear search
-                  </Button>
-                </CardContent>
-              </Card>
+              <div className="text-center py-12">
+                <p className="text-[14px] font-medium text-white">No results found</p>
+                <p className="text-[12px] text-white mt-1">No invoices match "{searchQuery}"</p>
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="mt-3 text-[13px] font-medium text-elec-yellow touch-manipulation"
+                >
+                  Clear search
+                </button>
+              </div>
             ) : activeFilter === 'all' ? (
               <EmptyStateGuide
                 type="invoice"
                 onCreateClick={() => navigate('/electrician/invoice-builder/create')}
               />
             ) : (
-              <Card className="bg-elec-gray/20 border-dashed">
-                <CardContent className="py-10 text-center">
-                  <FileText className="h-10 w-10 mx-auto text-white mb-3" />
-                  <p className="font-medium">No {activeFilter} invoices</p>
-                  <p className="text-sm text-white mt-1">
-                    Invoices will appear here when {activeFilter}
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="text-center py-12">
+                <p className="text-[14px] font-medium text-white">
+                  No {activeFilter !== 'all' ? activeFilter : ''} invoices
+                </p>
+                <p className="text-[12px] text-white mt-1">
+                  Invoices will appear here when {activeFilter}
+                </p>
+              </div>
             )
           ) : (
-            <>
-              {/* Table view (desktop only) */}
-              {viewMode === 'table' && (
-                <InvoiceTableView
-                  invoices={filteredInvoices}
-                  onInvoiceAction={handleInvoiceAction}
-                  onDownloadPDF={handleDownloadPDF}
-                  onMarkAsPaid={handleMarkAsPaid}
-                  onSendSuccess={handleSendSuccess}
-                  onDeleteInvoice={handleDeleteInvoice}
-                  onShareWhatsApp={handleShareWhatsApp}
-                  onShareEmail={handleShareEmail}
-                  markingPaidId={markingPaidId}
-                  downloadingPdfId={downloadingPdfId}
-                  deletingInvoiceId={deletingInvoiceId}
-                  stripeRefreshKey={stripeRefreshKey}
-                />
-              )}
-              {/* Card view (or mobile fallback) */}
-              <div className={viewMode === 'table' ? 'lg:hidden' : ''}>
-                <InvoiceCardView
-                  invoices={filteredInvoices}
-                  onInvoiceAction={handleInvoiceAction}
-                  onDownloadPDF={handleDownloadPDF}
-                  onMarkAsPaid={handleMarkAsPaid}
-                  onSendSuccess={handleSendSuccess}
-                  onDeleteInvoice={handleDeleteInvoice}
-                  onShareWhatsApp={handleShareWhatsApp}
-                  onShareEmail={handleShareEmail}
-                  markingPaidId={markingPaidId}
-                  downloadingPdfId={downloadingPdfId}
-                  deletingInvoiceId={deletingInvoiceId}
-                  formatCurrency={formatCurrency}
-                  stripeRefreshKey={stripeRefreshKey}
-                />
-              </div>
-            </>
+            <div className="space-y-3">
+              <AnimatePresence>
+                {filteredInvoices.map((invoice) => (
+                  <motion.div key={invoice.id} layout exit={{ opacity: 0, scale: 0.95 }}>
+                    <InvoiceCardView
+                      invoices={[invoice]}
+                      onInvoiceAction={handleInvoiceAction}
+                      onDownloadPDF={handleDownloadPDF}
+                      onMarkAsPaid={handleMarkAsPaid}
+                      onSendSuccess={handleSendSuccess}
+                      onDeleteInvoice={handleDeleteInvoice}
+                      onShareWhatsApp={handleShareWhatsApp}
+                      onShareEmail={handleShareEmail}
+                      markingPaidId={markingPaidId}
+                      downloadingPdfId={downloadingPdfId}
+                      deletingInvoiceId={deletingInvoiceId}
+                      formatCurrency={formatCurrency}
+                      stripeRefreshKey={stripeRefreshKey}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
           )}
         </section>
       </main>

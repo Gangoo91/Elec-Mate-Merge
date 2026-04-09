@@ -226,7 +226,7 @@ const QuoteBuilderCreate = () => {
   return (
     <VoiceFormProvider>
       <motion.div
-        className="min-h-screen bg-background pb-8"
+        className="min-h-screen bg-background pb-8 -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -250,12 +250,8 @@ const QuoteBuilderCreate = () => {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <div className="w-9 h-9 rounded-xl bg-elec-yellow flex items-center justify-center">
-              <FileText className="h-5 w-5 text-black" />
-            </div>
             <div className="flex-1 min-w-0">
-              <h1 className="text-base font-semibold text-white truncate">New Quote</h1>
-              <p className="text-[11px] text-white">Create a professional quote</p>
+              <h1 className="text-base font-semibold text-white">New Quote</h1>
             </div>
           </div>
         </header>
@@ -353,7 +349,7 @@ const QuoteBuilderCreate = () => {
         )}
 
         {/* Main Content */}
-        <main className="px-4 py-4">
+        <main className="px-0 sm:px-2 py-3">
           {isLoadingContext ? (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow"></div>

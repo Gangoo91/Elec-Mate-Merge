@@ -316,133 +316,92 @@ export const InvoiceWizard = ({
   };
 
   return (
-    <div ref={contentRef} className="space-y-6 pb-32">
+    <div ref={contentRef} className="space-y-8 pb-32 px-3 sm:px-4 lg:px-6">
       {/* Recovery Banner */}
       {showRecoveryBanner && recoveredDraft && (
-        <div className="rounded-2xl bg-amber-500/10 border border-amber-500/30 p-4">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h3 className="font-semibold text-amber-400 mb-1">Recover Unsaved Invoice?</h3>
-              <p className="text-sm text-white">
-                You have an unsaved invoice draft
-                {recoveredDraft.client?.name && ` for ${recoveredDraft.client.name}`}. Would you
-                like to recover it?
-              </p>
-            </div>
-            <div className="flex gap-2 flex-shrink-0">
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={handleDiscardDraft}
-                className="text-white hover:text-white"
-              >
-                Discard
-              </Button>
-              <Button
-                size="sm"
-                onClick={handleRecoverDraft}
-                className="bg-amber-500 text-black hover:bg-amber-400"
-              >
-                Recover
-              </Button>
-            </div>
+        <div className="flex items-center justify-between p-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/15">
+          <div>
+            <p className="text-[13px] font-semibold text-amber-400">Recover unsaved invoice?</p>
+            <p className="text-[11px] text-white">
+              {recoveredDraft.client?.name
+                ? `Draft for ${recoveredDraft.client.name}`
+                : 'You have an unsaved draft'}
+            </p>
+          </div>
+          <div className="flex gap-2 flex-shrink-0 ml-3">
+            <button onClick={handleDiscardDraft} className="text-[12px] text-white font-medium touch-manipulation">Discard</button>
+            <button onClick={handleRecoverDraft} className="text-[12px] text-amber-400 font-bold touch-manipulation">Recover</button>
           </div>
         </div>
       )}
 
-      {/* Auto-save indicator */}
+      {/* Auto-save status */}
       {!sourceQuote && (
-        <div className="flex justify-end">
+        <div className="flex justify-end -mb-4">
           <AutoSaveIndicator isSaving={isSaving} lastSaved={lastSaved} />
         </div>
       )}
 
-      {/* Step Progress - Clean pills (matching quote wizard) */}
-      <div className="flex items-center justify-center gap-2">
-        {steps.map((step, index) => {
-          const isComplete = currentStep > index;
-          const isActive = currentStep === index;
-          const Icon = step.icon;
+      {/* === ALL SECTIONS ON ONE PAGE — matching QuoteWizard === */}
 
-          return (
-            <React.Fragment key={step.id}>
-              <button
-                onClick={() => {
-                  if (isComplete) {
-                    // Allow going back to completed steps
-                    setCurrentStep(index);
-                  }
-                }}
-                disabled={!isComplete && !isActive}
-                className={cn(
-                  'flex items-center gap-2 px-4 py-2.5 rounded-full transition-all active:scale-95',
-                  isComplete && 'bg-emerald-500/20 text-emerald-400 cursor-pointer',
-                  isActive && 'bg-elec-yellow text-elec-dark font-semibold',
-                  !isComplete && !isActive && 'bg-elec-gray/30 text-white'
-                )}
-              >
-                {isComplete ? <Check className="h-4 w-4" /> : <Icon className="h-4 w-4" />}
-                <span className="text-sm hidden sm:inline">{step.title}</span>
-                <span className="text-sm sm:hidden">{step.shortTitle}</span>
-              </button>
-              {index < steps.length - 1 && (
-                <div
-                  className={cn(
-                    'w-6 h-0.5 rounded-full',
-                    currentStep > index ? 'bg-emerald-500' : 'bg-elec-gray/50'
-                  )}
-                />
-              )}
-            </React.Fragment>
-          );
-        })}
-      </div>
+      {/* 1. Client Details */}
+      <section>
+        <InvoiceClientDetailsStep
+          client={invoiceBuilder.invoice.client}
+          onUpdate={invoiceBuilder.updateClient}
+        />
+      </section>
 
-      {/* Step Content */}
-      <div>{renderStep()}</div>
+      {/* 2. Invoice Items */}
+      <section>
+        <div className="mb-3">
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+          <h2 className="text-sm font-bold text-white uppercase tracking-wide">Items</h2>
+        </div>
+        <InvoiceItemsStep
+          items={invoiceBuilder.invoice.items || []}
+          onAddItem={invoiceBuilder.addItem}
+          onUpdateItem={invoiceBuilder.updateItem}
+          onRemoveItem={invoiceBuilder.removeItem}
+          subtotal={invoiceBuilder.invoice.subtotal || 0}
+          vatAmount={invoiceBuilder.invoice.vatAmount || 0}
+          total={invoiceBuilder.invoice.total || 0}
+        />
+      </section>
 
-      {/* Bottom Navigation - Fixed (matching quote wizard) */}
-      <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border/50 px-4 py-4 z-30">
-        <div className="flex gap-3 max-w-lg mx-auto">
-          {/* Back Button */}
-          <Button
-            variant="outline"
-            onClick={prevStep}
-            disabled={currentStep === 0}
-            className="h-14 px-6 flex-shrink-0"
+      {/* 3. Settings */}
+      <section>
+        <div className="mb-3">
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+          <h2 className="text-sm font-bold text-white uppercase tracking-wide">Settings</h2>
+        </div>
+        <InvoiceSettingsStep
+          settings={invoiceBuilder.invoice.settings}
+          notes={invoiceBuilder.invoice.invoice_notes}
+          onUpdateSettings={invoiceBuilder.updateInvoiceSettings}
+          onUpdateNotes={invoiceBuilder.setInvoiceNotes}
+        />
+      </section>
+
+      {/* 4. Review */}
+      <section>
+        <div className="mb-3">
+          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+          <h2 className="text-sm font-bold text-white uppercase tracking-wide">Invoice Summary</h2>
+        </div>
+        <InvoiceReviewStep invoice={invoiceBuilder.invoice} />
+      </section>
+
+      {/* Save button — sticky footer matching QuoteWizard */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-t border-white/[0.06] p-4 lg:left-64">
+        <div className="flex gap-3 max-w-3xl mx-auto">
+          <button
+            onClick={handleGenerate}
+            disabled={isGenerating || !canProceed()}
+            className="flex-1 h-13 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98] shadow-lg shadow-elec-yellow/20 disabled:opacity-50"
           >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-
-          {/* Primary Action */}
-          {currentStep === steps.length - 1 ? (
-            <Button
-              onClick={handleGenerate}
-              disabled={isGenerating || !canProceed()}
-              className="flex-1 h-14 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold text-base"
-            >
-              {isGenerating ? (
-                <>
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                  Creating...
-                </>
-              ) : (
-                <>
-                  <Send className="h-5 w-5 mr-2" />
-                  Create Invoice
-                </>
-              )}
-            </Button>
-          ) : (
-            <Button
-              onClick={nextStep}
-              disabled={!canProceed()}
-              className="flex-1 h-14 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold text-base"
-            >
-              Continue
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
-          )}
+            {isGenerating ? 'Creating...' : 'Create Invoice'}
+          </button>
         </div>
       </div>
     </div>

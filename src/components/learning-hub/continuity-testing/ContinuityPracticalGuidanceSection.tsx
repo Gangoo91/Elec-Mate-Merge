@@ -1,357 +1,352 @@
-import React from 'react';
-import { BookOpen, Wrench, AlertTriangle, CheckCircle2, Clock, Target } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const ContinuityPracticalGuidanceSection = () => (
-  <div className="space-y-4 sm:space-y-6">
-    <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">
-          Best Practice Testing Procedures
-        </h4>
-      </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-green-400 mb-2">Pre-Test Preparation:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Document the circuit:</strong> Sketch layout and identify all outlets
-              </p>
-              <p>
-                • <strong>Remove parallel paths:</strong> Disconnect all equipment and accessories
-              </p>
-              <p>
-                • <strong>Identify conductors:</strong> Use reliable marking and verification
-              </p>
-              <p>
-                • <strong>Check test equipment:</strong> Verify calibration and battery condition
-              </p>
-              <p>
-                • <strong>Measure lead resistance:</strong> Null function or manual calculation
-              </p>
-              <p>
-                • <strong>Plan test sequence:</strong> Logical order to minimise errors
-              </p>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-green-400 mb-2">During Testing:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Good connections:</strong> Clean terminals and ensure secure contact
-              </p>
-              <p>
-                • <strong>Record immediately:</strong> Write down readings as taken
-              </p>
-              <p>
-                • <strong>Check for consistency:</strong> Similar circuits should have similar
-                values
-              </p>
-              <p>
-                • <strong>Investigate anomalies:</strong> High or low readings need explanation
-              </p>
-              <p>
-                • <strong>Use correct range:</strong> Appropriate instrument settings for accuracy
-              </p>
-              <p>
-                • <strong>Safety awareness:</strong> Remain alert to potential hazards
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
-    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Wrench className="h-4 w-4 text-blue-400" />
-        <h4 className="font-medium text-blue-400">Practical Testing Techniques</h4>
-      </div>
-      <div className="space-y-3 text-sm text-white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-blue-400 mb-2">Efficient Test Routing:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                <strong>Radial circuits:</strong>
-              </p>
-              <p>• Start at distribution board with connections</p>
-              <p>• Work systematically to furthest point</p>
-              <p>• Test at final outlet or equipment position</p>
-              <p>• Record reading and verify calculation</p>
-              <p>
-                <strong>Ring circuits:</strong>
-              </p>
-              <p>• Complete continuity tests first</p>
-              <p>• Set up cross-connections methodically</p>
-              <p>• Test every outlet on the ring</p>
-              <p>• Verify readings are consistent</p>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-blue-400 mb-2">Professional Tips:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Use quality test leads:</strong> Low resistance and good durability
-              </p>
-              <p>
-                • <strong>Clean probe tips:</strong> Remove oxidation for good contact
-              </p>
-              <p>
-                • <strong>Check connections twice:</strong> Verify before and after testing
-              </p>
-              <p>
-                • <strong>Label as you go:</strong> Mark tested circuits to avoid confusion
-              </p>
-              <p>
-                • <strong>Cross-reference drawings:</strong> Verify actual vs. planned installation
-              </p>
-              <p>
-                • <strong>Photo document issues:</strong> Visual record of problems found
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
-          <p className="font-medium text-yellow-400 mb-2">Time-Saving Techniques:</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Preparation Phase:</p>
-              <p>• Pre-plan test sequence</p>
-              <p>• Prepare test sheets in advance</p>
-              <p>• Organise tools and equipment</p>
-              <p>• Brief assistants on procedures</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Testing Phase:</p>
-              <p>• Work systematically, don't jump around</p>
-              <p>• Use radio communication for large sites</p>
-              <p>• Batch similar tests together</p>
-              <p>• Record results immediately</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Completion Phase:</p>
-              <p>• Verify all tests completed</p>
-              <p>• Check calculations are correct</p>
-              <p>• Ensure proper reconnection</p>
-              <p>• File results systematically</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+interface Props {
+  onBack: () => void;
+}
 
-    <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <AlertTriangle className="h-4 w-4 text-orange-400" />
-        <h4 className="font-medium text-orange-400">Troubleshooting Common Problems</h4>
-      </div>
-      <div className="space-y-3 text-sm text-white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-orange-400 mb-2">High Resistance Readings:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                <strong>Possible Causes:</strong>
-              </p>
-              <p>• Loose or corroded connections</p>
-              <p>• Damaged conductor (partial break)</p>
-              <p>• Poor crimped or soldered joints</p>
-              <p>• Undersized conductor for application</p>
-              <p>• Parallel resistance affecting reading</p>
-              <p>
-                <strong>Investigation Steps:</strong>
-              </p>
-              <p>• Visual inspection of connections</p>
-              <p>• Test individual cable sections</p>
-              <p>• Check for mechanical damage</p>
-              <p>• Verify conductor specification</p>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-orange-400 mb-2">Infinite Resistance Readings:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                <strong>Possible Causes:</strong>
-              </p>
-              <p>• Complete conductor break</p>
-              <p>• Disconnected terminal</p>
-              <p>• Blown fuse in circuit</p>
-              <p>• Isolation switch still open</p>
-              <p>• Test lead failure</p>
-              <p>
-                <strong>Investigation Steps:</strong>
-              </p>
-              <p>• Verify test lead continuity</p>
-              <p>• Check all isolation points</p>
-              <p>• Inspect for obvious damage</p>
-              <p>• Test sections systematically</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
-          <p className="font-medium text-red-400 mb-2">Inconsistent Ring Circuit Readings:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Symptoms:</p>
-              <p>• Readings vary significantly around ring</p>
-              <p>• Some outlets show very high resistance</p>
-              <p>• End-to-end tests don't correlate</p>
-              <p>• Unexpected zero or infinite readings</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Likely Causes:</p>
-              <p>• Ring circuit not actually continuous</p>
-              <p>• Incorrect wiring (radials from ring)</p>
-              <p>• Crossed connections between circuits</p>
-              <p>• Interconnections between ring legs</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+type SectionId = 'best-practice' | 'techniques' | 'troubleshooting' | 'qa' | 'records';
 
-    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <CheckCircle2 className="h-4 w-4 text-purple-400" />
-        <h4 className="font-medium text-purple-400">Quality Assurance and Verification</h4>
-      </div>
-      <div className="space-y-3 text-sm text-white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-purple-400 mb-2">Result Verification:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Sanity checks:</strong> Do results make sense for cable type/length?
-              </p>
-              <p>
-                • <strong>Comparison:</strong> Similar circuits should have similar values
-              </p>
-              <p>
-                • <strong>Calculation verification:</strong> Check arithmetic and formulas
-              </p>
-              <p>
-                • <strong>Regulation compliance:</strong> Ensure values meet BS 7671 requirements
-              </p>
-              <p>
-                • <strong>Design verification:</strong> Compare with design calculations
-              </p>
-              <p>
-                • <strong>Documentation:</strong> Complete and accurate test records
-              </p>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-purple-400 mb-2">Professional Standards:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Competency:</strong> Ensure tester has appropriate qualifications
-              </p>
-              <p>
-                • <strong>Equipment calibration:</strong> Valid certificates for all instruments
-              </p>
-              <p>
-                • <strong>Method compliance:</strong> Follow BS 7671 and IET guidance
-              </p>
-              <p>
-                • <strong>Witnessing:</strong> Independent verification where required
-              </p>
-              <p>
-                • <strong>Sign-off:</strong> Responsible person validates results
-              </p>
-              <p>
-                • <strong>Traceability:</strong> Clear audit trail of all testing
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+const ContinuityPracticalGuidanceSection = ({ onBack }: Props) => {
+  const [expanded, setExpanded] = useState<SectionId | null>(null);
+  const toggle = (id: SectionId) => setExpanded((prev) => (prev === id ? null : id));
 
-    <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Clock className="h-4 w-4 text-cyan-400" />
-        <h4 className="font-medium text-cyan-400">Record Keeping and Documentation</h4>
-      </div>
-      <div className="space-y-3 text-sm text-white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-cyan-400 mb-2">Essential Records:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Test results:</strong> All measured values with units
-              </p>
-              <p>
-                • <strong>Test conditions:</strong> Temperature, test method, instrument used
-              </p>
-              <p>
-                • <strong>Circuit details:</strong> Cable type, length, protective device
-              </p>
-              <p>
-                • <strong>Compliance assessment:</strong> Pass/fail against requirements
-              </p>
-              <p>
-                • <strong>Remedial actions:</strong> Any work required to achieve compliance
-              </p>
-              <p>
-                • <strong>Tester signature:</strong> Qualified person responsible for testing
-              </p>
+  const renderExpandable = (id: SectionId, title: string, accent: string, content: React.ReactNode) => {
+    const isOpen = expanded === id;
+    const barMap: Record<string, string> = {
+      green: 'bg-green-500/50',
+      blue: 'bg-blue-500/50',
+      orange: 'bg-orange-500/50',
+      purple: 'bg-purple-500/50',
+      cyan: 'bg-cyan-500/50',
+    };
+    const topAccentMap: Record<string, string> = {
+      green: 'bg-green-500',
+      blue: 'bg-blue-500',
+      orange: 'bg-orange-500',
+      purple: 'bg-purple-500',
+      cyan: 'bg-cyan-500',
+    };
+    const borderActiveMap: Record<string, string> = {
+      green: 'border-green-500/20',
+      blue: 'border-blue-500/20',
+      orange: 'border-orange-500/20',
+      purple: 'border-purple-500/20',
+      cyan: 'border-cyan-500/20',
+    };
+    const textMap: Record<string, string> = {
+      green: 'text-green-400',
+      blue: 'text-blue-400',
+      orange: 'text-orange-400',
+      purple: 'text-purple-400',
+      cyan: 'text-cyan-400',
+    };
+    return (
+      <motion.div variants={itemVariants}>
+        <button
+          type="button"
+          onClick={() => toggle(id)}
+          className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
+        >
+          <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? borderActiveMap[accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+            <div className={`absolute inset-x-0 top-0 h-[2px] ${topAccentMap[accent]}`} />
+            <div className={`absolute left-0 top-0 bottom-0 w-1 ${barMap[accent]} rounded-l-2xl`} />
+            <div className="p-4 flex items-center gap-3">
+              <p className={`text-[15px] font-bold ${textMap[accent]} flex-1`}>{title}</p>
+              <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                <ChevronDown className="h-4 w-4 text-white shrink-0" />
+              </motion.div>
             </div>
           </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-cyan-400 mb-2">Digital Record Keeping:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Electronic forms:</strong> Reduce errors and improve legibility
-              </p>
-              <p>
-                • <strong>Photo documentation:</strong> Visual evidence of connections and issues
-              </p>
-              <p>
-                • <strong>Cloud storage:</strong> Secure backup and easy access
-              </p>
-              <p>
-                • <strong>Integration:</strong> Link with design software and databases
-              </p>
-              <p>
-                • <strong>Reporting:</strong> Automated generation of certificates
-              </p>
-              <p>
-                • <strong>Audit trails:</strong> Complete history of all changes
-              </p>
-            </div>
+        </button>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden"
+            >
+              <div className="pt-2 px-1 pb-1">{content}</div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    );
+  };
+
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">Practical Guide</h1>
           </div>
         </div>
-        <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
-          <p className="font-medium text-green-400 mb-2">Long-term Value of Good Records:</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Maintenance:</p>
-              <p>• Historical performance data</p>
-              <p>• Deterioration trends</p>
-              <p>• Predictive maintenance</p>
-              <p>• Warranty claims</p>
+      </div>
+
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+        {/* Best Practice */}
+        {renderExpandable('best-practice', 'Best Practice Testing Procedures', 'green', (
+          <div className="space-y-2">
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-green-400 mb-1.5">Pre-Test Preparation:</p>
+              <div className="space-y-1">
+                <p className="text-[12px] text-white">- Document the circuit: Sketch layout and identify all outlets</p>
+                <p className="text-[12px] text-white">- Remove parallel paths: Disconnect all equipment and accessories</p>
+                <p className="text-[12px] text-white">- Identify conductors: Use reliable marking and verification</p>
+                <p className="text-[12px] text-white">- Check test equipment: Verify calibration and battery condition</p>
+                <p className="text-[12px] text-white">- Measure lead resistance: Null function or manual calculation</p>
+                <p className="text-[12px] text-white">- Plan test sequence: Logical order to minimise errors</p>
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Compliance:</p>
-              <p>• Regulatory inspections</p>
-              <p>• Insurance requirements</p>
-              <p>• Legal evidence</p>
-              <p>• Professional liability</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Business:</p>
-              <p>• Quality demonstration</p>
-              <p>• Client confidence</p>
-              <p>• Repeat business</p>
-              <p>• Professional reputation</p>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-green-400 mb-1.5">During Testing:</p>
+              <div className="space-y-1">
+                <p className="text-[12px] text-white">- Good connections: Clean terminals and ensure secure contact</p>
+                <p className="text-[12px] text-white">- Record immediately: Write down readings as taken</p>
+                <p className="text-[12px] text-white">- Check for consistency: Similar circuits should have similar values</p>
+                <p className="text-[12px] text-white">- Investigate anomalies: High or low readings need explanation</p>
+                <p className="text-[12px] text-white">- Use correct range: Appropriate instrument settings for accuracy</p>
+                <p className="text-[12px] text-white">- Safety awareness: Remain alert to potential hazards</p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        ))}
+
+        {/* Practical Techniques */}
+        {renderExpandable('techniques', 'Practical Testing Techniques', 'blue', (
+          <div className="space-y-2">
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Efficient Test Routing:</p>
+              <p className="text-[12px] text-white font-semibold mb-0.5">Radial circuits:</p>
+              <div className="space-y-0.5 mb-2">
+                <p className="text-[12px] text-white">- Start at distribution board with connections</p>
+                <p className="text-[12px] text-white">- Work systematically to furthest point</p>
+                <p className="text-[12px] text-white">- Test at final outlet or equipment position</p>
+                <p className="text-[12px] text-white">- Record reading and verify calculation</p>
+              </div>
+              <p className="text-[12px] text-white font-semibold mb-0.5">Ring circuits:</p>
+              <div className="space-y-0.5">
+                <p className="text-[12px] text-white">- Complete continuity tests first</p>
+                <p className="text-[12px] text-white">- Set up cross-connections methodically</p>
+                <p className="text-[12px] text-white">- Test every outlet on the ring</p>
+                <p className="text-[12px] text-white">- Verify readings are consistent</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Professional Tips:</p>
+              <div className="space-y-1">
+                <p className="text-[12px] text-white">- Use quality test leads: Low resistance and good durability</p>
+                <p className="text-[12px] text-white">- Clean probe tips: Remove oxidation for good contact</p>
+                <p className="text-[12px] text-white">- Check connections twice: Verify before and after testing</p>
+                <p className="text-[12px] text-white">- Label as you go: Mark tested circuits to avoid confusion</p>
+                <p className="text-[12px] text-white">- Cross-reference drawings: Verify actual vs. planned installation</p>
+                <p className="text-[12px] text-white">- Photo document issues: Visual record of problems found</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-yellow-400 mb-1.5">Time-Saving Techniques:</p>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-[12px] font-semibold text-white mb-0.5">Preparation Phase:</p>
+                  <div className="space-y-0.5">
+                    <p className="text-[12px] text-white">- Pre-plan test sequence</p>
+                    <p className="text-[12px] text-white">- Prepare test sheets in advance</p>
+                    <p className="text-[12px] text-white">- Organise tools and equipment</p>
+                    <p className="text-[12px] text-white">- Brief assistants on procedures</p>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold text-white mb-0.5">Testing Phase:</p>
+                  <div className="space-y-0.5">
+                    <p className="text-[12px] text-white">- Work systematically, don't jump around</p>
+                    <p className="text-[12px] text-white">- Use radio communication for large sites</p>
+                    <p className="text-[12px] text-white">- Batch similar tests together</p>
+                    <p className="text-[12px] text-white">- Record results immediately</p>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold text-white mb-0.5">Completion Phase:</p>
+                  <div className="space-y-0.5">
+                    <p className="text-[12px] text-white">- Verify all tests completed</p>
+                    <p className="text-[12px] text-white">- Check calculations are correct</p>
+                    <p className="text-[12px] text-white">- Ensure proper reconnection</p>
+                    <p className="text-[12px] text-white">- File results systematically</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Troubleshooting */}
+        {renderExpandable('troubleshooting', 'Troubleshooting Common Problems', 'orange', (
+          <div className="space-y-2">
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-orange-400 mb-1.5">High Resistance Readings:</p>
+              <p className="text-[12px] text-white font-semibold mb-0.5">Possible Causes:</p>
+              <div className="space-y-0.5 mb-2">
+                <p className="text-[12px] text-white">- Loose bolted connections at terminals or busbars</p>
+                <p className="text-[12px] text-white">- Incorrect conductor size for the circuit</p>
+                <p className="text-[12px] text-white">- Corroded clamp or terminal</p>
+                <p className="text-[12px] text-white">- Damaged conductor (partial break)</p>
+                <p className="text-[12px] text-white">- Poor crimped or soldered joints</p>
+                <p className="text-[12px] text-white">- Intermittent contacts due to loose bolts</p>
+                <p className="text-[12px] text-white">- Undersized bonding conductor</p>
+                <p className="text-[12px] text-white">- Parallel resistance affecting reading</p>
+              </div>
+              <p className="text-[12px] text-white font-semibold mb-0.5">Investigation Steps:</p>
+              <div className="space-y-0.5">
+                <p className="text-[12px] text-white">- Visual inspection of connections</p>
+                <p className="text-[12px] text-white">- Test individual cable sections</p>
+                <p className="text-[12px] text-white">- Check for mechanical damage</p>
+                <p className="text-[12px] text-white">- Verify conductor specification</p>
+                <p className="text-[12px] text-white">- Tighten all bolted connections and retest</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-orange-400 mb-1.5">Infinite Resistance Readings:</p>
+              <p className="text-[12px] text-white font-semibold mb-0.5">Possible Causes:</p>
+              <div className="space-y-0.5 mb-2">
+                <p className="text-[12px] text-white">- Complete conductor break</p>
+                <p className="text-[12px] text-white">- Disconnected terminal</p>
+                <p className="text-[12px] text-white">- Blown fuse in circuit</p>
+                <p className="text-[12px] text-white">- Isolation switch still open</p>
+                <p className="text-[12px] text-white">- Test lead failure</p>
+              </div>
+              <p className="text-[12px] text-white font-semibold mb-0.5">Investigation Steps:</p>
+              <div className="space-y-0.5">
+                <p className="text-[12px] text-white">- Verify test lead continuity</p>
+                <p className="text-[12px] text-white">- Check all isolation points</p>
+                <p className="text-[12px] text-white">- Inspect for obvious damage</p>
+                <p className="text-[12px] text-white">- Test sections systematically</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-red-400 mb-1.5">Inconsistent Ring Circuit Readings:</p>
+              <p className="text-[12px] text-white font-semibold mb-0.5">Symptoms:</p>
+              <div className="space-y-0.5 mb-2">
+                <p className="text-[12px] text-white">- Readings vary significantly around ring</p>
+                <p className="text-[12px] text-white">- Some outlets show very high resistance</p>
+                <p className="text-[12px] text-white">- End-to-end tests don't correlate</p>
+                <p className="text-[12px] text-white">- Unexpected zero or infinite readings</p>
+              </div>
+              <p className="text-[12px] text-white font-semibold mb-0.5">Likely Causes:</p>
+              <div className="space-y-0.5">
+                <p className="text-[12px] text-white">- Ring circuit not actually continuous</p>
+                <p className="text-[12px] text-white">- Incorrect wiring (radials from ring)</p>
+                <p className="text-[12px] text-white">- Crossed connections between circuits</p>
+                <p className="text-[12px] text-white">- Interconnections between ring legs</p>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Quality Assurance */}
+        {renderExpandable('qa', 'Quality Assurance and Verification', 'purple', (
+          <div className="space-y-2">
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-purple-400 mb-1.5">Result Verification:</p>
+              <div className="space-y-1">
+                <p className="text-[12px] text-white">- Sanity checks: Do results make sense for cable type/length?</p>
+                <p className="text-[12px] text-white">- Comparison: Similar circuits should have similar values</p>
+                <p className="text-[12px] text-white">- Calculation verification: Check arithmetic and formulas</p>
+                <p className="text-[12px] text-white">- Regulation compliance: Ensure values meet BS 7671 requirements</p>
+                <p className="text-[12px] text-white">- Design verification: Compare with design calculations</p>
+                <p className="text-[12px] text-white">- Documentation: Complete and accurate test records</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-purple-400 mb-1.5">Professional Standards:</p>
+              <div className="space-y-1">
+                <p className="text-[12px] text-white">- Competency: Ensure tester has appropriate qualifications</p>
+                <p className="text-[12px] text-white">- Equipment calibration: Valid certificates for all instruments</p>
+                <p className="text-[12px] text-white">- Method compliance: Follow BS 7671 and IET guidance</p>
+                <p className="text-[12px] text-white">- Witnessing: Independent verification where required</p>
+                <p className="text-[12px] text-white">- Sign-off: Responsible person validates results</p>
+                <p className="text-[12px] text-white">- Traceability: Clear audit trail of all testing</p>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Record Keeping */}
+        {renderExpandable('records', 'Record Keeping and Documentation', 'cyan', (
+          <div className="space-y-2">
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-cyan-400 mb-1.5">Essential Records:</p>
+              <div className="space-y-1">
+                <p className="text-[12px] text-white">- Test results: All measured values with units</p>
+                <p className="text-[12px] text-white">- Test conditions: Temperature, test method, instrument used</p>
+                <p className="text-[12px] text-white">- Circuit details: Cable type, length, protective device</p>
+                <p className="text-[12px] text-white">- Compliance assessment: Pass/fail against requirements</p>
+                <p className="text-[12px] text-white">- Remedial actions: Any work required to achieve compliance</p>
+                <p className="text-[12px] text-white">- Tester signature: Qualified person responsible for testing</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-cyan-400 mb-1.5">Digital Record Keeping:</p>
+              <div className="space-y-1">
+                <p className="text-[12px] text-white">- Electronic forms: Reduce errors and improve legibility</p>
+                <p className="text-[12px] text-white">- Photo documentation: Visual evidence of connections and issues</p>
+                <p className="text-[12px] text-white">- Cloud storage: Secure backup and easy access</p>
+                <p className="text-[12px] text-white">- Integration: Link with design software and databases</p>
+                <p className="text-[12px] text-white">- Reporting: Automated generation of certificates</p>
+                <p className="text-[12px] text-white">- Audit trails: Complete history of all changes</p>
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-green-400 mb-1.5">Long-term Value of Good Records:</p>
+              <div className="space-y-2">
+                <div>
+                  <p className="text-[12px] font-semibold text-white mb-0.5">Maintenance:</p>
+                  <div className="space-y-0.5">
+                    <p className="text-[12px] text-white">- Historical performance data</p>
+                    <p className="text-[12px] text-white">- Deterioration trends</p>
+                    <p className="text-[12px] text-white">- Predictive maintenance</p>
+                    <p className="text-[12px] text-white">- Warranty claims</p>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold text-white mb-0.5">Compliance:</p>
+                  <div className="space-y-0.5">
+                    <p className="text-[12px] text-white">- Regulatory inspections</p>
+                    <p className="text-[12px] text-white">- Insurance requirements</p>
+                    <p className="text-[12px] text-white">- Legal evidence</p>
+                    <p className="text-[12px] text-white">- Professional liability</p>
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold text-white mb-0.5">Business:</p>
+                  <div className="space-y-0.5">
+                    <p className="text-[12px] text-white">- Quality demonstration</p>
+                    <p className="text-[12px] text-white">- Client confidence</p>
+                    <p className="text-[12px] text-white">- Repeat business</p>
+                    <p className="text-[12px] text-white">- Professional reputation</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </motion.div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ContinuityPracticalGuidanceSection;

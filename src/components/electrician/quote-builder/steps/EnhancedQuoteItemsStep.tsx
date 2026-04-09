@@ -10,25 +10,11 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  Plus,
   Trash2,
-  Wrench,
-  Package,
-  Zap,
-  FileText,
   Copy,
-  TrendingUp,
   Search,
-  ChevronRight,
   ChevronDown,
-  Clock,
-  PoundSterling,
-  Hash,
-  Scan,
-  BookOpen,
-  Layers,
   ChevronUp,
-  Receipt,
   Pencil,
   Check,
 } from 'lucide-react';
@@ -312,8 +298,7 @@ export const EnhancedQuoteItemsStep = ({
       };
       onAdd(itemToAdd);
 
-      // Reset custom category after adding
-      setCustomCategory('manual');
+      // Keep customCategory so next manual item defaults to same category
 
       setNewItem((prev) => ({
         description: '',
@@ -417,10 +402,10 @@ export const EnhancedQuoteItemsStep = ({
   const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
   const categories = [
-    { id: 'labour', label: 'Labour', icon: Wrench, color: 'bg-elec-yellow' },
-    { id: 'materials', label: 'Materials', icon: Package, color: 'bg-elec-yellow' },
-    { id: 'equipment', label: 'Equipment', icon: Zap, color: 'bg-elec-yellow' },
-    { id: 'manual', label: 'Custom', icon: FileText, color: 'bg-elec-yellow' },
+    { id: 'labour', label: 'Labour', dotColor: 'bg-blue-500' },
+    { id: 'materials', label: 'Materials', dotColor: 'bg-green-500' },
+    { id: 'equipment', label: 'Equipment', dotColor: 'bg-purple-500' },
+    { id: 'manual', label: 'Custom', dotColor: 'bg-white' },
   ];
 
   const hourOptions = [
@@ -442,64 +427,36 @@ export const EnhancedQuoteItemsStep = ({
 
   return (
     <div className="space-y-4">
-      {/* Running Total Banner */}
+      {/* Running Total */}
       {items.length > 0 && (
-        <div className="flex items-center justify-between p-4 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center">
-              <PoundSterling className="h-5 w-5 text-black" />
-            </div>
-            <div>
-              <p className="text-[12px] text-white">Quote Total</p>
-              <p className="text-[13px] text-white">
-                {items.length} item{items.length !== 1 && 's'}
-              </p>
-            </div>
-          </div>
-          <p className="text-2xl font-bold text-elec-yellow">£{total.toFixed(2)}</p>
+        <div className="flex items-center justify-between">
+          <p className="text-[12px] text-white">{items.length} item{items.length !== 1 && 's'}</p>
+          <p className="text-[20px] font-bold text-elec-yellow">£{total.toFixed(2)}</p>
         </div>
       )}
 
-      {/* Quick Actions - Scanner & Templates */}
-      <div className="grid grid-cols-2 gap-3">
-        {/* Scan Invoice - Primary Action */}
+      {/* Quick actions — prominent, own row */}
+      <div className="grid grid-cols-2 gap-2">
         <button
           type="button"
           onClick={() => setScannerSheetOpen(true)}
-          className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 touch-manipulation active:scale-[0.98] transition-all"
+          className="h-12 rounded-xl bg-white/[0.06] border border-white/[0.1] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all"
         >
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/20">
-            <Scan className="h-6 w-6 text-white" />
-          </div>
-          <div className="text-center">
-            <p className="text-[14px] font-semibold text-white">Scan Invoice</p>
-            <p className="text-[11px] text-white">Photo or upload</p>
-          </div>
+          Scan Invoice
         </button>
-
-        {/* Job Templates */}
         <button
           type="button"
           onClick={() => setShowTemplates(true)}
-          className="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
+          className="h-12 rounded-xl bg-white/[0.06] border border-white/[0.1] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all"
         >
-          <div className="w-12 h-12 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-            <Copy className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <div className="text-center">
-            <p className="text-[14px] font-semibold text-white">Templates</p>
-            <p className="text-[11px] text-white">Common jobs</p>
-          </div>
+          Templates
         </button>
       </div>
 
-      {/* Markup Quick Select - Always visible */}
+      {/* Material markup */}
       {setPriceAdjustment && (
-        <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <div className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-elec-yellow" />
-            <span className="text-[13px] text-white">Material Markup</span>
-          </div>
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-medium text-white">Material Markup</span>
           <div className="flex gap-1">
             {[0, 10, 15, 20].map((markup) => (
               <button
@@ -507,10 +464,10 @@ export const EnhancedQuoteItemsStep = ({
                 type="button"
                 onClick={() => setPriceAdjustment(markup)}
                 className={cn(
-                  'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.97]',
+                  'h-9 px-3 rounded-lg text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.97]',
                   priceAdjustment === markup
                     ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.05] text-white'
+                    : 'bg-white/[0.04] text-white border border-white/[0.08]'
                 )}
               >
                 {markup}%
@@ -520,19 +477,9 @@ export const EnhancedQuoteItemsStep = ({
         </div>
       )}
 
-      {/* Section Header */}
-      <div className="flex items-center gap-2 pt-2">
-        <div className="h-px flex-1 bg-white/10" />
-        <span className="text-[11px] uppercase tracking-wider text-white font-medium">
-          Add Items
-        </span>
-        <div className="h-px flex-1 bg-white/10" />
-      </div>
-
-      {/* Category Pills - iOS-style segmented control */}
-      <div className="grid grid-cols-4 gap-2">
+      {/* Category tabs */}
+      <div className="flex gap-1.5">
         {categories.map((cat) => {
-          const Icon = cat.icon;
           const isActive = newItem.category === cat.id;
           return (
             <button
@@ -540,34 +487,27 @@ export const EnhancedQuoteItemsStep = ({
               type="button"
               onClick={() => handleCategoryChange(cat.id)}
               className={cn(
-                'flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all touch-manipulation active:scale-[0.97]',
+                'flex-1 h-11 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.98]',
                 isActive
-                  ? 'bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20'
-                  : 'bg-white/[0.03] text-white border border-white/[0.06]'
+                  ? 'bg-elec-yellow text-black font-semibold'
+                  : 'bg-white/[0.04] text-white border border-white/[0.08]'
               )}
             >
-              <Icon className={cn('h-5 w-5', isActive ? 'text-black' : 'text-white')} />
-              <span
-                className={cn('text-[12px] font-medium', isActive ? 'text-black' : 'text-white')}
-              >
-                {cat.label}
-              </span>
+              {cat.label}
             </button>
           );
         })}
       </div>
 
-      {/* Add Item Form - iOS grouped style */}
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+      {/* Add Item Form */}
+      <div>
         {/* Labour Fields */}
         {newItem.category === 'labour' && (
           <div className="p-4 space-y-4">
             {/* Worker Type - Visual Pills */}
             <div>
-              <label className="text-[12px] text-white uppercase tracking-wide mb-2 block">
-                Worker Type
-              </label>
-              <div className="grid grid-cols-2 gap-2">
+              <label className="text-xs font-medium text-white mb-2 block">Worker Type</label>
+              <div className="space-y-1.5">
                 {workerTypes.map((w) => {
                   const isSelected = newItem.workerType === w.id;
                   return (
@@ -576,40 +516,24 @@ export const EnhancedQuoteItemsStep = ({
                       type="button"
                       onClick={() => handleWorkerTypeChange(w.id)}
                       className={cn(
-                        'flex items-center justify-between p-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]',
+                        'w-full flex items-center justify-between h-11 px-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]',
                         isSelected
                           ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.03] text-white border border-white/[0.08]'
+                          : 'bg-white/[0.04] text-white border border-white/[0.08]'
                       )}
                     >
-                      <span
-                        className={cn(
-                          'text-[13px] font-medium',
-                          isSelected ? 'text-black' : 'text-white'
-                        )}
-                      >
-                        {w.name}
-                      </span>
-                      <span
-                        className={cn(
-                          'text-[12px] font-semibold',
-                          isSelected ? 'text-black/70' : 'text-white'
-                        )}
-                      >
-                        £{w.defaultHourlyRate}/hr
-                      </span>
+                      <span className={cn('text-[13px] font-medium', isSelected ? 'text-black' : 'text-white')}>{w.name}</span>
+                      <span className={cn('text-[12px] font-semibold', isSelected ? 'text-black/70' : 'text-white')}>£{w.defaultHourlyRate}/hr</span>
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Hours - Visual Pills */}
+            {/* Hours */}
             <div>
-              <label className="text-[12px] text-white uppercase tracking-wide mb-2 block">
-                Hours
-              </label>
-              <div className="flex flex-wrap gap-2">
+              <label className="text-xs font-medium text-white mb-2 block">Hours</label>
+              <div className="grid grid-cols-3 gap-1.5">
                 {hourOptions.map((opt) => {
                   const isSelected = newItem.hours === parseFloat(opt.value);
                   return (
@@ -618,10 +542,10 @@ export const EnhancedQuoteItemsStep = ({
                       type="button"
                       onClick={() => handleHoursChange(parseFloat(opt.value))}
                       className={cn(
-                        'px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                        'h-11 rounded-xl text-[12px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                         isSelected
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.03] text-white border border-white/[0.08]'
+                          ? 'bg-elec-yellow text-black font-semibold'
+                          : 'bg-white/[0.04] text-white border border-white/[0.08]'
                       )}
                     >
                       {opt.label}
@@ -728,77 +652,43 @@ export const EnhancedQuoteItemsStep = ({
 
         {/* Equipment Fields */}
         {newItem.category === 'equipment' && (
-          <div className="divide-y divide-white/[0.06]">
-            {/* Category */}
-            <div className="flex items-center gap-3 p-3.5">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Zap className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white block">Equipment Category</label>
-                <Select
-                  value={newItem.subcategory || ''}
-                  onValueChange={(value) => setNewItem((prev) => ({ ...prev, subcategory: value }))}
-                >
-                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white">
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
-                    {equipmentCategories.map((c) => (
-                      <SelectItem
-                        key={c.id}
-                        value={c.id}
-                        className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer"
-                      >
-                        {c.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+          <div className="space-y-3 p-0">
+            <div>
+              <label className="text-xs font-medium text-white mb-1.5 block">Equipment Category</label>
+              <Select value={newItem.subcategory || ''} onValueChange={(value) => setNewItem((prev) => ({ ...prev, subcategory: value }))}>
+                <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.08] text-white touch-manipulation">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
+                  {equipmentCategories.map((c) => (
+                    <SelectItem key={c.id} value={c.id} className="text-foreground focus:bg-white/10 cursor-pointer">{c.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-            {/* Equipment */}
-            <div className="flex items-center gap-3 p-3.5">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Package className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white block">Equipment</label>
-                <Select
-                  value={newItem.equipmentCode || ''}
-                  onValueChange={(value) => handleEquipmentSelect(value)}
-                >
-                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white">
-                    <SelectValue placeholder="Select equipment" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
-                    {commonEquipment
-                      .filter((e) => !newItem.subcategory || e.category === newItem.subcategory)
-                      .map((e) => (
-                        <SelectItem
-                          key={e.id}
-                          value={e.id}
-                          className="text-foreground focus:bg-white/10 focus:text-foreground cursor-pointer"
-                        >
-                          {e.name} - £{e.dailyRate}/{e.unit}
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div>
+              <label className="text-xs font-medium text-white mb-1.5 block">Equipment</label>
+              <Select value={newItem.equipmentCode || ''} onValueChange={(value) => handleEquipmentSelect(value)}>
+                <SelectTrigger className="h-11 bg-white/[0.06] border-white/[0.08] text-white touch-manipulation">
+                  <SelectValue placeholder="Select equipment" />
+                </SelectTrigger>
+                <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
+                  {commonEquipment.filter((e) => !newItem.subcategory || e.category === newItem.subcategory).map((e) => (
+                    <SelectItem key={e.id} value={e.id} className="text-foreground focus:bg-white/10 cursor-pointer">{e.name} - £{e.dailyRate}/{e.unit}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         )}
 
         {/* Manual Entry Fields */}
         {newItem.category === 'manual' && (
-          <div className="divide-y divide-white/[0.06]">
-            {/* Appears Under - Category Picker */}
-            <div className="p-3.5">
-              <label className="text-[12px] text-white uppercase tracking-wide mb-2 block">
-                Appears Under (on PDF)
-              </label>
-              <div className="flex flex-wrap gap-2">
+          <div className="space-y-3 p-0">
+            {/* Appears Under */}
+            <div>
+              <label className="text-xs font-medium text-white mb-2 block">Appears Under (on PDF)</label>
+              <div className="flex gap-1.5">
                 {[
                   { id: 'materials' as const, label: 'Materials' },
                   { id: 'labour' as const, label: 'Labour' },
@@ -810,10 +700,10 @@ export const EnhancedQuoteItemsStep = ({
                     type="button"
                     onClick={() => setCustomCategory(opt.id)}
                     className={cn(
-                      'px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                      'flex-1 h-11 rounded-xl text-[12px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                       customCategory === opt.id
                         ? 'bg-elec-yellow text-black'
-                        : 'bg-white/[0.03] text-white border border-white/[0.08]'
+                        : 'bg-white/[0.04] text-white border border-white/[0.08]'
                     )}
                   >
                     {opt.label}
@@ -822,75 +712,56 @@ export const EnhancedQuoteItemsStep = ({
               </div>
             </div>
             {/* Description */}
-            <div className="p-3.5">
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                  <FileText className="h-5 w-5 text-black" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <label className="text-[12px] text-white block mb-1">Description *</label>
-                  <Textarea
-                    placeholder="e.g., Site visit fee, Call-out charge"
-                    value={newItem.description}
-                    onChange={(e) =>
-                      setNewItem((prev) => ({ ...prev, description: e.target.value }))
-                    }
-                    className="min-h-[80px] px-0 border-0 bg-transparent text-[15px] text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
-                  />
-                </div>
-              </div>
+            <div>
+              <label className="text-xs font-medium text-white mb-1.5 block">Description *</label>
+              <Textarea
+                placeholder="e.g., Site visit fee, Call-out charge"
+                value={newItem.description}
+                onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
+                className="min-h-[80px] px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white resize-none"
+              />
             </div>
             {/* Quantity */}
-            <div className="flex items-center gap-3 p-3.5">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Hash className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white block">Quantity</label>
-                <Input
-                  type="text"
-                  inputMode="decimal"
-                  value={quantityInput}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === '' || /^\d*\.?\d*$/.test(val)) setQuantityInput(val);
-                  }}
-                  onBlur={() => {
-                    const parsed = parseFloat(quantityInput);
-                    const val = isNaN(parsed) || parsed <= 0 ? 1 : parsed;
-                    setNewItem((prev) => ({ ...prev, quantity: val }));
-                    setQuantityInput(String(val));
-                  }}
-                  placeholder="1"
-                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
-              </div>
+            <div>
+              <label className="text-xs font-medium text-white mb-1.5 block">Quantity</label>
+              <Input
+                type="text"
+                inputMode="decimal"
+                value={quantityInput}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === '' || /^\d*\.?\d*$/.test(val)) setQuantityInput(val);
+                }}
+                onBlur={() => {
+                  const parsed = parseFloat(quantityInput);
+                  const val = isNaN(parsed) || parsed <= 0 ? 1 : parsed;
+                  setNewItem((prev) => ({ ...prev, quantity: val }));
+                  setQuantityInput(String(val));
+                }}
+                placeholder="1"
+                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white"
+              />
             </div>
             {/* Unit Price */}
-            <div className="flex items-center gap-3 p-3.5">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <PoundSterling className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white block">Unit Price (£)</label>
-                <Input
-                  type="text"
-                  inputMode="decimal"
-                  value={unitPriceInput}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val === '' || /^\d*\.?\d*$/.test(val)) setUnitPriceInput(val);
-                  }}
-                  onBlur={() => {
-                    const parsed = parseFloat(unitPriceInput);
-                    const val = isNaN(parsed) ? 0 : parsed;
-                    setNewItem((prev) => ({ ...prev, unitPrice: val }));
-                    if (val > 0) setUnitPriceInput(val.toFixed(2));
-                  }}
-                  placeholder="0.00"
-                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0"
-                />
-              </div>
+            <div>
+              <label className="text-xs font-medium text-white mb-1.5 block">Unit Price (£)</label>
+              <Input
+                type="text"
+                inputMode="decimal"
+                value={unitPriceInput}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  if (val === '' || /^\d*\.?\d*$/.test(val)) setUnitPriceInput(val);
+                }}
+                onBlur={() => {
+                  const parsed = parseFloat(unitPriceInput);
+                  const val = isNaN(parsed) ? 0 : parsed;
+                  setNewItem((prev) => ({ ...prev, unitPrice: val }));
+                  if (val > 0) setUnitPriceInput(val.toFixed(2));
+                }}
+                placeholder="0.00"
+                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white"
+              />
             </div>
             {/* Total Preview */}
             {newItem.quantity > 0 && newItem.unitPrice > 0 && (
@@ -905,13 +776,12 @@ export const EnhancedQuoteItemsStep = ({
         )}
 
         {/* Add Button */}
-        <div className="p-3.5 bg-white/[0.02]">
+        <div className="pt-2">
           <Button
             onClick={handleAddItem}
             disabled={!newItem.description || newItem.unitPrice <= 0}
             className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-40"
           >
-            <Plus className="h-5 w-5 mr-2" />
             Add to Quote
           </Button>
         </div>
@@ -926,8 +796,6 @@ export const EnhancedQuoteItemsStep = ({
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
             {items.map((item) => {
               const cat = categories.find((c) => c.id === item.category);
-              const Icon = cat?.icon || FileText;
-              const color = cat?.color || 'bg-gray-500';
               return (
                 <div key={item.id} className="p-3">
                   {/* Top row: Category dot + Description + Total */}
@@ -1068,69 +936,42 @@ export const EnhancedQuoteItemsStep = ({
         </div>
       )}
 
-      {/* Job Templates Button */}
+      {/* Job Templates */}
       {!showTemplates ? (
         <button
           type="button"
           onClick={() => setShowTemplates(true)}
-          className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-dashed border-white/[0.1] touch-manipulation active:bg-white/[0.05] transition-colors"
+          className="w-full h-12 flex items-center justify-between px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] active:bg-white/[0.07] transition-all"
         >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
-              <FileText className="h-5 w-5 text-white" />
-            </div>
-            <div className="text-left">
-              <p className="text-[14px] font-medium text-white">Use Job Template</p>
-              <p className="text-[12px] text-white">Pre-built item sets for common jobs</p>
-            </div>
-          </div>
-          <ChevronRight className="h-5 w-5 text-white" />
+          <span className="text-[13px] font-medium text-white">Job Templates</span>
+          <span className="text-[11px] text-white">Pre-built item sets</span>
         </button>
       ) : (
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-          <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
-            <h3 className="font-semibold text-white">Job Templates</h3>
-            <button
-              type="button"
-              onClick={() => setShowTemplates(false)}
-              className="text-[14px] text-elec-yellow font-medium touch-manipulation"
-            >
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wide">Job Templates</h3>
+            <button type="button" onClick={() => setShowTemplates(false)} className="text-[12px] text-elec-yellow font-medium touch-manipulation">
               Close
             </button>
           </div>
-          <div className="p-4">
-            <JobTemplates onSelectTemplate={handleTemplateSelect} />
-          </div>
+          <JobTemplates onSelectTemplate={handleTemplateSelect} />
         </div>
       )}
 
-      {/* Price Book Section */}
+      {/* Price Book */}
       {!showPriceBook ? (
         <button
           type="button"
           onClick={() => setShowPriceBook(true)}
-          className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-dashed border-white/[0.1] touch-manipulation active:bg-white/[0.05] transition-colors"
+          className="w-full h-12 flex items-center justify-between px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] active:bg-white/[0.07] transition-all"
         >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-              <BookOpen className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div className="text-left">
-              <p className="text-[14px] font-medium text-white">My Price Book</p>
-              <p className="text-[12px] text-white">
-                {pricedBookItems.length} saved {pricedBookItems.length === 1 ? 'item' : 'items'}
-              </p>
-            </div>
-          </div>
-          <ChevronRight className="h-5 w-5 text-white" />
+          <span className="text-[13px] font-medium text-white">My Price Book</span>
+          <span className="text-[11px] text-white">{pricedBookItems.length} items</span>
         </button>
       ) : (
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
           <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
-            <h3 className="font-semibold text-white flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-elec-yellow" />
-              My Price Book
-            </h3>
+            <h3 className="font-semibold text-white">My Price Book</h3>
             <button
               type="button"
               onClick={() => setShowPriceBook(false)}
@@ -1208,28 +1049,15 @@ export const EnhancedQuoteItemsStep = ({
           <button
             type="button"
             onClick={() => setShowRateCard(true)}
-            className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-dashed border-white/[0.1] touch-manipulation active:bg-white/[0.05] transition-colors"
+            className="w-full h-12 flex items-center justify-between px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] active:bg-white/[0.07] transition-all"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                <Receipt className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div className="text-left">
-                <p className="text-[14px] font-medium text-white">My Rate Card</p>
-                <p className="text-[12px] text-white">
-                  {rateCardItems.length} saved {rateCardItems.length === 1 ? 'rate' : 'rates'}
-                </p>
-              </div>
-            </div>
-            <ChevronRight className="h-5 w-5 text-white" />
+            <span className="text-[13px] font-medium text-white">My Rate Card</span>
+            <span className="text-[11px] text-white">{rateCardItems.length} rates</span>
           </button>
         ) : (
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
-              <h3 className="font-semibold text-white flex items-center gap-2">
-                <Receipt className="h-4 w-4 text-elec-yellow" />
-                My Rate Card
-              </h3>
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wide">My Rate Card</h3>
               <button
                 type="button"
                 onClick={() => setShowRateCard(false)}
@@ -1306,28 +1134,15 @@ export const EnhancedQuoteItemsStep = ({
           <button
             type="button"
             onClick={() => setShowBundles(true)}
-            className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-dashed border-white/[0.1] touch-manipulation active:bg-white/[0.05] transition-colors"
+            className="w-full h-12 flex items-center justify-between px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] active:bg-white/[0.07] transition-all"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                <Layers className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div className="text-left">
-                <p className="text-[14px] font-medium text-white">My Bundles</p>
-                <p className="text-[12px] text-white">
-                  {bundles.length} saved {bundles.length === 1 ? 'assembly' : 'assemblies'}
-                </p>
-              </div>
-            </div>
-            <ChevronRight className="h-5 w-5 text-white" />
+            <span className="text-[13px] font-medium text-white">My Bundles</span>
+            <span className="text-[11px] text-white">{bundles.length} assemblies</span>
           </button>
         ) : (
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
-              <h3 className="font-semibold text-white flex items-center gap-2">
-                <Layers className="h-4 w-4 text-elec-yellow" />
-                My Bundles
-              </h3>
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wide">My Bundles</h3>
               <button
                 type="button"
                 onClick={() => setShowBundles(false)}

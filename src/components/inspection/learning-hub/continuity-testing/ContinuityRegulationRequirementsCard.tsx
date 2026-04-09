@@ -1,165 +1,231 @@
-import React from 'react';
-import { BookOpen, Shield, AlertTriangle } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const ContinuityRegulationRequirementsCard = () => (
-  <Card className="bg-gradient-to-br from-card to-background border-border">
-    <CardHeader className="p-4 sm:p-5 md:p-6">
-      <CardTitle className="text-elec-yellow flex items-center gap-2 text-base sm:text-lg md:text-xl">
-        <BookOpen className="h-5 w-5 sm:h-6 sm:w-6" />
-        BS 7671 Regulation Requirements
-      </CardTitle>
-      <CardDescription className="text-gray-300 text-sm sm:text-base">
-        Detailed regulatory requirements for continuity of protective conductors testing
-      </CardDescription>
-    </CardHeader>
-    <CardContent className="p-4 sm:p-5 md:p-6">
-      <div className="space-y-3 sm:space-y-4">
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 sm:p-4 md:p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-            <h4 className="font-medium text-blue-400 text-sm sm:text-base">
-              Regulation 612.2 - Continuity of Protective Conductors
-            </h4>
-          </div>
-          <div className="space-y-3 text-sm text-gray-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="font-medium text-foreground mb-2">612.2.1 - Test Requirements:</p>
-                <div className="space-y-1 text-xs">
-                  <p>• Continuity of every protective conductor must be verified</p>
-                  <p>• Test current shall not be less than 200mA</p>
-                  <p>• Test shall be made using a low resistance ohmmeter</p>
-                  <p>• The resistance of test leads shall be measured and recorded</p>
-                  <p>• Test results shall be corrected for test lead resistance</p>
-                </div>
-              </div>
-              <div>
-                <p className="font-medium text-foreground mb-2">612.2.2 - Test Methods:</p>
-                <div className="space-y-1 text-xs">
-                  <p>• Method 1: Test between phase and protective conductor (R1+R2)</p>
-                  <p>• Method 2: Test protective conductor only (R2)</p>
-                  <p>• Temporary link method acceptable for Method 2</p>
-                  <p>• All parallel paths must be disconnected during testing</p>
-                  <p>• Results must be recorded on appropriate test certificate</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
-        <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 sm:p-4 md:p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
-            <h4 className="font-medium text-green-400 text-sm sm:text-base">
-              Regulation 543.1 - Protective Conductor Cross-sectional Areas
-            </h4>
-          </div>
-          <div className="space-y-3 text-sm text-gray-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="font-medium text-foreground mb-2">
-                  543.1.3 - Minimum Cross-sectional Areas:
-                </p>
-                <div className="space-y-1 text-xs">
-                  <p>• Where phase conductor ≤ 16mm²: CPC = phase conductor size</p>
-                  <p>• Where phase conductor {'>'}16mm² but ≤ 35mm²: CPC = 16mm²</p>
-                  <p>• Where phase conductor {'>'} 35mm²: CPC = phase conductor size ÷ 2</p>
-                  <p>• Minimum CPC size: 2.5mm² for mechanical protection</p>
-                  <p>• Alternative calculation method using adiabatic equation</p>
-                </div>
-              </div>
-              <div>
-                <p className="font-medium text-foreground mb-2">543.1.4 - Ring Final Circuits:</p>
-                <div className="space-y-1 text-xs">
-                  <p>• Total resistance R1+R2 shall not exceed 1.67Ω</p>
-                  <p>• This ensures adequate fault current for protective device operation</p>
-                  <p>• Value based on 32A protective device with 0.4s disconnection</p>
-                  <p>• Applies to both socket outlet and fixed equipment circuits</p>
-                  <p>• Regular verification required during periodic inspection</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+interface Props {
+  onBack: () => void;
+}
 
-        <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3 sm:p-4 md:p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400" />
-            <h4 className="font-medium text-orange-400 text-sm sm:text-base">
-              Regulation 411.3.2 - Automatic Disconnection Requirements
-            </h4>
-          </div>
-          <div className="space-y-3 text-sm text-gray-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="font-medium text-foreground mb-2">
-                  411.3.2.2 - Maximum Disconnection Times:
-                </p>
-                <div className="space-y-1 text-xs">
-                  <p>• Final circuits not exceeding 32A: 0.4 seconds</p>
-                  <p>• Distribution circuits and final circuits exceeding 32A: 5 seconds</p>
-                  <p>• Special locations may have reduced disconnection times</p>
-                  <p>• Times apply to TN systems (TT systems have different requirements)</p>
-                  <p>• Protective conductor continuity essential for compliance</p>
-                </div>
-              </div>
-              <div>
-                <p className="font-medium text-foreground mb-2">411.3.2.3 - Maximum Zs Values:</p>
-                <div className="space-y-1 text-xs">
-                  <p>• Earth fault loop impedance must not exceed tabulated values</p>
-                  <p>• Values ensure adequate fault current for protective device operation</p>
-                  <p>• R1+R2 component critical for overall Zs calculation</p>
-                  <p>• Temperature correction factors must be applied</p>
-                  <p>• Regular testing ensures continued compliance</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+type SectionId = 'reg612' | 'reg543' | 'reg411' | 'compliance';
 
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 sm:p-4 md:p-5">
-          <div className="flex items-center gap-2 mb-3">
-            <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
-            <h4 className="font-medium text-red-400 text-sm sm:text-base">
-              Critical Compliance Points
-            </h4>
-          </div>
-          <div className="space-y-3 text-sm text-gray-300">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <p className="font-medium text-foreground mb-2">Testing Requirements:</p>
-                <div className="space-y-1 text-xs">
-                  <p>• Every protective conductor must be tested</p>
-                  <p>• Minimum 200mA test current required</p>
-                  <p>• Test lead resistance must be accounted for</p>
-                  <p>• Results must be recorded and retained</p>
-                </div>
-              </div>
-              <div>
-                <p className="font-medium text-foreground mb-2">Design Compliance:</p>
-                <div className="space-y-1 text-xs">
-                  <p>• Protective conductor sizing per Regulation 543</p>
-                  <p>• Maximum R1+R2 values for automatic disconnection</p>
-                  <p>• Ring circuit specific limitations</p>
-                  <p>• Bonding conductor requirements</p>
-                </div>
-              </div>
-              <div>
-                <p className="font-medium text-foreground mb-2">Documentation:</p>
-                <div className="space-y-1 text-xs">
-                  <p>• Electrical Installation Certificate required</p>
-                  <p>• Schedule of Test Results must be completed</p>
-                  <p>• Periodic inspection reports for existing installations</p>
-                  <p>• Competent person certification</p>
-                </div>
-              </div>
-            </div>
+const regulations = [
+  {
+    id: 'reg612' as SectionId,
+    title: 'Regulation 612.2 - Continuity of Protective Conductors',
+    accent: 'blue',
+    content: [
+      {
+        heading: '612.2.1 - Test Requirements:',
+        items: [
+          'Continuity of every protective conductor must be verified',
+          'Test current shall not be less than 200mA',
+          'Test shall be made using a low resistance ohmmeter',
+          'The resistance of test leads shall be measured and recorded',
+          'Test results shall be corrected for test lead resistance',
+        ],
+      },
+      {
+        heading: '612.2.2 - Test Methods:',
+        items: [
+          'Method 1: Test between phase and protective conductor (R1+R2)',
+          'Method 2: Test protective conductor only (R2)',
+          'Temporary link method acceptable for Method 2',
+          'All parallel paths must be disconnected during testing',
+          'Results must be recorded on appropriate test certificate',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'reg543' as SectionId,
+    title: 'Regulation 543.1 - Protective Conductor Cross-sectional Areas',
+    accent: 'green',
+    content: [
+      {
+        heading: '543.1.3 - Minimum Cross-sectional Areas:',
+        items: [
+          'Where phase conductor \u2264 16mm\u00B2: CPC = phase conductor size',
+          'Where phase conductor >16mm\u00B2 but \u2264 35mm\u00B2: CPC = 16mm\u00B2',
+          'Where phase conductor > 35mm\u00B2: CPC = phase conductor size \u00F7 2',
+          'Minimum CPC size: 2.5mm\u00B2 for mechanical protection',
+          'Alternative calculation method using adiabatic equation',
+        ],
+      },
+      {
+        heading: '543.1.4 - Ring Final Circuits:',
+        items: [
+          'Total resistance R1+R2 shall not exceed 1.67\u03A9',
+          'This ensures adequate fault current for protective device operation',
+          'Value based on 32A protective device with 0.4s disconnection',
+          'Applies to both socket outlet and fixed equipment circuits',
+          'Regular verification required during periodic inspection',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'reg411' as SectionId,
+    title: 'Regulation 411.3.2 - Automatic Disconnection Requirements',
+    accent: 'orange',
+    content: [
+      {
+        heading: '411.3.2.2 - Maximum Disconnection Times:',
+        items: [
+          'Final circuits \u226432A: disconnection time not more than 0.4s',
+          'Final circuits >32A and distribution circuits: disconnection time up to 5s',
+          'Measured Zs must be such that the protective device disconnects the circuit within the required time stated in BS 7671',
+          'Special locations may have reduced disconnection times',
+          'Times apply to TN systems (TT systems have different requirements)',
+          'Protective conductor continuity essential for compliance',
+        ],
+      },
+      {
+        heading: '411.3.2.3 - Maximum Zs Values:',
+        items: [
+          'Earth fault loop impedance must not exceed tabulated values',
+          'Values ensure adequate fault current for protective device operation',
+          'R1+R2 component critical for overall Zs calculation',
+          'Temperature correction factors must be applied',
+          'Regular testing ensures continued compliance',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'compliance' as SectionId,
+    title: 'Critical Compliance Points',
+    accent: 'red',
+    content: [
+      {
+        heading: 'Testing Requirements:',
+        items: [
+          'Every protective conductor must be tested',
+          'Minimum 200mA test current required',
+          'Test lead resistance must be accounted for',
+          'Results must be recorded and retained',
+        ],
+      },
+      {
+        heading: 'Design Compliance:',
+        items: [
+          'Protective conductor sizing per Regulation 543',
+          'Maximum R1+R2 values for automatic disconnection',
+          'Ring circuit specific limitations',
+          'Bonding conductor requirements',
+        ],
+      },
+      {
+        heading: 'Documentation:',
+        items: [
+          'Electrical Installation Certificate required',
+          'Schedule of Test Results must be completed',
+          'Periodic inspection reports for existing installations',
+          'Competent person certification',
+        ],
+      },
+    ],
+  },
+];
+
+const barMap: Record<string, string> = {
+  blue: 'bg-blue-500/50',
+  green: 'bg-green-500/50',
+  orange: 'bg-orange-500/50',
+  red: 'bg-red-500/50',
+};
+const textMap: Record<string, string> = {
+  blue: 'text-blue-400',
+  green: 'text-green-400',
+  orange: 'text-orange-400',
+  red: 'text-red-400',
+};
+
+const ContinuityRegulationRequirementsCard = ({ onBack }: Props) => {
+  const [expanded, setExpanded] = useState<SectionId | null>(null);
+  const toggle = (id: SectionId) => setExpanded((prev) => (prev === id ? null : id));
+
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">Regulations</h1>
           </div>
         </div>
       </div>
-    </CardContent>
-  </Card>
-);
+
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-3">
+        <motion.div variants={itemVariants}>
+          <div className="relative rounded-2xl bg-white/[0.03] border border-cyan-500/20 p-4 overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-500/60 rounded-l-2xl" />
+            <p className="text-[13px] font-semibold text-cyan-400">BS 7671 Regulation Requirements</p>
+            <p className="text-[12px] text-white mt-1">
+              Detailed regulatory requirements for continuity of protective conductors testing
+            </p>
+          </div>
+        </motion.div>
+
+        {regulations.map((reg) => {
+          const isOpen = expanded === reg.id;
+          return (
+            <motion.div key={reg.id} variants={itemVariants}>
+              <button
+                type="button"
+                onClick={() => toggle(reg.id)}
+                className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
+              >
+                <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? 'border-white/[0.15]' : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+                  <div className={`absolute left-0 top-0 bottom-0 w-1 ${barMap[reg.accent]} rounded-l-2xl`} />
+                  <div className="p-4 flex items-center gap-3">
+                    <p className={`text-[13px] font-semibold ${textMap[reg.accent]} flex-1`}>{reg.title}</p>
+                    <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                      <ChevronDown className="h-4 w-4 text-white shrink-0" />
+                    </motion.div>
+                  </div>
+                </div>
+              </button>
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-2 px-1 pb-1 space-y-2">
+                      {reg.content.map((block, i) => (
+                        <div key={i} className="rounded-xl bg-white/[0.05] p-3">
+                          <p className="text-[12px] font-semibold text-white mb-1.5">{block.heading}</p>
+                          <div className="space-y-1">
+                            {block.items.map((item, j) => (
+                              <p key={j} className="text-[12px] text-white">- {item}</p>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+    </div>
+  );
+};
 
 export default ContinuityRegulationRequirementsCard;

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { AlertTriangle, CheckCircle2, XCircle, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const scenarios = [
   {
@@ -21,7 +23,7 @@ const scenarios = [
     scenario:
       'After isolating a motor starter circuit, you receive a shock. The PFC capacitors retained a dangerous charge.',
     lesson:
-      'Regulation 416.2.5 requires a warning label adjacent to enclosures containing equipment that may retain a dangerous charge after disconnection. Allow discharge time and verify with a voltage indicator before touching conductors.',
+      'Regulation 416.2 requires measures to prevent danger from equipment that may retain a dangerous charge after disconnection. Allow discharge time and verify with a voltage indicator before touching conductors.',
   },
   {
     title: 'Adjacent Live Circuits',
@@ -32,109 +34,131 @@ const scenarios = [
   },
 ];
 
-const ReferenceTab = () => {
+const ReferenceTab = ({ onBack }: { onBack: () => void }) => {
   const [expanded, setExpanded] = useState<number | null>(null);
 
   return (
     <div className="space-y-4 sm:space-y-5">
-      {/* Reference note */}
-      <p className="text-xs text-white">
-        Verified against the regulations intelligence and practical work intelligence databases
-      </p>
+      {/* Back button header */}
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={onBack}
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div>
+              <h1 className="text-base font-semibold text-white">Regulations & Reference</h1>
+              <p className="text-[10px] text-white">BS 7671 · EAW 1989 · GS38</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Legal framework */}
-      <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-        <div className="px-4 py-3.5">
-          <h4 className="font-semibold text-white text-sm sm:text-base">Legal Framework</h4>
-        </div>
+      <div className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Legal Framework</h2>
         {[
           {
             title: 'Health and Safety at Work Act 1974',
             detail: 'General duty of care on employers and employees to ensure safety',
+            accent: 'bg-blue-500/50',
           },
           {
             title: 'Electricity at Work Regulations 1989',
             detail: 'Reg 12: Isolation. Reg 13: Dead working. Reg 14: Live work',
+            accent: 'bg-purple-500/50',
           },
           {
             title: 'HSE Guidance Note GS38',
             detail: 'Requirements for electrical test equipment — probes, leads, fuses, insulation',
+            accent: 'bg-amber-500/50',
           },
           {
             title: 'BS 7671 Key Regulations',
             detail:
-              'Reg 131.2 (safe isolation procedures), 132.8 (three-step prove-dead), 132.10 (disconnecting devices and lock-off), 463.3 (formal safe-isolation), 537.2 (isolation and switching)',
+              'Reg 131.2 (protection against electric shock), 132.10 (disconnecting devices for safe isolation), 463.3 (selection of isolators per Chapter 53), 537.2 (isolation and switching devices)',
+            accent: 'bg-green-500/50',
           },
         ].map((entry) => (
-          <div key={entry.title} className="px-4 py-3">
-            <span className="text-sm font-medium text-white">{entry.title}</span>
+          <div key={entry.title} className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] p-4 overflow-hidden">
+            <div className={`absolute left-0 top-0 bottom-0 w-1 ${entry.accent} rounded-l-2xl`} />
+            <span className="text-sm font-medium text-white block">{entry.title}</span>
             <p className="text-xs text-white mt-0.5">{entry.detail}</p>
           </div>
         ))}
       </div>
 
       {/* Acceptable vs NOT acceptable */}
-      <div className="grid grid-cols-2 gap-2 sm:gap-3">
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3 sm:p-4">
-          <div className="flex items-center gap-1.5 mb-2.5">
-            <CheckCircle2 className="h-4 w-4 text-green-400" />
-            <span className="font-semibold text-green-400 text-xs sm:text-sm">Acceptable</span>
+      <div className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Acceptable Isolation Devices</h2>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="relative rounded-2xl bg-white/[0.07] border border-green-500/30 p-3 sm:p-4 overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-green-500/50 rounded-l-2xl" />
+            <span className="font-semibold text-green-400 text-xs sm:text-sm block mb-2">Acceptable</span>
+            <ul className="space-y-1.5 text-xs sm:text-sm text-white">
+              <li>Switch-disconnectors</li>
+              <li>Circuit breakers</li>
+              <li>Isolators (visible break)</li>
+              <li>Plug withdrawal</li>
+            </ul>
           </div>
-          <ul className="space-y-1.5 text-xs sm:text-sm text-white">
-            <li>Switch-disconnectors</li>
-            <li>Circuit breakers</li>
-            <li>Isolators (visible break)</li>
-            <li>Plug withdrawal</li>
-          </ul>
-        </div>
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3 sm:p-4">
-          <div className="flex items-center gap-1.5 mb-2.5">
-            <XCircle className="h-4 w-4 text-red-400" />
-            <span className="font-semibold text-red-400 text-xs sm:text-sm">NOT Acceptable</span>
+          <div className="relative rounded-2xl bg-white/[0.07] border border-red-500/30 p-3 sm:p-4 overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500/50 rounded-l-2xl" />
+            <span className="font-semibold text-red-400 text-xs sm:text-sm block mb-2">NOT Acceptable</span>
+            <ul className="space-y-1.5 text-xs sm:text-sm text-white">
+              <li>Semiconductor switches</li>
+              <li>Emergency stops</li>
+              <li>Contactors</li>
+              <li>Remote switches</li>
+            </ul>
           </div>
-          <ul className="space-y-1.5 text-xs sm:text-sm text-white">
-            <li>Semiconductor switches</li>
-            <li>Emergency stops</li>
-            <li>Contactors</li>
-            <li>Remote switches</li>
-          </ul>
         </div>
       </div>
 
       {/* Scenario cards — expandable */}
-      <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-        <div className="px-4 py-3.5">
-          <h4 className="font-semibold text-white text-sm sm:text-base">Scenarios</h4>
-          <p className="text-xs text-white mt-0.5">Tap to expand</p>
-        </div>
+      <div className="space-y-3">
+        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Scenarios</h2>
         {scenarios.map((entry, i) => {
           const isOpen = expanded === i;
           return (
-            <div key={i}>
+            <div key={i} className="relative rounded-2xl bg-white/[0.07] border border-white/[0.08] p-4 overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-orange-500/50 rounded-l-2xl" />
               <button
                 type="button"
                 onClick={() => setExpanded(isOpen ? null : i)}
-                className="w-full flex items-center gap-3 px-4 py-3.5 min-h-[48px] touch-manipulation text-left active:bg-white/[0.04] transition-colors"
+                className="w-full text-left touch-manipulation"
                 aria-expanded={isOpen}
               >
-                <AlertTriangle className="h-4 w-4 text-orange-400 flex-shrink-0" />
-                <span className="text-sm font-medium text-white flex-1">
-                  {i + 1}. {entry.title}
-                </span>
-                <ChevronRight
-                  className={`h-4 w-4 text-white flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
-                />
-              </button>
-              {isOpen && (
-                <div className="px-4 pb-3.5 ml-7">
-                  <p className="text-xs text-white mb-2">{entry.scenario}</p>
-                  <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-2.5">
-                    <p className="text-xs text-white">
-                      <strong className="text-yellow-400">Key lesson:</strong> {entry.lesson}
-                    </p>
-                  </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-medium text-white flex-1">
+                    {i + 1}. {entry.title}
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-white flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                  />
                 </div>
-              )}
+              </button>
+              <AnimatePresence>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-3 mt-3 border-t border-white/[0.06]">
+                      <p className="text-xs text-white mb-2">{entry.scenario}</p>
+                      <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-2.5">
+                        <p className="text-xs text-white">
+                          <strong className="text-yellow-400">Key lesson:</strong> {entry.lesson}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           );
         })}

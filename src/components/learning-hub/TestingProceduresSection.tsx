@@ -95,7 +95,7 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
   const procedureComponents = {
     'safe-isolation': <SafeIsolationCard onBack={() => setCurrentView('grid')} />,
     'continuity-testing': <ContinuityTestingProcedure onBack={() => setCurrentView('grid')} />,
-    'insulation-resistance': <EnhancedInsulationResistanceTestCard />,
+    'insulation-resistance': <EnhancedInsulationResistanceTestCard onBack={() => setCurrentView('grid')} />,
     'polarity-testing': <EnhancedPolarityTestCard />,
     'zs-testing': <ZsTestCard />,
     'rcd-testing': <RcdTestCard />,
@@ -111,20 +111,7 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
   }
 
   if (currentView === 'insulation') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <EnhancedInsulationResistanceTestCard />
-      </div>
-    );
+    return <EnhancedInsulationResistanceTestCard onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'polarity') {

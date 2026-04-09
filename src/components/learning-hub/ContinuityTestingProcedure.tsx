@@ -1,118 +1,138 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { SmartTabs } from '@/components/ui/smart-tabs';
-import {
-  ArrowLeft,
-  Shield,
-  Zap,
-  AlertTriangle,
-  CheckCircle2,
-  Calculator,
-  BookOpen,
-  TestTube2,
-} from 'lucide-react';
-import ContinuityTestProcedureCard from './continuity-testing/ContinuityTestProcedureCard';
+import { ArrowLeft, Shield, Wrench, Calculator, BookOpen, ListChecks, FileText } from 'lucide-react';
+import { BusinessCard } from '@/components/business-hub';
+import { motion } from 'framer-motion';
 import ContinuityWhyTestSection from './continuity-testing/ContinuityWhyTestSection';
 import ContinuityHowToTestSection from './continuity-testing/ContinuityHowToTestSection';
 import ContinuityTablesSection from './continuity-testing/ContinuityTablesSection';
 import ContinuityPracticalGuidanceSection from './continuity-testing/ContinuityPracticalGuidanceSection';
+import ContinuityTestProcedureCard from './continuity-testing/ContinuityTestProcedureCard';
 import ContinuityRegulationRequirementsCard from './continuity-testing/ContinuityRegulationRequirementsCard';
-import ContinuityTestDiagram from './continuity-testing/ContinuityTestDiagram';
+
+type View = 'hub' | 'why' | 'how' | 'values' | 'practical' | 'procedures' | 'regulations';
 
 interface ContinuityTestingProcedureProps {
   onBack: () => void;
 }
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25 } },
+};
+
 const ContinuityTestingProcedure = ({ onBack }: ContinuityTestingProcedureProps) => {
+  const [view, setView] = useState<View>('hub');
+
+  if (view === 'why') return <ContinuityWhyTestSection onBack={() => setView('hub')} />;
+  if (view === 'how') return <ContinuityHowToTestSection onBack={() => setView('hub')} />;
+  if (view === 'values') return <ContinuityTablesSection onBack={() => setView('hub')} />;
+  if (view === 'practical') return <ContinuityPracticalGuidanceSection onBack={() => setView('hub')} />;
+  if (view === 'procedures') return <ContinuityTestProcedureCard onBack={() => setView('hub')} />;
+  if (view === 'regulations') return <ContinuityRegulationRequirementsCard onBack={() => setView('hub')} />;
+
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex items-center gap-4 mb-6 sm:mb-8">
-        <Button
-          variant="outline"
-          onClick={onBack}
-          className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] touch-manipulation"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          <span className="hidden sm:inline">Back to Testing Procedures</span>
-          <span className="sm:hidden">Back</span>
-        </Button>
-      </div>
-
-      <div className="text-center space-y-3 mb-8">
-        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3">
-          <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
-            Continuity of Protective Conductors Testing
-          </h1>
-        </div>
-        <p className="text-sm sm:text-base lg:text-lg text-white max-w-3xl mx-auto">
-          Comprehensive BS 7671 compliant testing procedure for protective conductor continuity with
-          practical guidance, real-world scenarios, and professional development focus.
-        </p>
-      </div>
-
-      {/* Test diagram */}
-      <ContinuityTestDiagram />
-
-      {/* Tabbed content sections */}
-      <SmartTabs
-        tabs={[
-          {
-            value: 'why-test',
-            label: 'Why Test?',
-            icon: <Shield className="h-4 w-4" />,
-            content: <ContinuityWhyTestSection />,
-          },
-          {
-            value: 'how-test',
-            label: 'How to Test',
-            icon: <TestTube2 className="h-4 w-4" />,
-            content: <ContinuityHowToTestSection />,
-          },
-          {
-            value: 'tables',
-            label: 'Values & Tables',
-            icon: <Calculator className="h-4 w-4" />,
-            content: <ContinuityTablesSection />,
-          },
-          {
-            value: 'guidance',
-            label: 'Practical Guide',
-            icon: <BookOpen className="h-4 w-4" />,
-            content: <ContinuityPracticalGuidanceSection />,
-          },
-        ]}
-        defaultValue="why-test"
-        className="w-full"
-        breakpoint={4}
-      />
-
-      {/* Main procedure card */}
-      <ContinuityTestProcedureCard />
-
-      {/* Regulation requirements */}
-      <ContinuityRegulationRequirementsCard />
-
-      {/* Safety Alert */}
-      <Card className="bg-gradient-to-br from-red-500/10 to-orange-500/10 border-2 border-red-500/20">
-        <CardHeader>
-          <CardTitle className="text-red-400 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Critical Safety Reminder
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2 text-white">
-            <p>• Always ensure complete isolation before commencing any continuity testing</p>
-            <p>• Use appropriate test equipment compliant with current safety standards</p>
-            <p>• Never assume previous test results are still valid - always retest</p>
-            <p>• Be aware of parallel paths that may affect test results</p>
-            <p>• Record all results accurately for compliance and safety documentation</p>
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div>
+              <h1 className="text-base font-semibold text-white">Continuity Testing</h1>
+              <p className="text-[10px] text-white">BS 7671 Section 612.2</p>
+            </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
+
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
+        <motion.div variants={itemVariants}>
+          <div className="relative rounded-2xl bg-white/[0.07] border border-red-500/20 p-4 overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-red-500 via-rose-400 to-red-500 opacity-60" />
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500/60 rounded-l-2xl" />
+            <p className="text-[15px] font-bold text-red-400">Safety Critical Testing</p>
+            <p className="text-[12px] text-white mt-1 leading-relaxed">
+              Protective conductor continuity must be verified on every circuit. Always isolate before testing.
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.section variants={itemVariants}>
+          <div className="grid grid-cols-2 gap-3">
+            <BusinessCard
+              title="Why Test?"
+              description="Safety protection, fault paths & case studies"
+              icon={Shield}
+              onClick={() => setView('why')}
+              variant="hero"
+              accentColor="from-red-500 via-rose-400 to-red-500"
+              iconColor="text-red-400"
+              iconBg="bg-red-500/10 border border-red-500/20"
+            />
+            <BusinessCard
+              title="How to Test"
+              description="R1+R2, R2 & ring circuit methods"
+              icon={Wrench}
+              onClick={() => setView('how')}
+              variant="hero"
+              accentColor="from-blue-500 via-blue-400 to-cyan-500"
+              iconColor="text-blue-400"
+              iconBg="bg-blue-500/10 border border-blue-500/20"
+            />
+            <BusinessCard
+              title="Values & Tables"
+              description="Cable resistance, MCB values & limits"
+              icon={Calculator}
+              onClick={() => setView('values')}
+              variant="hero"
+              accentColor="from-emerald-500 via-emerald-400 to-green-500"
+              iconColor="text-emerald-400"
+              iconBg="bg-emerald-500/10 border border-emerald-500/20"
+            />
+            <BusinessCard
+              title="Practical Guide"
+              description="Techniques, troubleshooting & QA"
+              icon={BookOpen}
+              onClick={() => setView('practical')}
+              variant="hero"
+              accentColor="from-purple-500 via-purple-400 to-violet-500"
+              iconColor="text-purple-400"
+              iconBg="bg-purple-500/10 border border-purple-500/20"
+            />
+            <BusinessCard
+              title="Test Procedures"
+              description="R1+R2 & R2 step-by-step guides"
+              icon={ListChecks}
+              onClick={() => setView('procedures')}
+              variant="hero"
+              accentColor="from-amber-500 via-yellow-400 to-amber-500"
+              iconColor="text-amber-400"
+              iconBg="bg-amber-500/10 border border-amber-500/20"
+            />
+            <BusinessCard
+              title="Regulations"
+              description="612.2, 543.1, 411.3.2 compliance"
+              icon={FileText}
+              onClick={() => setView('regulations')}
+              variant="hero"
+              accentColor="from-cyan-500 via-cyan-400 to-teal-500"
+              iconColor="text-cyan-400"
+              iconBg="bg-cyan-500/10 border border-cyan-500/20"
+            />
+          </div>
+        </motion.section>
+      </motion.div>
     </div>
   );
 };

@@ -5,8 +5,7 @@ import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { UnifiedAddressFinder } from '@/components/ui/unified-address-finder';
 import { QuoteClient, JobDetails } from '@/types/quote';
-import { User, Mail, Phone, MapPin, Briefcase, FileText, Calendar, Users, Check, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { X } from 'lucide-react';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
@@ -149,36 +148,38 @@ export const InvoiceClientDetailsStep = ({
     return () => subscription.unsubscribe();
   }, [form, onUpdate, customerId, savePromptDismissed]);
 
-  const inputClassName =
-    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white caret-elec-yellow';
-  const darkStyle: React.CSSProperties = { colorScheme: 'dark' };
+  const inputClass =
+    'w-full h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
+
+  /** Section header with gradient line */
+  const SectionHeader = ({ title }: { title: string }) => (
+    <div className="mb-3">
+      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+      <h2 className="text-sm font-bold text-white uppercase tracking-wide">{title}</h2>
+    </div>
+  );
 
   return (
     <Form {...form}>
-      <div className="space-y-5 text-left pb-24">
+      <div className="space-y-6 text-left">
 
-        {/* Saved Client Selector */}
-        <div className="space-y-2">
-          <p className="text-[13px] font-medium text-white uppercase tracking-wider flex items-center gap-2">
-            <Users className="h-3.5 w-3.5" />
-            Select Existing Client
-          </p>
-
+        {/* Customer selector */}
+        <div>
+          <SectionHeader title="Select Existing Customer" />
           {selectedCustomer ? (
-            <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
-                <Check className="h-5 w-5 text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[15px] font-medium text-white truncate">{selectedCustomer.name}</p>
-                <p className="text-[12px] text-white truncate">{selectedCustomer.email || selectedCustomer.phone || 'No contact details'}</p>
+            <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-emerald-500/20">
+              <div className="min-w-0">
+                <p className="text-[14px] font-semibold text-white">{selectedCustomer.name}</p>
+                <p className="text-[12px] text-white truncate">
+                  {selectedCustomer.email || selectedCustomer.phone || 'No contact details'}
+                </p>
               </div>
               <button
                 type="button"
                 onClick={handleClearCustomer}
-                className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center"
+                className="text-[11px] font-medium text-red-400 touch-manipulation ml-3 flex-shrink-0"
               >
-                <X className="h-4 w-4 text-white" />
+                Clear
               </button>
             </div>
           ) : (
@@ -189,85 +190,53 @@ export const InvoiceClientDetailsStep = ({
           )}
         </div>
 
-        {/* Client Information */}
+        {/* Client details */}
         <div>
-          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
-            Client Information
-          </p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-            {/* Name */}
+          <SectionHeader title="Client Details" />
+          <div className="space-y-3">
             <FormField control={form.control} name="name" render={({ field }) => (
-              <FormItem className="m-0 p-0 space-y-0">
-                <div className="flex items-center gap-3 p-4">
-                  <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                    <User className="h-5 w-5 text-black" />
-                  </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <label className="text-[12px] text-white block mb-0.5">Client Name *</label>
-                    <FormControl>
-                      <input {...field} style={darkStyle} placeholder="Enter client name" className={inputClassName} autoComplete="name" />
-                    </FormControl>
-                  </div>
-                </div>
-                <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+              <FormItem>
+                <label className="text-white text-xs font-medium mb-1.5 block">Client Name *</label>
+                <FormControl>
+                  <input {...field} placeholder="Full name" className={inputClass} autoComplete="name" />
+                </FormControl>
+                <FormMessage className="text-[12px] text-red-400" />
               </FormItem>
             )} />
-
-            {/* Email */}
-            <FormField control={form.control} name="email" render={({ field }) => (
-              <FormItem className="m-0 p-0 space-y-0">
-                <div className="flex items-center gap-3 p-4">
-                  <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                    <Mail className="h-5 w-5 text-black" />
-                  </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <label className="text-[12px] text-white block mb-0.5">Email Address (optional)</label>
-                    <FormControl>
-                      <input {...field} type="email" inputMode="email" style={darkStyle} placeholder="client@example.com" className={inputClassName} autoComplete="email" />
-                    </FormControl>
-                  </div>
-                </div>
-                <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
-              </FormItem>
-            )} />
-
-            {/* Phone */}
-            <FormField control={form.control} name="phone" render={({ field }) => (
-              <FormItem className="m-0 p-0 space-y-0">
-                <div className="flex items-center gap-3 p-4">
-                  <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                    <Phone className="h-5 w-5 text-black" />
-                  </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <label className="text-[12px] text-white block mb-0.5">Phone Number (optional)</label>
-                    <FormControl>
-                      <input {...field} type="tel" inputMode="tel" style={darkStyle} placeholder="07xxx xxxxxx" className={inputClassName} autoComplete="tel" />
-                    </FormControl>
-                  </div>
-                </div>
-                <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
-              </FormItem>
-            )} />
+            <div className="grid grid-cols-2 gap-3">
+              <FormField control={form.control} name="phone" render={({ field }) => (
+                <FormItem>
+                  <label className="text-white text-xs font-medium mb-1.5 block">Phone</label>
+                  <FormControl>
+                    <input {...field} type="tel" inputMode="tel" placeholder="07xxx xxxxxx" className={inputClass} autoComplete="tel" />
+                  </FormControl>
+                </FormItem>
+              )} />
+              <FormField control={form.control} name="email" render={({ field }) => (
+                <FormItem>
+                  <label className="text-white text-xs font-medium mb-1.5 block">Email</label>
+                  <FormControl>
+                    <input {...field} type="email" inputMode="email" placeholder="client@example.com" className={inputClass} autoComplete="email" />
+                  </FormControl>
+                  <FormMessage className="text-[12px] text-red-400" />
+                </FormItem>
+              )} />
+            </div>
           </div>
         </div>
 
         {/* Address */}
         <div>
-          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3 flex items-center gap-2">
-            <MapPin className="h-3.5 w-3.5" />
-            Job Site Address (optional)
-          </p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
-            <UnifiedAddressFinder
-              key={addressKey}
-              onAddressSelect={handleAddressSelect}
-              defaultValue={
-                form.watch('address')
-                  ? `${form.watch('address')}${form.watch('postcode') ? ', ' + form.watch('postcode') : ''}`
-                  : ''
-              }
-            />
-          </div>
+          <SectionHeader title="Job Site Address" />
+          <UnifiedAddressFinder
+            key={addressKey}
+            onAddressSelect={handleAddressSelect}
+            defaultValue={
+              form.watch('address')
+                ? `${form.watch('address')}${form.watch('postcode') ? ', ' + form.watch('postcode') : ''}`
+                : ''
+            }
+          />
         </div>
 
         {/* Save customer prompt */}
@@ -286,59 +255,31 @@ export const InvoiceClientDetailsStep = ({
 
         {/* Job Details */}
         <div>
-          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
-            Job Details
-          </p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-            {/* Job Title */}
+          <SectionHeader title="Job Details" />
+          <div className="space-y-3">
             <FormField control={form.control} name="jobTitle" render={({ field }) => (
-              <FormItem className="m-0 p-0 space-y-0">
-                <div className="flex items-center gap-3 p-4">
-                  <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                    <Briefcase className="h-5 w-5 text-black" />
-                  </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <label className="text-[12px] text-white block mb-0.5">Job Title *</label>
-                    <FormControl>
-                      <input {...field} style={darkStyle} placeholder="e.g., Consumer Unit Replacement" className={inputClassName} />
-                    </FormControl>
-                  </div>
-                </div>
-                <FormMessage className="px-4 pb-3 text-[12px] text-red-400" />
+              <FormItem>
+                <label className="text-white text-xs font-medium mb-1.5 block">Job Title *</label>
+                <FormControl>
+                  <input {...field} placeholder="e.g., Consumer Unit Replacement" className={inputClass} />
+                </FormControl>
+                <FormMessage className="text-[12px] text-red-400" />
               </FormItem>
             )} />
-
-            {/* Job Description */}
             <FormField control={form.control} name="jobDescription" render={({ field }) => (
-              <FormItem className="m-0 p-0 space-y-0">
-                <div className="flex items-start gap-3 p-4">
-                  <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                    <FileText className="h-5 w-5 text-black" />
-                  </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <label className="text-[12px] text-white block mb-0.5">Description</label>
-                    <FormControl>
-                      <textarea {...field} style={darkStyle} placeholder="Describe the work completed..." className={cn(inputClassName, 'min-h-[80px] resize-none')} rows={3} />
-                    </FormControl>
-                  </div>
-                </div>
+              <FormItem>
+                <label className="text-white text-xs font-medium mb-1.5 block">Description</label>
+                <FormControl>
+                  <textarea {...field} placeholder="Describe the work completed..." className={`${inputClass} min-h-[80px] resize-none`} rows={3} />
+                </FormControl>
               </FormItem>
             )} />
-
-            {/* Work Completion Date */}
             <FormField control={form.control} name="workStartDate" render={({ field }) => (
-              <FormItem className="m-0 p-0 space-y-0">
-                <div className="flex items-center gap-3 p-4">
-                  <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                    <Calendar className="h-5 w-5 text-black" />
-                  </div>
-                  <div className="flex-1 min-w-0 text-left">
-                    <label className="text-[12px] text-white block mb-0.5">Work Completion Date</label>
-                    <FormControl>
-                      <input {...field} type="date" style={darkStyle} className={cn(inputClassName, 'appearance-none')} />
-                    </FormControl>
-                  </div>
-                </div>
+              <FormItem>
+                <label className="text-white text-xs font-medium mb-1.5 block">Work Completion Date</label>
+                <FormControl>
+                  <input {...field} type="date" style={{ colorScheme: 'dark' }} className={inputClass} />
+                </FormControl>
               </FormItem>
             )} />
           </div>

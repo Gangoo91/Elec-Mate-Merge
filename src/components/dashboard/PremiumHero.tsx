@@ -178,133 +178,29 @@ export function PremiumHero() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 300, damping: 24 }}
     >
-      <div className="relative overflow-hidden card-glass">
-        {/* Gradient accent line at top */}
-        <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-elec-yellow via-amber-500 to-elec-yellow" />
+      <div className="relative overflow-hidden glass-premium rounded-2xl">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow opacity-60" />
 
-        {/* Content - left-aligned row layout */}
-        <div className="relative z-10 p-4 sm:p-5">
-          <div className="flex items-center gap-4">
-            {/* Profile Photo with Streak Ring */}
-            <div className="flex-shrink-0">
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handlePhotoUpload}
-              />
-              <motion.button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploading}
-                whileTap={{ scale: 0.95 }}
-                className="group relative touch-manipulation"
-              >
-                <div className="relative w-14 h-14">
-                  {/* Streak ring */}
-                  <StreakRing progress={streakProgress} strokeWidth={3} />
-
-                  {/* Avatar */}
-                  <div
-                    className={cn(
-                      'absolute inset-[4px] rounded-full overflow-hidden',
-                      'bg-white/[0.05] border-2 border-white/10',
-                      'flex items-center justify-center',
-                      'transition-all duration-200',
-                      'group-hover:border-elec-yellow/50',
-                      uploading && 'animate-pulse'
-                    )}
-                  >
-                    {avatarUrl || userData.avatarUrl ? (
-                      <img
-                        src={avatarUrl || userData.avatarUrl || ''}
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <User className="w-6 h-6 text-white" />
-                    )}
-                  </div>
-
-                  {/* Camera overlay on hover */}
-                  <div
-                    className="
-                    absolute inset-[4px] rounded-full
-                    bg-black/60 opacity-0 group-hover:opacity-100
-                    hidden sm:flex items-center justify-center
-                    transition-opacity duration-200
-                  "
-                  >
-                    <Camera className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-              </motion.button>
-            </div>
-
-            {/* Text content */}
+        <div className="relative z-10 px-5 py-4 sm:px-6 sm:py-5">
+          <div className="flex items-center justify-between">
             <div className="flex-1 min-w-0">
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="text-xs text-white"
-              >
-                {greeting}
-              </motion.p>
-              <motion.h1
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.25 }}
-                className="text-xl sm:text-2xl font-bold text-white tracking-tight"
-              >
+              <p className="text-[13px] text-white mb-0.5">{greeting},</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow tracking-tight">
                 {userData.firstName}
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.35 }}
-                className="text-sm text-white truncate mt-0.5"
-              >
+              </h1>
+              <p className="text-[12px] text-white mt-1 truncate">
                 {contextLine}
-              </motion.p>
+              </p>
             </div>
 
-            {/* Status badges - right side */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="flex flex-col items-end gap-1.5 flex-shrink-0"
-            >
-              {/* Subscription status */}
-              {userData.isSubscribed ? (
-                <Badge
-                  variant="outline"
-                  className="bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow text-[11px]"
-                >
-                  <Crown className="w-3 h-3 mr-1" />
-                  Pro
-                </Badge>
-              ) : userData.trialDaysLeft !== null && userData.trialDaysLeft > 0 ? (
-                <Badge
-                  variant="outline"
-                  className="bg-amber-500/10 border-amber-500/30 text-amber-400 text-[11px]"
-                >
-                  {userData.trialDaysLeft}d trial
-                </Badge>
-              ) : null}
-
-              {/* Streak badge */}
-              {learning.currentStreak > 0 && (
-                <Badge
-                  variant="outline"
-                  className="bg-orange-500/10 border-orange-500/30 text-orange-400 text-[11px]"
-                >
-                  <Flame className="w-3 h-3 mr-1" />
-                  {learning.currentStreak}d
-                </Badge>
-              )}
-            </motion.div>
+            {/* Hidden file input for avatar upload */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handlePhotoUpload}
+            />
           </div>
         </div>
       </div>

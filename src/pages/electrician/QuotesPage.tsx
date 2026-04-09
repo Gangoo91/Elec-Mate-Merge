@@ -1,43 +1,25 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Button } from '@/components/ui/button';
-import {
-  Plus,
-  ArrowLeft,
-  PoundSterling,
-  TrendingUp,
-  FileText,
-  Clock,
-  CheckCircle,
-  XCircle,
-  Send,
-  RefreshCw,
-  Receipt,
-  Search,
-  X,
-} from 'lucide-react';
+import { Plus, ArrowLeft, Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { Quote } from '@/types/quote';
 import { filterQuotesByStatus } from '@/utils/quote-analytics';
 import { useMemo, useState, useCallback } from 'react';
 import { cn } from '@/lib/utils';
-import { VoiceHeaderButton } from '@/components/electrician/VoiceHeaderButton';
 import { EmptyStateGuide } from '@/components/electrician/shared/EmptyStateGuide';
-import { Card, CardContent } from '@/components/ui/card';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
-import { SwipeableQuoteCard } from '@/components/electrician/quote-builder/SwipeableQuoteCard';
-import { AnimatePresence } from 'framer-motion';
+import { QuoteCard } from '@/components/electrician/quote-builder/QuoteCard';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { toast } from '@/hooks/use-toast';
 import { createQuickTaskBatch } from '@/utils/createQuickTask';
-import { ClipboardCheck } from 'lucide-react';
 
 const QuotesPage = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get('filter') || 'all';
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const [quoteToDelete, setQuoteToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -48,7 +30,6 @@ const QuotesPage = () => {
     invoicedQuotes,
     deleteQuote,
     updateQuoteStatus,
-    sendPaymentReminder,
     refreshQuotes,
     loading,
     lastUpdated,
@@ -57,39 +38,21 @@ const QuotesPage = () => {
   const handleAcceptQuote = async (quoteId: string, currentStatus: Quote['status']) => {
     const success = await updateQuoteStatus(quoteId, currentStatus, undefined, 'accepted');
     if (success) {
-      toast({
-        title: '✅ Quote accepted',
-        description: 'Marked as accepted. You can now convert it to an invoice.',
-      });
+      toast({ title: 'Quote accepted', description: 'You can now convert it to an invoice.' });
     } else {
-      toast({
-        title: 'Failed to accept quote',
-        description: 'Please try again.',
-        variant: 'destructive',
-      });
+      toast({ title: 'Failed to accept quote', variant: 'destructive' });
     }
   };
 
   const handleDeleteQuote = async (quoteId: string) => {
     const success = await deleteQuote(quoteId);
     if (success) {
-      toast({
-        title: 'Quote deleted',
-        description: 'The quote has been removed successfully.',
-      });
+      toast({ title: 'Quote deleted' });
     }
     setQuoteToDelete(null);
   };
 
-  // Refresh handler
-  const handleRefresh = useCallback(async () => {
-    setIsRefreshing(true);
-    await refreshQuotes();
-    setTimeout(() => setIsRefreshing(false), 500);
-  }, [refreshQuotes]);
-
   const filteredQuotes = useMemo(() => {
-    // Invoiced quotes come from a separate query
     if (filter === 'invoiced') {
       if (!searchQuery.trim()) return invoicedQuotes;
       const query = searchQuery.toLowerCase();
@@ -104,12 +67,10 @@ const QuotesPage = () => {
 
     let filtered = savedQuotes;
 
-    // Status filter
     if (filter && filter !== 'all' && filter !== 'monthly') {
       filtered = filterQuotesByStatus(filtered, filter as any);
     }
 
-    // Search filter
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
@@ -124,7 +85,7 @@ const QuotesPage = () => {
     return filtered;
   }, [savedQuotes, invoicedQuotes, filter, searchQuery]);
 
-  // Calculate stats
+  // Stats
   const stats = useMemo(() => {
     const totalValue = savedQuotes.reduce((acc, q) => acc + (q.total || 0), 0);
     const approvedValue = savedQuotes
@@ -160,7 +121,7 @@ const QuotesPage = () => {
     };
   }, [savedQuotes, invoicedQuotes]);
 
-  // Stale sent quotes (sent 7+ days ago, not yet approved/rejected)
+  // Stale quotes
   const staleQuotes = useMemo(() => {
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -192,11 +153,7 @@ const QuotesPage = () => {
         description: `${count} follow-up ${count === 1 ? 'task' : 'tasks'} added for tomorrow.`,
       });
     } catch (error: any) {
-      toast({
-        title: 'Failed',
-        description: error?.message || 'Could not create follow-up tasks.',
-        variant: 'destructive',
-      });
+      toast({ title: 'Failed', description: error?.message || 'Could not create tasks.', variant: 'destructive' });
     } finally {
       setCreatingFollowUps(false);
     }
@@ -211,337 +168,267 @@ const QuotesPage = () => {
   };
 
   const filterOptions = [
-    { id: 'all', label: 'All', icon: FileText, count: stats.counts.all },
-    { id: 'draft', label: 'Draft', icon: Clock, count: stats.counts.draft },
-    { id: 'sent', label: 'Sent', icon: Send, count: stats.counts.sent },
-    { id: 'approved', label: 'Approved', icon: CheckCircle, count: stats.counts.approved },
-    { id: 'rejected', label: 'Rejected', icon: XCircle, count: stats.counts.rejected },
-    { id: 'invoiced', label: 'Invoiced', icon: Receipt, count: stats.counts.invoiced },
+    { id: 'all', label: 'All', count: stats.counts.all },
+    { id: 'draft', label: 'Draft', count: stats.counts.draft },
+    { id: 'sent', label: 'Sent', count: stats.counts.sent },
+    { id: 'approved', label: 'Approved', count: stats.counts.approved },
+    { id: 'rejected', label: 'Declined', count: stats.counts.rejected },
+    { id: 'invoiced', label: 'Invoiced', count: stats.counts.invoiced },
   ];
 
-  const canonical = `${window.location.origin}/electrician/quotes`;
+  const formatGBP = useCallback(
+    (value: number) =>
+      `£${value.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`,
+    []
+  );
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background animate-fade-in">
+    <div className="bg-background min-h-screen animate-fade-in">
       <Helmet>
-        <title>All Quotes | Professional Quote Management for Electricians</title>
-        <meta
-          name="description"
-          content="View, manage and track all your electrical quotes. Professional quote management for UK electricians with BS 7671 compliant templates."
-        />
-        <link rel="canonical" href={canonical} />
+        <title>Quotes | Elec-Mate</title>
+        <meta name="description" content="Manage and track all your electrical quotes." />
       </Helmet>
 
-      {/* iOS-Style Native Header */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md">
-        {showSearch ? (
-          /* Search Mode - Full width search input */
-          <div className="flex items-center h-14 px-4 gap-2">
-            <div className="relative flex-1">
-              {!searchQuery && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-              )}
+      {/* Full-screen search overlay */}
+      <AnimatePresence>
+        {showSearch && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-background flex flex-col"
+          >
+            <div className="flex items-center gap-2 px-4 py-3 h-14 border-b border-white/[0.06]">
+              <Search className="h-5 w-5 text-white flex-shrink-0" />
               <Input
-                type="text"
-                placeholder="Search by name, quote #..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={cn(
-                  'h-11 pr-9 text-base touch-manipulation rounded-xl bg-white/[0.05] border-white/[0.06] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20',
-                  !searchQuery && 'pl-9'
-                )}
+                placeholder="Search by client, quote number, job..."
+                className="h-10 flex-1 text-base bg-transparent border-0 focus:ring-0 focus:border-0 placeholder:text-white touch-manipulation"
                 autoFocus
               />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  aria-label="Clear search"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-white/[0.1] hover:bg-white/[0.15] touch-manipulation"
-                >
-                  <X className="h-3 w-3 text-white" />
-                </button>
+              <button
+                className="text-elec-yellow font-medium text-sm flex-shrink-0 touch-manipulation"
+                onClick={() => {
+                  setShowSearch(false);
+                  setSearchQuery('');
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+              {searchQuery.trim() ? (
+                filteredQuotes.length > 0 ? (
+                  filteredQuotes.map((quote) => (
+                    <QuoteCard
+                      key={quote.id}
+                      quote={quote}
+                      onTap={() => {
+                        setShowSearch(false);
+                        navigate(`/electrician/quotes/view/${quote.id}`);
+                      }}
+                      onDelete={() => setQuoteToDelete(quote.id)}
+                      onEdit={() => navigate(`/electrician/quote-builder/${quote.id}`)}
+                      onAccept={() => handleAcceptQuote(quote.id, quote.status)}
+                    />
+                  ))
+                ) : (
+                  <div className="text-center py-12">
+                    <p className="text-white text-sm">No quotes matching "{searchQuery}"</p>
+                  </div>
+                )
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-white text-sm">Search by client name, quote number, or job title</p>
+                </div>
               )}
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-white/[0.06]">
+        <div className="flex items-center h-14 px-4 gap-2">
+          <button
+            onClick={() => navigate('/electrician/business')}
+            className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
+          >
+            <ArrowLeft className="h-5 w-5" />
+          </button>
+          <h1 className="flex-1 text-lg font-semibold text-white">Quotes</h1>
+          <button
+            onClick={() => setShowSearch(true)}
+            className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
+          >
+            <Search className="h-5 w-5 text-white" />
+          </button>
+          <button
+            onClick={() => navigate('/electrician/quote-builder/create')}
+            className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
+          >
+            <Plus className="h-5 w-5 text-black" />
+          </button>
+        </div>
+
+        {/* Filter pills — I&T style */}
+        <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
+          {filterOptions.map((option) => (
             <button
-              onClick={() => {
-                setShowSearch(false);
-                setSearchQuery('');
-              }}
-              className="text-sm text-elec-yellow font-medium px-2 touch-manipulation"
+              key={option.id}
+              onClick={() => setFilter(option.id)}
+              className={cn(
+                'flex-shrink-0 h-8 px-3 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.98]',
+                filter === option.id
+                  ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
+                  : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
+              )}
             >
-              Cancel
+              {option.label}
+              {option.count > 0 && (
+                <span className="ml-1.5 text-white">{option.count}</span>
+              )}
             </button>
-          </div>
-        ) : (
-          <>
-            {/* Row 1: Navigation bar */}
-            <div className="flex items-center h-14 px-4 gap-2">
-              <button
-                onClick={() => navigate('/electrician/business')}
-                aria-label="Go back"
-                className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-
-              <h1 className="flex-1 text-xl font-bold">Quotes</h1>
-
-              {/* Right side actions */}
-              <button
-                onClick={() => setShowSearch(true)}
-                aria-label="Search quotes"
-                className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
-              >
-                <Search className="h-5 w-5 text-white" />
-              </button>
-
-              <button
-                onClick={() => navigate('/electrician/quote-builder/create')}
-                aria-label="Create quote"
-                className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
-              >
-                <Plus className="h-5 w-5 text-black" />
-              </button>
-            </div>
-
-            {/* Row 2: Quick actions */}
-            <div className="flex items-center gap-3 px-4 pb-3">
-              <button
-                onClick={() => navigate('/electrician/invoices')}
-                className="flex items-center gap-2 text-elec-yellow active:opacity-70 touch-manipulation"
-              >
-                <Receipt className="h-4 w-4" />
-                <span className="text-[14px] font-medium">Invoices</span>
-              </button>
-
-              <div className="flex-1" />
-
-              <button
-                onClick={handleRefresh}
-                disabled={isRefreshing}
-                aria-label="Refresh quotes"
-                className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
-              >
-                <RefreshCw
-                  className={cn('h-4 w-4 text-white', isRefreshing && 'animate-spin')}
-                />
-              </button>
-
-              <VoiceHeaderButton
-                hint="Send quote"
-                currentSection="quotes"
-                onToolResult={handleRefresh}
-              />
-            </div>
-          </>
-        )}
-
-        {/* Filter Pills - Compact iOS style */}
-        {!showSearch && (
-          <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-            {filterOptions.map((option) => (
-              <button
-                key={option.id}
-                onClick={() => setFilter(option.id)}
-                className={cn(
-                  'shrink-0 flex items-center gap-1.5 h-9 px-3.5 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
-                  filter === option.id ? 'bg-elec-yellow text-black' : 'bg-white/[0.08] text-white'
-                )}
-              >
-                {option.label}
-                <span
-                  className={cn(
-                    'text-[11px] px-1.5 py-0.5 rounded-full min-w-[18px] text-center font-semibold',
-                    filter === option.id ? 'bg-black/20' : 'bg-white/[0.15]'
-                  )}
-                >
-                  {option.count}
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
       </header>
 
-      <div className="px-4 py-4 space-y-4 pb-6">
-        {/* iOS-Style Pipeline Card - Clean Grouped List */}
-        <section className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-          {/* Main Value Section */}
-          <div className="p-5">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center">
-                  <PoundSterling className="h-5 w-5 text-black" />
-                </div>
-                <div>
-                  <p className="text-[12px] text-white">Pipeline Value</p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                    <span className="text-[11px] text-white">Live</span>
-                  </div>
-                </div>
+      {/* Content */}
+      <PullToRefresh onRefresh={refreshQuotes} isRefreshing={loading}>
+        <div className="px-4 py-4 space-y-4 pb-24">
+          {/* Pipeline hero */}
+          <div className="space-y-3">
+            {/* Main value */}
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-[10px] text-white uppercase tracking-[0.15em] font-medium">Pipeline</p>
+                <p className="text-[36px] font-extrabold text-elec-yellow leading-none tracking-tight mt-1">{formatGBP(stats.totalValue)}</p>
+              </div>
+              <div className="text-right pb-0.5">
+                <p className="text-[28px] font-bold text-white leading-none">{stats.conversionRate}%</p>
+                <p className="text-[10px] text-white uppercase tracking-wider mt-0.5">Win Rate</p>
               </div>
             </div>
-            <p className="text-4xl font-bold text-elec-yellow">
-              £
-              {stats.totalValue.toLocaleString('en-GB', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-              })}
-            </p>
-            <p className="text-[13px] text-white mt-1">
-              {stats.counts.all} active • {stats.conversionRate}% win rate
-            </p>
-          </div>
 
-          {/* Status Grid - All elec-yellow themed */}
-          <div className="grid grid-cols-3 divide-x divide-white/[0.06] border-t border-white/[0.06]">
-            <button
-              onClick={() => setFilter('approved')}
-              className="p-4 text-center hover:bg-white/[0.02] active:scale-[0.98] touch-manipulation transition-colors"
-            >
-              <div className="w-9 h-9 mx-auto rounded-xl bg-elec-yellow/20 flex items-center justify-center mb-2">
-                <CheckCircle className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <p className="text-[11px] text-white mb-0.5">Approved</p>
-              <p className="text-lg font-bold text-white">
-                £{(stats.approvedValue / 1000).toFixed(0)}k
-              </p>
-            </button>
-
-            <button
-              onClick={() => setFilter('sent')}
-              className="p-4 text-center hover:bg-white/[0.02] active:scale-[0.98] touch-manipulation transition-colors"
-            >
-              <div className="w-9 h-9 mx-auto rounded-xl bg-elec-yellow/20 flex items-center justify-center mb-2">
-                <Send className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <p className="text-[11px] text-white mb-0.5">Pending</p>
-              <p className="text-lg font-bold text-white">{stats.counts.sent}</p>
-            </button>
-
-            <button
-              onClick={() => setFilter('draft')}
-              className="p-4 text-center hover:bg-white/[0.02] active:scale-[0.98] touch-manipulation transition-colors"
-            >
-              <div className="w-9 h-9 mx-auto rounded-xl bg-elec-yellow/20 flex items-center justify-center mb-2">
-                <Clock className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <p className="text-[11px] text-white mb-0.5">Draft</p>
-              <p className="text-lg font-bold text-white">{stats.counts.draft}</p>
-            </button>
-          </div>
-        </section>
-
-        {/* Follow-up task prompt for stale sent quotes */}
-        {staleQuotes.length > 0 && (
-          <div className="flex items-center gap-3 p-3 rounded-xl bg-purple-500/[0.08] border border-purple-500/20">
-            <ClipboardCheck className="h-5 w-5 text-purple-400 shrink-0" />
-            <p className="text-sm text-white flex-1">
-              {staleQuotes.length} {staleQuotes.length === 1 ? 'quote' : 'quotes'} sent 7+ days ago
-              — create follow-up tasks?
-            </p>
-            <button
-              type="button"
-              onClick={handleCreateFollowUps}
-              disabled={creatingFollowUps}
-              className="px-3 h-9 rounded-lg bg-purple-500/20 text-purple-400 text-sm font-semibold touch-manipulation active:bg-purple-500/30 transition-colors disabled:opacity-50"
-            >
-              {creatingFollowUps ? 'Creating...' : 'Create'}
-            </button>
-          </div>
-        )}
-
-        {/* Analytics Dashboard */}
-        {savedQuotes.length > 0 && (
-          <QuoteInvoiceAnalytics
-            quotes={savedQuotes}
-            formatCurrency={(value) =>
-              `£${value.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-            }
-            lastUpdated={lastUpdated}
-            onRefresh={refreshQuotes}
-            isLoading={loading}
-          />
-        )}
-
-        {/* Quotes List */}
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold">
-              {filter === 'all'
-                ? 'All Quotes'
-                : filter === 'invoiced'
-                  ? 'Invoiced Quotes'
-                  : filterOptions.find((f) => f.id === filter)?.label + ' Quotes'}
-            </h2>
-            <span className="text-sm text-white">
-              {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
-            </span>
-          </div>
-
-          {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-2 border-elec-yellow border-t-transparent"></div>
+            {/* Stat pills — tappable, inline */}
+            <div className="grid grid-cols-4 gap-2">
+              <button onClick={() => setFilter('approved')} className="rounded-xl bg-white/[0.04] border border-white/[0.08] py-2.5 text-center touch-manipulation active:scale-[0.97] active:bg-white/[0.07] transition-all">
+                <p className="text-[15px] font-bold text-emerald-400">{formatGBP(stats.approvedValue)}</p>
+                <p className="text-[10px] text-white mt-0.5">Won</p>
+              </button>
+              <button onClick={() => setFilter('sent')} className="rounded-xl bg-white/[0.04] border border-white/[0.08] py-2.5 text-center touch-manipulation active:scale-[0.97] active:bg-white/[0.07] transition-all">
+                <p className="text-[15px] font-bold text-amber-400">{stats.counts.sent}</p>
+                <p className="text-[10px] text-white mt-0.5">Pending</p>
+              </button>
+              <button onClick={() => setFilter('draft')} className="rounded-xl bg-white/[0.04] border border-white/[0.08] py-2.5 text-center touch-manipulation active:scale-[0.97] active:bg-white/[0.07] transition-all">
+                <p className="text-[15px] font-bold text-white">{stats.counts.draft}</p>
+                <p className="text-[10px] text-white mt-0.5">Drafts</p>
+              </button>
+              <button onClick={() => setFilter('invoiced')} className="rounded-xl bg-white/[0.04] border border-white/[0.08] py-2.5 text-center touch-manipulation active:scale-[0.97] active:bg-white/[0.07] transition-all">
+                <p className="text-[15px] font-bold text-blue-400">{stats.counts.invoiced}</p>
+                <p className="text-[10px] text-white mt-0.5">Invoiced</p>
+              </button>
             </div>
-          ) : filteredQuotes.length === 0 ? (
-            searchQuery.trim() ? (
-              <Card className="bg-muted/20 border-dashed">
-                <CardContent className="py-10 text-center">
-                  <Search className="h-10 w-10 mx-auto text-white mb-3" />
-                  <p className="font-medium">No quotes found</p>
-                  <p className="text-sm text-white mt-1">
-                    No quotes match "{searchQuery}"
-                  </p>
-                  <Button variant="outline" onClick={() => setSearchQuery('')} className="mt-4">
-                    Clear search
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : filter === 'all' ? (
-              <EmptyStateGuide
-                type="quote"
-                onCreateClick={() => navigate('/electrician/quote-builder/create')}
-              />
-            ) : (
-              <Card className="bg-muted/20 border-dashed">
-                <CardContent className="py-10 text-center">
-                  <FileText className="h-10 w-10 mx-auto text-white mb-3" />
-                  <p className="font-medium">No {filter} quotes</p>
-                  <p className="text-sm text-white mt-1">
-                    Quotes will appear here when {filter}
-                  </p>
-                </CardContent>
-              </Card>
-            )
-          ) : (
-            <div className="space-y-3">
-              <AnimatePresence>
-                {filteredQuotes.map((quote, idx) => (
-                  <SwipeableQuoteCard
-                    key={quote.id}
-                    quote={quote}
-                    onDelete={() => setQuoteToDelete(quote.id)}
-                    onEdit={() => navigate(`/electrician/quote-builder/${quote.id}`)}
-                    onView={() => navigate(`/electrician/quotes/view/${quote.id}`)}
-                    onAccept={() => handleAcceptQuote(quote.id, quote.status)}
-                    onMarkAsSent={() => updateQuoteStatus(quote.id, 'sent')}
-                    delay={idx * 0.05}
-                  />
-                ))}
-              </AnimatePresence>
-            </div>
+
+            {/* Follow-up */}
+            {staleQuotes.length > 0 && (
+              <button
+                type="button"
+                onClick={handleCreateFollowUps}
+                disabled={creatingFollowUps}
+                className="w-full flex items-center justify-between py-2.5 px-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/15 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
+              >
+                <p className="text-[12px] text-white">
+                  <span className="font-bold text-amber-400">{staleQuotes.length}</span> awaiting response 7+ days
+                </p>
+                <span className="text-[11px] font-bold text-amber-400">
+                  {creatingFollowUps ? 'Creating...' : 'Follow Up'}
+                </span>
+              </button>
+            )}
+          </div>
+
+          {/* Analytics */}
+          {savedQuotes.length > 0 && (
+            <QuoteInvoiceAnalytics
+              quotes={savedQuotes}
+              formatCurrency={(value) =>
+                `£${value.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+              }
+              lastUpdated={lastUpdated}
+              onRefresh={refreshQuotes}
+              isLoading={loading}
+            />
           )}
-        </section>
-      </div>
 
-      {/* Delete Confirmation Dialog */}
+          {/* Quotes list */}
+          <section className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-medium text-white uppercase tracking-wider">
+                {filter === 'all'
+                  ? 'All Quotes'
+                  : filterOptions.find((f) => f.id === filter)?.label + ' Quotes'}
+              </h2>
+              <span className="text-[11px] text-white">
+                {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
+              </span>
+            </div>
+
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-elec-yellow border-t-transparent" />
+              </div>
+            ) : filteredQuotes.length === 0 ? (
+              filter === 'all' && !searchQuery.trim() ? (
+                <EmptyStateGuide
+                  type="quote"
+                  onCreateClick={() => navigate('/electrician/quote-builder/create')}
+                />
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-[14px] font-medium text-white">
+                    No {filter !== 'all' ? filter : ''} quotes
+                  </p>
+                  <p className="text-[12px] text-white mt-1">
+                    {searchQuery.trim()
+                      ? `No quotes match "${searchQuery}"`
+                      : `Quotes will appear here when ${filter}`}
+                  </p>
+                </div>
+              )
+            ) : (
+              <div className="space-y-3">
+                <AnimatePresence>
+                  {filteredQuotes.map((quote) => (
+                    <motion.div
+                      key={quote.id}
+                      layout
+                      exit={{ opacity: 0, scale: 0.95 }}
+                    >
+                      <QuoteCard
+                        quote={quote}
+                        onTap={() => navigate(`/electrician/quotes/view/${quote.id}`)}
+                        onDelete={() => setQuoteToDelete(quote.id)}
+                        onEdit={() => navigate(`/electrician/quote-builder/${quote.id}`)}
+                        onAccept={() => handleAcceptQuote(quote.id, quote.status)}
+                      />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            )}
+          </section>
+        </div>
+      </PullToRefresh>
+
+      {/* Delete confirmation */}
       <ConfirmationDialog
         open={!!quoteToDelete}
         onOpenChange={(open) => !open && setQuoteToDelete(null)}
         onConfirm={() => quoteToDelete && handleDeleteQuote(quoteToDelete)}
         title="Delete Quote"
-        description="Are you sure you want to delete this quote? This action cannot be undone."
+        description="Are you sure? This cannot be undone."
         confirmText="Delete"
         cancelText="Cancel"
       />

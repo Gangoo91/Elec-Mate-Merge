@@ -1,390 +1,409 @@
-import React from 'react';
-import { TestTube2, Zap, Settings, AlertTriangle, CheckCircle2, Calculator } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, ChevronDown } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AnimatePresence, motion } from 'framer-motion';
 
-const ContinuityHowToTestSection = () => (
-  <div className="space-y-4 sm:space-y-6">
-    <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <TestTube2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-blue-400">
-          Test Equipment Requirements
-        </h4>
-      </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-white leading-relaxed">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-blue-400 mb-2">Approved Test Instruments:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Low resistance ohmmeter</strong> (preferred method)
-              </p>
-              <p>
-                • <strong>Continuity tester</strong> with adequate test current
-              </p>
-              <p>
-                • <strong>Multimeter</strong> with low resistance capability
-              </p>
-              <p>
-                • <strong>Insulation and continuity tester</strong> (combined unit)
-              </p>
-              <p>
-                • <strong>Calibration certificate</strong> must be current
-              </p>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-blue-400 mb-2">Technical Specifications:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Test current:</strong> Minimum 200mA DC for protective conductors
-              </p>
-              <p>
-                • <strong>Resolution:</strong> 0.01Ω or better for accurate readings
-              </p>
-              <p>
-                • <strong>Accuracy:</strong> ±2% of reading or better
-              </p>
-              <p>
-                • <strong>Test voltage:</strong> 4-24V DC (varies by manufacturer)
-              </p>
-              <p>
-                • <strong>Safety category:</strong> CAT III 300V minimum
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
-          <p className="font-medium text-yellow-400 mb-2">Test Lead Considerations:</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Lead Resistance:</p>
-              <p>• Must be known and recorded</p>
-              <p>• Subtracted from test readings</p>
-              <p>• Typically 0.01-0.05Ω per lead</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Lead Quality:</p>
-              <p>• Robust construction essential</p>
-              <p>• Good contact with test probes</p>
-              <p>• Adequate current carrying capacity</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Lead Safety:</p>
-              <p>• Insulated for working voltage</p>
-              <p>• Finger guards on probes</p>
-              <p>• Regular visual inspection</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
-    <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">
-          R1+R2 Test Method (Preferred)
-        </h4>
-      </div>
-      <div className="space-y-3 text-sm text-white">
-        <div>
-          <p className="font-medium text-foreground">Step-by-step R1+R2 testing procedure:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-            <div className="bg-card rounded p-3">
-              <p className="font-medium text-green-400 mb-2">Preparation Phase:</p>
-              <div className="space-y-1 text-xs">
-                <p>
-                  <strong>1.</strong> Ensure circuit is safely isolated and locked off
-                </p>
-                <p>
-                  <strong>2.</strong> Remove all lamps, equipment, and accessories
-                </p>
-                <p>
-                  <strong>3.</strong> Identify phase and CPC at distribution board
-                </p>
-                <p>
-                  <strong>4.</strong> Check test instrument calibration and leads
-                </p>
-                <p>
-                  <strong>5.</strong> Measure and record test lead resistance
-                </p>
-              </div>
-            </div>
-            <div className="bg-card rounded p-3">
-              <p className="font-medium text-green-400 mb-2">Testing Phase:</p>
-              <div className="space-y-1 text-xs">
-                <p>
-                  <strong>6.</strong> Connect test leads to phase and CPC at board
-                </p>
-                <p>
-                  <strong>7.</strong> Go to furthest point of circuit
-                </p>
-                <p>
-                  <strong>8.</strong> Connect phase and CPC terminals together
-                </p>
-                <p>
-                  <strong>9.</strong> Take reading on test instrument
-                </p>
-                <p>
-                  <strong>10.</strong> Subtract test lead resistance from reading
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
-          <p className="font-medium text-blue-400 mb-2">Why R1+R2 Method is Preferred:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Practical Advantages:</p>
-              <p>• Tests complete fault path (phase + protective conductor)</p>
-              <p>• No temporary links required at distribution board</p>
-              <p>• Directly measures impedance for fault calculations</p>
-              <p>• Suitable for all circuit types and configurations</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Safety Benefits:</p>
-              <p>• Minimal disturbance to distribution board</p>
-              <p>• Reduces risk of incorrect reconnection</p>
-              <p>• Clear indication of complete circuit integrity</p>
-              <p>• Easier to identify and locate faults</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+interface Props {
+  onBack: () => void;
+}
 
-    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Calculator className="h-4 w-4 text-purple-400" />
-        <h4 className="font-medium text-purple-400">R2 Test Method (Alternative)</h4>
-      </div>
-      <div className="space-y-3 text-sm text-white">
-        <div>
-          <p className="font-medium text-foreground">
-            Alternative R2 testing procedure when R1+R2 is not practical:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-            <div className="bg-card rounded p-3">
-              <p className="font-medium text-purple-400 mb-2">Setup Phase:</p>
-              <div className="space-y-1 text-xs">
-                <p>
-                  <strong>1.</strong> Ensure circuit is safely isolated
-                </p>
-                <p>
-                  <strong>2.</strong> Install temporary link between phase and CPC at board
-                </p>
-                <p>
-                  <strong>3.</strong> Ensure good electrical connection
-                </p>
-                <p>
-                  <strong>4.</strong> Verify link is secure and safe
-                </p>
-                <p>
-                  <strong>5.</strong> Prepare test equipment and leads
-                </p>
-              </div>
-            </div>
-            <div className="bg-card rounded p-3">
-              <p className="font-medium text-purple-400 mb-2">Testing Phase:</p>
-              <div className="space-y-1 text-xs">
-                <p>
-                  <strong>6.</strong> Go to circuit end point
-                </p>
-                <p>
-                  <strong>7.</strong> Connect test leads between phase and CPC terminals
-                </p>
-                <p>
-                  <strong>8.</strong> Take resistance reading (this is R2)
-                </p>
-                <p>
-                  <strong>9.</strong> Return to board and remove temporary link
-                </p>
-                <p>
-                  <strong>10.</strong> Calculate R1+R2 if required for design verification
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3">
-          <p className="font-medium text-orange-400 mb-2">When to Use R2 Method:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Suitable Situations:</p>
-              <p>• Ring circuits where R1+R2 method is complex</p>
-              <p>• Circuits with multiple cable types</p>
-              <p>• When phase conductor access is limited</p>
-              <p>• Existing installations with unknown cable types</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Limitations:</p>
-              <p>• Only tests protective conductor</p>
-              <p>• Requires calculation for R1+R2 value</p>
-              <p>• Additional steps and temporary connections</p>
-              <p>• Potential for reconnection errors</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+const equipmentApproved = [
+  'Low resistance ohmmeter (preferred method)',
+  'Continuity tester with adequate test current',
+  'Multimeter with low resistance capability',
+  'Insulation and continuity tester (combined unit)',
+  'Calibration certificate must be current',
+];
 
-    <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Zap className="h-4 w-4 text-cyan-400" />
-        <h4 className="font-medium text-cyan-400">Ring Circuit Testing Procedure</h4>
-      </div>
-      <div className="space-y-3 text-sm text-white">
-        <div>
-          <p className="font-medium text-foreground">
-            Comprehensive ring circuit continuity verification:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-            <div className="bg-card rounded p-3">
-              <p className="font-medium text-cyan-400 mb-2">Phase 1: Ring Continuity</p>
-              <div className="space-y-1 text-xs">
-                <p>
-                  <strong>1.</strong> Identify ring circuit conductors at board
-                </p>
-                <p>
-                  <strong>2.</strong> Test between phase conductors (should be ~R1)
-                </p>
-                <p>
-                  <strong>3.</strong> Test between neutral conductors (should be ~R1)
-                </p>
-                <p>
-                  <strong>4.</strong> Test between CPC conductors (should be ~R2)
-                </p>
-                <p>
-                  <strong>5.</strong> Record all readings for comparison
-                </p>
-              </div>
-            </div>
-            <div className="bg-card rounded p-3">
-              <p className="font-medium text-cyan-400 mb-2">Phase 2: End-to-End Testing</p>
-              <div className="space-y-1 text-xs">
-                <p>
-                  <strong>6.</strong> Cross-connect phase and neutral at board
-                </p>
-                <p>
-                  <strong>7.</strong> Test at each socket outlet on ring
-                </p>
-                <p>
-                  <strong>8.</strong> All readings should be approximately equal
-                </p>
-                <p>
-                  <strong>9.</strong> Significant variation indicates ring break
-                </p>
-                <p>
-                  <strong>10.</strong> Repeat for CPC with appropriate cross-connection
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
-          <p className="font-medium text-green-400 mb-2">Ring Circuit Expected Results:</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Leg-to-Leg Tests:</p>
-              <p>• Phase leg-to-leg: ~R1 value</p>
-              <p>• Neutral leg-to-leg: ~R1 value</p>
-              <p>• CPC leg-to-leg: ~R2 value</p>
-              <p>• Values should be approximately equal</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">End-to-End Tests:</p>
-              <p>• All socket outlets: (R1+R2)/4</p>
-              <p>• Consistent readings around ring</p>
-              <p>• Maximum deviation: ±0.05Ω</p>
-              <p>• Total R1+R2 must be ≤1.67Ω</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Fault Indications:</p>
-              <p>• Infinite reading: broken conductor</p>
-              <p>• Very high reading: poor connection</p>
-              <p>• Inconsistent readings: ring not intact</p>
-              <p>• Zero reading: short circuit</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+const equipmentSpecs = [
+  'Test current: Minimum 200mA DC for protective conductors',
+  'Resolution: 0.01\u03A9 or better for accurate readings',
+  'Accuracy: \u00B12% of reading or better',
+  'Test voltage: 4-24V DC (varies by manufacturer)',
+  'Safety category: CAT III 300V minimum',
+];
 
-    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <AlertTriangle className="h-4 w-4 text-red-400" />
-        <h4 className="font-medium text-red-400">Common Testing Errors and Solutions</h4>
-      </div>
-      <div className="space-y-3 text-sm text-white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-red-400 mb-2">Common Errors:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Inadequate test current:</strong> Using basic multimeter
-              </p>
-              <p>
-                • <strong>Parallel paths:</strong> Not isolating all connections
-              </p>
-              <p>
-                • <strong>Test lead resistance:</strong> Not compensating for lead resistance
-              </p>
-              <p>
-                • <strong>Poor connections:</strong> Inadequate probe contact
-              </p>
-              <p>
-                • <strong>Wrong terminals:</strong> Testing incorrect conductors
-              </p>
+const leadConsiderations = [
+  { heading: 'Lead Resistance', items: ['Must be known and recorded', 'Subtracted from test readings', 'Typically 0.01-0.05\u03A9 per lead'] },
+  { heading: 'Lead Quality', items: ['Robust construction essential', 'Good contact with test probes', 'Adequate current carrying capacity'] },
+  { heading: 'Lead Safety', items: ['Insulated for working voltage', 'Finger guards on probes', 'Regular visual inspection'] },
+];
+
+const r1r2Steps = [
+  { number: 1, text: 'Ensure circuit is safely isolated and locked off' },
+  { number: 2, text: 'Remove all lamps, equipment, and accessories' },
+  { number: 3, text: 'Identify phase and CPC at distribution board' },
+  { number: 4, text: 'Check test instrument calibration and leads' },
+  { number: 5, text: 'Measure and record test lead resistance' },
+  { number: 6, text: 'Connect test leads to phase and CPC at board' },
+  { number: 7, text: 'Go to furthest point of circuit' },
+  { number: 8, text: 'Connect phase and CPC terminals together' },
+  { number: 9, text: 'Take reading on test instrument' },
+  { number: 10, text: 'Subtract test lead resistance from reading' },
+];
+
+const r1r2Advantages = [
+  'Tests complete fault path (phase + protective conductor)',
+  'No temporary links required at distribution board',
+  'Directly measures impedance for fault calculations',
+  'Suitable for all circuit types and configurations',
+];
+
+const r1r2SafetyBenefits = [
+  'Minimal disturbance to distribution board',
+  'Reduces risk of incorrect reconnection',
+  'Clear indication of complete circuit integrity',
+  'Easier to identify and locate faults',
+];
+
+const r2Steps = [
+  { number: 1, text: 'Ensure circuit is safely isolated' },
+  { number: 2, text: 'Install temporary link between phase and CPC at board' },
+  { number: 3, text: 'Ensure good electrical connection' },
+  { number: 4, text: 'Verify link is secure and safe' },
+  { number: 5, text: 'Prepare test equipment and leads' },
+  { number: 6, text: 'Go to circuit end point' },
+  { number: 7, text: 'Connect test leads between phase and CPC terminals' },
+  { number: 8, text: 'Take resistance reading (this is R2)' },
+  { number: 9, text: 'Return to board and remove temporary link' },
+  { number: 10, text: 'Calculate R1+R2 if required for design verification' },
+];
+
+const r2Suitable = [
+  'Ring circuits where R1+R2 method is complex',
+  'Circuits with multiple cable types',
+  'When phase conductor access is limited',
+  'Existing installations with unknown cable types',
+];
+
+const r2Limitations = [
+  'Only tests protective conductor',
+  'Requires calculation for R1+R2 value',
+  'Additional steps and temporary connections',
+  'Potential for reconnection errors',
+];
+
+const ringStepA = [
+  { number: 1, text: 'Identify L, N and CPC conductors at the distribution board' },
+  { number: 2, text: 'Measure end-to-end resistance of line conductors (L-L)' },
+  { number: 3, text: 'Measure end-to-end resistance of neutral conductors (N-N)' },
+  { number: 4, text: 'Measure end-to-end resistance of CPC conductors (CPC-CPC)' },
+  { number: 5, text: 'A finite reading on each confirms no open circuit. Record all readings.' },
+];
+
+const ringStepB = [
+  { number: 6, text: 'Connect outgoing L to returning N and vice versa at the board' },
+  { number: 7, text: 'Measure resistance between L and N at each socket outlet on the ring' },
+  { number: 8, text: 'All readings should be substantially the same' },
+  { number: 9, text: 'Significant variation indicates a ring break or interconnection fault' },
+];
+
+const ringStepC = [
+  { number: 10, text: 'Reconnect L-N correctly, then cross-connect L to CPC and vice versa' },
+  { number: 11, text: 'Measure at each socket outlet on the ring' },
+  { number: 12, text: 'Ring sockets should show substantially the same readings at approximately half the loop resistance' },
+  { number: 13, text: 'Spurs will show proportionally higher resistance corresponding to spur cable length' },
+];
+
+const ringExpected = [
+  { heading: 'Leg-to-Leg Tests', items: ['Phase leg-to-leg: ~R1 value', 'Neutral leg-to-leg: ~R1 value', 'CPC leg-to-leg: ~R2 value', 'Values should be approximately equal'] },
+  { heading: 'End-to-End Tests', items: ['All socket outlets: (R1+R2)/4', 'Consistent readings around ring', 'Maximum deviation: \u00B10.05\u03A9', 'Total R1+R2 must be \u22641.67\u03A9'] },
+  { heading: 'Fault Indications', items: ['Infinite reading: broken conductor', 'Very high reading: poor connection', 'Inconsistent readings: ring not intact', 'Zero reading: short circuit'] },
+];
+
+const commonErrors = [
+  'Inadequate test current: Using basic multimeter',
+  'Parallel paths: Not isolating all connections',
+  'Test lead resistance: Not compensating for lead resistance',
+  'Poor connections: Inadequate probe contact',
+  'Wrong terminals: Testing incorrect conductors',
+];
+
+const solutions = [
+  'Use approved instruments: Minimum 200mA test current',
+  'Proper isolation: Remove all parallel paths',
+  'Measure lead resistance: Null or compensate readings',
+  'Ensure good contact: Clean terminals and probes',
+  'Verify connections: Double-check conductor identification',
+];
+
+const highResistanceCauses = [
+  'Loose terminal connections',
+  'Corroded or damaged conductors',
+  'Inadequate cable sizing',
+  'Poor crimped connections',
+  'Damaged cable during installation',
+];
+
+const highResistanceSteps = [
+  'Visual inspection of all connections',
+  'Test individual cable sections',
+  'Check for mechanical damage',
+  'Verify cable specification',
+  'Test at multiple points along route',
+];
+
+type SectionId = 'equipment' | 'r1r2' | 'r2' | 'ring' | 'errors';
+
+const ContinuityHowToTestSection = ({ onBack }: Props) => {
+  const [expanded, setExpanded] = useState<SectionId | null>(null);
+  const toggle = (id: SectionId) => setExpanded((prev) => (prev === id ? null : id));
+
+  const renderExpandable = (id: SectionId, title: string, accent: string, content: React.ReactNode) => {
+    const isOpen = expanded === id;
+    const barMap: Record<string, string> = {
+      blue: 'bg-blue-500/50',
+      amber: 'bg-amber-500/50',
+      purple: 'bg-purple-500/50',
+      cyan: 'bg-cyan-500/50',
+      red: 'bg-red-500/50',
+    };
+    const topAccentMap: Record<string, string> = {
+      blue: 'bg-blue-500',
+      amber: 'bg-amber-500',
+      purple: 'bg-purple-500',
+      cyan: 'bg-cyan-500',
+      red: 'bg-red-500',
+    };
+    const borderActiveMap: Record<string, string> = {
+      blue: 'border-blue-500/20',
+      amber: 'border-amber-500/20',
+      purple: 'border-purple-500/20',
+      cyan: 'border-cyan-500/20',
+      red: 'border-red-500/20',
+    };
+    const textMap: Record<string, string> = {
+      blue: 'text-blue-400',
+      amber: 'text-amber-400',
+      purple: 'text-purple-400',
+      cyan: 'text-cyan-400',
+      red: 'text-red-400',
+    };
+    return (
+      <motion.div variants={itemVariants}>
+        <button
+          type="button"
+          onClick={() => toggle(id)}
+          className="w-full text-left touch-manipulation active:scale-[0.99] transition-transform"
+        >
+          <div className={`relative rounded-2xl bg-white/[0.07] border ${isOpen ? borderActiveMap[accent] : 'border-white/[0.08]'} overflow-hidden transition-colors`}>
+            <div className={`absolute inset-x-0 top-0 h-[2px] ${topAccentMap[accent]}`} />
+            <div className={`absolute left-0 top-0 bottom-0 w-1 ${barMap[accent]} rounded-l-2xl`} />
+            <div className="p-4 flex items-center gap-3">
+              <p className={`text-[15px] font-bold ${textMap[accent]} flex-1`}>{title}</p>
+              <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                <ChevronDown className="h-4 w-4 text-white shrink-0" />
+              </motion.div>
             </div>
           </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-green-400 mb-2">Solutions:</p>
-            <div className="space-y-1 text-xs">
-              <p>
-                • <strong>Use approved instruments:</strong> Minimum 200mA test current
-              </p>
-              <p>
-                • <strong>Proper isolation:</strong> Remove all parallel paths
-              </p>
-              <p>
-                • <strong>Measure lead resistance:</strong> Null or compensate readings
-              </p>
-              <p>
-                • <strong>Ensure good contact:</strong> Clean terminals and probes
-              </p>
-              <p>
-                • <strong>Verify connections:</strong> Double-check conductor identification
-              </p>
+        </button>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="overflow-hidden"
+            >
+              <div className="pt-2 px-1 pb-1">{content}</div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    );
+  };
+
+  const renderStepCards = (steps: { number: number; text: string }[], accent: string) => {
+    const numColour: Record<string, string> = {
+      amber: 'text-amber-400',
+      purple: 'text-purple-400',
+      cyan: 'text-cyan-400',
+    };
+    const barColour: Record<string, string> = {
+      amber: 'bg-amber-500/50',
+      purple: 'bg-purple-500/50',
+      cyan: 'bg-cyan-500/50',
+    };
+    return (
+      <div className="space-y-1.5">
+        {steps.map((step) => (
+          <div key={step.number} className="relative rounded-xl bg-white/[0.05] p-3 overflow-hidden">
+            <div className={`absolute left-0 top-0 bottom-0 w-1 ${barColour[accent]} rounded-l-xl`} />
+            <div className="flex items-start gap-3 pl-2">
+              <span className={`text-lg font-bold ${numColour[accent]} shrink-0 w-6 text-center`}>{step.number}</span>
+              <p className="text-[12px] text-white leading-relaxed">{step.text}</p>
             </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">How to Test</h1>
           </div>
         </div>
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
-          <p className="font-medium text-yellow-400 mb-2">
-            Troubleshooting High Resistance Readings:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Potential Causes:</p>
-              <p>• Loose terminal connections</p>
-              <p>• Corroded or damaged conductors</p>
-              <p>• Inadequate cable sizing</p>
-              <p>• Poor crimped connections</p>
-              <p>• Damaged cable during installation</p>
+      </div>
+
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
+        {/* Equipment */}
+        {renderExpandable('equipment', 'Test Equipment Requirements', 'blue', (
+          <div className="space-y-2">
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Approved Test Instruments:</p>
+              <div className="space-y-1">
+                {equipmentApproved.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Investigation Steps:</p>
-              <p>• Visual inspection of all connections</p>
-              <p>• Test individual cable sections</p>
-              <p>• Check for mechanical damage</p>
-              <p>• Verify cable specification</p>
-              <p>• Test at multiple points along route</p>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Technical Specifications:</p>
+              <div className="space-y-1">
+                {equipmentSpecs.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-yellow-400 mb-1.5">Test Lead Considerations:</p>
+              {leadConsiderations.map((group, i) => (
+                <div key={i} className="mb-2 last:mb-0">
+                  <p className="text-[12px] font-semibold text-white mb-0.5">{group.heading}:</p>
+                  {group.items.map((item, j) => (
+                    <p key={j} className="text-[12px] text-white">- {item}</p>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </div>
+        ))}
+
+        {/* R1+R2 Method */}
+        <p className="text-xs font-medium text-amber-400 uppercase tracking-wider px-0.5 mt-4">R1+R2 Method (Preferred)</p>
+        {renderExpandable('r1r2', 'R1+R2 Step-by-Step Procedure', 'amber', (
+          <div className="space-y-3">
+            {renderStepCards(r1r2Steps, 'amber')}
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-blue-400 mb-1.5">Why R1+R2 is Preferred:</p>
+              <p className="text-[12px] font-semibold text-white mb-1">Practical Advantages:</p>
+              <div className="space-y-0.5 mb-2">
+                {r1r2Advantages.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+              <p className="text-[12px] font-semibold text-white mb-1">Safety Benefits:</p>
+              <div className="space-y-0.5">
+                {r1r2SafetyBenefits.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* R2 Method */}
+        <p className="text-xs font-medium text-purple-400 uppercase tracking-wider px-0.5 mt-4">R2 Method (Alternative)</p>
+        {renderExpandable('r2', 'R2 Step-by-Step Procedure', 'purple', (
+          <div className="space-y-3">
+            {renderStepCards(r2Steps, 'purple')}
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-orange-400 mb-1.5">When to Use R2 Method:</p>
+              <p className="text-[12px] font-semibold text-white mb-1">Suitable Situations:</p>
+              <div className="space-y-0.5 mb-2">
+                {r2Suitable.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+              <p className="text-[12px] font-semibold text-white mb-1">Limitations:</p>
+              <div className="space-y-0.5">
+                {r2Limitations.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Ring Circuit */}
+        <p className="text-xs font-medium text-cyan-400 uppercase tracking-wider px-0.5 mt-4">Ring Circuit Testing</p>
+        {renderExpandable('ring', 'Ring Circuit Testing Procedure', 'cyan', (
+          <div className="space-y-3">
+            <p className="text-[12px] font-semibold text-cyan-400 px-1">Step A: End-to-End Continuity</p>
+            {renderStepCards(ringStepA, 'cyan')}
+            <p className="text-[12px] font-semibold text-cyan-400 px-1 mt-2">Step B: Cross-Connection</p>
+            {renderStepCards(ringStepB, 'cyan')}
+            <p className="text-[12px] font-semibold text-cyan-400 px-1 mt-2">Step C: Verification</p>
+            {renderStepCards(ringStepC, 'cyan')}
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-green-400 mb-1.5">Expected Results:</p>
+              {ringExpected.map((group, i) => (
+                <div key={i} className="mb-2 last:mb-0">
+                  <p className="text-[12px] font-semibold text-white mb-0.5">{group.heading}:</p>
+                  {group.items.map((item, j) => (
+                    <p key={j} className="text-[12px] text-white">- {item}</p>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* Common Errors */}
+        {renderExpandable('errors', 'Common Testing Errors and Solutions', 'red', (
+          <div className="space-y-2">
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-red-400 mb-1.5">Common Errors:</p>
+              <div className="space-y-1">
+                {commonErrors.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-green-400 mb-1.5">Solutions:</p>
+              <div className="space-y-1">
+                {solutions.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+            </div>
+            <div className="rounded-xl bg-white/[0.05] p-3">
+              <p className="text-[12px] font-semibold text-yellow-400 mb-1.5">Troubleshooting High Resistance Readings:</p>
+              <p className="text-[12px] font-semibold text-white mb-1">Potential Causes:</p>
+              <div className="space-y-0.5 mb-2">
+                {highResistanceCauses.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+              <p className="text-[12px] font-semibold text-white mb-1">Investigation Steps:</p>
+              <div className="space-y-0.5">
+                {highResistanceSteps.map((item, i) => (
+                  <p key={i} className="text-[12px] text-white">- {item}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </motion.div>
     </div>
-  </div>
-);
+  );
+};
 
 export default ContinuityHowToTestSection;

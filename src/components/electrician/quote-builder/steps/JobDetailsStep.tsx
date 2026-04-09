@@ -1,16 +1,6 @@
-import {
-  Clock,
-  ChevronDown,
-  Briefcase,
-  FileText,
-  Calendar,
-  MapPin,
-  AlertTriangle,
-} from 'lucide-react';
-import React from 'react';
+import React, { useState } from 'react';
 import { JobDetails } from '@/types/quote';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -36,209 +26,119 @@ const durationOptions = [
   { value: 'Other', label: 'Other...' },
 ];
 
+const inputClass =
+  'w-full h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
+
 export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
   const [showOptional, setShowOptional] = useState(false);
 
   const handleChange = (field: keyof JobDetails, value: string) => {
-    onUpdate({
-      ...(jobDetails || {}),
-      [field]: value,
-    } as JobDetails);
-  };
-
-  // Clean input styles
-  const inputClassName =
-    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white caret-elec-yellow';
-  const textareaClassName =
-    'w-full bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white caret-elec-yellow resize-none';
-  const darkStyle: React.CSSProperties = {
-    colorScheme: 'dark',
+    onUpdate({ ...(jobDetails || {}), [field]: value } as JobDetails);
   };
 
   return (
     <div className="space-y-4 text-left">
-      {/* Job Information Section */}
+      {/* Job Title */}
       <div>
-        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3 flex items-center gap-2">
-          <Briefcase className="h-3.5 w-3.5" />
-          Job Information
-        </p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-          {/* Job Title */}
-          <div className="flex items-center gap-3 p-4">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-              <FileText className="h-5 w-5 text-black" />
-            </div>
-            <div className="flex-1 min-w-0 text-left">
-              <label className="text-[12px] text-white block mb-0.5">Job Title *</label>
-              <input
-                style={darkStyle}
-                value={jobDetails?.title || ''}
-                onChange={(e) => handleChange('title', e.target.value)}
-                placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
-                className={inputClassName}
-              />
-            </div>
-          </div>
-
-          {/* Job Description */}
-          <div className="p-4">
-            <div className="flex items-start gap-3">
-              <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Briefcase className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0 text-left">
-                <label className="text-[12px] text-white block mb-1">Job Description *</label>
-                <textarea
-                  style={darkStyle}
-                  value={jobDetails?.description || ''}
-                  onChange={(e) => handleChange('description', e.target.value)}
-                  placeholder="Describe the scope of work..."
-                  rows={4}
-                  className={textareaClassName}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        <label className="text-white text-xs mb-1.5 block">Job Title *</label>
+        <input
+          value={jobDetails?.title || ''}
+          onChange={(e) => handleChange('title', e.target.value)}
+          placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
+          className={inputClass}
+        />
       </div>
 
-      {/* Schedule Section */}
+      {/* Job Description */}
       <div>
-        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3 flex items-center gap-2">
-          <Clock className="h-3.5 w-3.5" />
-          Schedule
-        </p>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-          {/* Duration */}
+        <label className="text-white text-xs mb-1.5 block">Job Description *</label>
+        <textarea
+          value={jobDetails?.description || ''}
+          onChange={(e) => handleChange('description', e.target.value)}
+          placeholder="Describe the scope of work..."
+          rows={3}
+          className="w-full px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white resize-none"
+        />
+      </div>
+
+      {/* Duration + Start Date — side by side */}
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className="text-white text-xs mb-1.5 block">Estimated Duration</label>
           {jobDetails?.estimatedDuration === 'Other' ? (
-            <div className="flex items-center gap-3 p-4">
-              <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Clock className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0 text-left">
-                <label className="text-[12px] text-white block mb-0.5">Custom Duration</label>
-                <div className="flex items-center gap-2">
-                  <input
-                    style={darkStyle}
-                    value={jobDetails?.customDuration || ''}
-                    onChange={(e) => handleChange('customDuration', e.target.value)}
-                    placeholder="Enter duration"
-                    className={inputClassName}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => handleChange('estimatedDuration', '')}
-                    className="text-[14px] text-elec-yellow font-medium shrink-0 touch-manipulation"
-                  >
-                    Reset
-                  </button>
-                </div>
-              </div>
+            <div className="flex gap-2">
+              <input
+                value={jobDetails?.customDuration || ''}
+                onChange={(e) => handleChange('customDuration', e.target.value)}
+                placeholder="Enter duration"
+                className={inputClass}
+              />
+              <button
+                type="button"
+                onClick={() => handleChange('estimatedDuration', '')}
+                className="text-[12px] text-elec-yellow font-medium shrink-0 touch-manipulation"
+              >
+                Reset
+              </button>
             </div>
           ) : (
-            <div className="flex items-center gap-3 p-4">
-              <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <Clock className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0 text-left">
-                <label className="text-[12px] text-white block mb-0.5">Estimated Duration</label>
-                <Select
-                  value={jobDetails?.estimatedDuration || ''}
-                  onValueChange={(value) => handleChange('estimatedDuration', value)}
-                >
-                  <SelectTrigger className="w-full h-8 bg-transparent border-0 text-[16px] font-medium text-white focus:ring-0 focus:ring-offset-0 px-0 touch-manipulation [&>svg]:text-white">
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] bg-zinc-900 border-zinc-700 text-white">
-                    {durationOptions.map((opt) => (
-                      <SelectItem
-                        key={opt.value}
-                        value={opt.value}
-                        className="text-white focus:bg-elec-yellow focus:text-black cursor-pointer touch-manipulation"
-                      >
-                        {opt.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+            <Select
+              value={jobDetails?.estimatedDuration || ''}
+              onValueChange={(value) => handleChange('estimatedDuration', value)}
+            >
+              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow text-white">
+                <SelectValue placeholder="Select duration" />
+              </SelectTrigger>
+              <SelectContent className="z-[100] bg-zinc-900 border-zinc-700 text-white">
+                {durationOptions.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value} className="text-white focus:bg-elec-yellow focus:text-black touch-manipulation">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           )}
-
-          {/* Start Date */}
-          <div className="flex items-center gap-3 p-4">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-              <Calendar className="h-5 w-5 text-black" />
-            </div>
-            <div className="flex-1 min-w-0 text-left">
-              <label className="text-[12px] text-white block mb-0.5">Proposed Start Date</label>
-              <input
-                type="date"
-                style={darkStyle}
-                value={jobDetails?.workStartDate || ''}
-                onChange={(e) => handleChange('workStartDate', e.target.value)}
-                className={cn(inputClassName, '[color-scheme:dark]')}
-              />
-            </div>
-          </div>
+        </div>
+        <div>
+          <label className="text-white text-xs mb-1.5 block">Proposed Start Date</label>
+          <input
+            type="date"
+            value={jobDetails?.workStartDate || ''}
+            onChange={(e) => handleChange('workStartDate', e.target.value)}
+            className={cn(inputClass, '[color-scheme:dark]')}
+          />
         </div>
       </div>
 
-      {/* Additional Details Toggle */}
+      {/* Optional fields toggle */}
       <button
         type="button"
         onClick={() => setShowOptional(!showOptional)}
-        className={cn(
-          'w-full flex items-center justify-between px-4 py-4 rounded-2xl transition-all touch-manipulation active:scale-[0.99]',
-          'bg-white/[0.03] border border-white/[0.06]',
-          showOptional && 'bg-white/[0.05] border-white/[0.1]'
-        )}
+        className="text-[12px] font-medium text-elec-yellow touch-manipulation py-1"
       >
-        <span className="text-[14px] font-medium text-white">Additional Details (optional)</span>
-        <ChevronDown
-          className={cn('h-4 w-4 text-white transition-transform', showOptional && 'rotate-180')}
-        />
+        {showOptional ? 'Hide additional details' : 'Additional details (optional)'}
       </button>
 
-      {/* Optional Fields */}
       {showOptional && (
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-          {/* Work Location */}
-          <div className="flex items-center gap-3 p-4">
-            <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-              <MapPin className="h-5 w-5 text-black" />
-            </div>
-            <div className="flex-1 min-w-0 text-left">
-              <label className="text-[12px] text-white block mb-0.5">Work Location</label>
-              <input
-                style={darkStyle}
-                value={jobDetails?.location || ''}
-                onChange={(e) => handleChange('location', e.target.value)}
-                placeholder="If different from client address"
-                className={inputClassName}
-              />
-            </div>
+        <div className="space-y-4">
+          <div>
+            <label className="text-white text-xs mb-1.5 block">Work Location</label>
+            <input
+              value={jobDetails?.location || ''}
+              onChange={(e) => handleChange('location', e.target.value)}
+              placeholder="If different from client address"
+              className={inputClass}
+            />
           </div>
-
-          {/* Special Requirements */}
-          <div className="p-4">
-            <div className="flex items-start gap-3">
-              <div className="w-11 h-11 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
-                <AlertTriangle className="h-5 w-5 text-black" />
-              </div>
-              <div className="flex-1 min-w-0 text-left">
-                <label className="text-[12px] text-white block mb-1">Special Requirements</label>
-                <textarea
-                  style={darkStyle}
-                  value={jobDetails?.specialRequirements || ''}
-                  onChange={(e) => handleChange('specialRequirements', e.target.value)}
-                  placeholder="Access restrictions, working hours, safety considerations..."
-                  rows={3}
-                  className={textareaClassName}
-                />
-              </div>
-            </div>
+          <div>
+            <label className="text-white text-xs mb-1.5 block">Special Requirements</label>
+            <textarea
+              value={jobDetails?.specialRequirements || ''}
+              onChange={(e) => handleChange('specialRequirements', e.target.value)}
+              placeholder="Access, parking, isolation requirements..."
+              rows={2}
+              className="w-full px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white resize-none"
+            />
           </div>
         </div>
       )}
