@@ -7,6 +7,7 @@
  *  - read_pdf       → Extract text from a PDF URL or base64
  */
 
+import { createClient } from '@supabase/supabase-js';
 import type { UserContext } from '../auth.js';
 
 // ─── ElevenLabs ─────────────────────────────────────────────────────────────
@@ -21,7 +22,8 @@ export async function speakResponse(args: Record<string, unknown>, user: UserCon
   const voiceId = (args.voice_id as string) || 'onwK4e9ZLuTAKqWW03F9'; // Daniel — British male
 
   if (!text) return { error: 'text is required' };
-  if (text.length > 2500) return { error: 'Text too long — keep under 2500 characters for voice notes' };
+  if (text.length > 2500)
+    return { error: 'Text too long — keep under 2500 characters for voice notes' };
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) return { error: 'ElevenLabs API key not configured' };
@@ -49,28 +51,26 @@ export async function speakResponse(args: Record<string, unknown>, user: UserCon
     const audioBuffer = await res.arrayBuffer();
     const audioBase64 = Buffer.from(audioBuffer).toString('base64');
 
-    // Upload to Supabase storage
-    const supabase = user.supabase;
-    const fileName = `voice-notes/${user.userId}/${Date.now()}.mp3`;
+    // Upload using service role client to bypass RLS — audio is not sensitive
+    const supabaseUrl = process.env.SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co';
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!serviceKey) return { error: 'Storage not configured' };
 
-    const { error: uploadError } = await supabase.storage
-      .from('documents')
+    const adminClient = createClient(supabaseUrl, serviceKey);
+    const fileName = `voice-${user.userId}-${Date.now()}.mp3`;
+
+    const { error: uploadError } = await adminClient.storage
+      .from('visual-uploads')
       .upload(fileName, Buffer.from(audioBuffer), {
         contentType: 'audio/mpeg',
         upsert: false,
       });
 
     if (uploadError) {
-      // Fallback — return base64 if storage upload fails
-      return {
-        success: true,
-        audio_base64: `data:audio/mpeg;base64,${audioBase64}`,
-        note: 'Storage upload failed — returning base64 directly',
-        character_count: text.length,
-      };
+      return { error: `Audio storage failed: ${uploadError.message}` };
     }
 
-    const { data: urlData } = supabase.storage.from('documents').getPublicUrl(fileName);
+    const { data: urlData } = adminClient.storage.from('visual-uploads').getPublicUrl(fileName);
 
     return {
       success: true,
@@ -175,7 +175,9 @@ export async function readPdf(args: Record<string, unknown>, _user: UserContext)
       const contentType = res.headers.get('content-type') || '';
       const looksLikePdf = contentType.includes('pdf') || pdfUrl.toLowerCase().endsWith('.pdf');
       if (!looksLikePdf) {
-        return { error: `URL does not appear to be a PDF (content-type: ${contentType || 'unknown'}). Make sure you're sending a direct link to a .pdf file.` };
+        return {
+          error: `URL does not appear to be a PDF (content-type: ${contentType || 'unknown'}). Make sure you're sending a direct link to a .pdf file.`,
+        };
       }
 
       pdfBuffer = Buffer.from(await res.arrayBuffer());
@@ -231,7 +233,8 @@ export async function readPdf(args: Record<string, unknown>, _user: UserContext)
     if (!extractedText) {
       return {
         success: false,
-        error: 'Could not extract text — PDF may be image-based (scanned). Try analyse_photo for scanned documents.',
+        error:
+          'Could not extract text — PDF may be image-based (scanned). Try analyse_photo for scanned documents.',
         page_count: pageCount,
         size_kb: Math.round(pdfBuffer.length / 1024),
       };
@@ -243,7 +246,9 @@ export async function readPdf(args: Record<string, unknown>, _user: UserContext)
 
     return {
       success: true,
-      text: truncated ? extractedText.slice(0, maxChars) + '\n\n[... truncated — document is longer]' : extractedText,
+      text: truncated
+        ? extractedText.slice(0, maxChars) + '\n\n[... truncated — document is longer]'
+        : extractedText,
       page_count: pageCount || 'unknown',
       char_count: extractedText.length,
       size_kb: Math.round(pdfBuffer.length / 1024),

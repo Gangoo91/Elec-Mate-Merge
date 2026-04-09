@@ -57,9 +57,17 @@ export async function getJobWeather(args: Record<string, unknown>, user: UserCon
   try {
     const res = await fetch(`https://wttr.in/${encodeURIComponent(postcode)}?format=j1`);
     if (!res.ok) return { error: 'Weather lookup failed' };
-    const data = (await res.json()) as Record<string, unknown>;
-    const current = data.current_condition?.[0];
-    const forecast = data.weather?.[0];
+    type WttrHourly = Record<string, unknown>;
+    type WttrAstronomy = Record<string, unknown>;
+    type WttrDay = { hourly?: WttrHourly[]; astronomy?: WttrAstronomy[] };
+    type WttrCurrent = Record<string, unknown>;
+    type WttrData = { current_condition?: WttrCurrent[]; weather?: WttrDay[] };
+    const data = (await res.json()) as WttrData;
+    const current = data.current_condition?.[0] as WttrCurrent | undefined;
+    const forecast = data.weather?.[0] as WttrDay | undefined;
+    const hourly4 = forecast?.hourly?.[4] as WttrHourly | undefined;
+    const astronomy = forecast?.astronomy?.[0] as WttrAstronomy | undefined;
+    const weatherDesc = (current?.weatherDesc as Array<Record<string, unknown>> | undefined)?.[0];
 
     return {
       success: true,
@@ -68,11 +76,11 @@ export async function getJobWeather(args: Record<string, unknown>, user: UserCon
       weather: {
         temperature: `${current?.temp_C || '?'}°C`,
         feels_like: `${current?.FeelsLikeC || '?'}°C`,
-        description: current?.weatherDesc?.[0]?.value || 'Unknown',
-        rain_chance: `${forecast?.hourly?.[4]?.chanceofrain || '?'}%`,
+        description: weatherDesc?.value || 'Unknown',
+        rain_chance: `${hourly4?.chanceofrain || '?'}%`,
         wind: `${current?.windspeedMiles || '?'}mph ${current?.winddir16Point || ''}`,
-        sunrise: forecast?.astronomy?.[0]?.sunrise || '',
-        sunset: forecast?.astronomy?.[0]?.sunset || '',
+        sunrise: astronomy?.sunrise || '',
+        sunset: astronomy?.sunset || '',
       },
     };
   } catch {
