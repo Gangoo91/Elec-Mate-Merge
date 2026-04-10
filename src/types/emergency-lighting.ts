@@ -103,17 +103,9 @@ export interface EmergencyLightingFormData {
     actionTaken: string;
   };
 
-  // Individual luminaire test results
-  luminaireTestResults: {
-    id: string;
-    luminaireId: string;
-    functionalTest: 'pass' | 'fail' | 'na' | '';
-    durationTest: 'pass' | 'fail' | 'na' | '';
-    notes: string;
-  }[];
-
   // Test equipment
   luxMeterMake: string;
+  luxMeterModel: string;
   luxMeterSerial: string;
   luxMeterCalibrationDate: string;
 
@@ -153,6 +145,16 @@ export interface EmergencyLightingFormData {
   // Service schedule
   nextMonthlyTestDue: string;
   nextAnnualTestDue: string;
+  nextThreeYearlyInspectionDue: string;
+
+  // BS 5266 compliance references
+  previousCertificateNumber: string;
+  riskAssessmentReference: string;
+  drawingReference: string;
+  wiringSystem: string;
+  automaticTestSystem: boolean;
+  atsDetails: string;
+  designStandard: string;
 
   // Overall result
   overallResult: 'satisfactory' | 'unsatisfactory' | '';
@@ -217,9 +219,8 @@ export const getDefaultEmergencyLightingFormData = (): EmergencyLightingFormData
     actionTaken: '',
   },
 
-  luminaireTestResults: [],
-
   luxMeterMake: '',
+  luxMeterModel: '',
   luxMeterSerial: '',
   luxMeterCalibrationDate: '',
 
@@ -242,6 +243,15 @@ export const getDefaultEmergencyLightingFormData = (): EmergencyLightingFormData
 
   nextMonthlyTestDue: '',
   nextAnnualTestDue: '',
+  nextThreeYearlyInspectionDue: '',
+
+  previousCertificateNumber: '',
+  riskAssessmentReference: '',
+  drawingReference: '',
+  wiringSystem: '',
+  automaticTestSystem: false,
+  atsDetails: '',
+  designStandard: 'BS 5266-1:2016',
 
   overallResult: '',
 

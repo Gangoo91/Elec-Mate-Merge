@@ -6,9 +6,6 @@ import EmergencyLightingLuminaireSchedule from './EmergencyLightingLuminaireSche
 import EmergencyLightingTestResults from './EmergencyLightingTestResults';
 import EmergencyLightingDeclarations from './EmergencyLightingDeclarations';
 import EmergencyLightingTabNavigation from './EmergencyLightingTabNavigation';
-import { Building2, Lightbulb, TestTube, FileText } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import type { EmergencyLightingFormData } from '@/types/emergency-lighting';
 
 interface EmergencyLightingFormTabsProps {
@@ -50,24 +47,19 @@ interface EmergencyLightingFormTabsProps {
 const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
   currentTab,
   onTabChange,
-  canAccessTab,
   formData,
   onUpdate,
   tabNavigationProps,
   onGenerateCertificate,
-  onSaveDraft,
   canGenerateCertificate = true,
 }) => {
-  const isMobile = useIsMobile();
-
   const smartTabs: SmartTab[] = [
     {
       value: 'installation',
       label: 'Installation',
       shortLabel: 'Install',
-      icon: <Building2 className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6')}>
+        <div className="space-y-6">
           <EmergencyLightingInstallationDetails formData={formData} onUpdate={onUpdate} />
           <EmergencyLightingTabNavigation {...tabNavigationProps} />
         </div>
@@ -77,9 +69,8 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
       value: 'luminaires',
       label: 'Luminaires',
       shortLabel: 'Lights',
-      icon: <Lightbulb className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6')}>
+        <div className="space-y-6">
           <EmergencyLightingLuminaireSchedule formData={formData} onUpdate={onUpdate} />
           <EmergencyLightingTabNavigation {...tabNavigationProps} />
         </div>
@@ -89,9 +80,8 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
       value: 'testing',
       label: 'Testing',
       shortLabel: 'Test',
-      icon: <TestTube className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6')}>
+        <div className="space-y-6">
           <EmergencyLightingTestResults formData={formData} onUpdate={onUpdate} />
           <EmergencyLightingTabNavigation {...tabNavigationProps} />
         </div>
@@ -101,9 +91,8 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
       value: 'declarations',
       label: 'Declarations',
       shortLabel: 'Sign',
-      icon: <FileText className="h-4 w-4" />,
       content: (
-        <div className={cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6')}>
+        <div className="space-y-6">
           <EmergencyLightingDeclarations formData={formData} onUpdate={onUpdate} />
           <EmergencyLightingTabNavigation
             {...tabNavigationProps}
@@ -116,15 +105,12 @@ const EmergencyLightingFormTabs: React.FC<EmergencyLightingFormTabsProps> = ({
   ];
 
   return (
-    <div className="space-y-2 sm:space-y-4">
-      <SmartTabs
-        tabs={smartTabs}
-        value={currentTab}
-        onValueChange={onTabChange}
-        className="space-y-4"
-        breakpoint={3}
-      />
-    </div>
+    <SmartTabs
+      tabs={smartTabs}
+      value={currentTab}
+      onValueChange={onTabChange}
+      className="space-y-4"
+    />
   );
 };
 

@@ -10,7 +10,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
@@ -22,7 +21,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Lightbulb, Save, Download, Loader2 } from 'lucide-react';
+import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
@@ -347,7 +346,10 @@ export default function EmergencyLightingCertificate() {
               .update({ storage_path: storagePath })
               .eq('report_id', savedReportId);
           } catch (storageErr) {
-            console.warn('[EmergencyLighting] Permanent PDF storage failed, using temp URL:', storageErr);
+            console.warn(
+              '[EmergencyLighting] Permanent PDF storage failed, using temp URL:',
+              storageErr
+            );
           }
         }
 
@@ -386,10 +388,10 @@ export default function EmergencyLightingCertificate() {
     <div className="bg-background min-h-screen">
       {/* Recovery Dialog */}
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-[#1a1a1e] border-white/[0.08] text-white">
           <AlertDialogHeader>
-            <AlertDialogTitle>Recover Unsaved Work?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Recover Unsaved Work?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               We found an unsaved Emergency Lighting certificate from{' '}
               {recoveryDraft?.lastModified.toLocaleString()}.
               {recoveryDraft?.data?.clientName && (
@@ -402,82 +404,66 @@ export default function EmergencyLightingCertificate() {
                   Premises: {recoveryDraft.data.premisesAddress}
                 </span>
               )}
-              Would you like to recover this work?
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleDiscardDraft}>Start Fresh</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction>
+            <AlertDialogCancel
+              onClick={handleDiscardDraft}
+              className="border-white/[0.12] text-white hover:bg-white/[0.06]"
+            >
+              Start Fresh
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleRecoverDraft}
+              className="bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30"
+            >
+              Recover Draft
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Mobile-First Header */}
-      <div className="bg-background border-b border-white/[0.06] sticky top-0 z-10">
-        <div className="px-4 py-3">
-          {/* Top Row - Back & Actions */}
-          <div className="flex items-center justify-between mb-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white hover:text-white hover:bg-white/10 -ml-2 h-11 px-2 touch-manipulation active:scale-[0.98] transition-transform"
-              onClick={() => navigate('/electrician/inspection-testing?section=specialist')}
-            >
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              Back
-            </Button>
-
+      {/* Header — EIC pattern */}
+      <div className="bg-background">
+        <div className="px-2 py-2.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <button
+                onClick={() => navigate('/electrician/inspection-testing?section=specialist')}
+                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+              <div>
+                <h1 className="text-sm font-bold text-white leading-tight">Emergency Lighting</h1>
+                {formData.certificateNumber && (
+                  <p className="text-[10px] text-white font-mono mt-0.5">
+                    {formData.certificateNumber}
+                  </p>
+                )}
+              </div>
+            </div>
             <div className="flex items-center gap-2">
               <SyncStatusBadge status={syncStatus} />
-
-              <Button
-                variant="ghost"
-                size="icon"
+              <button
                 onClick={handleSaveDraft}
                 disabled={isSaving}
-                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
-                aria-label="Save draft"
+                className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50"
               >
                 {isSaving ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <Save className="h-4 w-4" />
                 )}
-              </Button>
-
-              <Button
-                size="sm"
-                onClick={handleGenerateCertificate}
-                disabled={isGenerating}
-                className="bg-amber-500 hover:bg-amber-600 text-white h-11 px-3 font-semibold rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
-                aria-label="Generate certificate PDF"
-              >
-                {isGenerating ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Download className="h-4 w-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center">
-              <Lightbulb className="h-5 w-5 text-amber-400" />
-            </div>
-            <div>
-              <h1 className="text-base font-bold text-white">
-                {isNew ? 'New Emergency Lighting Certificate' : 'Emergency Lighting Certificate'}
-              </h1>
-              <p className="text-[11px] text-white">BS 5266 Compliance</p>
+              </button>
             </div>
           </div>
         </div>
+        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
       {/* Main Content */}
-      <main className="py-4 pb-4 sm:px-6 lg:px-8 sm:pb-8">
+      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
         <EmergencyLightingFormTabs
           currentTab={tabProps.currentTab}
           onTabChange={(tab) => {
@@ -524,8 +510,9 @@ export default function EmergencyLightingCertificate() {
         errorMessage={generationError}
         documentLabel="Certificate"
       />
-
-      <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
+      {activeConflict && (
+        <ConflictResolutionDialog conflict={activeConflict} onResolve={resolveConflict} />
+      )}
     </div>
   );
 }

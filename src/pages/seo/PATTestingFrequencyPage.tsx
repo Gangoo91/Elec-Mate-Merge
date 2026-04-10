@@ -9,6 +9,7 @@ import {
   Building2,
   FileText,
   CalendarClock,
+  ShieldCheck,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

@@ -98,8 +98,9 @@ const SectionNav = ({
   const onSectionChangeRef = useRef(onSectionChange);
   onSectionChangeRef.current = onSectionChange;
 
-  // Debounce replaceState calls — prevent >100 calls per 10 seconds
+  // Throttle replaceState calls — prevent >100 calls per 10 seconds
   const lastChangeRef = useRef<string>('');
+  const lastChangeTimeRef = useRef<number>(0);
 
   // Set up intersection observer for auto-tracking active section
   // Only depends on section IDs (stringified), NOT on onSectionChange callback
@@ -109,9 +110,14 @@ const SectionNav = ({
       (entries) => {
         if (isScrollingRef.current) return;
 
+        const now = Date.now();
+        // Throttle: ignore if less than 150ms since last change
+        if (now - lastChangeTimeRef.current < 150) return;
+
         for (const entry of entries) {
           if (entry.isIntersecting && entry.target.id !== lastChangeRef.current) {
             lastChangeRef.current = entry.target.id;
+            lastChangeTimeRef.current = now;
             onSectionChangeRef.current(entry.target.id);
             break; // Only process the first visible section
           }

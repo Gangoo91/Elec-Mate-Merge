@@ -1,15 +1,8 @@
 /**
- * BulkLuminaireActions Component
- *
- * Provides bulk operations for large emergency lighting installations:
- * - Add 5/10/20 luminaires at once
- * - Mark all as PASS for functional test
- * - Clone luminaire with specs
+ * BulkLuminaireActions — bulk add + bulk test pass for large installations
  */
 
 import React, { useState } from 'react';
-import { Plus, Copy, CheckCircle2, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
@@ -40,193 +33,98 @@ interface BulkLuminaireActionsProps {
 const BulkLuminaireActions: React.FC<BulkLuminaireActionsProps> = ({
   luminaires,
   onAddLuminaires,
-  onCloneLuminaire,
   onMarkAllPass,
   onMarkAllDurationPass,
   className,
 }) => {
-  const [isAddingBulk, setIsAddingBulk] = useState(false);
   const [isMarkingPass, setIsMarkingPass] = useState(false);
   const [isMarkingDurationPass, setIsMarkingDurationPass] = useState(false);
   const { toast } = useToast();
 
-  const handleBulkAdd = async (count: number) => {
-    setIsAddingBulk(true);
-    try {
-      onAddLuminaires(count);
-      toast({
-        title: 'Luminaires Added',
-        description: `${count} luminaires have been added to the schedule.`,
-      });
-    } finally {
-      setIsAddingBulk(false);
-    }
+  const handleBulkAdd = (count: number) => {
+    onAddLuminaires(count);
+    toast({ title: `${count} luminaires added` });
   };
 
-  const handleMarkAllPass = async () => {
+  const handleMarkAllPass = () => {
     if (luminaires.length === 0) {
-      toast({
-        title: 'No Luminaires',
-        description: 'Add luminaires to the schedule first.',
-        variant: 'destructive',
-      });
+      toast({ title: 'Add luminaires first', variant: 'destructive' });
       return;
     }
-
     setIsMarkingPass(true);
-    try {
-      onMarkAllPass();
-      toast({
-        title: 'All Marked Pass',
-        description: `${luminaires.length} luminaires marked as functional PASS.`,
-      });
-    } finally {
-      setTimeout(() => setIsMarkingPass(false), 500);
-    }
+    onMarkAllPass();
+    toast({ title: `${luminaires.length} marked functional PASS` });
+    setTimeout(() => setIsMarkingPass(false), 500);
   };
 
-  const handleMarkAllDurationPass = async () => {
+  const handleMarkAllDurationPass = () => {
     if (luminaires.length === 0 || !onMarkAllDurationPass) return;
-
     setIsMarkingDurationPass(true);
-    try {
-      onMarkAllDurationPass();
-      toast({
-        title: 'All Duration PASS',
-        description: `${luminaires.length} luminaires marked as duration PASS.`,
-      });
-    } finally {
-      setTimeout(() => setIsMarkingDurationPass(false), 500);
-    }
+    onMarkAllDurationPass();
+    toast({ title: `${luminaires.length} marked duration PASS` });
+    setTimeout(() => setIsMarkingDurationPass(false), 500);
   };
 
   return (
-    <div className={cn('space-y-4', className)}>
-      {/* Quick Add Section */}
-      <div className="bg-muted/30 rounded-lg p-4">
-        <h4 className="font-medium mb-2 flex items-center gap-2">
-          <Plus className="h-4 w-4 text-elec-yellow" />
-          Bulk Add Luminaires
-        </h4>
-        <p className="text-sm text-white mb-3">
-          Quickly add multiple luminaires for large installations.
+    <div className={cn('space-y-3', className)}>
+      {/* Bulk add */}
+      <div className="flex items-center gap-2">
+        <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">
+          Bulk add
         </p>
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleBulkAdd(5)}
-            disabled={isAddingBulk}
-            className="h-11 touch-manipulation border-white/30 hover:border-elec-yellow/50"
+        <div className="h-px flex-1 bg-white/[0.06]" />
+      </div>
+      <div className="grid grid-cols-4 gap-2">
+        {[5, 10, 20, 50].map((count) => (
+          <button
+            key={count}
+            type="button"
+            onClick={() => handleBulkAdd(count)}
+            className="h-11 rounded-lg bg-white/[0.04] border border-white/[0.08] text-xs font-semibold text-white touch-manipulation active:scale-[0.98]"
           >
-            {isAddingBulk ? (
-              <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-            ) : (
-              <Plus className="h-4 w-4 mr-1" />
-            )}
-            +5
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleBulkAdd(10)}
-            disabled={isAddingBulk}
-            className="h-11 touch-manipulation border-white/30 hover:border-elec-yellow/50"
-          >
-            {isAddingBulk ? (
-              <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-            ) : (
-              <Plus className="h-4 w-4 mr-1" />
-            )}
-            +10
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => handleBulkAdd(20)}
-            disabled={isAddingBulk}
-            className="h-11 touch-manipulation border-white/30 hover:border-elec-yellow/50"
-          >
-            {isAddingBulk ? (
-              <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-            ) : (
-              <Plus className="h-4 w-4 mr-1" />
-            )}
-            +20
-          </Button>
-        </div>
+            +{count}
+          </button>
+        ))}
       </div>
 
-      {/* Bulk Test Results Section */}
+      {/* Bulk test results */}
       {luminaires.length > 0 && (
-        <div className="bg-muted/30 rounded-lg p-4">
-          <h4 className="font-medium mb-2 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-green-400" />
-            Bulk Test Results
-          </h4>
-          <p className="text-sm text-white mb-3">
-            Quickly mark all {luminaires.length} luminaires.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <Button
-              variant="outline"
-              size="sm"
+        <>
+          <div className="flex items-center gap-2">
+            <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">
+              Bulk results
+            </p>
+            <div className="h-px flex-1 bg-white/[0.06]" />
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
               onClick={handleMarkAllPass}
-              disabled={isMarkingPass}
               className={cn(
-                'h-11 touch-manipulation border-white/30',
-                isMarkingPass && 'border-green-500/50 bg-green-500/10'
+                'h-11 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
+                isMarkingPass
+                  ? 'bg-green-500 text-white'
+                  : 'bg-white/[0.04] border border-white/[0.08] text-white'
               )}
             >
-              {isMarkingPass ? (
-                <>
-                  <CheckCircle2 className="h-4 w-4 mr-2 text-green-400" />
-                  Marked!
-                </>
-              ) : (
-                <>
-                  <CheckCircle2 className="h-4 w-4 mr-2" />
-                  All Functional PASS
-                </>
-              )}
-            </Button>
+              {isMarkingPass ? 'Done!' : `All Functional PASS (${luminaires.length})`}
+            </button>
             {onMarkAllDurationPass && (
-              <Button
-                variant="outline"
-                size="sm"
+              <button
+                type="button"
                 onClick={handleMarkAllDurationPass}
-                disabled={isMarkingDurationPass}
                 className={cn(
-                  'h-11 touch-manipulation border-white/30',
-                  isMarkingDurationPass && 'border-green-500/50 bg-green-500/10'
+                  'h-11 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all',
+                  isMarkingDurationPass
+                    ? 'bg-green-500 text-white'
+                    : 'bg-white/[0.04] border border-white/[0.08] text-white'
                 )}
               >
-                {isMarkingDurationPass ? (
-                  <>
-                    <CheckCircle2 className="h-4 w-4 mr-2 text-green-400" />
-                    Marked!
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 className="h-4 w-4 mr-2" />
-                    All Duration PASS
-                  </>
-                )}
-              </Button>
+                {isMarkingDurationPass ? 'Done!' : `All Duration PASS (${luminaires.length})`}
+              </button>
             )}
           </div>
-        </div>
-      )}
-
-      {/* Clone Hint */}
-      {luminaires.length > 0 && (
-        <div className="flex items-start gap-2 text-xs text-white px-1">
-          <Copy className="h-3.5 w-3.5 mt-0.5 shrink-0" />
-          <span>
-            Use the <strong>Clone</strong> button on any luminaire to duplicate it with the same
-            specs but a new location.
-          </span>
-        </div>
+        </>
       )}
     </div>
   );

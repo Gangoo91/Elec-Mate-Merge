@@ -1,0 +1,1511 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emergency Lighting Certificate - BS 5266-1:2016</title>
+    <style>
+      /* Dynamic accent colour - Emergency Lighting Amber */
+      :root {
+          --accent-color: {{ company_accent_color | default: "#f59e0b" }};
+          --accent-light: {{ company_accent_color | default: "#f59e0b" }}33;
+      }
+
+      @page {
+          size: A4;
+          margin: 3mm 3mm 4mm 3mm;
+      }
+
+      @page landscape {
+          size: A4 landscape;
+          margin: 3mm 3mm 4mm 3mm;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          font-size: 8.5px;
+          line-height: 1.4;
+          color: #1a1a1a;
+          background: #fff;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+      }
+
+      .doc-header {
+          background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+          color: #fff;
+          padding: 10px 12px;
+          margin-bottom: 2px;
+          border-radius: 2px;
+          position: relative;
+          overflow: hidden;
+      }
+
+      .doc-header::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, var(--accent-color), var(--accent-color), var(--accent-color));
+      }
+
+      .doc-header-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+
+      .doc-title-section { flex: 1; }
+
+      .doc-title {
+          font-size: 16px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          margin-bottom: 2px;
+      }
+
+      .doc-subtitle {
+          font-size: 7.5px;
+          font-weight: 400;
+          opacity: 0.85;
+          letter-spacing: 0.3px;
+      }
+
+      .doc-meta { text-align: right; }
+
+      .cert-number {
+          font-size: 11px;
+          font-weight: 700;
+          color: var(--accent-color);
+          letter-spacing: 0.5px;
+      }
+
+      .page-number {
+          font-size: 8px;
+          opacity: 0.7;
+          margin-top: 2px;
+      }
+
+      .company-logo {
+          flex-shrink: 0;
+          margin-right: 12px;
+      }
+
+      .company-logo img {
+          max-height: 45px;
+          max-width: 120px;
+          object-fit: contain;
+      }
+
+      .company-brand {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-right: 12px;
+      }
+
+      .company-brand-info {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .company-brand-name {
+          font-size: 11px;
+          font-weight: 700;
+          color: #fff;
+          letter-spacing: 0.3px;
+      }
+
+      .company-brand-tagline {
+          font-size: 7px;
+          color: rgba(255,255,255,0.7);
+          font-style: italic;
+      }
+
+      .company-brand-reg {
+          font-size: 7px;
+          color: var(--accent-color);
+          margin-top: 1px;
+      }
+
+      .section { margin-bottom: 4px; }
+
+      .section-title {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #fff;
+          font-size: 9px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+          padding: 4px 8px;
+          margin-bottom: 3px;
+          border-left: 3px solid var(--accent-color);
+      }
+
+      .section-subtitle {
+          background: #f1f5f9;
+          color: #334155;
+          font-size: 8px;
+          font-weight: 600;
+          padding: 3px 10px;
+          margin-bottom: 2px;
+          border-left: 3px solid #64748b;
+      }
+
+      .form-grid {
+          display: table;
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 2px;
+      }
+
+      .form-row { display: table-row; }
+
+      .form-label {
+          display: table-cell;
+          font-size: 7.5px;
+          font-weight: 600;
+          color: #475569;
+          padding: 4px 6px;
+          width: 120px;
+          vertical-align: middle;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+      }
+
+      .form-value {
+          display: table-cell;
+          font-size: 8.5px;
+          color: #1e293b;
+          padding: 4px 6px;
+          vertical-align: middle;
+          border: 1px solid #e2e8f0;
+          background: #fff;
+      }
+
+      .inline-form {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+          padding: 4px 6px;
+          background: #fafbfc;
+          border: 1px solid #e2e8f0;
+          border-radius: 2px;
+      }
+
+      .inline-group {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+      }
+
+      .inline-label {
+          font-size: 7.5px;
+          font-weight: 600;
+          color: #64748b;
+          white-space: nowrap;
+      }
+
+      .inline-value {
+          font-size: 8px;
+          color: #1e293b;
+          padding: 3px 5px;
+          background: #fff;
+          border: 1px solid #cbd5e1;
+          border-radius: 2px;
+          min-width: 50px;
+          min-height: 18px;
+          line-height: 1.3;
+      }
+
+      .inline-value.wide {
+          min-width: 100px;
+          flex: 1;
+      }
+
+      .checkbox-row {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          align-items: center;
+      }
+
+      .checkbox-item {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+      }
+
+      .checkbox-box {
+          width: 10px;
+          height: 10px;
+          border: 1px solid #64748b;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 8px;
+          font-weight: bold;
+      }
+
+      .checkbox-box.checked {
+          background: #0f172a;
+          color: #fff;
+      }
+
+      .two-col { display: flex; gap: 4px; }
+      .two-col > .col { flex: 1; }
+
+      .three-col { display: flex; gap: 4px; }
+      .three-col > .col { flex: 1; }
+
+      .data-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 8px;
+          margin-bottom: 3px;
+      }
+
+      .data-table th {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #fff;
+          font-weight: 600;
+          font-size: 7.5px;
+          padding: 4px 6px;
+          text-align: left;
+          border: 1px solid #0f172a;
+      }
+
+      .data-table td {
+          padding: 4px 6px;
+          border: 1px solid #e2e8f0;
+          vertical-align: top;
+          background: #fff;
+      }
+
+      .test-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 8px;
+      }
+
+      .test-table th {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #fff;
+          font-weight: 600;
+          font-size: 7.5px;
+          padding: 5px 6px;
+          text-align: center;
+          border: 1px solid #0f172a;
+      }
+
+      .test-table th:first-child {
+          text-align: left;
+      }
+
+      .test-table td {
+          padding: 5px 6px;
+          border: 1px solid #e2e8f0;
+          text-align: center;
+          background: #fff;
+      }
+
+      .test-table td:first-child {
+          text-align: left;
+          font-weight: 500;
+          background: #f8fafc;
+      }
+
+      .test-table .result-pass {
+          background: #dcfce7;
+          color: #166534;
+          font-weight: 600;
+      }
+
+      .test-table .result-fail {
+          background: #fee2e2;
+          color: #991b1b;
+          font-weight: 600;
+      }
+
+      .test-table .result-na {
+          background: #f1f5f9;
+          color: #64748b;
+      }
+
+      /* Equipment Summary Grid */
+      .equipment-grid {
+          display: flex;
+          gap: 4px;
+          margin-bottom: 4px;
+      }
+
+      .equipment-box {
+          flex: 1;
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+          border: 1px solid #cbd5e1;
+          border-radius: 3px;
+          padding: 6px;
+          text-align: center;
+      }
+
+      .equipment-box .count {
+          font-size: 18px;
+          font-weight: 700;
+          color: var(--accent-color);
+          line-height: 1;
+      }
+
+      .equipment-box .label {
+          font-size: 7px;
+          color: #64748b;
+          margin-top: 2px;
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
+      }
+
+      /* Defect Cards */
+      .defect-card {
+          background: #fff;
+          border: 1px solid #e2e8f0;
+          border-radius: 3px;
+          padding: 6px;
+          margin-bottom: 4px;
+      }
+
+      .defect-card.immediate {
+          border-left: 3px solid #dc2626;
+      }
+
+      .defect-card.within-7-days {
+          border-left: 3px solid #f59e0b;
+      }
+
+      .defect-card.within-28-days {
+          border-left: 3px solid #3b82f6;
+      }
+
+      .defect-card.recommendation {
+          border-left: 3px solid #8b5cf6;
+      }
+
+      .defect-header {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 4px;
+      }
+
+      .defect-number {
+          background: #0f172a;
+          color: #fff;
+          font-size: 7px;
+          font-weight: 600;
+          padding: 2px 6px;
+          border-radius: 2px;
+      }
+
+      .defect-severity {
+          font-size: 7px;
+          font-weight: 600;
+          padding: 2px 6px;
+          border-radius: 2px;
+      }
+
+      .defect-severity.immediate {
+          background: #fee2e2;
+          color: #991b1b;
+      }
+
+      .defect-severity.within-7-days {
+          background: #fef3c7;
+          color: #92400e;
+      }
+
+      .defect-severity.within-28-days {
+          background: #dbeafe;
+          color: #1e40af;
+      }
+
+      .defect-severity.recommendation {
+          background: #ede9fe;
+          color: #6d28d9;
+      }
+
+      .defect-description {
+          font-size: 8px;
+          color: #1e293b;
+          margin-bottom: 3px;
+      }
+
+      .defect-status {
+          font-size: 7px;
+          color: #64748b;
+      }
+
+      .defect-status .rectified {
+          color: #166534;
+          font-weight: 600;
+      }
+
+      /* No Defects Box */
+      .no-defects-box {
+          background: #dcfce7;
+          border: 1px solid #86efac;
+          border-left: 3px solid #22c55e;
+          border-radius: 2px;
+          padding: 8px 12px;
+          text-align: center;
+      }
+
+      .no-defects-box .icon {
+          font-size: 16px;
+          margin-bottom: 2px;
+      }
+
+      .no-defects-box .text {
+          font-size: 9px;
+          font-weight: 600;
+          color: #166534;
+      }
+
+      /* Signature Grid */
+      .signature-grid {
+          display: flex;
+          gap: 6px;
+          margin-top: 2px;
+      }
+
+      .signature-box {
+          flex: 1;
+          border: 1px solid #cbd5e1;
+          border-radius: 2px;
+          overflow: hidden;
+      }
+
+      .signature-box-header {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #fff;
+          font-size: 7.5px;
+          font-weight: 600;
+          padding: 3px 8px;
+          border-bottom: 2px solid var(--accent-color);
+      }
+
+      .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+
+      .sig-field {
+          display: flex;
+          align-items: center;
+          margin-bottom: 3px;
+          gap: 4px;
+      }
+
+      .sig-field:last-child { margin-bottom: 0; }
+
+      .sig-field-label {
+          font-size: 7px;
+          font-weight: 600;
+          color: #64748b;
+          min-width: 70px;
+          flex-shrink: 0;
+      }
+
+      .sig-field-value {
+          flex: 1;
+          font-size: 8px;
+          color: #1e293b;
+          padding: 3px 5px;
+          background: #fff;
+          border: 1px solid #e2e8f0;
+          border-radius: 1px;
+          min-height: 18px;
+      }
+
+      .sig-field-value.signature {
+          min-height: 35px;
+          display: flex;
+          align-items: center;
+      }
+
+      .sig-field-value img { max-height: 30px; }
+
+      .declaration-box {
+          background: #f0fdf4;
+          border: 1px solid #86efac;
+          border-left: 3px solid var(--accent-color);
+          border-radius: 2px;
+          padding: 6px 10px;
+          margin-bottom: 4px;
+      }
+
+      .declaration-text {
+          font-size: 7.5px;
+          color: #166534;
+          line-height: 1.5;
+          text-align: justify;
+      }
+
+      .declaration-text strong {
+          color: #14532d;
+      }
+
+      /* Overall Assessment */
+      .assessment-box {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 8px 12px;
+          background: #f8fafc;
+          border: 2px solid #1e293b;
+          border-radius: 3px;
+      }
+
+      .assessment-label { font-size: 9px; font-weight: 600; color: #334155; }
+      .assessment-options { display: flex; gap: 12px; }
+
+      .assessment-option {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 16px;
+          border: 2px solid #cbd5e1;
+          border-radius: 3px;
+          background: #fff;
+      }
+
+      .assessment-option.pass-selected {
+          background: #22c55e;
+          border-color: #22c55e;
+      }
+
+      .assessment-option.pass-selected .option-label {
+          color: #fff;
+      }
+
+      .assessment-option.fail-selected {
+          background: #dc2626;
+          border-color: #dc2626;
+      }
+
+      .assessment-option.fail-selected .option-label {
+          color: #fff;
+      }
+
+      .assessment-option .option-label {
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+      }
+
+      .assessment-option .pass-label { color: #16a34a; }
+      .assessment-option .fail-label { color: #dc2626; }
+
+      .status-badge {
+          display: inline-block;
+          padding: 2px 8px;
+          border-radius: 2px;
+          font-size: 7px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
+      }
+
+      .status-badge.pass {
+          background: #dcfce7;
+          color: #166534;
+          border: 1px solid #86efac;
+      }
+
+      .status-badge.fail {
+          background: #fee2e2;
+          color: #991b1b;
+          border: 1px solid #fca5a5;
+      }
+
+      .status-badge.na {
+          background: #f1f5f9;
+          color: #64748b;
+          border: 1px solid #cbd5e1;
+      }
+
+      .status-badge.warning {
+          background: #fef3c7;
+          color: #92400e;
+          border: 1px solid #fcd34d;
+      }
+
+      .page-break { page-break-before: always; }
+      .avoid-break { page-break-inside: avoid; }
+
+      .footer {
+          margin-top: 8px;
+          padding-top: 6px;
+          border-top: 2px solid var(--accent-color);
+          display: flex;
+          justify-content: space-between;
+          font-size: 7px;
+          color: #64748b;
+      }
+
+      .footer-left { line-height: 1.5; }
+      .footer-right { text-align: right; }
+
+      .text-center { text-align: center; }
+      .font-bold { font-weight: 600; }
+      .mt-2 { margin-top: 4px; }
+      .mb-2 { margin-bottom: 4px; }
+
+      /* Page 2 Landscape styles */
+      .landscape-page {
+          page: landscape;
+      }
+
+      /* Photos Grid */
+      .photos-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
+      }
+
+      .photo-item {
+          border: 1px solid #e2e8f0;
+          border-radius: 3px;
+          overflow: hidden;
+      }
+
+      .photo-item img {
+          width: 100%;
+          height: 120px;
+          object-fit: cover;
+      }
+
+      .photo-caption {
+          font-size: 7px;
+          color: #64748b;
+          padding: 4px 6px;
+          background: #f8fafc;
+          text-align: center;
+      }
+
+      .service-schedule {
+          display: flex;
+          gap: 12px;
+          padding: 8px 12px;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 3px;
+      }
+
+      .service-item {
+          flex: 1;
+      }
+
+      .service-label {
+          font-size: 7px;
+          color: #64748b;
+          margin-bottom: 2px;
+      }
+
+      .service-date {
+          font-size: 10px;
+          font-weight: 600;
+          color: #1e293b;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ================================================================== -->
+    <!-- PAGE 1: MAIN CERTIFICATE                                           -->
+    <!-- ================================================================== -->
+    <div class="doc-header">
+      <div class="doc-header-content">
+        <!-- Company Branding Section -->
+        <div class="company-brand">
+          {% if company_logo %}
+          <div class="company-logo">
+            <img src="{{ company_logo }}" alt="Company Logo" />
+          </div>
+          {% endif %}
+          {% if registration_scheme_logo %}
+          <div class="company-logo" style="margin-left: 8px;">
+            <img src="{{ registration_scheme_logo }}" alt="Scheme Logo" />
+          </div>
+          {% endif %}
+          <div class="company-brand-info">
+            <div class="company-brand-name">{{ company_name }}</div>
+            {% if company_tagline %}
+            <div class="company-brand-tagline">{{ company_tagline }}</div>
+            {% endif %}
+            {% if registration_scheme %}
+            <div class="company-brand-reg">{{ registration_scheme }}{% if registration_number %}: {{ registration_number }}{% endif %}</div>
+            {% endif %}
+          </div>
+        </div>
+        <!-- Certificate Title Section -->
+        <div class="doc-title-section">
+          <div class="doc-title">EMERGENCY LIGHTING CERTIFICATE</div>
+          <div class="doc-subtitle">
+            In accordance with BS 5266-1:2016, BS EN 50172:2004, BS EN 1838:2013
+          </div>
+        </div>
+        <!-- Certificate Number Section -->
+        <div class="doc-meta">
+          <div class="cert-number">{{ certificate_number }}</div>
+          <div class="page-number">
+            Page 1 of {% if has_photos %}3{% else %}2{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION A: CERTIFICATE TYPE                                        -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section A: Certificate Details</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Certificate Type:</span>
+          <div class="checkbox-row">
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if certificate_type == 'completion' %}checked{% endif %}">{% if certificate_type == 'completion' %}&#10003;{% endif %}</span>
+              <label>Completion</label>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if certificate_type == 'periodic' %}checked{% endif %}">{% if certificate_type == 'periodic' %}&#10003;{% endif %}</span>
+              <label>Periodic</label>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if certificate_type == 'existing-site' %}checked{% endif %}">{% if certificate_type == 'existing-site' %}&#10003;{% endif %}</span>
+              <label>Existing Site</label>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if certificate_type == 'completion-small' %}checked{% endif %}">{% if certificate_type == 'completion-small' %}&#10003;{% endif %}</span>
+              <label>Completion (&le;25)</label>
+            </div>
+          </div>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Test Type:</span>
+          <span class="inline-value">{{ metadata.test_type_display }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Test Date:</span>
+          <span class="inline-value">{{ test_date }}</span>
+        </div>
+      </div>
+      {% if previous_certificate_number %}
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Previous Certificate:</span>
+          <span class="inline-value">{{ previous_certificate_number }}</span>
+        </div>
+        {% if risk_assessment_reference %}
+        <div class="inline-group">
+          <span class="inline-label">Risk Assessment:</span>
+          <span class="inline-value">{{ risk_assessment_reference }}</span>
+        </div>
+        {% endif %}
+        {% if drawing_reference %}
+        <div class="inline-group">
+          <span class="inline-label">Drawing Ref:</span>
+          <span class="inline-value">{{ drawing_reference }}</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION B: CLIENT DETAILS                                          -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section B: Client Details</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Client Name</div>
+          <div class="form-value">{{ client.name }}</div>
+          <div class="form-label">Telephone</div>
+          <div class="form-value">{{ client.telephone }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Client Address</div>
+          <div class="form-value" colspan="3">{{ client.address }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Email Address</div>
+          <div class="form-value" colspan="3">{{ client.email }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION C: PREMISES DETAILS                                        -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section C: Premises Details</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Premises Name</div>
+          <div class="form-value">{{ premises.name }}</div>
+          <div class="form-label">Premises Type</div>
+          <div class="form-value">{{ premises.type_display }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Premises Address</div>
+          <div class="form-value" colspan="3">{{ premises.address }}</div>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 2px">
+        <div class="inline-group">
+          <span class="inline-label">Occupancy Type:</span>
+          <span class="inline-value">{{ premises.occupancy_display }}</span>
+        </div>
+        {% if has_extent %}
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Extent of Installation:</span>
+          <span class="inline-value wide">{{ extent_of_installation }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION D: SYSTEM DETAILS                                          -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section D: System Details</div>
+      <div class="two-col">
+        <div class="col">
+          <div class="section-subtitle">System Configuration</div>
+          <div class="inline-form" style="border: none; padding: 0">
+            <div class="inline-group">
+              <span class="inline-label">System Type:</span>
+              <span class="inline-value" style="font-weight: 600">{{ system.type_display }}</span>
+            </div>
+            <div class="inline-group">
+              <span class="inline-label">Rated Duration:</span>
+              <span class="inline-value">{{ system.rated_duration_display }}</span>
+            </div>
+          </div>
+          <div class="inline-form" style="border: none; padding: 0; margin-top: 2px">
+            <div class="inline-group">
+              <span class="inline-label">Self-Contained Units:</span>
+              <span class="checkbox-box {% if system.self_contained_units %}checked{% endif %}">{% if system.self_contained_units %}&#10003;{% endif %}</span>
+            </div>
+            <div class="inline-group">
+              <span class="inline-label">Central Battery:</span>
+              <span class="checkbox-box {% if system.central_battery_system %}checked{% endif %}">{% if system.central_battery_system %}&#10003;{% endif %}</span>
+            </div>
+            {% if system.central_battery_system %}
+            <div class="inline-group">
+              <span class="inline-label">Location:</span>
+              <span class="inline-value">{{ system.central_battery_location }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="col">
+          <div class="section-subtitle">Purpose of System</div>
+          <div class="inline-form" style="border: none; padding: 0">
+            <div class="checkbox-row">
+              <div class="checkbox-item">
+                <span class="checkbox-box {% if system.purpose_escape_route %}checked{% endif %}">{% if system.purpose_escape_route %}&#10003;{% endif %}</span>
+                <label>Escape Route</label>
+              </div>
+              <div class="checkbox-item">
+                <span class="checkbox-box {% if system.purpose_open_area %}checked{% endif %}">{% if system.purpose_open_area %}&#10003;{% endif %}</span>
+                <label>Open Area (Anti-Panic)</label>
+              </div>
+              <div class="checkbox-item">
+                <span class="checkbox-box {% if system.purpose_high_risk %}checked{% endif %}">{% if system.purpose_high_risk %}&#10003;{% endif %}</span>
+                <label>High Risk Task Area</label>
+              </div>
+              <div class="checkbox-item">
+                <span class="checkbox-box {% if system.purpose_standby %}checked{% endif %}">{% if system.purpose_standby %}&#10003;{% endif %}</span>
+                <label>Standby Lighting</label>
+              </div>
+            </div>
+          </div>
+          {% if design_standard %}
+          <div class="inline-form" style="border: none; padding: 0; margin-top: 2px">
+            <div class="inline-group">
+              <span class="inline-label">Design Standard:</span>
+              <span class="inline-value">{{ design_standard }}</span>
+            </div>
+            {% if wiring_system %}
+            <div class="inline-group">
+              <span class="inline-label">Wiring System:</span>
+              <span class="inline-value">{{ wiring_system }}</span>
+            </div>
+            {% endif %}
+            {% if automatic_test_system %}
+            <div class="inline-group">
+              <span class="inline-label">ATS:</span>
+              <span class="inline-value">{{ ats_details }}</span>
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION E: EQUIPMENT SUMMARY                                       -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section E: Equipment Summary</div>
+      <div class="equipment-grid">
+        <div class="equipment-box">
+          <div class="count">{{ equipment.luminaire_count }}</div>
+          <div class="label">Luminaires</div>
+        </div>
+        <div class="equipment-box">
+          <div class="count">{{ equipment.exit_sign_count }}</div>
+          <div class="label">Exit Signs</div>
+        </div>
+        <div class="equipment-box">
+          <div class="count">{{ equipment.central_battery_count }}</div>
+          <div class="label">Central Batteries</div>
+        </div>
+        <div class="equipment-box">
+          <div class="count">{{ equipment.total_count }}</div>
+          <div class="label">Total Units</div>
+        </div>
+      </div>
+
+      <!-- Luminaire Category Breakdown -->
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Escape Route:</span>
+          <span class="inline-value">{{ luminaire_summary.escape_route }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Open Area:</span>
+          <span class="inline-value">{{ luminaire_summary.open_area }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">High Risk:</span>
+          <span class="inline-value">{{ luminaire_summary.high_risk }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Standby:</span>
+          <span class="inline-value">{{ luminaire_summary.standby }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Exit Signs:</span>
+          <span class="inline-value">{{ luminaire_summary.exit_signs }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION F: TEST RESULTS                                            -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section F: Test Results</div>
+
+      <!-- Test Equipment -->
+      <div class="section-subtitle">Test Equipment</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Lux Meter:</span>
+          <span class="inline-value">{{ test_equipment.lux_meter_make }}{% if lux_meter_model %} {{ lux_meter_model }}{% endif %}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Serial No:</span>
+          <span class="inline-value">{{ test_equipment.lux_meter_serial }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Calibration Date:</span>
+          <span class="inline-value">{{ test_equipment.lux_meter_calibration_date }}</span>
+        </div>
+      </div>
+
+      <!-- Monthly Functional Test -->
+      <div class="section-subtitle" style="margin-top: 3px">Monthly Functional Test</div>
+      <div class="two-col">
+        <div class="col">
+          <div class="inline-form" style="border: none; padding: 0">
+            <div class="inline-group">
+              <span class="inline-label">Date:</span>
+              <span class="inline-value">{{ monthly_test.date }}</span>
+            </div>
+            <div class="inline-group">
+              <span class="inline-label">All Luminaires Operational:</span>
+              <span class="status-badge {% if monthly_test.all_luminaires_operational %}pass{% else %}fail{% endif %}">{{ monthly_test.all_luminaires_operational_display }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="inline-form" style="border: none; padding: 0">
+            <div class="inline-group">
+              <span class="inline-label">Charging Indicators Normal:</span>
+              <span class="status-badge {% if monthly_test.charging_indicators_normal %}pass{% else %}fail{% endif %}">{{ monthly_test.charging_indicators_normal_display }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if monthly_test.has_faults %}
+      <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Faults Found:</span>
+          <span class="inline-value wide">{{ monthly_test.faults_found }}</span>
+        </div>
+        {% if monthly_test.action_taken %}
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Action Taken:</span>
+          <span class="inline-value wide">{{ monthly_test.action_taken }}</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- Annual Duration Test -->
+      <div class="section-subtitle" style="margin-top: 3px">Annual Duration Test</div>
+      <div class="two-col">
+        <div class="col">
+          <div class="inline-form" style="border: none; padding: 0">
+            <div class="inline-group">
+              <span class="inline-label">Date:</span>
+              <span class="inline-value">{{ annual_test.date }}</span>
+            </div>
+            <div class="inline-group">
+              <span class="inline-label">Duration Tested:</span>
+              <span class="inline-value">{{ annual_test.duration_tested }} min</span>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="inline-form" style="border: none; padding: 0">
+            <div class="inline-group">
+              <span class="inline-label">All Operational:</span>
+              <span class="status-badge {% if annual_test.all_luminaires_operational %}pass{% else %}fail{% endif %}">{{ annual_test.all_luminaires_operational_display }}</span>
+            </div>
+            <div class="inline-group">
+              <span class="inline-label">Battery Condition:</span>
+              <span class="inline-value">{{ annual_test.battery_condition_display }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if annual_test.has_faults %}
+      <div class="inline-form" style="margin-top: 2px;">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Faults Found:</span>
+          <span class="inline-value wide">{{ annual_test.faults_found }}</span>
+        </div>
+        {% if annual_test.action_taken %}
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Action Taken:</span>
+          <span class="inline-value wide">{{ annual_test.action_taken }}</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- Test Summary -->
+      <div class="inline-form" style="margin-top: 3px">
+        <div class="inline-group">
+          <span class="inline-label">Total Tested:</span>
+          <span class="inline-value">{{ luminaire_summary.tested_count }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Passed:</span>
+          <span class="inline-value" style="color: #166534; font-weight: 600;">{{ luminaire_summary.pass_count }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Failed:</span>
+          <span class="inline-value" style="color: {% if luminaire_summary.fail_count > 0 %}#991b1b{% else %}#166534{% endif %}; font-weight: 600;">{{ luminaire_summary.fail_count }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">All Pass:</span>
+          <span class="status-badge {% if luminaire_summary.all_pass %}pass{% else %}fail{% endif %}">{{ luminaire_summary.all_pass_display }}</span>
+        </div>
+      </div>
+
+      <!-- Service Schedule -->
+      <div class="section-subtitle" style="margin-top: 3px">Service Schedule</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">Next Monthly Test Due:</span>
+          <span class="inline-value" style="font-weight: 600; color: var(--accent-color);">{{ next_monthly_test_due }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Next Annual Test Due:</span>
+          <span class="inline-value" style="font-weight: 600; color: var(--accent-color);">{{ next_annual_test_due }}</span>
+        </div>
+        {% if next_three_yearly_inspection_due %}
+        <div class="inline-group">
+          <span class="inline-label">3-Yearly Inspection:</span>
+          <span class="inline-value" style="font-weight: 600; color: var(--accent-color);">{{ next_three_yearly_inspection_due }}</span>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- LUX READINGS (if recorded)                                         -->
+    <!-- ================================================================== -->
+    {% if has_lux_readings %}
+    <div class="section">
+      <div class="section-title">Lux Level Readings</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 5%">#</th>
+            <th style="width: 30%">Location</th>
+            <th style="width: 20%">Category</th>
+            <th style="width: 15%; text-align: center">Reading (lux)</th>
+            <th style="width: 15%; text-align: center">Min Required</th>
+            <th style="width: 15%; text-align: center">Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for reading in lux_readings %}
+          <tr>
+            <td>{{ reading.number }}</td>
+            <td>{{ reading.location }}</td>
+            <td>{{ reading.category_display }}</td>
+            <td style="text-align: center">{{ reading.reading }}</td>
+            <td style="text-align: center">{{ reading.min_required }}</td>
+            <td style="text-align: center" class="{% if reading.result_raw == 'pass' %}result-pass{% elsif reading.result_raw == 'fail' %}result-fail{% else %}result-na{% endif %}">{{ reading.result }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    <!-- ================================================================== -->
+    <!-- SECTION G: DEFECTS                                                 -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section G: Defects & Observations ({{ defect_count }})</div>
+      {% if no_defects %}
+      <div class="no-defects-box">
+        <div class="icon">&#10003;</div>
+        <div class="text">No defects or observations recorded</div>
+      </div>
+      {% else %}
+      {% for defect in defects %}
+      <div class="defect-card {{ defect.priority_raw }}">
+        <div class="defect-header">
+          <span class="defect-number">#{{ defect.number }}</span>
+          <span class="defect-severity {{ defect.priority_raw }}">{{ defect.priority }}</span>
+          {% if defect.luminaire_location %}
+          <span style="font-size: 7px; color: #64748b;">Location: {{ defect.luminaire_location }}</span>
+          {% endif %}
+        </div>
+        <div class="defect-description">{{ defect.description }}</div>
+        <div class="defect-status">
+          {% if defect.rectified %}
+          <span class="rectified">RECTIFIED on {{ defect.rectification_date }}</span>
+          {% else %}
+          <span>Outstanding</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION H: RECOMMENDATIONS                                         -->
+    <!-- ================================================================== -->
+    {% if has_recommendations %}
+    <div class="section">
+      <div class="section-title">Section H: Recommendations</div>
+      <div class="inline-form">
+        <span style="font-size: 8px; color: #1e293b; line-height: 1.5;">{{ recommendations }}</span>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- ================================================================== -->
+    <!-- SECTION I: OVERALL ASSESSMENT                                      -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section I: Overall Assessment</div>
+      <div class="assessment-box">
+        <div class="assessment-label">OVERALL RESULT:</div>
+        <div class="assessment-options">
+          <div class="assessment-option {% if is_satisfactory %}pass-selected{% endif %}">
+            <span class="checkbox-box {% if is_satisfactory %}checked{% endif %}" style="{% if is_satisfactory %}background: #fff; color: #22c55e;{% endif %}">{% if is_satisfactory %}&#10003;{% endif %}</span>
+            <span class="option-label {% unless is_satisfactory %}pass-label{% endunless %}">SATISFACTORY</span>
+          </div>
+          <div class="assessment-option {% unless is_satisfactory %}{% if overall_result == 'unsatisfactory' %}fail-selected{% endif %}{% endunless %}">
+            <span class="checkbox-box {% if overall_result == 'unsatisfactory' %}checked{% endif %}" style="{% if overall_result == 'unsatisfactory' %}background: #fff; color: #dc2626;{% endif %}">{% if overall_result == 'unsatisfactory' %}&#10003;{% endif %}</span>
+            <span class="option-label {% unless overall_result == 'unsatisfactory' %}fail-label{% endunless %}">UNSATISFACTORY</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- SECTION J: DECLARATION & SIGNATURES                                -->
+    <!-- ================================================================== -->
+    <div class="section">
+      <div class="section-title">Section J: Declaration & Signatures</div>
+      <div class="declaration-box">
+        <div class="declaration-text">
+          <strong>{{ declaration_text }}</strong>
+        </div>
+      </div>
+
+      <div class="signature-grid">
+        <!-- Tester Signature -->
+        <div class="signature-box">
+          <div class="signature-box-header">Tested By</div>
+          <div class="signature-box-body">
+            <div class="sig-field">
+              <span class="sig-field-label">Name:</span>
+              <span class="sig-field-value">{{ tester.name }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Company:</span>
+              <span class="sig-field-value">{{ tester.company }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Qualifications:</span>
+              <span class="sig-field-value">{{ tester.qualifications }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Signature:</span>
+              <span class="sig-field-value signature">
+                {% if tester.signature %}<img src="{{ tester.signature }}" alt="Signature" />{% endif %}
+              </span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Date:</span>
+              <span class="sig-field-value">{{ tester.date }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Responsible Person Signature -->
+        <div class="signature-box">
+          <div class="signature-box-header">Responsible Person (Client)</div>
+          <div class="signature-box-body">
+            <div class="sig-field">
+              <span class="sig-field-label">Name:</span>
+              <span class="sig-field-value">{{ responsible_person.name }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Position:</span>
+              <span class="sig-field-value">{{ responsible_person.position }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Signature:</span>
+              <span class="sig-field-value signature">
+                {% if responsible_person.signature %}<img src="{{ responsible_person.signature }}" alt="Signature" />{% endif %}
+              </span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Date:</span>
+              <span class="sig-field-value">{{ responsible_person.date }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- ADDITIONAL NOTES                                                   -->
+    <!-- ================================================================== -->
+    {% if has_additional_notes %}
+    <div class="section">
+      <div class="section-title">Additional Notes</div>
+      <div class="inline-form">
+        <span style="font-size: 8px; color: #1e293b; line-height: 1.5;">{{ additional_notes }}</span>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-left">
+        {{ company_name }}{% if company_address %} | {{ company_address }}{% endif %}<br/>
+        {% if company_phone %}Tel: {{ company_phone }}{% endif %}{% if company_email %} | {{ company_email }}{% endif %}{% if company_website %} | {{ company_website }}{% endif %}
+      </div>
+      <div class="footer-right">
+        Certificate No: {{ certificate_number }}<br/>
+        BS 5266-1:2016 | BS EN 50172:2004 | BS EN 1838:2013
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- PAGE 2: LUMINAIRE SCHEDULE (Landscape)                             -->
+    <!-- ================================================================== -->
+    <div class="page-break landscape-page">
+      <!-- Page 2 Header -->
+      <div class="doc-header">
+        <div class="doc-header-content">
+          <div class="company-brand">
+            {% if company_logo %}
+            <div class="company-logo">
+              <img src="{{ company_logo }}" alt="Company Logo" />
+            </div>
+            {% endif %}
+            <div class="company-brand-info">
+              <div class="company-brand-name">{{ company_name }}</div>
+            </div>
+          </div>
+          <div class="doc-title-section">
+            <div class="doc-title">LUMINAIRE SCHEDULE</div>
+            <div class="doc-subtitle">Emergency Lighting Certificate - {{ certificate_number }}</div>
+          </div>
+          <div class="doc-meta">
+            <div class="cert-number">{{ certificate_number }}</div>
+            <div class="page-number">Page 2 of {% if has_photos %}3{% else %}2{% endif %}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Luminaire Schedule Table -->
+      <div class="section">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 4%; text-align: center">#</th>
+              <th style="width: 16%">Location</th>
+              <th style="width: 10%">Make</th>
+              <th style="width: 10%">Model</th>
+              <th style="width: 8%">Type</th>
+              <th style="width: 8%">Category</th>
+              <th style="width: 6%; text-align: center">Duration</th>
+              <th style="width: 8%">Battery</th>
+              <th style="width: 5%; text-align: center">W</th>
+              <th style="width: 8%; text-align: center">Functional</th>
+              <th style="width: 8%; text-align: center">Duration</th>
+              <th style="width: 9%">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for lum in luminaires %}
+            <tr>
+              <td style="text-align: center">{{ lum.number }}</td>
+              <td>{{ lum.location }}</td>
+              <td>{{ lum.make }}</td>
+              <td>{{ lum.model }}</td>
+              <td>{{ lum.type }}</td>
+              <td>{{ lum.category }}</td>
+              <td style="text-align: center">{{ lum.rated_duration_display }}</td>
+              <td>{{ lum.battery_type }}</td>
+              <td style="text-align: center">{{ lum.wattage }}</td>
+              <td style="text-align: center" class="{% if lum.functional_result_raw == 'pass' %}result-pass{% elsif lum.functional_result_raw == 'fail' %}result-fail{% else %}result-na{% endif %}">{{ lum.functional_result }}</td>
+              <td style="text-align: center" class="{% if lum.duration_result_raw == 'pass' %}result-pass{% elsif lum.duration_result_raw == 'fail' %}result-fail{% else %}result-na{% endif %}">{{ lum.duration_result }}</td>
+              <td style="font-size: 7px">{{ lum.notes }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Page 2 Footer -->
+      <div class="footer">
+        <div class="footer-left">
+          {{ company_name }} | Certificate No: {{ certificate_number }}
+        </div>
+        <div class="footer-right">
+          Test Date: {{ test_date }} | BS 5266-1:2016
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- PAGE 3: PHOTOS (if any)                                            -->
+    <!-- ================================================================== -->
+    {% if has_photos %}
+    <div class="page-break">
+      <!-- Page 3 Header -->
+      <div class="doc-header">
+        <div class="doc-header-content">
+          <div class="company-brand">
+            {% if company_logo %}
+            <div class="company-logo">
+              <img src="{{ company_logo }}" alt="Company Logo" />
+            </div>
+            {% endif %}
+            <div class="company-brand-info">
+              <div class="company-brand-name">{{ company_name }}</div>
+            </div>
+          </div>
+          <div class="doc-title-section">
+            <div class="doc-title">PHOTOGRAPHIC EVIDENCE</div>
+            <div class="doc-subtitle">Emergency Lighting Certificate - {{ certificate_number }}</div>
+          </div>
+          <div class="doc-meta">
+            <div class="cert-number">{{ certificate_number }}</div>
+            <div class="page-number">Page 3 of 3</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Installation Photos -->
+      {% if has_installation_photos %}
+      <div class="section">
+        <div class="section-title">Installation Overview</div>
+        <div class="photos-grid">
+          {% for photo in installation_photos %}
+          <div class="photo-item">
+            <img src="{{ photo.url }}" alt="{{ photo.caption }}" />
+            <div class="photo-caption">{{ photo.caption }}{% if photo.linked_item %} - {{ photo.linked_item }}{% endif %}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Luminaire Photos -->
+      {% if has_luminaire_photos %}
+      <div class="section">
+        <div class="section-title">Luminaire Photos</div>
+        <div class="photos-grid">
+          {% for photo in luminaire_photos %}
+          <div class="photo-item">
+            <img src="{{ photo.url }}" alt="{{ photo.caption }}" />
+            <div class="photo-caption">{{ photo.caption }}{% if photo.linked_item %} - {{ photo.linked_item }}{% endif %}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Defect Photos -->
+      {% if has_defect_photos %}
+      <div class="section">
+        <div class="section-title">Defect Evidence</div>
+        <div class="photos-grid">
+          {% for photo in defect_photos %}
+          <div class="photo-item">
+            <img src="{{ photo.url }}" alt="{{ photo.caption }}" />
+            <div class="photo-caption">{{ photo.caption }}{% if photo.linked_item %} - {{ photo.linked_item }}{% endif %}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Page 3 Footer -->
+      <div class="footer">
+        <div class="footer-left">
+          {{ company_name }} | Certificate No: {{ certificate_number }}
+        </div>
+        <div class="footer-right">
+          Test Date: {{ test_date }} | BS 5266-1:2016
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </body>
+</html>

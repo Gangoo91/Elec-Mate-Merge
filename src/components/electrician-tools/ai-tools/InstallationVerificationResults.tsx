@@ -183,9 +183,11 @@ const InstallationVerificationResults = ({
   const passPercentage = totalChecks > 0 ? Math.round((passCount / totalChecks) * 100) : 0;
 
   // Determine overall result
-  const overallResult: 'pass' | 'fail' | 'requires_testing' =
+  const rawResult =
     analysisResult?.overall_result ||
     (failCount > 0 ? 'fail' : testingCount > 0 ? 'requires_testing' : 'pass');
+  const overallResult: 'pass' | 'fail' | 'requires_testing' =
+    rawResult in overallResultConfig ? (rawResult as 'pass' | 'fail' | 'requires_testing') : 'fail';
 
   // Filter checks
   const filteredChecks = checks.filter((check) => {

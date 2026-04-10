@@ -28,6 +28,12 @@ export const useCompanyProfile = () => {
 
       if (error) {
         logger.api('company_profiles/fetch', requestId).error(error);
+        toast({
+          title: 'Profile Load Failed',
+          description:
+            'Could not load your company profile. Pull down to refresh or try again later.',
+          variant: 'destructive',
+        });
         return;
       }
 

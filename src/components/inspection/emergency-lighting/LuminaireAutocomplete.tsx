@@ -1,28 +1,21 @@
 /**
- * LuminaireAutocomplete Component
- *
- * A searchable combobox for selecting emergency luminaires from the database.
- * Groups luminaires by manufacturer and shows type icons.
- * On selection, calls the provided callback to auto-fill luminaire specs.
+ * LuminaireAutocomplete — searchable bottom sheet for selecting emergency luminaires from database
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Check, ChevronsUpDown, Lightbulb, Search, Sparkles, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
+  CommandInput,
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { SwipeableBottomSheet } from '@/components/native/SwipeableBottomSheet';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Badge } from '@/components/ui/badge';
 import {
   EmergencyLuminaire,
   getLuminairesGroupedByMake,
@@ -37,50 +30,6 @@ interface LuminaireAutocompleteProps {
   disabled?: boolean;
 }
 
-// Luminaire type icons/badges
-const getLuminaireTypeIcon = (type: string) => {
-  switch (type) {
-    case 'bulkhead':
-      return '⬜';
-    case 'twin-spot':
-      return '🔦';
-    case 'recessed':
-      return '⭕';
-    case 'downlight':
-      return '💡';
-    case 'exit-sign':
-      return '🚪';
-    case 'exit-box':
-      return '📦';
-    case 'strip':
-      return '➖';
-    case 'surface':
-      return '⬛';
-    default:
-      return '💡';
-  }
-};
-
-const getLuminaireTypeBadgeColor = (type: string) => {
-  switch (type) {
-    case 'bulkhead':
-      return 'bg-blue-500/20 text-blue-400';
-    case 'twin-spot':
-      return 'bg-purple-500/20 text-purple-400';
-    case 'recessed':
-    case 'downlight':
-      return 'bg-amber-500/20 text-amber-400';
-    case 'exit-sign':
-    case 'exit-box':
-      return 'bg-green-500/20 text-green-400';
-    case 'strip':
-    case 'surface':
-      return 'bg-cyan-500/20 text-cyan-400';
-    default:
-      return 'bg-gray-500/20 text-white';
-  }
-};
-
 const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
   value,
   onSelect,
@@ -92,22 +41,15 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const isMobile = useIsMobile();
 
-  // Get luminaires grouped by manufacturer
   const luminairesGrouped = useMemo(() => getLuminairesGroupedByMake(), []);
 
-  // Filter luminaires based on search query
   const filteredLuminaires = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return luminairesGrouped;
-    }
+    if (!searchQuery.trim()) return luminairesGrouped;
     const results = searchLuminaires(searchQuery);
-    // Re-group filtered results
     return results.reduce(
-      (acc, luminaire) => {
-        if (!acc[luminaire.make]) {
-          acc[luminaire.make] = [];
-        }
-        acc[luminaire.make].push(luminaire);
+      (acc, lum) => {
+        if (!acc[lum.make]) acc[lum.make] = [];
+        acc[lum.make].push(lum);
         return acc;
       },
       {} as Record<string, EmergencyLuminaire[]>
@@ -123,165 +65,107 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
     [onSelect]
   );
 
-  // Display value
   const displayValue = value ? `${value.make} ${value.model}` : null;
 
-  // Check if luminaire is selected
-  const isLuminaireSelected = (luminaire: EmergencyLuminaire) => {
-    return value?.make === luminaire.make && value?.model === luminaire.model;
-  };
-
-  // Trigger button shared between mobile and desktop
   const triggerButton = (
-    <Button
-      variant="outline"
-      role="combobox"
-      aria-expanded={open}
+    <button
+      type="button"
       disabled={disabled}
-      onClick={isMobile ? () => setOpen(true) : undefined}
+      onClick={() => setOpen(true)}
       className={cn(
-        'w-full h-11 justify-between text-left font-normal',
-        'touch-manipulation',
-        !displayValue && 'text-white',
+        'w-full h-11 rounded-lg bg-white/[0.06] border border-white/[0.08] px-3 flex items-center justify-between text-left touch-manipulation active:scale-[0.98]',
+        displayValue ? 'text-white' : 'text-white',
         className
       )}
     >
-      <div className="flex items-center gap-2 truncate">
-        {displayValue ? (
-          <>
-            <Sparkles className="h-4 w-4 text-elec-yellow shrink-0" />
-            <span className="truncate">{displayValue}</span>
-          </>
-        ) : (
-          <>
-            <Search className="h-4 w-4 shrink-0" />
-            <span>{placeholder}</span>
-          </>
-        )}
-      </div>
-      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-    </Button>
+      <span className="truncate text-sm">{displayValue || placeholder}</span>
+      <span className="text-[10px] text-white shrink-0 ml-2">DB</span>
+    </button>
   );
 
-  // Render luminaire item (shared renderer for mobile and desktop)
   const renderLuminaireItem = (luminaire: EmergencyLuminaire, forMobile = false) => {
-    const isSelected = isLuminaireSelected(luminaire);
+    const isSelected = value?.make === luminaire.make && value?.model === luminaire.model;
     return (
       <div
         key={luminaire.id}
         onClick={() => handleSelect(luminaire)}
         className={cn(
-          'rounded-lg cursor-pointer transition-colors flex items-center touch-manipulation',
-          forMobile ? 'px-4 py-4 min-h-[56px]' : 'px-2 py-2 min-h-[44px]',
+          'rounded-lg cursor-pointer transition-colors touch-manipulation',
+          forMobile ? 'px-4 py-3' : 'px-2 py-2',
           'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
-          isSelected && 'bg-elec-yellow/20'
+          isSelected && 'bg-elec-yellow/10 border border-elec-yellow/20'
         )}
       >
-        <Check
-          className={cn(
-            'shrink-0',
-            forMobile ? 'mr-3 h-5 w-5' : 'mr-2 h-4 w-4',
-            isSelected ? 'opacity-100 text-elec-yellow' : 'opacity-0'
-          )}
-        />
-        <div className="flex flex-col flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className={cn('font-medium truncate', forMobile && 'text-base')}>
-              {luminaire.model}
-            </span>
-            <Badge
-              variant="secondary"
-              className={cn(
-                'shrink-0',
-                forMobile ? 'text-xs' : 'text-xs',
-                getLuminaireTypeBadgeColor(luminaire.luminaireType)
-              )}
-            >
-              {getLuminaireTypeIcon(luminaire.luminaireType)} {luminaire.luminaireType}
-            </Badge>
-          </div>
-          <div
+        <div className="flex items-center justify-between">
+          <p className={cn('font-medium text-white', forMobile ? 'text-sm' : 'text-xs')}>
+            {luminaire.model}
+          </p>
+          <span
             className={cn(
-              'text-white flex items-center gap-2 flex-wrap',
-              forMobile ? 'text-sm mt-1' : 'text-xs'
+              'text-[10px] font-medium px-1.5 py-0.5 rounded shrink-0',
+              luminaire.luminaireType === 'exit-sign' || luminaire.luminaireType === 'exit-box'
+                ? 'bg-green-500/15 text-green-400'
+                : luminaire.luminaireType === 'bulkhead'
+                  ? 'bg-blue-500/15 text-blue-400'
+                  : luminaire.luminaireType === 'twin-spot'
+                    ? 'bg-purple-500/15 text-purple-400'
+                    : 'bg-amber-500/15 text-amber-400'
             )}
           >
-            <span>{luminaire.wattage}W</span>
-            <span>•</span>
-            <span>{luminaire.lightOutput}lm</span>
-            <span>•</span>
-            <span>{luminaire.ratedDuration === 180 ? '3hr' : '1hr'}</span>
-            <span>•</span>
-            <span>{luminaire.ipRating}</span>
-          </div>
+            {luminaire.luminaireType}
+          </span>
         </div>
+        <p className={cn('text-white mt-0.5', forMobile ? 'text-xs' : 'text-[10px]')}>
+          {luminaire.wattage}W · {luminaire.lightOutput}lm ·{' '}
+          {luminaire.ratedDuration === 180 ? '3hr' : '1hr'} · {luminaire.ipRating}
+        </p>
       </div>
     );
   };
 
-  // Mobile: Use SwipeableBottomSheet
   if (isMobile) {
     return (
       <>
         {triggerButton}
-
         <SwipeableBottomSheet
           open={open}
           onOpenChange={setOpen}
-          title="Select Emergency Luminaire"
+          title="Select Luminaire"
           contentClassName="p-0"
         >
-          <div className="flex flex-col max-h-[70vh]">
-            {/* Search input */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
-              <Search className="h-5 w-5 text-white shrink-0" />
+          <div className="flex flex-col max-h-[75vh]">
+            <div className="px-4 py-3 border-b border-white/[0.06] bg-background sticky top-0">
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search luminaires..."
-                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
+                placeholder="Search by make or model..."
                 autoFocus
+                className="h-11 bg-white/[0.06] border-white/[0.08] text-white text-base"
               />
-              {searchQuery && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSearchQuery('')}
-                  className="h-11 w-11 p-0 touch-manipulation"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              )}
             </div>
-
-            {/* Luminaire list */}
-            <div className="flex-1 overflow-y-auto momentum-scroll-y">
+            <div className="flex-1 overflow-y-auto">
               {Object.keys(filteredLuminaires).length === 0 ? (
-                <div className="py-12 text-center text-white">
-                  <Lightbulb className="h-12 w-12 mx-auto mb-3 opacity-30" />
-                  <p className="text-base">No luminaires found</p>
-                  <p className="text-sm mt-1">Try a different search term</p>
+                <div className="py-12 text-center">
+                  <p className="text-sm text-white">No luminaires found</p>
+                  <p className="text-xs text-white mt-1">Try a different search</p>
                 </div>
               ) : (
                 <div className="px-2 py-2">
                   {Object.entries(filteredLuminaires).map(([make, luminaires]) => (
-                    <div key={make} className="mb-4">
-                      <p className="px-4 py-2 text-sm text-white font-medium sticky top-0 bg-background">
+                    <div key={make} className="mb-3">
+                      <p className="px-3 py-1.5 text-[10px] font-semibold text-white uppercase tracking-wider">
                         {make}
                       </p>
                       <div className="space-y-1">
-                        {luminaires.map((luminaire) => renderLuminaireItem(luminaire, true))}
+                        {luminaires.map((lum) => renderLuminaireItem(lum, true))}
                       </div>
                     </div>
                   ))}
                 </div>
               )}
             </div>
-
-            {/* Footer */}
-            <div className="border-t border-border/50 px-4 py-3 bg-card/30">
-              <p className="text-xs text-white text-center flex items-center justify-center gap-1">
-                <Sparkles className="h-3 w-3 text-elec-yellow" />
+            <div className="border-t border-white/[0.06] px-4 py-2.5 bg-background">
+              <p className="text-[10px] text-white text-center">
                 Selecting auto-fills specs from database
               </p>
             </div>
@@ -291,15 +175,14 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
     );
   }
 
-  // Desktop: Use Popover
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
       <PopoverContent
-        className="w-[var(--radix-popover-trigger-width)] p-0 bg-background border-border"
+        className="w-[var(--radix-popover-trigger-width)] p-0 bg-[#1a1a1e] border-white/[0.08]"
         align="start"
       >
-        <Command className="bg-background">
+        <Command className="bg-transparent">
           <CommandInput
             placeholder="Search by make or model..."
             value={searchQuery}
@@ -308,55 +191,28 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
           />
           <CommandList className="max-h-[300px]">
             <CommandEmpty>
-              <div className="py-6 text-center text-sm">
-                <Lightbulb className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                <p>No luminaire found.</p>
-                <p className="text-white text-xs mt-1">Try a different search term</p>
-              </div>
+              <div className="py-6 text-center text-sm text-white">No luminaire found</div>
             </CommandEmpty>
-
             {Object.entries(filteredLuminaires).map(([make, luminaires]) => (
               <CommandGroup key={make} heading={make}>
-                {luminaires.map((luminaire) => (
+                {luminaires.map((lum) => (
                   <CommandItem
-                    key={luminaire.id}
-                    value={`${luminaire.make} ${luminaire.model}`}
-                    onSelect={() => handleSelect(luminaire)}
+                    key={lum.id}
+                    value={`${lum.make} ${lum.model}`}
+                    onSelect={() => handleSelect(lum)}
                     className="cursor-pointer"
                   >
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <Check
-                        className={cn(
-                          'h-4 w-4 shrink-0',
-                          value?.make === luminaire.make && value?.model === luminaire.model
-                            ? 'opacity-100 text-elec-yellow'
-                            : 'opacity-0'
-                        )}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium truncate">{luminaire.model}</span>
-                          <Badge
-                            variant="secondary"
-                            className={cn(
-                              'text-xs shrink-0',
-                              getLuminaireTypeBadgeColor(luminaire.luminaireType)
-                            )}
-                          >
-                            {getLuminaireTypeIcon(luminaire.luminaireType)}{' '}
-                            {luminaire.luminaireType}
-                          </Badge>
-                        </div>
-                        <div className="text-xs text-white flex items-center gap-2">
-                          <span>{luminaire.wattage}W</span>
-                          <span>•</span>
-                          <span>{luminaire.lightOutput}lm</span>
-                          <span>•</span>
-                          <span>{luminaire.ratedDuration === 180 ? '3hr' : '1hr'}</span>
-                          <span>•</span>
-                          <span>{luminaire.ipRating}</span>
-                        </div>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="min-w-0">
+                        <p className="text-xs font-medium text-white truncate">{lum.model}</p>
+                        <p className="text-[10px] text-white">
+                          {lum.wattage}W · {lum.lightOutput}lm ·{' '}
+                          {lum.ratedDuration === 180 ? '3hr' : '1hr'} · {lum.ipRating}
+                        </p>
                       </div>
+                      <span className="text-[9px] font-medium px-1.5 py-0.5 rounded bg-white/[0.06] text-white shrink-0 ml-2">
+                        {lum.luminaireType}
+                      </span>
                     </div>
                   </CommandItem>
                 ))}
@@ -364,13 +220,8 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
             ))}
           </CommandList>
         </Command>
-
-        {/* Auto-fill hint */}
-        <div className="border-t border-border px-3 py-2 bg-muted/30">
-          <p className="text-xs text-white flex items-center gap-1">
-            <Sparkles className="h-3 w-3 text-elec-yellow" />
-            Selecting auto-fills specs from database
-          </p>
+        <div className="border-t border-white/[0.06] px-3 py-2">
+          <p className="text-[10px] text-white">Selecting auto-fills specs from database</p>
         </div>
       </PopoverContent>
     </Popover>

@@ -3,35 +3,12 @@ import { useQuery } from '@tanstack/react-query';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  ChevronDown,
-  User,
-  Building2,
-  Lightbulb,
-  Settings,
-  Info,
-  Clock,
-  Copy,
-  History,
-  Target,
-  FileText,
-} from 'lucide-react';
+import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import { DurationBadge } from './ValidationBadge';
 import { supabase } from '@/integrations/supabase/client';
+import CertificateClientSection from '@/components/inspection/shared/CertificateClientSection';
 import type { EmergencyLightingFormData } from '@/types/emergency-lighting';
 
 interface ExistingClient {
@@ -46,7 +23,7 @@ interface ExistingClient {
   occupancyType: string;
 }
 
-interface EmergencyLightingInstallationDetailsProps {
+interface Props {
   formData: EmergencyLightingFormData;
   onUpdate: (
     field: string,
@@ -54,22 +31,87 @@ interface EmergencyLightingInstallationDetailsProps {
   ) => void;
 }
 
-const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallationDetailsProps> = ({
-  formData,
+const inputCn =
+  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const textareaCn =
+  'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
+const pickerTrigger =
+  'h-11 w-full touch-manipulation bg-white/[0.06] border-white/[0.08] text-white';
+
+const SectionHeader = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1 mb-3">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const Sub = ({ title }: { title: string }) => (
+  <div className="flex items-center gap-2 pt-2">
+    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">
+      {title}
+    </p>
+    <div className="h-px flex-1 bg-white/[0.06]" />
+  </div>
+);
+
+const Field = ({
+  label,
+  required,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) => (
+  <div>
+    <Label className="text-white text-xs mb-1.5 block">
+      {label}
+      {required && ' *'}
+    </Label>
+    {children}
+  </div>
+);
+
+const Toggle = ({
+  label,
+  field,
+  value,
   onUpdate,
-}) => {
-  const isMobile = useIsMobile();
+}: {
+  label: string;
+  field: string;
+  value: boolean | undefined;
+  onUpdate: (f: string, v: boolean) => void;
+}) => (
+  <div className="flex items-center justify-between">
+    <Label className="text-white text-xs font-medium">{label}</Label>
+    <div className="flex gap-1.5">
+      {[true, false].map((v) => (
+        <button
+          key={String(v)}
+          type="button"
+          onClick={() => onUpdate(field, v)}
+          className={cn(
+            'w-14 h-8 rounded-lg text-[11px] font-semibold touch-manipulation transition-all',
+            value === v
+              ? v
+                ? 'bg-green-500 text-white'
+                : 'bg-white/20 text-white'
+              : 'bg-white/[0.06] text-white border border-white/[0.08]'
+          )}
+        >
+          {v ? 'Yes' : 'No'}
+        </button>
+      ))}
+    </div>
+  </div>
+);
+
+const EmergencyLightingInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => {
   const { getDurationForPremises } = useEmergencyLightingSmartForm();
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
-    client: true,
-    premises: true,
-    system: true,
-    purpose: true,
-    equipment: true,
-  });
   const [sameAsClientAddress, setSameAsClientAddress] = useState(false);
 
-  // Fetch existing clients from previous emergency lighting certificates
+  // Fetch existing clients from previous certificates
   const { data: existingClients } = useQuery({
     queryKey: ['emergency-lighting-existing-clients'],
     queryFn: async () => {
@@ -77,17 +119,13 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return [];
-
       const { data, error } = await supabase
         .from('reports')
         .select('id, data, created_at')
         .eq('report_type', 'emergency-lighting')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
-
       if (error || !data) return [];
-
-      // Extract unique clients from report data
       const clientMap = new Map<string, ExistingClient>();
       data.forEach((report) => {
         const rd = report.data as Record<string, unknown>;
@@ -96,23 +134,22 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
         if (!clientMap.has(key)) {
           clientMap.set(key, {
             id: report.id,
-            clientName: rd.clientName || '',
-            clientAddress: rd.clientAddress || '',
-            clientTelephone: rd.clientTelephone || '',
-            clientEmail: rd.clientEmail || '',
-            premisesName: rd.premisesName || '',
-            premisesAddress: rd.premisesAddress || '',
-            premisesType: rd.premisesType || '',
-            occupancyType: rd.occupancyType || '',
+            clientName: (rd.clientName as string) || '',
+            clientAddress: (rd.clientAddress as string) || '',
+            clientTelephone: (rd.clientTelephone as string) || '',
+            clientEmail: (rd.clientEmail as string) || '',
+            premisesName: (rd.premisesName as string) || '',
+            premisesAddress: (rd.premisesAddress as string) || '',
+            premisesType: (rd.premisesType as string) || '',
+            occupancyType: (rd.occupancyType as string) || '',
           });
         }
       });
       return Array.from(clientMap.values());
     },
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    staleTime: 5 * 60 * 1000,
   });
 
-  // Handle selecting an existing client
   const handleSelectExistingClient = (clientId: string) => {
     const client = existingClients?.find((c) => c.id === clientId);
     if (client) {
@@ -127,26 +164,16 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
     }
   };
 
-  const toggleSection = (section: string) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
-
-  // Get duration guidance based on premises type
   const durationGuidance = formData.premisesType
     ? getDurationForPremises(formData.premisesType)
     : null;
 
-  // Auto-update duration when premises type changes to sleeping risk
   useEffect(() => {
-    if (durationGuidance && durationGuidance.duration === 180) {
-      // Only auto-update if currently set to 1 hour
-      if (formData.ratedDuration === 60) {
-        onUpdate('ratedDuration', 180);
-      }
+    if (durationGuidance && durationGuidance.duration === 180 && formData.ratedDuration === 60) {
+      onUpdate('ratedDuration', 180);
     }
   }, [formData.premisesType, durationGuidance]);
 
-  // Copy client address to premises address
   const copyClientAddress = () => {
     if (formData.clientAddress) {
       onUpdate('premisesAddress', formData.clientAddress);
@@ -155,719 +182,435 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
   };
 
   return (
-    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
+    <div className="space-y-6">
       {/* Client Details */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-        <Collapsible open={openSections.client} onOpenChange={() => toggleSection('client')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
-                  <User className="h-5 w-5 text-blue-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Client Details</h3>
-                  <span className="text-xs text-white">Name, contact & address</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.client && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-blue-500/15 flex items-center justify-center">
-                    <User className="h-4 w-4 text-blue-400" />
-                  </div>
-                  <span className="text-white font-semibold">Client Details</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.client && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {/* Existing Client Dropdown */}
-              {existingClients && existingClients.length > 0 && (
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2">
-                    <History className="h-3.5 w-3.5 text-blue-400" />
-                    Load Previous Client
-                  </Label>
-                  <Select onValueChange={handleSelectExistingClient}>
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select existing client..." />
-                    </SelectTrigger>
-                    <SelectContent className="max-w-[calc(100vw-2rem)]">
-                      {existingClients.map((client) => (
-                        <SelectItem key={client.id} value={client.id}>
-                          <div className="flex flex-col">
-                            <span className="font-medium">{client.clientName}</span>
-                            <span className="text-xs text-white truncate max-w-[250px]">
-                              {client.premisesAddress || client.clientAddress || 'No address'}
-                            </span>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-white">
-                    Select a previous client to auto-fill their details
-                  </p>
-                </div>
-              )}
+      <div className="space-y-4">
+        <SectionHeader title="Client Details" />
+        <CertificateClientSection formData={formData} onUpdate={onUpdate} />
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="clientName">Client Name *</Label>
-                  <Input
-                    id="clientName"
-                    placeholder="Enter client name"
-                    value={formData.clientName || ''}
-                    onChange={(e) => onUpdate('clientName', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="clientTelephone">Telephone</Label>
-                  <Input
-                    id="clientTelephone"
-                    type="tel"
-                    placeholder="Contact number"
-                    value={formData.clientTelephone || ''}
-                    onChange={(e) => onUpdate('clientTelephone', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="clientAddress">Client Address</Label>
-                <Textarea
-                  id="clientAddress"
-                  placeholder="Full address"
-                  value={formData.clientAddress || ''}
-                  onChange={(e) => onUpdate('clientAddress', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px]"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="clientEmail">Email</Label>
-                <Input
-                  id="clientEmail"
-                  type="email"
-                  placeholder="Email address"
-                  value={formData.clientEmail || ''}
-                  onChange={(e) => onUpdate('clientEmail', e.target.value)}
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+        {existingClients && existingClients.length > 0 && (
+          <MobileSelectPicker
+            value=""
+            onValueChange={handleSelectExistingClient}
+            options={(existingClients || []).map((c) => ({
+              value: c.id,
+              label: c.clientName,
+              description: c.premisesAddress || c.clientAddress || '',
+            }))}
+            placeholder="Load previous client..."
+            triggerClassName={pickerTrigger}
+          />
+        )}
+
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Client Name" required>
+            <Input
+              value={formData.clientName || ''}
+              onChange={(e) => onUpdate('clientName', e.target.value)}
+              className={inputCn}
+              placeholder="Full name"
+            />
+          </Field>
+          <Field label="Telephone">
+            <Input
+              type="tel"
+              value={formData.clientTelephone || ''}
+              onChange={(e) => onUpdate('clientTelephone', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Email">
+            <Input
+              type="email"
+              value={formData.clientEmail || ''}
+              onChange={(e) => onUpdate('clientEmail', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+          <Field label="Certificate No.">
+            <Input
+              value={formData.certificateNumber || ''}
+              onChange={(e) => onUpdate('certificateNumber', e.target.value)}
+              className={inputCn}
+              placeholder="Auto if blank"
+            />
+          </Field>
+        </div>
+        <Field label="Client Address">
+          <Textarea
+            value={formData.clientAddress || ''}
+            onChange={(e) => onUpdate('clientAddress', e.target.value)}
+            className={textareaCn}
+            placeholder="Full address"
+          />
+        </Field>
       </div>
 
-      {/* Premises Details */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-        <Collapsible open={openSections.premises} onOpenChange={() => toggleSection('premises')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center shrink-0">
-                  <Building2 className="h-5 w-5 text-green-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Premises Details</h3>
-                  <span className="text-xs text-white">Address, type & risk</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.premises && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-green-500/15 flex items-center justify-center">
-                    <Building2 className="h-4 w-4 text-green-400" />
-                  </div>
-                  <span className="text-white font-semibold">Premises Details</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.premises && 'rotate-180'
-                  )}
-                />
-              </div>
+      {/* Premises */}
+      <div className="space-y-4">
+        <SectionHeader title="Premises Details" />
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Premises Name">
+            <Input
+              value={formData.premisesName || ''}
+              onChange={(e) => onUpdate('premisesName', e.target.value)}
+              className={inputCn}
+              placeholder="Building name"
+            />
+          </Field>
+          <div className="flex items-end">
+            {formData.clientAddress && (
+              <button
+                type="button"
+                onClick={copyClientAddress}
+                className="h-11 w-full rounded-lg bg-white/[0.04] border border-white/[0.08] text-[11px] text-white touch-manipulation active:scale-[0.98]"
+              >
+                Same as client address
+              </button>
             )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="space-y-2">
-                <Label htmlFor="premisesName">Premises Name</Label>
-                <Input
-                  id="premisesName"
-                  placeholder="Building or site name"
-                  value={formData.premisesName || ''}
-                  onChange={(e) => onUpdate('premisesName', e.target.value)}
-                  className="h-11 text-base touch-manipulation"
-                />
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="premisesAddress">Premises Address *</Label>
-                  {formData.clientAddress && (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={copyClientAddress}
-                      className="h-11 text-xs text-white hover:text-white touch-manipulation"
-                    >
-                      <Copy className="h-3 w-3 mr-1" />
-                      Same as client
-                    </Button>
-                  )}
-                </div>
-                <Textarea
-                  id="premisesAddress"
-                  placeholder="Full installation address"
-                  value={formData.premisesAddress || ''}
-                  onChange={(e) => {
-                    onUpdate('premisesAddress', e.target.value);
-                    setSameAsClientAddress(false);
-                  }}
-                  className="text-base touch-manipulation min-h-[80px]"
-                />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="premisesType">Premises Type</Label>
-                  <Select
-                    value={formData.premisesType || ''}
-                    onValueChange={(value) => onUpdate('premisesType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="office">Office</SelectItem>
-                      <SelectItem value="retail">Retail</SelectItem>
-                      <SelectItem value="industrial">Industrial</SelectItem>
-                      <SelectItem value="educational">Educational</SelectItem>
-                      <SelectItem value="healthcare">Healthcare</SelectItem>
-                      <SelectItem value="residential-communal">Residential Communal</SelectItem>
-                      <SelectItem value="hotel">Hotel/Hospitality</SelectItem>
-                      <SelectItem value="entertainment">Entertainment</SelectItem>
-                      <SelectItem value="warehouse">Warehouse</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="occupancyType">Occupancy Risk</Label>
-                  <Select
-                    value={formData.occupancyType || ''}
-                    onValueChange={(value) => onUpdate('occupancyType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select risk" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="sleeping">Sleeping Risk</SelectItem>
-                      <SelectItem value="high">High Risk</SelectItem>
-                      <SelectItem value="normal">Normal Risk</SelectItem>
-                      <SelectItem value="low">Low Risk</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="extentOfInstallation">Extent of Installation Covered</Label>
-                <Textarea
-                  id="extentOfInstallation"
-                  placeholder="e.g., All emergency lighting throughout ground and first floors"
-                  value={formData.extentOfInstallation || ''}
-                  onChange={(e) => onUpdate('extentOfInstallation', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px]"
-                />
-                <p className="text-xs text-white">
-                  BS 5266 requires documenting the scope of this certificate
-                </p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+          </div>
+        </div>
+        <Field label="Premises Address" required>
+          <Textarea
+            value={formData.premisesAddress || ''}
+            onChange={(e) => {
+              onUpdate('premisesAddress', e.target.value);
+              setSameAsClientAddress(false);
+            }}
+            className={textareaCn}
+            placeholder="Full installation address"
+          />
+        </Field>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Premises Type">
+            <MobileSelectPicker
+              value={formData.premisesType || ''}
+              onValueChange={(v) => onUpdate('premisesType', v)}
+              options={[
+                { value: 'office', label: 'Office' },
+                { value: 'retail', label: 'Retail' },
+                { value: 'industrial', label: 'Industrial' },
+                { value: 'educational', label: 'Educational' },
+                { value: 'healthcare', label: 'Healthcare' },
+                { value: 'residential-communal', label: 'Residential Communal' },
+                { value: 'hotel', label: 'Hotel / Hospitality' },
+                { value: 'entertainment', label: 'Entertainment' },
+                { value: 'warehouse', label: 'Warehouse' },
+              ]}
+              placeholder="Select..."
+              triggerClassName={pickerTrigger}
+            />
+          </Field>
+          <Field label="Occupancy Risk">
+            <MobileSelectPicker
+              value={formData.occupancyType || ''}
+              onValueChange={(v) => onUpdate('occupancyType', v)}
+              options={[
+                { value: 'sleeping', label: 'Sleeping Risk' },
+                { value: 'high', label: 'High Risk' },
+                { value: 'normal', label: 'Normal Risk' },
+                { value: 'low', label: 'Low Risk' },
+              ]}
+              placeholder="Select..."
+              triggerClassName={pickerTrigger}
+            />
+          </Field>
+        </div>
+        <Field label="Extent of Installation Covered">
+          <Textarea
+            value={formData.extentOfInstallation || ''}
+            onChange={(e) => onUpdate('extentOfInstallation', e.target.value)}
+            className={textareaCn}
+            placeholder="e.g. All emergency lighting throughout ground and first floors"
+          />
+        </Field>
       </div>
 
       {/* System Classification */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-        <Collapsible open={openSections.system} onOpenChange={() => toggleSection('system')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0">
-                  <Settings className="h-5 w-5 text-amber-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">System Classification</h3>
-                  <span className="text-xs text-white">BS 5266 settings</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.system && 'rotate-180'
-                  )}
+      <div className="space-y-4">
+        <SectionHeader title="System Classification (BS 5266)" />
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Certificate Type">
+            <MobileSelectPicker
+              value={formData.certificateType || ''}
+              onValueChange={(v) => onUpdate('certificateType', v)}
+              options={[
+                { value: 'completion', label: 'Completion' },
+                { value: 'periodic', label: 'Periodic Inspection' },
+                { value: 'existing-site', label: 'Existing Site' },
+                { value: 'completion-small', label: 'Completion (Small)' },
+              ]}
+              placeholder="Select..."
+              triggerClassName={pickerTrigger}
+            />
+          </Field>
+          <Field label="Test Type">
+            <MobileSelectPicker
+              value={formData.testType || ''}
+              onValueChange={(v) => onUpdate('testType', v)}
+              options={[
+                { value: 'commissioning', label: 'Commissioning' },
+                { value: 'monthly', label: 'Monthly Functional' },
+                { value: 'annual', label: 'Annual Duration' },
+              ]}
+              placeholder="Select..."
+              triggerClassName={pickerTrigger}
+            />
+          </Field>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Test Date" required>
+            <Input
+              type="date"
+              value={formData.testDate || ''}
+              onChange={(e) => onUpdate('testDate', e.target.value)}
+              className={inputCn}
+            />
+          </Field>
+          <Field label="System Type" required>
+            <MobileSelectPicker
+              value={formData.systemType || ''}
+              onValueChange={(v) => onUpdate('systemType', v)}
+              options={[
+                { value: 'maintained', label: 'Maintained' },
+                { value: 'non-maintained', label: 'Non-Maintained' },
+                { value: 'combined', label: 'Combined (Sustained)' },
+              ]}
+              placeholder="Select..."
+              triggerClassName={pickerTrigger}
+            />
+          </Field>
+        </div>
+
+        <Sub title="Rated Duration" />
+        <div className="flex items-center gap-3">
+          <div className="flex-1">
+            <MobileSelectPicker
+              value={formData.ratedDuration?.toString() || '180'}
+              onValueChange={(v) => onUpdate('ratedDuration', parseInt(v))}
+              options={[
+                { value: '60', label: '1 Hour (60 min)' },
+                { value: '180', label: '3 Hours (180 min)' },
+              ]}
+              placeholder="Select..."
+              triggerClassName={pickerTrigger}
+            />
+          </div>
+          {durationGuidance && (
+            <DurationBadge
+              duration={durationGuidance.duration}
+              required={durationGuidance.duration === 180}
+            />
+          )}
+        </div>
+        {durationGuidance && (
+          <div
+            className={`rounded-lg p-2.5 border ${durationGuidance.duration === 180 ? 'bg-purple-500/5 border-purple-500/15' : 'bg-blue-500/5 border-blue-500/15'}`}
+          >
+            <p
+              className={`text-[11px] font-semibold ${durationGuidance.duration === 180 ? 'text-purple-300' : 'text-blue-300'}`}
+            >
+              {durationGuidance.title}
+            </p>
+            <p className="text-[10px] text-white mt-0.5">{durationGuidance.content}</p>
+            <p className="text-[9px] text-white mt-0.5">{durationGuidance.reference}</p>
+          </div>
+        )}
+
+        <Sub title="Power Source" />
+        <div className="space-y-3">
+          <Toggle
+            label="Self-contained luminaires"
+            field="selfContainedUnits"
+            value={formData.selfContainedUnits !== false}
+            onUpdate={onUpdate}
+          />
+          <Toggle
+            label="Central battery system"
+            field="centralBatterySystem"
+            value={formData.centralBatterySystem || false}
+            onUpdate={onUpdate}
+          />
+          {formData.centralBatterySystem && (
+            <div className="ml-4">
+              <Field label="Central Battery Location">
+                <Input
+                  value={formData.centralBatteryLocation || ''}
+                  onChange={(e) => onUpdate('centralBatteryLocation', e.target.value)}
+                  className={inputCn}
+                  placeholder="e.g. Electrical plant room"
                 />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-amber-500/15 flex items-center justify-center">
-                    <Settings className="h-4 w-4 text-amber-400" />
-                  </div>
-                  <span className="text-white font-semibold">System Classification (BS 5266)</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.system && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="space-y-2">
-                <Label htmlFor="certificateType">Certificate Type (BS 5266)</Label>
-                <Select
-                  value={formData.certificateType || ''}
-                  onValueChange={(value) => onUpdate('certificateType', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select certificate type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="completion">
-                      <div className="flex flex-col">
-                        <span className="font-medium">Completion Certificate</span>
-                        <span className="text-xs text-white">New installation</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="periodic">
-                      <div className="flex flex-col">
-                        <span className="font-medium">Periodic Inspection & Testing</span>
-                        <span className="text-xs text-white">
-                          Routine testing of existing system
-                        </span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="existing-site">
-                      <div className="flex flex-col">
-                        <span className="font-medium">Existing Site Compliance</span>
-                        <span className="text-xs text-white">
-                          Assessment of existing installation
-                        </span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="completion-small">
-                      <div className="flex flex-col">
-                        <span className="font-medium">Completion (Small)</span>
-                        <span className="text-xs text-white">
-                          Up to 25 self-contained luminaires
-                        </span>
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="testType">Test Type</Label>
-                  <Select
-                    value={formData.testType || ''}
-                    onValueChange={(value) => onUpdate('testType', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select test type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="commissioning">Commissioning</SelectItem>
-                      <SelectItem value="monthly">Monthly Functional Test</SelectItem>
-                      <SelectItem value="annual">Annual Duration Test</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="testDate">Test Date *</Label>
-                  <Input
-                    id="testDate"
-                    type="date"
-                    value={formData.testDate || ''}
-                    onChange={(e) => onUpdate('testDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="systemType">System Type *</Label>
-                <Select
-                  value={formData.systemType || ''}
-                  onValueChange={(value) => onUpdate('systemType', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select system type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="maintained">
-                      <div className="flex flex-col">
-                        <span className="font-medium">Maintained</span>
-                        <span className="text-xs text-white">Continuously lit, battery backup</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="non-maintained">
-                      <div className="flex flex-col">
-                        <span className="font-medium">Non-Maintained</span>
-                        <span className="text-xs text-white">Only lit on mains failure</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="combined">
-                      <div className="flex flex-col">
-                        <span className="font-medium">Combined (Sustained)</span>
-                        <span className="text-xs text-white">
-                          Both maintained and non-maintained
-                        </span>
-                      </div>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Label htmlFor="ratedDuration">Rated Duration</Label>
-                  {durationGuidance && (
-                    <DurationBadge
-                      duration={durationGuidance.duration}
-                      required={durationGuidance.duration === 180}
-                    />
-                  )}
-                </div>
-                <Select
-                  value={formData.ratedDuration?.toString() || '180'}
-                  onValueChange={(value) => onUpdate('ratedDuration', parseInt(value))}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="60">1 Hour (60 minutes)</SelectItem>
-                    <SelectItem value="180">3 Hours (180 minutes)</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                {/* Duration Guidance Alert */}
-                {durationGuidance && (
-                  <Alert
-                    className={cn(
-                      'mt-2',
-                      durationGuidance.duration === 180
-                        ? 'border-purple-500/30 bg-purple-500/10'
-                        : 'border-blue-500/30 bg-blue-500/10'
-                    )}
-                  >
-                    <Clock
-                      className={cn(
-                        'h-4 w-4',
-                        durationGuidance.duration === 180 ? 'text-purple-400' : 'text-blue-400'
-                      )}
-                    />
-                    <AlertDescription
-                      className={cn(
-                        'text-sm text-left',
-                        durationGuidance.duration === 180 ? 'text-purple-200' : 'text-blue-200'
-                      )}
-                    >
-                      <strong>{durationGuidance.title}</strong>
-                      <p className="text-xs mt-1">{durationGuidance.content}</p>
-                      <p className="text-xs mt-1 opacity-80">{durationGuidance.reference}</p>
-                    </AlertDescription>
-                  </Alert>
-                )}
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                  <Checkbox
-                    id="selfContainedUnits"
-                    checked={formData.selfContainedUnits !== false}
-                    onCheckedChange={(checked) => onUpdate('selfContainedUnits', checked)}
-                    className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <Label
-                    htmlFor="selfContainedUnits"
-                    className="cursor-pointer text-base leading-relaxed"
-                  >
-                    Self-contained luminaires (integrated battery)
-                  </Label>
-                </div>
-
-                <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                  <Checkbox
-                    id="centralBatterySystem"
-                    checked={formData.centralBatterySystem || false}
-                    onCheckedChange={(checked) => onUpdate('centralBatterySystem', checked)}
-                    className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <Label
-                    htmlFor="centralBatterySystem"
-                    className="cursor-pointer text-base leading-relaxed"
-                  >
-                    Central battery system installed
-                  </Label>
-                </div>
-
-                {formData.centralBatterySystem && (
-                  <div className="pl-6 space-y-2">
-                    <Label htmlFor="centralBatteryLocation">Central Battery Location</Label>
-                    <Input
-                      id="centralBatteryLocation"
-                      placeholder="e.g., Electrical plant room"
-                      value={formData.centralBatteryLocation || ''}
-                      onChange={(e) => onUpdate('centralBatteryLocation', e.target.value)}
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                )}
-              </div>
+              </Field>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+          )}
+        </div>
+
+        <Sub title="Compliance References" />
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Design Standard">
+            <MobileSelectPicker
+              value={formData.designStandard || 'BS 5266-1:2016'}
+              onValueChange={(v) => onUpdate('designStandard', v)}
+              options={[
+                { value: 'BS 5266-1:2016', label: 'BS 5266-1:2016' },
+                { value: 'BS EN 50172:2004', label: 'BS EN 50172:2004' },
+                { value: 'BS 5266-1 + BS EN 50172', label: 'BS 5266-1 + BS EN 50172' },
+              ]}
+              placeholder="Select..."
+              triggerClassName={pickerTrigger}
+            />
+          </Field>
+          <Field label="Previous Cert No.">
+            <Input
+              value={formData.previousCertificateNumber || ''}
+              onChange={(e) => onUpdate('previousCertificateNumber', e.target.value)}
+              className={inputCn}
+              placeholder="For periodic"
+            />
+          </Field>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Risk Assessment Ref">
+            <Input
+              value={formData.riskAssessmentReference || ''}
+              onChange={(e) => onUpdate('riskAssessmentReference', e.target.value)}
+              className={inputCn}
+              placeholder="RA reference"
+            />
+          </Field>
+          <Field label="Drawing Ref">
+            <Input
+              value={formData.drawingReference || ''}
+              onChange={(e) => onUpdate('drawingReference', e.target.value)}
+              className={inputCn}
+              placeholder="As-installed"
+            />
+          </Field>
+        </div>
+        <Field label="Wiring System">
+          <MobileSelectPicker
+            value={formData.wiringSystem || ''}
+            onValueChange={(v) => onUpdate('wiringSystem', v)}
+            options={[
+              { value: 'Fire-resistant cable', label: 'Fire-resistant cable (BS 7629/8519)' },
+              { value: 'Segregated circuit', label: 'Segregated circuit' },
+              { value: 'Standard wiring', label: 'Standard wiring (self-contained only)' },
+              { value: 'other', label: 'Other' },
+            ]}
+            placeholder="Select..."
+            triggerClassName={pickerTrigger}
+          />
+        </Field>
+        <Toggle
+          label="Automatic Test System (BS EN 62034)"
+          field="automaticTestSystem"
+          value={formData.automaticTestSystem || false}
+          onUpdate={onUpdate}
+        />
+        {formData.automaticTestSystem && (
+          <div className="ml-4">
+            <Field label="ATS Details">
+              <Input
+                value={formData.atsDetails || ''}
+                onChange={(e) => onUpdate('atsDetails', e.target.value)}
+                className={inputCn}
+                placeholder="Make, model, type"
+              />
+            </Field>
+          </div>
+        )}
       </div>
 
-      {/* Purpose of System (BS 5266-1 Part 7) */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-        <Collapsible open={openSections.purpose} onOpenChange={() => toggleSection('purpose')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-cyan-500/20 flex items-center justify-center shrink-0">
-                  <Target className="h-5 w-5 text-cyan-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Purpose of System</h3>
-                  <span className="text-xs text-white">BS 5266-1 Part 7 requirements</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.purpose && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-cyan-500/15 flex items-center justify-center">
-                    <Target className="h-4 w-4 text-cyan-400" />
-                  </div>
-                  <span className="text-white font-semibold">Purpose of System (BS 5266)</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.purpose && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <p className="text-sm text-white">Select all that apply per BS 5266-1 Part 7:</p>
-
-              <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                <Checkbox
-                  id="purposeEscapeRoute"
-                  checked={formData.purposeEscapeRoute || false}
-                  onCheckedChange={(checked) => onUpdate('purposeEscapeRoute', checked)}
-                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label
-                  htmlFor="purposeEscapeRoute"
-                  className="cursor-pointer text-base leading-relaxed"
-                >
-                  Escape route lighting
-                </Label>
-              </div>
-
-              <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                <Checkbox
-                  id="purposeOpenArea"
-                  checked={formData.purposeOpenArea || false}
-                  onCheckedChange={(checked) => onUpdate('purposeOpenArea', checked)}
-                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label
-                  htmlFor="purposeOpenArea"
-                  className="cursor-pointer text-base leading-relaxed"
-                >
-                  Open area lighting (anti-panic)
-                </Label>
-              </div>
-
-              <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                <Checkbox
-                  id="purposeHighRisk"
-                  checked={formData.purposeHighRisk || false}
-                  onCheckedChange={(checked) => onUpdate('purposeHighRisk', checked)}
-                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label
-                  htmlFor="purposeHighRisk"
-                  className="cursor-pointer text-base leading-relaxed"
-                >
-                  High risk task area lighting
-                </Label>
-              </div>
-
-              <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
-                <Checkbox
-                  id="purposeStandby"
-                  checked={formData.purposeStandby || false}
-                  onCheckedChange={(checked) => onUpdate('purposeStandby', checked)}
-                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                />
-                <Label
-                  htmlFor="purposeStandby"
-                  className="cursor-pointer text-base leading-relaxed"
-                >
-                  Standby lighting
-                </Label>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+      {/* Purpose of System */}
+      <div className="space-y-4">
+        <SectionHeader title="Purpose of System (BS 5266)" />
+        <div className="space-y-2">
+          <Toggle
+            label="Escape route lighting"
+            field="purposeEscapeRoute"
+            value={formData.purposeEscapeRoute || false}
+            onUpdate={onUpdate}
+          />
+          <Toggle
+            label="Open area (anti-panic)"
+            field="purposeOpenArea"
+            value={formData.purposeOpenArea || false}
+            onUpdate={onUpdate}
+          />
+          <Toggle
+            label="High risk task area"
+            field="purposeHighRisk"
+            value={formData.purposeHighRisk || false}
+            onUpdate={onUpdate}
+          />
+          <Toggle
+            label="Standby lighting"
+            field="purposeStandby"
+            value={formData.purposeStandby || false}
+            onUpdate={onUpdate}
+          />
+        </div>
       </div>
 
       {/* Equipment Summary */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
-        <Collapsible open={openSections.equipment} onOpenChange={() => toggleSection('equipment')}>
-          <CollapsibleTrigger className="w-full">
-            {isMobile ? (
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
-                  <Lightbulb className="h-5 w-5 text-purple-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Equipment Summary</h3>
-                  <span className="text-xs text-white">Luminaire & sign counts</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform shrink-0',
-                    openSections.equipment && 'rotate-180'
-                  )}
-                />
-              </div>
-            ) : (
-              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-purple-500/15 flex items-center justify-center">
-                    <Lightbulb className="h-4 w-4 text-purple-400" />
-                  </div>
-                  <span className="text-white font-semibold">Equipment Summary</span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-white transition-transform',
-                    openSections.equipment && 'rotate-180'
-                  )}
-                />
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="luminaireCount">Luminaire Count</Label>
-                  <Input
-                    id="luminaireCount"
-                    type="number"
-                    min="0"
-                    value={formData.luminaireCount ?? ''}
-                    onChange={(e) =>
-                      onUpdate(
-                        'luminaireCount',
-                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
-                      )
-                    }
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="exitSignCount">Exit Sign Count</Label>
-                  <Input
-                    id="exitSignCount"
-                    type="number"
-                    min="0"
-                    value={formData.exitSignCount ?? ''}
-                    onChange={(e) =>
-                      onUpdate(
-                        'exitSignCount',
-                        e.target.value === '' ? '' : parseInt(e.target.value) || 0
-                      )
-                    }
-                    className="h-11 text-base touch-manipulation"
-                  />
-                </div>
-                {formData.centralBatterySystem && (
-                  <div className="space-y-2">
-                    <Label htmlFor="centralBatteryCount">Central Battery Units</Label>
-                    <Input
-                      id="centralBatteryCount"
-                      type="number"
-                      min="0"
-                      value={formData.centralBatteryCount ?? ''}
-                      onChange={(e) =>
-                        onUpdate(
-                          'centralBatteryCount',
-                          e.target.value === '' ? '' : parseInt(e.target.value) || 0
-                        )
-                      }
-                      className="h-11 text-base touch-manipulation"
-                    />
-                  </div>
-                )}
-              </div>
-
-              <div className="bg-muted/50 rounded-lg p-4">
-                <h4 className="font-medium mb-2">Equipment Total</h4>
-                <p className="text-2xl font-bold text-amber-500">
-                  {(formData.luminaireCount || 0) + (formData.exitSignCount || 0)} units
-                </p>
-                <p className="text-sm text-white">
-                  {formData.luminaireCount || 0} luminaires + {formData.exitSignCount || 0} exit
-                  signs
-                </p>
-              </div>
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
+      <div className="space-y-4">
+        <SectionHeader title="Equipment Summary" />
+        <div className="grid grid-cols-2 gap-3">
+          <Field label="Luminaire Count">
+            <Input
+              type="number"
+              min="0"
+              value={formData.luminaireCount ?? ''}
+              onChange={(e) =>
+                onUpdate(
+                  'luminaireCount',
+                  e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                )
+              }
+              className={inputCn}
+            />
+          </Field>
+          <Field label="Exit Sign Count">
+            <Input
+              type="number"
+              min="0"
+              value={formData.exitSignCount ?? ''}
+              onChange={(e) =>
+                onUpdate(
+                  'exitSignCount',
+                  e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                )
+              }
+              className={inputCn}
+            />
+          </Field>
+        </div>
+        {formData.centralBatterySystem && (
+          <Field label="Central Battery Units">
+            <Input
+              type="number"
+              min="0"
+              value={formData.centralBatteryCount ?? ''}
+              onChange={(e) =>
+                onUpdate(
+                  'centralBatteryCount',
+                  e.target.value === '' ? '' : parseInt(e.target.value) || 0
+                )
+              }
+              className={inputCn}
+            />
+          </Field>
+        )}
+        <div className="rounded-lg bg-elec-yellow/5 border border-elec-yellow/15 p-3 text-center">
+          <p className="text-2xl font-bold text-elec-yellow">
+            {(formData.luminaireCount || 0) + (formData.exitSignCount || 0)}
+          </p>
+          <p className="text-[10px] text-white mt-0.5">
+            {formData.luminaireCount || 0} luminaires + {formData.exitSignCount || 0} exit signs
+          </p>
+        </div>
       </div>
     </div>
   );

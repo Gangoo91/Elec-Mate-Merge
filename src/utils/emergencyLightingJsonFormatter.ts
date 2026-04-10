@@ -11,7 +11,9 @@ import {
 } from '@/types/emergency-lighting';
 import type { EmergencyLightingPayloadType } from '@/types/emergency-lighting-payload';
 
-export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingFormData>): EmergencyLightingPayloadType => {
+export const formatEmergencyLightingJson = (
+  formData: Partial<EmergencyLightingFormData>
+): EmergencyLightingPayloadType => {
   const get = (key: keyof EmergencyLightingFormData, defaultValue: string = ''): string => {
     const value = formData[key] ?? defaultValue;
     if (value === null || value === undefined) return '';
@@ -302,6 +304,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     // ============================================
     test_equipment: {
       lux_meter_make: get('luxMeterMake'),
+      lux_meter_model: get('luxMeterModel'),
       lux_meter_serial: get('luxMeterSerial'),
       lux_meter_calibration_date: getDate('luxMeterCalibrationDate'),
       has_equipment: !!(get('luxMeterMake') || get('luxMeterSerial')),
@@ -484,6 +487,14 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     // Service schedule (flat)
     next_monthly_test_due: getDate('nextMonthlyTestDue'),
     next_annual_test_due: getDate('nextAnnualTestDue'),
+    next_three_yearly_inspection_due: get('nextThreeYearlyInspectionDue'),
+    previous_certificate_number: get('previousCertificateNumber'),
+    risk_assessment_reference: get('riskAssessmentReference'),
+    drawing_reference: get('drawingReference'),
+    wiring_system: get('wiringSystem'),
+    automatic_test_system: getBool('automaticTestSystem'),
+    ats_details: get('atsDetails'),
+    design_standard: get('designStandard') || 'BS 5266-1:2016',
 
     // Tester (flat)
     tester_name: get('testerName'),
@@ -511,6 +522,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     responsible_person_signature: get('responsiblePersonSignature'),
     responsible_person_date: getDate('responsiblePersonDate'),
     lux_meter_make: get('luxMeterMake'),
+    lux_meter_model: get('luxMeterModel'),
     lux_meter_serial: get('luxMeterSerial'),
     lux_meter_calibration_date: getDate('luxMeterCalibrationDate'),
   };

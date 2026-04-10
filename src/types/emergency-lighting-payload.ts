@@ -124,6 +124,7 @@ export interface EmergencyLightingPayloadType {
 
   test_equipment: {
     lux_meter_make: string;
+    lux_meter_model: string;
     lux_meter_serial: string;
     lux_meter_calibration_date: string;
     has_equipment: boolean;
@@ -277,6 +278,14 @@ export interface EmergencyLightingPayloadType {
   // Flat copies — service schedule
   next_monthly_test_due: string;
   next_annual_test_due: string;
+  next_three_yearly_inspection_due: string;
+  previous_certificate_number: string;
+  risk_assessment_reference: string;
+  drawing_reference: string;
+  wiring_system: string;
+  automatic_test_system: boolean;
+  ats_details: string;
+  design_standard: string;
 
   // Flat copies — tester
   tester_name: string;
@@ -293,6 +302,7 @@ export interface EmergencyLightingPayloadType {
 
   // Flat copies — test equipment
   lux_meter_make: string;
+  lux_meter_model: string;
   lux_meter_serial: string;
   lux_meter_calibration_date: string;
 
