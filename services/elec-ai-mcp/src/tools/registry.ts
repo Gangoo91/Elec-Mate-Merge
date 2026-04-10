@@ -84,6 +84,9 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
 
   // Integrations (ElevenLabs, Perplexity, PDF)
   registerIntegrationTools(server, user);
+
+  // Smart Features (completion workflow, pricing, templates)
+  registerSmartFeatureTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -2706,5 +2709,46 @@ function registerIntegrationTools(server: McpServer, user: UserContext): void {
         .describe('Base64-encoded PDF data (with or without data: prefix)'),
     },
     callTool('read_pdf', user)
+  );
+}
+
+// ─── Smart Feature Tools (completion, pricing, templates) ────────────────
+
+function registerSmartFeatureTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'get_completion_checklist',
+    'Get a completion checklist for a finished job or project. Shows what is done and what is missing: invoice raised? Certificates created? Open snags? Returns suggested next actions. Use when a job is marked as completed to prompt the user through the close-out process.',
+    {
+      job_id: z.string().optional().describe('Job UUID (employer_jobs table)'),
+      project_id: z.string().optional().describe('Project UUID (spark_projects table)'),
+    },
+    callTool('get_completion_checklist', user)
+  );
+
+  server.tool(
+    'get_pricing_suggestions',
+    "Get pricing suggestions for a job type based on the electrician's own history and industry benchmarks. Returns their average, min, max, median prices for similar work, plus RAG pricing data. Use when creating a quote to suggest a competitive price.",
+    {
+      job_type: z
+        .string()
+        .describe(
+          'Job type description (e.g. "consumer unit change", "full rewire", "EICR", "EV charger install")'
+        ),
+    },
+    callTool('get_pricing_suggestions', user)
+  );
+
+  server.tool(
+    'create_project_from_template',
+    'Create a project with pre-built tasks from a template. Templates: rewire (11 tasks), eicr (8 tasks), consumer_unit (9 tasks), solar (12 tasks), ev_charger (10 tasks). Each includes task descriptions, estimated hours, and suggested certificates. Use when a user starts a common job type.',
+    {
+      template: z
+        .string()
+        .describe('Template name: rewire, eicr, consumer_unit, solar, ev_charger'),
+      client_id: z.string().optional().describe('Customer UUID to link to the project'),
+      location: z.string().optional().describe('Job location/address'),
+      start_date: z.string().optional().describe('Planned start date (ISO-8601)'),
+    },
+    callTool('create_project_from_template', user)
   );
 }

@@ -43,35 +43,40 @@ export async function readProjects(args: Record<string, unknown>, user: UserCont
   const { data, error } = await query;
   if (error) throw new Error(`Failed to read projects: ${error.message}`);
 
-  // For each project, get task counts
-  const projects = await Promise.all(
-    (data || []).map(async (p: Record<string, unknown>) => {
-      const customer = p.customers as { name: string } | null;
-      const { customers: _c, ...rest } = p;
+  const rows = data || [];
+  const projectIds = rows.map((p: Record<string, unknown>) => p.id as string);
 
-      // Count total and completed tasks for this project
-      const { count: totalTasks } = await supabase
-        .from('spark_tasks')
-        .select('id', { count: 'exact', head: true })
-        .eq('project_id', p.id)
-        .neq('status', 'cancelled');
+  // Fetch ALL task counts in one query instead of N+1 per-project queries
+  const taskCountMap: Record<string, { total: number; done: number }> = {};
+  if (projectIds.length > 0) {
+    const { data: allTasks } = await supabase
+      .from('spark_tasks')
+      .select('project_id, status')
+      .in('project_id', projectIds)
+      .neq('status', 'cancelled');
 
-      const { count: doneTasks } = await supabase
-        .from('spark_tasks')
-        .select('id', { count: 'exact', head: true })
-        .eq('project_id', p.id)
-        .eq('status', 'done');
+    for (const t of allTasks || []) {
+      const task = t as Record<string, unknown>;
+      const pid = task.project_id as string;
+      if (!taskCountMap[pid]) taskCountMap[pid] = { total: 0, done: 0 };
+      taskCountMap[pid].total++;
+      if (task.status === 'done') taskCountMap[pid].done++;
+    }
+  }
 
-      return {
-        ...rest,
-        customer_name: customer?.name || null,
-        total_tasks: totalTasks || 0,
-        completed_tasks: doneTasks || 0,
-        progress:
-          totalTasks && totalTasks > 0 ? Math.round(((doneTasks || 0) / totalTasks) * 100) : 0,
-      };
-    })
-  );
+  const projects = rows.map((p: Record<string, unknown>) => {
+    const customer = p.customers as { name: string } | null;
+    const { customers: _c, ...rest } = p;
+    const counts = taskCountMap[p.id as string] || { total: 0, done: 0 };
+
+    return {
+      ...rest,
+      customer_name: customer?.name || null,
+      total_tasks: counts.total,
+      completed_tasks: counts.done,
+      progress: counts.total > 0 ? Math.round((counts.done / counts.total) * 100) : 0,
+    };
+  });
 
   return { projects };
 }

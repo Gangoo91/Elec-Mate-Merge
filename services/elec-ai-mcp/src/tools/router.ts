@@ -36,6 +36,7 @@ import * as photoEstimate from './photo-estimate.js';
 import * as googleApis from './google-apis.js';
 import * as automation from './automation.js';
 import * as integrations from './integrations.js';
+import * as smartFeatures from './smart-features.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -279,6 +280,11 @@ const handlers: Record<string, ToolHandler> = {
   speak_response: integrations.speakResponse,
   web_search: integrations.webSearch,
   read_pdf: integrations.readPdf,
+
+  // Smart Features (completion workflow, pricing, templates)
+  get_completion_checklist: smartFeatures.getCompletionChecklist,
+  get_pricing_suggestions: smartFeatures.getPricingSuggestions,
+  create_project_from_template: smartFeatures.createProjectFromTemplate,
 };
 
 /**
