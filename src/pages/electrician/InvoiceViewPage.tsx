@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
+import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 
 /** Gradient section header — matching QuoteViewPage */
 const SectionHeader = ({ title }: { title: string }) => (
@@ -44,6 +45,30 @@ const InvoiceViewPage = () => {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showActionsSheet, setShowActionsSheet] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const { hasConnectedProvider, syncInvoice, integrations } = useAccountingIntegrations();
+
+  const connectedProvider = integrations.find((i) => i.connected);
+  const providerName = connectedProvider?.provider
+    ? connectedProvider.provider.charAt(0).toUpperCase() + connectedProvider.provider.slice(1)
+    : 'Accounting';
+  const alreadySynced = !!(invoice?.external_invoice_id);
+
+  const handleSyncToAccounting = async () => {
+    if (!invoice) return;
+    setIsSyncing(true);
+    try {
+      const success = await syncInvoice(invoice.id);
+      if (success) {
+        toast({ title: `Synced to ${providerName}`, description: `Invoice ${invoice.invoice_number} has been synced.` });
+        fetchInvoice();
+      }
+    } catch {
+      toast({ title: 'Sync failed', variant: 'destructive' });
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   const formatCurrency = (amount: number | undefined | null) => {
     const safeAmount = typeof amount === 'number' && !isNaN(amount) ? amount : 0;
@@ -610,6 +635,41 @@ const InvoiceViewPage = () => {
           </div>
         )}
 
+        {/* === ACCOUNTING SYNC STATUS === */}
+        {(alreadySynced || hasConnectedProvider) && (
+          <div>
+            <SectionHeader title="Accounting" />
+            {alreadySynced ? (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-[14px] font-medium text-white">
+                    Synced to {(invoice as any).external_invoice_provider
+                      ? (invoice as any).external_invoice_provider.charAt(0).toUpperCase() + (invoice as any).external_invoice_provider.slice(1)
+                      : providerName}
+                  </p>
+                  {(invoice as any).external_invoice_synced_at && (
+                    <p className="text-[12px] text-white/50 mt-0.5">
+                      {format(new Date((invoice as any).external_invoice_synced_at), 'd MMM yyyy, HH:mm')}
+                    </p>
+                  )}
+                </div>
+                <span className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">Synced</span>
+              </div>
+            ) : (
+              <button
+                onClick={handleSyncToAccounting}
+                disabled={isSyncing}
+                className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.99] disabled:opacity-50"
+              >
+                <p className="text-[14px] font-medium text-blue-400">
+                  {isSyncing ? 'Syncing...' : `Sync to ${providerName}`}
+                </p>
+                <span className="text-[12px] text-white/50">→</span>
+              </button>
+            )}
+          </div>
+        )}
+
       </div>
 
       {/* === ACTIONS BOTTOM SHEET === */}
@@ -647,6 +707,18 @@ const InvoiceViewPage = () => {
                   <span className="text-[15px] font-medium text-red-400">Send Final Notice</span>
                 </button>
               </>
+            )}
+            {hasConnectedProvider && (
+              <button
+                onClick={() => { setShowActionsSheet(false); handleSyncToAccounting(); }}
+                disabled={isSyncing}
+                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all disabled:opacity-50"
+              >
+                <span className="text-[15px] font-medium text-blue-400">
+                  {isSyncing ? 'Syncing...' : alreadySynced ? `Re-sync to ${providerName}` : `Sync to ${providerName}`}
+                </span>
+                {alreadySynced && <span className="text-[11px] text-emerald-400">Synced</span>}
+              </button>
             )}
             <div className="border-t border-white/[0.06] mt-2 pt-2">
               <button

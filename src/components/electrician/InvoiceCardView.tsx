@@ -200,8 +200,11 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
               }
               disabled={isPaid}
             >
-              <button
+              <div
+                role="button"
+                tabIndex={0}
                 onClick={() => onInvoiceAction(invoice)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onInvoiceAction(invoice); }}
                 className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation cursor-pointer"
               >
                 <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200 rounded-2xl">
@@ -258,18 +261,44 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                       </span>
                     </div>
 
-                    {/* Row 5: Footer CTA */}
+                    {/* Row 5: Footer CTA + Sync */}
                     <div className="flex items-center justify-between mt-3">
                       <span className="text-[11px] font-medium text-elec-yellow">
-                        {isPaid ? 'View' : invoice.invoice_status === 'draft' ? 'Continue Editing' : 'View Invoice'}
+                        {isPaid ? 'View' : 'View Invoice'}
                       </span>
-                      <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-                        <Eye className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
+                      <div className="flex items-center gap-2">
+                        {hasAccountingConnected && !isPaid && invoice.invoice_status !== 'draft' && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              handleSyncToAccounting(invoice.id);
+                            }}
+                            disabled={syncingInvoiceId === invoice.id}
+                            className={cn(
+                              'h-7 px-2.5 rounded-lg text-[10px] font-semibold touch-manipulation active:scale-[0.95] transition-all flex items-center gap-1',
+                              (invoice as any).external_invoice_id
+                                ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20'
+                                : 'bg-blue-500/15 text-blue-400 border border-blue-500/20'
+                            )}
+                          >
+                            {syncingInvoiceId === invoice.id ? (
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                            ) : (invoice as any).external_invoice_id ? (
+                              'Synced'
+                            ) : (
+                              `Sync${connectedProvider ? '' : ''}`
+                            )}
+                          </button>
+                        )}
+                        <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                          <Eye className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </button>
+              </div>
             </SwipeableCard>
           </div>
         );
@@ -392,8 +421,8 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </button>
                 )}
 
-                {/* Sync to Accounting - Only for paid invoices */}
-                {actionsSheetInvoice.invoice_status === 'paid' &&
+                {/* Sync to Accounting */}
+                {actionsSheetInvoice.invoice_status !== 'draft' &&
                   hasAccountingConnected &&
                   connectedProvider && (
                     <button

@@ -396,22 +396,27 @@ const QuoteViewPage = () => {
           </button>
         </div>
 
-        {/* === TIMELINE === */}
+        {/* === TIMELINE — vertical stepper === */}
         <div>
           <SectionHeader title="Timeline" />
-          <div className="flex items-end gap-0 overflow-x-auto scrollbar-hide -mx-4 px-4">
+          <div className="space-y-0">
             {timelineEvents.map((event, i) => (
-              <div key={i} className="flex items-center flex-shrink-0">
-                {i > 0 && (
-                  <div className={cn('w-5 h-[2px] flex-shrink-0', event.active ? 'bg-white/20' : 'bg-white/[0.08]')} />
-                )}
-                <div className="flex flex-col items-center gap-1 py-1">
-                  <div className={cn('w-2 h-2 rounded-full flex-shrink-0', event.colour)} />
-                  <p className="text-[10px] font-medium whitespace-nowrap text-white">
+              <div key={i} className="flex items-stretch gap-3">
+                <div className="flex flex-col items-center w-4 flex-shrink-0">
+                  <div className={cn(
+                    'w-3 h-3 rounded-full flex-shrink-0 mt-0.5',
+                    event.active ? event.colour : 'bg-white/[0.12] border border-white/[0.15]'
+                  )} />
+                  {i < timelineEvents.length - 1 && (
+                    <div className={cn('w-[2px] flex-1 min-h-[20px] my-1', timelineEvents[i + 1].active ? 'bg-white/15' : 'bg-white/[0.08]')} />
+                  )}
+                </div>
+                <div className="flex items-baseline justify-between flex-1 pb-3">
+                  <p className={cn('text-[13px] font-medium', event.active ? 'text-white' : 'text-white/30')}>
                     {event.label}
                   </p>
                   {event.date && (
-                    <p className="text-[9px] -mt-0.5 text-white">{event.date}</p>
+                    <p className="text-[12px] text-white/50 tabular-nums">{event.date}</p>
                   )}
                 </div>
               </div>

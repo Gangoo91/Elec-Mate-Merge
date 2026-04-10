@@ -130,12 +130,8 @@ const InvoicesPage = () => {
   };
 
   const handleInvoiceAction = (invoice: Quote) => {
-    const status = invoice.invoice_status;
-    if (status === 'draft') {
-      navigate(`/electrician/invoice-quote-builder/${invoice.id}`);
-    } else {
-      navigate(`/electrician/invoices/${invoice.id}/view`);
-    }
+    // Always go to view page — user can edit from there via bottom sheet
+    navigate(`/electrician/invoices/${invoice.id}/view`);
   };
 
   const handleDownloadPDF = async (invoice: Quote) => {
@@ -456,17 +452,11 @@ const InvoicesPage = () => {
       );
     }
 
-    // Sort by priority: overdue > sent > draft > paid
+    // Sort: chronological, newest created first
     return [...filtered].sort((a, b) => {
-      const aOverdue = a.invoice_due_date && isPast(addHours(new Date(a.invoice_due_date), 24));
-      const bOverdue = b.invoice_due_date && isPast(addHours(new Date(b.invoice_due_date), 24));
-      if (aOverdue && !bOverdue) return -1;
-      if (!aOverdue && bOverdue) return 1;
-      const statusOrder = { overdue: 0, sent: 1, draft: 2, paid: 3 };
-      return (
-        (statusOrder[a.invoice_status as keyof typeof statusOrder] || 4) -
-        (statusOrder[b.invoice_status as keyof typeof statusOrder] || 4)
-      );
+      const aDate = new Date(a.createdAt).getTime();
+      const bDate = new Date(b.createdAt).getTime();
+      return bDate - aDate;
     });
   }, [invoices, activeFilter, searchQuery]);
 
