@@ -43,6 +43,8 @@ import * as marketing from './marketing.js';
 import * as smartScheduling from './smart-scheduling.js';
 import * as portfolio from './portfolio.js';
 import * as businessIntelligence from './business-intelligence.js';
+import * as tutorQuiz from './tutor-quiz.js';
+import * as studyBuddy from './study-buddy.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -321,6 +323,21 @@ const handlers: Record<string, ToolHandler> = {
   get_predicted_workload: businessIntelligence.getPredictedWorkload,
   spot_missed_revenue: businessIntelligence.spotMissedRevenue,
   analyse_spec_sheet: businessIntelligence.analyseSpecSheet,
+
+  // Tutor Quiz Builder
+  create_quiz: tutorQuiz.createQuiz,
+  add_questions_to_quiz: tutorQuiz.addQuestionsToQuiz,
+  generate_quiz_questions: tutorQuiz.generateQuizQuestions,
+  publish_quiz: tutorQuiz.publishQuiz,
+  get_quiz_submissions: tutorQuiz.getQuizSubmissions,
+  get_cohort_quiz_analytics: tutorQuiz.getCohortQuizAnalytics,
+
+  // WhatsApp Study Buddy
+  quiz_me: studyBuddy.quizMe,
+  explain_topic: studyBuddy.explainTopic,
+  get_my_study_stats: studyBuddy.getMyStudyStats,
+  get_study_plan: studyBuddy.getStudyPlan,
+  daily_challenge: studyBuddy.dailyChallenge,
 };
 
 /**

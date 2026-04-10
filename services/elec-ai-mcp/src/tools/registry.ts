@@ -97,6 +97,12 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
 
   // Business Intelligence (learns from patterns)
   registerBusinessIntelligenceTools(server, user);
+
+  // Tutor Quiz Builder
+  registerTutorQuizTools(server, user);
+
+  // WhatsApp Study Buddy
+  registerStudyBuddyTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -2946,5 +2952,137 @@ function registerBusinessIntelligenceTools(server: McpServer, user: UserContext)
       pdf_url: z.string().optional().describe('URL to a PDF spec sheet (use read_pdf first)'),
     },
     callTool('analyse_spec_sheet', user)
+  );
+}
+
+// ─── Tutor Quiz Tools (6) ───────────────────────────────────────────────
+
+function registerTutorQuizTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'create_quiz',
+    'Create a custom quiz with title and optional questions. Saved to tutor_quizzes table. Questions can be added later or AI-generated.',
+    {
+      title: z.string().describe('Quiz title'),
+      description: z.string().optional(),
+      topic: z.string().optional().describe('Topic area'),
+      difficulty: z.enum(['easy', 'medium', 'hard', 'mixed']).optional(),
+      time_limit_minutes: z.number().optional(),
+      pass_mark: z.number().optional().describe('Pass mark % (default 70)'),
+      cohort_id: z.string().optional().describe('Cohort UUID'),
+      questions: z
+        .array(
+          z.object({
+            question_text: z.string(),
+            options: z.array(z.string()),
+            correct_answer_index: z.number(),
+            explanation: z.string().optional(),
+            category: z.string().optional(),
+            difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
+            ac_ref: z.string().optional(),
+            points: z.number().optional(),
+          })
+        )
+        .optional(),
+    },
+    callTool('create_quiz', user)
+  );
+  server.tool(
+    'add_questions_to_quiz',
+    'Add questions to an existing quiz.',
+    {
+      quiz_id: z.string().describe('Quiz UUID'),
+      questions: z.array(
+        z.object({
+          question_text: z.string(),
+          options: z.array(z.string()),
+          correct_answer_index: z.number(),
+          explanation: z.string().optional(),
+          category: z.string().optional(),
+          difficulty: z.enum(['easy', 'medium', 'hard']).optional(),
+          ac_ref: z.string().optional(),
+          points: z.number().optional(),
+        })
+      ),
+    },
+    callTool('add_questions_to_quiz', user)
+  );
+  server.tool(
+    'generate_quiz_questions',
+    'AI-generate questions for a topic. Returns questions for tutor review — NOT auto-saved. Call create_quiz or add_questions_to_quiz to save.',
+    {
+      topic: z.string().describe('Topic to generate questions for'),
+      count: z.number().optional().describe('Number of questions (default 10, max 20)'),
+      difficulty: z.enum(['easy', 'medium', 'hard', 'mixed']).optional(),
+    },
+    callTool('generate_quiz_questions', user)
+  );
+  server.tool(
+    'publish_quiz',
+    'Make a quiz available to a cohort of students. Quiz must have questions.',
+    {
+      quiz_id: z.string().describe('Quiz UUID'),
+      cohort_id: z.string().optional().describe('Cohort UUID to publish to'),
+    },
+    callTool('publish_quiz', user)
+  );
+  server.tool(
+    'get_quiz_submissions',
+    'See who completed a quiz, their scores, pass/fail, and weak questions.',
+    { quiz_id: z.string().describe('Quiz UUID') },
+    callTool('get_quiz_submissions', user)
+  );
+  server.tool(
+    'get_cohort_quiz_analytics',
+    'Aggregate quiz analytics for a cohort: avg score, pass rate, at-risk students, weakest topics.',
+    { cohort_id: z.string().describe('Cohort UUID') },
+    callTool('get_cohort_quiz_analytics', user)
+  );
+}
+
+// ─── Study Buddy Tools (5) ──────────────────────────────────────────────
+
+function registerStudyBuddyTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'quiz_me',
+    'Quick quiz for WhatsApp: generates questions on a topic. Present one at a time, say right/wrong + explanation. Call save_quiz_result when done.',
+    {
+      topic: z
+        .string()
+        .optional()
+        .describe('Topic (e.g. "earthing", "RCD protection", "cable sizing")'),
+      difficulty: z.enum(['easy', 'medium', 'hard', 'mixed']).optional(),
+      count: z.number().optional().describe('Number of questions (default 5, max 10)'),
+    },
+    callTool('quiz_me', user)
+  );
+  server.tool(
+    'explain_topic',
+    'Explain an electrical concept using RAG knowledge. Returns training content, regulations, and practical methods for the agent to explain conversationally.',
+    {
+      topic: z.string().describe('Topic to explain'),
+      level: z.enum(['beginner', 'intermediate', 'advanced']).optional(),
+    },
+    callTool('explain_topic', user)
+  );
+  server.tool(
+    'get_my_study_stats',
+    'Comprehensive study statistics: quiz scores by topic, weak/strong areas, study streak, portfolio progress, exam history. Use when apprentice asks how they are doing.',
+    {},
+    callTool('get_my_study_stats', user)
+  );
+  server.tool(
+    'get_study_plan',
+    'Create a personalised revision schedule based on weak areas and exam date. Uses spaced repetition principles.',
+    {
+      exam_date: z.string().describe('Exam date (ISO-8601, e.g. "2026-06-15")'),
+      exam_type: z.string().optional().describe('Exam type (e.g. "AM2", "2365", "2357")'),
+    },
+    callTool('get_study_plan', user)
+  );
+  server.tool(
+    'daily_challenge',
+    'One question per day on weakest/least-studied topic. Builds study streak. Check if already completed today.',
+    {},
+    callTool('daily_challenge', user)
   );
 }
