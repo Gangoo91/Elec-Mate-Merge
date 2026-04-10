@@ -106,8 +106,8 @@ function buildFollowupEmailHtml(
 
           <!-- Header -->
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 28px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 24px; font-weight: 700;">⚡ ${companyName}</h1>
+            <td style="padding: 16px 24px; text-align: center;">
+              <h1 style="margin: 0; color: #FFD700; font-size: 24px; font-weight: 700;">${companyName}</h1>
             </td>
           </tr>
 
@@ -136,7 +136,7 @@ function buildFollowupEmailHtml(
               </p>
 
               <!-- Quote Summary Box -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: linear-gradient(135deg, #fafafa 0%, #f3f4f6 100%); border-radius: 12px; border: 1px solid #e5e7eb; margin: 24px 0;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #f9fafb; border-radius: 12px; border: 1px solid #e5e7eb; margin: 24px 0;">
                 <tr>
                   <td style="padding: 24px;">
                     <p style="margin: 0 0 16px; font-size: 13px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 1px;">Your Quote</p>
@@ -162,7 +162,7 @@ function buildFollowupEmailHtml(
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 28px 0;">
                 <tr>
                   <td style="text-align: center;">
-                    <a href="${acceptUrl}" style="display: inline-block; background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);">
+                    <a href="${acceptUrl}" style="display: inline-block; background: #FFD700; color: #000000; text-decoration: none; padding: 16px 40px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);">
                       View Quote
                     </a>
                   </td>
@@ -191,7 +191,7 @@ function buildFollowupEmailHtml(
                 companyPhone || companyEmail
                   ? `
               <p style="margin: 0; font-size: 14px; color: #6b7280;">
-                ${companyPhone ? `📞 ${companyPhone}` : ''}${companyPhone && companyEmail ? ' &nbsp;·&nbsp; ' : ''}${companyEmail ? `✉️ ${companyEmail}` : ''}
+                ${companyPhone ? `${companyPhone}` : ''}${companyPhone && companyEmail ? ' &nbsp;·&nbsp; ' : ''}${companyEmail ? `${companyEmail}` : ''}
               </p>
               `
                   : ''
@@ -202,7 +202,7 @@ function buildFollowupEmailHtml(
           <!-- Footer -->
           <tr>
             <td style="background: #1a1a1a; padding: 20px; text-align: center;">
-              <p style="margin: 0; font-size: 13px; color: #FFD700; font-weight: 600;">⚡ Powered by ElecMate</p>
+              <p style="margin: 0; font-size: 13px; color: #FFD700; font-weight: 600;">Sent via Elec-Mate</p>
               <p style="margin: 4px 0 0; font-size: 11px; color: #9ca3af;">Professional tools for electricians</p>
             </td>
           </tr>
@@ -269,9 +269,9 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     if (followupError) {
-      console.error('❌ Error fetching follow-up quotes:', followupError);
+      console.error('Error fetching follow-up quotes:', followupError);
     } else if (followupQuotes && followupQuotes.length > 0) {
-      console.log(`📋 Found ${followupQuotes.length} quotes needing follow-up`);
+      console.log(`Found ${followupQuotes.length} quotes needing follow-up`);
 
       for (const quote of followupQuotes as FollowupQuote[]) {
         try {
@@ -294,7 +294,7 @@ const handler = async (req: Request): Promise<Response> => {
             .single();
 
           if (!quoteView?.public_token) {
-            console.log(`⚠️ No public token for ${quote.quote_number}, skipping`);
+            console.log(`No public token for ${quote.quote_number}, skipping`);
             continue;
           }
 
@@ -333,7 +333,7 @@ const handler = async (req: Request): Promise<Response> => {
           });
 
           if (emailError) {
-            console.error(`❌ Failed to send follow-up for ${quote.quote_number}:`, emailError);
+            console.error(`Failed to send follow-up for ${quote.quote_number}:`, emailError);
             results.followup_errors++;
             continue;
           }
@@ -359,22 +359,22 @@ const handler = async (req: Request): Promise<Response> => {
           });
 
           console.log(
-            `✅ Follow-up sent for ${quote.quote_number} (reminder #${quote.reminder_count + 1})`
+            `Follow-up sent for ${quote.quote_number} (reminder #${quote.reminder_count + 1})`
           );
           results.followups_sent++;
         } catch (quoteError) {
-          console.error(`❌ Error processing ${quote.quote_number}:`, quoteError);
+          console.error(`Error processing ${quote.quote_number}:`, quoteError);
           results.followup_errors++;
         }
       }
     } else {
-      console.log('✅ No quotes need follow-up at this time');
+      console.log('No quotes need follow-up at this time');
     }
 
     // ========================================================================
     // PART 2: Process Expiry Notifications (to electricians)
     // ========================================================================
-    console.log('\n⏰ Checking for quotes expiring soon...');
+    console.log('\nChecking for quotes expiring soon...');
 
     const { data: expiringQuotes, error: expiryError } = await supabase.rpc(
       'get_quotes_expiring_soon',
@@ -384,13 +384,13 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     if (expiryError) {
-      console.error('❌ Error fetching expiring quotes:', expiryError);
+      console.error('Error fetching expiring quotes:', expiryError);
     } else if (expiringQuotes && expiringQuotes.length > 0) {
-      console.log(`📋 Found ${expiringQuotes.length} quotes expiring soon`);
+      console.log(`Found ${expiringQuotes.length} quotes expiring soon`);
 
       for (const quote of expiringQuotes as ExpiringQuote[]) {
         try {
-          console.log(`\n⏰ Processing expiry notification for ${quote.quote_number}...`);
+          console.log(`\nProcessing expiry notification for ${quote.quote_number}...`);
 
           // Create in-app notification for electrician
           await supabase.from('ojt_notifications').insert({
@@ -418,22 +418,22 @@ const handler = async (req: Request): Promise<Response> => {
             })
             .eq('id', quote.quote_id);
 
-          console.log(`✅ Expiry notification sent for ${quote.quote_number}`);
+          console.log(`Expiry notification sent for ${quote.quote_number}`);
           results.expiry_notifications++;
         } catch (notifyError) {
-          console.error(`❌ Error notifying for ${quote.quote_number}:`, notifyError);
+          console.error(`Error notifying for ${quote.quote_number}:`, notifyError);
           results.expiry_errors++;
         }
       }
     } else {
-      console.log('✅ No quotes expiring soon');
+      console.log('No quotes expiring soon');
     }
 
     // ========================================================================
     // RETURN RESULTS
     // ========================================================================
     const duration = Date.now() - startTime;
-    console.log(`\n✅ Automated follow-up complete in ${duration}ms`);
+    console.log(`\nAutomated follow-up complete in ${duration}ms`);
     console.log(`   Follow-ups sent: ${results.followups_sent}`);
     console.log(`   Follow-up errors: ${results.followup_errors}`);
     console.log(`   Expiry notifications: ${results.expiry_notifications}`);
@@ -449,7 +449,7 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     const duration = Date.now() - startTime;
-    console.error(`❌ Error after ${duration}ms:`, error);
+    console.error(`Error after ${duration}ms:`, error);
     await captureException(error, {
       functionName: 'quote-automated-followup',
       requestUrl: req.url,

@@ -1,106 +1,100 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Target, Shield, CheckCircle2, AlertTriangle, FileCheck, Zap } from 'lucide-react';
+import { ArrowLeft, Shield, Settings, AlertTriangle, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
-const WhyTestSection = () => {
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
+
+interface Props {
+  onBack: () => void;
+}
+
+const reasons = [
+  { icon: Shield, title: 'Safety System Verification', description: 'Electrical tests prove the wiring is correct. Functional tests prove the equipment actually works. An emergency stop that passes all electrical tests but has a seized button provides no protection. Functional testing catches these real-world failures.' },
+  { icon: Settings, title: 'Operational Confirmation', description: 'Every switch must switch, every isolator must isolate, every interlock must prevent access. Functional testing verifies that the installed equipment performs its intended function — not just that it is electrically connected correctly.' },
+  { icon: AlertTriangle, title: 'Defect Detection', description: 'Mechanical faults, stiff controls, incorrect adjustment, mis-wired control circuits, and failed indicator lamps are only discovered through functional testing. These defects are invisible to electrical measurement but can have serious safety consequences.' },
+  { icon: Zap, title: 'Handover Confidence', description: 'Functional testing provides evidence that the installation works as designed before handover to the client. It protects you professionally — demonstrating that everything was working when you signed it off.' },
+];
+
+const whatItCovers = [
+  'Switching devices — all switches, isolators, and disconnectors operate correctly',
+  'Protective devices — MCBs, RCDs, fuses trip and reset as expected',
+  'Control equipment — contactors, relays, timers, and programmable devices function correctly',
+  'Interlocks — mechanical and electrical interlocks prevent unsafe access or operation',
+  'Emergency systems — emergency stops, fire alarm interfaces, emergency lighting changeover',
+  'Indicating devices — neon indicators, pilot lamps, and status displays show correct state',
+  'Motorised equipment — motors rotate in the correct direction, overloads function',
+  'Heating controls — thermostats, timers, and zone valves respond correctly',
+];
+
+const WhyTestSection = ({ onBack }: Props) => {
   return (
-    <div className="space-y-6">
-      <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
-        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-          <Target className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-          <h4 className="text-base sm:text-lg font-semibold text-green-400">
-            Why Functional Testing is Essential
-          </h4>
-        </div>
-        <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h4 className="font-semibold text-foreground flex items-center gap-2">
-                <Shield className="h-4 w-4 text-green-400" />
-                Safety Verification
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li>• Ensures emergency stops work correctly under fault conditions</li>
-                <li>• Verifies RCD test buttons operate within specified time limits</li>
-                <li>• Confirms safety systems function as designed</li>
-                <li>• Validates protective device operation under normal conditions</li>
-                <li>• Tests interlocking systems and safety circuits</li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-semibold text-foreground flex items-center gap-2">
-                <FileCheck className="h-4 w-4 text-blue-400" />
-                Regulatory Compliance
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li>• Required by BS 7671 Regulation 612.13</li>
-                <li>• Part of initial verification process</li>
-                <li>• Essential for EIC/EICR certification completion</li>
-                <li>• Demonstrates due diligence in testing procedures</li>
-                <li>• Meets insurance and legal requirements</li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-semibold text-foreground flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-purple-400" />
-                Operational Benefits
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li>• Identifies faulty controls before they cause problems</li>
-                <li>• Prevents unexpected downtime and equipment failure</li>
-                <li>• Ensures reliable operation of critical systems</li>
-                <li>• Validates manufacturer specifications</li>
-                <li>• Confirms proper installation and commissioning</li>
-              </ul>
-            </div>
-
-            <div className="space-y-4">
-              <h4 className="font-semibold text-foreground flex items-center gap-2">
-                <Zap className="h-4 w-4 text-yellow-400" />
-                System Performance
-              </h4>
-              <ul className="space-y-2 text-sm">
-                <li>• Tests system response times under load</li>
-                <li>• Verifies control logic and sequencing</li>
-                <li>• Confirms proper equipment coordination</li>
-                <li>• Validates automatic transfer systems</li>
-                <li>• Tests backup and redundant systems</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-            <h4 className="font-semibold text-green-400 mb-2 flex items-center gap-2">
-              <Target className="h-4 w-4" />
-              Real-World Impact
-            </h4>
-            <p className="text-sm text-gray-300">
-              Functional testing has prevented countless accidents by identifying faulty emergency
-              stops, malfunctioning RCDs, and defective control systems. A properly functioning
-              emergency stop can be the difference between a minor incident and a serious injury.
-              Regular functional testing ensures that when safety systems are needed most, they
-              operate correctly.
-            </p>
-          </div>
-
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
-            <h4 className="font-semibold text-amber-400 mb-2 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
-              Consequences of Not Testing
-            </h4>
-            <ul className="space-y-1 text-sm text-gray-300">
-              <li>• Emergency systems may fail when needed most</li>
-              <li>• RCD protection may not operate correctly</li>
-              <li>• Legal liability for accidents and injuries</li>
-              <li>• Insurance claims may be rejected</li>
-              <li>• Equipment damage from uncontrolled shutdowns</li>
-              <li>• Regulatory non-compliance and potential prosecution</li>
-            </ul>
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">Why Test?</h1>
           </div>
         </div>
       </div>
+
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <p className="text-sm text-white leading-relaxed">
+              Functional testing is the final step in the verification sequence. After all dead tests (continuity, IR, polarity) and live tests (Zs, PFC, RCD) are complete, functional testing confirms that every assembly, component and control system actually works as intended when operated by the user.
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 612.13</span>
+            </div>
+            <p className="text-sm text-white leading-relaxed">
+              "Assemblies, including switchgear and controlgear assemblies, and components of the electrical installation shall be subjected to a functional test to show that they are properly mounted, adjusted and installed in accordance with BS 7671."
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Why It Matters</p>
+        </motion.div>
+
+        {reasons.map((r, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <r.icon className="h-5 w-5 text-yellow-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white">{r.title}</p>
+                  <p className="text-sm text-white mt-1 leading-relaxed">{r.description}</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Functional Testing Covers</p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="space-y-1.5">
+              {whatItCovers.map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                  <p className="text-sm text-white">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

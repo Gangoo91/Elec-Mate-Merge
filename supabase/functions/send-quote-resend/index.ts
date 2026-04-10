@@ -27,7 +27,7 @@ function safeJsonParse(data: any, fallback: any = {}): any {
     try {
       return JSON.parse(data);
     } catch (e) {
-      console.warn('⚠️ JSON parse failed, using fallback:', e);
+      console.warn('JSON parse failed, using fallback:', e);
       return fallback;
     }
   }
@@ -78,7 +78,7 @@ function formatDate(dateInput: any): string {
       year: 'numeric',
     });
   } catch (e) {
-    console.warn('⚠️ Date format failed:', e);
+    console.warn('Date format failed:', e);
     return 'N/A';
   }
 }
@@ -105,24 +105,24 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
 
     if (!resendApiKey) {
-      console.error('❌ RESEND_API_KEY not configured');
+      console.error('RESEND_API_KEY not configured');
       throw new Error('Email service not configured. Please contact support.');
     }
 
     if (!supabaseUrl || !supabaseAnonKey) {
-      console.error('❌ Supabase environment variables missing');
+      console.error('Supabase environment variables missing');
       throw new Error('Database service not configured. Please contact support.');
     }
 
     const resend = new Resend(resendApiKey);
-    console.log('✅ Environment validated');
+    console.log('Environment validated');
 
     // ========================================================================
     // STEP 2: Authenticate user
     // ========================================================================
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      console.error('❌ No Authorization header found');
+      console.error('No Authorization header found');
       throw new Error('Please log in to send quotes.');
     }
 
@@ -137,11 +137,11 @@ const handler = async (req: Request): Promise<Response> => {
     } = await supabaseClient.auth.getUser(jwt);
 
     if (userError || !user) {
-      console.error('❌ User authentication error:', userError);
+      console.error('User authentication error:', userError);
       throw new Error('Session expired. Please log in again.');
     }
 
-    console.log('✅ User authenticated:', user.id);
+    console.log('User authenticated:', user.id);
     const userEmail = user.email;
 
     // ========================================================================
@@ -152,7 +152,7 @@ const handler = async (req: Request): Promise<Response> => {
       const body = await req.json();
       quoteId = body.quoteId;
     } catch (e) {
-      console.error('❌ Failed to parse request body:', e);
+      console.error('Failed to parse request body:', e);
       throw new Error('Invalid request format.');
     }
 
@@ -160,7 +160,7 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Quote ID is required.');
     }
 
-    console.log('📄 Processing quote:', quoteId);
+    console.log('Processing quote:', quoteId);
 
     // ========================================================================
     // STEP 4: Fetch quote from database
@@ -173,7 +173,7 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     if (quoteError) {
-      console.error('❌ Database error fetching quote:', quoteError);
+      console.error('Database error fetching quote:', quoteError);
       throw new Error('Could not find this quote. It may have been deleted.');
     }
 
@@ -182,26 +182,26 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const quoteNumber = quote.quote_number || `QTE-${quoteId.substring(0, 8)}`;
-    console.log(`✅ Quote fetched: ${quoteNumber}`);
+    console.log(`Quote fetched: ${quoteNumber}`);
 
     // ========================================================================
     // STEP 5: Parse client data safely
     // ========================================================================
     const clientData = safeJsonParse(quote.client_data, {});
-    console.log('📄 Client data keys:', Object.keys(clientData));
+    console.log('Client data keys:', Object.keys(clientData));
 
     const clientEmail = clientData?.email?.trim();
     const clientName = clientData?.name || 'Valued Client';
 
     if (!isValidEmail(clientEmail)) {
-      console.error('❌ Invalid client email:', clientEmail);
-      console.error('❌ Client data:', JSON.stringify(clientData).substring(0, 300));
+      console.error('Invalid client email:', clientEmail);
+      console.error('Client data:', JSON.stringify(clientData).substring(0, 300));
       throw new Error(
         `Invalid client email address: "${clientEmail || 'missing'}". Please update the quote with a valid email.`
       );
     }
 
-    console.log(`✅ Client: ${clientName} <${clientEmail}>`);
+    console.log(`Client: ${clientName} <${clientEmail}>`);
 
     // ========================================================================
     // STEP 6: Fetch company profile
@@ -213,7 +213,7 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     const companyName = companyProfile?.company_name || 'ElecMate';
-    console.log(`✅ Company: ${companyName}`);
+    console.log(`Company: ${companyName}`);
 
     // ========================================================================
     // STEP 7: Get or create public token for accept/reject
@@ -247,9 +247,9 @@ const handler = async (req: Request): Promise<Response> => {
             .update({ public_token: publicToken })
             .eq('id', quoteId);
         }
-        console.log('✅ Public token ready');
+        console.log('Public token ready');
       } catch (tokenError) {
-        console.warn('⚠️ Token generation error (non-fatal):', tokenError);
+        console.warn('Token generation error (non-fatal):', tokenError);
         publicToken = crypto.randomUUID(); // Fallback
       }
     }
@@ -301,14 +301,14 @@ const handler = async (req: Request): Promise<Response> => {
                 pdf_version: (quote.pdf_version || 0) + 1,
               })
               .eq('id', quoteId);
-            console.log('✅ PDF regenerated');
+            console.log('PDF regenerated');
             return newPdfUrl;
           }
         } else {
-          console.warn('⚠️ PDF generation failed - continuing without attachment');
+          console.warn('PDF generation failed - continuing without attachment');
         }
       } catch (pdfGenError) {
-        console.warn('⚠️ PDF generation error (non-fatal):', pdfGenError);
+        console.warn('PDF generation error (non-fatal):', pdfGenError);
       }
       return null;
     };
@@ -328,14 +328,14 @@ const handler = async (req: Request): Promise<Response> => {
             binary += String.fromCharCode.apply(null, Array.from(chunk));
           }
           pdfBase64 = btoa(binary);
-          console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+          console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
           return true;
         } else {
-          console.warn(`⚠️ PDF download failed with status: ${pdfFileResponse.status}`);
+          console.warn(`PDF download failed with status: ${pdfFileResponse.status}`);
           return false;
         }
       } catch (pdfDownloadError) {
-        console.warn('⚠️ PDF download error:', pdfDownloadError);
+        console.warn('PDF download error:', pdfDownloadError);
         return false;
       }
     };
@@ -394,8 +394,8 @@ const handler = async (req: Request): Promise<Response> => {
 
           <!-- Header -->
           <tr>
-            <td style="background-color: #1a1a1a; background-image: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700;">⚡ ${companyName}</h1>
+            <td style="padding: 32px 24px 24px; border-bottom: 1px solid #e5e7eb;">
+              <h1 style="margin: 0; color: #1f2937; font-size: 22px; font-weight: 700;">${companyName}</h1>
             </td>
           </tr>
 
@@ -414,7 +414,7 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Quote Card -->
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; background-image: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;  border-radius: 12px; border: 2px solid #e5e7eb;">
                 <tr>
                   <td style="padding: 24px;">
                     <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;">Quote #${quoteNumber}</h2>
@@ -432,7 +432,7 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Total Amount -->
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fffbeb; background-image: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-left: 4px solid #FFD700; border-radius: 8px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fffbeb;  border-left: 4px solid #FFD700; border-radius: 8px;">
                 <tr>
                   <td style="padding: 20px;">
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
@@ -455,8 +455,8 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <div style="background-color: #3b82f6; background-image: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600;">
-                📎 Quote PDF Attached
+              <div style="background-color: #FFD700; color: #000000; text-align: center; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600;">
+                Quote PDF Attached
               </div>
               <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
                 Quote_${quoteNumber}.pdf is attached to this email
@@ -476,12 +476,12 @@ const handler = async (req: Request): Promise<Response> => {
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td style="padding-right: 8px; width: 50%;">
-                    <a href="${acceptUrl}" style="display: block; background-color: #22c55e; background-image: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
+                    <a href="${acceptUrl}" style="display: block; background-color: #22c55e;  color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
                       ✓ Accept & Sign
                     </a>
                   </td>
                   <td style="padding-left: 8px; width: 50%;">
-                    <a href="${rejectUrl}" style="display: block; background-color: #6b7280; background-image: linear-gradient(135deg, #6b7280 0%, #4b5563 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
+                    <a href="${rejectUrl}" style="display: block; background-color: #6b7280;  color: #ffffff; text-align: center; text-decoration: none; padding: 16px 12px; border-radius: 10px; font-size: 16px; font-weight: 600;">
                       ✗ Decline
                     </a>
                   </td>
@@ -502,7 +502,7 @@ const handler = async (req: Request): Promise<Response> => {
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #f9fafb; border-radius: 8px;">
                 <tr>
                   <td style="padding: 16px;">
-                    <p style="margin: 0 0 8px; font-size: 14px; font-weight: 700; color: #374151;">📝 Scope of Work:</p>
+                    <p style="margin: 0 0 8px; font-size: 14px; font-weight: 700; color: #374151;">Scope of Work:</p>
                     <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #6b7280;">${jobDescription}</p>
                   </td>
                 </tr>
@@ -520,14 +520,14 @@ const handler = async (req: Request): Promise<Response> => {
                 If you have any questions about this quote, please don't hesitate to contact us.
               </p>
               <p style="margin: 0; font-size: 16px; font-weight: 700; color: #1f2937;">${companyName}</p>
-              ${companyProfile?.company_phone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;">📞 <a href="tel:${companyProfile.company_phone}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_phone}</a></p>` : ''}
-              ${companyProfile?.company_email ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;">✉️ <a href="mailto:${companyProfile.company_email}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_email}</a></p>` : ''}
+              ${companyProfile?.company_phone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;"><a href="tel:${companyProfile.company_phone}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_phone}</a></p>` : ''}
+              ${companyProfile?.company_email ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;"><a href="mailto:${companyProfile.company_email}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_email}</a></p>` : ''}
             </td>
           </tr>
 
           <tr>
-            <td style="background-color: #1a1a1a; background-image: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ Powered by ElecMate</p>
+            <td style="padding: 16px 24px; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 11px; color: #9ca3af;">Sent via Elec-Mate</p>
               <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
             </td>
           </tr>
@@ -577,17 +577,17 @@ const handler = async (req: Request): Promise<Response> => {
           content: pdfBase64,
         },
       ];
-      console.log('📎 PDF attached');
+      console.log('PDF attached');
     }
 
     const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
 
     if (emailError) {
-      console.error('❌ Resend API error:', emailError);
+      console.error('Resend API error:', emailError);
       throw new Error(`Failed to send email: ${emailError.message || 'Unknown error'}`);
     }
 
-    console.log('✅ Email sent:', emailData?.id);
+    console.log('Email sent:', emailData?.id);
 
     // ========================================================================
     // STEP 12: Update quote status and track first send
@@ -630,11 +630,11 @@ const handler = async (req: Request): Promise<Response> => {
         },
       });
     } catch (eventError) {
-      console.warn('⚠️ Failed to record email event (non-blocking):', eventError);
+      console.warn('Failed to record email event (non-blocking):', eventError);
     }
 
     const duration = Date.now() - startTime;
-    console.log(`✅ Complete in ${duration}ms`);
+    console.log(`Complete in ${duration}ms`);
 
     return new Response(
       JSON.stringify({
@@ -648,7 +648,7 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     const duration = Date.now() - startTime;
-    console.error(`❌ Error after ${duration}ms:`, error);
+    console.error(`Error after ${duration}ms:`, error);
 
     // Capture to Sentry
     await captureException(error, {

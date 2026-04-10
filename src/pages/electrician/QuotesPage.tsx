@@ -272,17 +272,17 @@ const QuotesPage = () => {
           </button>
         </div>
 
-        {/* Filter pills — I&T style */}
+        {/* Filter pills */}
         <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
           {filterOptions.map((option) => (
             <button
               key={option.id}
               onClick={() => setFilter(option.id)}
               className={cn(
-                'flex-shrink-0 h-8 px-3 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.98]',
+                'flex-shrink-0 h-9 px-3.5 rounded-xl text-[12px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                 filter === option.id
                   ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
-                  : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
+                  : 'bg-white/[0.04] text-white border border-white/[0.08]'
               )}
             >
               {option.label}
@@ -299,35 +299,38 @@ const QuotesPage = () => {
         <div className="px-4 py-4 space-y-4 pb-24">
           {/* Pipeline hero */}
           <div className="space-y-3">
+            {/* Gradient accent */}
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
+
             {/* Main value */}
             <div className="flex items-end justify-between">
               <div>
-                <p className="text-[10px] text-white uppercase tracking-[0.15em] font-medium">Pipeline</p>
-                <p className="text-[36px] font-extrabold text-elec-yellow leading-none tracking-tight mt-1">{formatGBP(stats.totalValue)}</p>
+                <p className="text-[10px] text-white uppercase tracking-widest font-medium">Pipeline</p>
+                <p className="text-[38px] font-extrabold text-elec-yellow leading-none tracking-tight mt-1">{formatGBP(stats.totalValue)}</p>
               </div>
               <div className="text-right pb-0.5">
                 <p className="text-[28px] font-bold text-white leading-none">{stats.conversionRate}%</p>
-                <p className="text-[10px] text-white uppercase tracking-wider mt-0.5">Win Rate</p>
+                <p className="text-[10px] text-white uppercase tracking-widest mt-0.5">Win Rate</p>
               </div>
             </div>
 
-            {/* Stat pills — tappable, inline */}
-            <div className="grid grid-cols-4 gap-2">
-              <button onClick={() => setFilter('approved')} className="rounded-xl bg-white/[0.04] border border-white/[0.08] py-2.5 text-center touch-manipulation active:scale-[0.97] active:bg-white/[0.07] transition-all">
-                <p className="text-[15px] font-bold text-emerald-400">{formatGBP(stats.approvedValue)}</p>
-                <p className="text-[10px] text-white mt-0.5">Won</p>
+            {/* Stat pills — 2×2 grid */}
+            <div className="grid grid-cols-2 gap-2">
+              <button onClick={() => setFilter('approved')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
+                <p className="text-[18px] font-bold text-emerald-400 tabular-nums">{formatGBP(stats.approvedValue)}</p>
+                <p className="text-[11px] text-white mt-0.5">Won</p>
               </button>
-              <button onClick={() => setFilter('sent')} className="rounded-xl bg-white/[0.04] border border-white/[0.08] py-2.5 text-center touch-manipulation active:scale-[0.97] active:bg-white/[0.07] transition-all">
-                <p className="text-[15px] font-bold text-amber-400">{stats.counts.sent}</p>
-                <p className="text-[10px] text-white mt-0.5">Pending</p>
+              <button onClick={() => setFilter('sent')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
+                <p className="text-[18px] font-bold text-amber-400 tabular-nums">{stats.counts.sent}</p>
+                <p className="text-[11px] text-white mt-0.5">Pending</p>
               </button>
-              <button onClick={() => setFilter('draft')} className="rounded-xl bg-white/[0.04] border border-white/[0.08] py-2.5 text-center touch-manipulation active:scale-[0.97] active:bg-white/[0.07] transition-all">
-                <p className="text-[15px] font-bold text-white">{stats.counts.draft}</p>
-                <p className="text-[10px] text-white mt-0.5">Drafts</p>
+              <button onClick={() => setFilter('draft')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
+                <p className="text-[18px] font-bold text-white tabular-nums">{stats.counts.draft}</p>
+                <p className="text-[11px] text-white mt-0.5">Drafts</p>
               </button>
-              <button onClick={() => setFilter('invoiced')} className="rounded-xl bg-white/[0.04] border border-white/[0.08] py-2.5 text-center touch-manipulation active:scale-[0.97] active:bg-white/[0.07] transition-all">
-                <p className="text-[15px] font-bold text-blue-400">{stats.counts.invoiced}</p>
-                <p className="text-[10px] text-white mt-0.5">Invoiced</p>
+              <button onClick={() => setFilter('invoiced')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
+                <p className="text-[18px] font-bold text-blue-400 tabular-nums">{stats.counts.invoiced}</p>
+                <p className="text-[11px] text-white mt-0.5">Invoiced</p>
               </button>
             </div>
 

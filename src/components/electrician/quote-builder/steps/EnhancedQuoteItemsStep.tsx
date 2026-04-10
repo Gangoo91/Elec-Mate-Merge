@@ -988,11 +988,11 @@ export const EnhancedQuoteItemsStep = ({
                 placeholder="Search price book..."
                 value={priceBookSearch}
                 onChange={(e) => setPriceBookSearch(e.target.value)}
-                className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
+                className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
               />
             </div>
             {pricedBookItems.length === 0 ? (
-              <p className="text-sm text-gray-500 text-center py-6">
+              <p className="text-sm text-white text-center py-6">
                 {priceBookSearch ? 'No matching items' : 'No priced items in your lists yet.'}
               </p>
             ) : (
@@ -1031,9 +1031,9 @@ export const EnhancedQuoteItemsStep = ({
                         per {p.item.unit || 'each'}
                       </span>
                       {p.item.supplier && (
-                        <span className="text-[12px] text-gray-500">{p.item.supplier}</span>
+                        <span className="text-[12px] text-white">{p.item.supplier}</span>
                       )}
-                      <span className="text-[10px] text-gray-600 ml-auto">{p.listName}</span>
+                      <span className="text-[10px] text-white ml-auto">{p.listName}</span>
                     </div>
                   </button>
                 ))}
@@ -1074,7 +1074,7 @@ export const EnhancedQuoteItemsStep = ({
                   placeholder="Search rates..."
                   value={rateCardSearch}
                   onChange={(e) => setRateCardSearch(e.target.value)}
-                  className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
+                  className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
                 />
               </div>
               <div className="max-h-[300px] overflow-y-auto space-y-2">
@@ -1111,14 +1111,14 @@ export const EnhancedQuoteItemsStep = ({
                         <div className="flex-1 min-w-0 mr-2">
                           <p className="font-medium text-[14px] text-white line-clamp-1">{item.name}</p>
                           {item.description && (
-                            <p className="text-[12px] text-gray-500 line-clamp-1 mt-0.5">{item.description}</p>
+                            <p className="text-[12px] text-white line-clamp-1 mt-0.5">{item.description}</p>
                           )}
                         </div>
                         <p className="font-bold text-[15px] text-elec-yellow whitespace-nowrap flex-shrink-0">
                           £{item.unit_price.toFixed(2)}
                         </p>
                       </div>
-                      <p className="text-[12px] text-gray-500 mt-0.5">per {item.unit}</p>
+                      <p className="text-[12px] text-white mt-0.5">per {item.unit}</p>
                     </button>
                   ))
                 }
@@ -1166,19 +1166,19 @@ export const EnhancedQuoteItemsStep = ({
                         <div className="flex-1 min-w-0">
                           <p className="text-[14px] font-medium text-white line-clamp-1">{bundle.name}</p>
                           {bundle.description && (
-                            <p className="text-[11px] text-gray-500 mt-0.5 line-clamp-1">{bundle.description}</p>
+                            <p className="text-[11px] text-white mt-0.5 line-clamp-1">{bundle.description}</p>
                           )}
                         </div>
                         <div className="flex items-center gap-2 ml-2 flex-shrink-0">
                           <span className="text-[14px] font-bold text-elec-yellow">£{total.toFixed(2)}</span>
                           {expanded ? (
-                            <ChevronUp className="h-4 w-4 text-gray-500" />
+                            <ChevronUp className="h-4 w-4 text-white" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-gray-500" />
+                            <ChevronDown className="h-4 w-4 text-white" />
                           )}
                         </div>
                       </div>
-                      <p className="text-[11px] text-gray-600 mt-0.5">{bundle.items.length} items</p>
+                      <p className="text-[11px] text-white mt-0.5">{bundle.items.length} items</p>
                     </button>
 
                     {expanded && (
@@ -1187,7 +1187,7 @@ export const EnhancedQuoteItemsStep = ({
                           {bundle.items.map((item) => (
                             <div key={item.id} className="flex items-center justify-between text-[12px]">
                               <span className="text-white flex-1 min-w-0 line-clamp-1">{item.name}</span>
-                              <span className="text-gray-500 ml-2 flex-shrink-0">
+                              <span className="text-white ml-2 flex-shrink-0">
                                 {item.quantity} × £{item.unitPrice.toFixed(2)}
                               </span>
                             </div>

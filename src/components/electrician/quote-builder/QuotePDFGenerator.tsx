@@ -13,25 +13,7 @@ const hexToRgb = (hex: string): [number, number, number] => {
     : [0, 0, 0];
 };
 
-// Debug function to log company profile data
-const debugCompanyProfile = (companyProfile?: CompanyProfile) => {
-  console.log('PDF Generation - Company Profile:', {
-    hasProfile: !!companyProfile,
-    name: companyProfile?.company_name,
-    email: companyProfile?.company_email,
-    phone: companyProfile?.company_phone,
-    hasLogo: !!companyProfile?.logo_data_url,
-    colors: {
-      primary: companyProfile?.primary_color,
-      secondary: companyProfile?.secondary_color,
-    },
-  });
-};
-
 export const generateQuotePDF = async (quote: Partial<Quote>, companyProfile?: CompanyProfile) => {
-  // Debug company profile data
-  debugCompanyProfile(companyProfile);
-
   // Validate company profile is loaded
   if (!companyProfile) {
     console.warn('PDF Generation: No company profile provided - using fallback branding');

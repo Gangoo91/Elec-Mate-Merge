@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { Helmet } from 'react-helmet';
-import { CheckCircle, X, ClipboardCheck } from 'lucide-react';
+import { X } from 'lucide-react';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { useState, useEffect } from 'react';
@@ -154,7 +154,7 @@ const InvoiceBuilderCreate = () => {
         )}
 
         {/* Main Content */}
-        <main className="px-4 py-6 pb-32">
+        <main className="px-0 sm:px-2 py-3">
           {isLoadingContext ? (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-2 border-elec-yellow border-t-transparent" />

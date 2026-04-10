@@ -177,7 +177,7 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Invoice ID is required.');
     }
 
-    console.log('📄 Processing invoice:', invoiceId);
+    console.log('Processing invoice:', invoiceId);
 
     // ========================================================================
     // STEP 4: Fetch invoice from database
@@ -206,7 +206,7 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 5: Parse client data safely
     // ========================================================================
     const clientData = safeJsonParse(invoice.client_data, {});
-    console.log('📄 Client data keys:', Object.keys(clientData));
+    console.log('Client data keys:', Object.keys(clientData));
 
     let clientEmail = clientData?.email?.trim();
     const clientName = clientData?.name || 'Valued Client';
@@ -277,7 +277,7 @@ const handler = async (req: Request): Promise<Response> => {
           stripePaymentUrl = invoice.stripe_payment_link_url;
           console.log('✅ Using existing Stripe payment link');
         } else {
-          console.log('💳 Generating Stripe payment link...');
+          console.log('Generating Stripe payment link...');
           const paymentLinkResponse = await fetch(
             `${supabaseUrl}/functions/v1/create-invoice-payment-link`,
             {
@@ -501,9 +501,9 @@ const handler = async (req: Request): Promise<Response> => {
 
           <!-- Header -->
           <tr>
-            <td style="background-color: #1a1a1a; background-image: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              ${companyProfile?.logo_url ? `<img src="${companyProfile.logo_url}" alt="${companyName}" style="max-height: 60px; max-width: 200px; margin-bottom: 16px; display: block; margin-left: auto; margin-right: auto;" />` : ''}
-              <h1 style="margin: 0; color: #FFD700; font-size: 26px; font-weight: 700;">⚡ ${companyName}</h1>
+            <td style="padding: 32px 24px 24px; border-bottom: 1px solid #e5e7eb;">
+              <h1 style="margin: 0; color: #1f2937; font-size: 22px; font-weight: 700;">${companyName}</h1>
+              ${companyProfile?.company_phone ? `<p style="margin: 6px 0 0; font-size: 13px; color: #6b7280;">${companyProfile.company_phone}${companyProfile?.company_email ? ` · ${companyProfile.company_email}` : ''}</p>` : ''}
             </td>
           </tr>
 
@@ -522,7 +522,7 @@ const handler = async (req: Request): Promise<Response> => {
           <!-- Invoice Card -->
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa; background-image: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; border: 2px solid #e5e7eb;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;  border-radius: 12px; border: 2px solid #e5e7eb;">
                 <tr>
                   <td style="padding: 24px;">
                     <h2 style="margin: 0 0 16px; font-size: 28px; font-weight: 700; color: #1f2937;">Invoice #${invoiceNumber}</h2>
@@ -543,8 +543,8 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <a href="${pdfUrl}" target="_blank" style="display: block; background-color: #3b82f6; background-image: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">
-                📄 View Invoice PDF
+              <a href="${pdfUrl}" target="_blank" style="display: block; background-color: #FFD700; color: #000000; text-align: center; text-decoration: none; padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);">
+                View Invoice PDF
               </a>
               <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
                 ${pdfAttachmentSuccess ? `Invoice_${invoiceNumber}.pdf is attached to this email` : 'Click above to view and download your invoice'}
@@ -561,8 +561,8 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <a href="${stripePaymentUrl}" target="_blank" style="display: block; background-color: #6366f1; background-image: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);">
-                💳 Pay Now - Secure Card Payment
+              <a href="${stripePaymentUrl}" target="_blank" style="display: block; background-color: #FFD700; color: #000000; text-align: center; text-decoration: none; padding: 20px 24px; border-radius: 12px; font-size: 18px; font-weight: 700; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);">
+                Pay Now - Secure Card Payment
               </a>
               <p style="margin: 12px 0 0; text-align: center; font-size: 13px; color: #6b7280;">
                 Fast, secure payment via Stripe
@@ -579,16 +579,16 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef3c7; background-image: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid #f59e0b; border-radius: 8px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;">
                 <tr>
                   <td style="padding: 20px;">
-                    <h3 style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #92400e;">💳 Payment Details (Bank Transfer)</h3>
+                    <h3 style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #1f2937;">Payment Details (Bank Transfer)</h3>
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      ${bankDetails.bankName ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Bank:</strong></td><td style="text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${bankDetails.bankName}</td></tr>` : ''}
-                      ${bankDetails.accountName ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Account:</strong></td><td style="text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${bankDetails.accountName}</td></tr>` : ''}
-                      ${bankDetails.accountNumber ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Acc No:</strong></td><td style="text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${bankDetails.accountNumber}</td></tr>` : ''}
-                      ${bankDetails.sortCode ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #78350f;"><strong>Sort Code:</strong></td><td style="text-align: right; font-size: 14px; color: #78350f; font-weight: 600;">${bankDetails.sortCode}</td></tr>` : ''}
-                      <tr><td style="padding: 8px 0 0; font-size: 14px; color: #78350f;"><strong>Reference:</strong></td><td style="text-align: right; font-size: 14px; color: #92400e; font-weight: 700;">${invoiceNumber}</td></tr>
+                      ${bankDetails.bankName ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #374151;"><strong>Bank:</strong></td><td style="text-align: right; font-size: 14px; color: #374151; font-weight: 600;">${bankDetails.bankName}</td></tr>` : ''}
+                      ${bankDetails.accountName ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #374151;"><strong>Account:</strong></td><td style="text-align: right; font-size: 14px; color: #374151; font-weight: 600;">${bankDetails.accountName}</td></tr>` : ''}
+                      ${bankDetails.accountNumber ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #374151;"><strong>Acc No:</strong></td><td style="text-align: right; font-size: 14px; color: #374151; font-weight: 600;">${bankDetails.accountNumber}</td></tr>` : ''}
+                      ${bankDetails.sortCode ? `<tr><td style="padding: 4px 0; font-size: 14px; color: #374151;"><strong>Sort Code:</strong></td><td style="text-align: right; font-size: 14px; color: #374151; font-weight: 600;">${bankDetails.sortCode}</td></tr>` : ''}
+                      <tr><td style="padding: 8px 0 0; font-size: 14px; color: #374151;"><strong>Reference:</strong></td><td style="text-align: right; font-size: 14px; color: #1f2937; font-weight: 700;">${invoiceNumber}</td></tr>
                     </table>
                   </td>
                 </tr>
@@ -638,11 +638,11 @@ const handler = async (req: Request): Promise<Response> => {
               ? `
           <tr>
             <td style="padding: 0 24px 24px;">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #fffbeb; border-left: 4px solid #FFD700; border-radius: 8px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;">
                 <tr>
                   <td style="padding: 16px;">
-                    <p style="margin: 0 0 8px; font-size: 14px; font-weight: 700; color: #92400e;">📝 Notes:</p>
-                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #78350f;">${invoice.invoice_notes}</p>
+                    <p style="margin: 0 0 8px; font-size: 14px; font-weight: 700; color: #1f2937;">Notes:</p>
+                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #374151;">${invoice.invoice_notes}</p>
                   </td>
                 </tr>
               </table>
@@ -654,20 +654,19 @@ const handler = async (req: Request): Promise<Response> => {
 
           <!-- Footer -->
           <tr>
-            <td style="padding: 0 24px 32px;">
-              <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.6; color: #374151;">
-                If you have any questions, please don't hesitate to contact us.
+            <td style="padding: 24px; border-top: 1px solid #e5e7eb;">
+              <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.6; color: #6b7280;">
+                If you have any questions, please reply to this email or contact us directly.
               </p>
-              <p style="margin: 0; font-size: 16px; font-weight: 700; color: #1f2937;">${companyName}</p>
-              ${companyProfile?.company_phone ? `<p style="margin: 8px 0 0; font-size: 14px; color: #6b7280;">📞 <a href="tel:${companyProfile.company_phone}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_phone}</a></p>` : ''}
-              ${companyProfile?.company_email ? `<p style="margin: 4px 0 0; font-size: 14px; color: #6b7280;">✉️ <a href="mailto:${companyProfile.company_email}" style="color: #1f2937; text-decoration: none;">${companyProfile.company_email}</a></p>` : ''}
+              <p style="margin: 0; font-size: 14px; font-weight: 600; color: #1f2937;">${companyName}</p>
+              ${companyProfile?.company_phone ? `<p style="margin: 4px 0 0; font-size: 13px; color: #6b7280;">${companyProfile.company_phone}</p>` : ''}
+              ${companyProfile?.company_email ? `<p style="margin: 2px 0 0; font-size: 13px; color: #6b7280;">${companyProfile.company_email}</p>` : ''}
             </td>
           </tr>
 
           <tr>
-            <td style="background-color: #1a1a1a; background-image: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ Powered by ElecMate</p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical contracting tools</p>
+            <td style="padding: 16px 24px; text-align: center;">
+              <p style="margin: 0; font-size: 11px; color: #9ca3af;">Sent via Elec-Mate</p>
             </td>
           </tr>
 
@@ -713,7 +712,7 @@ const handler = async (req: Request): Promise<Response> => {
           content: pdfBase64,
         },
       ];
-      console.log('📎 Invoice PDF attached');
+      console.log('Invoice PDF attached');
     }
 
     // Check for linked certificate PDF (when invoice was created from EICR/EIC/Minor Works)
@@ -748,7 +747,7 @@ const handler = async (req: Request): Promise<Response> => {
           });
 
           console.log(
-            `📎 Certificate PDF attached: ${certFilename} (${certPdfArrayBuffer.byteLength} bytes)`
+            `Certificate PDF attached: ${certFilename} (${certPdfArrayBuffer.byteLength} bytes)`
           );
         } else {
           console.warn('⚠️ Failed to download certificate PDF, continuing without it');

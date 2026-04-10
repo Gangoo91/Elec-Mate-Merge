@@ -203,7 +203,7 @@ function generateConfirmationEmailHTML(firstName: string, confirmLink: string): 
                           </v:roundrect>
                           <![endif]-->
                           <!--[if !mso]><!-->
-                          <a href="${confirmLink}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #0a0a0a; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 12px; text-align: center;">
+                          <a href="${confirmLink}" style="display: block; padding: 18px 32px; background: #FFD700; color: #0a0a0a; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 12px; text-align: center;">
                             Confirm Email Address
                           </a>
                           <!--<![endif]-->

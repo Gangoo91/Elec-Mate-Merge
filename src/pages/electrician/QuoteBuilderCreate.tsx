@@ -2,14 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { storageGetJSONSync, storageRemoveSync } from '@/utils/storage';
-import {
-  CheckCircle,
-  ArrowLeft,
-  FileText,
-  ClipboardCheck,
-  Package,
-  FolderOpen,
-} from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useState, useEffect } from 'react';
@@ -256,95 +249,55 @@ const QuoteBuilderCreate = () => {
           </div>
         </header>
 
-        {/* Cost Engineer Banner */}
+        {/* Context banners — no icon circles, clean inline */}
         {costContext && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20"
+            className="mx-4 mt-4 px-4 py-3 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/15"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
-              <CheckCircle className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[15px] font-medium text-emerald-400">Cost Data Imported</p>
-              <p className="text-[13px] text-white">
-                {costContext.materials?.length || 0} materials pre-filled
-              </p>
-            </div>
+            <p className="text-[13px] font-semibold text-emerald-400">Cost Data Imported</p>
+            <p className="text-[12px] text-white mt-0.5">{costContext.materials?.length || 0} materials pre-filled</p>
           </motion.div>
         )}
-
-        {/* Certificate Data Banner */}
         {certificateContext && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20"
+            className="mx-4 mt-4 px-4 py-3 rounded-xl bg-blue-500/[0.06] border border-blue-500/15"
           >
-            <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
-              <ClipboardCheck className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[15px] font-medium text-blue-400">Certificate Data Imported</p>
-              <p className="text-[13px] text-white">Client details pre-filled from certificate</p>
-            </div>
+            <p className="text-[13px] font-semibold text-blue-400">Certificate Data Imported</p>
+            <p className="text-[12px] text-white mt-0.5">Client details pre-filled from certificate</p>
           </motion.div>
         )}
-
-        {/* Site Visit Data Banner */}
         {siteVisitContext && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20"
+            className="mx-4 mt-4 px-4 py-3 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/15"
           >
-            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
-              <ClipboardCheck className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[15px] font-medium text-emerald-400">Imported from Site Visit</p>
-              <p className="text-[13px] text-white">Client details and scope pre-filled</p>
-            </div>
+            <p className="text-[13px] font-semibold text-emerald-400">Imported from Site Visit</p>
+            <p className="text-[12px] text-white mt-0.5">Client details and scope pre-filled</p>
           </motion.div>
         )}
-
-        {/* Project Data Banner */}
         {projectContext?.client && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/20"
+            className="mx-4 mt-4 px-4 py-3 rounded-xl bg-purple-500/[0.06] border border-purple-500/15"
           >
-            <div className="w-10 h-10 rounded-xl bg-purple-500 flex items-center justify-center flex-shrink-0">
-              <FolderOpen className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[15px] font-medium text-purple-400">Imported from Project</p>
-              <p className="text-[13px] text-white">Client &amp; job details pre-filled</p>
-            </div>
+            <p className="text-[13px] font-semibold text-purple-400">Imported from Project</p>
+            <p className="text-[12px] text-white mt-0.5">Client &amp; job details pre-filled</p>
           </motion.div>
         )}
-
-        {/* Materials Import Banner */}
         {materialsContext && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20"
+            className="mx-4 mt-4 px-4 py-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/15"
           >
-            <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center flex-shrink-0">
-              <Package className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[15px] font-medium text-amber-400">
-                Materials Imported from {materialsContext.sourceLabel}
-              </p>
-              <p className="text-[13px] text-white">
-                {materialsContext.materials.length}{' '}
-                {materialsContext.materials.length === 1 ? 'item' : 'items'} pre-filled
-              </p>
-            </div>
+            <p className="text-[13px] font-semibold text-amber-400">Materials Imported from {materialsContext.sourceLabel}</p>
+            <p className="text-[12px] text-white mt-0.5">{materialsContext.materials.length} {materialsContext.materials.length === 1 ? 'item' : 'items'} pre-filled</p>
           </motion.div>
         )}
 

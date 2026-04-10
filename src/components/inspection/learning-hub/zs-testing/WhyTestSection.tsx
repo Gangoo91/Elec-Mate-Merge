@@ -1,332 +1,254 @@
-import React from 'react';
-import {
-  AlertTriangle,
-  Shield,
-  Zap,
-  Clock,
-  Users,
-  TrendingUp,
-  Activity,
-  BookOpen,
-} from 'lucide-react';
+import { ArrowLeft, Zap, Shield, Clock, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
-const WhyTestSection = () => (
-  <div className="space-y-4 sm:space-y-6">
-    <div className="bg-red-500/10 border border-red-500/20 border-l-4 border-l-red-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-red-400">
-          Critical Life Safety Requirement
-        </h4>
-      </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
-        <div className="flex items-start gap-2">
-          <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-medium text-foreground">Automatic Disconnection of Supply (ADS)</p>
-            <p>
-              Ensures protective devices operate within required disconnection times to prevent
-              dangerous touch voltages persisting during earth faults. This is the primary method of
-              protection against electric shock in most installations.
-            </p>
-          </div>
-        </div>
-        <div className="flex items-start gap-2">
-          <Clock className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-medium text-foreground">Disconnection Time Compliance</p>
-            <p>
-              Verifies that MCBs and fuses will disconnect within 0.4s (socket outlets) or 5s (fixed
-              equipment) as required by BS 7671 Regulation 411.3.2. These times are based on
-              physiological research into safe shock duration limits.
-            </p>
-          </div>
-        </div>
-        <div className="flex items-start gap-2">
-          <Zap className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-medium text-foreground">Fault Current Adequacy</p>
-            <p>
-              Confirms sufficient fault current flows to operate protective devices reliably under
-              all installation conditions. Insufficient fault current means protective devices may
-              not operate at all, leaving dangerous voltages present indefinitely.
-            </p>
-          </div>
-        </div>
-        <div className="flex items-start gap-2">
-          <Users className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-medium text-foreground">Public Safety Assurance</p>
-            <p>
-              Protects users from electric shock by ensuring dangerous voltages cannot persist
-              during earth fault conditions. This protects both competent electrical workers and
-              members of the public who may come into contact with the installation.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
-    <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-blue-400">
-          The Physics of Earth Fault Loop Impedance
-        </h4>
-      </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
-        <div>
-          <p className="font-medium text-foreground">Understanding the complete fault path:</p>
-          <p className="ml-4">
-            • <strong>Source impedance (Ze):</strong> External supply network resistance
-          </p>
-          <p className="ml-4">
-            • <strong>Phase conductor (R1):</strong> Resistance from origin to fault point
-          </p>
-          <p className="ml-4">
-            • <strong>CPC resistance (R2):</strong> Return path through protective conductor
-          </p>
-          <p className="ml-4">
-            • <strong>Total loop (Zs):</strong> Ze + R1 + R2 (simplified for resistive circuits)
-          </p>
-        </div>
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">Ohm's Law Application:</p>
-          <div className="text-center text-lg font-mono text-blue-400 mb-2">
-            Fault Current (If) = Supply Voltage (U₀) ÷ Earth Fault Loop Impedance (Zs)
-          </div>
-          <p className="text-center text-sm">For UK single-phase: If = 230V ÷ Zs</p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Protective device operation requirements:</p>
-          <p className="ml-4">
-            • <strong>MCB magnetic operation:</strong> Typically 5-10 times rated current
-          </p>
-          <p className="ml-4">
-            • <strong>BS EN 60898 Type B MCB:</strong> 5 × In instantaneous trip
-          </p>
-          <p className="ml-4">
-            • <strong>BS EN 60898 Type C MCB:</strong> 10 × In instantaneous trip
-          </p>
-          <p className="ml-4">
-            • <strong>BS 88 fuses:</strong> Variable characteristics based on fuse rating
-          </p>
-        </div>
-      </div>
-    </div>
+interface Props {
+  onBack: () => void;
+}
 
-    <div className="bg-orange-500/10 border border-orange-500/20 border-l-4 border-l-orange-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-orange-400">
-          Disconnection Time Requirements Explained
-        </h4>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
-        <div className="bg-card rounded p-3">
-          <div className="text-orange-400 font-medium mb-2">Socket Outlet Circuits (0.4s max)</div>
-          <ul className="space-y-1">
-            <li>
-              • <strong>Reason:</strong> High accessibility and mobility risk
-            </li>
-            <li>• Portable appliances can be moved while plugged in</li>
-            <li>• Increased chance of simultaneous contact</li>
-            <li>• Wet conditions possible (kitchens, utility rooms)</li>
-            <li>• Hand-held equipment creates direct contact risk</li>
-            <li>• Children and untrained persons have access</li>
-          </ul>
-        </div>
-        <div className="bg-card rounded p-3">
-          <div className="text-orange-400 font-medium mb-2">Fixed Equipment Circuits (5s max)</div>
-          <ul className="space-y-1">
-            <li>
-              • <strong>Reason:</strong> Lower accessibility and contact probability
-            </li>
-            <li>• Equipment normally out of reach or enclosed</li>
-            <li>• Reduced likelihood of accidental contact</li>
-            <li>• More predictable installation conditions</li>
-            <li>• Typically only accessed by competent persons</li>
-            <li>• Fixed mounting reduces movement during faults</li>
-          </ul>
-        </div>
-      </div>
-      <div className="mt-4 space-y-3">
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
-          <p className="font-medium text-yellow-400 mb-2">Special Location Requirements:</p>
-          <p className="text-sm text-gray-300">
-            Bathrooms (Section 701), swimming pools (Section 702), construction sites (Section 704),
-            and other special locations typically require 0.4s disconnection for all circuits due to
-            increased shock risk from reduced body resistance in wet conditions or harsh
-            environments.
-          </p>
-        </div>
-        <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
-          <p className="font-medium text-purple-400 mb-2">Medical Locations (Section 710):</p>
-          <p className="text-sm text-gray-300">
-            Medical locations may require even shorter disconnection times or additional protective
-            measures such as medical IT systems, due to the critical nature of patient safety and
-            the presence of life-supporting equipment.
-          </p>
-        </div>
-      </div>
-    </div>
+const hazards = [
+  {
+    icon: Shield,
+    title: 'Automatic Disconnection of Supply (ADS)',
+    description: 'ADS is the primary method of protection against electric shock in most installations. When a fault occurs, the protective device must disconnect the supply fast enough to prevent dangerous touch voltages from persisting. Zs testing proves this will actually happen.',
+  },
+  {
+    icon: Clock,
+    title: 'Disconnection Time Compliance',
+    description: 'BS 7671 Reg 411.3.2 requires MCBs and fuses to disconnect within 0.4 seconds for socket outlet circuits and 5 seconds for fixed equipment circuits. These times are based on physiological research into the maximum duration a person can safely withstand electric shock.',
+  },
+  {
+    icon: Zap,
+    title: 'Fault Current Adequacy',
+    description: 'The fault current must be high enough to trip the protective device within the required time. If Zs is too high, the fault current (I = U₀ ÷ Zs) will be too low, and the device may take too long to operate — or may not operate at all, leaving dangerous voltages present indefinitely.',
+  },
+  {
+    icon: AlertTriangle,
+    title: 'Thermal Protection',
+    description: 'During a fault, current flows through the protective conductor and heats it rapidly. If Zs is too high and the device is slow to operate, the CPC can overheat, damaging insulation and creating fire risk. Reg 131.3 requires verification that earth faults cannot produce excessive thermal effects.',
+  },
+];
 
-    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <TrendingUp className="h-4 w-4 text-purple-400" />
-        <h4 className="font-medium text-purple-400">
-          Real-World Failure Scenarios and Consequences
-        </h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">
-            Scenario 1: High Zs = Inadequate Fault Current
-          </p>
-          <p className="mb-2">
-            A 32A Type B MCB protecting a ring final circuit requires 160A fault current for 0.4s
-            disconnection.
-          </p>
-          <p className="mb-2">If Zs = 2.0Ω (exceeds BS 7671 limit of 1.44Ω):</p>
-          <div className="ml-4 space-y-1">
-            <p className="text-red-400">
-              • Fault current = 230V ÷ 2.0Ω = 115A (insufficient for magnetic trip)
-            </p>
-            <p className="text-red-400">
-              • MCB relies on thermal trip - may take several seconds or minutes
-            </p>
-            <p className="text-red-400">
-              • Dangerous touch voltages persist during entire trip time
-            </p>
-            <p className="text-red-400">• Risk of electrocution, fire, or equipment damage</p>
-            <p className="text-red-400">• Potential for arc formation and consequential fire</p>
-          </div>
-        </div>
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">
-            Scenario 2: Acceptable Zs = Adequate Protection
-          </p>
-          <p className="mb-2">Same 32A MCB with compliant installation:</p>
-          <p className="mb-2">If Zs = 1.2Ω (within BS 7671 limit of 1.44Ω):</p>
-          <div className="ml-4 space-y-1">
-            <p className="text-green-400">
-              • Fault current = 230V ÷ 1.2Ω = 192A (exceeds 160A magnetic trip threshold)
-            </p>
-            <p className="text-green-400">• MCB trips magnetically in &lt;0.4s reliably</p>
-            <p className="text-green-400">• Touch voltages limited to safe levels and duration</p>
-            <p className="text-green-400">• Full protection achieved as per BS 7671 requirements</p>
-            <p className="text-green-400">• Installation safe for normal use</p>
-          </div>
-        </div>
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">Scenario 3: Marginal Zs Values</p>
-          <p className="mb-2">When Zs approaches but doesn't exceed limits:</p>
-          <div className="ml-4 space-y-1">
-            <p className="text-yellow-400">• Protection may be unreliable under all conditions</p>
-            <p className="text-yellow-400">• Voltage variations may affect fault current</p>
-            <p className="text-yellow-400">• Temperature changes affect conductor resistance</p>
-            <p className="text-yellow-400">
-              • Consider remedial action even if technically compliant
-            </p>
-            <p className="text-yellow-400">• Document concerns for future reference</p>
-          </div>
-        </div>
-      </div>
-    </div>
+const whatIsZs = [
+  { component: 'Supply transformer winding impedance', detail: 'The internal impedance of the DNO transformer' },
+  { component: 'Line conductor resistance (R1)', detail: 'From the transformer to the point of the fault' },
+  { component: 'Protective conductor resistance (R2)', detail: 'The CPC from the fault point back to the main earthing terminal' },
+  { component: 'Earthing conductor and arrangement', detail: 'The return path — depends on TN-S, TN-C-S or TT system type' },
+];
 
-    <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <BookOpen className="h-4 w-4 text-green-400" />
-        <h4 className="font-medium text-green-400">Legal and Regulatory Framework</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">Primary legislation and standards:</p>
-          <p className="ml-4">
-            • <strong>BS 7671 Regulation 612.9:</strong> Mandatory test for verification of ADS
-          </p>
-          <p className="ml-4">
-            • <strong>BS 7671 Regulation 411.3:</strong> Requirements for automatic disconnection
-          </p>
-          <p className="ml-4">
-            • <strong>Electricity at Work Regulations 1989:</strong> Duty to maintain safe
-            electrical systems
-          </p>
-          <p className="ml-4">
-            • <strong>IET Guidance Note 3:</strong> Detailed inspection and testing procedures
-          </p>
-          <p className="ml-4">
-            • <strong>Health and Safety at Work Act 1974:</strong> General duty of care
-          </p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Professional and commercial implications:</p>
-          <p className="ml-4">
-            • <strong>Insurance requirements:</strong> Valid electrical certificates often mandatory
-          </p>
-          <p className="ml-4">
-            • <strong>Legal liability:</strong> Prosecution possible if accidents occur due to
-            non-compliance
-          </p>
-          <p className="ml-4">
-            • <strong>Professional responsibility:</strong> Competent persons must ensure compliance
-          </p>
-          <p className="ml-4">
-            • <strong>Building regulations:</strong> Part P compliance in domestic premises
-          </p>
-          <p className="ml-4">
-            • <strong>Landlord obligations:</strong> Electrical safety certificates required
-          </p>
-        </div>
-        <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
-          <p className="font-medium text-red-400 mb-2">Consequences of Non-Compliance:</p>
-          <div className="space-y-1 text-sm">
-            <p>• Criminal prosecution under Electricity at Work Regulations</p>
-            <p>• Unlimited fines for corporate offences</p>
-            <p>• Personal prosecution of responsible individuals</p>
-            <p>• Professional body disciplinary action</p>
-            <p>• Insurance claim refusal</p>
-            <p>• Premises closure orders</p>
+const systemTypes = [
+  { system: 'TN-S', path: 'Fault current returns via the metallic sheath of the supply cable. Typically low Ze (0.35-0.8Ω). Most reliable earth path.', typical: '0.35-0.8Ω' },
+  { system: 'TN-C-S (PME)', path: 'Fault current returns via the combined neutral/earth (PEN) conductor. Typically very low Ze (0.2-0.35Ω). Lowest impedance but PME risks apply.', typical: '0.2-0.35Ω' },
+  { system: 'TT', path: 'Fault current returns via the earth electrode into the ground. High Ze means RCDs are essential — overcurrent devices alone cannot provide adequate disconnection.', typical: '2-200Ω+' },
+];
+
+const realWorldExamples = [
+  {
+    title: 'Kitchen Ring — High Zs at Furthest Socket',
+    fault: 'Measured Zs of 1.85Ω at the furthest socket on a 32A Type B ring circuit',
+    consequence: 'Maximum permitted Zs is 1.37Ω (BS 7671). At 1.85Ω, fault current = 230/1.85 = 124A. A 32A Type B MCB needs 160A to trip in 0.4s. The MCB would take much longer to trip — potentially leaving the socket energised during a fault.',
+    resolution: 'Investigation found a loose CPC connection at a junction box. Re-terminated and re-tested at 0.92Ω — within limits.',
+  },
+  {
+    title: 'Shower Circuit — Undersized CPC',
+    fault: 'Measured Zs of 2.8Ω on a 40A Type B shower circuit (max permitted 1.09Ω)',
+    consequence: 'Fault current only 82A — MCB requires 200A for 0.4s trip. Shower could become live during a fault with no automatic disconnection for several seconds.',
+    resolution: 'CPC was 1.5mm² on a long cable run. Upgraded to 4mm² CPC. Re-tested at 0.78Ω — compliant.',
+  },
+];
+
+const WhyTestSection = ({ onBack }: Props) => {
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">Why Test Zs?</h1>
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Shield className="h-4 w-4 text-cyan-400" />
-        <h4 className="font-medium text-cyan-400">Additional Protection Methods</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">When Zs limits cannot be met:</p>
-          <p className="ml-4">
-            • <strong>RCD protection:</strong> 30mA RCDs provide additional shock protection
-          </p>
-          <p className="ml-4">
-            • <strong>Supplementary bonding:</strong> In special locations where required
-          </p>
-          <p className="ml-4">
-            • <strong>SELV/PELV systems:</strong> Safety extra-low voltage applications
-          </p>
-          <p className="ml-4">
-            • <strong>Class II equipment:</strong> Double or reinforced insulation
-          </p>
-          <p className="ml-4">
-            • <strong>Electrical separation:</strong> Isolating transformer systems
-          </p>
-        </div>
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
-          <p className="font-medium text-yellow-400 mb-2">RCD Limitation:</p>
-          <p className="text-sm text-gray-300">
-            RCDs provide additional protection but cannot replace the requirement for ADS
-            compliance. They protect against earth leakage currents but may not operate for
-            phase-to-phase or phase-to-neutral faults.
-          </p>
-        </div>
-      </div>
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <p className="text-sm text-white leading-relaxed">
+              Earth fault loop impedance (Zs) testing verifies that the complete fault current path has low enough impedance to ensure protective devices disconnect within the required time during an earth fault. Without this test, there is no guarantee that ADS will work.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* What is Zs */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Is Zs?</p>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-xs font-bold text-yellow-400 bg-yellow-400/20 px-2 py-0.5 rounded-lg">Reg 134.2.2</span>
+            </div>
+            <p className="text-sm text-white leading-relaxed mb-3">
+              Zs is the total impedance of the earth fault loop — from the point of the fault, through the protective conductor, earthing arrangement, transformer winding and line conductor back to the fault point.
+            </p>
+            <div className="space-y-2">
+              {whatIsZs.map((item, i) => (
+                <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.05] p-3">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                    <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-white">{item.component}</p>
+                    <p className="text-sm text-white/70">{item.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 rounded-xl bg-white/[0.05] p-3">
+              <p className="text-sm text-white"><span className="font-semibold text-yellow-400">Key formula:</span> Fault current I = U₀ ÷ Zs (where U₀ = 230V). Lower Zs = higher fault current = faster disconnection.</p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Why it matters */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Why It Matters</p>
+        </motion.div>
+
+        {hazards.map((hazard, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <hazard.icon className="h-5 w-5 text-yellow-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white">{hazard.title}</p>
+                  <p className="text-sm text-white mt-1 leading-relaxed">{hazard.description}</p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+
+        {/* System types */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Zs by Earthing System</p>
+        </motion.div>
+
+        {systemTypes.map((sys, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-sm font-semibold text-white">{sys.system}</p>
+                <span className="text-xs font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">Ze: {sys.typical}</span>
+              </div>
+              <p className="text-sm text-white leading-relaxed">{sys.path}</p>
+            </div>
+          </motion.div>
+        ))}
+
+        {/* TT System — special consideration */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+            <p className="text-sm font-semibold text-white mb-2">TT Systems — Why RCDs Are Essential</p>
+            <p className="text-sm text-white leading-relaxed mb-3">
+              In TT systems, the fault current returns through the earth electrode and ground — a high-impedance path. The loop impedance is so high that MCBs and fuses cannot disconnect fast enough. RCDs must be used instead.
+            </p>
+            <div className="rounded-xl bg-white/[0.05] p-3 mb-3">
+              <p className="text-sm text-white"><span className="font-semibold text-yellow-400">TT Formula:</span> Ra ≤ U₀ ÷ IΔn</p>
+              <p className="text-sm text-white/70 mt-1">For a 30mA RCD: Ra ≤ 230 ÷ 0.03 = 7,667Ω. In practice, aim for Ra below 200Ω for service reliability.</p>
+            </div>
+            <div className="space-y-1.5">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">Earth electrode resistance must be low enough for the RCD to operate within required disconnection time</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">Electrode resistance varies seasonally — test in dry conditions for worst-case readings</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">Zs testing on TT systems confirms the RCD will see enough fault current to trip reliably</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Disconnection times detail */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <p className="text-sm font-semibold text-white mb-3">Disconnection Times — Reg 411.3.2</p>
+            <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-2">
+                <div className="rounded-xl bg-white/[0.05] p-3">
+                  <p className="text-xs text-white/60">Final circuits ≤63A (sockets)</p>
+                  <p className="text-lg font-bold text-white">0.4s</p>
+                  <p className="text-xs text-white/60">Maximum disconnection time</p>
+                </div>
+                <div className="rounded-xl bg-white/[0.05] p-3">
+                  <p className="text-xs text-white/60">Distribution circuits & fixed equipment</p>
+                  <p className="text-lg font-bold text-white">5s</p>
+                  <p className="text-xs text-white/60">Maximum disconnection time</p>
+                </div>
+              </div>
+              <div className="rounded-xl bg-white/[0.05] p-3">
+                <p className="text-sm text-white"><span className="font-semibold text-yellow-400">Important:</span> The 5-second time applies to distribution circuits and circuits supplying fixed equipment only. All socket outlet circuits and circuits likely to supply portable equipment must disconnect in 0.4 seconds.</p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Real-world examples */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Real-World Examples</p>
+        </motion.div>
+
+        {realWorldExamples.map((example, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+              <p className="text-sm font-semibold text-white">{example.title}</p>
+              <div className="space-y-2">
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                    <span className="text-xs font-bold text-yellow-400">F</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-white/60">Finding</p>
+                    <p className="text-sm text-white">{example.fault}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center">
+                    <span className="text-xs font-bold text-orange-400">C</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-white/60">Consequence</p>
+                    <p className="text-sm text-white">{example.consequence}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-green-400/10 border border-green-400/20 flex items-center justify-center">
+                    <span className="text-xs font-bold text-green-400">R</span>
+                  </div>
+                  <div>
+                    <p className="text-xs font-medium text-white/60">Resolution</p>
+                    <p className="text-sm text-white">{example.resolution}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
-  </div>
-);
+  );
+};
 
 export default WhyTestSection;

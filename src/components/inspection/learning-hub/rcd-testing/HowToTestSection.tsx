@@ -1,386 +1,183 @@
-import React from 'react';
-import {
-  TestTube2,
-  Zap,
-  AlertTriangle,
-  Clock,
-  CheckCircle2,
-  Settings,
-  Activity,
-} from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
-const HowToTestSection = () => (
-  <div className="space-y-4 sm:space-y-6">
-    <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <TestTube2 className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">
-          RCD Test Equipment and Setup
-        </h4>
-      </div>
-      <div className="space-y-3 text-xs sm:text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">Essential test equipment:</p>
-          <p className="ml-4">
-            • <strong>RCD tester:</strong> Calibrated instrument capable of injecting precise test
-            currents
-          </p>
-          <p className="ml-4">
-            • <strong>Test leads:</strong> Appropriate leads for connection to RCD terminals or test
-            sockets
-          </p>
-          <p className="ml-4">
-            • <strong>Socket adaptors:</strong> For testing RCDs via socket outlets
-          </p>
-          <p className="ml-4">
-            • <strong>Voltage indicator:</strong> To verify supply presence and correct connection
-          </p>
-          <p className="ml-4">
-            • <strong>Calibration certificate:</strong> Ensure tester accuracy within ±5% or better
-          </p>
-        </div>
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">Pre-test verification checklist:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <p className="font-medium text-green-400">Tester preparation:</p>
-              <p>• Check battery condition and charge level</p>
-              <p>• Verify test lead continuity and insulation</p>
-              <p>• Confirm calibration certificate validity</p>
-              <p>• Function test on known working RCD</p>
-              <p>• Set correct test parameters for RCD type</p>
-            </div>
-            <div>
-              <p className="font-medium text-green-400">RCD preparation:</p>
-              <p>• Verify RCD rating and type (AC, A, B)</p>
-              <p>• Check physical condition for damage</p>
-              <p>• Ensure RCD is in ON position</p>
-              <p>• Test mechanical test button operation</p>
-              <p>• Note any downstream load conditions</p>
-            </div>
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
+
+interface Props {
+  onBack: () => void;
+}
+
+const equipment = [
+  { name: 'Calibrated RCD tester', detail: 'Capable of injecting 50%, 100% and 5× rated residual current. Must test at 0° and 180° phase angles. Accuracy ±5% or better.' },
+  { name: 'Socket adaptor (for plug-in testing)', detail: 'Plugs into socket outlet downstream of RCD. Quick, safe, and tests the complete circuit as installed.' },
+  { name: 'Test leads (for terminal testing)', detail: 'For testing at the distribution board or where socket access is not available. Connect between line and CPC.' },
+  { name: 'Proving unit', detail: 'To prove the tester before and after use. Mandatory — never skip this step.' },
+];
+
+const testSequence = [
+  { step: 'Test Button Check', detail: 'Press the mechanical \'T\' button on the RCD. It must trip immediately. If it fails, the RCD is faulty — do not proceed with electrical tests. Replace the RCD.', note: 'This confirms basic mechanical operation only — it does NOT verify electrical performance or trip timing.' },
+  { step: 'Connect Tester', detail: 'For socket testing: plug the RCD tester into a socket downstream of the RCD. For terminal testing: connect between line and CPC at the load side of the RCD.', note: 'Verify correct polarity and supply voltage (207-253V) before proceeding.' },
+  { step: '50% Test (Non-Trip)', detail: 'Apply 50% of rated tripping current (15mA for a 30mA RCD) for up to 2 seconds. The RCD must NOT trip. If it trips, the RCD is oversensitive — investigate background leakage or replace.', note: 'Record: PASS = no trip, FAIL = tripped.' },
+  { step: '100% Test (1×IΔn)', detail: 'Apply 100% of rated tripping current (30mA for a 30mA RCD). Test at both 0° and 180° phase angles. The RCD must trip within 300ms (general type) or 500ms (S-type). Record the worst-case (longest) trip time.', note: 'Typical healthy RCD trips in 20-40ms. Readings >200ms suggest deterioration.' },
+  { step: '5×IΔn Test (Additional Protection)', detail: 'Apply 5× rated current (150mA for a 30mA RCD). The RCD must trip within 40ms (general type) or 150ms (S-type). This is the critical test for personal protection — confirms fast disconnection at higher fault currents.', note: 'This test is mandatory where the RCD provides additional protection (Reg 411.3.3).' },
+  { step: 'Reset and Verify', detail: 'Reset the RCD after each test. Verify the protected circuits are restored and functioning normally. Record all results on the Schedule of Test Results.', note: 'Check that the RCD resets cleanly — difficulty resetting may indicate a genuine fault on the circuit.' },
+];
+
+const commonMistakes = [
+  { mistake: 'Testing with loads connected', fix: 'Connected equipment can cause false trips or provide leakage paths that affect results. Disconnect loads where practical, or note load conditions in the results.' },
+  { mistake: 'Only pressing the T button without instrument testing', fix: 'The T button checks mechanical operation only. It does not verify trip timing, sensitivity, or response to different fault currents. Calibrated instrument testing is essential.' },
+  { mistake: 'Not testing at both phase angles', fix: 'RCDs can be more sensitive at one phase angle than the other. Test at 0° and 180° and record the worst-case (longest) trip time. GN3 Section 2.6.18 requires this.' },
+  { mistake: 'Forgetting to notify occupants', fix: 'RCD testing causes power interruptions. Always notify building occupants before testing. Check for critical equipment — alarms, refrigeration, medical equipment, IT systems.' },
+  { mistake: 'Not proving the test instrument', fix: 'Prove the tester on a proving unit before and after every test session. An uncalibrated or faulty tester gives false confidence in results.' },
+  { mistake: 'Not recording device type (general vs S-type)', fix: 'S-type (time-delayed) RCDs have different acceptance criteria. If you apply general-type limits to an S-type, you will record false failures.' },
+];
+
+const HowToTestSection = ({ onBack }: Props) => {
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">How to Test</h1>
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="bg-blue-500/10 border border-blue-500/20 border-l-4 border-l-blue-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-blue-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-blue-400">
-          Standard RCD Testing Procedure
-        </h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">Step 1: Test Button Verification</p>
-          <p className="ml-4">• Press the mechanical test button on the RCD</p>
-          <p className="ml-4">• RCD should trip immediately (contacts open)</p>
-          <p className="ml-4">• If test button fails to trip RCD, do not proceed - RCD is faulty</p>
-          <p className="ml-4">• Reset RCD after successful test button operation</p>
-          <p className="ml-4">
-            • This confirms basic mechanical operation but not electrical performance
-          </p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Step 2: Connection and Safety Checks</p>
-          <p className="ml-4">
-            • <strong>Socket testing:</strong> Insert RCD tester plug into socket downstream of RCD
-          </p>
-          <p className="ml-4">
-            • <strong>Terminal testing:</strong> Connect between phase and earth at appropriate test
-            point
-          </p>
-          <p className="ml-4">
-            • <strong>Polarity check:</strong> Verify correct phase/neutral connections
-          </p>
-          <p className="ml-4">
-            • <strong>Supply voltage:</strong> Confirm voltage is within ±10% of nominal (207-253V)
-          </p>
-          <p className="ml-4">
-            • <strong>Load conditions:</strong> Note any significant loads that remain connected
-          </p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">
-            Step 3: Half-Rated Current Test (Non-Trip Test)
-          </p>
-          <p className="ml-4">• Apply 50% of rated tripping current (15mA for 30mA RCD)</p>
-          <p className="ml-4">• RCD should NOT trip at this current level</p>
-          <p className="ml-4">• Apply test current for maximum 2 seconds</p>
-          <p className="ml-4">
-            • If RCD trips at half-rated current, it is too sensitive and requires investigation
-          </p>
-          <p className="ml-4">• Record result as PASS (no trip) or FAIL (tripped)</p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Step 4: Rated Current Test (Trip Test)</p>
-          <p className="ml-4">• Apply 100% of rated tripping current (30mA for 30mA RCD)</p>
-          <p className="ml-4">• RCD must trip within 300ms for general type, 500ms for S-type</p>
-          <p className="ml-4">• Test at both 0° and 180° phase angles (GN3 Section 2.6.18)</p>
-          <p className="ml-4">• Record the worst-case (longest) trip time from both tests</p>
-          <p className="ml-4">• Typical trip times should be 20-40ms for healthy RCDs</p>
-          <p className="ml-4">• Reset RCD after test and verify normal operation</p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">
-            Step 5: Five Times Rated Current Test (Fast Trip)
-          </p>
-          <p className="ml-4">• Apply 5× rated tripping current (150mA for 30mA RCD)</p>
-          <p className="ml-4">• RCD must trip within 40ms maximum</p>
-          <p className="ml-4">• This tests the RCD's response to higher fault currents</p>
-          <p className="ml-4">• Record actual trip time - should be &lt;40ms</p>
-          <p className="ml-4">• Essential test for personal protection verification</p>
-        </div>
-      </div>
-    </div>
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
+        {/* Equipment */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Test Equipment</p>
+          <div className="space-y-2">
+            {equipment.map((item, i) => (
+              <div key={i} className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-white">{item.name}</p>
+                  <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
-    <div className="bg-orange-500/10 border border-orange-500/20 border-l-4 border-l-orange-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <Settings className="h-5 w-5 sm:h-6 sm:w-6 text-orange-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-orange-400">
-          Testing Different RCD Types
-        </h4>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
-        <div className="bg-card rounded p-3">
-          <div className="text-orange-400 font-medium mb-2">Type AC RCDs</div>
-          <ul className="space-y-1">
-            <li>• Test at 0° and 180° phase angles</li>
-            <li>• Both positive and negative half-cycles</li>
-            <li>• Standard test procedure applies</li>
-            <li>• Most common residential type</li>
-            <li>• May not detect pulsating DC faults</li>
-          </ul>
-        </div>
-        <div className="bg-card rounded p-3">
-          <div className="text-orange-400 font-medium mb-2">Type A RCDs</div>
-          <ul className="space-y-1">
-            <li>• Test with AC and pulsating DC</li>
-            <li>• Additional pulsating DC test required</li>
-            <li>• Test at 0° and 90° for pulsating DC</li>
-            <li>• Essential for modern electronic loads</li>
-            <li>• Higher specification than Type AC</li>
-          </ul>
-        </div>
-        <div className="bg-card rounded p-3">
-          <div className="text-orange-400 font-medium mb-2">Type B RCDs</div>
-          <ul className="space-y-1">
-            <li>• AC, pulsating DC, and smooth DC tests</li>
-            <li>• Complex test procedures required</li>
-            <li>• Specialist test equipment needed</li>
-            <li>• Required for EV charging points</li>
-            <li>• Most comprehensive protection</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+        {/* Test sequence */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Test Sequence (6 Steps)</p>
+        </motion.div>
 
-    <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Clock className="h-4 w-4 text-yellow-400" />
-        <h4 className="font-medium text-yellow-400">RCD Test Results and Acceptance Criteria</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">Pass/Fail Criteria Summary:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="font-medium text-green-400 mb-1">Test 1 - Half Rated Current (×0.5):</p>
-              <p>• RCD must NOT trip</p>
-              <p>• Duration: Up to 2 seconds</p>
-              <p>• 15mA for 30mA RCD</p>
-              <p>• Confirms RCD isn't over-sensitive</p>
+        {testSequence.map((item, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
+                </div>
+                <p className="text-sm font-semibold text-white">{item.step}</p>
+              </div>
+              <p className="text-sm text-white leading-relaxed pl-11">{item.detail}</p>
+              <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-2.5 ml-11">
+                <p className="text-xs text-yellow-400/80">{item.note}</p>
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-green-400 mb-1">Test 2 - Rated Current (×1):</p>
-              <p>• RCD must trip within 300ms</p>
-              <p>• 30mA for 30mA RCD</p>
-              <p>• Typical: 20-40ms for healthy RCD</p>
-              <p>• Core functional test</p>
+          </motion.div>
+        ))}
+
+        {/* Discrimination testing */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+            <p className="text-sm font-semibold text-white mb-2">Testing RCDs in Series (Discrimination)</p>
+            <p className="text-sm text-white leading-relaxed mb-3">
+              When RCDs are installed in series (e.g., main RCCB + downstream RCBO), test the downstream device first. If both trip during testing, discrimination has failed — the upstream device should be S-type (time-delayed) to allow the downstream device to trip first.
+            </p>
+            <div className="space-y-1.5">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">Test downstream RCDs/RCBOs first — they should trip independently</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">If the upstream RCCB also trips, discrimination is inadequate — upgrade upstream to S-type</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">S-type upstream RCD has intentional time delay (500ms at 1×IΔn, 150ms at 5×IΔn)</p>
+              </div>
             </div>
           </div>
-          <div className="mt-4">
-            <p className="font-medium text-green-400 mb-1">
-              Test 3 - Five Times Rated Current (×5):
-            </p>
-            <p>• General type: must trip within 40ms maximum</p>
-            <p>• S-type: must trip within 150ms maximum</p>
-            <p>• 150mA for 30mA RCD</p>
-            <p>• Tests fast response to higher currents</p>
-            <p>• Critical for shock protection verification</p>
-          </div>
-          <div className="mt-4 bg-blue-500/10 border border-blue-500/20 rounded p-3">
-            <p className="font-medium text-blue-400 mb-1">
-              S-Type (Time Delayed) RCD Acceptance Criteria:
-            </p>
-            <p>• At ½×IΔn: must NOT trip</p>
-            <p>• At 1×IΔn: max 500ms (vs 300ms for general type)</p>
-            <p>• At 5×IΔn: max 150ms (vs 40ms for general type)</p>
-            <p className="text-blue-300 mt-1">Ref: GN3 Table 2.17 — Tests for RCDs</p>
-          </div>
-        </div>
-        <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
-          <p className="font-medium text-red-400 mb-2">Failure Indicators:</p>
-          <div className="space-y-1 text-sm">
-            <p>
-              • <strong>No trip at rated current:</strong> RCD completely failed
-            </p>
-            <p>
-              • <strong>Trip time {'>'}300ms at rated current:</strong> RCD too slow
-            </p>
-            <p>
-              • <strong>Trip time {'>'}40ms at 5× rated current (general) or {'>'}150ms (S-type):</strong>{' '}
-              Inadequate fast response
-            </p>
-            <p>
-              • <strong>Trip at half rated current:</strong> RCD too sensitive
-            </p>
-            <p>
-              • <strong>Test button doesn't operate RCD:</strong> Mechanical failure
-            </p>
-            <p>
-              • <strong>Inconsistent results:</strong> Intermittent fault present
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
 
-    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Zap className="h-4 w-4 text-purple-400" />
-        <h4 className="font-medium text-purple-400">Advanced Testing Techniques</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">Phase angle testing for Type AC RCDs:</p>
-          <p className="ml-4">• Test at 0° phase angle (current peak aligns with voltage peak)</p>
-          <p className="ml-4">• Test at 180° phase angle (current peak opposite to voltage peak)</p>
-          <p className="ml-4">
-            • Both tests must pass - some RCDs more sensitive at specific angles
-          </p>
-          <p className="ml-4">• Record worst-case (longest) trip time from both tests</p>
-          <p className="ml-4">
-            • Phase angle affects magnetic field strength in toroidal transformer
-          </p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Ramp testing capability:</p>
-          <p className="ml-4">• Gradually increase current until RCD trips</p>
-          <p className="ml-4">• Determines exact trip threshold of the RCD</p>
-          <p className="ml-4">• Should trip between 50% and 100% of rated current</p>
-          <p className="ml-4">• Useful for investigating marginal or suspect RCDs</p>
-          <p className="ml-4">• Helps identify drift in RCD sensitivity over time</p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Loop impedance during RCD testing:</p>
-          <p className="ml-4">• Some testers can measure loop impedance without tripping RCD</p>
-          <p className="ml-4">• Uses very low test current (&lt;15mA) to avoid RCD operation</p>
-          <p className="ml-4">
-            • Allows verification of earth path integrity on RCD-protected circuits
-          </p>
-          <p className="ml-4">
-            • Essential for confirming both RCD and ADS protection are adequate
-          </p>
-        </div>
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
-          <p className="font-medium text-blue-400 mb-2">Testing RCDs in Series (Discrimination):</p>
-          <p className="text-sm text-gray-300">
-            When RCDs are installed in series (e.g., main RCD + RCBO), test the downstream device
-            first. If both trip during testing, check for correct discrimination. Time-delayed
-            (S-type) RCDs upstream should allow downstream RCDs to operate first.
-          </p>
-        </div>
-      </div>
-    </div>
+        {/* Common mistakes */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Mistakes to Avoid</p>
+        </motion.div>
 
-    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <AlertTriangle className="h-4 w-4 text-red-400" />
-        <h4 className="font-medium text-red-400">Safety Considerations During Testing</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">Personal safety precautions:</p>
-          <p className="ml-4">• Use appropriate PPE including insulated gloves</p>
-          <p className="ml-4">
-            • Ensure test equipment is properly calibrated and in good condition
-          </p>
-          <p className="ml-4">• Never bypass or disable RCD protection unnecessarily</p>
-          <p className="ml-4">• Be aware that loads downstream will lose power during testing</p>
-          <p className="ml-4">
-            • Consider impact on critical systems (alarms, refrigeration, etc.)
-          </p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Equipment protection:</p>
-          <p className="ml-4">• Warn users that power interruption will occur during testing</p>
-          <p className="ml-4">• Check for sensitive electronic equipment on protected circuits</p>
-          <p className="ml-4">• Consider testing during off-peak hours to minimise disruption</p>
-          <p className="ml-4">• Ensure UPS systems are functioning for critical loads</p>
-          <p className="ml-4">• Document any equipment that cannot tolerate power interruption</p>
-        </div>
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
-          <p className="font-medium text-yellow-400 mb-2">Testing in Special Locations:</p>
-          <p className="text-sm text-gray-300">
-            Extra care required when testing RCDs protecting special locations (bathrooms, swimming
-            pools, medical areas). Ensure alternative safety measures are in place during testing,
-            and restore protection immediately after testing. Consider increased testing frequency
-            in harsh environments.
-          </p>
-        </div>
-      </div>
-    </div>
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="space-y-3">
+              {commonMistakes.map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center mt-0.5">
+                    <span className="text-xs font-bold text-orange-400">{i + 1}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-white">{item.mistake}</p>
+                    <p className="text-sm text-white/70 mt-0.5">{item.fix}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
 
-    <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <CheckCircle2 className="h-4 w-4 text-cyan-400" />
-        <h4 className="font-medium text-cyan-400">Documentation and Record Keeping</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">Essential information to record:</p>
-          <p className="ml-4">
-            • <strong>RCD details:</strong> Rating, type, manufacturer, and location
-          </p>
-          <p className="ml-4">
-            • <strong>Test results:</strong> Trip times for each test current level
-          </p>
-          <p className="ml-4">
-            • <strong>Test conditions:</strong> Supply voltage, ambient temperature, load conditions
-          </p>
-          <p className="ml-4">
-            • <strong>Equipment used:</strong> Tester model and calibration details
-          </p>
-          <p className="ml-4">
-            • <strong>Test outcome:</strong> Pass/fail status and any recommendations
-          </p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Standard test form entries:</p>
-          <p className="ml-4">• RCD rating and type (e.g., 30mA Type A)</p>
-          <p className="ml-4">• Test button operation: Satisfactory/Unsatisfactory</p>
-          <p className="ml-4">
-            • Trip time at IΔn (rated current): ___ms (max 300ms general, 500ms S-type)
-          </p>
-          <p className="ml-4">
-            • Trip time at 5×IΔn: ___ms (max 40ms general, 150ms S-type)
-          </p>
-          <p className="ml-4">• Non-trip at 0.5×IΔn: Pass/Fail</p>
-          <p className="ml-4">• Overall assessment: Satisfactory/Unsatisfactory</p>
-        </div>
-        <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
-          <p className="font-medium text-green-400 mb-2">Quality Assurance:</p>
-          <p className="text-sm text-gray-300">
-            Cross-reference RCD test results with circuit details and previous test records. Look
-            for trends in trip times that might indicate deteriorating performance. Fast trip times
-            (&lt;10ms) may indicate an oversensitive RCD, while slower times ({'>'}100ms) suggest
-            deterioration.
-          </p>
-        </div>
-      </div>
+        {/* Three-phase RCD testing */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Testing Three-Phase RCDs</p>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <p className="text-sm text-white leading-relaxed">
+              Three-phase RCDs sense all live conductors through the toroidal transformer. Standard practice is to test on one pole (L1 to CPC), but additional pole testing can detect counterfeit or faulty devices.
+            </p>
+            <div className="space-y-2">
+              {[
+                { step: 'Perform standard RCD tests (0.5×, 1×, 5× IΔn) using L1 to CPC as the test connection', note: 'If all tests pass on L1, the device is functioning correctly for most purposes.' },
+                { step: 'If any doubt about the device, or if results seem inconsistent — repeat the same tests on L2 and L3', note: 'Genuine RCDs should perform identically on all poles. The sensing covers all live conductors.' },
+                { step: 'Compare trip times across all three poles', note: 'Little or no discernible difference should exist. If one pole fails while others pass, the device is faulty.' },
+                { step: 'If results differ significantly between poles — remove and replace the unit', note: 'Inconsistent pole performance is a strong indicator of a counterfeit device or internal defect.' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
+                  <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                    <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
+                  </div>
+                  <div>
+                    <p className="text-sm text-white">{item.step}</p>
+                    <p className="text-xs text-yellow-400/80 mt-1">{item.note}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4">
+            <p className="text-sm font-semibold text-white mb-2">Counterfeit RCD Detection</p>
+            <p className="text-sm text-white leading-relaxed">
+              Counterfeit RCDs are a growing problem in the UK market. They may pass basic single-pole testing but fail on other poles. If you encounter a device with inconsistent results across poles, record serial numbers, remove the device, and report to Trading Standards. Never leave a suspect device in service.
+            </p>
+          </div>
+        </motion.div>
+      </motion.div>
     </div>
-  </div>
-);
+  );
+};
 
 export default HowToTestSection;

@@ -112,12 +112,6 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
     setShowAutocomplete(false);
 
     try {
-      console.log('🔍 Fuzzy searching 43k materials:', {
-        query: queryToSearch,
-        selectedCategory,
-        selectedSupplier,
-      });
-
       const { data, error: functionError } = await supabase.functions.invoke(
         'search-materials-fast',
         {
@@ -134,8 +128,6 @@ export const IntelligentMaterialSearch = ({ onAddToQuote }: IntelligentMaterialS
         console.error('❌ Fuzzy search error:', functionError);
         throw new Error(functionError.message);
       }
-
-      console.log('✅ Fuzzy search results:', data);
 
       if (data?.materials && data.materials.length > 0) {
         setSearchResults(data.materials);

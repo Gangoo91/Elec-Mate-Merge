@@ -1,4 +1,4 @@
-import { ChevronRight, Trash2, Check, Pencil } from 'lucide-react';
+import { Trash2, Check, Pencil } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
 import { format, differenceInDays, isPast } from 'date-fns';
@@ -29,7 +29,6 @@ interface QuoteCardProps {
   onAccept?: () => void;
 }
 
-// Status → gradient accent (top 2px bar)
 function getStatusGradient(status: string, acceptanceStatus?: string, invoiced?: boolean): string {
   if (invoiced) return 'from-blue-500 via-blue-400 to-cyan-400';
   if (acceptanceStatus === 'accepted' || status === 'approved')
@@ -38,10 +37,9 @@ function getStatusGradient(status: string, acceptanceStatus?: string, invoiced?:
     return 'from-red-500 via-rose-400 to-pink-400';
   if (status === 'sent' || status === 'pending')
     return 'from-amber-500 via-amber-400 to-yellow-400';
-  return 'from-slate-400 via-slate-300 to-gray-400'; // draft
+  return 'from-elec-yellow/40 via-elec-yellow/20 to-amber-400/10';
 }
 
-// Status → badge style
 function getStatusBadge(
   status: string,
   acceptanceStatus?: string,
@@ -54,15 +52,7 @@ function getStatusBadge(
     return { label: 'DECLINED', style: 'bg-red-500/15 text-red-400' };
   if (status === 'sent' || status === 'pending')
     return { label: 'SENT', style: 'bg-amber-500/15 text-amber-400' };
-  return { label: 'DRAFT', style: 'bg-white/10 text-white' };
-}
-
-// CTA text by status
-function getCTAText(status: string, acceptanceStatus?: string, invoiced?: boolean): string {
-  if (invoiced) return 'View Invoice';
-  if (acceptanceStatus === 'accepted' || status === 'approved') return 'Convert to Invoice';
-  if (status === 'draft') return 'Continue Editing';
-  return 'View Quote';
+  return { label: 'DRAFT', style: 'bg-white/[0.08] text-white' };
 }
 
 function formatQuoteDate(date?: string | Date): string {
@@ -75,26 +65,15 @@ function formatQuoteDate(date?: string | Date): string {
 }
 
 export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCardProps) {
-  const statusBadge = getStatusBadge(
-    quote.status,
-    quote.acceptance_status,
-    quote.invoice_raised
-  );
-  const gradient = getStatusGradient(
-    quote.status,
-    quote.acceptance_status,
-    quote.invoice_raised
-  );
-  const ctaText = getCTAText(quote.status, quote.acceptance_status, quote.invoice_raised);
+  const statusBadge = getStatusBadge(quote.status, quote.acceptance_status, quote.invoice_raised);
+  const gradient = getStatusGradient(quote.status, quote.acceptance_status, quote.invoice_raised);
 
-  // Expiry
   const expiryDate = quote.expiryDate ? new Date(quote.expiryDate) : null;
   const daysUntilExpiry = expiryDate ? differenceInDays(expiryDate, new Date()) : null;
   const isExpired = expiryDate ? isPast(expiryDate) : false;
   const isExpiringSoon =
     daysUntilExpiry !== null && daysUntilExpiry >= 0 && daysUntilExpiry <= 7 && !isExpired;
 
-  // Can accept (swipe right action)
   const canAccept =
     (quote.status === 'sent' || quote.status === 'pending') &&
     quote.acceptance_status !== 'accepted' &&
@@ -106,18 +85,30 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
       onClick={onTap}
       className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation cursor-pointer"
     >
-      <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200 rounded-2xl">
+      <div className="group relative overflow-hidden active:scale-[0.98] transition-all duration-200 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
         {/* Gradient accent */}
-        <div
-          className={cn(
-            'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40 group-hover:opacity-100 transition-opacity duration-200',
-            gradient
-          )}
-        />
+        <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r', gradient)} />
 
         <div className="relative z-10 p-4">
-          {/* Row 1: Badges + date */}
-          <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+          {/* Row 1: Client name + Amount */}
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex-1 min-w-0">
+              <h3 className="text-[15px] font-semibold text-white leading-tight truncate">
+                {quote.client?.name || 'No client'}
+              </h3>
+              {quote.jobDetails?.title && (
+                <p className="mt-0.5 text-[12px] text-white leading-tight truncate">
+                  {quote.jobDetails.title}
+                </p>
+              )}
+            </div>
+            <p className="text-[20px] font-bold text-elec-yellow flex-shrink-0 tabular-nums leading-none">
+              £{quote.total?.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </p>
+          </div>
+
+          {/* Row 2: Badges */}
+          <div className="flex items-center gap-1.5 mt-2.5 flex-wrap">
             <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded', statusBadge.style)}>
               {statusBadge.label}
             </span>
@@ -128,7 +119,7 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
             )}
             {(quote.email_open_count ?? 0) > 0 && (
               <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/15 text-blue-400">
-                Viewed{(quote.email_open_count ?? 0) > 1 ? ` (${quote.email_open_count})` : ''}
+                Viewed{(quote.email_open_count ?? 0) > 1 ? ` ${quote.email_open_count}×` : ''}
               </span>
             )}
             {(quote.reminder_count ?? 0) > 0 && (
@@ -149,36 +140,6 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
             <span className="text-[11px] text-white ml-auto flex-shrink-0">
               {formatQuoteDate(quote.updatedAt || quote.createdAt)}
             </span>
-          </div>
-
-          {/* Row 2: Client name */}
-          <h3 className="text-[15px] font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors truncate">
-            {quote.client?.name || 'No client'}
-          </h3>
-
-          {/* Row 3: Job title */}
-          <p className="mt-0.5 text-[12px] text-white leading-tight truncate">
-            {quote.jobDetails?.title || 'No job title'}
-          </p>
-
-          {/* Row 4: Amount + expiry */}
-          <div className="flex items-center justify-between mt-2">
-            <span className="text-[15px] font-bold text-elec-yellow">
-              £{quote.total?.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-            </span>
-            {expiryDate && !isExpired && !quote.invoice_raised && (
-              <span className="text-[11px] text-white">
-                Expires {formatQuoteDate(expiryDate)}
-              </span>
-            )}
-          </div>
-
-          {/* Row 5: Footer CTA */}
-          <div className="flex items-center justify-between mt-3">
-            <span className="text-[11px] font-medium text-elec-yellow">{ctaText}</span>
-            <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-              <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-            </div>
           </div>
         </div>
       </div>

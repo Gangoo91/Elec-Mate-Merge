@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import TestingProceduresHeader from './testing-procedures/TestingProceduresHeader';
 import TestingProceduresGrid from './testing-procedures/TestingProceduresGrid';
 import TestProcedureWizard from './testing-procedures/TestProcedureWizard';
-import SafeIsolationCard from './safe-isolation/SafeIsolationCard';
-import CertificateGuideTab from './supplementary-testing/CertificateGuideTab';
-import ScheduleGuideTab from './supplementary-testing/ScheduleGuideTab';
+import SafeIsolationProcedure from './safe-isolation/SafeIsolationProcedure';
+import CertificateGuideProcedure from './supplementary-testing/CertificateGuideProcedure';
+import ScheduleGuideProcedure from './supplementary-testing/ScheduleGuideProcedure';
 import ContinuityTestingProcedure from './ContinuityTestingProcedure';
-import EnhancedInsulationResistanceTestCard from './EnhancedInsulationResistanceTestCard';
-import EnhancedPolarityTestCard from './EnhancedPolarityTestCard';
-import ZsTestCard from './ZsTestCard';
-import RcdTestCard from './RcdTestCard';
-import PfcTestCard from './PfcTestCard';
-import FunctionalTestCard from './FunctionalTestCard';
-import SupplementaryTestCard from './SupplementaryTestCard';
+import InsulationTestingProcedure from './insulation-testing/InsulationTestingProcedure';
+import PolarityTestingProcedure from './polarity-testing/PolarityTestingProcedure';
+import ZsTestingProcedure from './zs-testing/ZsTestingProcedure';
+import RcdTestingProcedure from './rcd-testing/RcdTestingProcedure';
+import PfcTestingProcedure from './pfc-testing/PfcTestingProcedure';
+import FunctionalTestingProcedure from './functional-testing/FunctionalTestingProcedure';
+import SupplementaryTestingProcedure from './supplementary-testing/SupplementaryTestingProcedure';
 import { testingProceduresData, TestingProcedure } from './testing-procedures/TestingProcedureData';
 
 interface TestingProceduresSectionProps {
@@ -93,17 +93,17 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
   };
 
   const procedureComponents = {
-    'safe-isolation': <SafeIsolationCard onBack={() => setCurrentView('grid')} />,
+    'safe-isolation': <SafeIsolationProcedure onBack={() => setCurrentView('grid')} />,
     'continuity-testing': <ContinuityTestingProcedure onBack={() => setCurrentView('grid')} />,
-    'insulation-resistance': <EnhancedInsulationResistanceTestCard />,
-    'polarity-testing': <EnhancedPolarityTestCard />,
-    'zs-testing': <ZsTestCard />,
-    'rcd-testing': <RcdTestCard />,
-    'functional-testing': <FunctionalTestCard />,
+    'insulation-resistance': <InsulationTestingProcedure onBack={() => setCurrentView('grid')} />,
+    'polarity-testing': <PolarityTestingProcedure onBack={() => setCurrentView('grid')} />,
+    'zs-testing': <ZsTestingProcedure onBack={() => setCurrentView('grid')} />,
+    'rcd-testing': <RcdTestingProcedure onBack={() => setCurrentView('grid')} />,
+    'functional-testing': <FunctionalTestingProcedure onBack={() => setCurrentView('grid')} />,
   };
 
   if (currentView === 'isolation') {
-    return <SafeIsolationCard onBack={handleBackToProcedures} />;
+    return <SafeIsolationProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'continuity') {
@@ -111,156 +111,39 @@ const TestingProceduresSection = ({ onBack }: TestingProceduresSectionProps) => 
   }
 
   if (currentView === 'insulation') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <EnhancedInsulationResistanceTestCard />
-      </div>
-    );
+    return <InsulationTestingProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'polarity') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <EnhancedPolarityTestCard />
-      </div>
-    );
+    return <PolarityTestingProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'zs') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <ZsTestCard />
-      </div>
-    );
+    return <ZsTestingProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'rcd') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <RcdTestCard />
-      </div>
-    );
+    return <RcdTestingProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'pfc') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <PfcTestCard />
-      </div>
-    );
+    return <PfcTestingProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'functional') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <FunctionalTestCard />
-      </div>
-    );
+    return <FunctionalTestingProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'supplementary') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <SupplementaryTestCard />
-      </div>
-    );
+    return <SupplementaryTestingProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'certificate-guide') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <CertificateGuideTab />
-      </div>
-    );
+    return <CertificateGuideProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'schedule-guide') {
-    return (
-      <div className="space-y-4 sm:space-y-6 md:space-y-8 px-3 sm:px-4">
-        <div className="flex items-center gap-2 sm:gap-4 mb-4 sm:mb-6 md:mb-8">
-          <button
-            onClick={handleBackToProcedures}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-card text-foreground rounded-lg hover:bg-muted transition-colors text-sm min-h-[44px] touch-manipulation"
-          >
-            ← <span className="hidden sm:inline">Back to Testing Procedures</span>
-            <span className="sm:hidden">Back</span>
-          </button>
-        </div>
-        <ScheduleGuideTab />
-      </div>
-    );
+    return <ScheduleGuideProcedure onBack={handleBackToProcedures} />;
   }
 
   if (currentView === 'procedure' && selectedProcedure) {

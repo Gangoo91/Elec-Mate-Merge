@@ -1,399 +1,180 @@
-import React from 'react';
-import {
-  AlertTriangle,
-  Shield,
-  Heart,
-  Clock,
-  Users,
-  TrendingUp,
-  Activity,
-  BookOpen,
-  Zap,
-} from 'lucide-react';
+import { ArrowLeft, Heart, Shield, Flame, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
-const WhyTestSection = () => (
-  <div className="space-y-4 sm:space-y-6">
-    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 sm:p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-red-400" />
-        <h4 className="font-medium text-sm sm:text-base text-red-400">
-          Critical Life-Saving Protection
-        </h4>
-      </div>
-      <div className="space-y-3 text-xs sm:text-sm text-gray-300">
-        <div className="flex items-start gap-2">
-          <Heart className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-medium text-foreground">Protection Against Fatal Electric Shock</p>
-            <p>
-              RCDs detect earth leakage currents as low as 30mA (or less) and must disconnect the
-              supply within 300ms at rated current, and within 40ms at higher fault currents (5×
-              rated). This is fast enough to prevent cardiac fibrillation in healthy adults, as the
-              human heart can typically withstand currents up to 50mA for short durations without
-              fatal consequences.
-            </p>
-          </div>
-        </div>
-        <div className="flex items-start gap-2">
-          <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-medium text-foreground">Fire Prevention</p>
-            <p>
-              Earth leakage currents can cause arcing and heating in damaged cables or loose
-              connections. RCDs prevent electrical fires by detecting these fault currents before
-              they reach dangerous levels that could ignite surrounding materials.
-            </p>
-          </div>
-        </div>
-        <div className="flex items-start gap-2">
-          <Users className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-medium text-foreground">
-              Enhanced Protection for Vulnerable Persons
-            </p>
-            <p>
-              Children, elderly, and people with medical conditions may be more susceptible to
-              electric shock. RCDs provide an additional layer of protection that doesn't rely on
-              the adequacy of earthing or the operation of overcurrent devices.
-            </p>
-          </div>
-        </div>
-        <div className="flex items-start gap-2">
-          <Zap className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
-          <div>
-            <p className="font-medium text-foreground">Detection of Insulation Breakdown</p>
-            <p>
-              RCDs can detect gradual deterioration of cable insulation, water ingress, or damage to
-              equipment before it becomes dangerous. This early warning capability helps prevent
-              accidents and equipment damage.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
-    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Activity className="h-4 w-4 text-blue-400" />
-        <h4 className="font-medium text-blue-400">The Science Behind RCD Operation</h4>
-      </div>
-      <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm text-gray-300 leading-relaxed">
-        <div>
-          <p className="font-medium text-foreground">Residual Current Detection Principle:</p>
-          <p className="ml-4">
-            • <strong>Balanced currents:</strong> In normal operation, current flowing out through
-            the phase conductor returns through the neutral
-          </p>
-          <p className="ml-4">
-            • <strong>Current imbalance:</strong> During an earth fault, some current flows to
-            earth, creating an imbalance
-          </p>
-          <p className="ml-4">
-            • <strong>Toroidal transformer:</strong> Detects the magnetic field difference caused by
-            unequal currents
-          </p>
-          <p className="ml-4">
-            • <strong>Trip mechanism:</strong> Amplified signal operates the trip relay to open the
-            contacts
-          </p>
-        </div>
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">
-            Physiological Response to Electric Current:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <p className="font-medium text-blue-400">Current Levels & Effects:</p>
-              <p>
-                • <strong>1mA:</strong> Barely perceptible
-              </p>
-              <p>
-                • <strong>5mA:</strong> Maximum safe current
-              </p>
-              <p>
-                • <strong>10-20mA:</strong> Muscular control lost
-              </p>
-              <p>
-                • <strong>30mA:</strong> Respiratory paralysis
-              </p>
-              <p>
-                • <strong>50mA:</strong> Ventricular fibrillation possible
-              </p>
-              <p>
-                • <strong>100mA+:</strong> Certain ventricular fibrillation
-              </p>
-            </div>
-            <div>
-              <p className="font-medium text-blue-400">Time/Current Relationship:</p>
-              <p>• Higher currents = less time to cause damage</p>
-              <p>• 30mA RCDs trip in ≤300ms at rated current, ≤40ms at 5×IΔn</p>
-              <p>• 100mA+ currents can cause fibrillation in &lt;200ms</p>
-              <p>• RCD protection prevents sustained contact</p>
-            </div>
+interface Props {
+  onBack: () => void;
+}
+
+const hazards = [
+  { icon: Heart, title: 'Protection Against Fatal Electric Shock', description: 'RCDs detect earth leakage currents as low as 30mA and disconnect within 300ms at rated current, and within 40ms at 5×IΔn. This is fast enough to prevent cardiac fibrillation — the human heart can typically withstand currents up to 50mA for short durations without fatal consequences.' },
+  { icon: Flame, title: 'Fire Prevention', description: 'Earth leakage currents cause arcing and heating in damaged cables or loose connections. RCDs detect these fault currents before they reach levels that could ignite surrounding materials. Electrical fires from insulation failure are a leading cause of building fires.' },
+  { icon: Shield, title: 'Enhanced Protection for Vulnerable Persons', description: 'Children, elderly, and people with medical conditions are more susceptible to electric shock. RCDs provide additional protection that does not rely on the adequacy of earthing or the operation of overcurrent devices.' },
+  { icon: Zap, title: 'Detection of Insulation Breakdown', description: 'RCDs detect gradual deterioration of cable insulation, water ingress, or equipment damage before it becomes dangerous. This early warning capability helps prevent accidents — a circuit with deteriorating insulation will trip the RCD before a person is harmed.' },
+];
+
+const howItWorks = [
+  { step: 'Balanced currents', detail: 'In normal operation, current flowing out through the line conductor returns through the neutral. The magnetic fields cancel in the toroidal transformer.' },
+  { step: 'Current imbalance', detail: 'During an earth fault, some current flows to earth instead of returning via the neutral. This creates a difference between line and neutral currents.' },
+  { step: 'Toroidal detection', detail: 'The RCD\'s toroidal transformer detects the magnetic field imbalance caused by unequal currents. Even a tiny difference (30mA) is detected.' },
+  { step: 'Trip mechanism', detail: 'The amplified signal from the transformer operates the trip relay, opening the contacts and disconnecting the supply within milliseconds.' },
+];
+
+const currentEffects = [
+  { current: '1mA', effect: 'Barely perceptible' },
+  { current: '5mA', effect: 'Maximum safe current — "let-go" threshold' },
+  { current: '10-20mA', effect: 'Muscular control lost — cannot release grip' },
+  { current: '30mA', effect: 'Respiratory paralysis — breathing stops' },
+  { current: '50mA', effect: 'Ventricular fibrillation possible' },
+  { current: '100mA+', effect: 'Certain ventricular fibrillation — almost always fatal' },
+];
+
+const failureScenarios = [
+  { title: 'Faulty Appliance — Damaged Cable', withRcd: 'User touches live casing, 30mA earth leakage detected, RCD trips in <40ms. Minimal shock sensation — user startled but unharmed.', withoutRcd: 'User receives sustained shock through body to earth. Potential cardiac arrest or muscular paralysis preventing release from the equipment.' },
+  { title: 'Bathroom — Water Ingress in Fitting', withRcd: 'Leakage current detected immediately, power disconnected before anyone enters the wet area. No risk to users.', withoutRcd: 'Wet conditions reduce body resistance dramatically. Shock severity increases. Potential electrocution in high-risk environment.' },
+  { title: 'Garden — Cable Cut by Mower', withRcd: 'RCD trips within milliseconds of cable damage. Brief flash, circuit dead. User receives minor tingle at most.', withoutRcd: 'Severed cable remains live. User holding metal mower handle in contact with earth — direct shock path through body. Potentially fatal.' },
+];
+
+const whyTestRegularly = [
+  'RCDs are mechanical devices with moving parts that can fail without warning',
+  'Unlike fuses or MCBs that visibly show when they have operated, a failed RCD appears normal but provides no protection',
+  'Internal components deteriorate with age, temperature cycling, and electrical stress',
+  'Contamination from dust, insects, or moisture can prevent the trip mechanism from operating',
+  'The only way to know an RCD is working is to test it — regular testing is the only guarantee of continued protection',
+];
+
+const WhyTestSection = ({ onBack }: Props) => {
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">Why Test RCDs?</h1>
           </div>
         </div>
       </div>
-    </div>
 
-    <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Clock className="h-4 w-4 text-orange-400" />
-        <h4 className="font-medium text-orange-400">RCD Types and Applications</h4>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-gray-300">
-        <div className="bg-card rounded p-3">
-          <div className="text-orange-400 font-medium mb-2">Type AC RCDs</div>
-          <ul className="space-y-1">
-            <li>• Detects AC residual currents only</li>
-            <li>• Most common and economical type</li>
-            <li>• Suitable for resistive and inductive loads</li>
-            <li>• Standard for most domestic applications</li>
-            <li>• May not detect all fault types with electronic equipment</li>
-          </ul>
-        </div>
-        <div className="bg-card rounded p-3">
-          <div className="text-orange-400 font-medium mb-2">Type A RCDs</div>
-          <ul className="space-y-1">
-            <li>• Detects AC and pulsating DC currents</li>
-            <li>• Required for equipment with electronic controls</li>
-            <li>• Washing machines, dishwashers, computers</li>
-            <li>• Variable speed drives and inverters</li>
-            <li>• Recommended for modern installations</li>
-          </ul>
-        </div>
-        <div className="bg-card rounded p-3">
-          <div className="text-orange-400 font-medium mb-2">Type B RCDs</div>
-          <ul className="space-y-1">
-            <li>• Detects AC, pulsating DC, and smooth DC</li>
-            <li>• Required for EV charging points</li>
-            <li>• Medical equipment applications</li>
-            <li>• Three-phase inverter equipment</li>
-            <li>• Photovoltaic installations</li>
-          </ul>
-        </div>
-      </div>
-      <div className="mt-4 space-y-3">
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
-          <p className="font-medium text-yellow-400 mb-2">Sensitivity Ratings:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
-            <div>
-              <p className="font-medium text-foreground">High Sensitivity (≤30mA):</p>
-              <p>• Personal protection against electric shock</p>
-              <p>• Socket outlets and portable equipment</p>
-              <p>• Bathrooms and special locations</p>
-              <p>• Required by BS 7671 for most circuits</p>
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <p className="text-sm text-white leading-relaxed">
+              Residual Current Devices are the last line of defence against electric shock. They detect current leaking to earth — a sign that someone may be in contact with a live conductor — and disconnect the supply in milliseconds. Testing proves they will actually work when needed.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* What RCDs protect against */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What RCDs Protect Against</p>
+        </motion.div>
+
+        {hazards.map((h, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <h.icon className="h-5 w-5 text-yellow-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-white">{h.title}</p>
+                  <p className="text-sm text-white mt-1 leading-relaxed">{h.description}</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-foreground">Lower Sensitivity (100mA, 300mA):</p>
-              <p>• Fire protection and equipment protection</p>
-              <p>• Distribution boards and sub-mains</p>
-              <p>• Industrial equipment with high earth leakage</p>
-              <p>• Backup protection for downstream RCDs</p>
+          </motion.div>
+        ))}
+
+        {/* How it works */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">How an RCD Works</p>
+        </motion.div>
+
+        {howItWorks.map((item, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+              <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-white">{item.step}</p>
+                <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+
+        {/* Current effects on the body */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Electric Current Effects on the Human Body</p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/[0.08]">
+                    <th className="text-left p-3 text-xs font-semibold text-white/60">Current</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white/60">Effect</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentEffects.map((row, i) => (
+                    <tr key={i} className="border-b border-white/[0.04]">
+                      <td className="p-3 text-yellow-400 font-semibold">{row.current}</td>
+                      <td className="p-3 text-white">{row.effect}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="p-3 border-t border-white/[0.06]">
+              <p className="text-xs text-white/70">A 30mA RCD trips before current reaches the threshold for respiratory paralysis. A 5×IΔn test (150mA) confirms the RCD trips in ≤40ms — before ventricular fibrillation can occur.</p>
             </div>
           </div>
-        </div>
-        <div className="bg-purple-500/10 border border-purple-500/20 rounded p-3">
-          <p className="font-medium text-purple-400 mb-2">Time Delay Characteristics:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
-            <div>
-              <p className="font-medium text-foreground">Instantaneous (General Type):</p>
-              <p>• No intentional time delay</p>
-              <p>• At 1×IΔn: max 300ms</p>
-              <p>• At 5×IΔn: max 40ms</p>
-              <p>• Used for final circuits</p>
+        </motion.div>
+
+        {/* Real-world scenarios */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">What Happens With and Without a Working RCD</p>
+        </motion.div>
+
+        {failureScenarios.map((s, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+              <p className="text-sm font-semibold text-white">{s.title}</p>
+              <div className="rounded-xl bg-green-400/5 border border-green-400/10 p-3">
+                <p className="text-xs font-semibold text-green-400 mb-1">With working RCD</p>
+                <p className="text-sm text-white">{s.withRcd}</p>
+              </div>
+              <div className="rounded-xl bg-red-400/5 border border-red-400/10 p-3">
+                <p className="text-xs font-semibold text-red-400 mb-1">Without RCD / failed RCD</p>
+                <p className="text-sm text-white">{s.withoutRcd}</p>
+              </div>
             </div>
-            <div>
-              <p className="font-medium text-foreground">Time Delayed (S-Type):</p>
-              <p>• At 1×IΔn: max 500ms</p>
-              <p>• At 5×IΔn: max 150ms</p>
-              <p>• Used for discrimination/selectivity</p>
-              <p>• Upstream protection devices</p>
+          </motion.div>
+        ))}
+
+        {/* Why test regularly */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+            <p className="text-sm font-semibold text-white mb-3">Why Regular Testing is Essential</p>
+            <div className="space-y-1.5">
+              {whyTestRegularly.map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                  <p className="text-sm text-white">{item}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
-
-    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <TrendingUp className="h-4 w-4 text-purple-400" />
-        <h4 className="font-medium text-purple-400">Real-World Failure Scenarios</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">
-            Scenario 1: Faulty Appliance with Damaged Cable
-          </p>
-          <p className="mb-2">
-            A lawn mower cable is damaged, causing the metal casing to become live:
-          </p>
-          <div className="ml-4 space-y-1">
-            <p className="text-green-400">
-              • <strong>With functioning RCD:</strong> User touches the casing, 30mA earth leakage
-              detected, RCD trips in &lt;40ms, minimal shock sensation
-            </p>
-            <p className="text-red-400">
-              • <strong>Without RCD/faulty RCD:</strong> User receives sustained shock through body
-              to earth, potential cardiac arrest or muscular paralysis preventing release
-            </p>
-          </div>
-        </div>
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">Scenario 2: Water Ingress in Bathroom</p>
-          <p className="mb-2">Water penetrates a light fitting, creating earth leakage:</p>
-          <div className="ml-4 space-y-1">
-            <p className="text-green-400">
-              • <strong>With functioning RCD:</strong> Leakage current detected immediately, power
-              disconnected, no risk to users
-            </p>
-            <p className="text-red-400">
-              • <strong>Without RCD/faulty RCD:</strong> Wet conditions reduce body resistance,
-              increased shock severity, potential electrocution in high-risk environment
-            </p>
-          </div>
-        </div>
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-foreground mb-2">
-            Scenario 3: Gradual Cable Insulation Degradation
-          </p>
-          <p className="mb-2">Old cable insulation slowly deteriorates over time:</p>
-          <div className="ml-4 space-y-1">
-            <p className="text-green-400">
-              • <strong>With functioning RCD:</strong> Increasing leakage detected early, RCD trips
-              before dangerous levels reached
-            </p>
-            <p className="text-red-400">
-              • <strong>Without RCD/faulty RCD:</strong> Insulation continues to degrade, potential
-              for arcing, fire risk, eventual catastrophic failure
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <BookOpen className="h-4 w-4 text-green-400" />
-        <h4 className="font-medium text-green-400">Legal and Regulatory Requirements</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">BS 7671 Requirements for RCD Protection:</p>
-          <p className="ml-4">
-            • <strong>Regulation 411.3.3:</strong> Additional protection by RCD for socket outlets
-            rated up to 32A
-          </p>
-          <p className="ml-4">
-            • <strong>Regulation 411.3.3:</strong> RCD protection for mobile equipment outdoors
-          </p>
-          <p className="ml-4">
-            • <strong>Section 701:</strong> All circuits in bathrooms require RCD protection
-          </p>
-          <p className="ml-4">
-            • <strong>Section 702:</strong> Swimming pool installations require RCD protection
-          </p>
-          <p className="ml-4">
-            • <strong>Section 704:</strong> Construction sites require RCD protection
-          </p>
-          <p className="ml-4">
-            • <strong>Regulation 612.13:</strong> RCD testing during initial verification
-          </p>
-          <p className="ml-4">
-            • <strong>Regulation 643.7/643.8:</strong> RCD testing during periodic inspection
-          </p>
-          <p className="ml-4">
-            • <strong>GN3 Table 2.17:</strong> Definitive RCD test acceptance criteria
-          </p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Testing and maintenance obligations:</p>
-          <p className="ml-4">
-            • <strong>Initial verification:</strong> All new RCDs must be tested during
-            commissioning
-          </p>
-          <p className="ml-4">
-            • <strong>Periodic inspection:</strong> RCDs tested during electrical installation
-            condition reports
-          </p>
-          <p className="ml-4">
-            • <strong>Routine testing:</strong> Test button operation at least every 6 months
-            (Reg 514.12.2), monthly recommended as best practice
-          </p>
-          <p className="ml-4">
-            • <strong>Professional testing:</strong> Annual testing with calibrated instruments
-          </p>
-          <p className="ml-4">
-            • <strong>Landlord obligations:</strong> Regular RCD testing for rental properties
-          </p>
-        </div>
-        <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
-          <p className="font-medium text-red-400 mb-2">Consequences of Non-Compliance:</p>
-          <div className="space-y-1 text-sm">
-            <p>• Fatal accident liability under Health and Safety at Work Act</p>
-            <p>• Prosecution under Electricity at Work Regulations</p>
-            <p>• Insurance claims may be invalidated</p>
-            <p>• Professional negligence for electrical contractors</p>
-            <p>• Building control non-compliance (Part P)</p>
-            <p>• Duty holder liability in workplace accidents</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Shield className="h-4 w-4 text-cyan-400" />
-        <h4 className="font-medium text-cyan-400">RCD Limitations and Considerations</h4>
-      </div>
-      <div className="space-y-3 text-sm text-gray-300">
-        <div>
-          <p className="font-medium text-foreground">What RCDs cannot protect against:</p>
-          <p className="ml-4">
-            • <strong>Phase to neutral shock:</strong> No earth leakage current flows
-          </p>
-          <p className="ml-4">
-            • <strong>Phase to phase contact:</strong> Balanced currents in three-phase systems
-          </p>
-          <p className="ml-4">
-            • <strong>Downstream of the RCD:</strong> Faults between RCD and protective device
-          </p>
-          <p className="ml-4">
-            • <strong>Overcurrent conditions:</strong> RCDs don't provide overcurrent protection
-          </p>
-          <p className="ml-4">
-            • <strong>DC systems:</strong> Type AC RCDs ineffective with pure DC currents
-          </p>
-        </div>
-        <div>
-          <p className="font-medium text-foreground">Common causes of RCD failure:</p>
-          <p className="ml-4">
-            • <strong>Age-related degradation:</strong> Internal components deteriorate over time
-          </p>
-          <p className="ml-4">
-            • <strong>Mechanical damage:</strong> Physical impact or vibration damage
-          </p>
-          <p className="ml-4">
-            • <strong>Environmental conditions:</strong> Extreme temperatures or humidity
-          </p>
-          <p className="ml-4">
-            • <strong>Electrical stress:</strong> Lightning strikes or voltage surges
-          </p>
-          <p className="ml-4">
-            • <strong>Contamination:</strong> Dust, insects, or corrosion affecting contacts
-          </p>
-        </div>
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded p-3">
-          <p className="font-medium text-yellow-400 mb-2">Why Regular Testing is Essential:</p>
-          <p className="text-sm text-gray-300">
-            RCDs are mechanical devices with moving parts that can fail without warning. Unlike
-            fuses or MCBs that clearly show when they've operated, a failed RCD may appear normal
-            but provide no protection. Regular testing is the only way to ensure continued
-            protection.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+  );
+};
 
 export default WhyTestSection;

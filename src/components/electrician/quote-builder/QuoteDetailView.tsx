@@ -41,7 +41,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
       case 'equipment':
         return <Zap className="h-4 w-4 text-purple-500" />;
       default:
-        return <FileText className="h-4 w-4 text-gray-500" />;
+        return <FileText className="h-4 w-4 text-white" />;
     }
   };
 

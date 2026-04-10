@@ -424,7 +424,7 @@ function generateClientExpiryEmail(
       <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0f172a;">
         <tr>
           <td align="center" style="padding: 48px 16px;">
-            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 420px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; border: 1px solid ${config.borderColor};">
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 420px; background: #111111; border-radius: 24px; overflow: hidden; border: 1px solid ${config.borderColor};">
 
               <!-- Title -->
               <tr>
@@ -500,7 +500,7 @@ function generateClientExpiryEmail(
               <tr>
                 <td style="padding: 28px 32px; border-top: 1px solid rgba(148, 163, 184, 0.1);">
                   <p style="margin: 0; font-size: 13px; color: #64748b; text-align: center;">Sent on behalf of ${companyName}</p>
-                  <p style="margin: 8px 0 0 0; font-size: 12px; color: #475569; text-align: center;">Powered by ElecMate</p>
+                  <p style="margin: 8px 0 0 0; font-size: 12px; color: #475569; text-align: center;">Sent via Elec-Mate</p>
                   <p style="margin: 12px 0 0 0; font-size: 11px; color: #334155; text-align: center;">You received this because your electrician has enabled certificate expiry reminders for you. If you believe this was sent in error, please contact your electrician directly.</p>
                 </td>
               </tr>

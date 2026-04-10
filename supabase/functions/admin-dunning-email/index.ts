@@ -37,8 +37,8 @@ function generateEmail1Html(name: string, amount: string, hostedInvoiceUrl: stri
       <td style="padding: 20px 10px;">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">⚡ ElecMate</h1>
+            <td style="background: #111111; padding: 32px 24px; text-align: center;">
+              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">ElecMate</h1>
             </td>
           </tr>
           <tr>
@@ -78,12 +78,12 @@ function generateEmail1Html(name: string, amount: string, hostedInvoiceUrl: stri
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td style="text-align: center; padding: 8px 0;">
-                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px;">Pay Now</a>
+                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: #FFD700; color: #000000; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px;">Pay Now</a>
                   </td>
                 </tr>
                 <tr>
                   <td style="text-align: center; padding: 8px 0;">
-                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
+                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: #FFD700; color: #000000; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
                   </td>
                 </tr>
               </table>
@@ -93,8 +93,8 @@ function generateEmail1Html(name: string, amount: string, hostedInvoiceUrl: stri
             </td>
           </tr>
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ ElecMate</p>
+            <td style="padding: 16px 24px; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 11px; color: #9ca3af;">ElecMate</p>
               <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical tools</p>
             </td>
           </tr>
@@ -124,8 +124,8 @@ function generateEmail2Html(name: string, amount: string, hostedInvoiceUrl: stri
       <td style="padding: 20px 10px;">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">⚡ ElecMate</h1>
+            <td style="background: #111111; padding: 32px 24px; text-align: center;">
+              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">ElecMate</h1>
             </td>
           </tr>
           <tr>
@@ -157,12 +157,12 @@ function generateEmail2Html(name: string, amount: string, hostedInvoiceUrl: stri
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td style="text-align: center; padding: 8px 0;">
-                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px;">Pay Now</a>
+                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: #FFD700; color: #000000; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px;">Pay Now</a>
                   </td>
                 </tr>
                 <tr>
                   <td style="text-align: center; padding: 8px 0;">
-                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
+                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: #FFD700; color: #000000; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
                   </td>
                 </tr>
               </table>
@@ -172,8 +172,8 @@ function generateEmail2Html(name: string, amount: string, hostedInvoiceUrl: stri
             </td>
           </tr>
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ ElecMate</p>
+            <td style="padding: 16px 24px; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 11px; color: #9ca3af;">ElecMate</p>
               <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical tools</p>
             </td>
           </tr>
@@ -203,8 +203,8 @@ function generateEmail3Html(name: string, amount: string, hostedInvoiceUrl: stri
       <td style="padding: 20px 10px;">
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">⚡ ElecMate</h1>
+            <td style="background: #111111; padding: 32px 24px; text-align: center;">
+              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">ElecMate</h1>
             </td>
           </tr>
           <tr>
@@ -237,12 +237,12 @@ function generateEmail3Html(name: string, amount: string, hostedInvoiceUrl: stri
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                 <tr>
                   <td style="text-align: center; padding: 8px 0;">
-                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; font-weight: 700; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-size: 18px;">Pay Now to Keep Access</a>
+                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: #FFD700; color: #000000; font-weight: 700; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-size: 18px;">Pay Now to Keep Access</a>
                   </td>
                 </tr>
                 <tr>
                   <td style="text-align: center; padding: 8px 0;">
-                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
+                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: #FFD700; color: #000000; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
                   </td>
                 </tr>
               </table>
@@ -252,8 +252,8 @@ function generateEmail3Html(name: string, amount: string, hostedInvoiceUrl: stri
             </td>
           </tr>
           <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ ElecMate</p>
+            <td style="padding: 16px 24px; text-align: center;">
+              <p style="margin: 0 0 8px; font-size: 11px; color: #9ca3af;">ElecMate</p>
               <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical tools</p>
             </td>
           </tr>

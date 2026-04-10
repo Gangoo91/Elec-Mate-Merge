@@ -356,20 +356,22 @@ export const QuoteWizard = ({
       {/* Sticky footer — live total + save */}
       <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-t border-white/[0.06] lg:left-64">
         <div className="max-w-3xl mx-auto">
-          {/* Live total bar */}
-          {(quote.items?.length ?? 0) > 0 && (
-            <div className="flex items-center justify-between px-4 pt-3 pb-1">
-              <div className="flex items-center gap-3">
-                <span className="text-[12px] text-white">{quote.items?.length} item{(quote.items?.length ?? 0) !== 1 ? 's' : ''}</span>
-                {quote.settings?.vatRegistered && (
-                  <span className="text-[11px] text-white">inc. VAT</span>
-                )}
-              </div>
-              <span className="text-[22px] font-bold text-elec-yellow">
-                £{(quote.total || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          {/* Live total bar — always visible */}
+          <div className="flex items-center justify-between px-4 pt-3 pb-1">
+            <div className="flex items-center gap-3">
+              <span className="text-[12px] text-white">
+                {(quote.items?.length ?? 0) > 0
+                  ? `${quote.items?.length} item${(quote.items?.length ?? 0) !== 1 ? 's' : ''}`
+                  : 'No items yet'}
               </span>
+              {quote.settings?.vatRegistered && (quote.items?.length ?? 0) > 0 && (
+                <span className="text-[11px] text-white">inc. VAT</span>
+              )}
             </div>
-          )}
+            <span className="text-[22px] font-bold text-elec-yellow tabular-nums">
+              £{(quote.total || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
+          </div>
           {/* Save button */}
           <div className="px-4 pb-4 pt-2">
             <Button
@@ -380,7 +382,7 @@ export const QuoteWizard = ({
               {isGenerating ? (
                 <>
                   <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                  Creating...
+                  Saving...
                 </>
               ) : (
                 'Save Quote'

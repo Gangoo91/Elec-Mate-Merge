@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, ArrowLeft } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal } from 'lucide-react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { Helmet } from 'react-helmet';
@@ -45,6 +46,7 @@ const QuoteViewPage = () => {
   const [isConverting, setIsConverting] = useState(false);
   const [isSendingReminder, setIsSendingReminder] = useState(false);
   const [isReverting, setIsReverting] = useState(false);
+  const [showActionsSheet, setShowActionsSheet] = useState(false);
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [emailTracking, setEmailTracking] = useState<{
     email_opened_at?: string;
@@ -320,10 +322,10 @@ const QuoteViewPage = () => {
           <span className="font-mono text-[13px] text-white flex-1 min-w-0 truncate">{quote.quoteNumber}</span>
           <span className={cn('text-[11px] font-semibold px-2.5 py-1 rounded-lg', statusBadge.style)}>{statusBadge.label}</span>
           <button
-            onClick={() => setShowDeleteDialog(true)}
-            className="text-[12px] text-red-400 font-medium touch-manipulation flex-shrink-0"
+            onClick={() => setShowActionsSheet(true)}
+            className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.95] touch-manipulation flex-shrink-0"
           >
-            Delete
+            <MoreHorizontal className="h-5 w-5 text-white" />
           </button>
         </div>
       </header>
@@ -379,52 +381,19 @@ const QuoteViewPage = () => {
           </div>
         )}
 
-        {/* === QUICK ACTIONS === */}
-        <div>
-          <SectionHeader title="Actions" />
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              onClick={() => navigate(`/electrician/quote-builder/${quote.id}`)}
-              className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all"
-            >
-              Edit
-            </button>
-            <QuoteSendDropdown
-              quote={quote}
-              onSent={() => setQuote((prev) => prev ? { ...prev, status: 'sent' } : prev)}
-            />
-            <button
-              onClick={handleDownloadPDF}
-              disabled={isDownloading}
-              className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all disabled:opacity-50"
-            >
-              {isDownloading ? 'Generating...' : 'PDF'}
-            </button>
-            <button
-              onClick={handleDuplicate}
-              className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all"
-            >
-              Duplicate
-            </button>
-            {canSendReminder && (
-              <button
-                onClick={handleSendReminder}
-                disabled={isSendingReminder}
-                className="h-11 rounded-xl bg-blue-500/10 border border-blue-500/20 text-[13px] font-medium text-blue-400 touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
-              >
-                {isSendingReminder ? 'Sending...' : 'Remind'}
-              </button>
-            )}
-            {canRevert && (
-              <button
-                onClick={() => setShowRevertDialog(true)}
-                disabled={isReverting}
-                className="h-11 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[13px] font-medium text-amber-400 touch-manipulation active:scale-[0.97] transition-all"
-              >
-                Revert
-              </button>
-            )}
-          </div>
+        {/* === QUICK ACTIONS — inline primary only === */}
+        <div className="grid grid-cols-2 gap-2">
+          <QuoteSendDropdown
+            quote={quote}
+            onSent={() => setQuote((prev) => prev ? { ...prev, status: 'sent' } : prev)}
+          />
+          <button
+            onClick={handleDownloadPDF}
+            disabled={isDownloading}
+            className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all disabled:opacity-50"
+          >
+            {isDownloading ? 'Generating...' : 'Download PDF'}
+          </button>
         </div>
 
         {/* === TIMELINE === */}
@@ -602,6 +571,54 @@ const QuoteViewPage = () => {
       </div>
 
       {/* === DIALOGS === */}
+      {/* Actions Bottom Sheet */}
+      <Sheet open={showActionsSheet} onOpenChange={setShowActionsSheet}>
+        <SheetContent side="bottom" className="rounded-t-2xl p-0 max-h-[60vh]">
+          <div className="p-5 space-y-1">
+            <p className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-1">Actions</p>
+            <button
+              onClick={() => { setShowActionsSheet(false); navigate(`/electrician/quote-builder/${quote.id}`); }}
+              className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+            >
+              <span className="text-[15px] font-medium text-white">Edit Quote</span>
+              <span className="text-[12px] text-white">→</span>
+            </button>
+            <button
+              onClick={() => { setShowActionsSheet(false); handleDuplicate(); }}
+              className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+            >
+              <span className="text-[15px] font-medium text-white">Duplicate</span>
+              <span className="text-[12px] text-white">→</span>
+            </button>
+            {canSendReminder && (
+              <button
+                onClick={() => { setShowActionsSheet(false); handleSendReminder(); }}
+                disabled={isSendingReminder}
+                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all disabled:opacity-50"
+              >
+                <span className="text-[15px] font-medium text-blue-400">{isSendingReminder ? 'Sending...' : 'Send Reminder'}</span>
+              </button>
+            )}
+            {canRevert && (
+              <button
+                onClick={() => { setShowActionsSheet(false); setShowRevertDialog(true); }}
+                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+              >
+                <span className="text-[15px] font-medium text-amber-400">Revert to Draft</span>
+              </button>
+            )}
+            <div className="border-t border-white/[0.06] mt-2 pt-2">
+              <button
+                onClick={() => { setShowActionsSheet(false); setShowDeleteDialog(true); }}
+                className="w-full flex items-center h-12 px-4 rounded-xl hover:bg-red-500/[0.06] touch-manipulation active:scale-[0.99] transition-all"
+              >
+                <span className="text-[15px] font-medium text-red-400">Delete Quote</span>
+              </button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>

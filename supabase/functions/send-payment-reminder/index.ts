@@ -118,7 +118,8 @@ const handler = async (req: Request): Promise<Response> => {
     const fromName = companyProfile?.company_name || 'Your Electrician';
 
     const { data: emailResult, error: emailError } = await resend.emails.send({
-      from: `${fromName} <${fromEmail}>`,
+      from: `${fromName} <founder@elec-mate.com>`,
+      reply_to: fromEmail,
       to: [clientEmail],
       subject: emailContent.subject,
       html: emailContent.html,
@@ -142,7 +143,7 @@ const handler = async (req: Request): Promise<Response> => {
       })
       .eq('id', invoiceId);
 
-    console.log(`✅ ${reminderType} reminder sent successfully to ${clientEmail}`);
+    console.log(`${reminderType} reminder sent successfully to ${clientEmail}`);
 
     return new Response(
       JSON.stringify({
@@ -181,7 +182,9 @@ function generateReminderEmail(
   const companyPhone = company?.company_phone || '';
   const companyEmail = company?.company_email || '';
   const bankDetails = company?.bank_details || invoice.settings?.bankDetails;
-  const paymentLink = invoice.external_invoice_url || null;
+
+  // Prefer Stripe payment link over Xero external URL
+  const paymentLink = invoice.stripe_payment_link_url || invoice.external_invoice_url || null;
 
   const dueDateStr = invoice.invoice_due_date
     ? new Date(invoice.invoice_due_date).toLocaleDateString('en-GB', {
@@ -195,7 +198,7 @@ function generateReminderEmail(
   const clientName = client?.name || 'Valued Customer';
   const invoiceRef = invoice.invoice_number || 'N/A';
 
-  // ── Subjects (no double "Invoice" prefix) ────────────────────────────
+  // ── Subjects ──────────────────────────────────────────────────────────
   let subject = '';
   switch (type) {
     case 'gentle':
@@ -210,7 +213,10 @@ function generateReminderEmail(
   }
 
   // ── Accent colour per urgency ─────────────────────────────────────────
-  const accentColor = type === 'final' ? '#ef4444' : type === 'firm' ? '#f59e0b' : '#FFD700';
+  const accentColor = type === 'final' ? '#dc2626' : type === 'firm' ? '#d97706' : '#FFD700';
+  const accentBg = type === 'final' ? '#fef2f2' : type === 'firm' ? '#fffbeb' : '#fffbeb';
+  const accentBorder = type === 'final' ? '#fecaca' : type === 'firm' ? '#fde68a' : '#fde68a';
+  const accentText = type === 'final' ? '#991b1b' : type === 'firm' ? '#92400e' : '#92400e';
 
   // ── Urgency banner ────────────────────────────────────────────────────
   let urgencyBanner = '';
@@ -219,13 +225,13 @@ function generateReminderEmail(
       <tr>
         <td style="padding: 0 32px 24px;">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-            style="background-color: #1e1a0e; border: 1px solid #f59e0b; border-radius: 8px; border-left: 4px solid #f59e0b;">
+            style="background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; border-left: 4px solid #d97706;">
             <tr>
               <td style="padding: 16px 20px;">
-                <p style="margin: 0; font-size: 14px; color: #fbbf24; font-weight: 600;">
-                  ⚠️ Second Notice — ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue
+                <p style="margin: 0; font-size: 14px; color: #92400e; font-weight: 600;">
+                  Second Notice — ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue
                 </p>
-                <p style="margin: 6px 0 0; font-size: 14px; color: #ffffff;">
+                <p style="margin: 6px 0 0; font-size: 14px; color: #78350f;">
                   Please arrange payment within 7 days or contact us to discuss.
                 </p>
               </td>
@@ -238,13 +244,13 @@ function generateReminderEmail(
       <tr>
         <td style="padding: 0 32px 24px;">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-            style="background-color: #1e0f0f; border: 1px solid #ef4444; border-radius: 8px; border-left: 4px solid #ef4444;">
+            style="background-color: #fef2f2; border: 1px solid #fecaca; border-radius: 8px; border-left: 4px solid #dc2626;">
             <tr>
               <td style="padding: 16px 20px;">
-                <p style="margin: 0; font-size: 14px; color: #f87171; font-weight: 700;">
-                  🚨 Final Notice — ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue
+                <p style="margin: 0; font-size: 14px; color: #991b1b; font-weight: 700;">
+                  Final Notice — ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue
                 </p>
-                <p style="margin: 6px 0 0; font-size: 14px; color: #ffffff;">
+                <p style="margin: 6px 0 0; font-size: 14px; color: #7f1d1d;">
                   Payment must be received within <strong>48 hours</strong>. Failure to pay may result in late payment charges and referral for debt recovery.
                 </p>
               </td>
@@ -254,21 +260,20 @@ function generateReminderEmail(
       </tr>`;
   }
 
-  // ── Pay Now button (only when payment link exists and overdue) ────────
-  const payNowButton =
-    paymentLink && daysOverdue >= 0
-      ? `
+  // ── Pay Now button ────────────────────────────────────────────────────
+  const payNowButton = paymentLink
+    ? `
       <tr>
         <td style="padding: 0 32px 24px; text-align: center;">
           <a href="${paymentLink}"
-            style="display: inline-block; background-color: ${accentColor}; color: #111111;
-              padding: 14px 36px; border-radius: 8px; text-decoration: none;
+            style="display: inline-block; background-color: #FFD700; color: #111111;
+              padding: 14px 40px; border-radius: 8px; text-decoration: none;
               font-size: 16px; font-weight: 700; letter-spacing: 0.3px;">
-            Pay Now →
+            Pay Now
           </a>
         </td>
       </tr>`
-      : '';
+    : '';
 
   // ── Bank details ──────────────────────────────────────────────────────
   const bankDetailsHtml = bankDetails
@@ -276,18 +281,18 @@ function generateReminderEmail(
       <tr>
         <td style="padding: 0 32px 24px;">
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-            style="background-color: #1a1a2e; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; border-left: 4px solid #3b82f6;">
+            style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;">
             <tr>
-              <td style="padding: 16px 20px;">
-                <p style="margin: 0 0 12px; font-size: 13px; font-weight: 700; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.8px;">
+              <td style="padding: 20px;">
+                <p style="margin: 0 0 12px; font-size: 12px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px;">
                   Bank Transfer Details
                 </p>
-                ${bankDetails.bankName ? `<p style="margin: 4px 0; font-size: 14px; color: #ffffff;"><span style="color: rgba(255,255,255,0.5);">Bank:</span> ${bankDetails.bankName}</p>` : ''}
-                ${bankDetails.accountName ? `<p style="margin: 4px 0; font-size: 14px; color: #ffffff;"><span style="color: rgba(255,255,255,0.5);">Account Name:</span> ${bankDetails.accountName}</p>` : ''}
-                ${bankDetails.accountNumber ? `<p style="margin: 4px 0; font-size: 14px; color: #ffffff;"><span style="color: rgba(255,255,255,0.5);">Account Number:</span> ${bankDetails.accountNumber}</p>` : ''}
-                ${bankDetails.sortCode ? `<p style="margin: 4px 0; font-size: 14px; color: #ffffff;"><span style="color: rgba(255,255,255,0.5);">Sort Code:</span> ${bankDetails.sortCode}</p>` : ''}
-                <p style="margin: 12px 0 0; font-size: 13px; color: rgba(255,255,255,0.4);">
-                  Please use <strong style="color: rgba(255,255,255,0.7);">${invoiceRef}</strong> as the payment reference.
+                ${bankDetails.bankName ? `<p style="margin: 4px 0; font-size: 14px; color: #1a1a1a;"><span style="color: #6b7280;">Bank:</span> ${bankDetails.bankName}</p>` : ''}
+                ${bankDetails.accountName ? `<p style="margin: 4px 0; font-size: 14px; color: #1a1a1a;"><span style="color: #6b7280;">Account Name:</span> ${bankDetails.accountName}</p>` : ''}
+                ${bankDetails.accountNumber ? `<p style="margin: 4px 0; font-size: 14px; color: #1a1a1a;"><span style="color: #6b7280;">Account Number:</span> ${bankDetails.accountNumber}</p>` : ''}
+                ${bankDetails.sortCode ? `<p style="margin: 4px 0; font-size: 14px; color: #1a1a1a;"><span style="color: #6b7280;">Sort Code:</span> ${bankDetails.sortCode}</p>` : ''}
+                <p style="margin: 12px 0 0; font-size: 13px; color: #6b7280;">
+                  Please use <strong style="color: #1a1a1a;">${invoiceRef}</strong> as the payment reference.
                 </p>
               </td>
             </tr>
@@ -300,7 +305,7 @@ function generateReminderEmail(
   let bodyCopy = '';
   switch (type) {
     case 'gentle':
-      bodyCopy = `This is a friendly reminder that the invoice below is due for payment. If you've already arranged this, please ignore this message — and thank you!`;
+      bodyCopy = `This is a friendly reminder that the invoice below is due for payment. If you've already arranged this, please ignore this message — and thank you.`;
       break;
     case 'firm':
       bodyCopy = `We notice the invoice below remains outstanding. Please arrange payment as soon as possible. If there's an issue, don't hesitate to get in touch.`;
@@ -312,13 +317,13 @@ function generateReminderEmail(
 
   // ── Contact line ──────────────────────────────────────────────────────
   const contactLine = [
-    companyPhone ? `📞 ${companyPhone}` : '',
-    companyEmail ? `✉️ ${companyEmail}` : '',
+    companyPhone ? `${companyPhone}` : '',
+    companyEmail ? `${companyEmail}` : '',
   ]
     .filter(Boolean)
-    .join('&nbsp;&nbsp;·&nbsp;&nbsp;');
+    .join('&nbsp;&nbsp;&middot;&nbsp;&nbsp;');
 
-  // ── Full HTML ─────────────────────────────────────────────────────────
+  // ── Full HTML — Professional White Theme ──────────────────────────────
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -326,35 +331,33 @@ function generateReminderEmail(
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment Reminder</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+<body style="margin: 0; padding: 0; background-color: #f6f6f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
 
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0a0a0a; min-height: 100vh;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f6f6f6;">
     <tr>
-      <td style="padding: 32px 16px;">
+      <td style="padding: 40px 16px;">
 
         <!-- Card -->
         <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-          style="max-width: 600px; margin: 0 auto; background-color: #111111; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06);">
+          style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
 
           <!-- Header -->
           <tr>
-            <td style="background-color: #111111; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 28px 32px;">
-              <p style="margin: 0; font-size: 22px; font-weight: 700; color: ${accentColor};">
-                ⚡ ${companyName}
+            <td style="background-color: #111111; padding: 24px 32px;">
+              <p style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;">
+                ${companyName}
               </p>
-              <p style="margin: 4px 0 0; font-size: 13px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px;">
-                Payment Reminder
-              </p>
+              ${contactLine ? `<p style="margin: 6px 0 0; font-size: 13px; color: rgba(255,255,255,0.6);">${contactLine}</p>` : ''}
             </td>
           </tr>
 
           <!-- Greeting -->
           <tr>
-            <td style="padding: 28px 32px 20px;">
-              <p style="margin: 0 0 12px; font-size: 16px; color: #ffffff;">
+            <td style="padding: 32px 32px 20px;">
+              <p style="margin: 0 0 16px; font-size: 16px; color: #1a1a1a;">
                 Hi <strong>${clientName}</strong>,
               </p>
-              <p style="margin: 0; font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6;">
+              <p style="margin: 0; font-size: 15px; color: #4b5563; line-height: 1.6;">
                 ${bodyCopy}
               </p>
             </td>
@@ -367,23 +370,23 @@ function generateReminderEmail(
           <tr>
             <td style="padding: 0 32px 24px;">
               <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
-                style="background-color: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px;">
+                style="background-color: #fafafa; border: 1px solid #e5e7eb; border-radius: 10px;">
                 <tr>
-                  <td style="padding: 24px; text-align: center;">
-                    <p style="margin: 0 0 4px; font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px;">
+                  <td style="padding: 28px; text-align: center;">
+                    <p style="margin: 0 0 4px; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px;">
                       Invoice Reference
                     </p>
-                    <p style="margin: 0 0 20px; font-size: 16px; font-weight: 600; color: #ffffff;">
+                    <p style="margin: 0 0 20px; font-size: 16px; font-weight: 600; color: #1a1a1a;">
                       ${invoiceRef}
                     </p>
-                    <p style="margin: 0 0 4px; font-size: 12px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.8px;">
+                    <p style="margin: 0 0 4px; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px;">
                       Amount Due
                     </p>
-                    <p style="margin: 0 0 12px; font-size: 40px; font-weight: 700; color: ${accentColor}; line-height: 1.1;">
+                    <p style="margin: 0 0 12px; font-size: 40px; font-weight: 700; color: #1a1a1a; line-height: 1.1;">
                       ${amount}
                     </p>
-                    <p style="margin: 0; font-size: 13px; color: rgba(255,255,255,0.5);">
-                      Due date: <span style="color: rgba(255,255,255,0.8);">${dueDateStr}</span>
+                    <p style="margin: 0; font-size: 13px; color: #6b7280;">
+                      Due date: <span style="color: #1a1a1a; font-weight: 500;">${dueDateStr}</span>
                     </p>
                     ${
                       daysOverdue > 0
@@ -406,24 +409,19 @@ function generateReminderEmail(
 
           <!-- Sign-off -->
           <tr>
-            <td style="padding: 0 32px 28px;">
-              <p style="margin: 0; font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6;">
+            <td style="padding: 0 32px 32px;">
+              <p style="margin: 0; font-size: 15px; color: #4b5563; line-height: 1.6;">
                 Kind regards,<br>
-                <strong style="color: #ffffff;">${companyName}</strong>
+                <strong style="color: #1a1a1a;">${companyName}</strong>
               </p>
-              ${
-                contactLine
-                  ? `<p style="margin: 10px 0 0; font-size: 13px; color: rgba(255,255,255,0.4);">${contactLine}</p>`
-                  : ''
-              }
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="background-color: #0d0d0d; border-top: 1px solid rgba(255,255,255,0.06); padding: 20px 32px; text-align: center;">
-              <p style="margin: 0; font-size: 12px; color: rgba(255,255,255,0.25);">
-                Sent via <span style="color: #FFD700;">⚡ Elec-Mate</span> · Your Trade. Your App.
+            <td style="border-top: 1px solid #e5e7eb; padding: 20px 32px; text-align: center;">
+              <p style="margin: 0; font-size: 11px; color: #9ca3af;">
+                Sent via Elec-Mate
               </p>
             </td>
           </tr>

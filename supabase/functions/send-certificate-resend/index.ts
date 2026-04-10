@@ -110,7 +110,7 @@ function buildCertificateEmailHtml(data: {
                 <img src="${data.companyLogo}" alt="${data.companyName}" style="max-height: 56px; max-width: 180px; margin-bottom: 12px;" />
               `
                   : `
-                <div style="font-size: 28px; margin-bottom: 8px;">⚡</div>
+                <div style="font-size: 28px; margin-bottom: 8px;"></div>
               `
               }
               <h1 style="margin: 0 0 4px 0; font-size: 22px; font-weight: 700; color: #0f172a;">
@@ -141,7 +141,7 @@ function buildCertificateEmailHtml(data: {
               </p>
 
               <!-- Certificate Summary -->
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-radius: 16px; border: 1px solid #fde047;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px; background: #f9fafb; border-radius: 16px; border: 1px solid #fde047;">
                 <tr>
                   <td style="padding: 24px;">
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
@@ -240,11 +240,11 @@ function buildCertificateEmailHtml(data: {
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 32px;">
                 <tr>
                   <td style="padding: 20px; background-color: #eff6ff; border-radius: 12px; text-align: center;">
-                    <p style="margin: 0 0 4px 0; font-size: 24px;">📎</p>
+                    <p style="margin: 0 0 4px 0; font-size: 24px;"></p>
                     <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: 600; color: #1e40af;">
                       Your certificate is attached
                     </p>
-                    <p style="margin: 0; font-size: 13px; color: #3b82f6;">
+                    <p style="margin: 0; font-size: 13px; color: #374151;">
                       Download the PDF for your records
                     </p>
                   </td>
@@ -274,10 +274,10 @@ function buildCertificateEmailHtml(data: {
                     </p>
                     <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto;">
                       <tr>
-                        <td style="padding: 10px 20px; background: linear-gradient(135deg, #fefce8 0%, #fef9c3 100%); border-radius: 8px; border: 1px solid #fde047;">
+                        <td style="padding: 10px 20px; background: #f9fafb; border-radius: 8px; border: 1px solid #fde047;">
                           <a href="https://elec-mate.com" style="text-decoration: none;">
-                            <span style="font-size: 16px; vertical-align: middle;">⚡</span>
-                            <span style="font-size: 13px; font-weight: 600; color: #78350f; vertical-align: middle; margin-left: 4px;">Powered by Elec-Mate</span>
+                            <span style="font-size: 16px; vertical-align: middle;"></span>
+                            <span style="font-size: 13px; font-weight: 600; color: #78350f; vertical-align: middle; margin-left: 4px;">Sent via Elec-Mate</span>
                           </a>
                         </td>
                       </tr>
@@ -320,17 +320,17 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY');
 
     if (!resendApiKey) {
-      console.error('❌ RESEND_API_KEY not configured');
+      console.error('RESEND_API_KEY not configured');
       throw new Error('Email service not configured. Please contact support.');
     }
 
     if (!supabaseUrl || !supabaseAnonKey) {
-      console.error('❌ Supabase environment variables missing');
+      console.error('Supabase environment variables missing');
       throw new Error('Database service not configured. Please contact support.');
     }
 
     const resend = new Resend(resendApiKey);
-    console.log('✅ Environment validated');
+    console.log('Environment validated');
 
     // ========================================================================
     // STEP 1.5: Check for test mode
@@ -370,7 +370,7 @@ const handler = async (req: Request): Promise<Response> => {
         throw new Error(`Test email failed: ${testEmailError.message}`);
       }
 
-      console.log('✅ Test email sent:', testEmailData?.id);
+      console.log('Test email sent:', testEmailData?.id);
 
       return new Response(
         JSON.stringify({
@@ -388,7 +388,7 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      console.error('❌ No Authorization header found');
+      console.error('No Authorization header found');
       throw new Error('Please log in to send certificates.');
     }
 
@@ -403,11 +403,11 @@ const handler = async (req: Request): Promise<Response> => {
     } = await supabaseClient.auth.getUser(jwt);
 
     if (userError || !user) {
-      console.error('❌ User authentication error:', userError);
+      console.error('User authentication error:', userError);
       throw new Error('Session expired. Please log in again.');
     }
 
-    console.log('✅ User authenticated:', user.id);
+    console.log('User authenticated:', user.id);
 
     // ========================================================================
     // STEP 3: Parse and validate request
@@ -421,7 +421,7 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Report ID is required.');
     }
 
-    console.log('📄 Processing report:', reportId);
+    console.log('Processing report:', reportId);
 
     // ========================================================================
     // STEP 4: Fetch report from database
@@ -439,7 +439,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (reportById) {
       report = reportById;
-      console.log('✅ Found report by id (UUID)');
+      console.log('Found report by id (UUID)');
     } else {
       // Second try: Query by 'report_id' (certificate number like MW-2024-001234)
       console.log('⏳ Not found by id, trying report_id...');
@@ -452,9 +452,9 @@ const handler = async (req: Request): Promise<Response> => {
 
       if (reportByReportId) {
         report = reportByReportId;
-        console.log('✅ Found report by report_id');
+        console.log('Found report by report_id');
       } else {
-        console.error('❌ Report not found by either id or report_id:', errorById, errorByReportId);
+        console.error('Report not found by either id or report_id:', errorById, errorByReportId);
         throw new Error(
           'Could not find this report. It may have been deleted or you may need to save it first.'
         );
@@ -463,7 +463,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const certificateNumber =
       report.certificate_number || report.report_id || `CERT-${reportId.substring(0, 8)}`;
-    console.log(`✅ Report fetched: ${certificateNumber}`);
+    console.log(`Report fetched: ${certificateNumber}`);
 
     // ========================================================================
     // STEP 5: Determine recipient email
@@ -472,13 +472,13 @@ const handler = async (req: Request): Promise<Response> => {
     const clientEmail = recipientEmail || reportData.clientEmail || reportData.client_email;
 
     if (!isValidEmail(clientEmail)) {
-      console.error('❌ Invalid client email:', clientEmail);
+      console.error('Invalid client email:', clientEmail);
       throw new Error(
         `Invalid client email address: "${clientEmail || 'missing'}". Please update the report with a valid email.`
       );
     }
 
-    console.log(`✅ Recipient: ${report.client_name || 'Client'} <${clientEmail}>`);
+    console.log(`Recipient: ${report.client_name || 'Client'} <${clientEmail}>`);
 
     // ========================================================================
     // STEP 6: Fetch company profile
@@ -490,7 +490,7 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     const companyName = companyProfile?.company_name || 'Electrical Services';
-    console.log(`✅ Company: ${companyName}`);
+    console.log(`Company: ${companyName}`);
 
     // ========================================================================
     // STEP 7: Determine report type and generate PDF
@@ -515,11 +515,11 @@ const handler = async (req: Request): Promise<Response> => {
     } else if (reportType === 'solar-pv' || reportType === 'solar pv') {
       edgeFunctionName = 'generate-solar-pv-pdf';
     } else {
-      console.error('❌ Unsupported report type:', reportType);
+      console.error('Unsupported report type:', reportType);
       throw new Error(`Unsupported certificate type: "${report.report_type}"`);
     }
 
-    console.log(`📄 Generating ${reportType.toUpperCase()} PDF via ${edgeFunctionName}...`);
+    console.log(`Generating ${reportType.toUpperCase()} PDF via ${edgeFunctionName}...`);
 
     let pdfUrl = report.pdf_url;
     let pdfBase64: string | null = null;
@@ -562,15 +562,15 @@ const handler = async (req: Request): Promise<Response> => {
               })
               .eq('id', report.id);
 
-            console.log('✅ PDF generated successfully');
+            console.log('PDF generated successfully');
           } else {
-            console.warn('⚠️ PDF generation returned no URL:', pdfData);
+            console.warn('PDF generation returned no URL:', pdfData);
           }
         } else {
-          console.warn('⚠️ PDF generation request failed:', pdfResponse.status);
+          console.warn('PDF generation request failed:', pdfResponse.status);
         }
       } catch (pdfGenError) {
-        console.warn('⚠️ PDF generation error (non-fatal):', pdfGenError);
+        console.warn('PDF generation error (non-fatal):', pdfGenError);
       }
     }
 
@@ -591,10 +591,10 @@ const handler = async (req: Request): Promise<Response> => {
           }
           pdfBase64 = btoa(binary);
           pdfAttachmentSuccess = true;
-          console.log(`✅ PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+          console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
         }
       } catch (pdfDownloadError) {
-        console.warn('⚠️ PDF download error (non-fatal):', pdfDownloadError);
+        console.warn('PDF download error (non-fatal):', pdfDownloadError);
       }
     }
 
@@ -671,20 +671,20 @@ const handler = async (req: Request): Promise<Response> => {
           content: pdfBase64,
         },
       ];
-      console.log('📎 PDF attached:', filename);
+      console.log('PDF attached:', filename);
     }
 
     const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
 
     if (emailError) {
-      console.error('❌ Resend API error:', emailError);
+      console.error('Resend API error:', emailError);
       throw new Error(`Failed to send email: ${emailError.message || 'Unknown error'}`);
     }
 
-    console.log('✅ Email sent:', emailData?.id);
+    console.log('Email sent:', emailData?.id);
 
     const duration = Date.now() - startTime;
-    console.log(`✅ Complete in ${duration}ms`);
+    console.log(`Complete in ${duration}ms`);
 
     return new Response(
       JSON.stringify({
@@ -700,7 +700,7 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: unknown) {
     const duration = Date.now() - startTime;
-    console.error(`❌ Error after ${duration}ms:`, error);
+    console.error(`Error after ${duration}ms:`, error);
 
     // Capture to Sentry
     await captureException(error, {

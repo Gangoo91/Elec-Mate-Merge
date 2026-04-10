@@ -1,6 +1,5 @@
 import { Invoice } from '@/types/invoice';
-import { Badge } from '@/components/ui/badge';
-import { FileText, User, Banknote, Calendar, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -10,168 +9,79 @@ interface InvoiceReviewStepProps {
 }
 
 export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceReviewStepProps) => {
-  const [expandedSections, setExpandedSections] = useState<string[]>(['items']);
+  const [showItems, setShowItems] = useState(true);
 
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(amount);
 
   const formatDate = (date: Date | string | undefined) => {
-    if (!date) return 'N/A';
-    return new Date(date).toLocaleDateString('en-GB');
+    if (!date) return '—';
+    return new Date(date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   };
 
   const totalAmount = invoice.total || 0;
-
-  // Combine all items for display
   const allItems = [...(invoice.items || []), ...(invoice.additional_invoice_items || [])];
 
-  const toggleSection = (section: string) => {
-    setExpandedSections((prev) =>
-      prev.includes(section) ? prev.filter((s) => s !== section) : [...prev, section]
-    );
-  };
-
-  // Summary only mode - used in step 0 when coming from a quote
+  // Summary only mode
   if (showSummaryOnly) {
     return (
       <div className="space-y-5 text-left">
-        {/* Summary Banner */}
-        <div className="rounded-2xl bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 p-5">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-[12px] text-white">Quote Number</p>
-              <p className="text-[15px] font-semibold text-white">{invoice.quoteNumber || 'N/A'}</p>
-            </div>
-            <div>
-              <p className="text-[12px] text-white">Client</p>
-              <p className="text-[15px] font-semibold text-white truncate">
-                {invoice.client?.name || 'N/A'}
-              </p>
-            </div>
-            <div>
-              <p className="text-[12px] text-white">Date</p>
-              <p className="text-[15px] font-semibold text-white">
-                {formatDate(invoice.createdAt)}
-              </p>
-            </div>
-            <div>
-              <p className="text-[12px] text-white">Total</p>
-              <p className="text-xl font-bold text-elec-yellow">{formatCurrency(totalAmount)}</p>
-            </div>
+        <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+          <div>
+            <p className="text-[11px] text-white uppercase tracking-wider">Quote</p>
+            <p className="text-[15px] font-medium text-white">{invoice.quoteNumber || '—'}</p>
+          </div>
+          <div>
+            <p className="text-[11px] text-white uppercase tracking-wider">Client</p>
+            <p className="text-[15px] font-medium text-white truncate">{invoice.client?.name || '—'}</p>
+          </div>
+          <div>
+            <p className="text-[11px] text-white uppercase tracking-wider">Date</p>
+            <p className="text-[15px] font-medium text-white">{formatDate(invoice.createdAt)}</p>
+          </div>
+          <div>
+            <p className="text-[11px] text-white uppercase tracking-wider">Total</p>
+            <p className="text-[18px] font-bold text-white">{formatCurrency(totalAmount)}</p>
           </div>
         </div>
 
-        {/* Client Details */}
-        <div>
-          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
-            Client Details
-          </p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
-            <div className="flex items-center gap-3 p-4">
+        <div className="divide-y divide-white/[0.06]">
+          {allItems.slice(0, 5).map((item, index) => (
+            <div key={item.id || index} className="flex justify-between items-center py-3">
               <div className="flex-1 min-w-0">
-                <p className="text-[12px] text-white">Name</p>
-                <p className="text-[14px] font-medium text-white">
-                  {invoice.client?.name || 'N/A'}
-                </p>
+                <p className="text-[14px] text-white truncate">{item.description}</p>
+                <p className="text-[12px] text-white">{item.quantity} × {formatCurrency(item.unitPrice)}</p>
               </div>
+              <p className="text-[14px] font-medium text-white ml-4 tabular-nums">
+                {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+              </p>
             </div>
-            <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
-              <div className="p-4">
-                <p className="text-[12px] text-white">Email</p>
-                <p className="text-[14px] font-medium text-white truncate">
-                  {invoice.client?.email || 'N/A'}
-                </p>
-              </div>
-              <div className="p-4">
-                <p className="text-[12px] text-white">Phone</p>
-                <p className="text-[14px] font-medium text-white">
-                  {invoice.client?.phone || 'N/A'}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-4">
-              <div className="w-9 h-9 rounded-lg bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-                <MapPin className="h-4 w-4 text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-[12px] text-white">Address</p>
-                <p className="text-[14px] font-medium text-white">
-                  {invoice.client?.address || 'N/A'}
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
+          {allItems.length > 5 && (
+            <p className="text-[12px] text-white py-3">+{allItems.length - 5} more items</p>
+          )}
         </div>
 
-        {/* Items Summary */}
-        <div>
-          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
-            Items ({allItems.length})
-          </p>
-          <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-            <div className="divide-y divide-white/[0.06]">
-              {allItems.slice(0, 5).map((item, index) => (
-                <div key={item.id || index} className="flex justify-between items-center p-4">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[14px] font-medium text-white truncate">
-                      {item.description}
-                    </p>
-                    <p className="text-[12px] text-white">
-                      {item.quantity} × {formatCurrency(item.unitPrice)}
-                    </p>
-                  </div>
-                  <p className="text-[14px] font-semibold text-elec-yellow ml-4">
-                    {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
-                  </p>
-                </div>
-              ))}
-              {allItems.length > 5 && (
-                <div className="p-4 text-center">
-                  <p className="text-[12px] text-white">+{allItems.length - 5} more items</p>
-                </div>
-              )}
+        <div className="pt-3 border-t border-white/[0.12] space-y-2">
+          <div className="flex justify-between text-[13px]">
+            <span className="text-white">Subtotal</span>
+            <span className="text-white tabular-nums">{formatCurrency(invoice.subtotal || 0)}</span>
+          </div>
+          {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
+            <div className="flex justify-between text-[13px]">
+              <span className="text-red-400">{invoice.settings.discountLabel || 'Discount'}</span>
+              <span className="text-red-400 tabular-nums">-{formatCurrency(invoice.discountAmount || 0)}</span>
             </div>
-            <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20 space-y-2">
-              {/* Subtotal */}
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] text-white">Subtotal</span>
-                <span className="text-[13px] font-medium text-white">
-                  {formatCurrency(invoice.subtotal || 0)}
-                </span>
-              </div>
-
-              {/* Discount - only show if enabled */}
-              {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
-                <div className="flex items-center justify-between">
-                  <span className="text-[12px] text-red-400">
-                    {invoice.settings.discountLabel || 'Discount'}
-                  </span>
-                  <span className="text-[13px] font-medium text-red-400">
-                    -{formatCurrency(invoice.discountAmount || 0)}
-                  </span>
-                </div>
-              )}
-
-              {/* VAT - only show if VAT registered */}
-              {invoice.settings?.vatRegistered && (
-                <div className="flex items-center justify-between">
-                  <span className="text-[12px] text-white">
-                    VAT ({invoice.settings?.vatRate || 20}%)
-                  </span>
-                  <span className="text-[13px] font-medium text-white">
-                    {formatCurrency(invoice.vatAmount || 0)}
-                  </span>
-                </div>
-              )}
-
-              {/* Total */}
-              <div className="flex items-center justify-between pt-1 border-t border-elec-yellow/30">
-                <span className="text-[14px] font-medium text-white">Total</span>
-                <span className="text-lg font-bold text-elec-yellow">
-                  {formatCurrency(totalAmount)}
-                </span>
-              </div>
+          )}
+          {invoice.settings?.vatRegistered && (
+            <div className="flex justify-between text-[13px]">
+              <span className="text-white">VAT ({invoice.settings?.vatRate || 20}%)</span>
+              <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount || 0)}</span>
             </div>
+          )}
+          <div className="mt-3 p-4 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
+            <span className="text-[15px] font-bold text-white">Total Due</span>
+            <span className="text-[26px] font-bold text-elec-yellow tabular-nums">{formatCurrency(totalAmount)}</span>
           </div>
         </div>
       </div>
@@ -180,276 +90,159 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
 
   return (
     <div className="space-y-5 text-left">
-      {/* Summary Banner */}
-      <div className="rounded-2xl bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 p-5">
-        <div className="grid grid-cols-2 gap-4">
+      {/* Key info — flat grid, no container */}
+      <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+        <div>
+          <p className="text-[11px] text-white uppercase tracking-wider">Invoice No.</p>
+          <p className="text-[15px] font-medium text-white">
+            {invoice.invoice_number || invoice.quoteNumber || 'Draft'}
+          </p>
+        </div>
+        <div>
+          <p className="text-[11px] text-white uppercase tracking-wider">Client</p>
+          <p className="text-[15px] font-medium text-white truncate">{invoice.client?.name || '—'}</p>
+        </div>
+        <div>
+          <p className="text-[11px] text-white uppercase tracking-wider">Due Date</p>
+          <p className="text-[15px] font-medium text-white">
+            {formatDate(invoice.invoice_due_date || invoice.createdAt)}
+          </p>
+        </div>
+        <div>
+          <p className="text-[11px] text-white uppercase tracking-wider">Total</p>
+          <p className="text-[18px] font-bold text-white">{formatCurrency(totalAmount)}</p>
+        </div>
+      </div>
+
+      {/* Client */}
+      <div className="py-3 border-t border-white/[0.12]">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2">
           <div>
-            <p className="text-[12px] text-white">Invoice No.</p>
-            <p className="text-[15px] font-semibold text-white">
-              {invoice.invoice_number || invoice.quoteNumber || 'Draft'}
-            </p>
+            <p className="text-[11px] text-white uppercase tracking-wider">Name</p>
+            <p className="text-[14px] text-white">{invoice.client?.name || '—'}</p>
           </div>
           <div>
-            <p className="text-[12px] text-white">Client</p>
-            <p className="text-[15px] font-semibold text-white truncate">
-              {invoice.client?.name || 'N/A'}
-            </p>
+            <p className="text-[11px] text-white uppercase tracking-wider">Phone</p>
+            <p className="text-[14px] text-white">{invoice.client?.phone || '—'}</p>
           </div>
           <div>
-            <p className="text-[12px] text-white">Due Date</p>
-            <p className="text-[15px] font-semibold text-white">
-              {formatDate(invoice.invoice_due_date || invoice.createdAt)}
-            </p>
+            <p className="text-[11px] text-white uppercase tracking-wider">Email</p>
+            <p className="text-[14px] text-white break-all">{invoice.client?.email || '—'}</p>
           </div>
           <div>
-            <p className="text-[12px] text-white">Total</p>
-            <p className="text-xl font-bold text-elec-yellow">{formatCurrency(totalAmount)}</p>
+            <p className="text-[11px] text-white uppercase tracking-wider">Address</p>
+            <p className="text-[14px] text-white">{invoice.client?.address || '—'}</p>
           </div>
         </div>
       </div>
 
-      {/* Collapsible Sections */}
-      <div className="space-y-3">
-        {/* Client Section */}
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-          <button
-            onClick={() => toggleSection('client')}
-            className="w-full flex items-center justify-between p-4 touch-manipulation"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-[14px] font-medium text-white">Client Information</span>
-            </div>
-            {expandedSections.includes('client') ? (
-              <ChevronUp className="h-5 w-5 text-white" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-white" />
-            )}
-          </button>
+      {/* Items — collapsible */}
+      <div className="border-t border-white/[0.12]">
+        <button
+          onClick={() => setShowItems(!showItems)}
+          className="w-full flex items-center justify-between py-3 touch-manipulation"
+        >
+          <span className="text-[14px] font-medium text-white">
+            {invoice.settings?.showSummaryView ? 'Items (Summary)' : `Items (${allItems.length})`}
+          </span>
+          {showItems
+            ? <ChevronUp className="h-4 w-4 text-white" />
+            : <ChevronDown className="h-4 w-4 text-white" />
+          }
+        </button>
 
-          {expandedSections.includes('client') && (
-            <div className="border-t border-white/[0.06] divide-y divide-white/[0.06]">
-              <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
-                <div className="p-4">
-                  <p className="text-[12px] text-white">Name</p>
-                  <p className="text-[14px] font-medium text-white">
-                    {invoice.client?.name || 'N/A'}
-                  </p>
-                </div>
-                <div className="p-4">
-                  <p className="text-[12px] text-white">Phone</p>
-                  <p className="text-[14px] font-medium text-white">
-                    {invoice.client?.phone || 'N/A'}
-                  </p>
-                </div>
-              </div>
-              <div className="p-4">
-                <p className="text-[12px] text-white">Email</p>
-                <p className="text-[14px] font-medium text-white break-all">
-                  {invoice.client?.email || 'N/A'}
-                </p>
-              </div>
-              <div className="p-4">
-                <p className="text-[12px] text-white">Address</p>
-                <p className="text-[14px] font-medium text-white">
-                  {invoice.client?.address || 'N/A'}
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
+        {showItems && (
+          <div>
+            <div className="divide-y divide-white/[0.06]">
+              {invoice.settings?.showSummaryView
+                ? (() => {
+                    const categoryTotals = allItems.reduce((acc, item) => {
+                      const total = (item.quantity || 0) * (item.unitPrice || 0);
+                      const category = item.category || 'manual';
+                      if (!acc[category]) acc[category] = 0;
+                      acc[category] += total;
+                      return acc;
+                    }, {} as Record<string, number>);
 
-        {/* Invoice Details Section */}
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-          <button
-            onClick={() => toggleSection('details')}
-            className="w-full flex items-center justify-between p-4 touch-manipulation"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-[14px] font-medium text-white">Invoice Details</span>
-            </div>
-            {expandedSections.includes('details') ? (
-              <ChevronUp className="h-5 w-5 text-white" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-white" />
-            )}
-          </button>
+                    const labels: Record<string, string> = { labour: 'Labour', materials: 'Materials', equipment: 'Equipment Hire', manual: 'Other' };
 
-          {expandedSections.includes('details') && (
-            <div className="border-t border-white/[0.06] divide-y divide-white/[0.06]">
-              <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
-                <div className="p-4">
-                  <p className="text-[12px] text-white">Reference</p>
-                  <p className="text-[14px] font-medium text-white">
-                    {invoice.quoteNumber || 'N/A'}
-                  </p>
-                </div>
-                <div className="p-4">
-                  <p className="text-[12px] text-white">Status</p>
-                  <Badge
-                    variant="secondary"
-                    className={cn(
-                      'mt-1',
-                      invoice.invoice_status === 'paid' && 'bg-emerald-500/20 text-emerald-400',
-                      invoice.invoice_status === 'pending' && 'bg-amber-500/20 text-amber-400',
-                      invoice.invoice_status === 'overdue' && 'bg-red-500/20 text-red-400'
-                    )}
-                  >
-                    {invoice.invoice_status || invoice.status || 'Draft'}
-                  </Badge>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
-                <div className="p-4">
-                  <p className="text-[12px] text-white">Invoice Date</p>
-                  <p className="text-[14px] font-medium text-white">
-                    {formatDate(invoice.invoice_date || invoice.createdAt)}
-                  </p>
-                </div>
-                <div className="p-4">
-                  <p className="text-[12px] text-white">Due Date</p>
-                  <p className="text-[14px] font-medium text-white">
-                    {formatDate(invoice.invoice_due_date || invoice.expiryDate)}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Items Section */}
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-          <button
-            onClick={() => toggleSection('items')}
-            className="w-full flex items-center justify-between p-4 touch-manipulation"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-[14px] font-medium text-white">
-                Invoice Items{' '}
-                {invoice.settings?.showSummaryView ? '(Summary)' : `(${allItems.length})`}
-              </span>
-            </div>
-            {expandedSections.includes('items') ? (
-              <ChevronUp className="h-5 w-5 text-white" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-white" />
-            )}
-          </button>
-
-          {expandedSections.includes('items') && (
-            <div className="border-t border-white/[0.06]">
-              <div className="divide-y divide-white/[0.06]">
-                {invoice.settings?.showSummaryView
-                  ? // Summary View: Group by category
-                    (() => {
-                      const categoryTotals = allItems.reduce(
-                        (acc, item) => {
-                          const qty = item.quantity || 0;
-                          const total = qty * (item.unitPrice || 0);
-                          const category = item.category || 'manual';
-                          if (!acc[category]) acc[category] = 0;
-                          acc[category] += total;
-                          return acc;
-                        },
-                        {} as Record<string, number>
-                      );
-
-                      const categoryLabels: Record<string, string> = {
-                        labour: 'Labour',
-                        materials: 'Materials',
-                        equipment: 'Equipment Hire',
-                        manual: 'Other',
-                      };
-
-                      const categoryOrder = ['labour', 'materials', 'equipment', 'manual'];
-
-                      return categoryOrder
-                        .filter((cat) => categoryTotals[cat] && categoryTotals[cat] > 0)
-                        .map((category) => (
-                          <div key={category} className="p-4 space-y-2">
-                            <div className="flex justify-between items-start gap-3">
-                              <div className="flex-1 min-w-0">
-                                <p className="text-[14px] font-medium text-white">
-                                  {categoryLabels[category]}
-                                </p>
-                              </div>
-                              <p className="text-[14px] font-bold text-elec-yellow shrink-0">
-                                {formatCurrency(categoryTotals[category])}
-                              </p>
-                            </div>
-                          </div>
-                        ));
-                    })()
-                  : // Detailed View: Show all items
-                    allItems.map((item, index) => (
-                      <div key={item.id || index} className="p-4 space-y-2">
-                        <div className="flex justify-between items-start gap-3">
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[14px] font-medium text-white">{item.description}</p>
-                            {item.notes && (
-                              <p className="text-[12px] text-white mt-0.5">{item.notes}</p>
-                            )}
-                          </div>
-                          <p className="text-[14px] font-bold text-elec-yellow shrink-0">
-                            {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+                    return ['labour', 'materials', 'equipment', 'manual']
+                      .filter((cat) => categoryTotals[cat] > 0)
+                      .map((category) => (
+                        <div key={category} className="flex justify-between items-center py-3">
+                          <p className="text-[14px] text-white">{labels[category]}</p>
+                          <p className="text-[14px] font-medium text-white tabular-nums">{formatCurrency(categoryTotals[category])}</p>
+                        </div>
+                      ));
+                  })()
+                : allItems.map((item, index) => (
+                    <div key={item.id || index} className="py-3">
+                      <div className="flex justify-between items-start gap-3">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[14px] text-white">{item.description}</p>
+                          {item.notes && <p className="text-[12px] text-white mt-0.5">{item.notes}</p>}
+                          <p className="text-[12px] text-white mt-0.5">
+                            {item.quantity} {item.unit} × {formatCurrency(item.unitPrice)}
                           </p>
                         </div>
-                        <div className="flex items-center gap-4 text-[12px] text-white">
-                          <span>
-                            {item.quantity} {item.unit}
-                          </span>
-                          <span>×</span>
-                          <span>{formatCurrency(item.unitPrice)}</span>
-                        </div>
+                        <p className="text-[14px] font-medium text-white shrink-0 tabular-nums">
+                          {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
+                        </p>
                       </div>
-                    ))}
+                    </div>
+                  ))
+              }
+            </div>
+
+            {/* Totals */}
+            <div className="pt-3 mt-1 border-t border-white/[0.12] space-y-2">
+              <div className="flex justify-between text-[13px]">
+                <span className="text-white">Subtotal</span>
+                <span className="text-white tabular-nums">{formatCurrency(invoice.subtotal || 0)}</span>
               </div>
-
-              {/* Totals Breakdown */}
-              <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20 space-y-2">
-                {/* Subtotal */}
-                <div className="flex items-center justify-between">
-                  <span className="text-[13px] text-white">Subtotal</span>
-                  <span className="text-[14px] font-medium text-white">
-                    {formatCurrency(invoice.subtotal || 0)}
-                  </span>
+              {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
+                <div className="flex justify-between text-[13px]">
+                  <span className="text-red-400">{invoice.settings.discountLabel || 'Discount'}</span>
+                  <span className="text-red-400 tabular-nums">-{formatCurrency(invoice.discountAmount || 0)}</span>
                 </div>
-
-                {/* Discount - only show if enabled */}
-                {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-[13px] text-red-400">
-                      {invoice.settings.discountLabel || 'Discount'}
-                    </span>
-                    <span className="text-[14px] font-medium text-red-400">
-                      -{formatCurrency(invoice.discountAmount || 0)}
-                    </span>
-                  </div>
-                )}
-
-                {/* VAT - only show if VAT registered */}
-                {invoice.settings?.vatRegistered && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-[13px] text-white">
-                      VAT ({invoice.settings?.vatRate || 20}%)
-                    </span>
-                    <span className="text-[14px] font-medium text-white">
-                      {formatCurrency(invoice.vatAmount || 0)}
-                    </span>
-                  </div>
-                )}
-
-                {/* Total */}
-                <div className="flex items-center justify-between pt-2 border-t border-elec-yellow/30">
-                  <span className="text-[15px] font-semibold text-white">Total</span>
-                  <span className="text-xl font-bold text-elec-yellow">
-                    {formatCurrency(totalAmount)}
-                  </span>
+              )}
+              {invoice.settings?.vatRegistered && (
+                <div className="flex justify-between text-[13px]">
+                  <span className="text-white">VAT ({invoice.settings?.vatRate || 20}%)</span>
+                  <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount || 0)}</span>
                 </div>
+              )}
+              <div className="mt-3 p-4 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20 flex justify-between items-baseline">
+                <span className="text-[15px] font-bold text-white">Total Due</span>
+                <span className="text-[26px] font-bold text-elec-yellow tabular-nums">{formatCurrency(totalAmount)}</span>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
+
+      {/* Linked Certificate */}
+      {(invoice as any).linked_certificate_id && (
+        <div className="border-t border-white/[0.12] pt-4">
+          <p className="text-[11px] text-white uppercase tracking-wider mb-2">Linked Document</p>
+          <div className="flex items-center gap-3 p-3 rounded-xl bg-blue-500/[0.08] border border-blue-500/20">
+            <div className="flex-1 min-w-0">
+              <p className="text-[14px] font-medium text-white">{(invoice as any).linked_certificate_type}</p>
+              <p className="text-[12px] text-white">{(invoice as any).linked_certificate_reference}</p>
+            </div>
+            {(invoice as any).linked_certificate_pdf_url && (
+              <a
+                href={(invoice as any).linked_certificate_pdf_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[12px] font-medium text-blue-400 touch-manipulation flex-shrink-0"
+              >
+                View PDF
+              </a>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -180,7 +180,7 @@ export default function InvoiceQuoteBuilder() {
         </div>
       </header>
 
-      <div className="px-4 py-6 animate-fade-in">
+      <div className="px-0 sm:px-2 py-3 animate-fade-in">
 
         {quote && quote.invoice_raised && quote.invoice_number ? (
           <InvoiceWizard

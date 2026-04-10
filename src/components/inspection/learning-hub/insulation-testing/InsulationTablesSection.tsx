@@ -1,220 +1,181 @@
-import React from 'react';
-import { Calculator, TrendingUp, AlertTriangle, CheckCircle2 } from 'lucide-react';
-import { ModernTableCard, DataGrid } from '@/components/ui/responsive-table';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
-const InsulationTablesSection = () => (
-  <div className="space-y-6">
-    <ModernTableCard
-      title="BS 7671 Minimum Insulation Resistance Values"
-      icon={<Calculator />}
-      variant="info"
-    >
-      <div className="space-y-4">
-        <DataGrid
-          headers={['Circuit Voltage', 'Test Voltage', 'Min Resistance']}
-          rows={[
-            ['SELV (≤50V)', '250V DC', '0.5 MΩ'],
-            ['LV (50V-500V)', '500V DC', '1.0 MΩ'],
-            ['LV (500V-1000V)', '1000V DC', '1.0 MΩ'],
-          ]}
-        />
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
 
-        <DataGrid
-          headers={['Test Type', 'Duration']}
-          rows={[
-            ['Standard Test', '1 minute'],
-            ['Periodic Test', '1 minute'],
-            ['Initial Verification', '1 minute'],
-            ['Fault Investigation', 'As required'],
-          ]}
-        />
+interface Props {
+  onBack: () => void;
+}
 
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3">
-          <p className="text-yellow-400 font-medium text-sm">
-            <strong>Note:</strong> Reading must be stable for final 15 seconds
-          </p>
-        </div>
-      </div>
-    </ModernTableCard>
+const minValues = [
+  ['SELV / PELV (≤50V)', '250V DC', '0.5 MΩ'],
+  ['LV up to 500V (most circuits)', '500V DC', '1.0 MΩ'],
+  ['LV 500V to 1000V', '1000V DC', '1.0 MΩ'],
+];
 
-    <ModernTableCard title="Temperature Correction Factors" icon={<TrendingUp />} variant="success">
-      <div className="space-y-4">
-        <DataGrid
-          headers={['Temperature (°C)', 'Correction Factor']}
-          rows={[
-            ['0', '4.438'],
-            ['5', '2.105'],
-            ['10', '1.403'],
-            ['15', '1.184'],
-            ['20', '1.000'],
-            ['25', '0.847'],
-            ['30', '0.718'],
-            ['35', '0.609'],
-            ['40', '0.516'],
-          ]}
-        />
+const tempCorrection = [
+  ['0', '4.44', 'Very cold — IR reads much higher than at 20°C'],
+  ['5', '2.11', 'Cold winter'],
+  ['10', '1.40', 'Cool indoor'],
+  ['15', '1.18', ''],
+  ['20', '1.00', 'Reference temperature — no correction needed'],
+  ['25', '0.85', 'Warm day'],
+  ['30', '0.72', 'Hot environment'],
+  ['35', '0.61', 'Plant room'],
+  ['40', '0.52', 'Enclosed space, direct sun'],
+];
 
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="font-medium text-foreground mb-3">Correction Formula:</h5>
-          <div className="bg-muted rounded-lg p-3 text-sm space-y-2">
-            <p className="font-mono text-foreground">R₂₀ = R_measured × 1.07^(20-T_measured)</p>
-            <div className="text-muted-foreground space-y-1">
-              <p>
-                <strong>Where:</strong>
-              </p>
-              <p>• R₂₀ = Resistance corrected to 20°C</p>
-              <p>• R_measured = Actual measured resistance</p>
-              <p>• T_measured = Temperature during test</p>
-              <p>• 1.07 = Temperature coefficient for typical insulation</p>
-            </div>
-            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-2 mt-3">
-              <p className="text-yellow-400 font-medium text-sm">
-                <strong>Example:</strong> 500MΩ at 5°C = 500 × 0.475 = 238MΩ at 20°C
-              </p>
-            </div>
+const InsulationTablesSection = ({ onBack }: Props) => {
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">IR Tables</h1>
           </div>
         </div>
       </div>
-    </ModernTableCard>
 
-    <ModernTableCard
-      title="Typical Insulation Resistance Values"
-      icon={<CheckCircle2 />}
-      variant="info"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="font-medium text-foreground mb-3">New Installations</h5>
-          <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Typical readings:</p>
-            <div className="space-y-1">
-              <p>• New PVC cables: &gt; 999MΩ</p>
-              <p>• XLPE cables: &gt; 999MΩ</p>
-              <p>• Rubber cables: 100-999MΩ</p>
-              <p>• MICC cables: &gt; 999MΩ</p>
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
+        {/* Quick reference */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Quick Reference</p>
+          <div className="grid grid-cols-3 gap-2">
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
+              <p className="text-xs text-white/60">New installation</p>
+              <p className="text-lg font-bold text-white">&gt;200MΩ</p>
+              <p className="text-xs text-green-400">Excellent</p>
             </div>
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-2 mt-3">
-              <p className="text-green-400 font-medium text-sm">All should exceed 1.0MΩ minimum</p>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
+              <p className="text-xs text-white/60">Existing (good)</p>
+              <p className="text-lg font-bold text-white">2-200MΩ</p>
+              <p className="text-xs text-yellow-400">Acceptable</p>
+            </div>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
+              <p className="text-xs text-white/60">Investigate</p>
+              <p className="text-lg font-bold text-white">&lt;1MΩ</p>
+              <p className="text-xs text-red-400">Below minimum</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="font-medium text-foreground mb-3">Aged Installations</h5>
-          <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Acceptable ranges:</p>
-            <div className="space-y-1">
-              <p>• 10-20 years: 10-100MΩ</p>
-              <p>• 20-30 years: 2-50MΩ</p>
-              <p>• 30+ years: 1-10MΩ</p>
-              <p>• Damp conditions: 0.5-5MΩ</p>
-            </div>
-            <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-2 mt-3">
-              <p className="text-yellow-400 font-medium text-sm">Must still meet 1.0MΩ minimum</p>
+        {/* BS 7671 minimum values */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">BS 7671 Minimum Values — Table 61</p>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/[0.08]">
+                    <th className="text-left p-3 text-xs font-semibold text-white/60">Circuit Voltage</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white/60">Test Voltage</th>
+                    <th className="text-left p-3 text-xs font-semibold text-yellow-400">Min IR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {minValues.map((row, i) => (
+                    <tr key={i} className="border-b border-white/[0.04]">
+                      <td className="p-3 text-white text-xs">{row[0]}</td>
+                      <td className="p-3 text-white">{row[1]}</td>
+                      <td className="p-3 text-yellow-400 font-semibold">{row[2]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="bg-card border border-border rounded-lg p-4">
-          <h5 className="font-medium text-foreground mb-3">Problem Indicators</h5>
-          <div className="space-y-2 text-sm">
-            <p className="font-medium text-muted-foreground">Investigation required:</p>
-            <div className="space-y-1">
-              <p>• &lt; 1.0MΩ (new installation)</p>
-              <p>• &lt; 0.5MΩ (existing installation)</p>
-              <p>• Rapidly declining readings</p>
-              <p>• Inconsistent phase readings</p>
-            </div>
-            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-2 mt-3">
-              <p className="text-red-400 font-medium text-sm">May indicate insulation failure</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ModernTableCard>
-
-    <ModernTableCard
-      title="Environmental Factors Affecting Results"
-      icon={<AlertTriangle />}
-      variant="warning"
-    >
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card border border-border rounded-lg p-4">
-            <h5 className="font-medium text-foreground mb-3">Temperature Effects</h5>
-            <div className="space-y-2 text-sm">
-              <p>
-                • <strong>Cold weather:</strong> Increases resistance readings
-              </p>
-              <p>
-                • <strong>Hot weather:</strong> Decreases resistance readings
-              </p>
-              <p>
-                • <strong>Correction needed:</strong> When test temperature ≠ 20°C
-              </p>
-              <p>
-                • <strong>Seasonal variation:</strong> Can be 10:1 ratio winter to summer
-              </p>
-              <p>
-                • <strong>Thermal cycling:</strong> Affects cable ageing rate
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-card border border-border rounded-lg p-4">
-            <h5 className="font-medium text-foreground mb-3">Humidity & Contamination</h5>
-            <div className="space-y-2 text-sm">
-              <p>
-                • <strong>High humidity:</strong> Reduces surface resistance
-              </p>
-              <p>
-                • <strong>Condensation:</strong> Can cause very low readings
-              </p>
-              <p>
-                • <strong>Dirt/dust:</strong> Creates conductive paths
-              </p>
-              <p>
-                • <strong>Salt contamination:</strong> Particularly problematic
-              </p>
-              <p>
-                • <strong>Chemical exposure:</strong> Degrades insulation materials
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
-          <h5 className="font-medium text-red-400 mb-3">Test Conditions Best Practice</h5>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div>
-              <h6 className="font-medium text-foreground mb-2">Before Testing:</h6>
-              <div className="space-y-1">
-                <p>• Allow cables to reach ambient temperature</p>
-                <p>• Clean terminations and connections</p>
-                <p>• Check for visible moisture or contamination</p>
+        {/* Important notes */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
+            <p className="text-sm font-semibold text-white">Important Notes</p>
+            <div className="space-y-1.5">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">The 1MΩ minimum is <span className="font-semibold">per circuit</span> — not the whole installation. Each circuit must individually meet the minimum.</p>
               </div>
-            </div>
-            <div>
-              <h6 className="font-medium text-foreground mb-2">During Testing:</h6>
-              <div className="space-y-1">
-                <p>• Record ambient temperature</p>
-                <p>• Note humidity conditions</p>
-                <p>• Apply test voltage for full duration</p>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">If the whole installation is tested together (all circuits in parallel), the combined IR may be lower than any individual circuit. Always test circuits individually if the combined reading is below 2MΩ.</p>
               </div>
-            </div>
-            <div>
-              <h6 className="font-medium text-foreground mb-2">After Testing:</h6>
-              <div className="space-y-1">
-                <p>• Apply temperature correction</p>
-                <p>• Consider environmental factors</p>
-                <p>• Document any unusual conditions</p>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">Apply the test voltage for a <span className="font-semibold">minimum of 1 minute</span>. The reading must be stable for the final 15 seconds.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
+                <p className="text-sm text-white">A reading of exactly 1MΩ is a <span className="font-semibold">borderline pass</span> — investigate the cause even though it technically meets the minimum.</p>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </ModernTableCard>
-  </div>
-);
+        </motion.div>
+
+        {/* Temperature correction */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Temperature Correction Factors</p>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 mb-3">
+            <p className="text-sm text-white leading-relaxed">
+              Insulation resistance <span className="font-semibold">decreases</span> as temperature increases (opposite to conductor resistance). BS 7671 values are referenced to 20°C. If testing in cold conditions, the reading will be artificially high — apply the correction factor to see the true 20°C value.
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
+            <div className="p-4 border-b border-white/[0.06]">
+              <p className="text-sm font-semibold text-white">IR corrected = IR measured × correction factor</p>
+              <p className="text-xs text-white/60 mt-0.5">Multiply your reading by the factor to get the equivalent value at 20°C</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-white/[0.08]">
+                    <th className="text-left p-3 text-xs font-semibold text-white/60">Temp (°C)</th>
+                    <th className="text-left p-3 text-xs font-semibold text-yellow-400">Factor</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white/60">Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tempCorrection.map((row, i) => (
+                    <tr key={i} className="border-b border-white/[0.04]">
+                      <td className="p-3 text-white font-medium">{row[0]}°C</td>
+                      <td className="p-3 text-yellow-400 font-semibold">{row[1]}</td>
+                      <td className="p-3 text-white/60 text-xs">{row[2]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Worked example */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+            <p className="text-sm font-semibold text-white mb-2">Worked Example</p>
+            <p className="text-sm text-white leading-relaxed">
+              Measured IR = 2.5MΩ at 5°C ambient. Correction factor at 5°C = 2.11.
+            </p>
+            <p className="text-sm text-white mt-2">
+              IR at 20°C = 2.5 × <span className="font-semibold text-orange-400">0.475</span> (reciprocal of 2.11) = <span className="font-semibold text-yellow-400">1.19MΩ</span>
+            </p>
+            <p className="text-sm text-white/70 mt-2">
+              This circuit passes (≥1MΩ) but only just. At 20°C the reading would be significantly lower than the 2.5MΩ measured in cold conditions. Flag for monitoring at next inspection.
+            </p>
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+};
 
 export default InsulationTablesSection;

@@ -1,520 +1,175 @@
-import React from 'react';
-import {
-  Wrench,
-  Play,
-  CheckCircle2,
-  AlertTriangle,
-  Settings,
-  Target,
-  Zap,
-  Shield,
-  Clock,
-  Calculator,
-} from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 
-const HowToTestSection = () => (
-  <div className="space-y-4 sm:space-y-6">
-    <div className="bg-green-500/10 border border-green-500/20 border-l-4 border-l-green-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-green-400">
-          Essential Test Equipment
-        </h4>
-      </div>
-      <div className="space-y-4 text-xs sm:text-sm text-gray-300">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-green-400 mb-2">Primary Test Equipment:</p>
-            <div className="space-y-2 text-xs">
-              <div>
-                <p className="font-medium text-foreground">Dedicated PFC Tester:</p>
-                <p>• Kewtech KT64, Megger MFT1741, Fluke 1664FC</p>
-                <p>• Measurement range: 10A to 25kA typical</p>
-                <p>• Accuracy: ±5% of reading ±2 digits</p>
-                <p>• CAT III 600V safety rating minimum</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Multifunction Tester:</p>
-                <p>• Combines multiple test functions</p>
-                <p>• PFC, Ze, Zs, insulation, continuity</p>
-                <p>• Cost-effective for smaller contractors</p>
-                <p>• Requires regular calibration</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-green-400 mb-2">Supporting Equipment:</p>
-            <div className="space-y-2 text-xs">
-              <div>
-                <p className="font-medium text-foreground">Test Leads and Probes:</p>
-                <p>• Heavy duty test leads (minimum 10A rating)</p>
-                <p>• Fused test probes for safety</p>
-                <p>• Crocodile clips for secure connections</p>
-                <p>• Proving unit for test equipment verification</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Live Working Safety Equipment:</p>
-                <p>• Voltage indicator and proving unit</p>
-                <p>• Insulated tools and barriers</p>
-                <p>• PPE appropriate for live working</p>
-                <p>• Warning notices for live circuit work</p>
-              </div>
-            </div>
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
+const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
+
+interface Props {
+  onBack: () => void;
+}
+
+const equipment = [
+  { name: 'PFC/loop impedance tester', detail: 'Measurement range 10A to 25kA. Accuracy ±5%. CAT III 600V safety rating minimum. Current calibration certificate.' },
+  { name: 'GS38-compliant test leads', detail: 'Fused probes with finger guards. Heavy duty rated for live testing. Check condition before every use.' },
+  { name: 'Proving unit', detail: 'To prove the tester before and after use. Mandatory for all live testing.' },
+  { name: 'PPE for live working', detail: 'Safety glasses, insulated gloves, safety boots. Arc-rated clothing where high fault levels are expected.' },
+];
+
+const testSteps = [
+  { step: 'Risk Assessment', detail: 'Complete a live working risk assessment. PFC testing MUST be performed on energised circuits — there is no dead alternative. Ensure you have authorisation for live working and appropriate PPE.', note: 'GS38 compliance and proving are mandatory. No exceptions.' },
+  { step: 'Preparation', detail: 'Disconnect all loads from the circuit while keeping it energised at the board. Remove lamps, unplug equipment. The circuit must remain live but unloaded. Establish barriers and warning notices.', note: 'Connected loads can affect readings and create parallel paths.' },
+  { step: 'Prove Test Equipment', detail: 'Prove the PFC tester on the proving unit. Confirm it gives a reading and the display is functioning correctly.', note: 'Never skip proving — an unproven tester gives false confidence.' },
+  { step: 'Phase-Earth Test', detail: 'Connect between phase and earth at the circuit origin (usually the distribution board). Press the test button. The tester briefly creates a controlled low-impedance path and calculates the prospective fault current. Record the reading.', note: 'This is the primary measurement for ADS verification.' },
+  { step: 'Phase-Neutral Test', detail: 'Connect between phase and neutral at the same point. Press the test button. Record the reading. This is usually higher than L-E and is important for breaking capacity assessment.', note: 'The higher of L-E and L-N is recorded on the certificate.' },
+  { step: 'Record and Assess', detail: 'Record the higher value on the Schedule of Test Results. Compare against the protective device breaking capacity and the minimum PFC required for magnetic operation. Verify the device rating is adequate.', note: 'If PFC exceeds device breaking capacity — immediate danger. The device must be upgraded.' },
+];
+
+const whereToTest = [
+  { location: 'At the origin of the installation', detail: 'The highest PFC will be at the main intake. This determines the breaking capacity required for the main switch and incomer devices.' },
+  { location: 'At each distribution board', detail: 'PFC decreases with distance from the supply. Each DB needs its own PFC measurement to verify the devices installed there are adequate.' },
+  { location: 'At the origin of each circuit (optional)', detail: 'For critical circuits or where discrimination is important. The circuit PFC confirms the specific device on that circuit is adequate.' },
+];
+
+const commonMistakes = [
+  { mistake: 'Trying to test on an isolated circuit', fix: 'PFC can ONLY be measured on a live circuit. Dead testing cannot provide PFC values — the supply impedance only exists when energised.' },
+  { mistake: 'Not recording the higher of L-E and L-N', fix: 'BS 7671 requires the greater prospective fault current to be stated on the certificate. Always test both and record the higher value.' },
+  { mistake: 'Comparing PFC to the wrong device rating', fix: 'PFC must be compared to breaking capacity (kA rating on the device), not the current rating (A). A 32A MCB with 6kA breaking capacity can handle 6,000A fault current.' },
+  { mistake: 'Not proving the test instrument', fix: 'Prove before and after every test session. Live PFC testing relies on accurate readings — an uncalibrated instrument could miss an over-rated installation.' },
+  { mistake: 'Poor connections causing arcing', fix: 'Make secure, low-resistance connections before pressing the test button. Loose probe contact on live terminals can cause arcing and burns.' },
+];
+
+const calculationMethod = {
+  formula: 'Ipf = U₀ ÷ Zs',
+  example: {
+    title: 'Kitchen Ring Circuit',
+    data: ['Ze = 0.35Ω (TN-C-S supply)', 'R1+R2 end-to-end = 0.96Ω', 'Ring factor = 0.25', 'Circuit R1+R2 = 0.96 × 0.25 = 0.24Ω'],
+    calculation: ['Zs = Ze + R1+R2 = 0.35 + 0.24 = 0.59Ω', 'PFC = 230V ÷ 0.59Ω = 390A', '32A Type B MCB minimum = 160A', 'Safety margin: 390/160 = 2.4× — satisfactory'],
+  },
+};
+
+const HowToTestSection = ({ onBack }: Props) => {
+  return (
+    <div>
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06] -mx-4 px-4 mb-5">
+        <div className="py-2">
+          <div className="flex items-center gap-3 h-11">
+            <Button variant="ghost" size="icon" onClick={onBack} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <h1 className="text-base font-semibold text-white">How to Test</h1>
           </div>
         </div>
       </div>
+
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
+        {/* PPE & Equipment */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Test Equipment</p>
+          <div className="space-y-2">
+            {equipment.map((item, i) => (
+              <div key={i} className="flex items-start gap-3 rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+                <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <span className="text-xs font-bold text-yellow-400">{i + 1}</span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-white">{item.name}</p>
+                  <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Test procedure */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-orange-400/10 border border-orange-400/20 p-4 mb-3">
+            <p className="text-sm font-semibold text-white">Live Testing Procedure</p>
+            <p className="text-sm text-white mt-1">PFC testing MUST be performed on energised circuits. There is no dead alternative — the supply impedance only exists when the circuit is live.</p>
+          </div>
+        </motion.div>
+
+        {testSteps.map((item, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
+                  <span className="text-sm font-bold text-yellow-400">{i + 1}</span>
+                </div>
+                <p className="text-sm font-semibold text-white">{item.step}</p>
+              </div>
+              <p className="text-sm text-white leading-relaxed pl-11">{item.detail}</p>
+              <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-2.5 ml-11">
+                <p className="text-xs text-yellow-400/80">{item.note}</p>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+
+        {/* Where to test */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Where to Test</p>
+        </motion.div>
+
+        {whereToTest.map((item, i) => (
+          <motion.div key={i} variants={itemVariants}>
+            <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+              <p className="text-sm font-semibold text-white">{item.location}</p>
+              <p className="text-sm text-white/80 mt-1">{item.detail}</p>
+            </div>
+          </motion.div>
+        ))}
+
+        {/* Calculation method */}
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-yellow-400/10 border border-yellow-400/20 p-4">
+            <p className="text-sm font-semibold text-white mb-3">Calculation Method (Design Verification)</p>
+            <div className="rounded-xl bg-white/[0.05] p-3 text-center mb-3">
+              <p className="text-lg font-bold text-white">{calculationMethod.formula}</p>
+            </div>
+            <p className="text-sm font-semibold text-white mb-2">{calculationMethod.example.title}</p>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="rounded-xl bg-white/[0.05] p-3">
+                <p className="text-xs text-white/60 mb-1">Given Data</p>
+                {calculationMethod.example.data.map((d, i) => (
+                  <p key={i} className="text-sm text-white">{d}</p>
+                ))}
+              </div>
+              <div className="rounded-xl bg-white/[0.05] p-3">
+                <p className="text-xs text-white/60 mb-1">Calculation</p>
+                {calculationMethod.example.calculation.map((c, i) => (
+                  <p key={i} className="text-sm text-white">{c}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Common mistakes */}
+        <motion.div variants={itemVariants}>
+          <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Common Mistakes to Avoid</p>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
+            <div className="space-y-3">
+              {commonMistakes.map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-9 h-9 rounded-xl bg-orange-400/10 border border-orange-400/20 flex items-center justify-center mt-0.5">
+                    <span className="text-xs font-bold text-orange-400">{i + 1}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-white">{item.mistake}</p>
+                    <p className="text-sm text-white/70 mt-0.5">{item.fix}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
     </div>
-
-    <div className="bg-red-500/10 border border-red-500/20 border-l-4 border-l-red-500 rounded-lg p-4 sm:p-5 md:p-6">
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-        <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 shrink-0" />
-        <h4 className="text-base sm:text-lg font-semibold text-red-400">
-          CRITICAL: PFC Testing Requires Live Circuits
-        </h4>
-      </div>
-      <div className="space-y-4 text-sm text-gray-300">
-        <div className="bg-card rounded p-4">
-          <p className="font-medium text-red-400 mb-3">Why PFC Testing Must Be Performed Live:</p>
-          <div className="space-y-2 text-xs">
-            <p>• PFC testing measures the actual fault current available from the supply</p>
-            <p>• Dead circuit testing cannot provide meaningful PFC values</p>
-            <p>• Supply impedance and transformer characteristics only exist when energised</p>
-            <p>• BS 7671 requires measurement of actual prospective fault current</p>
-            <p>
-              • Unlike other electrical tests, PFC testing CANNOT be performed safely on isolated
-              circuits
-            </p>
-          </div>
-        </div>
-
-        <div className="bg-red-500/20 border border-red-500/30 rounded p-3">
-          <p className="font-medium text-red-400 mb-2">⚠️ Live Working Safety Notice:</p>
-          <p className="text-xs text-gray-300">
-            PFC testing involves working on or near live electrical circuits. This presents
-            significant risks of electric shock, burns, and arc flash. Only competent persons with
-            appropriate training, equipment, and authorisation should perform PFC testing.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Play className="h-4 w-4 text-blue-400" />
-        <h4 className="font-medium text-blue-400">Live Circuit PFC Testing Procedure</h4>
-      </div>
-      <div className="space-y-4 text-sm text-gray-300">
-        <div className="bg-card rounded p-4">
-          <p className="font-medium text-blue-400 mb-3">Step-by-Step Live Testing Procedure:</p>
-          <div className="space-y-4">
-            <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                1
-              </div>
-              <div className="flex-1">
-                <p className="font-medium text-foreground mb-1">Risk Assessment and Preparation</p>
-                <div className="text-xs text-gray-400 space-y-1">
-                  <p>• Complete live working risk assessment</p>
-                  <p>• Ensure appropriate competency and training</p>
-                  <p>• Obtain permission for live working if required</p>
-                  <p>• Check test equipment calibration certificates</p>
-                  <p>• Verify all PPE is suitable for live working</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                2
-              </div>
-              <div className="flex-1">
-                <p className="font-medium text-foreground mb-1">Live Working Safety Setup</p>
-                <div className="text-xs text-gray-400 space-y-1">
-                  <p>• Don appropriate PPE for live working</p>
-                  <p>• Establish barriers and warning notices</p>
-                  <p>• Ensure emergency procedures are understood</p>
-                  <p>• Have rescue equipment readily available</p>
-                  <p>• Brief all personnel on live working hazards</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                3
-              </div>
-              <div className="flex-1">
-                <p className="font-medium text-foreground mb-1">Circuit Load Disconnection</p>
-                <div className="text-xs text-gray-400 space-y-1">
-                  <p>• Disconnect all loads from the circuit whilst keeping it energised</p>
-                  <p>• Remove lamps from lighting circuits</p>
-                  <p>• Unplug all equipment from socket circuits</p>
-                  <p>• Ensure no parallel paths through connected equipment</p>
-                  <p>• Circuit must remain live at distribution board</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                4
-              </div>
-              <div className="flex-1">
-                <p className="font-medium text-foreground mb-1">Live Circuit Test Connection</p>
-                <div className="text-xs text-gray-400 space-y-1">
-                  <p>• Use insulated tools and maintain safe working distances</p>
-                  <p>• Connect test leads at circuit origin (live terminals)</p>
-                  <p>• Phase conductor to earth terminal for L-E PFC</p>
-                  <p>• Phase conductor to neutral terminal for L-N PFC</p>
-                  <p>• Ensure secure connections to avoid arcing</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                5
-              </div>
-              <div className="flex-1">
-                <p className="font-medium text-foreground mb-1">Live Measurement and Recording</p>
-                <div className="text-xs text-gray-400 space-y-1">
-                  <p>• Perform phase-earth PFC test on live circuit</p>
-                  <p>• Record reading immediately and note any warnings</p>
-                  <p>• Perform phase-neutral PFC test if required</p>
-                  <p>• Keep exposure time to absolute minimum</p>
-                  <p>• Monitor for any signs of overheating or arcing</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-foreground rounded-full flex items-center justify-center text-xs font-bold">
-                6
-              </div>
-              <div className="flex-1">
-                <p className="font-medium text-foreground mb-1">
-                  Safe Disconnection and Restoration
-                </p>
-                <div className="text-xs text-gray-400 space-y-1">
-                  <p>• Carefully disconnect test equipment using insulated tools</p>
-                  <p>• Reconnect all loads and equipment</p>
-                  <p>• Test circuit operation after restoration</p>
-                  <p>• Remove barriers and warning notices</p>
-                  <p>• Complete test documentation immediately</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-blue-400 mb-2">Live Testing Critical Points:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Where to Test:</p>
-              <p>• At the origin of each circuit (live protective device terminals)</p>
-              <p>• Consumer unit, distribution board, or local isolator</p>
-              <p>• Circuit must remain energised from supply</p>
-              <p>• Use insulated barriers to prevent accidental contact</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">What to Measure on Live Circuits:</p>
-              <p>• Phase-Earth PFC (most critical for safety)</p>
-              <p>• Phase-Neutral PFC (for discrimination/selectivity)</p>
-              <p>• Three-phase systems: each phase individually whilst live</p>
-              <p>• All measurements require live circuit conditions</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Calculator className="h-4 w-4 text-purple-400" />
-        <h4 className="font-medium text-purple-400">Calculation Method (Design Stage Only)</h4>
-      </div>
-      <div className="space-y-4 text-sm text-gray-300">
-        <div className="bg-card rounded p-3">
-          <p className="font-medium text-purple-400 mb-2">When to Use Calculated Method:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Appropriate Situations:</p>
-              <p>• Design stage calculations before installation</p>
-              <p>• When live measurement is not safe or practical</p>
-              <p>• Verification of measured values (comparison)</p>
-              <p>• Complex installations with multiple parallel paths</p>
-              <p>• New installations before first energisation</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Limitations:</p>
-              <p>• Less accurate than live circuit measurement</p>
-              <p>• Doesn't account for actual connection resistances</p>
-              <p>• Supply impedance variations not considered</p>
-              <p>• Cannot replace live testing for verification</p>
-              <p>• Requires validation by live measurement when possible</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-card rounded p-4">
-          <p className="font-medium text-purple-400 mb-3">Calculation Formulas and Method:</p>
-          <div className="space-y-3">
-            <div className="bg-muted rounded p-3">
-              <p className="font-medium text-foreground mb-2">Basic PFC Formula:</p>
-              <div className="font-mono text-sm bg-accent p-2 rounded">PFC = Uo / Zs</div>
-              <div className="text-xs mt-2 space-y-1">
-                <p>
-                  <strong>Where:</strong>
-                </p>
-                <p>• PFC = Prospective Fault Current (Amperes)</p>
-                <p>• Uo = Nominal voltage to earth (230V single phase, 400V three phase)</p>
-                <p>• Zs = Earth fault loop impedance (Ze + R1 + R2)</p>
-              </div>
-            </div>
-
-            <div className="bg-muted rounded p-3">
-              <p className="font-medium text-foreground mb-2">Component Values Required:</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div>
-                  <p>
-                    <strong>Ze - External Earth Fault Loop Impedance:</strong>
-                  </p>
-                  <p>• Measured at supply intake</p>
-                  <p>• Provided by DNO or measured</p>
-                  <p>• Varies with supply transformer and network</p>
-                  <p>• Typical values: 0.2-0.8Ω for TN systems</p>
-                </div>
-                <div>
-                  <p>
-                    <strong>R1 + R2 - Circuit Conductor Resistances:</strong>
-                  </p>
-                  <p>• R1 = Phase conductor resistance</p>
-                  <p>• R2 = Protective conductor resistance</p>
-                  <p>• Calculated from cable length and conductor size</p>
-                  <p>• Temperature correction may be required</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-muted rounded p-3">
-              <p className="font-medium text-foreground mb-2">
-                Worked Example - Kitchen Ring Circuit:
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                <div>
-                  <p>
-                    <strong>Given Data:</strong>
-                  </p>
-                  <p>• Ze = 0.35Ω (TN-C-S supply)</p>
-                  <p>• Ring circuit length = 30m</p>
-                  <p>• Cable: 2.5mm² T&E (twin and earth)</p>
-                  <p>• R1+R2 end-to-end = 0.96Ω (from tables)</p>
-                  <p>• Ring factor = 0.25 (quarter end-to-end)</p>
-                </div>
-                <div>
-                  <p>
-                    <strong>Calculation:</strong>
-                  </p>
-                  <p>• Zs = Ze + (R1+R2)/4</p>
-                  <p>• Zs = 0.35 + 0.96/4</p>
-                  <p>• Zs = 0.35 + 0.24 = 0.59Ω</p>
-                  <p>• PFC = 230V / 0.59Ω</p>
-                  <p>
-                    • <strong>PFC = 390A</strong>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <Zap className="h-4 w-4 text-orange-400" />
-        <h4 className="font-medium text-orange-400">Advanced Live Testing Techniques</h4>
-      </div>
-      <div className="space-y-4 text-sm text-gray-300">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-orange-400 mb-2">Three-Phase Live System Testing:</p>
-            <div className="space-y-2 text-xs">
-              <div>
-                <p className="font-medium text-foreground">Phase-Earth Testing (Live):</p>
-                <p>• Test L1-E, L2-E, L3-E individually on live system</p>
-                <p>• Values should be similar (within 10%)</p>
-                <p>• Large differences indicate supply problems</p>
-                <p>• Use lowest value for assessment</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Phase-Neutral Testing (Live):</p>
-                <p>• Test L1-N, L2-N, L3-N individually on live system</p>
-                <p>• Important for discrimination analysis</p>
-                <p>• Usually higher than phase-earth values</p>
-                <p>• Essential for protective device coordination</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Phase-Phase Testing (Live):</p>
-                <p>• Test L1-L2, L2-L3, L3-L1 on live system if required</p>
-                <p>• Relevant for motor circuits and three-phase loads</p>
-                <p>• Higher fault current than single phase</p>
-                <p>• Critical for discrimination studies</p>
-              </div>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-orange-400 mb-2">Special Installation Live Testing:</p>
-            <div className="space-y-2 text-xs">
-              <div>
-                <p className="font-medium text-foreground">TT System Installations:</p>
-                <p>• PFC limited by earth electrode resistance</p>
-                <p>• Typically much lower values (50-200A) when live</p>
-                <p>• RCD protection becomes critical</p>
-                <p>• Earth electrode condition affects live results</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Generator-Fed Circuits:</p>
-                <p>• Different fault characteristics when running</p>
-                <p>• Generator impedance affects live PFC</p>
-                <p>• Must be tested with generator operational</p>
-                <p>• Consider generator earthing arrangements</p>
-              </div>
-              <div>
-                <p className="font-medium text-foreground">Solar PV Installations:</p>
-                <p>• Test AC side circuits live normally</p>
-                <p>• DC side requires special live testing procedures</p>
-                <p>• Isolator positions affect live measurements</p>
-                <p>• Consider inverter earthing arrangements</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <AlertTriangle className="h-4 w-4 text-red-400" />
-        <h4 className="font-medium text-red-400">Critical Live Working Safety Precautions</h4>
-      </div>
-      <div className="space-y-4 text-sm text-gray-300">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-red-400 mb-2">Pre-Live Working Safety Checks:</p>
-            <div className="space-y-1 text-xs">
-              <p>• Verify competency for live working activities</p>
-              <p>• Complete comprehensive risk assessment</p>
-              <p>• Check test equipment calibration and condition</p>
-              <p>• Inspect test leads for damage or deterioration</p>
-              <p>• Ensure appropriate PPE for live working is available</p>
-              <p>• Confirm emergency procedures and rescue arrangements</p>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-red-400 mb-2">During Live Working Safety:</p>
-            <div className="space-y-1 text-xs">
-              <p>• Maintain safe working distances from live parts</p>
-              <p>• Keep test duration to absolute minimum</p>
-              <p>• Monitor test equipment for overheating</p>
-              <p>• Be aware of high current transients and arcing risks</p>
-              <p>• Stop immediately if unusual readings or sparking occur</p>
-              <p>• Maintain barriers to prevent unauthorised access</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-card rounded p-4">
-          <p className="font-medium text-red-400 mb-3">High-Risk Live Working Scenarios:</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Arc Flash Risks:</p>
-              <p>• High test currents can cause arcing</p>
-              <p>• Poor connections increase arc risk</p>
-              <p>• Ensure secure, low-resistance connections</p>
-              <p>• Use appropriate arc-rated PPE</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Electric Shock Hazards:</p>
-              <p>• Direct contact with live conductors</p>
-              <p>• Induced voltages in nearby circuits</p>
-              <p>• Use insulated tools and barriers</p>
-              <p>• Maintain safe working practices</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Equipment Overheating:</p>
-              <p>• High currents generate significant heat</p>
-              <p>• Test leads and connections can overheat</p>
-              <p>• Monitor temperature during testing</p>
-              <p>• Allow cooling between repeated tests</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="bg-teal-500/10 border border-teal-500/20 rounded-lg p-4">
-      <div className="flex items-center gap-2 mb-3">
-        <CheckCircle2 className="h-4 w-4 text-teal-400" />
-        <h4 className="font-medium text-teal-400">Live Test Result Analysis and Validation</h4>
-      </div>
-      <div className="space-y-4 text-sm text-gray-300">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-teal-400 mb-2">Live Circuit Result Assessment:</p>
-            <div className="space-y-1 text-xs">
-              <p>• Compare with protective device minimum requirements</p>
-              <p>• Check consistency between similar live circuits</p>
-              <p>• Verify readings are technically reasonable for live systems</p>
-              <p>• Cross-reference with calculated values if available</p>
-              <p>• Consider supply characteristics and live variations</p>
-            </div>
-          </div>
-          <div className="bg-card rounded p-3">
-            <p className="font-medium text-teal-400 mb-2">Live Testing Quality Assurance:</p>
-            <div className="space-y-1 text-xs">
-              <p>• Repeat tests if live readings appear inconsistent</p>
-              <p>• Check test equipment battery and calibration</p>
-              <p>• Verify live test connections are secure and safe</p>
-              <p>• Ensure proper live working procedures maintained</p>
-              <p>• Document any live testing anomalies or safety concerns</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-card rounded p-4">
-          <p className="font-medium text-teal-400 mb-3">Documentation Requirements:</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            <div>
-              <p className="font-medium text-foreground mb-1">Test Data Recording:</p>
-              <p>• Circuit identification and location</p>
-              <p>• Protective device type and rating</p>
-              <p>• Phase-Earth PFC measurement</p>
-              <p>• Phase-Neutral PFC if measured</p>
-              <p>• Test method used (direct/calculated)</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Equipment Information:</p>
-              <p>• Test instrument make and model</p>
-              <p>• Calibration certificate reference</p>
-              <p>• Test lead specifications</p>
-              <p>• Environmental conditions</p>
-              <p>• Date and time of testing</p>
-            </div>
-            <div>
-              <p className="font-medium text-foreground mb-1">Assessment and Actions:</p>
-              <p>• Pass/fail against requirements</p>
-              <p>• Safety margin calculations</p>
-              <p>• Any remedial work required</p>
-              <p>• Recommendations for future testing</p>
-              <p>• Tester signature and certification</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+  );
+};
 
 export default HowToTestSection;

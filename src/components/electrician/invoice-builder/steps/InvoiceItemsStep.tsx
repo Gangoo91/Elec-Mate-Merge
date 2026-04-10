@@ -1,27 +1,14 @@
 import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Button } from '@/components/ui/button';
 import {
-  Plus,
   Trash2,
-  Calculator,
-  Wrench,
-  Package,
-  Zap,
-  Clock,
-  FileText,
-  Copy,
-  Search,
   ChevronDown,
   ChevronUp,
   Check,
   Pencil,
-  User,
-  HardHat,
-  Hammer,
-  Lightbulb,
-  Camera,
-  Scan,
+  Copy,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
@@ -101,21 +88,6 @@ interface InvoiceItemsStepProps {
 type AddMethod = 'quick' | 'manual' | 'templates' | 'scan';
 type Category = 'labour' | 'materials' | 'equipment';
 
-// Worker type icons
-const getWorkerIcon = (id: string) => {
-  switch (id) {
-    case 'electrician':
-      return Lightbulb;
-    case 'apprentice':
-      return HardHat;
-    case 'labourer':
-      return Hammer;
-    case 'designer':
-      return User;
-    default:
-      return Wrench;
-  }
-};
 
 export const InvoiceItemsStep = ({
   originalItems,
@@ -352,6 +324,7 @@ export const InvoiceItemsStep = ({
         newItem.category === 'labour' && newItem.hours > 0 ? newItem.hours : newItem.quantity,
     };
     onAddItem(itemToAdd);
+    toast({ title: 'Item added', description: itemToAdd.description });
 
     setNewItem((prev) => ({
       description: '',
@@ -369,18 +342,6 @@ export const InvoiceItemsStep = ({
     }));
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'labour':
-        return <Wrench className="h-4 w-4" />;
-      case 'materials':
-        return <Package className="h-4 w-4" />;
-      case 'equipment':
-        return <Zap className="h-4 w-4" />;
-      default:
-        return <Package className="h-4 w-4" />;
-    }
-  };
 
   const duplicateItem = (item: InvoiceItem) => {
     const duplicate = {
@@ -428,27 +389,22 @@ export const InvoiceItemsStep = ({
   const hourOptions = [0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 24, 40];
 
   return (
-    <div className="space-y-4 text-left pb-24">
-      {/* Running Total with VAT breakdown */}
-      <div className="p-3 rounded-xl bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30">
+    <div className="space-y-4 text-left">
+      {/* Running Total */}
+      <div className="pb-4 border-b border-white/[0.12] space-y-1.5">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Calculator className="h-5 w-5 text-elec-yellow" />
-            <span className="text-[13px] text-white">Subtotal</span>
-          </div>
-          <span className="text-[14px] font-medium text-white">{formatCurrency(subtotal)}</span>
+          <span className="text-[13px] text-white">Subtotal</span>
+          <span className="text-[14px] text-white tabular-nums">{formatCurrency(subtotal)}</span>
         </div>
-
         {settings?.vatRegistered && (
-          <div className="flex items-center justify-between mt-1.5">
-            <span className="text-[12px] text-white ml-7">VAT ({settings?.vatRate || 20}%)</span>
-            <span className="text-[13px] text-white">{formatCurrency(vatAmount)}</span>
+          <div className="flex items-center justify-between">
+            <span className="text-[13px] text-white">VAT ({settings?.vatRate || 20}%)</span>
+            <span className="text-[14px] text-white tabular-nums">{formatCurrency(vatAmount)}</span>
           </div>
         )}
-
-        <div className="flex items-center justify-between mt-2 pt-2 border-t border-elec-yellow/30">
-          <span className="text-[13px] font-medium text-white ml-7">Total</span>
-          <span className="text-lg font-bold text-elec-yellow">{formatCurrency(total)}</span>
+        <div className="flex items-center justify-between pt-1.5">
+          <span className="text-[14px] font-semibold text-white">Total</span>
+          <span className="text-[18px] font-bold text-white tabular-nums">{formatCurrency(total)}</span>
         </div>
       </div>
 
@@ -469,11 +425,11 @@ export const InvoiceItemsStep = ({
             )}
           </button>
           {showOriginalItems && (
-            <div className="space-y-2">
+            <div className="divide-y divide-white/[0.06]">
               {originalItems.map((item) => (
                 <div
                   key={item.id}
-                  className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3"
+                  className="py-3"
                 >
                   <div className="flex items-center justify-between mb-2">
                     {editingItemId === item.id ? (
@@ -493,7 +449,7 @@ export const InvoiceItemsStep = ({
                           }
                           if (e.key === 'Escape') setEditingItemId(null);
                         }}
-                        className="flex-1 mr-2 bg-[#1a1a1e] border border-elec-yellow/40 rounded-lg px-2 py-1 text-[13px] text-white focus:outline-none focus:border-elec-yellow"
+                        className="flex-1 mr-2 bg-white/[0.06] border border-white/[0.15] rounded-lg px-2 py-1 text-[13px] text-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                       />
                     ) : (
                       <p className="text-[13px] font-medium text-white truncate flex-1 mr-2">
@@ -501,7 +457,7 @@ export const InvoiceItemsStep = ({
                       </p>
                     )}
                     <div className="flex items-center gap-1 ml-2">
-                      <p className="text-[13px] font-bold text-elec-yellow mr-1">
+                      <p className="text-[13px] font-bold text-white mr-1">
                         {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
                       </p>
                       <button
@@ -514,16 +470,16 @@ export const InvoiceItemsStep = ({
                             setEditingItemId(item.id);
                           }
                         }}
-                        className={`w-7 h-7 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-elec-yellow/20' : 'bg-white/[0.05]'}`}
+                        className={`w-9 h-9 rounded-lg flex items-center justify-center touch-manipulation active:scale-95 ${editingItemId === item.id ? 'bg-white/[0.12]' : 'bg-white/[0.08]'}`}
                         aria-label={editingItemId === item.id ? 'Confirm edit' : 'Edit description'}
                       >
                         {editingItemId === item.id
-                          ? <Check className="h-3.5 w-3.5 text-elec-yellow" />
+                          ? <Check className="h-3.5 w-3.5 text-white" />
                           : <Pencil className="h-3.5 w-3.5 text-white" />}
                       </button>
                       <button
                         onClick={() => onRemoveItem(item.id)}
-                        className="w-7 h-7 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
+                        className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
                       >
                         <Trash2 className="h-3.5 w-3.5 text-red-400" />
                       </button>
@@ -539,7 +495,7 @@ export const InvoiceItemsStep = ({
                         })
                       }
                       style={darkInputStyle}
-                      className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
+                      className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                     />
                     <span className="text-[12px] text-white">×</span>
                     <InlineDecimalInput
@@ -551,7 +507,7 @@ export const InvoiceItemsStep = ({
                         })
                       }
                       style={darkInputStyle}
-                      className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
+                      className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                     />
                     <span className="text-[12px] text-white flex-1">{item.unit}</span>
                   </div>
@@ -563,25 +519,23 @@ export const InvoiceItemsStep = ({
       )}
 
       {/* Add Method Tabs */}
-      <div className="flex rounded-xl bg-white/[0.03] border border-white/[0.06] p-1 gap-1">
+      <div className="flex gap-2 pt-2">
         {[
-          { id: 'quick' as AddMethod, label: 'Quick', icon: Clock },
-          { id: 'manual' as AddMethod, label: 'Manual', icon: Plus },
-          { id: 'templates' as AddMethod, label: 'Jobs', icon: FileText },
-          { id: 'scan' as AddMethod, label: 'Scan', icon: Camera },
+          { id: 'quick' as AddMethod, label: 'Quick' },
+          { id: 'manual' as AddMethod, label: 'Manual' },
+          { id: 'templates' as AddMethod, label: 'Jobs' },
+          { id: 'scan' as AddMethod, label: 'Scan' },
         ].map((method) => {
-          const Icon = method.icon;
           const isActive = activeAddMethod === method.id;
           return (
             <button
               key={method.id}
               onClick={() => setActiveAddMethod(method.id)}
               className={cn(
-                'flex-1 flex flex-col items-center justify-center py-2 rounded-lg text-[11px] font-medium transition-all touch-manipulation min-w-0',
-                isActive ? 'bg-elec-yellow text-black' : 'text-white'
+                'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation',
+                isActive ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40' : 'text-white'
               )}
             >
-              <Icon className="h-5 w-5 mb-0.5" />
               {method.label}
             </button>
           );
@@ -592,24 +546,22 @@ export const InvoiceItemsStep = ({
       {activeAddMethod === 'quick' && (
         <div className="space-y-3">
           {/* Category Tabs */}
-          <div className="flex rounded-xl bg-white/[0.03] border border-white/[0.06] p-1">
+          <div className="flex gap-2">
             {[
-              { id: 'labour' as Category, label: 'Labour', icon: Wrench },
-              { id: 'materials' as Category, label: 'Materials', icon: Package },
-              { id: 'equipment' as Category, label: 'Equipment', icon: Zap },
+              { id: 'labour' as Category, label: 'Labour' },
+              { id: 'materials' as Category, label: 'Materials' },
+              { id: 'equipment' as Category, label: 'Equipment' },
             ].map((cat) => {
-              const Icon = cat.icon;
               const isActive = newItem.category === cat.id;
               return (
                 <button
                   key={cat.id}
                   onClick={() => handleCategoryChange(cat.id)}
                   className={cn(
-                    'flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-[13px] font-medium transition-all touch-manipulation',
-                    isActive ? 'bg-elec-yellow text-black' : 'text-white'
+                    'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation',
+                    isActive ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40' : 'text-white'
                   )}
                 >
-                  <Icon className="h-4 w-4" />
                   {cat.label}
                 </button>
               );
@@ -622,7 +574,7 @@ export const InvoiceItemsStep = ({
               {/* Worker Type Selector */}
               <button
                 onClick={() => setWorkerSheetOpen(true)}
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -634,7 +586,7 @@ export const InvoiceItemsStep = ({
                 </div>
                 <div className="flex items-center gap-2">
                   {selectedWorker && (
-                    <span className="text-[14px] font-semibold text-elec-yellow">
+                    <span className="text-[14px] font-semibold text-white">
                       £{selectedWorker.defaultHourlyRate}/hr
                     </span>
                   )}
@@ -645,12 +597,9 @@ export const InvoiceItemsStep = ({
               {/* Hours Selector */}
               <button
                 onClick={() => setHoursSheetOpen(true)}
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-white" />
-                  </div>
                   <div className="text-left">
                     <p className="text-[11px] text-white uppercase tracking-wide">Hours</p>
                     <p className="text-[15px] font-medium text-white">
@@ -665,13 +614,11 @@ export const InvoiceItemsStep = ({
 
               {/* Subtotal */}
               {selectedWorker && newItem.hours > 0 && (
-                <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[14px] text-white">Subtotal</span>
-                    <span className="text-[18px] font-bold text-elec-yellow">
-                      {formatCurrency(newItem.hours * newItem.hourlyRate)}
-                    </span>
-                  </div>
+                <div className="flex justify-between items-center py-3 border-b border-white/[0.12]">
+                  <span className="text-[14px] text-white">Subtotal</span>
+                  <span className="text-[18px] font-bold text-white tabular-nums">
+                    {formatCurrency(newItem.hours * newItem.hourlyRate)}
+                  </span>
                 </div>
               )}
             </div>
@@ -681,21 +628,18 @@ export const InvoiceItemsStep = ({
           {newItem.category === 'materials' && (
             <div className="space-y-2">
               {/* Search */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                <input
-                  placeholder="Search materials..."
-                  value={materialSearch}
-                  onChange={(e) => setMaterialSearch(e.target.value)}
-                  style={darkInputStyle}
-                  className="w-full h-11 pl-10 pr-4 rounded-xl bg-[#1a1a1e] border border-white/[0.06] text-[14px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow"
-                />
-              </div>
+              <input
+                placeholder="Search materials..."
+                value={materialSearch}
+                onChange={(e) => setMaterialSearch(e.target.value)}
+                style={darkInputStyle}
+                className="w-full h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[14px] text-white placeholder:text-white/60 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+              />
 
               {/* Category Selector */}
               <button
                 onClick={() => setCategorySheetOpen(true)}
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -711,12 +655,9 @@ export const InvoiceItemsStep = ({
               {/* Material Selector */}
               <button
                 onClick={() => setMaterialSheetOpen(true)}
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
-                    <Package className="h-5 w-5 text-white" />
-                  </div>
                   <div className="text-left">
                     <p className="text-[11px] text-white uppercase tracking-wide">Material</p>
                     <p className="text-[15px] font-medium text-white truncate max-w-[180px]">
@@ -726,7 +667,7 @@ export const InvoiceItemsStep = ({
                 </div>
                 <div className="flex items-center gap-2">
                   {selectedMaterial && (
-                    <span className="text-[14px] font-semibold text-elec-yellow">
+                    <span className="text-[14px] font-semibold text-white">
                       £{calculateAdjustedPrice(selectedMaterial.defaultPrice).toFixed(2)}
                     </span>
                   )}
@@ -735,8 +676,8 @@ export const InvoiceItemsStep = ({
               </button>
 
               {/* Markup Quick Select */}
-              <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-                <span className="text-[12px] text-white uppercase tracking-wide">Markup</span>
+              <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+                <span className="text-[11px] text-white uppercase tracking-wider">Markup</span>
                 <div className="flex gap-1">
                   {[0, 10, 15, 20].map((markup) => (
                     <button
@@ -745,8 +686,8 @@ export const InvoiceItemsStep = ({
                       className={cn(
                         'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation',
                         priceAdjustment === markup
-                          ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.05] text-white'
+                          ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
+                          : 'bg-white/[0.08] text-white'
                       )}
                     >
                       {markup}%
@@ -762,7 +703,7 @@ export const InvoiceItemsStep = ({
             <div className="space-y-2">
               <button
                 onClick={() => setEquipmentCategorySheetOpen(true)}
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -779,12 +720,9 @@ export const InvoiceItemsStep = ({
 
               <button
                 onClick={() => setEquipmentSheetOpen(true)}
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
-                    <Zap className="h-5 w-5 text-white" />
-                  </div>
                   <div className="text-left">
                     <p className="text-[11px] text-white uppercase tracking-wide">Equipment</p>
                     <p className="text-[15px] font-medium text-white">
@@ -794,7 +732,7 @@ export const InvoiceItemsStep = ({
                 </div>
                 <div className="flex items-center gap-2">
                   {selectedEquipment && (
-                    <span className="text-[14px] font-semibold text-elec-yellow">
+                    <span className="text-[14px] font-semibold text-white">
                       £{selectedEquipment.dailyRate}/day
                     </span>
                   )}
@@ -807,9 +745,8 @@ export const InvoiceItemsStep = ({
           {/* Add Button */}
           <Button
             onClick={handleAddItem}
-            className="w-full h-12 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+            className="w-full h-12 bg-elec-yellow/15 text-elec-yellow font-semibold hover:bg-elec-yellow/20 active:scale-[0.98] touch-manipulation rounded-xl border border-elec-yellow/20"
           >
-            <Plus className="h-5 w-5 mr-2" />
             Add to Invoice
           </Button>
         </div>
@@ -818,22 +755,22 @@ export const InvoiceItemsStep = ({
       {/* Manual Entry */}
       {activeAddMethod === 'manual' && (
         <div className="space-y-3">
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-            <div className="p-4 border-b border-white/[0.06]">
-              <label className="text-[11px] text-white uppercase tracking-wide block mb-2">
-                Description *
+          <div>
+            <div className="pb-3 border-b border-white/[0.12]">
+              <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
+                Description
               </label>
               <input
                 value={newItem.description}
                 onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
                 placeholder="Enter item description"
                 style={darkInputStyle}
-                className="w-full h-11 px-3 rounded-lg bg-[#1a1a1e] border-0 text-[15px] text-white placeholder:text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+                className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
               />
             </div>
-            <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
-              <div className="p-4">
-                <label className="text-[11px] text-white uppercase tracking-wide block mb-2">
+            <div className="grid grid-cols-2 gap-3 py-3">
+              <div>
+                <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
                   Quantity
                 </label>
                 <input
@@ -850,12 +787,12 @@ export const InvoiceItemsStep = ({
                       }
                     }
                   }}
-                  className="w-full h-11 px-3 rounded-lg bg-[#1a1a1e] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
                   placeholder="1"
                 />
               </div>
-              <div className="p-4">
-                <label className="text-[11px] text-white uppercase tracking-wide block mb-2">
+              <div>
+                <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
                   Unit Price (£)
                 </label>
                 <input
@@ -872,16 +809,16 @@ export const InvoiceItemsStep = ({
                       }
                     }
                   }}
-                  className="w-full h-11 px-3 rounded-lg bg-[#1a1a1e] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
                   placeholder="0.00"
                 />
               </div>
             </div>
             {newItem.quantity > 0 && newItem.unitPrice > 0 && (
-              <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20">
+              <div className="p-4 bg-white/[0.06] border-t border-white/[0.12]">
                 <div className="flex justify-between items-center">
                   <span className="text-[14px] text-white">Line Total</span>
-                  <span className="text-[18px] font-bold text-elec-yellow">
+                  <span className="text-[18px] font-bold text-white">
                     {formatCurrency(newItem.quantity * newItem.unitPrice)}
                   </span>
                 </div>
@@ -890,9 +827,8 @@ export const InvoiceItemsStep = ({
           </div>
           <Button
             onClick={handleAddItem}
-            className="w-full h-12 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+            className="w-full h-12 bg-elec-yellow/15 text-elec-yellow font-semibold hover:bg-elec-yellow/20 active:scale-[0.98] touch-manipulation rounded-xl border border-elec-yellow/20"
           >
-            <Plus className="h-5 w-5 mr-2" />
             Add to Invoice
           </Button>
         </div>
@@ -904,33 +840,24 @@ export const InvoiceItemsStep = ({
       {/* Scan Invoice */}
       {activeAddMethod === 'scan' && (
         <div className="space-y-3">
-          {/* Info Card */}
-          <div className="p-4 rounded-xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
-                <Scan className="h-5 w-5 text-cyan-400" />
-              </div>
-              <div>
-                <p className="text-[14px] font-medium text-white">Scan Supplier Invoice</p>
-                <p className="text-[12px] text-white">
-                  Take a photo or upload an invoice to auto-import materials
-                </p>
-              </div>
-            </div>
+          <div className="pb-3">
+            <p className="text-[14px] font-medium text-white">Scan Supplier Invoice</p>
+            <p className="text-[12px] text-white mt-0.5">
+              Take a photo or upload an invoice to auto-import materials
+            </p>
           </div>
 
           {/* Action Buttons */}
           <Button
             onClick={() => setScannerSheetOpen(true)}
-            className="w-full h-14 bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
+            className="w-full h-14 bg-elec-yellow/15 text-elec-yellow font-semibold hover:bg-elec-yellow/20 active:scale-[0.98] touch-manipulation rounded-xl border border-elec-yellow/20"
           >
-            <Camera className="h-5 w-5 mr-2" />
             Scan Invoice
           </Button>
 
           {/* Tips */}
-          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-            <p className="text-[11px] text-white uppercase tracking-wide mb-3">
+          <div className="pt-3">
+            <p className="text-[11px] text-white uppercase tracking-wider mb-2">
               Supported Suppliers
             </p>
             <div className="flex flex-wrap gap-2">
@@ -938,7 +865,7 @@ export const InvoiceItemsStep = ({
                 (supplier) => (
                   <span
                     key={supplier}
-                    className="px-2.5 py-1 rounded-lg bg-white/[0.05] text-[12px] text-white"
+                    className="px-2.5 py-1 rounded-lg bg-white/[0.08] text-[12px] text-white"
                   >
                     {supplier}
                   </span>
@@ -949,17 +876,43 @@ export const InvoiceItemsStep = ({
         </div>
       )}
 
+      {/* Empty State */}
+      {originalItems.length === 0 && additionalItems.length === 0 && (
+        <div className="text-center py-10 px-4">
+          <p className="text-[15px] font-medium text-white mb-1">No items yet</p>
+          <p className="text-[13px] text-white/60 mb-5">Add labour, materials, or equipment to your invoice</p>
+          <div className="flex gap-2 justify-center">
+            <button
+              onClick={() => setActiveAddMethod('quick')}
+              className="px-4 h-11 rounded-lg text-[13px] font-medium bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40 touch-manipulation active:scale-[0.97]"
+            >
+              Quick Add
+            </button>
+            <button
+              onClick={() => setActiveAddMethod('templates')}
+              className="px-4 h-11 rounded-lg text-[13px] font-medium bg-white/[0.08] text-white border border-white/[0.12] touch-manipulation active:scale-[0.97]"
+            >
+              Use Template
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Additional Items */}
       {additionalItems.length > 0 && (
         <div>
           <p className="text-[12px] font-semibold text-white uppercase tracking-wider py-2">
             Added Items ({additionalItems.length})
           </p>
-          <div className="space-y-2">
+          <AnimatePresence mode="popLayout">
             {additionalItems.map((item) => (
-              <div
+              <motion.div
                 key={item.id}
-                className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="py-3 border-b border-white/[0.12]"
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -967,18 +920,21 @@ export const InvoiceItemsStep = ({
                       {item.description}
                     </p>
                   </div>
-                  <div className="flex items-center gap-1 ml-2">
+                  <div className="flex items-center gap-1.5 ml-2">
                     <button
                       onClick={() => duplicateItem(item)}
-                      className="w-7 h-7 rounded-lg bg-white/[0.05] flex items-center justify-center touch-manipulation active:scale-95"
+                      className="w-9 h-9 rounded-lg bg-white/[0.08] flex items-center justify-center touch-manipulation active:scale-95"
                     >
-                      <Copy className="h-3.5 w-3.5 text-white" />
+                      <Copy className="h-4 w-4 text-white" />
                     </button>
                     <button
-                      onClick={() => onRemoveItem(item.id)}
-                      className="w-7 h-7 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
+                      onClick={() => {
+                        onRemoveItem(item.id);
+                        toast({ title: 'Item removed' });
+                      }}
+                      className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center touch-manipulation active:scale-95"
                     >
-                      <Trash2 className="h-3.5 w-3.5 text-red-400" />
+                      <Trash2 className="h-4 w-4 text-red-400" />
                     </button>
                   </div>
                 </div>
@@ -997,7 +953,7 @@ export const InvoiceItemsStep = ({
                         }
                       }
                     }}
-                    className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
+                    className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                   />
                   <span className="text-[12px] text-white">×</span>
                   <input
@@ -1014,57 +970,46 @@ export const InvoiceItemsStep = ({
                         }
                       }
                     }}
-                    className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
+                    className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-white/[0.06] border border-white/[0.12] rounded-lg caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
                   />
                   <span className="text-[12px] text-white flex-1">{item.unit}</span>
-                  <span className="text-[13px] font-bold text-elec-yellow">
+                  <span className="text-[13px] font-bold text-white">
                     {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </AnimatePresence>
         </div>
       )}
 
       {/* Worker Type Sheet */}
       <Sheet open={workerSheetOpen} onOpenChange={setWorkerSheetOpen}>
         <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.06]">
+          <SheetHeader className="p-4 border-b border-white/[0.12]">
             <SheetTitle className="text-white text-left">Select Worker Type</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(70vh-60px)]">
             {workerTypes.map((worker) => {
-              const WorkerIcon = getWorkerIcon(worker.id);
               const isSelected = newItem.workerType === worker.id;
               return (
                 <button
                   key={worker.id}
                   onClick={() => handleWorkerTypeChange(worker.id)}
                   className={cn(
-                    'w-full flex items-center gap-4 p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.05]',
-                    isSelected && 'bg-elec-yellow/10'
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation active:bg-white/[0.08]',
+                    isSelected && 'bg-white/[0.06]'
                   )}
                 >
-                  <div
-                    className={cn(
-                      'w-12 h-12 rounded-xl flex items-center justify-center',
-                      isSelected ? 'bg-elec-yellow' : 'bg-white/[0.05]'
-                    )}
-                  >
-                    <WorkerIcon
-                      className={cn('h-6 w-6', isSelected ? 'text-black' : 'text-white')}
-                    />
-                  </div>
                   <div className="flex-1 text-left">
-                    <p className="text-[16px] font-medium text-white">{worker.name}</p>
-                    <p className="text-[13px] text-white">{worker.description}</p>
+                    <p className="text-[15px] font-medium text-white">{worker.name}</p>
+                    <p className="text-[12px] text-white">{worker.description}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-[16px] font-bold text-elec-yellow">
+                    <span className="text-[15px] font-bold text-white">
                       £{worker.defaultHourlyRate}/hr
                     </span>
-                    {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                    {isSelected && <Check className="h-5 w-5 text-white" />}
                   </div>
                 </button>
               );
@@ -1076,7 +1021,7 @@ export const InvoiceItemsStep = ({
       {/* Hours Sheet */}
       <Sheet open={hoursSheetOpen} onOpenChange={setHoursSheetOpen}>
         <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.06]">
+          <SheetHeader className="p-4 border-b border-white/[0.12]">
             <SheetTitle className="text-white text-left">Select Hours</SheetTitle>
           </SheetHeader>
           <div className="p-4 space-y-3">
@@ -1088,7 +1033,7 @@ export const InvoiceItemsStep = ({
                 inputMode="decimal"
                 placeholder="e.g. 2.5"
                 style={darkInputStyle}
-                className="flex-1 h-11 px-3 rounded-xl bg-[#1a1a1e] border border-white/[0.06] text-[15px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow caret-elec-yellow"
+                className="flex-1 h-11 px-3 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[15px] text-white placeholder:text-white/60 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 caret-elec-yellow"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     const val = parseFloat((e.target as HTMLInputElement).value);
@@ -1114,8 +1059,8 @@ export const InvoiceItemsStep = ({
                     className={cn(
                       'p-4 rounded-xl border transition-all touch-manipulation active:scale-[0.98]',
                       isSelected
-                        ? 'bg-elec-yellow text-black border-elec-yellow font-bold'
-                        : 'bg-white/[0.03] border-white/[0.06] text-white'
+                        ? 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/20 font-bold'
+                        : 'bg-white/[0.06] border-white/[0.12] text-white'
                     )}
                   >
                     <p className="text-[18px] font-semibold">{h}</p>
@@ -1131,7 +1076,7 @@ export const InvoiceItemsStep = ({
       {/* Material Category Sheet */}
       <Sheet open={categorySheetOpen} onOpenChange={setCategorySheetOpen}>
         <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.06]">
+          <SheetHeader className="p-4 border-b border-white/[0.12]">
             <SheetTitle className="text-white text-left">Select Category</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(60vh-60px)]">
@@ -1141,12 +1086,12 @@ export const InvoiceItemsStep = ({
                 setCategorySheetOpen(false);
               }}
               className={cn(
-                'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
+                'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation',
                 !newItem.subcategory && 'bg-elec-yellow/10'
               )}
             >
               <span className="text-[16px] font-medium text-white">All Categories</span>
-              {!newItem.subcategory && <Check className="h-5 w-5 text-elec-yellow" />}
+              {!newItem.subcategory && <Check className="h-5 w-5 text-white" />}
             </button>
             {materialCategories.map((cat) => {
               const isSelected = newItem.subcategory === cat.id;
@@ -1158,12 +1103,12 @@ export const InvoiceItemsStep = ({
                     setCategorySheetOpen(false);
                   }}
                   className={cn(
-                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
-                    isSelected && 'bg-elec-yellow/10'
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation',
+                    isSelected && 'bg-white/[0.06]'
                   )}
                 >
                   <span className="text-[16px] font-medium text-white">{cat.name}</span>
-                  {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                  {isSelected && <Check className="h-5 w-5 text-white" />}
                 </button>
               );
             })}
@@ -1174,7 +1119,7 @@ export const InvoiceItemsStep = ({
       {/* Material Sheet */}
       <Sheet open={materialSheetOpen} onOpenChange={setMaterialSheetOpen}>
         <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.06]">
+          <SheetHeader className="p-4 border-b border-white/[0.12]">
             <SheetTitle className="text-white text-left">Select Material</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(80vh-60px)]">
@@ -1186,8 +1131,8 @@ export const InvoiceItemsStep = ({
                   key={material.id}
                   onClick={() => handleMaterialSelect(material.id)}
                   className={cn(
-                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.05]',
-                    isSelected && 'bg-elec-yellow/10'
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation active:bg-white/[0.08]',
+                    isSelected && 'bg-white/[0.06]'
                   )}
                 >
                   <div className="flex-1 text-left">
@@ -1195,10 +1140,10 @@ export const InvoiceItemsStep = ({
                     <p className="text-[12px] text-white">{material.category}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-[15px] font-bold text-elec-yellow">
+                    <span className="text-[15px] font-bold text-white">
                       £{price.toFixed(2)}
                     </span>
-                    {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                    {isSelected && <Check className="h-5 w-5 text-white" />}
                   </div>
                 </button>
               );
@@ -1210,7 +1155,7 @@ export const InvoiceItemsStep = ({
       {/* Equipment Category Sheet */}
       <Sheet open={equipmentCategorySheetOpen} onOpenChange={setEquipmentCategorySheetOpen}>
         <SheetContent side="bottom" className="h-[50vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.06]">
+          <SheetHeader className="p-4 border-b border-white/[0.12]">
             <SheetTitle className="text-white text-left">Select Category</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(50vh-60px)]">
@@ -1224,12 +1169,12 @@ export const InvoiceItemsStep = ({
                     setEquipmentCategorySheetOpen(false);
                   }}
                   className={cn(
-                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation',
-                    isSelected && 'bg-elec-yellow/10'
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation',
+                    isSelected && 'bg-white/[0.06]'
                   )}
                 >
                   <span className="text-[16px] font-medium text-white">{cat.name}</span>
-                  {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                  {isSelected && <Check className="h-5 w-5 text-white" />}
                 </button>
               );
             })}
@@ -1240,7 +1185,7 @@ export const InvoiceItemsStep = ({
       {/* Equipment Sheet */}
       <Sheet open={equipmentSheetOpen} onOpenChange={setEquipmentSheetOpen}>
         <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.06]">
+          <SheetHeader className="p-4 border-b border-white/[0.12]">
             <SheetTitle className="text-white text-left">Select Equipment</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(70vh-60px)]">
@@ -1253,8 +1198,8 @@ export const InvoiceItemsStep = ({
                     key={equipment.id}
                     onClick={() => handleEquipmentSelect(equipment.id)}
                     className={cn(
-                      'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.05]',
-                      isSelected && 'bg-elec-yellow/10'
+                      'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation active:bg-white/[0.08]',
+                      isSelected && 'bg-white/[0.06]'
                     )}
                   >
                     <div className="flex-1 text-left">
@@ -1262,10 +1207,10 @@ export const InvoiceItemsStep = ({
                       <p className="text-[12px] text-white">{equipment.category}</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-[15px] font-bold text-elec-yellow">
+                      <span className="text-[15px] font-bold text-white">
                         £{equipment.dailyRate}/{equipment.unit}
                       </span>
-                      {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
+                      {isSelected && <Check className="h-5 w-5 text-white" />}
                     </div>
                   </button>
                 );

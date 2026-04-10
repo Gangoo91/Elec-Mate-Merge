@@ -215,7 +215,7 @@ serve(async (req: Request) => {
         });
 
         console.log(
-          `✅ ${reminderType} reminder sent for ${invoice.invoice_number} to ${clientEmail}`
+          `${reminderType} reminder sent for ${invoice.invoice_number} to ${clientEmail}`
         );
 
         // Delay between sends to avoid Resend rate limits and stagger delivery
@@ -269,34 +269,34 @@ function generateReminderEmail(
 
   const configs = {
     gentle: {
-      emoji: '📋',
       subject: `Friendly Reminder: Invoice ${invoiceNumber} is now due`,
       title: 'Payment Reminder',
-      titleColor: '#3b82f6',
-      borderColor: 'rgba(59, 130, 246, 0.2)',
-      bgGradient: 'rgba(59, 130, 246, 0.1)',
+      accentColor: '#FFD700',
+      bannerBg: '',
+      bannerBorder: '',
+      bannerTextColor: '',
       message: `Just a friendly reminder that payment for invoice <strong>${invoiceNumber}</strong> was due <strong>${daysOverdue} day${daysOverdue === 1 ? '' : 's'} ago</strong>.`,
       cta: "If you've already made the payment, please disregard this message. Otherwise, we'd appreciate if you could arrange payment at your earliest convenience.",
       urgency: '',
     },
     firm: {
-      emoji: '⚠️',
       subject: `Second Notice: Invoice ${invoiceNumber} - ${daysOverdue} days overdue`,
       title: 'Payment Overdue',
-      titleColor: '#f59e0b',
-      borderColor: 'rgba(245, 158, 11, 0.3)',
-      bgGradient: 'rgba(245, 158, 11, 0.1)',
+      accentColor: '#d97706',
+      bannerBg: '#fffbeb',
+      bannerBorder: '#fde68a',
+      bannerTextColor: '#92400e',
       message: `This is a follow-up regarding invoice <strong>${invoiceNumber}</strong>, which is now <strong>${daysOverdue} days overdue</strong>.`,
       cta: "Please arrange payment within the next 7 days. If you're experiencing any issues, please contact us immediately to discuss payment arrangements.",
       urgency: 'This matter requires your prompt attention.',
     },
     final: {
-      emoji: '🚨',
-      subject: `URGENT: Final Notice - Invoice ${invoiceNumber}`,
+      subject: `Final Notice: Invoice ${invoiceNumber} - Immediate action required`,
       title: 'Final Payment Notice',
-      titleColor: '#ef4444',
-      borderColor: 'rgba(239, 68, 68, 0.3)',
-      bgGradient: 'rgba(239, 68, 68, 0.15)',
+      accentColor: '#dc2626',
+      bannerBg: '#fef2f2',
+      bannerBorder: '#fecaca',
+      bannerTextColor: '#991b1b',
       message: `Despite previous reminders, invoice <strong>${invoiceNumber}</strong> remains unpaid and is now <strong>${daysOverdue} days overdue</strong>.`,
       cta: "To avoid further action, please ensure payment is made within <strong>48 hours</strong>. If you're experiencing financial difficulties, please contact us immediately.",
       urgency: 'This is a final notice before we consider further recovery action.',
@@ -305,101 +305,114 @@ function generateReminderEmail(
 
   const config = configs[type];
 
-  const html = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;">
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0f172a;">
-        <tr>
-          <td align="center" style="padding: 48px 16px;">
+  // Urgency banner for firm/final
+  let urgencyBanner = '';
+  if (type === 'firm' || type === 'final') {
+    urgencyBanner = `
+      <tr>
+        <td style="padding: 0 32px 24px;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
+            style="background-color: ${config.bannerBg}; border: 1px solid ${config.bannerBorder}; border-radius: 8px; border-left: 4px solid ${config.accentColor};">
+            <tr>
+              <td style="padding: 16px 20px;">
+                <p style="margin: 0; font-size: 14px; color: ${config.bannerTextColor}; font-weight: 600;">
+                  ${type === 'final' ? 'Final Notice' : 'Second Notice'} — ${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue
+                </p>
+                ${config.urgency ? `<p style="margin: 6px 0 0; font-size: 14px; color: ${config.bannerTextColor};">${config.urgency}</p>` : ''}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>`;
+  }
 
-            <!-- Main Card -->
-            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 420px; background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); border-radius: 24px; overflow: hidden; border: 1px solid ${config.borderColor};">
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin: 0; padding: 0; background-color: #f6f6f6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f6f6f6;">
+    <tr>
+      <td style="padding: 40px 16px;">
 
-              <!-- Header Emoji -->
-              <tr>
-                <td align="center" style="padding: 48px 32px 20px 32px;">
-                  <span style="font-size: 64px; line-height: 1;">${config.emoji}</span>
-                </td>
-              </tr>
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
+          style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
 
-              <!-- Title -->
-              <tr>
-                <td align="center" style="padding: 0 32px 12px 32px;">
-                  <h1 style="margin: 0; font-size: 26px; font-weight: 700; color: ${config.titleColor}; line-height: 1.3;">${config.title}</h1>
-                </td>
-              </tr>
+          <!-- Header -->
+          <tr>
+            <td style="background-color: #111111; padding: 24px 32px;">
+              <p style="margin: 0; font-size: 20px; font-weight: 700; color: #ffffff;">${companyName}</p>
+            </td>
+          </tr>
 
-              <!-- Invoice Badge -->
-              <tr>
-                <td align="center" style="padding: 0 32px 32px 32px;">
-                  <table role="presentation" cellspacing="0" cellpadding="0">
-                    <tr>
-                      <td style="background: rgba(250, 204, 21, 0.15); border: 1px solid rgba(250, 204, 21, 0.3); border-radius: 12px; padding: 12px 24px;">
-                        <span style="font-size: 15px; font-weight: 600; color: #facc15;">${invoiceNumber}</span>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+          <!-- Greeting -->
+          <tr>
+            <td style="padding: 32px 32px 20px;">
+              <p style="margin: 0 0 16px; font-size: 16px; color: #1a1a1a;">Hi <strong>${clientName}</strong>,</p>
+              <p style="margin: 0; font-size: 15px; color: #4b5563; line-height: 1.6;">${config.message}</p>
+              <p style="margin: 16px 0 0; font-size: 15px; color: #4b5563; line-height: 1.6;">${config.cta}</p>
+            </td>
+          </tr>
 
-              <!-- Amount Card -->
-              <tr>
-                <td style="padding: 0 24px 32px 24px;">
-                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: ${config.bgGradient}; border-radius: 20px; border: 1px solid ${config.borderColor};">
-                    <tr>
-                      <td align="center" style="padding: 24px;">
-                        <p style="margin: 0 0 8px 0; font-size: 13px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px;">Amount Due</p>
-                        <p style="margin: 0; font-size: 36px; font-weight: 700; color: ${config.titleColor};">${formattedTotal}</p>
-                        <p style="margin: 12px 0 0 0; font-size: 14px; color: #ef4444; font-weight: 600;">${daysOverdue} days overdue</p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+          <!-- Urgency banner -->
+          ${urgencyBanner}
 
-              <!-- Message -->
-              <tr>
-                <td style="padding: 0 32px 24px 32px;">
-                  <p style="margin: 0; font-size: 17px; color: #e2e8f0; line-height: 1.6;">Hi ${clientName},</p>
-                  <p style="margin: 20px 0 0 0; font-size: 16px; color: #94a3b8; line-height: 1.7;">${config.message}</p>
-                  <p style="margin: 16px 0 0 0; font-size: 16px; color: #94a3b8; line-height: 1.7;">${config.cta}</p>
-                  ${config.urgency ? `<p style="margin: 16px 0 0 0; font-size: 15px; color: ${config.titleColor}; font-weight: 600;">${config.urgency}</p>` : ''}
-                </td>
-              </tr>
+          <!-- Amount card -->
+          <tr>
+            <td style="padding: 0 32px 24px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
+                style="background-color: #fafafa; border: 1px solid #e5e7eb; border-radius: 10px;">
+                <tr>
+                  <td style="padding: 28px; text-align: center;">
+                    <p style="margin: 0 0 4px; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px;">Invoice Reference</p>
+                    <p style="margin: 0 0 20px; font-size: 16px; font-weight: 600; color: #1a1a1a;">${invoiceNumber}</p>
+                    <p style="margin: 0 0 4px; font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px;">Amount Due</p>
+                    <p style="margin: 0 0 12px; font-size: 40px; font-weight: 700; color: #1a1a1a; line-height: 1.1;">${formattedTotal}</p>
+                    <p style="margin: 0; font-size: 13px; font-weight: 600; color: ${config.accentColor};">${daysOverdue} day${daysOverdue !== 1 ? 's' : ''} overdue</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-              <!-- Contact Box -->
-              <tr>
-                <td style="padding: 0 24px 40px 24px;">
-                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: rgba(250, 204, 21, 0.08); border-radius: 16px; border: 1px solid rgba(250, 204, 21, 0.15);">
-                    <tr>
-                      <td style="padding: 20px 24px;">
-                        <p style="margin: 0; font-size: 15px; color: #fbbf24;"><strong>Questions?</strong> Just reply to this email - we're here to help!</p>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+          <!-- Contact prompt -->
+          <tr>
+            <td style="padding: 0 32px 24px;">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"
+                style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px;">
+                <tr>
+                  <td style="padding: 16px 20px;">
+                    <p style="margin: 0; font-size: 14px; color: #4b5563;"><strong style="color: #1a1a1a;">Questions?</strong> Just reply to this email — we're here to help.</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-              <!-- Footer -->
-              <tr>
-                <td style="padding: 28px 32px; border-top: 1px solid rgba(148, 163, 184, 0.1);">
-                  <p style="margin: 0; font-size: 13px; color: #64748b; text-align: center;">Sent by ${companyName}</p>
-                  <p style="margin: 8px 0 0 0; font-size: 12px; color: #475569; text-align: center;">Powered by ElecMate Professional Suite</p>
-                </td>
-              </tr>
+          <!-- Sign-off -->
+          <tr>
+            <td style="padding: 0 32px 32px;">
+              <p style="margin: 0; font-size: 15px; color: #4b5563; line-height: 1.6;">
+                Kind regards,<br><strong style="color: #1a1a1a;">${companyName}</strong>
+              </p>
+            </td>
+          </tr>
 
-            </table>
-          </td>
-        </tr>
-      </table>
-    </body>
-    </html>
-  `;
+          <!-- Footer -->
+          <tr>
+            <td style="border-top: 1px solid #e5e7eb; padding: 20px 32px; text-align: center;">
+              <p style="margin: 0; font-size: 11px; color: #9ca3af;">Sent via Elec-Mate</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
 
   return { subject: config.subject, html };
 }
