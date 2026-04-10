@@ -1,6 +1,7 @@
 /**
  * Battery Energy Storage System (BESS) Certificate Types
- * IET Code of Practice for EESS + MCS MIS 3002 + BS 7671:2018+A3:2024
+ * IET Code of Practice for EESS (3rd Ed) + MCS MIS 3012:2025 + BS 7671:2018+A3:2024
+ * PAS 63100:2024 (domestic fire safety)
  */
 
 export type BatteryChemistry = 'LFP' | 'NMC' | 'NCA' | 'lead-acid' | 'flow' | 'other';
@@ -16,6 +17,7 @@ export type ProtectionDeviceType = 'MCB' | 'RCBO' | 'MCCB' | 'fuse';
 export type RCDType = 'Type A' | 'Type B' | 'Type F' | '';
 export type PassFail = 'pass' | 'fail' | '';
 export type YesNo = 'yes' | 'no' | '';
+export type EESSClass = '1' | '2' | '3' | '4' | '';
 
 export interface GridProtectionSetting {
   voltage?: string;
@@ -35,6 +37,7 @@ export interface BESSFormData {
   clientAddress: string;
   clientTelephone: string;
   clientEmail: string;
+  contactPerson: string;
 
   // Installation
   installationType: 'domestic' | 'commercial' | 'industrial';
@@ -138,6 +141,53 @@ export interface BESSFormData {
   warningSignageLocations: string;
   emergencyShutdownProvided: boolean;
   fireServiceInfoProvided: boolean;
+
+  // PAS 63100:2024 fire safety (domestic)
+  pas63100Applicable: boolean;
+  notInSleepingRoom: boolean;
+  notInEscapeRoute: boolean;
+  notInLoftOrVoid: boolean;
+  notInBasementNoAccess: boolean;
+  enclosureNonCombustible: boolean;
+  enclosureToolAccessOnly: boolean;
+  dcFusesToolAccessOnly: boolean;
+  energyPerEnclosure: string;
+  totalEnergyAtPremises: string;
+  distanceFromOpenings: string;
+  distanceFromFlammables: string;
+  ik10Protection: boolean;
+  fireDetectionGrade: string;
+  fireDetectionCategory: string;
+  audibleBatteryWarning: boolean;
+  ventilationToOutdoors: boolean;
+  ventPortMinDistance: boolean;
+
+  // EESS classification (MCS MIS 3012:2025)
+  eessClass: EESSClass;
+
+  // Labelling (Reg 514.15.1)
+  labelAtOrigin: boolean;
+  labelAtMeteringPoint: boolean;
+  labelAtMainCU: boolean;
+  labelAtIsolationPoints: boolean;
+  batteryEnclosureLabel: boolean;
+  dcIsolationLabelled: boolean;
+  emergencyProcedureDisplayed: boolean;
+
+  // AFDD
+  afddInstalled: boolean;
+
+  // Additional compliance
+  pas63100Compliant: boolean;
+  nextInspectionDate: string;
+  nextInspectionInterval: string;
+  buildingControlRef: string;
+  eicReference: string;
+
+  // Additional functional tests
+  emergencyShutdownTest: PassFail;
+  bmsOperationalTest: PassFail;
+  thermalMonitoringTest: PassFail;
 
   // AC test results
   ze: string;
@@ -281,6 +331,7 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   clientAddress: '',
   clientTelephone: '',
   clientEmail: '',
+  contactPerson: '',
 
   installationType: 'domestic',
   installationAddress: '',
@@ -374,6 +425,53 @@ export const getDefaultBESSFormData = (): BESSFormData => ({
   warningSignageLocations: '',
   emergencyShutdownProvided: false,
   fireServiceInfoProvided: false,
+
+  // PAS 63100
+  pas63100Applicable: true,
+  notInSleepingRoom: false,
+  notInEscapeRoute: false,
+  notInLoftOrVoid: false,
+  notInBasementNoAccess: false,
+  enclosureNonCombustible: false,
+  enclosureToolAccessOnly: false,
+  dcFusesToolAccessOnly: false,
+  energyPerEnclosure: '',
+  totalEnergyAtPremises: '',
+  distanceFromOpenings: '',
+  distanceFromFlammables: '',
+  ik10Protection: false,
+  fireDetectionGrade: 'D2',
+  fireDetectionCategory: 'LD2',
+  audibleBatteryWarning: false,
+  ventilationToOutdoors: false,
+  ventPortMinDistance: false,
+
+  // EESS class
+  eessClass: '',
+
+  // Labelling
+  labelAtOrigin: false,
+  labelAtMeteringPoint: false,
+  labelAtMainCU: false,
+  labelAtIsolationPoints: false,
+  batteryEnclosureLabel: false,
+  dcIsolationLabelled: false,
+  emergencyProcedureDisplayed: false,
+
+  // AFDD
+  afddInstalled: false,
+
+  // Compliance
+  pas63100Compliant: false,
+  nextInspectionDate: '',
+  nextInspectionInterval: '12',
+  buildingControlRef: '',
+  eicReference: '',
+
+  // Additional functional tests
+  emergencyShutdownTest: '',
+  bmsOperationalTest: '',
+  thermalMonitoringTest: '',
 
   ze: '',
   zs: '',

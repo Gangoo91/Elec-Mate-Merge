@@ -306,7 +306,12 @@ export const generateBulkPDFs = async (
           const { formatSolarPVJson } = await import('./solarPVJsonFormatter');
           dataForPdf = formatSolarPVJson(validation.data);
         }
-        // Minor Works, BESS, G98/99, notices: edge function handles transform internally
+        // BESS
+        else if (rtLower === 'bess') {
+          const { formatBESSJson } = await import('./bessJsonFormatter');
+          dataForPdf = formatBESSJson(validation.data);
+        }
+        // Minor Works, G98/99, notices: edge function handles transform internally
       }
 
       // Optimise data before sending (use enriched data)

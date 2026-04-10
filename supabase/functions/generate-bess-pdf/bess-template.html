@@ -111,7 +111,7 @@
             </div>
             <div class="doc-title-section">
                 <div class="doc-title">BESS COMMISSIONING CERTIFICATE</div>
-                <div class="doc-subtitle">Battery Energy Storage System — IET CoP EESS + MCS MIS 3002 + BS 7671:2018+A3:2024</div>
+                <div class="doc-subtitle">Battery Energy Storage System — IET CoP EESS (3rd Ed) + MCS MIS 3012:2025 + BS 7671:2018+A3:2024</div>
             </div>
             <div class="doc-meta">
                 <div class="cert-number">{{ certificateNumber }}</div>
@@ -141,6 +141,7 @@
             <div class="front-field"><div class="front-field-label">Installation Date</div><div class="front-field-value">{{ installationDate }}</div></div>
             <div class="front-field"><div class="front-field-label">Commissioning Date</div><div class="front-field-value">{{ commissioningDate }}</div></div>
             <div class="front-field"><div class="front-field-label">Client</div><div class="front-field-value">{{ clientName }}</div></div>
+            {% unless contactPerson == blank %}<div class="front-field"><div class="front-field-label">Contact Person</div><div class="front-field-value">{{ contactPerson }}</div></div>{% endunless %}
             {% unless clientTelephone == blank %}<div class="front-field"><div class="front-field-label">Contact</div><div class="front-field-value">{{ clientTelephone }}{% unless clientEmail == blank %} | {{ clientEmail }}{% endunless %}</div></div>{% endunless %}
             {% unless clientAddress == blank %}<div class="front-field"><div class="front-field-label">Client Address</div><div class="front-field-value">{{ clientAddress }}</div></div>{% endunless %}
             <div class="front-field"><div class="front-field-label">Installation Address</div><div class="front-field-value">{{ installationAddress }}</div></div>
@@ -159,6 +160,7 @@
             <div class="front-field"><div class="front-field-label">Inverter</div><div class="front-field-value">{{ inverterManufacturer }} {{ inverterModel }} ({{ inverterType }})</div></div>
             <div class="front-field"><div class="front-field-label">Capacity</div><div class="front-field-value">{{ usableCapacity }} kWh ({{ numberOfModules }} module{% unless numberOfModules == "1" %}s{% endunless %})</div></div>
             <div class="front-field"><div class="front-field-label">Coupling</div><div class="front-field-value">{{ couplingType }}-coupled | {{ operatingMode }}</div></div>
+            {% unless eessClass == blank %}<div class="front-field"><div class="front-field-label">EESS Class</div><div class="front-field-value">Class {{ eessClass }} (MIS 3012)</div></div>{% endunless %}
             {% if associatedPV %}<div class="front-field"><div class="front-field-label">Associated PV</div><div class="front-field-value">{{ associatedPVCapacity }} kWp (ref: {{ associatedPVRef }})</div></div>{% endif %}
             {% unless totalSiteGeneration == blank %}<div class="front-field"><div class="front-field-label">Total Generation</div><div class="front-field-value">{{ totalSiteGeneration }} kW — {{ gridConnectionType }}</div></div>{% endunless %}
         </div>
@@ -175,6 +177,9 @@
                 <div class="checkbox-item"><span class="checkbox-box {% if monitoringConfirmed %}checked-green{% endif %}">{% if monitoringConfirmed %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">Monitoring active</label></div>
                 <div class="checkbox-item"><span class="checkbox-box {% if acPolarity == 'correct' %}checked-green{% endif %}">{% if acPolarity == 'correct' %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">AC polarity</label></div>
                 <div class="checkbox-item"><span class="checkbox-box {% if dcPolarityVerified %}checked-green{% endif %}">{% if dcPolarityVerified %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">DC polarity</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if emergencyShutdownTest == 'pass' %}checked-green{% endif %}">{% if emergencyShutdownTest == 'pass' %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">Emergency shutdown</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if bmsOperationalTest == 'pass' %}checked-green{% endif %}">{% if bmsOperationalTest == 'pass' %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">BMS operational</label></div>
+                <div class="checkbox-item"><span class="checkbox-box {% if thermalMonitoringTest == 'pass' %}checked-green{% endif %}">{% if thermalMonitoringTest == 'pass' %}&#10003;{% endif %}</span><label style="font-size: 7.5px;">Thermal monitoring</label></div>
             </div>
         </div>
     </div>
@@ -182,7 +187,7 @@
     <div style="flex: 1;"></div>
     <div class="footer">
         <div><strong>{{ companyName }}</strong><br>{{ companyAddress }}<br>{% unless companyPhone == blank %}Tel: {{ companyPhone }}{% endunless %}{% unless companyEmail == blank %} | {{ companyEmail }}{% endunless %}</div>
-        <div style="text-align: right;">{% unless registrationScheme == blank %}<strong>{{ registrationScheme }}</strong><br>Reg No: {{ registrationNumber }}<br>{% endunless %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024 | IET CoP EESS | MCS MIS 3002</span></div>
+        <div style="text-align: right;">{% unless registrationScheme == blank %}<strong>{{ registrationScheme }}</strong><br>Reg No: {{ registrationNumber }}<br>{% endunless %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024 | IET CoP EESS | MCS MIS 3012:2025</span></div>
     </div>
     <div style="text-align: center; margin-top: 6px;"><span style="font-size: 7px; color: #94a3b8; letter-spacing: 0.3px;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
 </div>
@@ -269,6 +274,7 @@
         {% unless acCableType == blank %}<div class="form-row"><div class="form-label">Cable</div><div class="form-value">{{ acCableType }} {{ acCableCSA }}mm² × {{ acCableLength }}m</div><div class="form-label">Protection</div><div class="form-value">{{ acProtectionType }} {{ acProtectionRating }}A curve {{ acProtectionCurve }}</div></div>{% endunless %}
         {% unless rcdType == blank %}<div class="form-row"><div class="form-label">RCD</div><div class="form-value">{{ rcdType }} {{ rcdRating }}mA</div><div class="form-label">AC Isolator</div><div class="form-value">{{ acIsolatorLocation }}</div></div>{% endunless %}
         {% unless acSPDType == blank %}<div class="form-row"><div class="form-label">AC SPD</div><div class="form-value">{{ acSPDType }} — {{ acSPDManufacturer }}</div></div>{% endunless %}
+        {% if afddInstalled %}<div class="form-row"><div class="form-label">AFDD</div><div class="form-value"><span class="badge green">Installed</span></div></div>{% endif %}
     </div>
 </div>
 
@@ -284,6 +290,46 @@
         {% if fireServiceInfoProvided %}<div class="checkbox-item"><span class="checkbox-box checked-green">&#10003;</span><label>Fire service info provided</label></div>{% endif %}
     </div>
     {% unless distanceFromCombustibles == blank %}<div class="form-grid" style="margin-top: 2px;"><div class="form-row"><div class="form-label">Distance from Combustibles</div><div class="form-value">{{ distanceFromCombustibles }}mm</div><div class="form-label">Thermal Management</div><div class="form-value">{{ thermalManagement }}</div></div></div>{% endunless %}
+</div>
+
+{% if pas63100Applicable %}
+<div class="section avoid-break">
+    <div class="section-title red">Section G2: PAS 63100 — Domestic Fire Safety</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if notInSleepingRoom %}checked-green{% endif %}">{% if notInSleepingRoom %}&#10003;{% endif %}</span><label>Not in sleeping room</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if notInEscapeRoute %}checked-green{% endif %}">{% if notInEscapeRoute %}&#10003;{% endif %}</span><label>Not on escape route</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if notInLoftOrVoid %}checked-green{% endif %}">{% if notInLoftOrVoid %}&#10003;{% endif %}</span><label>Not in loft/void</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if notInBasementNoAccess %}checked-green{% endif %}">{% if notInBasementNoAccess %}&#10003;{% endif %}</span><label>Not in basement without exit</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if enclosureNonCombustible %}checked-green{% endif %}">{% if enclosureNonCombustible %}&#10003;{% endif %}</span><label>Non-combustible enclosure</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if enclosureToolAccessOnly %}checked-green{% endif %}">{% if enclosureToolAccessOnly %}&#10003;{% endif %}</span><label>Tool-only access</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if dcFusesToolAccessOnly %}checked-green{% endif %}">{% if dcFusesToolAccessOnly %}&#10003;{% endif %}</span><label>DC fuses tool-access</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if ik10Protection %}checked-green{% endif %}">{% if ik10Protection %}&#10003;{% endif %}</span><label>IK10 protection</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if audibleBatteryWarning %}checked-green{% endif %}">{% if audibleBatteryWarning %}&#10003;{% endif %}</span><label>Audible warning</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if ventilationToOutdoors %}checked-green{% endif %}">{% if ventilationToOutdoors %}&#10003;{% endif %}</span><label>Ventilation to outdoors</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if ventPortMinDistance %}checked-green{% endif %}">{% if ventPortMinDistance %}&#10003;{% endif %}</span><label>Vent port ≥1m</label></div>
+    </div>
+    {% unless energyPerEnclosure == blank %}
+    <div class="form-grid" style="margin-top: 2px;">
+        <div class="form-row"><div class="form-label">Energy / Enclosure</div><div class="form-value">{{ energyPerEnclosure }} kWh (max 20)</div><div class="form-label">Total at Premises</div><div class="form-value">{{ totalEnergyAtPremises }} kWh</div></div>
+        {% unless distanceFromOpenings == blank %}<div class="form-row"><div class="form-label">From Openings</div><div class="form-value">{{ distanceFromOpenings }}m (min 1m outdoor)</div><div class="form-label">From Flammables</div><div class="form-value">{{ distanceFromFlammables }}m (min 2m)</div></div>{% endunless %}
+        {% unless fireDetectionGrade == blank %}<div class="form-row"><div class="form-label">Fire Detection</div><div class="form-value">Grade {{ fireDetectionGrade }} / Category {{ fireDetectionCategory }}</div></div>{% endunless %}
+    </div>
+    {% endunless %}
+    {% if pas63100Compliant %}<div class="alert-box green" style="margin-top: 3px;"><div style="font-size: 7px; font-weight: 600; color: #166534;">✓ PAS 63100:2024 Compliant</div></div>{% endif %}
+</div>
+{% endif %}
+
+<div class="section avoid-break">
+    <div class="section-title amber">Section G3: Labelling (Reg 514.15)</div>
+    <div class="inline-form">
+        <div class="checkbox-item"><span class="checkbox-box {% if labelAtOrigin %}checked-amber{% endif %}">{% if labelAtOrigin %}&#10003;{% endif %}</span><label>Origin</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if labelAtMeteringPoint %}checked-amber{% endif %}">{% if labelAtMeteringPoint %}&#10003;{% endif %}</span><label>Metering point</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if labelAtMainCU %}checked-amber{% endif %}">{% if labelAtMainCU %}&#10003;{% endif %}</span><label>Main CU</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if labelAtIsolationPoints %}checked-amber{% endif %}">{% if labelAtIsolationPoints %}&#10003;{% endif %}</span><label>Isolation points</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if batteryEnclosureLabel %}checked-amber{% endif %}">{% if batteryEnclosureLabel %}&#10003;{% endif %}</span><label>Battery enclosure</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if dcIsolationLabelled %}checked-amber{% endif %}">{% if dcIsolationLabelled %}&#10003;{% endif %}</span><label>DC isolation</label></div>
+        <div class="checkbox-item"><span class="checkbox-box {% if emergencyProcedureDisplayed %}checked-amber{% endif %}">{% if emergencyProcedureDisplayed %}&#10003;{% endif %}</span><label>Emergency procedure</label></div>
+    </div>
 </div>
 
 <div class="footer">
@@ -363,6 +409,8 @@
         <div class="form-row"><div class="form-label">Anti-islanding</div><div class="form-value"><span class="badge {% if antiIslandingTest == 'pass' %}pass{% else %}fail{% endif %}">{{ antiIslandingTest }}</span> {% unless antiIslandingMethod == blank %}({{ antiIslandingMethod }}){% endunless %}</div></div>
         <div class="form-row"><div class="form-label">Charge Test</div><div class="form-value"><span class="badge {% if chargeTest == 'pass' %}pass{% else %}fail{% endif %}">{{ chargeTest }}</span></div><div class="form-label">Discharge Test</div><div class="form-value"><span class="badge {% if dischargeTest == 'pass' %}pass{% else %}fail{% endif %}">{{ dischargeTest }}</span></div></div>
         {% unless epsTest == blank %}<div class="form-row"><div class="form-label">EPS Switchover</div><div class="form-value"><span class="badge {% if epsTest == 'pass' %}pass{% else %}fail{% endif %}">{{ epsTest }}</span>{% unless epsSwitchoverTime == blank %} ({{ epsSwitchoverTime }}ms){% endunless %}</div></div>{% endunless %}
+        <div class="form-row"><div class="form-label">Emergency Shutdown</div><div class="form-value"><span class="badge {% if emergencyShutdownTest == 'pass' %}pass{% else %}fail{% endif %}">{{ emergencyShutdownTest }}</span></div><div class="form-label">BMS Operational</div><div class="form-value"><span class="badge {% if bmsOperationalTest == 'pass' %}pass{% else %}fail{% endif %}">{{ bmsOperationalTest }}</span></div></div>
+        {% unless thermalMonitoringTest == blank %}<div class="form-row"><div class="form-label">Thermal Monitoring</div><div class="form-value"><span class="badge {% if thermalMonitoringTest == 'pass' %}pass{% else %}fail{% endif %}">{{ thermalMonitoringTest }}</span></div></div>{% endunless %}
     </div>
     <div class="inline-form" style="margin-top: 2px;">
         <div class="checkbox-item"><span class="checkbox-box {% if monitoringConfirmed %}checked-green{% endif %}">{% if monitoringConfirmed %}&#10003;{% endif %}</span><label>Monitoring confirmed operational</label></div>
@@ -397,11 +445,21 @@
 <div class="section avoid-break">
     <div class="section-title">Section N: Declaration</div>
     <div class="alert-box green" style="margin-bottom: 3px;">
-        <div style="font-size: 7px; color: #166534; font-style: italic; line-height: 1.5;">I hereby certify that the battery energy storage system installation described in this certificate has been designed, installed, inspected, tested, and commissioned in accordance with BS 7671:2018+A3:2024, the IET Code of Practice for Electrical Energy Storage Systems, and the manufacturer's installation instructions. The system is safe for use and complies with the relevant requirements of the Distribution Network Operator.</div>
+        <div style="font-size: 7px; color: #166534; font-style: italic; line-height: 1.5;">I hereby certify that the battery energy storage system installation described in this certificate has been designed, installed, inspected, tested, and commissioned in accordance with BS 7671:2018+A3:2024, the IET Code of Practice for Electrical Energy Storage Systems (3rd Edition), MCS MIS 3012:2025, PAS 63100:2024 (where applicable), and the manufacturer's installation instructions. The system is safe for use and complies with the relevant requirements of the Distribution Network Operator.</div>
     </div>
     {% unless batteryWarrantyYears == blank %}
     <div class="form-grid" style="margin-bottom: 4px;">
         <div class="form-row"><div class="form-label">Battery Warranty</div><div class="form-value">{{ batteryWarrantyYears }} years</div><div class="form-label">Inverter Warranty</div><div class="form-value">{{ inverterWarrantyYears }} years</div></div>
+    </div>
+    {% endunless %}
+    {% unless nextInspectionDate == blank %}
+    <div class="form-grid" style="margin-bottom: 4px;">
+        <div class="form-row"><div class="form-label">Next Inspection</div><div class="form-value">{{ nextInspectionDate }} ({{ nextInspectionInterval }} months)</div></div>
+    </div>
+    {% endunless %}
+    {% unless eicReference == blank %}
+    <div class="form-grid" style="margin-bottom: 4px;">
+        <div class="form-row"><div class="form-label">Linked EIC/EICR</div><div class="form-value">{{ eicReference }}</div>{% unless buildingControlRef == blank %}<div class="form-label">Building Control</div><div class="form-value">{{ buildingControlRef }}</div>{% endunless %}</div>
     </div>
     {% endunless %}
     <div class="signature-grid">
@@ -486,7 +544,7 @@
 
 <div class="footer">
     <div><strong>{{ companyName }}</strong><br>{{ companyAddress }}<br>{% unless companyPhone == blank %}Tel: {{ companyPhone }}{% endunless %}{% unless companyEmail == blank %} | {{ companyEmail }}{% endunless %}</div>
-    <div style="text-align: right;">{% unless registrationScheme == blank %}<strong>{{ registrationScheme }}</strong><br>Reg No: {{ registrationNumber }}<br>{% endunless %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024 | IET CoP EESS | MCS MIS 3002</span></div>
+    <div style="text-align: right;">{% unless registrationScheme == blank %}<strong>{{ registrationScheme }}</strong><br>Reg No: {{ registrationNumber }}<br>{% endunless %}<span style="color: #94a3b8;">BS 7671:2018+A3:2024 | IET CoP EESS | MCS MIS 3012:2025</span></div>
 </div>
 <div style="text-align: center; margin-top: 6px;"><span style="font-size: 7px; color: #94a3b8;">Powered by <strong style="color: #64748b;">Elec-Mate</strong></span></div>
 

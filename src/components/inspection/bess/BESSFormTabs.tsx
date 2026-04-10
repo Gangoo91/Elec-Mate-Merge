@@ -1,5 +1,4 @@
-import { SmartTabs, SmartTab } from '@/components/ui/ui/smart-tabs';
-import { Battery, Cpu, Shield, Gauge, FileCheck } from 'lucide-react';
+import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { BESSTabValue } from '@/hooks/useBESSTabs';
 import BESSInstallationDetails from './BESSInstallationDetails';
 import BESSSystemDesign from './BESSSystemDesign';
@@ -25,13 +24,15 @@ interface Props {
   onCustomerIdChange?: (id: string | undefined) => void;
   onGenerate?: () => void;
   isGenerating?: boolean;
+  reportId?: string;
+  onSaveFirst?: () => Promise<void>;
 }
 
 export default function BESSFormTabs({
   formData, onUpdate, currentTab, onTabChange,
   currentTabIndex, totalTabs, canNavigateNext, canNavigatePrevious,
   onNext, onPrevious, isCurrentTabComplete, progress,
-  customerId, onCustomerIdChange, onGenerate, isGenerating,
+  customerId, onCustomerIdChange, onGenerate, isGenerating, reportId, onSaveFirst,
 }: Props) {
   const tabNavigationProps = {
     currentTabIndex, totalTabs, canNavigateNext, canNavigatePrevious,
@@ -41,14 +42,14 @@ export default function BESSFormTabs({
   };
 
   const smartTabs: SmartTab[] = [
-    { value: 'installation', label: 'Installation', shortLabel: 'Install', icon: <Battery className="h-4 w-4" />, content: (<div className="space-y-4"><BESSInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'system-design', label: 'System Design', shortLabel: 'Design', icon: <Cpu className="h-4 w-4" />, content: (<div className="space-y-4"><BESSSystemDesign formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'electrical', label: 'Electrical & Safety', shortLabel: 'Electrical', icon: <Shield className="h-4 w-4" />, content: (<div className="space-y-4"><BESSElectricalSafety formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'testing', label: 'Test Results', shortLabel: 'Testing', icon: <Gauge className="h-4 w-4" />, content: (<div className="space-y-4"><BESSTestResults formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'declarations', label: 'Declarations', shortLabel: 'Sign-off', icon: <FileCheck className="h-4 w-4" />, content: (<div className="space-y-4"><BESSDeclarations formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'installation', label: 'Installation', shortLabel: 'Install', content: (<div className="space-y-6"><BESSInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'system-design', label: 'System Design', shortLabel: 'Design', content: (<div className="space-y-6"><BESSSystemDesign formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'electrical', label: 'Electrical & Safety', shortLabel: 'Electrical', content: (<div className="space-y-6"><BESSElectricalSafety formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'testing', label: 'Test Results', shortLabel: 'Testing', content: (<div className="space-y-6"><BESSTestResults formData={formData} onUpdate={onUpdate} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'declarations', label: 'Declarations', shortLabel: 'Sign', content: (<div className="space-y-6"><BESSDeclarations formData={formData} onUpdate={onUpdate} reportId={reportId} onSaveFirst={onSaveFirst} /><BESSTabNavigation {...tabNavigationProps} /></div>) },
   ];
 
   return (
-    <SmartTabs tabs={smartTabs} value={currentTab} onValueChange={(v) => onTabChange(v as BESSTabValue)} className="space-y-4" breakpoint={3} />
+    <SmartTabs tabs={smartTabs} value={currentTab} onValueChange={(v) => onTabChange(v as BESSTabValue)} className="space-y-4" />
   );
 }

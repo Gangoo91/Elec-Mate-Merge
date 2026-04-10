@@ -271,10 +271,9 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
 
       {/* Detailed AI Analysis Dialog */}
       <Dialog open={!!selectedPhoto} onOpenChange={() => setSelectedPhoto(null)}>
-        <DialogContent className="max-w-2xl sm:max-w-4xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl sm:max-w-4xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto bg-[#1a1a1e] border-white/[0.08] text-white">
           <DialogHeader>
-            <DialogTitle>Photo Evidence & AI Quality Assurance</DialogTitle>
-            <p className="text-sm text-white">BS7671:2018+A3:2024 Compliance Check</p>
+            <DialogTitle className="text-white text-sm font-bold">Photo Evidence</DialogTitle>
           </DialogHeader>
           {selectedPhoto && (
             <div className="space-y-4">
@@ -532,12 +531,9 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                   </Alert>
                 </>
               ) : (
-                <Alert>
-                  <AlertDescription className="text-sm">
-                    No AI analysis available. Click the Sparkles button to run quality assurance
-                    check.
-                  </AlertDescription>
-                </Alert>
+                <div className="rounded-lg bg-white/[0.04] border border-white/[0.08] p-4 text-center">
+                  <p className="text-xs text-white/60">No AI analysis yet — tap AI Scan from the photo list to run a quality check.</p>
+                </div>
               )}
             </div>
           )}

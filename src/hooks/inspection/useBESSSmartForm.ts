@@ -281,6 +281,71 @@ export function useBESSSmartForm() {
     return validations;
   }, []);
 
+  // PAS 63100:2024 compliance validation (domestic BESS fire safety)
+  const getPAS63100Compliance = useCallback((formData: any): { errors: string[]; warnings: string[] } => {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+    if (formData.installationType !== 'domestic') return { errors, warnings };
+
+    // Location prohibitions
+    if (!formData.notInSleepingRoom) errors.push('Confirm battery NOT in sleeping room');
+    if (!formData.notInEscapeRoute) errors.push('Confirm battery NOT on escape route');
+    if (!formData.notInLoftOrVoid) errors.push('Confirm battery NOT in loft/void/roof space');
+    if (!formData.notInBasementNoAccess) errors.push('Confirm battery NOT in basement without external access');
+
+    // Energy limits
+    const energyPerEnc = parseFloat(formData.energyPerEnclosure) || 0;
+    if (energyPerEnc > 20) errors.push(`Max 20 kWh per enclosure — currently ${energyPerEnc} kWh`);
+    const totalEnergy = parseFloat(formData.totalEnergyAtPremises) || 0;
+    const loc = formData.installationLocation;
+    if (loc === 'garage' || loc === 'dedicated-enclosure') {
+      if (totalEnergy > 80) errors.push(`Max 80 kWh in outbuilding/garage — currently ${totalEnergy} kWh`);
+    } else if (totalEnergy > 40) {
+      errors.push(`Max 40 kWh in this location — currently ${totalEnergy} kWh`);
+    }
+
+    // Distances
+    const distOpenings = parseFloat(formData.distanceFromOpenings) || 0;
+    if (loc === 'outdoor' && distOpenings > 0 && distOpenings < 1) warnings.push('Min 1m from windows/doors/vents (outdoor)');
+    const distFlam = parseFloat(formData.distanceFromFlammables) || 0;
+    if (distFlam > 0 && distFlam < 2) warnings.push('Min 2m from flammable materials/fuel storage');
+
+    // Enclosure
+    if (!formData.enclosureNonCombustible) warnings.push('Enclosure must be non-combustible (PAS 63100)');
+    if (!formData.enclosureToolAccessOnly) warnings.push('Enclosure access must require tool (PAS 63100)');
+    if (!formData.dcFusesToolAccessOnly) warnings.push('DC fuses must only be accessible via tool');
+
+    // IK10 for garage/vehicle areas
+    if ((loc === 'garage') && !formData.ik10Protection) warnings.push('IK10 mechanical protection required in garage/vehicle area');
+
+    // Fire detection
+    if (!formData.fireDetectionGrade) warnings.push('Grade D2 fire detection required');
+    if (!formData.audibleBatteryWarning) warnings.push('Audible warning required for dangerous battery condition');
+
+    // Ventilation
+    if (loc !== 'outdoor' && !formData.ventilationToOutdoors) warnings.push('Interior installation requires ventilation to outdoors');
+
+    return { errors, warnings };
+  }, []);
+
+  // EESS Class auto-suggestion (MCS MIS 3012:2025)
+  const getEESSClassSuggestion = useCallback((formData: any): { suggested: string; description: string } => {
+    const battMfr = (formData.batteryManufacturer || '').toLowerCase();
+    const invMfr = (formData.inverterManufacturer || '').toLowerCase();
+    if (!battMfr || !invMfr) return { suggested: '', description: 'Select battery and inverter manufacturers' };
+    if (battMfr === invMfr) {
+      const sameEnclosure = formData.installationLocation === 'dedicated-enclosure';
+      if (sameEnclosure) return { suggested: '1', description: 'Class 1 — Same manufacturer, single enclosure, no visible DC cable' };
+      return { suggested: '2', description: 'Class 2 — Same manufacturer, separate enclosures with DC cable link' };
+    }
+    return { suggested: '3', description: 'Class 3 — Different manufacturers (verify compatibility)' };
+  }, []);
+
+  // AFDD recommendation
+  const getAFDDRecommendation = useCallback((installationType: string): boolean => {
+    return installationType === 'domestic';
+  }, []);
+
   // MCS validation — check mandatory fields before PDF generation
   const getMCSMissingFields = useCallback((formData: any): string[] => {
     const missing: string[] = [];
@@ -323,6 +388,9 @@ export function useBESSSmartForm() {
     lookupMaxZs,
     validateTestResults,
     getMCSMissingFields,
+    getPAS63100Compliance,
+    getEESSClassSuggestion,
+    getAFDDRecommendation,
   };
 }
 
