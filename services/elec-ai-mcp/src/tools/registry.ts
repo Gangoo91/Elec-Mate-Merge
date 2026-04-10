@@ -94,6 +94,9 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
   registerMarketingTools(server, user);
   registerSmartSchedulingTools(server, user);
   registerPortfolioTools(server, user);
+
+  // Business Intelligence (learns from patterns)
+  registerBusinessIntelligenceTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -2910,5 +2913,38 @@ function registerPortfolioTools(server: McpServer, user: UserContext): void {
       photo_urls: z.array(z.string()).optional().describe('Array of photo URLs to include'),
     },
     callTool('create_portfolio_page', user)
+  );
+}
+
+// ─── Business Intelligence Tools (4) ────────────────────────────────────
+
+function registerBusinessIntelligenceTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'get_my_pricing',
+    "Analyse the electrician's pricing patterns from their quotes and invoices. Returns their go-to prices for common line items with min/max/average. Use when creating quotes to auto-fill with their usual prices. Also helps spot if they are undercharging.",
+    {},
+    callTool('get_my_pricing', user)
+  );
+  server.tool(
+    'get_predicted_workload',
+    'Predict busy and quiet periods based on historical invoicing patterns by month. Shows next 6 months with verdict (busy/quiet/average) and marketing tips for quiet months. Use when user asks about planning ahead or when to market.',
+    {},
+    callTool('get_predicted_workload', user)
+  );
+  server.tool(
+    'spot_missed_revenue',
+    'Find money left on the table: completed jobs never invoiced, accepted quotes never converted, stale quotes never followed up. Returns specific items with estimated values and actions. Use proactively or when user asks "am I missing anything".',
+    {},
+    callTool('spot_missed_revenue', user)
+  );
+  server.tool(
+    'analyse_spec_sheet',
+    'Analyse a spec sheet or electrical drawing photo using Claude Vision. Returns: circuits needed, cable sizes per BS 7671, accessories, compliance notes, materials list. Use when user sends a spec sheet, architect drawing, or electrical plan photo.',
+    {
+      image_url: z.string().optional().describe('URL to the spec sheet image'),
+      image_path: z.string().optional().describe('Local file path to the image'),
+      pdf_url: z.string().optional().describe('URL to a PDF spec sheet (use read_pdf first)'),
+    },
+    callTool('analyse_spec_sheet', user)
   );
 }

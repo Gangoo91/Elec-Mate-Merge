@@ -42,6 +42,7 @@ import * as clientIntelligence from './client-intelligence.js';
 import * as marketing from './marketing.js';
 import * as smartScheduling from './smart-scheduling.js';
 import * as portfolio from './portfolio.js';
+import * as businessIntelligence from './business-intelligence.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -314,6 +315,12 @@ const handlers: Record<string, ToolHandler> = {
 
   // Portfolio
   create_portfolio_page: portfolio.createPortfolioPage,
+
+  // Business Intelligence (learns from patterns)
+  get_my_pricing: businessIntelligence.getMyPricing,
+  get_predicted_workload: businessIntelligence.getPredictedWorkload,
+  spot_missed_revenue: businessIntelligence.spotMissedRevenue,
+  analyse_spec_sheet: businessIntelligence.analyseSpecSheet,
 };
 
 /**
