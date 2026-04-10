@@ -103,6 +103,9 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
 
   // WhatsApp Study Buddy
   registerStudyBuddyTools(server, user);
+
+  // Phone Agent
+  registerPhoneAgentTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -3096,5 +3099,44 @@ function registerStudyBuddyTools(server: McpServer, user: UserContext): void {
     'One question per day on weakest/least-studied topic. Builds study streak. Check if already completed today.',
     {},
     callTool('daily_challenge', user)
+  );
+}
+
+// ─── Phone Agent Tools (4) ──────────────────────────────────────────────
+
+function registerPhoneAgentTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'toggle_phone_agent',
+    'Enable or disable the phone agent. When enabled, Mate answers calls autonomously — takes details, checks calendar, books jobs, then WhatsApps a summary. Use when user says "answer my calls" or "stop answering calls".',
+    { enabled: z.boolean().describe('true to enable, false to disable') },
+    callTool('toggle_phone_agent', user)
+  );
+  server.tool(
+    'log_call_summary',
+    'Log a completed phone call. Called by the ElevenLabs post-call webhook. Records caller details, duration, summary, and any actions taken.',
+    {
+      caller_name: z.string().optional(),
+      caller_phone: z.string().optional(),
+      duration_seconds: z.number().optional(),
+      summary: z.string(),
+      actions_taken: z.array(z.string()).optional(),
+      job_created_id: z.string().optional(),
+      booking_created: z.boolean().optional(),
+      call_type: z.enum(['enquiry', 'booking', 'quote_followup', 'voicemail', 'other']).optional(),
+      transcript: z.string().optional(),
+    },
+    callTool('log_call_summary', user)
+  );
+  server.tool(
+    'get_call_history',
+    'Get recent phone call history — who called, when, what they wanted, what Mate did.',
+    { limit: z.number().optional().describe('Max results (default 10)') },
+    callTool('get_call_history', user)
+  );
+  server.tool(
+    'get_phone_agent_status',
+    'Check if phone agent is enabled/disabled and see call stats (today + total).',
+    {},
+    callTool('get_phone_agent_status', user)
   );
 }
