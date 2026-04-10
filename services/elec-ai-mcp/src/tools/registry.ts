@@ -87,6 +87,13 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
 
   // Smart Features (completion workflow, pricing, templates)
   registerSmartFeatureTools(server, user);
+
+  // Business Growth Engine
+  registerBusinessHealthTools(server, user);
+  registerClientIntelligenceTools(server, user);
+  registerMarketingTools(server, user);
+  registerSmartSchedulingTools(server, user);
+  registerPortfolioTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
@@ -2750,5 +2757,158 @@ function registerSmartFeatureTools(server: McpServer, user: UserContext): void {
       start_date: z.string().optional().describe('Planned start date (ISO-8601)'),
     },
     callTool('create_project_from_template', user)
+  );
+}
+
+// ─── Business Health Tools (3) ──────────────────────────────────────────
+
+function registerBusinessHealthTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'get_business_health_score',
+    'Get a 0-100 business health score with breakdown across 6 dimensions (revenue, cash flow, clients, pipeline, compliance, marketing). Returns grade (A-F), per-dimension scores, and top 3 actions to improve. Use when user asks "how is my business doing" or wants an overview.',
+    {},
+    callTool('get_business_health_score', user)
+  );
+  server.tool(
+    'get_weekly_summary',
+    'End-of-week business report: revenue earned, invoices paid/sent, quotes sent/accepted, certificates issued, outstanding money, next week preview, and "win of the week". Perfect for Friday summaries or voice note briefs.',
+    {
+      week_ending: z
+        .string()
+        .optional()
+        .describe('End date of the week (ISO-8601, default: this week)'),
+    },
+    callTool('get_weekly_summary', user)
+  );
+  server.tool(
+    'get_tax_estimate',
+    'Estimate income tax, NIC, and VAT owed for the current tax year based on actual invoices and expenses. Breaks down gross revenue, expenses, taxable profit, and monthly set-aside amount. Not financial advice — always see an accountant.',
+    {
+      tax_year: z
+        .string()
+        .optional()
+        .describe('Tax year start (e.g. "2025" for 2025/26). Default: current year.'),
+    },
+    callTool('get_tax_estimate', user)
+  );
+}
+
+// ─── Client Intelligence Tools (2) ──────────────────────────────────────
+
+function registerClientIntelligenceTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'get_client_insights',
+    'Deep dive on a specific client: lifetime value, payment behaviour (avg days to pay, late %), RFM churn risk score, services used, certificates, and recommended next actions (renewal, review request, upsell, deposit). Use when user asks about a specific client.',
+    { client_id: z.string().describe('Client UUID to analyse') },
+    callTool('get_client_insights', user)
+  );
+  server.tool(
+    'get_client_milestones',
+    'Find client milestones worth celebrating: anniversaries (1+ years as client), big job completions (£1k+). Returns draft messages for each. Great for building loyalty and triggering review requests.',
+    {},
+    callTool('get_client_milestones', user)
+  );
+}
+
+// ─── Marketing Tools (5) ────────────────────────────────────────────────
+
+function registerMarketingTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'get_marketing_plan',
+    "Generate a personalised monthly marketing action plan based on the electrician's actual business data. Analyses cert renewals, dormant clients, conversion rates, client mix, and suggests prioritised actions with estimated revenue impact.",
+    {},
+    callTool('get_marketing_plan', user)
+  );
+  server.tool(
+    'get_social_media_post',
+    'Generate a ready-to-copy social media post with caption, hashtags, and tips for a specific platform. Can be based on a completed job or a general topic. Platform-specific formatting (Instagram=hashtag-heavy, LinkedIn=professional, TikTok=hook).',
+    {
+      platform: z
+        .enum(['instagram', 'facebook', 'linkedin', 'tiktok'])
+        .describe('Target social media platform'),
+      job_id: z.string().optional().describe('Job/project UUID to base the post on'),
+      topic: z
+        .string()
+        .optional()
+        .describe('Post topic if not based on a job (e.g. "EICR importance", "winter prep")'),
+    },
+    callTool('get_social_media_post', user)
+  );
+  server.tool(
+    'get_google_review_request',
+    'Draft a personalised Google review request message for a specific client, timed based on their last job completion. Includes review link if Google Place ID provided. Returns timing verdict (perfect/good/late) and recommended channel.',
+    {
+      client_id: z.string().describe('Client UUID to request review from'),
+      google_place_id: z.string().optional().describe('Google Place ID for direct review link'),
+    },
+    callTool('get_google_review_request', user)
+  );
+  server.tool(
+    'get_client_win_back',
+    'Find dormant clients and generate personalised re-engagement messages. Checks for cert expiry angles (warm leads) and seasonal hooks. Returns draft messages sorted by lifetime value.',
+    {
+      months_inactive: z
+        .number()
+        .optional()
+        .describe('Months of inactivity threshold (default: 6)'),
+      limit: z.number().optional().describe('Max clients to return (default: 5)'),
+    },
+    callTool('get_client_win_back', user)
+  );
+  server.tool(
+    'get_seasonal_campaigns',
+    "Get quarter-specific marketing campaign ideas matched to the electrician's actual client base and services. Each campaign includes target segment, client count, suggested message, and estimated revenue potential.",
+    { quarter: z.enum(['Q1', 'Q2', 'Q3', 'Q4']).optional().describe('Quarter (default: current)') },
+    callTool('get_seasonal_campaigns', user)
+  );
+}
+
+// ─── Smart Scheduling Tools (3) ─────────────────────────────────────────
+
+function registerSmartSchedulingTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'schedule_jobs',
+    'Take accepted quotes and suggest an optimised schedule based on calendar availability. Finds free slots, avoids double-booking, suggests morning/afternoon times. Use when user has multiple jobs to book in.',
+    {
+      start_date: z
+        .string()
+        .optional()
+        .describe('Start scheduling from this date (ISO, default: today)'),
+      days_ahead: z.number().optional().describe('How many days ahead to look (default: 5)'),
+    },
+    callTool('schedule_jobs', user)
+  );
+  server.tool(
+    'get_end_of_day_summary',
+    "End-of-day business debrief: jobs done, revenue received, invoices sent, quotes sent, tasks completed. Highlights uninvoiced completed jobs and suggests next actions. Shows tomorrow's schedule.",
+    {},
+    callTool('get_end_of_day_summary', user)
+  );
+  server.tool(
+    'get_competitor_pricing',
+    "Research current market pricing for a job type using Perplexity web search + own history + RAG data. Compares the electrician's prices to market rates and gives verdict: below_market, competitive, or above_market.",
+    {
+      job_type: z
+        .string()
+        .describe('Job type (e.g. "EICR", "consumer unit change", "full rewire")'),
+      location: z.string().optional().describe('Location for local pricing (default: UK)'),
+    },
+    callTool('get_competitor_pricing', user)
+  );
+}
+
+// ─── Portfolio Tools (1) ─────────────────────────────────────────────────
+
+function registerPortfolioTools(server: McpServer, user: UserContext): void {
+  server.tool(
+    'create_portfolio_page',
+    'Create a shareable portfolio page from a completed job — mobile-friendly HTML with photos, description, and call-to-action. Share the link on social media, WhatsApp, or with prospects.',
+    {
+      project_id: z.string().optional().describe('Project UUID'),
+      job_id: z.string().optional().describe('Job UUID'),
+      description: z.string().optional().describe('Job description (if no project/job ID)'),
+      photo_urls: z.array(z.string()).optional().describe('Array of photo URLs to include'),
+    },
+    callTool('create_portfolio_page', user)
   );
 }

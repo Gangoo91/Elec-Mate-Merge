@@ -37,6 +37,11 @@ import * as googleApis from './google-apis.js';
 import * as automation from './automation.js';
 import * as integrations from './integrations.js';
 import * as smartFeatures from './smart-features.js';
+import * as businessHealth from './business-health.js';
+import * as clientIntelligence from './client-intelligence.js';
+import * as marketing from './marketing.js';
+import * as smartScheduling from './smart-scheduling.js';
+import * as portfolio from './portfolio.js';
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -285,6 +290,30 @@ const handlers: Record<string, ToolHandler> = {
   get_completion_checklist: smartFeatures.getCompletionChecklist,
   get_pricing_suggestions: smartFeatures.getPricingSuggestions,
   create_project_from_template: smartFeatures.createProjectFromTemplate,
+
+  // Business Health
+  get_business_health_score: businessHealth.getBusinessHealthScore,
+  get_weekly_summary: businessHealth.getWeeklySummary,
+  get_tax_estimate: businessHealth.getTaxEstimate,
+
+  // Client Intelligence
+  get_client_insights: clientIntelligence.getClientInsights,
+  get_client_milestones: clientIntelligence.getClientMilestones,
+
+  // Marketing
+  get_marketing_plan: marketing.getMarketingPlan,
+  get_social_media_post: marketing.getSocialMediaPost,
+  get_google_review_request: marketing.getGoogleReviewRequest,
+  get_client_win_back: marketing.getClientWinBack,
+  get_seasonal_campaigns: marketing.getSeasonalCampaigns,
+
+  // Smart Scheduling
+  schedule_jobs: smartScheduling.scheduleJobs,
+  get_end_of_day_summary: smartScheduling.getEndOfDaySummary,
+  get_competitor_pricing: smartScheduling.getCompetitorPricing,
+
+  // Portfolio
+  create_portfolio_page: portfolio.createPortfolioPage,
 };
 
 /**
