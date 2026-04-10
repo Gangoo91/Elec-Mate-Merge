@@ -18,8 +18,8 @@
 
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError, AuthenticationError } from '../_shared/errors.ts';
-import { decryptToken } from '../_shared/encryption.ts';
-import { timingSafeEqual } from '../_shared/jwt-signer.ts';
+import { decryptToken, encryptToken } from '../_shared/encryption.ts';
+import { timingSafeEqual, signJwt } from '../_shared/jwt-signer.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -127,24 +127,77 @@ serve(async (req) => {
       );
     }
 
-    // Check if expired
-    if (new Date(tokenRecord.expires_at) < new Date()) {
-      return new Response(
-        JSON.stringify({
-          error: 'token_expired',
-          user_id: targetUserId,
-          expires_at: tokenRecord.expires_at,
-          message: 'Agent token has expired — needs rotation',
-        }),
-        {
-          status: 403,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
-    }
+    // Check if expired — auto-rotate if within 14 days of expiry
+    const expiresAt = new Date(tokenRecord.expires_at);
+    const now = new Date();
+    const fourteenDaysMs = 14 * 24 * 60 * 60 * 1000;
+    const isExpired = expiresAt < now;
+    const isExpiringSoon = !isExpired && expiresAt.getTime() - now.getTime() < fourteenDaysMs;
 
-    // Decrypt the JWT
-    const jwt = await decryptToken(tokenRecord.token_encrypted);
+    let jwt: string;
+    let actualExpiresAt = tokenRecord.expires_at;
+
+    if (isExpired || isExpiringSoon) {
+      // Auto-rotate: generate a new 90-day JWT
+      const jwtSecret = Deno.env.get('SUPABASE_JWT_SECRET');
+      if (!jwtSecret) {
+        if (isExpired) {
+          return new Response(
+            JSON.stringify({
+              error: 'token_expired',
+              user_id: targetUserId,
+              expires_at: tokenRecord.expires_at,
+              message: 'Agent token has expired and cannot auto-rotate (missing JWT secret)',
+            }),
+            { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+        // Expiring soon but can't rotate — use existing token
+        jwt = await decryptToken(tokenRecord.token_encrypted);
+      } else {
+        // Fetch profile for JWT claims
+        const { data: userProfile } = await supabase
+          .from('profiles')
+          .select('role, email')
+          .eq('id', targetUserId)
+          .single();
+
+        const newExp = new Date();
+        newExp.setDate(newExp.getDate() + 90);
+
+        const payload = {
+          sub: targetUserId,
+          aud: 'authenticated',
+          role: 'authenticated',
+          iss: 'supabase',
+          iat: Math.floor(now.getTime() / 1000),
+          exp: Math.floor(newExp.getTime() / 1000),
+          email: userProfile?.email || '',
+          app_metadata: { provider: 'agent', role: userProfile?.role || 'electrician' },
+          user_metadata: { agent: true },
+        };
+
+        jwt = await signJwt(payload, jwtSecret);
+        const encrypted = await encryptToken(jwt);
+
+        await supabase
+          .from('agent_jwt_tokens')
+          .update({
+            token_encrypted: encrypted,
+            expires_at: newExp.toISOString(),
+            rotated_at: now.toISOString(),
+          })
+          .eq('user_id', targetUserId);
+
+        actualExpiresAt = newExp.toISOString();
+        console.log(
+          `[get-agent-jwt] Auto-rotated JWT for ${targetUserId} (was ${isExpired ? 'expired' : 'expiring soon'})`
+        );
+      }
+    } else {
+      // Token is valid and not expiring soon
+      jwt = await decryptToken(tokenRecord.token_encrypted);
+    }
 
     // Fetch user role for context
     const { data: profile } = await supabase
@@ -168,7 +221,7 @@ serve(async (req) => {
         agent_status: profile?.agent_status || 'unknown',
         owner_type: route.owner_type,
         customer_id: route.customer_id || null,
-        expires_at: tokenRecord.expires_at,
+        expires_at: actualExpiresAt,
       }),
       {
         status: 200,

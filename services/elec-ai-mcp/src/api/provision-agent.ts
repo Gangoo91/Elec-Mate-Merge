@@ -22,7 +22,18 @@
 
 import { type Request, type Response } from 'express';
 import { spawn, execSync } from 'node:child_process';
-import { chmod, mkdir, symlink, writeFile, readFile, readdir } from 'node:fs/promises';
+import {
+  chmod,
+  mkdir,
+  symlink,
+  writeFile,
+  readFile,
+  readdir,
+  lstat,
+  unlink,
+  readlink,
+  access,
+} from 'node:fs/promises';
 import { join } from 'node:path';
 import { config } from '../config.js';
 
@@ -46,6 +57,59 @@ const SHARED_FILES = [
   'RAILS_REFERENCE.md',
   'USER_PROFILE.md',
 ];
+
+/**
+ * Repair workspace symlinks — replaces stale copies or broken symlinks
+ * with correct symlinks pointing to the shared workspace.
+ * Idempotent: safe to call on every provision request.
+ */
+async function repairWorkspaceSymlinks(workspaceDir: string): Promise<string[]> {
+  const repaired: string[] = [];
+
+  for (const file of SHARED_FILES) {
+    const target = join(SHARED_WORKSPACE, file);
+    const link = join(workspaceDir, file);
+
+    // Check if shared file exists
+    try {
+      await access(target);
+    } catch {
+      // Target doesn't exist in shared workspace — skip silently
+      continue;
+    }
+
+    try {
+      const stat = await lstat(link);
+
+      if (stat.isSymbolicLink()) {
+        // Check if symlink points to the right target
+        const currentTarget = await readlink(link);
+        if (currentTarget === target) continue; // Already correct
+        // Wrong target — fix it
+        await unlink(link);
+        await symlink(target, link);
+        repaired.push(`${file}: fixed symlink target (was ${currentTarget})`);
+      } else if (stat.isFile()) {
+        // Regular file (stale copy) — replace with symlink
+        await unlink(link);
+        await symlink(target, link);
+        repaired.push(`${file}: replaced stale copy with symlink`);
+      }
+    } catch (err: unknown) {
+      if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+        // File doesn't exist — create symlink
+        await symlink(target, link);
+        repaired.push(`${file}: created new symlink`);
+      } else {
+        console.error(
+          `[provision] Failed to repair symlink for ${file}: ${(err as Error).message}`
+        );
+      }
+    }
+  }
+
+  return repaired;
+}
 
 /** Convert phone number to WhatsApp JID format */
 function phoneToJid(phone: string): string {
@@ -143,16 +207,10 @@ export async function handleProvisionAgent(req: Request, res: Response): Promise
     await mkdir(workspaceDir, { recursive: true });
     await mkdir(configDir, { recursive: true });
 
-    // 2. Symlink shared files (skip if already exists)
-    for (const file of SHARED_FILES) {
-      const target = join(SHARED_WORKSPACE, file);
-      const link = join(workspaceDir, file);
-      try {
-        await symlink(target, link);
-      } catch (err: unknown) {
-        // EEXIST is fine — symlink already exists
-        if ((err as NodeJS.ErrnoException).code !== 'EEXIST') throw err;
-      }
+    // 2. Repair/create workspace symlinks — replaces stale copies with correct symlinks
+    const repaired = await repairWorkspaceSymlinks(workspaceDir);
+    if (repaired.length > 0) {
+      console.log(`[provision] Repaired symlinks: ${repaired.join('; ')}`);
     }
 
     // 3. Create USER.md (unique per user)
@@ -298,6 +356,7 @@ exec /opt/elec-ai/mcp-call "$@"
       workspace: workspaceDir,
       whatsapp_jid: jid,
       files: files,
+      repaired_symlinks: repaired,
     });
   } catch (err) {
     console.error(`[provision] Failed for ${user_id}:`, err);
@@ -305,5 +364,58 @@ exec /opt/elec-ai/mcp-call "$@"
       error: 'Provisioning failed',
       detail: (err as Error).message,
     });
+  }
+}
+
+/**
+ * POST /api/repair-workspaces
+ * Scans ALL workspaces (including workspace-main) and repairs stale symlinks.
+ * Run this after updating shared workspace files to ensure all agents see the latest.
+ */
+export async function handleRepairWorkspaces(req: Request, res: Response): Promise<void> {
+  const { timingSafeCompare } = await import('../lib/request-signer.js');
+  const apiKey = req.headers['x-api-key'] as string | undefined;
+  if (!apiKey || !config.vpsApiKey || !timingSafeCompare(apiKey, config.vpsApiKey)) {
+    res.status(401).json({ error: 'Invalid or missing API key' });
+    return;
+  }
+
+  const results: Record<string, string[]> = {};
+
+  try {
+    // Repair workspace-main (the default/main agent workspace)
+    const workspaceMain = join(OPENCLAW_HOME, 'workspace-main');
+    try {
+      const repaired = await repairWorkspaceSymlinks(workspaceMain);
+      if (repaired.length > 0) results['workspace-main'] = repaired;
+    } catch {
+      /* workspace-main may not exist */
+    }
+
+    // Repair all user workspaces
+    try {
+      const dirs = await readdir(WORKSPACES_DIR, { withFileTypes: true });
+      for (const d of dirs) {
+        if (!d.isDirectory()) continue;
+        const ws = join(WORKSPACES_DIR, d.name);
+        const repaired = await repairWorkspaceSymlinks(ws);
+        if (repaired.length > 0) results[d.name] = repaired;
+      }
+    } catch {
+      /* workspaces dir may not exist */
+    }
+
+    const totalRepaired = Object.values(results).reduce((sum, r) => sum + r.length, 0);
+    console.log(
+      `[repair] Repaired ${totalRepaired} symlinks across ${Object.keys(results).length} workspaces`
+    );
+
+    res.json({
+      success: true,
+      repaired_count: totalRepaired,
+      workspaces: results,
+    });
+  } catch (err) {
+    res.status(500).json({ error: (err as Error).message });
   }
 }

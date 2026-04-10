@@ -33,7 +33,7 @@ import {
 } from './middleware/rate-limiter.js';
 import { EdgeFunctionBlockedError } from './middleware/edge-function-guard.js';
 import { createUserClient } from './lib/supabase.js';
-import { handleProvisionAgent } from './api/provision-agent.js';
+import { handleProvisionAgent, handleRepairWorkspaces } from './api/provision-agent.js';
 import { handleDeprovisionAgent } from './api/deprovision-agent.js';
 import { handleHtmlToPdf } from './api/html-to-pdf.js';
 import { handleAppleWalletPass } from './api/apple-wallet-pass.js';
@@ -230,6 +230,7 @@ function startHttp(): void {
   // ── Agent provisioning / deprovisioning endpoints ───────────────
   app.post('/api/provision-agent', handleProvisionAgent);
   app.post('/api/deprovision-agent', handleDeprovisionAgent);
+  app.post('/api/repair-workspaces', handleRepairWorkspaces);
 
   // ── HTML → PDF proxy (Gotenberg) ──────────────────────────────
   app.post('/api/html-to-pdf', handleHtmlToPdf);
