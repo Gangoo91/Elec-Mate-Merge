@@ -45,7 +45,7 @@ import * as portfolio from './portfolio.js';
 import * as businessIntelligence from './business-intelligence.js';
 import * as tutorQuiz from './tutor-quiz.js';
 import * as studyBuddy from './study-buddy.js';
-import * as phoneAgent from './phone-agent.js';
+// phone-agent.ts exists but disabled — reserved for Mate Call product (separate build)
 
 /** Handler function signature — every tool handler takes args + user context */
 export type ToolHandler = (args: Record<string, unknown>, user: UserContext) => Promise<unknown>;
@@ -340,12 +340,6 @@ const handlers: Record<string, ToolHandler> = {
   get_my_study_stats: studyBuddy.getMyStudyStats,
   get_study_plan: studyBuddy.getStudyPlan,
   daily_challenge: studyBuddy.dailyChallenge,
-
-  // Phone Agent
-  toggle_phone_agent: phoneAgent.togglePhoneAgent,
-  log_call_summary: phoneAgent.logCallSummary,
-  get_call_history: phoneAgent.getCallHistory,
-  get_phone_agent_status: phoneAgent.getPhoneAgentStatus,
 };
 
 /**

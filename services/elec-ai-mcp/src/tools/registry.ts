@@ -104,8 +104,8 @@ export function registerAllTools(server: McpServer, user: UserContext): void {
   // WhatsApp Study Buddy
   registerStudyBuddyTools(server, user);
 
-  // Phone Agent
-  registerPhoneAgentTools(server, user);
+  // Phone Agent — disabled, reserved for Mate Call product
+  // registerPhoneAgentTools(server, user);
 }
 
 // ─── Helper to wrap handler calls with rate limiting + audit logging ────
