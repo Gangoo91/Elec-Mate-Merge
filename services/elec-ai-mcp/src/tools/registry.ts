@@ -3037,6 +3037,18 @@ function registerTutorQuizTools(server: McpServer, user: UserContext): void {
     { cohort_id: z.string().describe('Cohort UUID') },
     callTool('get_cohort_quiz_analytics', user)
   );
+  server.tool(
+    'generate_exam_pdf',
+    'Generate a printable exam PDF from a quiz — clean A4 question sheet with answer boxes + separate answer key PDF. Send exam to students via MEDIA:, keep answer key for tutor.',
+    {
+      quiz_id: z.string().describe('Quiz UUID'),
+      include_answer_key: z
+        .boolean()
+        .optional()
+        .describe('Include separate answer key PDF (default true)'),
+    },
+    callTool('generate_exam_pdf', user)
+  );
 }
 
 // ─── Study Buddy Tools (5) ──────────────────────────────────────────────

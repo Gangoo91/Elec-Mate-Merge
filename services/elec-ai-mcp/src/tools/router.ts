@@ -331,6 +331,7 @@ const handlers: Record<string, ToolHandler> = {
   publish_quiz: tutorQuiz.publishQuiz,
   get_quiz_submissions: tutorQuiz.getQuizSubmissions,
   get_cohort_quiz_analytics: tutorQuiz.getCohortQuizAnalytics,
+  generate_exam_pdf: tutorQuiz.generateExamPdf,
 
   // WhatsApp Study Buddy
   quiz_me: studyBuddy.quizMe,

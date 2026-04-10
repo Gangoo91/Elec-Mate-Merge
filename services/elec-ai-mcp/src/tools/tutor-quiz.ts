@@ -1,7 +1,8 @@
 /**
- * Tutor Quiz Builder — create, manage, publish quizzes to cohorts
+ * Tutor Quiz Builder — create, manage, publish quizzes to cohorts, print exams
  */
 
+import { createClient } from '@supabase/supabase-js';
 import type { UserContext } from '../auth.js';
 
 export async function createQuiz(args: Record<string, unknown>, user: UserContext) {
@@ -365,4 +366,205 @@ export async function getCohortQuizAnalytics(args: Record<string, unknown>, user
       };
     }),
   };
+}
+
+// ─── Generate Printable Exam PDF ──────────────────────────────────────────
+
+/**
+ * Generate a printable exam PDF from a quiz — question sheet + separate answer key.
+ * Uses Gotenberg for HTML→PDF conversion, uploads to Supabase storage.
+ * Returns both a download URL and sends via MEDIA: for WhatsApp delivery.
+ */
+export async function generateExamPdf(args: Record<string, unknown>, user: UserContext) {
+  const supabase = user.supabase;
+  const quizId = args.quiz_id as string;
+  const includeAnswerKey = args.include_answer_key !== false; // default true
+
+  if (!quizId) return { error: 'quiz_id is required' };
+
+  // Get quiz + questions
+  const { data: quiz } = await supabase
+    .from('tutor_quizzes')
+    .select('id, title, topic, difficulty, pass_mark, time_limit_minutes')
+    .eq('id', quizId)
+    .eq('creator_id', user.userId)
+    .single();
+
+  if (!quiz) return { error: 'Quiz not found or you do not own it' };
+
+  const { data: questions } = await supabase
+    .from('tutor_quiz_questions')
+    .select(
+      'question_text, options, correct_answer_index, explanation, category, points, sort_order'
+    )
+    .eq('quiz_id', quizId)
+    .order('sort_order', { ascending: true });
+
+  if (!questions || questions.length === 0) return { error: 'Quiz has no questions' };
+
+  const totalPoints = questions.reduce((s, q) => s + Number(q.points || 1), 0);
+  const letters = ['A', 'B', 'C', 'D'];
+
+  // Get tutor profile
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('full_name, business_name')
+    .eq('id', user.userId)
+    .single();
+
+  const tutorName = (profile?.full_name as string) || (profile?.business_name as string) || '';
+  const today = new Date().toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+  // Build question sheet HTML
+  const questionsHtml = questions
+    .map((q, i) => {
+      const opts = (q.options as string[]) || [];
+      return `
+      <div class="question">
+        <p class="q-num"><strong>Question ${i + 1}</strong> <span class="pts">[${q.points || 1} mark${(q.points || 1) > 1 ? 's' : ''}]</span></p>
+        <p class="q-text">${q.question_text}</p>
+        <div class="options">
+          ${opts.map((opt, j) => `<div class="option"><span class="letter">${letters[j]}</span> ${opt}</div>`).join('')}
+        </div>
+        <div class="answer-box">Answer: _______</div>
+      </div>`;
+    })
+    .join('');
+
+  const examHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+    @page { size: A4; margin: 20mm; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 12pt; line-height: 1.5; color: #000; }
+    .header { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
+    .header h1 { margin: 0; font-size: 18pt; }
+    .header .meta { font-size: 10pt; color: #555; margin-top: 5px; }
+    .student-info { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; display: flex; gap: 20px; }
+    .student-info div { flex: 1; }
+    .student-info label { font-weight: bold; font-size: 10pt; display: block; margin-bottom: 2px; }
+    .student-info .line { border-bottom: 1px solid #999; height: 20px; }
+    .question { margin-bottom: 20px; page-break-inside: avoid; }
+    .q-num { margin: 0 0 4px; }
+    .pts { font-weight: normal; color: #666; font-size: 10pt; }
+    .q-text { margin: 0 0 8px; }
+    .options { margin-left: 10px; }
+    .option { margin: 4px 0; }
+    .letter { display: inline-block; width: 24px; height: 24px; border: 1px solid #999; border-radius: 50%; text-align: center; line-height: 22px; font-weight: bold; margin-right: 8px; font-size: 10pt; }
+    .answer-box { margin-top: 8px; font-size: 10pt; color: #666; }
+    .footer { margin-top: 30px; border-top: 1px solid #ccc; padding-top: 10px; font-size: 9pt; color: #999; text-align: center; }
+  </style></head><body>
+    <div class="header">
+      <h1>${quiz.title}</h1>
+      <div class="meta">
+        ${quiz.topic ? `Topic: ${quiz.topic} | ` : ''}${questions.length} questions | ${totalPoints} marks | Pass mark: ${quiz.pass_mark || 70}%
+        ${quiz.time_limit_minutes ? ` | Time: ${quiz.time_limit_minutes} minutes` : ''}
+      </div>
+    </div>
+    <div class="student-info">
+      <div><label>Name:</label><div class="line"></div></div>
+      <div><label>Date:</label><div class="line"></div></div>
+      <div><label>Score:</label><div class="line"> / ${totalPoints}</div></div>
+    </div>
+    ${questionsHtml}
+    <div class="footer">Generated by Elec-Mate${tutorName ? ` | ${tutorName}` : ''} | ${today}</div>
+  </body></html>`;
+
+  // Build answer key HTML
+  let answerKeyHtml = '';
+  if (includeAnswerKey) {
+    const answersHtml = questions
+      .map((q, i) => {
+        const opts = (q.options as string[]) || [];
+        const correctIdx = q.correct_answer_index as number;
+        return `<tr>
+        <td>${i + 1}</td>
+        <td><strong>${letters[correctIdx]}</strong></td>
+        <td>${opts[correctIdx] || ''}</td>
+        <td style="font-size:9pt;color:#555;">${q.explanation || ''}</td>
+      </tr>`;
+      })
+      .join('');
+
+    answerKeyHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+      @page { size: A4; margin: 20mm; }
+      body { font-family: Arial, sans-serif; font-size: 11pt; }
+      h1 { font-size: 16pt; border-bottom: 2px solid #000; padding-bottom: 8px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+      th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
+      th { background: #f0f0f0; font-size: 10pt; }
+      .footer { margin-top: 20px; font-size: 9pt; color: #999; text-align: center; }
+    </style></head><body>
+      <h1>${quiz.title} — Answer Key</h1>
+      <table>
+        <tr><th>#</th><th>Answer</th><th>Correct Option</th><th>Explanation</th></tr>
+        ${answersHtml}
+      </table>
+      <div class="footer">CONFIDENTIAL — Tutor use only | Generated by Elec-Mate | ${today}</div>
+    </body></html>`;
+  }
+
+  // Convert HTML to PDF via Gotenberg
+  const gotenbergUrl = 'http://127.0.0.1:3200/forms/chromium/convert/html';
+
+  try {
+    const formData = new FormData();
+    formData.append('files', new Blob([examHtml], { type: 'text/html' }), 'index.html');
+    formData.append('marginTop', '0');
+    formData.append('marginBottom', '0');
+    formData.append('marginLeft', '0');
+    formData.append('marginRight', '0');
+
+    const pdfRes = await fetch(gotenbergUrl, { method: 'POST', body: formData });
+    if (!pdfRes.ok) return { error: `PDF generation failed: ${pdfRes.status}` };
+
+    const pdfBuffer = Buffer.from(await pdfRes.arrayBuffer());
+
+    // Upload exam PDF
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!serviceKey) return { error: 'Storage not configured' };
+    const adminClient = createClient(
+      process.env.SUPABASE_URL || 'https://jtwygbeceundfgnkirof.supabase.co',
+      serviceKey
+    );
+
+    const examFileName = `exam-${quizId.slice(0, 8)}-${Date.now()}.pdf`;
+    await adminClient.storage
+      .from('visual-uploads')
+      .upload(examFileName, pdfBuffer, { contentType: 'application/pdf', upsert: false });
+    const { data: examUrl } = adminClient.storage.from('visual-uploads').getPublicUrl(examFileName);
+
+    // Generate answer key PDF if requested
+    let answerKeyUrl = null;
+    if (includeAnswerKey && answerKeyHtml) {
+      const akForm = new FormData();
+      akForm.append('files', new Blob([answerKeyHtml], { type: 'text/html' }), 'index.html');
+      akForm.append('marginTop', '0');
+      akForm.append('marginBottom', '0');
+
+      const akRes = await fetch(gotenbergUrl, { method: 'POST', body: akForm });
+      if (akRes.ok) {
+        const akBuffer = Buffer.from(await akRes.arrayBuffer());
+        const akFileName = `answer-key-${quizId.slice(0, 8)}-${Date.now()}.pdf`;
+        await adminClient.storage
+          .from('visual-uploads')
+          .upload(akFileName, akBuffer, { contentType: 'application/pdf', upsert: false });
+        const { data: akUrl } = adminClient.storage.from('visual-uploads').getPublicUrl(akFileName);
+        answerKeyUrl = akUrl.publicUrl;
+      }
+    }
+
+    return {
+      success: true,
+      quiz_title: quiz.title,
+      questions: questions.length,
+      total_marks: totalPoints,
+      exam_pdf_url: examUrl.publicUrl,
+      answer_key_pdf_url: answerKeyUrl,
+      note: 'Send the exam PDF to students via MEDIA: prefix. Keep the answer key for yourself.',
+    };
+  } catch (err) {
+    return { error: `PDF generation failed: ${err instanceof Error ? err.message : 'unknown'}` };
+  }
 }
