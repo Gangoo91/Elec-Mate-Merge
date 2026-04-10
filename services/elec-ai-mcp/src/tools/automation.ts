@@ -198,31 +198,44 @@ export async function suggestUpsell(args: Record<string, unknown>, user: UserCon
 
 /**
  * Transcribe a voice note using OpenAI Whisper API directly.
+ * Supports: local file path (from OpenClaw media), URL, or base64.
  */
 export async function transcribeVoiceNote(args: Record<string, unknown>, _user: UserContext) {
   const audioUrl = args.audio_url as string;
   const audioBase64 = args.audio_base64 as string;
+  const audioPath = args.audio_path as string;
 
-  if (!audioUrl && !audioBase64) return { error: 'audio_url or audio_base64 is required' };
+  if (!audioUrl && !audioBase64 && !audioPath) {
+    return { error: 'audio_url, audio_path, or audio_base64 is required' };
+  }
 
   const openaiKey = process.env.OPENAI_API_KEY;
   if (!openaiKey) return { error: 'OpenAI API key not configured for voice transcription' };
 
   try {
-    let audioBlob: Blob;
+    const { readFile } = await import('fs/promises');
+    let audioBuffer: Buffer;
+    let fileName = 'voice.ogg';
 
-    if (audioUrl) {
+    if (audioPath || (audioUrl && audioUrl.startsWith('/'))) {
+      // Local file path (from OpenClaw inbound media)
+      const filePath = audioPath || audioUrl;
+      audioBuffer = await readFile(filePath);
+      fileName = filePath.split('/').pop() || 'voice.ogg';
+    } else if (audioUrl) {
+      // Remote URL
       const res = await fetch(audioUrl);
-      if (!res.ok) return { error: 'Failed to download audio' };
-      audioBlob = await res.blob();
+      if (!res.ok) return { error: `Failed to download audio: ${res.status}` };
+      audioBuffer = Buffer.from(await res.arrayBuffer());
     } else {
+      // Base64
       const raw = audioBase64.replace(/^data:audio\/\w+;base64,/, '');
-      const buffer = Buffer.from(raw, 'base64');
-      audioBlob = new Blob([buffer], { type: 'audio/ogg' });
+      audioBuffer = Buffer.from(raw, 'base64');
     }
 
+    const audioBlob = new Blob([audioBuffer], { type: 'audio/ogg' });
     const formData = new FormData();
-    formData.append('file', audioBlob, 'voice.ogg');
+    formData.append('file', audioBlob, fileName);
     formData.append('model', 'whisper-1');
     formData.append('language', 'en');
 
@@ -243,8 +256,10 @@ export async function transcribeVoiceNote(args: Record<string, unknown>, _user: 
       transcript: data.text || '',
       language: 'en',
     };
-  } catch {
-    return { error: 'Voice transcription failed. Try sending a text message instead.' };
+  } catch (err) {
+    return {
+      error: `Voice transcription failed: ${err instanceof Error ? err.message : 'unknown'}`,
+    };
   }
 }
 

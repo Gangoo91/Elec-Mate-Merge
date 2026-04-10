@@ -95,10 +95,16 @@ interface ProvisionRequest {
   role?: string;
 }
 
+/** Shell-escape a string for safe embedding in bash scripts */
+function shellEscape(s: string): string {
+  return `'${s.replace(/'/g, "'\\''")}'`;
+}
+
 export async function handleProvisionAgent(req: Request, res: Response): Promise<void> {
-  // Authenticate via X-API-Key
+  // Authenticate via X-API-Key (timing-safe)
+  const { timingSafeCompare } = await import('../lib/request-signer.js');
   const apiKey = req.headers['x-api-key'] as string | undefined;
-  if (!apiKey || apiKey !== config.vpsApiKey) {
+  if (!apiKey || !config.vpsApiKey || !timingSafeCompare(apiKey, config.vpsApiKey)) {
     res.status(401).json({ error: 'Invalid or missing API key' });
     return;
   }
@@ -108,6 +114,20 @@ export async function handleProvisionAgent(req: Request, res: Response): Promise
   // Validate required fields
   if (!body.user_id || !body.phone_number) {
     res.status(400).json({ error: 'user_id and phone_number are required' });
+    return;
+  }
+
+  // Input validation — prevent injection
+  if (!/^\+\d{7,15}$/.test(body.phone_number)) {
+    res.status(400).json({ error: 'phone_number must be E.164 format (e.g. +447507241303)' });
+    return;
+  }
+  if (!/^[a-f0-9-]{36}$/i.test(body.user_id)) {
+    res.status(400).json({ error: 'user_id must be a valid UUID' });
+    return;
+  }
+  if (body.full_name && body.full_name.length > 100) {
+    res.status(400).json({ error: 'full_name must be under 100 characters' });
     return;
   }
 
@@ -174,9 +194,10 @@ Always address them by name and use their data from the MCP tools.
     await mkdir(binDir, { recursive: true });
 
     const mcpCallScript = `#!/bin/bash
-# Tool caller for ${full_name} — identity baked in
-export MCP_SENDER_PHONE="${phone_number}"
-export MCP_API_KEY="${config.vpsApiKey}"
+# Tool caller for ${(full_name || '').replace(/[^a-zA-Z0-9 .-]/g, '')} — identity baked in
+export MCP_SENDER_PHONE=${shellEscape(phone_number)}
+export MCP_API_KEY=${shellEscape(config.vpsApiKey)}
+export MCP_HMAC_SECRET=${shellEscape(config.hmacSecret || '')}
 exec /opt/elec-ai/mcp-call "$@"
 `;
     const mcpCallPath = join(binDir, 'mcp-call');

@@ -17,13 +17,96 @@ import type { UserContext } from '../auth.js';
  * Uploads the audio to Supabase storage so Mate can send it as a voice note.
  * Default voice: "Daniel" (British male, natural pacing — good for UK sparks)
  */
-export async function speakResponse(args: Record<string, unknown>, user: UserContext) {
-  const text = args.text as string;
-  const voiceId = (args.voice_id as string) || 'onwK4e9ZLuTAKqWW03F9'; // Daniel — British male
+/**
+ * Expand electrical abbreviations so TTS reads them naturally.
+ * "2.5mm²" → "2.5 millimetre squared", "32A" → "32 amp", etc.
+ */
+function expandForSpeech(raw: string): string {
+  let t = raw;
 
-  if (!text) return { error: 'text is required' };
-  if (text.length > 2500)
+  // Units with superscript/symbol — do these first before stripping
+  t = t.replace(/mm²/g, ' millimetres squared');
+  t = t.replace(/mm2/g, ' millimetres squared');
+  t = t.replace(/m²/g, ' metres squared');
+
+  // Electrical units after numbers: 32A → 32 amp, 230V → 230 volts, etc.
+  t = t.replace(/(\d)\s*kVA/g, '$1 kVA');
+  t = t.replace(/(\d)\s*kW/g, '$1 kilowatts');
+  t = t.replace(/(\d)\s*mA/g, '$1 milliamps');
+  t = t.replace(/(\d)\s*mm/g, '$1 millimetre');
+  t = t.replace(/(\d)\s*A\b/g, '$1 amp');
+  t = t.replace(/(\d)\s*V\b/g, '$1 volt');
+  t = t.replace(/(\d)\s*W\b/g, '$1 watt');
+  t = t.replace(/(\d)\s*Ω/g, '$1 ohm');
+  t = t.replace(/(\d)\s*kΩ/g, '$1 kilohm');
+  t = t.replace(/(\d)\s*MΩ/g, '$1 megohm');
+  t = t.replace(/(\d)\s*Hz/g, '$1 hertz');
+
+  // Pluralise when number > 1
+  t = t.replace(
+    /(\d+(?:\.\d+)?)\s+(amp|volt|watt|ohm|kilowatt|milliamp|hertz|megohm|kilohm|millimetre|metre)\b/g,
+    (_, num, unit) => {
+      const n = parseFloat(num);
+      return n === 1 ? `${num} ${unit}` : `${num} ${unit}s`;
+    }
+  );
+
+  // Common abbreviations
+  t = t.replace(/\bBS\s*7671\b/g, 'B S 7671');
+  t = t.replace(/\bBS\s*(\d+)/g, 'B S $1');
+  t = t.replace(/\bEICR\b/g, 'E I C R');
+  t = t.replace(/\bEIC\b/g, 'E I C');
+  t = t.replace(/\bRCBO\b/g, 'R C B O');
+  t = t.replace(/\bRCCD\b/g, 'R C C D');
+  t = t.replace(/\bRCD\b/g, 'R C D');
+  t = t.replace(/\bMCB\b/g, 'M C B');
+  t = t.replace(/\bSWA\b/g, 'S W A');
+  t = t.replace(/\bPAT\b/g, 'P A T');
+  t = t.replace(/\bRAMS\b/g, 'rams');
+  t = t.replace(/\bEV\b/g, 'E V');
+  t = t.replace(/\bDNO\b/g, 'D N O');
+  t = t.replace(/\bCPC\b/g, 'C P C');
+  t = t.replace(/\bPME\b/g, 'P M E');
+  t = t.replace(/\bTN-S\b/g, 'T N S');
+  t = t.replace(/\bTN-C-S\b/g, 'T N C S');
+  t = t.replace(/\bTT\b/g, 'T T');
+  t = t.replace(/\bIP\d+/g, (m) => m.split('').join(' '));
+  t = t.replace(/\bZs\b/g, 'zed s');
+  t = t.replace(/\bZe\b/g, 'zed e');
+  t = t.replace(/\bR1\s*\+\s*R2\b/g, 'R1 plus R2');
+  t = t.replace(/\bIr\b/g, 'I R');
+  t = t.replace(/\bIn\b(?=\s*\d)/g, 'I N');
+  t = t.replace(/\bIpf\b/g, 'I P F');
+  t = t.replace(/\bIa\b/g, 'I A');
+  t = t.replace(/\bT&E\b/gi, 'twin and earth');
+  t = t.replace(/\bCU\b/g, 'consumer unit');
+  t = t.replace(/\bDB\b/g, 'distribution board');
+  t = t.replace(/\bSFU\b/g, 'switched fuse unit');
+
+  // Symbols
+  t = t.replace(/£(\d)/g, '£$1'); // pound sign is fine for TTS
+  t = t.replace(/°C/g, ' degrees celsius');
+  t = t.replace(/°F/g, ' degrees fahrenheit');
+  t = t.replace(/\+\/-/g, 'plus or minus');
+  t = t.replace(/≤/g, 'less than or equal to');
+  t = t.replace(/≥/g, 'greater than or equal to');
+  t = t.replace(/±/g, 'plus or minus');
+
+  // Clean up multiple spaces
+  t = t.replace(/\s{2,}/g, ' ').trim();
+
+  return t;
+}
+
+export async function speakResponse(args: Record<string, unknown>, user: UserContext) {
+  const rawText = args.text as string;
+  const voiceId = (args.voice_id as string) || 'j57KDF72L6gxbLk4sOo5'; // George — British male (professional)
+
+  if (!rawText) return { error: 'text is required' };
+  if (rawText.length > 2500)
     return { error: 'Text too long — keep under 2500 characters for voice notes' };
+
+  const text = expandForSpeech(rawText);
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) return { error: 'ElevenLabs API key not configured' };
@@ -38,8 +121,13 @@ export async function speakResponse(args: Record<string, unknown>, user: UserCon
       },
       body: JSON.stringify({
         text,
-        model_id: 'eleven_turbo_v2_5',
-        voice_settings: { stability: 0.5, similarity_boost: 0.75 },
+        model_id: 'eleven_multilingual_v2',
+        voice_settings: {
+          stability: 0.65,
+          similarity_boost: 0.8,
+          style: 0.15,
+          use_speaker_boost: true,
+        },
       }),
     });
 

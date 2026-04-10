@@ -18,6 +18,7 @@
  */
 
 import { randomUUID } from 'node:crypto';
+import { timingSafeCompare } from './lib/request-signer.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
@@ -123,8 +124,40 @@ function startHttp(): void {
 
   app.use(express.json({ limit: '1mb' }));
 
-  // ── Health check ───────────────────────────────────────────────────
+  // ── Health check (public — minimal info) ─────────────────────────
   app.get('/health', async (_req, res) => {
+    if (isShuttingDown) {
+      res.status(503).json({ status: 'shutting_down' });
+      return;
+    }
+
+    // Public health: just status + uptime, no infrastructure details
+    let status = 'ok';
+    if (config.supabaseAnonKey) {
+      try {
+        const supabase = createUserClient(config.supabaseAnonKey);
+        await supabase.from('profiles').select('id').limit(1);
+      } catch {
+        status = 'degraded';
+      }
+    }
+
+    res.status(status === 'ok' ? 200 : 503).json({
+      status,
+      service: 'elec-ai-mcp',
+      uptime: Math.floor(process.uptime()),
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  // ── Health check (authenticated — full diagnostics) ─────────────
+  app.get('/health/details', async (req, res) => {
+    const apiKey = req.headers['x-api-key'] as string | undefined;
+    if (!apiKey || !config.vpsApiKey || !timingSafeCompare(apiKey, config.vpsApiKey)) {
+      res.status(401).json({ error: 'API key required for detailed health' });
+      return;
+    }
+
     if (isShuttingDown) {
       res.status(503).json({ status: 'shutting_down' });
       return;
@@ -138,6 +171,7 @@ function startHttp(): void {
       transport: 'http',
       uptime: Math.floor(process.uptime()),
       timestamp: new Date().toISOString(),
+      hmac_signing: config.hmacSecret ? 'enabled' : 'DISABLED — phone spoofing protection off',
       memory_mb: {
         rss: Math.round(mem.rss / 1048576),
         heap_used: Math.round(mem.heapUsed / 1048576),
@@ -225,7 +259,12 @@ function startHttp(): void {
     }
 
     try {
-      const userContext = await authenticateUser(undefined, apiKey, senderPhone);
+      const hmacHeaders = {
+        signature: req.headers['x-request-signature'] as string | undefined,
+        timestamp: req.headers['x-request-timestamp'] as string | undefined,
+        nonce: req.headers['x-request-nonce'] as string | undefined,
+      };
+      const userContext = await authenticateUser(undefined, apiKey, senderPhone, hmacHeaders);
 
       const handler = getHandler(tool);
       if (!handler) {
@@ -265,7 +304,7 @@ function startHttp(): void {
     }
 
     const apiKey = req.headers['x-api-key'] as string | undefined;
-    if (!apiKey || apiKey !== config.vpsApiKey) {
+    if (!apiKey || !config.vpsApiKey || !timingSafeCompare(apiKey, config.vpsApiKey)) {
       res.status(401).json({ error: 'Invalid API key' });
       return;
     }

@@ -14,6 +14,7 @@
 
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 import { config } from './config.js';
+import { verifySignedRequest, timingSafeCompare } from './lib/request-signer.js';
 
 export interface UserContext {
   userId: string;
@@ -102,11 +103,15 @@ const API_KEY_JWT_TTL_MS = 30 * 60 * 1000; // 30 minutes
  * Fetches a user JWT from the get-agent-jwt edge function using the sender's phone number.
  * Each phone number resolves to a different Supabase user via the phone_number_routing table.
  */
-async function authenticateWithApiKey(apiKey: string, senderPhone?: string): Promise<UserContext> {
+async function authenticateWithApiKey(
+  apiKey: string,
+  senderPhone?: string,
+  hmacHeaders?: { signature?: string; timestamp?: string; nonce?: string }
+): Promise<UserContext> {
   if (!config.vpsApiKey) {
     throw new AuthError('api_key_disabled', 'API key auth is not configured');
   }
-  if (apiKey !== config.vpsApiKey) {
+  if (!timingSafeCompare(apiKey, config.vpsApiKey)) {
     throw new AuthError('invalid_api_key', 'Invalid API key');
   }
 
@@ -116,6 +121,33 @@ async function authenticateWithApiKey(apiKey: string, senderPhone?: string): Pro
       'sender_phone is required for API key auth — identity cannot be determined without it'
     );
   }
+
+  // HMAC signature verification (prevents phone spoofing)
+  if (config.hmacSecret) {
+    const { signature, timestamp, nonce } = hmacHeaders || {};
+    if (!signature || !timestamp || !nonce) {
+      throw new AuthError(
+        'missing_signature',
+        'Request signing is required — X-Request-Signature, X-Request-Timestamp, X-Request-Nonce headers missing'
+      );
+    }
+
+    const result = verifySignedRequest(
+      senderPhone,
+      parseInt(timestamp, 10),
+      nonce,
+      signature,
+      config.hmacSecret
+    );
+
+    if (!result.valid) {
+      console.error(`[auth] HMAC verification failed for ${senderPhone}: ${result.reason}`);
+      throw new AuthError('invalid_signature', result.reason);
+    }
+  } else if (config.nodeEnv === 'production') {
+    console.warn('[auth] WARNING: HMAC_SECRET not set — phone spoofing protection disabled');
+  }
+
   const phoneNumber = senderPhone;
 
   // Use per-phone cached JWT if fresh
@@ -160,11 +192,12 @@ async function authenticateWithApiKey(apiKey: string, senderPhone?: string): Pro
 export async function authenticateUser(
   authHeader: string | undefined,
   apiKeyHeader?: string | undefined,
-  senderPhone?: string | undefined
+  senderPhone?: string | undefined,
+  hmacHeaders?: { signature?: string; timestamp?: string; nonce?: string }
 ): Promise<UserContext> {
   // Try API key auth first (X-API-Key header)
   if (apiKeyHeader) {
-    return authenticateWithApiKey(apiKeyHeader, senderPhone);
+    return authenticateWithApiKey(apiKeyHeader, senderPhone, hmacHeaders);
   }
 
   if (!authHeader) {

@@ -825,6 +825,12 @@ function registerInvoicingTools(server: McpServer, user: UserContext): void {
       vat_rate: z.number().optional().describe('VAT rate (default 20)'),
       due_days: z.number().optional().describe('Payment terms in days (default 30)'),
       notes: z.string().optional().describe('Invoice notes'),
+      confirmed: z
+        .boolean()
+        .optional()
+        .describe(
+          'Set to true to override safety checks (e.g. amount >2x average, possible duplicate). Only pass this after the user explicitly confirms.'
+        ),
     },
     callTool('create_invoice', user)
   );
@@ -2617,7 +2623,7 @@ function registerAutomationTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'suggest_upsell',
-    'Analyse a client\'s certificate and invoice history to suggest upsell opportunities. Detects: annual contract candidates (3+ certs), cross-sell (EICR without PAT), EV charger opportunities, referral requests. Returns prioritised suggestions with estimated values.',
+    "Analyse a client's certificate and invoice history to suggest upsell opportunities. Detects: annual contract candidates (3+ certs), cross-sell (EICR without PAT), EV charger opportunities, referral requests. Returns prioritised suggestions with estimated values.",
     {
       client_id: z.string().describe('Customer ID to analyse'),
     },
@@ -2626,9 +2632,18 @@ function registerAutomationTools(server: McpServer, user: UserContext): void {
 
   server.tool(
     'transcribe_voice_note',
-    'Transcribe a WhatsApp voice note to text using OpenAI Whisper. Use when the user sends an audio message — transcribe it, then respond to the content as if they typed it.',
+    'Transcribe a WhatsApp voice note to text using OpenAI Whisper. Use when the user sends an audio message — transcribe it, then respond to the content as if they typed it. Accepts local file paths (from OpenClaw inbound media), URLs, or base64.',
     {
-      audio_url: z.string().optional().describe('URL to the audio file'),
+      audio_url: z
+        .string()
+        .optional()
+        .describe('URL to the audio file (also accepts local file paths starting with /)'),
+      audio_path: z
+        .string()
+        .optional()
+        .describe(
+          'Local file path to the audio file (e.g. /home/openclaw/.openclaw/media/inbound/xxx.ogg)'
+        ),
       audio_base64: z.string().optional().describe('Base64-encoded audio data'),
     },
     callTool('transcribe_voice_note', user)
@@ -2656,7 +2671,9 @@ function registerIntegrationTools(server: McpServer, user: UserContext): void {
       voice_id: z
         .string()
         .optional()
-        .describe('ElevenLabs voice ID. Defaults to Daniel (British male). Leave blank for default.'),
+        .describe(
+          'ElevenLabs voice ID. Defaults to Daniel (British male). Leave blank for default.'
+        ),
     },
     callTool('speak_response', user)
   );
@@ -2667,7 +2684,9 @@ function registerIntegrationTools(server: McpServer, user: UserContext): void {
     {
       query: z
         .string()
-        .describe('Search query (e.g. "current price of 6mm T&E cable UK", "BS 7671 2024 amendment changes")'),
+        .describe(
+          'Search query (e.g. "current price of 6mm T&E cable UK", "BS 7671 2024 amendment changes")'
+        ),
       focus: z
         .enum(['web', 'news'])
         .optional()
@@ -2680,10 +2699,7 @@ function registerIntegrationTools(server: McpServer, user: UserContext): void {
     'read_pdf',
     'Extract text from a PDF document — either from a URL or base64 data. Use when a client sends a spec sheet, planning document, compliance report, or any PDF file. Returns the extracted text, page count, and file size. For scanned (image-based) PDFs, use analyse_photo instead.',
     {
-      pdf_url: z
-        .string()
-        .optional()
-        .describe('URL to the PDF file to read'),
+      pdf_url: z.string().optional().describe('URL to the PDF file to read'),
       pdf_base64: z
         .string()
         .optional()

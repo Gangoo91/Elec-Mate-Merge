@@ -36,6 +36,9 @@ export const config = {
 
   /** Anthropic API key for vision analysis (Claude) */
   anthropicApiKey: process.env.ANTHROPIC_API_KEY || '',
+
+  /** HMAC secret for request signing (prevents phone spoofing in API key auth) */
+  hmacSecret: process.env.HMAC_SECRET || '',
 } as const;
 
 /** Validate required config on startup */

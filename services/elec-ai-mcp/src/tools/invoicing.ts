@@ -153,12 +153,40 @@ export async function createInvoice(args: Record<string, unknown>, user: UserCon
     .limit(50);
 
   const warnings: string[] = [];
+  const confirmed = args.confirmed === true;
 
   if (avgData && avgData.length >= 3) {
     const avg = avgData.reduce((sum, q) => sum + (q.total || 0), 0) / avgData.length;
+    if (total > avg * 2 && !confirmed) {
+      throw new Error(
+        `This invoice (£${total.toFixed(2)}) is more than 2x your average (£${avg.toFixed(2)}). If this is correct, pass confirmed: true to proceed.`
+      );
+    }
     if (total > avg * 2) {
-      warnings.push(
-        `This invoice (£${total.toFixed(2)}) is more than 2x your average (£${avg.toFixed(2)}). Please double-check the amount.`
+      warnings.push(`Amount is above average — confirmed by user.`);
+    }
+  }
+
+  // Check for duplicate invoices (same client, similar amount, last 7 days)
+  const clientName =
+    typeof args.client_data === 'object'
+      ? (args.client_data as Record<string, unknown>)?.name
+      : undefined;
+  if (clientName) {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const { data: recentInvoices } = await supabase
+      .from('invoices')
+      .select('id, invoice_number, total, created_at')
+      .eq('client_data->>name', clientName)
+      .gte('created_at', sevenDaysAgo.toISOString());
+
+    const similar = (recentInvoices || []).find(
+      (inv) => Math.abs(Number(inv.total) - total) / total < 0.1
+    );
+    if (similar && !confirmed) {
+      throw new Error(
+        `A similar invoice (${similar.invoice_number}, £${Number(similar.total).toFixed(2)}) was created for ${clientName} within the last 7 days. If this is intentional, pass confirmed: true.`
       );
     }
   }
