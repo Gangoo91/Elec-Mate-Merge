@@ -87,7 +87,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
             {commonDefects.map((item, i) => (
               <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.defect}</p>
-                <p className="text-sm text-white/70 mt-1">{item.detail}</p>
+                <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
             ))}
           </div>
@@ -121,7 +121,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
                 <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
                 <div>
                   <p className="text-sm font-medium text-white">{item.tip}</p>
-                  <p className="text-sm text-white/80 mt-0.5">{item.detail}</p>
+                  <p className="text-sm text-white mt-0.5">{item.detail}</p>
                 </div>
               </div>
             ))}

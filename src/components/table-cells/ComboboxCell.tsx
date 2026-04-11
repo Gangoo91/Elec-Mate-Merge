@@ -198,7 +198,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>{trigger}</PopoverTrigger>
-      <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0 z-[9999] bg-background border border-white/[0.1] rounded-xl shadow-xl" align="start" side="bottom" sideOffset={4}>
+      <PopoverContent className="min-w-[220px] w-[var(--radix-popover-trigger-width)] p-0 z-[9999] bg-background border border-white/[0.1] rounded-xl shadow-xl" align="start" side="bottom" sideOffset={4}>
         {/* Search */}
         <div className="px-3 py-2 border-b border-white/[0.06]">
           <div className="flex items-center gap-2 h-9 px-2 rounded-lg bg-white/[0.06]">
@@ -213,7 +213,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
           </div>
         </div>
         {/* Options */}
-        <div className="max-h-[240px] overflow-y-auto">
+        <div className="max-h-[320px] overflow-y-auto">
           {filtered.map(renderOption)}
           {filtered.length === 0 && search.trim() && allowCustom && (
             <button

@@ -14,7 +14,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
-import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
+import { DistributionBoard, createMainBoard, getBoardWays, MAIN_BOARD_ID } from '@/types/distributionBoard';
 
 // Fields managed by this section (for memoization comparison)
 const ELECTRICAL_SECTION_FIELDS = [
@@ -24,8 +24,10 @@ const ELECTRICAL_SECTION_FIELDS = [
   'cuType',
   'boardSize',
   'intakeCableSize',
+  'intakeCableSizeCustom',
   'intakeCableType',
   'tailsSize',
+  'tailsSizeCustom',
   'tailsLength',
 ] as const;
 
@@ -110,13 +112,14 @@ const ElectricalInstallationSectionInner = ({
       if (mainBoard.location) onUpdate('cuLocation', mainBoard.location);
       if (mainBoard.make) onUpdate('cuManufacturer', mainBoard.make);
       if (mainBoard.type) onUpdate('cuType', mainBoard.type);
-      if (mainBoard.totalWays) onUpdate('boardSize', `${mainBoard.totalWays}-way`);
+      const resolvedWays = getBoardWays(mainBoard);
+      onUpdate('boardSize', resolvedWays ? `${resolvedWays}-way` : '');
     }
   };
 
   // Cable size options
-  const intakeCableSizes = ['16mm', '25mm', '35mm', '50mm', '70mm', '95mm'];
-  const tailsSizes = ['16mm', '25mm', '35mm'];
+  const intakeCableSizes = ['16mm', '25mm', '35mm', '50mm', '70mm', '95mm', '120mm', '150mm', '185mm', '240mm', '300mm'];
+  const tailsSizes = ['16mm', '25mm', '35mm', '50mm', '70mm', '95mm'];
 
   // Cable type options
   const cableTypes = [
@@ -165,7 +168,27 @@ const ElectricalInstallationSectionInner = ({
                   {size}²
                 </button>
               ))}
+              <button
+                type="button"
+                onClick={() => { haptic.light(); onUpdate('intakeCableSize', 'custom'); }}
+                className={cn(
+                  'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                  formData.intakeCableSize === 'custom'
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.03] text-white border border-white/[0.06]'
+                )}
+              >
+                Other
+              </button>
             </div>
+            {formData.intakeCableSize === 'custom' && (
+              <Input
+                value={formData.intakeCableSizeCustom || ''}
+                onChange={(e) => onUpdate('intakeCableSizeCustom', e.target.value)}
+                placeholder="e.g. 400mm²"
+                className="h-11 text-base touch-manipulation mt-2"
+              />
+            )}
           </FormField>
 
           {getWarningsForField('intakeCableSize').map((w, i) => (
@@ -220,7 +243,27 @@ const ElectricalInstallationSectionInner = ({
                     {size}²
                   </button>
                 ))}
+                <button
+                  type="button"
+                  onClick={() => { haptic.light(); onUpdate('tailsSize', 'custom'); }}
+                  className={cn(
+                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                    formData.tailsSize === 'custom'
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                  )}
+                >
+                  Other
+                </button>
               </div>
+              {formData.tailsSize === 'custom' && (
+                <Input
+                  value={formData.tailsSizeCustom || ''}
+                  onChange={(e) => onUpdate('tailsSizeCustom', e.target.value)}
+                  placeholder="e.g. 120mm²"
+                  className="h-11 text-base touch-manipulation mt-2"
+                />
+              )}
             </FormField>
             <FormField label="Length (m)">
               <Input

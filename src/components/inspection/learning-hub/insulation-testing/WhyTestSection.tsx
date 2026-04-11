@@ -137,7 +137,7 @@ const WhyTestSection = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.cause}</p>
-              <p className="text-sm text-white/80 mt-1 leading-relaxed">{item.detail}</p>
+              <p className="text-sm text-white mt-1 leading-relaxed">{item.detail}</p>
             </div>
           </motion.div>
         ))}
@@ -157,7 +157,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-yellow-400">F</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Finding</p>
+                    <p className="text-xs font-medium text-white">Finding</p>
                     <p className="text-sm text-white">{example.fault}</p>
                   </div>
                 </div>
@@ -166,7 +166,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-orange-400">C</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Consequence</p>
+                    <p className="text-xs font-medium text-white">Consequence</p>
                     <p className="text-sm text-white">{example.consequence}</p>
                   </div>
                 </div>
@@ -175,7 +175,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-green-400">R</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Resolution</p>
+                    <p className="text-xs font-medium text-white">Resolution</p>
                     <p className="text-sm text-white">{example.resolution}</p>
                   </div>
                 </div>

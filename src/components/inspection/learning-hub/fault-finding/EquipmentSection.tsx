@@ -45,7 +45,7 @@ const EquipmentSection = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{inst.name}</p>
               <p className="text-xs text-yellow-400/80">{inst.faults}</p>
-              <p className="text-sm text-white/80 leading-relaxed">{inst.description}</p>
+              <p className="text-sm text-white leading-relaxed">{inst.description}</p>
               <div className="space-y-1.5">
                 {inst.tips.map((tip, j) => (
                   <div key={j} className="flex items-start gap-2">

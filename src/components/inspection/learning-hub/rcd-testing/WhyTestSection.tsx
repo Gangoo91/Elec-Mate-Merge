@@ -103,7 +103,7 @@ const WhyTestSection = ({ onBack }: Props) => {
               </div>
               <div>
                 <p className="text-sm font-medium text-white">{item.step}</p>
-                <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                <p className="text-sm text-white mt-0.5">{item.detail}</p>
               </div>
             </div>
           </motion.div>
@@ -117,8 +117,8 @@ const WhyTestSection = ({ onBack }: Props) => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Current</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Effect</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Current</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Effect</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -132,7 +132,7 @@ const WhyTestSection = ({ onBack }: Props) => {
               </table>
             </div>
             <div className="p-3 border-t border-white/[0.06]">
-              <p className="text-xs text-white/70">A 30mA RCD trips before current reaches the threshold for respiratory paralysis. A 5×IΔn test (150mA) confirms the RCD trips in ≤40ms — before ventricular fibrillation can occur.</p>
+              <p className="text-xs text-white">A 30mA RCD trips before current reaches the threshold for respiratory paralysis. A 5×IΔn test (150mA) confirms the RCD trips in ≤40ms — before ventricular fibrillation can occur.</p>
             </div>
           </div>
         </motion.div>

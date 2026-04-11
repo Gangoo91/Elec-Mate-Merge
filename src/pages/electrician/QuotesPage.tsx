@@ -16,6 +16,12 @@ import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { toast } from '@/hooks/use-toast';
 import { createQuickTaskBatch } from '@/utils/createQuickTask';
 
+const statusFilters: Quote['status'][] = ['draft', 'sent', 'pending', 'approved', 'rejected'];
+
+const getErrorMessage = (error: unknown, fallback: string): string => {
+  return error instanceof Error && error.message ? error.message : fallback;
+};
+
 const QuotesPage = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -67,8 +73,8 @@ const QuotesPage = () => {
 
     let filtered = savedQuotes;
 
-    if (filter && filter !== 'all' && filter !== 'monthly') {
-      filtered = filterQuotesByStatus(filtered, filter as any);
+    if (statusFilters.includes(filter as Quote['status'])) {
+      filtered = filterQuotesByStatus(filtered, filter as Quote['status']);
     }
 
     if (searchQuery.trim()) {
@@ -152,8 +158,12 @@ const QuotesPage = () => {
         title: 'Follow-up tasks created',
         description: `${count} follow-up ${count === 1 ? 'task' : 'tasks'} added for tomorrow.`,
       });
-    } catch (error: any) {
-      toast({ title: 'Failed', description: error?.message || 'Could not create tasks.', variant: 'destructive' });
+    } catch (error: unknown) {
+      toast({
+        title: 'Failed',
+        description: getErrorMessage(error, 'Could not create tasks.'),
+        variant: 'destructive',
+      });
     } finally {
       setCreatingFollowUps(false);
     }

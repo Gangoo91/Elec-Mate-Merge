@@ -126,8 +126,8 @@ const TroubleshootingSection = ({ onBack }: Props) => {
               <table className="w-full text-xs">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-2.5 font-semibold text-white/60">Symptom</th>
-                    <th className="text-left p-2.5 font-semibold text-white/60">First Test</th>
+                    <th className="text-left p-2.5 font-semibold text-white">Symptom</th>
+                    <th className="text-left p-2.5 font-semibold text-white">First Test</th>
                     <th className="text-left p-2.5 font-semibold text-yellow-400">Likely Fault</th>
                   </tr>
                 </thead>
@@ -135,7 +135,7 @@ const TroubleshootingSection = ({ onBack }: Props) => {
                   {symptomQuickMatch.map((row, i) => (
                     <tr key={i} className="border-b border-white/[0.04]">
                       <td className="p-2.5 text-white font-medium">{row.symptom}</td>
-                      <td className="p-2.5 text-white/70">{row.test}</td>
+                      <td className="p-2.5 text-white">{row.test}</td>
                       <td className={`p-2.5 font-semibold ${row.colour === 'red' ? 'text-red-400' : row.colour === 'orange' ? 'text-orange-400' : 'text-yellow-400'}`}>{row.likely}</td>
                     </tr>
                   ))}

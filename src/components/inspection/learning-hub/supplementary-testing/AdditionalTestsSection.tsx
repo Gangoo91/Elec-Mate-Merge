@@ -59,15 +59,15 @@ const AdditionalTestsSection = ({ onBack }: Props) => {
               <p className="text-sm font-semibold text-white">{test.title}</p>
               <div className="space-y-2">
                 <div className="rounded-xl bg-white/[0.05] p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-1">When Required</p>
+                  <p className="text-xs font-semibold text-white mb-1">When Required</p>
                   <p className="text-sm text-white">{test.when}</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-1">Procedure</p>
+                  <p className="text-xs font-semibold text-white mb-1">Procedure</p>
                   <p className="text-sm text-white">{test.procedure}</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-1">Acceptance</p>
+                  <p className="text-xs font-semibold text-white mb-1">Acceptance</p>
                   <p className="text-sm text-white">{test.acceptance}</p>
                 </div>
                 <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-3">

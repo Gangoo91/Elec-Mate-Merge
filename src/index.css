@@ -25,11 +25,8 @@ select:-webkit-autofill {
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-:root:not(.dark) input::placeholder,
-:root:not(.dark) textarea::placeholder {
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(255, 255, 255, 1) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 1) !important;
 }
 
 /* Hide browser autofill icons (location pin, contacts, etc.) in all inputs */

@@ -74,7 +74,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white">{item.name}</p>
-                  <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                  <p className="text-sm text-white mt-0.5">{item.detail}</p>
                 </div>
               </div>
             ))}
@@ -115,7 +115,7 @@ const HowToTestSection = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.location}</p>
-              <p className="text-sm text-white/80 mt-1">{item.detail}</p>
+              <p className="text-sm text-white mt-1">{item.detail}</p>
             </div>
           </motion.div>
         ))}
@@ -130,13 +130,13 @@ const HowToTestSection = ({ onBack }: Props) => {
             <p className="text-sm font-semibold text-white mb-2">{calculationMethod.example.title}</p>
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded-xl bg-white/[0.05] p-3">
-                <p className="text-xs text-white/60 mb-1">Given Data</p>
+                <p className="text-xs text-white mb-1">Given Data</p>
                 {calculationMethod.example.data.map((d, i) => (
                   <p key={i} className="text-sm text-white">{d}</p>
                 ))}
               </div>
               <div className="rounded-xl bg-white/[0.05] p-3">
-                <p className="text-xs text-white/60 mb-1">Calculation</p>
+                <p className="text-xs text-white mb-1">Calculation</p>
                 {calculationMethod.example.calculation.map((c, i) => (
                   <p key={i} className="text-sm text-white">{c}</p>
                 ))}
@@ -160,7 +160,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white">{item.mistake}</p>
-                    <p className="text-sm text-white/70 mt-0.5">{item.fix}</p>
+                    <p className="text-sm text-white mt-0.5">{item.fix}</p>
                   </div>
                 </div>
               ))}

@@ -47,11 +47,11 @@ const DiagnosticsSection = ({ onBack }: Props) => {
 
               <div className="space-y-2">
                 <div className="rounded-xl bg-white/[0.05] p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-1">When to Use</p>
+                  <p className="text-xs font-semibold text-white mb-1">When to Use</p>
                   <p className="text-sm text-white">{dt.when}</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-1">Procedure</p>
+                  <p className="text-xs font-semibold text-white mb-1">Procedure</p>
                   <p className="text-sm text-white">{dt.procedure}</p>
                 </div>
                 <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-3">

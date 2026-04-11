@@ -35,19 +35,19 @@ const QuickReferencePage = ({ onBack }: Props) => {
             <div className="p-3">
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div className="rounded-xl bg-white/[0.05] p-2.5">
-                  <p className="text-[10px] text-white/50">SELV ≤50V</p>
+                  <p className="text-[10px] text-white">SELV ≤50V</p>
                   <p className="text-lg font-black text-white">0.5</p>
-                  <p className="text-[10px] text-white/50">MΩ @ 250V</p>
+                  <p className="text-[10px] text-white">MΩ @ 250V</p>
                 </div>
                 <div className="rounded-xl bg-yellow-400/10 border border-yellow-400/20 p-2.5">
-                  <p className="text-[10px] text-white/50">LV ≤500V</p>
+                  <p className="text-[10px] text-white">LV ≤500V</p>
                   <p className="text-lg font-black text-yellow-400">1.0</p>
                   <p className="text-[10px] text-yellow-400">MΩ @ 500V</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-2.5">
-                  <p className="text-[10px] text-white/50">500-1000V</p>
+                  <p className="text-[10px] text-white">500-1000V</p>
                   <p className="text-lg font-black text-white">1.0</p>
-                  <p className="text-[10px] text-white/50">MΩ @ 1000V</p>
+                  <p className="text-[10px] text-white">MΩ @ 1000V</p>
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
               <div className="grid grid-cols-4 gap-1.5">
                 {[['6A', '5.82'], ['10A', '3.50'], ['16A', '2.19'], ['20A', '1.75'], ['25A', '1.40'], ['32A', '1.09'], ['40A', '0.87'], ['50A', '0.70']].map(([rating, zs]) => (
                   <div key={rating} className="rounded-lg bg-white/[0.05] p-2 text-center">
-                    <p className="text-[10px] text-white/50">{rating}</p>
+                    <p className="text-[10px] text-white">{rating}</p>
                     <p className="text-sm font-bold text-white">{zs}Ω</p>
                   </div>
                 ))}
@@ -77,13 +77,13 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-white/[0.02] border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-white/60 uppercase tracking-wider">Zs Maximum — Type C MCBs (80% test limit)</p>
+              <p className="text-xs font-bold text-white uppercase tracking-wider">Zs Maximum — Type C MCBs (80% test limit)</p>
             </div>
             <div className="p-3">
               <div className="grid grid-cols-4 gap-1.5">
                 {[['6A', '2.91'], ['10A', '1.75'], ['16A', '1.09'], ['20A', '0.87'], ['25A', '0.70'], ['32A', '0.55'], ['40A', '0.44'], ['50A', '0.35']].map(([rating, zs]) => (
                   <div key={rating} className="rounded-lg bg-white/[0.05] p-2 text-center">
-                    <p className="text-[10px] text-white/50">{rating}</p>
+                    <p className="text-[10px] text-white">{rating}</p>
                     <p className="text-sm font-bold text-white">{zs}Ω</p>
                   </div>
                 ))}
@@ -102,7 +102,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
               <div className="grid grid-cols-4 gap-1.5">
                 {[['6A', '30'], ['10A', '50'], ['16A', '80'], ['20A', '100'], ['25A', '125'], ['32A', '160'], ['40A', '200'], ['50A', '250']].map(([rating, pfc]) => (
                   <div key={rating} className="rounded-lg bg-white/[0.05] p-2 text-center">
-                    <p className="text-[10px] text-white/50">{rating}</p>
+                    <p className="text-[10px] text-white">{rating}</p>
                     <p className="text-sm font-bold text-white">{pfc}A</p>
                   </div>
                 ))}
@@ -120,30 +120,30 @@ const QuickReferencePage = ({ onBack }: Props) => {
             <div className="p-3 space-y-2">
               <div className="grid grid-cols-3 gap-2">
                 <div className="rounded-xl bg-white/[0.05] p-2.5 text-center">
-                  <p className="text-[10px] text-white/50">0.5× (15mA)</p>
+                  <p className="text-[10px] text-white">0.5× (15mA)</p>
                   <p className="text-sm font-bold text-white">No trip</p>
                 </div>
                 <div className="rounded-xl bg-yellow-400/10 border border-yellow-400/20 p-2.5 text-center">
-                  <p className="text-[10px] text-white/50">1× (30mA)</p>
+                  <p className="text-[10px] text-white">1× (30mA)</p>
                   <p className="text-sm font-bold text-yellow-400">≤300ms</p>
                 </div>
                 <div className="rounded-xl bg-yellow-400/10 border border-yellow-400/20 p-2.5 text-center">
-                  <p className="text-[10px] text-white/50">5× (150mA)</p>
+                  <p className="text-[10px] text-white">5× (150mA)</p>
                   <p className="text-sm font-bold text-yellow-400">≤40ms</p>
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div className="rounded-xl bg-white/[0.05] p-2.5 text-center">
-                  <p className="text-[10px] text-white/40">S-type 0.5×</p>
-                  <p className="text-xs font-bold text-white/60">No trip</p>
+                  <p className="text-[10px] text-white">S-type 0.5×</p>
+                  <p className="text-xs font-bold text-white">No trip</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-2.5 text-center">
-                  <p className="text-[10px] text-white/40">S-type 1×</p>
-                  <p className="text-xs font-bold text-white/60">≤500ms</p>
+                  <p className="text-[10px] text-white">S-type 1×</p>
+                  <p className="text-xs font-bold text-white">≤500ms</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-2.5 text-center">
-                  <p className="text-[10px] text-white/40">S-type 5×</p>
-                  <p className="text-xs font-bold text-white/60">≤150ms</p>
+                  <p className="text-[10px] text-white">S-type 5×</p>
+                  <p className="text-xs font-bold text-white">≤150ms</p>
                 </div>
               </div>
             </div>
@@ -161,17 +161,17 @@ const QuickReferencePage = ({ onBack }: Props) => {
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
                   <p className="text-xs font-semibold text-white">TN-S</p>
                   <p className="text-lg font-black text-white">0.8Ω</p>
-                  <p className="text-[10px] text-white/40">max declared</p>
+                  <p className="text-[10px] text-white">max declared</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
                   <p className="text-xs font-semibold text-white">TN-C-S</p>
                   <p className="text-lg font-black text-white">0.35Ω</p>
-                  <p className="text-[10px] text-white/40">max declared</p>
+                  <p className="text-[10px] text-white">max declared</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
                   <p className="text-xs font-semibold text-white">TT</p>
                   <p className="text-lg font-black text-white">21Ω</p>
-                  <p className="text-[10px] text-white/40">max declared</p>
+                  <p className="text-[10px] text-white">max declared</p>
                 </div>
               </div>
             </div>
@@ -187,14 +187,14 @@ const QuickReferencePage = ({ onBack }: Props) => {
             <div className="p-3">
               <div className="grid grid-cols-2 gap-2">
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
-                  <p className="text-[10px] text-white/50">CPC (R1+R2)</p>
+                  <p className="text-[10px] text-white">CPC (R1+R2)</p>
                   <p className="text-lg font-black text-white">≤0.5Ω</p>
-                  <p className="text-[10px] text-white/40">typical target</p>
+                  <p className="text-[10px] text-white">typical target</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
-                  <p className="text-[10px] text-white/50">Main bonding</p>
+                  <p className="text-[10px] text-white">Main bonding</p>
                   <p className="text-lg font-black text-white">≤0.5Ω</p>
-                  <p className="text-[10px] text-white/40">to MET</p>
+                  <p className="text-[10px] text-white">to MET</p>
                 </div>
               </div>
             </div>
@@ -205,13 +205,13 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-white/[0.02] border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-white/60 uppercase tracking-wider">Zs Temperature Correction</p>
+              <p className="text-xs font-bold text-white uppercase tracking-wider">Zs Temperature Correction</p>
             </div>
             <div className="p-3">
               <div className="grid grid-cols-4 gap-1.5">
                 {[['10°C', '1.00'], ['15°C', '1.02'], ['20°C', '1.04'], ['25°C', '1.06'], ['30°C', '1.08'], ['35°C', '1.10'], ['40°C', '1.12']].map(([temp, factor]) => (
                   <div key={temp} className="rounded-lg bg-white/[0.05] p-2 text-center">
-                    <p className="text-[10px] text-white/50">{temp}</p>
+                    <p className="text-[10px] text-white">{temp}</p>
                     <p className="text-sm font-bold text-white">×{factor}</p>
                   </div>
                 ))}
@@ -239,7 +239,7 @@ const QuickReferencePage = ({ onBack }: Props) => {
               ].map((item, i) => (
                 <div key={i} className="flex items-center justify-between rounded-xl bg-white/[0.05] px-3 py-2.5">
                   <p className="text-sm font-bold text-white font-mono">{item.formula}</p>
-                  <p className="text-[10px] text-white/50 text-right">{item.label}</p>
+                  <p className="text-[10px] text-white text-right">{item.label}</p>
                 </div>
               ))}
             </div>
@@ -250,19 +250,19 @@ const QuickReferencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="px-4 py-2.5 bg-white/[0.02] border-b border-white/[0.06]">
-              <p className="text-xs font-bold text-white/60 uppercase tracking-wider">Disconnection Times — Reg 411.3.2</p>
+              <p className="text-xs font-bold text-white uppercase tracking-wider">Disconnection Times — Reg 411.3.2</p>
             </div>
             <div className="p-3">
               <div className="grid grid-cols-2 gap-2">
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
-                  <p className="text-[10px] text-white/50">Final circuits ≤63A</p>
+                  <p className="text-[10px] text-white">Final circuits ≤63A</p>
                   <p className="text-lg font-black text-white">0.4s</p>
-                  <p className="text-[10px] text-white/40">sockets, portable</p>
+                  <p className="text-[10px] text-white">sockets, portable</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
-                  <p className="text-[10px] text-white/50">Distribution / fixed</p>
+                  <p className="text-[10px] text-white">Distribution / fixed</p>
                   <p className="text-lg font-black text-white">5s</p>
-                  <p className="text-[10px] text-white/40">distribution circuits</p>
+                  <p className="text-[10px] text-white">distribution circuits</p>
                 </div>
               </div>
             </div>

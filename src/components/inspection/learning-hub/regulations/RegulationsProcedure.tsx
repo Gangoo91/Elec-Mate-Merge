@@ -80,7 +80,7 @@ const RegulationsProcedure = ({ onBack }: Props) => {
         </motion.section>
 
         <motion.section variants={itemVariants}>
-          <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3">Reference</p>
+          <p className="text-xs font-medium text-white uppercase tracking-wider mb-3">Reference</p>
           <div className="grid grid-cols-2 gap-3">
             <BusinessCard title="A3:2024 Changes" description="What changed &amp; why" icon={Zap} onClick={() => setView('a3changes')} variant="hero" />
             <BusinessCard title="BS 7671 Structure" description="Parts 1-8 overview" icon={BookOpen} onClick={() => setView('structure')} variant="hero" />

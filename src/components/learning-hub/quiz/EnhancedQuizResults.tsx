@@ -103,7 +103,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
         {/* Wrong answers review */}
         {wrongAnswers.length > 0 && (
           <motion.div variants={itemVariants}>
-            <p className="text-[11px] font-bold text-white/70 uppercase tracking-widest mb-3">Review Wrong Answers</p>
+            <p className="text-[11px] font-bold text-white uppercase tracking-widest mb-3">Review Wrong Answers</p>
             <div className="space-y-2.5">
               {wrongAnswers.map((wa, i) => (
                 <div key={i} className="rounded-2xl bg-white/[0.06] border border-white/[0.12] p-4 space-y-2">
@@ -121,7 +121,7 @@ const EnhancedQuizResults: React.FC<EnhancedQuizResultsProps> = ({
                     <p className="text-xs text-green-400">Correct: {wa.question.options[wa.question.correctAnswer]}</p>
                   </div>
                   <div className="rounded-xl bg-white/[0.04] p-2.5">
-                    <p className="text-xs text-white/70">{wa.question.explanation}</p>
+                    <p className="text-xs text-white">{wa.question.explanation}</p>
                     {wa.question.regulation && (
                       <p className="text-[10px] text-yellow-400 mt-1 flex items-center gap-1">
                         <BookOpen className="h-2.5 w-2.5" /> {wa.question.regulation}

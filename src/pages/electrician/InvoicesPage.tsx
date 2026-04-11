@@ -42,6 +42,14 @@ import { createQuickTaskBatch } from '@/utils/createQuickTask';
 import { ClipboardCheck } from 'lucide-react';
 import { openExternalUrl } from '@/utils/open-external-url';
 
+type TemporaryPdfLinkResponse = {
+  publicUrl: string;
+};
+
+const getErrorMessage = (error: unknown, fallback: string): string => {
+  return error instanceof Error && error.message ? error.message : fallback;
+};
+
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices, deleteInvoice, lastUpdated } = useInvoiceStorage();
   const navigate = useNavigate();
@@ -282,7 +290,7 @@ const InvoicesPage = () => {
       } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
-      const linkData = await retryAsync(async () => {
+      const linkData = await retryAsync<TemporaryPdfLinkResponse>(async () => {
         const { data, error } = await supabase.functions.invoke(
           'generate-temporary-pdf-link',
           {
@@ -294,10 +302,7 @@ const InvoicesPage = () => {
         return data;
       });
 
-      const clientData =
-        typeof (invoice as any).client_data === 'string'
-          ? JSON.parse((invoice as any).client_data)
-          : (invoice as any).client_data;
+      const clientData = invoice.client;
 
       const message = `Hello ${clientData?.name || 'there'},\n\nHere is your invoice:\n\n📄 Invoice #${invoice.invoice_number}\n💷 Amount: ${formatCurrency(invoice.total)}\n\n📥 Download Invoice:\n${linkData.publicUrl}\n\nThank you for your business!`;
 
@@ -327,7 +332,7 @@ const InvoicesPage = () => {
       } = await supabase.auth.getSession();
       if (!session) throw new Error('User not authenticated');
 
-      const linkData = await retryAsync(async () => {
+      const linkData = await retryAsync<TemporaryPdfLinkResponse>(async () => {
         const { data, error } = await supabase.functions.invoke(
           'generate-temporary-pdf-link',
           {
@@ -415,10 +420,10 @@ const InvoicesPage = () => {
         title: 'Chase tasks created',
         description: `${count} chase ${count === 1 ? 'task' : 'tasks'} added to your task list.`,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Failed',
-        description: error?.message || 'Could not create chase tasks.',
+        description: getErrorMessage(error, 'Could not create chase tasks.'),
         variant: 'destructive',
       });
     } finally {
@@ -478,9 +483,9 @@ const InvoicesPage = () => {
         variant: 'success',
         duration: 5000,
       });
-      // Clean URL - remove stripe param
-      searchParams.delete('stripe');
-      setSearchParams(searchParams, { replace: true });
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.delete('stripe');
+      setSearchParams(nextParams, { replace: true });
       // Trigger refresh of Stripe status in child components
       setStripeRefreshKey((prev) => prev + 1);
       // Refresh invoice list
@@ -491,10 +496,11 @@ const InvoicesPage = () => {
         description: 'Please finish connecting your Stripe account.',
         duration: 5000,
       });
-      searchParams.delete('stripe');
-      setSearchParams(searchParams, { replace: true });
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.delete('stripe');
+      setSearchParams(nextParams, { replace: true });
     }
-  }, []); // Only run once on mount
+  }, [fetchInvoices, searchParams, setSearchParams]);
 
   // Highlight invoice when navigating from quote
   useEffect(() => {

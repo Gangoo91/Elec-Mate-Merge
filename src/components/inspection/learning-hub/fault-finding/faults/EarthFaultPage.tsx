@@ -51,7 +51,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
         <motion.div key={i} variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
-            <p className="text-sm text-white/80 leading-relaxed">{item.detail}</p>
+            <p className="text-sm text-white leading-relaxed">{item.detail}</p>
             <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
@@ -87,7 +87,7 @@ const EarthFaultPage = ({ onBack }: Props) => (
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Bathroom RCD Tripping — Water Behind Tiles</p>
-          <p className="text-sm text-white/80">RCD trips every time the shower is used. Works fine the rest of the time.</p>
+          <p className="text-sm text-white">RCD trips every time the shower is used. Works fine the rest of the time.</p>
           <div className="rounded-xl bg-white/[0.05] p-3">
             <p className="text-xs text-white">IR test dry: L-E = 35MΩ. IR test after running shower for 10 mins: L-E = 0.4MΩ. Water was penetrating through failed grout behind the shower tiles and soaking a junction box in the ceiling void above the bathroom. Steam and moisture condensed inside the JB, creating a conductive path L to E.</p>
           </div>

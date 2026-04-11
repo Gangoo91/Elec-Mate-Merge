@@ -939,32 +939,6 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>): FireA
     building_plan_date: getDate('buildingPlanDate'),
 
     // ============================================
-    // OCCUPANCY
-    // ============================================
-    estimated_occupancy: getNum('estimatedOccupancy'),
-    occupancy_basis: get('occupancyBasis'),
-
-    // ============================================
-    // CONTACT DETAILS
-    // ============================================
-    installer_company_address: get('installerCompanyAddress'),
-    installer_company_phone: get('installerCompanyPhone'),
-    commissioner_company_address: get('commissionerCompanyAddress'),
-    commissioner_company_phone: get('commissionerCompanyPhone'),
-
-    // ============================================
-    // RELATED STANDARDS
-    // ============================================
-    related_standards: formData.relatedStandards || [],
-    has_related_standards: (formData.relatedStandards || []).length > 0,
-
-    // ============================================
-    // PHOTOS (for PDF page 3)
-    // ============================================
-    photos: [] as { url: string; caption: string }[],
-    has_photos: false,
-
-    // ============================================
     // COMPANY BRANDING (from profile)
     // ============================================
     company_name: get('companyName'),

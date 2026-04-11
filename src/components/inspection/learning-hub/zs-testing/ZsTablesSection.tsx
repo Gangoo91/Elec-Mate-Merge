@@ -56,14 +56,14 @@ const ZsTable = ({ title, subtitle, rows }: { title: string; subtitle: string; r
   <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
     <div className="p-4 border-b border-white/[0.06]">
       <p className="text-sm font-semibold text-white">{title}</p>
-      <p className="text-xs text-white/60 mt-0.5">{subtitle}</p>
+      <p className="text-xs text-white mt-0.5">{subtitle}</p>
     </div>
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-white/[0.08]">
-            <th className="text-left p-3 text-xs font-semibold text-white/60">Rating (A)</th>
-            <th className="text-left p-3 text-xs font-semibold text-white/60">BS 7671 Max (Ω)</th>
+            <th className="text-left p-3 text-xs font-semibold text-white">Rating (A)</th>
+            <th className="text-left p-3 text-xs font-semibold text-white">BS 7671 Max (Ω)</th>
             <th className="text-left p-3 text-xs font-semibold text-yellow-400">80% Test Limit (Ω)</th>
           </tr>
         </thead>
@@ -116,22 +116,22 @@ const ZsTablesSection = ({ onBack }: Props) => {
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Quick Reference — Common Circuits</p>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <p className="text-xs text-white/60">Lighting (6A Type B)</p>
+              <p className="text-xs text-white">Lighting (6A Type B)</p>
               <p className="text-lg font-bold text-white">5.82Ω</p>
               <p className="text-xs text-yellow-400">80% test limit</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <p className="text-xs text-white/60">Ring Main (32A Type B)</p>
+              <p className="text-xs text-white">Ring Main (32A Type B)</p>
               <p className="text-lg font-bold text-white">1.09Ω</p>
               <p className="text-xs text-yellow-400">80% test limit</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <p className="text-xs text-white/60">Cooker (32A Type B)</p>
+              <p className="text-xs text-white">Cooker (32A Type B)</p>
               <p className="text-lg font-bold text-white">1.09Ω</p>
               <p className="text-xs text-yellow-400">80% test limit</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <p className="text-xs text-white/60">Shower (40A Type B)</p>
+              <p className="text-xs text-white">Shower (40A Type B)</p>
               <p className="text-lg font-bold text-white">0.87Ω</p>
               <p className="text-xs text-yellow-400">80% test limit</p>
             </div>

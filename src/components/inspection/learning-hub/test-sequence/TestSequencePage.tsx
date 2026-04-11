@@ -70,10 +70,10 @@ const TestSequencePage = ({ onBack }: Props) => {
                     <p className="text-sm font-semibold text-white">{t.test}</p>
                     <span className="text-[10px] font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg shrink-0">{t.ref}</span>
                   </div>
-                  <p className="text-sm text-white/80 leading-relaxed">{t.what}</p>
+                  <p className="text-sm text-white leading-relaxed">{t.what}</p>
                   <div className="flex items-start gap-2 pt-1">
                     <span className="text-[10px] font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded shrink-0 mt-0.5">PASS</span>
-                    <p className="text-xs text-white/60">{t.acceptance}</p>
+                    <p className="text-xs text-white">{t.acceptance}</p>
                   </div>
                   <p className="text-xs text-yellow-400/70 italic">{t.why}</p>
                 </div>
@@ -111,10 +111,10 @@ const TestSequencePage = ({ onBack }: Props) => {
                     <p className="text-sm font-semibold text-white">{t.test}</p>
                     <span className="text-[10px] font-bold text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded-lg shrink-0">{t.ref}</span>
                   </div>
-                  <p className="text-sm text-white/80 leading-relaxed">{t.what}</p>
+                  <p className="text-sm text-white leading-relaxed">{t.what}</p>
                   <div className="flex items-start gap-2 pt-1">
                     <span className="text-[10px] font-bold text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded shrink-0 mt-0.5">PASS</span>
-                    <p className="text-xs text-white/60">{t.acceptance}</p>
+                    <p className="text-xs text-white">{t.acceptance}</p>
                   </div>
                   <p className="text-xs text-yellow-400/70 italic">{t.why}</p>
                 </div>
@@ -127,7 +127,7 @@ const TestSequencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="flex items-center gap-3 mt-2">
             <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs font-bold text-white/40 uppercase tracking-widest px-3">If Required</span>
+            <span className="text-xs font-bold text-white uppercase tracking-widest px-3">If Required</span>
             <div className="h-px flex-1 bg-white/10" />
           </div>
         </motion.div>
@@ -135,24 +135,24 @@ const TestSequencePage = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/40">+</span>
-              <p className="text-sm text-white/60">Earth electrode resistance (TT systems)</p>
+              <span className="text-xs text-white">+</span>
+              <p className="text-sm text-white">Earth electrode resistance (TT systems)</p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/40">+</span>
-              <p className="text-sm text-white/60">Supplementary bonding (bathrooms, special locations)</p>
+              <span className="text-xs text-white">+</span>
+              <p className="text-sm text-white">Supplementary bonding (bathrooms, special locations)</p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/40">+</span>
-              <p className="text-sm text-white/60">External earth fault loop impedance Ze (at the origin)</p>
+              <span className="text-xs text-white">+</span>
+              <p className="text-sm text-white">External earth fault loop impedance Ze (at the origin)</p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/40">+</span>
-              <p className="text-sm text-white/60">Phase sequence verification (three-phase installations)</p>
+              <span className="text-xs text-white">+</span>
+              <p className="text-sm text-white">Phase sequence verification (three-phase installations)</p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-white/40">+</span>
-              <p className="text-sm text-white/60">Voltage drop verification (long runs or critical loads)</p>
+              <span className="text-xs text-white">+</span>
+              <p className="text-sm text-white">Voltage drop verification (long runs or critical loads)</p>
             </div>
           </div>
         </motion.div>

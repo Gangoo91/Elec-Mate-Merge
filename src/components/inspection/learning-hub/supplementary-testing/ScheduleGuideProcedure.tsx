@@ -69,7 +69,7 @@ const ScheduleGuideProcedure = ({ onBack }: Props) => {
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-white">{col.column}</p>
-                  <p className="text-sm text-white/80 mt-1">{col.detail}</p>
+                  <p className="text-sm text-white mt-1">{col.detail}</p>
                 </div>
               </div>
             </div>
@@ -90,7 +90,7 @@ const ScheduleGuideProcedure = ({ onBack }: Props) => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white">{item.mistake}</p>
-                    <p className="text-sm text-white/70 mt-0.5">{item.fix}</p>
+                    <p className="text-sm text-white mt-0.5">{item.fix}</p>
                   </div>
                 </div>
               ))}

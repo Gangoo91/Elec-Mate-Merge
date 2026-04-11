@@ -57,7 +57,7 @@ const SafetySection = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{r.title}</p>
-              <p className="text-sm text-white/80 mt-1 leading-relaxed">{r.detail}</p>
+              <p className="text-sm text-white mt-1 leading-relaxed">{r.detail}</p>
             </div>
           </motion.div>
         ))}
@@ -88,7 +88,7 @@ const SafetySection = ({ onBack }: Props) => {
               </div>
               <div>
                 <p className="text-sm font-medium text-white">{item.item}</p>
-                <p className="text-sm text-white/70 mt-0.5">{item.when}</p>
+                <p className="text-sm text-white mt-0.5">{item.when}</p>
               </div>
             </div>
           </motion.div>

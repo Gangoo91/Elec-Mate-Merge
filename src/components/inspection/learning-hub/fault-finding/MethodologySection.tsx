@@ -50,7 +50,7 @@ const MethodologySection = ({ onBack }: Props) => {
                 </div>
                 <div className="flex-1 p-4 space-y-3">
                   <p className="text-sm font-semibold text-white">{s.step}</p>
-                  <p className="text-sm text-white/80 leading-relaxed">{s.detail}</p>
+                  <p className="text-sm text-white leading-relaxed">{s.detail}</p>
                   <div className="space-y-1.5">
                     {s.tips.map((tip, j) => (
                       <div key={j} className="flex items-start gap-2">

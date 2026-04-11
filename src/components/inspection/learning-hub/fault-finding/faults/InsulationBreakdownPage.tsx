@@ -52,7 +52,7 @@ const InsulationBreakdownPage = ({ onBack }: Props) => (
         <motion.div key={i} variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
-            <p className="text-sm text-white/80 leading-relaxed">{item.detail}</p>
+            <p className="text-sm text-white leading-relaxed">{item.detail}</p>
             <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
@@ -81,9 +81,9 @@ const InsulationBreakdownPage = ({ onBack }: Props) => (
           <p className="text-sm font-semibold text-white mb-3">IR Trending — Reading the Story</p>
           <div className="space-y-2">
             <div className="grid grid-cols-3 gap-2 text-center">
-              <div className="rounded-xl bg-white/[0.05] p-2.5"><p className="text-[10px] text-white/50">2015</p><p className="text-sm font-bold text-green-400">&gt;200MΩ</p></div>
-              <div className="rounded-xl bg-white/[0.05] p-2.5"><p className="text-[10px] text-white/50">2020</p><p className="text-sm font-bold text-yellow-400">15MΩ</p></div>
-              <div className="rounded-xl bg-white/[0.05] p-2.5"><p className="text-[10px] text-white/50">2025</p><p className="text-sm font-bold text-red-400">1.8MΩ</p></div>
+              <div className="rounded-xl bg-white/[0.05] p-2.5"><p className="text-[10px] text-white">2015</p><p className="text-sm font-bold text-green-400">&gt;200MΩ</p></div>
+              <div className="rounded-xl bg-white/[0.05] p-2.5"><p className="text-[10px] text-white">2020</p><p className="text-sm font-bold text-yellow-400">15MΩ</p></div>
+              <div className="rounded-xl bg-white/[0.05] p-2.5"><p className="text-[10px] text-white">2025</p><p className="text-sm font-bold text-red-400">1.8MΩ</p></div>
             </div>
             <p className="text-xs text-white">This circuit has lost 99% of its insulation resistance in 10 years. At this rate, it will fall below 1MΩ within 2 years. Recommend rewire before the next periodic inspection.</p>
           </div>
@@ -94,7 +94,7 @@ const InsulationBreakdownPage = ({ onBack }: Props) => (
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
           <p className="text-sm font-semibold text-white">1960s Flat — TRS Cable Degradation</p>
-          <p className="text-sm text-white/80">EICR on a 1960s flat. Client says "everything works fine". Previous EICR from 2019 shows IR trending downward.</p>
+          <p className="text-sm text-white">EICR on a 1960s flat. Client says "everything works fine". Previous EICR from 2019 shows IR trending downward.</p>
           <div className="rounded-xl bg-white/[0.05] p-3">
             <p className="text-xs text-white">2019 EICR: Kitchen ring IR = 8MΩ, Lighting = 12MΩ. 2025 EICR: Kitchen ring = 1.2MΩ, Lighting = 3MΩ. Original 1960s TRS rubber-sheathed cable throughout. Rubber insulation brittle and cracking at every accessory termination. No single fault — general degradation across all circuits.</p>
           </div>

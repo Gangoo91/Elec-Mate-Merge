@@ -55,7 +55,7 @@ const ShortCircuitPage = ({ onBack }: Props) => (
         <motion.div key={i} variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
-            <p className="text-sm text-white/80 leading-relaxed">{item.detail}</p>
+            <p className="text-sm text-white leading-relaxed">{item.detail}</p>
             <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
@@ -93,9 +93,9 @@ const ShortCircuitPage = ({ onBack }: Props) => (
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Bedroom Socket Circuit — Shelf Installation</p>
-          <p className="text-sm text-white/80">Client installed floating shelves in the bedroom. 32A ring circuit MCB tripped and will not reset.</p>
+          <p className="text-sm text-white">Client installed floating shelves in the bedroom. 32A ring circuit MCB tripped and will not reset.</p>
           <div className="rounded-xl bg-white/[0.05] p-3">
-            <p className="text-xs font-semibold text-white/60 mb-1">Investigation</p>
+            <p className="text-xs font-semibold text-white mb-1">Investigation</p>
             <p className="text-xs text-white">IR test L-N: 0Ω. L-E: &gt;999MΩ. N-E: &gt;999MΩ. Dead short between L and N only — no earth involvement. Sectioned circuit at junction box behind headboard. Fault isolated to cable between JB and socket behind bed. Removed socket faceplate — drill hole visible in backbox where shelf bracket screw had penetrated the cable.</p>
           </div>
           <div className="rounded-xl bg-green-400/5 border border-green-400/10 p-3">

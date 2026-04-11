@@ -14,6 +14,19 @@ export const useQuoteStorage = () => {
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
+  const parseNumber = (value: unknown): number => {
+    if (typeof value === 'number') {
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    if (typeof value === 'string') {
+      const parsed = Number.parseFloat(value);
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    return 0;
+  };
+
   // Convert database row to Quote object
   const convertDbRowToQuote = useCallback(
     (row: any): Quote => ({
@@ -23,12 +36,12 @@ export const useQuoteStorage = () => {
       jobDetails: row.job_details,
       items: row.items,
       settings: row.settings,
-      subtotal: parseFloat(row.subtotal),
-      overhead: parseFloat(row.overhead),
-      profit: parseFloat(row.profit),
-      discountAmount: 0,
-      vatAmount: parseFloat(row.vat_amount),
-      total: parseFloat(row.total),
+      subtotal: parseNumber(row.subtotal),
+      overhead: parseNumber(row.overhead),
+      profit: parseNumber(row.profit),
+      discountAmount: parseNumber(row.discount_amount),
+      vatAmount: parseNumber(row.vat_amount),
+      total: parseNumber(row.total),
       status: row.status,
       tags: row.tags || [],
       lastReminderSentAt: row.last_reminder_sent_at
@@ -51,6 +64,10 @@ export const useQuoteStorage = () => {
       work_completion_date: row.work_completion_date
         ? new Date(row.work_completion_date)
         : undefined,
+      pdf_document_id: row.pdf_document_id,
+      pdf_url: row.pdf_url,
+      pdf_generated_at: row.pdf_generated_at ? new Date(row.pdf_generated_at) : undefined,
+      pdf_version: row.pdf_version,
       // Email tracking fields
       first_sent_at: row.first_sent_at ? new Date(row.first_sent_at) : undefined,
       reminder_count: row.reminder_count || 0,
@@ -68,6 +85,91 @@ export const useQuoteStorage = () => {
     []
   );
 
+  const fetchActiveQuotesForUser = useCallback(
+    async (userId: string): Promise<Quote[]> => {
+      const { data, error } = await supabase
+        .from('quotes')
+        .select(
+          `
+          *,
+          quote_views!left (
+            email_opened_at,
+            email_open_count,
+            email_sent_at,
+            last_viewed_at,
+            view_count
+          )
+        `
+        )
+        .eq('user_id', userId)
+        .eq('invoice_raised', false)
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false });
+
+      if (error) {
+        throw error;
+      }
+
+      return (
+        data?.map((row: any) => {
+          const quoteView = row.quote_views?.[0] || {};
+          return convertDbRowToQuote({
+            ...row,
+            email_opened_at: quoteView.email_opened_at,
+            email_open_count: quoteView.email_open_count || 0,
+          });
+        }) || []
+      );
+    },
+    [convertDbRowToQuote]
+  );
+
+  const fetchInvoicedQuotesForUser = useCallback(
+    async (userId: string): Promise<Quote[]> => {
+      const { data, error } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('invoice_raised', true)
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false });
+
+      if (error) {
+        throw error;
+      }
+
+      return (data || []).map((row: any) => convertDbRowToQuote(row));
+    },
+    [convertDbRowToQuote]
+  );
+
+  // Manually refresh quotes from database
+  const refreshQuotes = useCallback(async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        return;
+      }
+
+      const [quotes, invoiced] = await Promise.all([
+        fetchActiveQuotesForUser(user.id),
+        fetchInvoicedQuotesForUser(user.id),
+      ]);
+
+      setSavedQuotes(quotes);
+      setInvoicedQuotes(invoiced);
+      setLastUpdated(new Date());
+    } catch (error) {
+      captureApiError(
+        error instanceof Error ? error : new Error(String(error)),
+        'quotes/refresh',
+        { context: 'refreshQuotes' }
+      );
+    }
+  }, [fetchActiveQuotesForUser, fetchInvoicedQuotesForUser]);
+
   // Load quotes from Supabase on mount
   useEffect(() => {
     const loadQuotes = async () => {
@@ -80,42 +182,15 @@ export const useQuoteStorage = () => {
           return;
         }
 
-        // Fetch quotes with email tracking data from quote_views
-        const { data, error } = await supabase
-          .from('quotes')
-          .select(
-            `
-            *,
-            quote_views!left (
-              email_opened_at,
-              email_open_count,
-              email_sent_at,
-              last_viewed_at,
-              view_count
-            )
-          `
-          )
-          .eq('invoice_raised', false)
-          .order('updated_at', { ascending: false });
-
-        if (error) {
-          return;
-        }
-
-        // Flatten quote_views data into the quote object
-        const quotes =
-          data?.map((row: any) => {
-            const quoteView = row.quote_views?.[0] || {};
-            return convertDbRowToQuote({
-              ...row,
-              email_opened_at: quoteView.email_opened_at,
-              email_open_count: quoteView.email_open_count || 0,
-            });
-          }) || [];
+        const quotes = await fetchActiveQuotesForUser(user.id);
         setSavedQuotes(quotes);
         setLastUpdated(new Date());
-      } catch {
-        // Quote loading failed silently
+      } catch (error) {
+        captureApiError(
+          error instanceof Error ? error : new Error(String(error)),
+          'quotes/load',
+          { context: 'loadQuotes' }
+        );
       } finally {
         setLoading(false);
       }
@@ -129,20 +204,14 @@ export const useQuoteStorage = () => {
         } = await supabase.auth.getUser();
         if (!user) return;
 
-        const { data, error } = await supabase
-          .from('quotes')
-          .select('*')
-          .eq('user_id', user.id)
-          .eq('invoice_raised', true)
-          .is('deleted_at', null)
-          .order('updated_at', { ascending: false });
-
-        if (error || !data) return;
-
-        const converted = data.map((row: any) => convertDbRowToQuote(row));
+        const converted = await fetchInvoicedQuotesForUser(user.id);
         setInvoicedQuotes(converted);
-      } catch {
-        // Invoiced quotes loading failed silently
+      } catch (error) {
+        captureApiError(
+          error instanceof Error ? error : new Error(String(error)),
+          'quotes/load-invoiced',
+          { context: 'loadInvoicedQuotes' }
+        );
       }
     };
 
@@ -227,7 +296,7 @@ export const useQuoteStorage = () => {
     return () => {
       if (channel) supabase.removeChannel(channel);
     };
-  }, [convertDbRowToQuote]);
+  }, [fetchActiveQuotesForUser, fetchInvoicedQuotesForUser, refreshQuotes]);
 
   // Save a new quote to Supabase
   const saveQuote = useCallback(
@@ -350,7 +419,7 @@ export const useQuoteStorage = () => {
 
         // Track successful quote creation/update
         trackMilestone('Quote Saved', { quoteId: quote.id, total: quote.total });
-        trackFeatureUse(quote.user_id || '', 'quote_saved', { quoteId: quote.id, total: quote.total });
+        trackFeatureUse(user.id, 'quote_saved', { quoteId: quote.id, total: quote.total });
 
         return true;
       } catch (error) {
@@ -418,72 +487,6 @@ export const useQuoteStorage = () => {
       totalQuotes: savedQuotes.length,
     };
   }, [savedQuotes]);
-
-  // Manually refresh quotes from database
-  const refreshQuotes = useCallback(async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        return;
-      }
-
-      // Fetch quotes with email tracking data from quote_views
-      const { data, error } = await supabase
-        .from('quotes')
-        .select(
-          `
-          *,
-          quote_views!left (
-            email_opened_at,
-            email_open_count,
-            email_sent_at,
-            last_viewed_at,
-            view_count
-          )
-        `
-        )
-        .eq('invoice_raised', false)
-        .order('updated_at', { ascending: false });
-
-      if (error) {
-        return;
-      }
-
-      // Flatten quote_views data into the quote object
-      const quotes =
-        data?.map((row: any) => {
-          const quoteView = row.quote_views?.[0] || {};
-          return convertDbRowToQuote({
-            ...row,
-            email_opened_at: quoteView.email_opened_at,
-            email_open_count: quoteView.email_open_count || 0,
-          });
-        }) || [];
-      setSavedQuotes(quotes);
-      setLastUpdated(new Date());
-
-      // Also refresh invoiced quotes
-      try {
-        const { data: invoicedData } = await supabase
-          .from('quotes')
-          .select('*')
-          .eq('user_id', user.id)
-          .eq('invoice_raised', true)
-          .is('deleted_at', null)
-          .order('updated_at', { ascending: false });
-
-        if (invoicedData) {
-          setInvoicedQuotes(invoicedData.map((row: any) => convertDbRowToQuote(row)));
-        }
-      } catch {
-        // Invoiced quotes refresh failed silently
-      }
-    } catch {
-      // Refresh failed silently
-    }
-  }, [convertDbRowToQuote]);
 
   // Generate invoice number from quote number
   const generateInvoiceNumber = (quoteNumber: string): string => {

@@ -20,6 +20,10 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllInsulationLiveEarth?: (value: string) => void;
   onFillAllPolarity?: (value: string) => void;
   onFillAllFunctional?: () => void;
+  onFillAllWiringType?: (value: string) => void;
+  onFillAllRefMethod?: (value: string) => void;
+  onFillAllKa?: (value: string) => void;
+  onFillAllAfddNA?: () => void;
 }
 
 const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTableHeaderProps> = ({
@@ -38,6 +42,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllInsulationLiveEarth,
   onFillAllPolarity,
   onFillAllFunctional,
+  onFillAllWiringType,
+  onFillAllRefMethod,
+  onFillAllKa,
+  onFillAllAfddNA,
 }) => {
   const [rcdBsPopoverOpen, setRcdBsPopoverOpen] = useState(false);
   const [rcdTypePopoverOpen, setRcdTypePopoverOpen] = useState(false);
@@ -70,7 +78,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           <span className="text-purple-400 font-semibold text-xs">Phase</span>
         </TableHead>
 
-        <TableHead colSpan={4} className="sot-header-group-cell bg-blue-500/5">
+        <TableHead colSpan={isGroupCollapsed('circuit') ? 1 : 4} className="sot-header-group-cell bg-blue-500/5">
           <button
             onClick={() => onToggleGroup('circuit')}
             className="sot-collapse-btn w-full justify-center"
@@ -84,7 +92,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={2} className="sot-header-group-cell bg-emerald-500/5">
+        <TableHead colSpan={isGroupCollapsed('conductor') ? 1 : 2} className="sot-header-group-cell bg-emerald-500/5">
           <button
             onClick={() => onToggleGroup('conductor')}
             className="sot-collapse-btn w-full justify-center"
@@ -98,7 +106,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={5} className="sot-header-group-cell bg-orange-500/5">
+        <TableHead colSpan={isGroupCollapsed('protection') ? 1 : 5} className="sot-header-group-cell bg-orange-500/5">
           <button
             onClick={() => onToggleGroup('protection')}
             className="sot-collapse-btn w-full justify-center"
@@ -112,7 +120,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={4} className="sot-header-group-cell bg-rose-500/5">
+        <TableHead colSpan={isGroupCollapsed('rcdDetails') ? 1 : 4} className="sot-header-group-cell bg-rose-500/5">
           <button
             onClick={() => onToggleGroup('rcdDetails')}
             className="sot-collapse-btn w-full justify-center"
@@ -126,7 +134,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={5} className="sot-header-group-cell bg-violet-500/5">
+        <TableHead colSpan={isGroupCollapsed('continuity') ? 1 : 5} className="sot-header-group-cell bg-violet-500/5">
           <button
             onClick={() => onToggleGroup('continuity')}
             className="sot-collapse-btn w-full justify-center"
@@ -140,7 +148,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={3} className="sot-header-group-cell bg-purple-500/5">
+        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 3} className="sot-header-group-cell bg-purple-500/5">
           <button
             onClick={() => onToggleGroup('insulation')}
             className="sot-collapse-btn w-full justify-center"
@@ -154,7 +162,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={2} className="sot-header-group-cell bg-amber-500/5">
+        <TableHead colSpan={isGroupCollapsed('zs') ? 1 : 2} className="sot-header-group-cell bg-amber-500/5">
           <button
             onClick={() => onToggleGroup('zs')}
             className="sot-collapse-btn w-full justify-center"
@@ -168,7 +176,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={2} className="sot-header-group-cell bg-indigo-500/5">
+        <TableHead colSpan={isGroupCollapsed('rcd') ? 1 : 2} className="sot-header-group-cell bg-indigo-500/5">
           <button
             onClick={() => onToggleGroup('rcd')}
             className="sot-collapse-btn w-full justify-center"
@@ -238,10 +246,40 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               Description
             </TableHead>
             <TableHead className="sot-header-cell min-w-[110px] max-w-[110px]" data-group="circuit">
-              Wiring Type
+              <div className="flex items-center justify-center gap-1">
+                <span>Wiring Type</span>
+                {onFillAllWiringType && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300 hover:bg-transparent"><CheckCircle className="h-3.5 w-3.5" /></Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-48 p-2 z-[9999] bg-background border border-white/10" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all wiring type</p>
+                      {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'].map((v) => (
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllWiringType(v)}>Type {v}</Button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
             </TableHead>
             <TableHead className="sot-header-cell min-w-[90px] max-w-[90px]" data-group="circuit">
-              Ref Method
+              <div className="flex items-center justify-center gap-1">
+                <span>Ref Method</span>
+                {onFillAllRefMethod && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300 hover:bg-transparent"><CheckCircle className="h-3.5 w-3.5" /></Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-48 p-2 z-[9999] bg-background border border-white/10" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all ref method</p>
+                      {['A', 'B', 'C', 'D', 'E', 'F', 'G'].map((v) => (
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllRefMethod(v)}>Method {v}</Button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell w-16 min-w-[64px] max-w-[64px]"
@@ -295,7 +333,22 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-20 min-w-[75px] max-w-[75px]"
               data-group="protection"
             >
-              kA
+              <div className="flex items-center justify-center gap-1">
+                <span>kA</span>
+                {onFillAllKa && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="ghost" size="icon" className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300 hover:bg-transparent"><CheckCircle className="h-3.5 w-3.5" /></Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all kA</p>
+                      {['3', '6', '10', '16', '25'].map((v) => (
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllKa(v)}>{v} kA</Button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell w-28 min-w-[110px] max-w-[110px]"
@@ -940,14 +993,17 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="afdd">
             <div className="flex items-center justify-center gap-1">
               <span>Test</span>
-              {onFillAllAfdd && (
-                <button
-                  onClick={onFillAllAfdd}
-                  className="sot-fill-all-btn"
-                  title="Fill all with Pass"
-                >
-                  <CheckCircle className="h-5 w-5 text-amber-400" />
-                </button>
+              {(onFillAllAfdd || onFillAllAfddNA) && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300 hover:bg-transparent"><CheckCircle className="h-3.5 w-3.5" /></Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-36 p-2 z-[9999] bg-background border border-white/10" align="center">
+                    <p className="text-[10px] text-white mb-2 font-semibold">Fill all AFDD</p>
+                    {onFillAllAfdd && <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={onFillAllAfdd}>All Pass</Button>}
+                    {onFillAllAfddNA && <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={onFillAllAfddNA}>All N/A</Button>}
+                  </PopoverContent>
+                </Popover>
               )}
             </div>
           </TableHead>

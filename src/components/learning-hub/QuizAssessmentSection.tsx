@@ -53,7 +53,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
     return (
       <>
         <motion.div variants={itemVariants}>
-          <p className="text-[11px] font-bold text-white/70 uppercase tracking-widest px-0.5 mb-2 mt-2">
+          <p className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5 mb-2 mt-2">
             {title}
           </p>
         </motion.div>

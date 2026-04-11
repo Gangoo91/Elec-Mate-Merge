@@ -51,7 +51,7 @@ const SupplyQualityPage = ({ onBack }: Props) => (
         <motion.div key={i} variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
-            <p className="text-sm text-white/80 leading-relaxed">{item.detail}</p>
+            <p className="text-sm text-white leading-relaxed">{item.detail}</p>
             <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
@@ -85,7 +85,7 @@ const SupplyQualityPage = ({ onBack }: Props) => (
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Office Block — Flickering Lights, All Floors</p>
-          <p className="text-sm text-white/80">Multiple tenants report lights flickering. Problem affects all floors. Gets worse during business hours.</p>
+          <p className="text-sm text-white">Multiple tenants report lights flickering. Problem affects all floors. Gets worse during business hours.</p>
           <div className="rounded-xl bg-white/[0.05] p-3">
             <p className="text-xs text-white">Voltage logging at the main intake showed 218-245V range over 24 hours — within limits but volatile. N-E voltage measured at 8V at the main neutral bar. Thermal scan revealed a hot spot at the main neutral connection to the busbar — 78°C versus 35°C ambient. The neutral bar bolt had lost 2 turns of torque over years of thermal cycling.</p>
           </div>

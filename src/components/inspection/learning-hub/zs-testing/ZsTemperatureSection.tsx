@@ -82,7 +82,7 @@ const ZsTemperatureSection = ({ onBack }: Props) => {
             <p className="text-sm font-semibold text-white mb-3">The Correction Formula</p>
             <div className="rounded-xl bg-white/[0.05] p-4 text-center">
               <p className="text-lg font-bold text-white">Zs(corrected) = Zs(measured) × (230 + 70) ÷ (230 + T)</p>
-              <p className="text-xs text-white/60 mt-2">Where T = ambient temperature at time of measurement (°C)</p>
+              <p className="text-xs text-white mt-2">Where T = ambient temperature at time of measurement (°C)</p>
             </div>
             <div className="mt-3 space-y-1.5">
               <p className="text-sm text-white"><span className="font-semibold text-yellow-400">230</span> — inferred zero resistance temperature for copper (°C)</p>
@@ -115,9 +115,9 @@ const ZsTemperatureSection = ({ onBack }: Props) => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Ambient (°C)</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Factor</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Note</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Ambient (°C)</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Factor</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Note</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -125,7 +125,7 @@ const ZsTemperatureSection = ({ onBack }: Props) => {
                     <tr key={i} className="border-b border-white/[0.04]">
                       <td className="p-3 text-white font-medium">{row[0]}°C</td>
                       <td className="p-3 text-yellow-400 font-semibold">{row[1]}</td>
-                      <td className="p-3 text-white/60 text-xs">{row[2]}</td>
+                      <td className="p-3 text-white text-xs">{row[2]}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -150,23 +150,23 @@ const ZsTemperatureSection = ({ onBack }: Props) => {
               </div>
               <div className="grid grid-cols-2 gap-2">
                 <div className="rounded-xl bg-white/[0.05] p-2.5">
-                  <p className="text-xs text-white/60">Measured</p>
+                  <p className="text-xs text-white">Measured</p>
                   <p className="text-sm font-semibold text-white">{ex.measured}Ω at {ex.temp}°C</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-2.5">
-                  <p className="text-xs text-white/60">Corrected</p>
+                  <p className="text-xs text-white">Corrected</p>
                   <p className="text-sm font-semibold text-white">{ex.corrected}</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-2.5">
-                  <p className="text-xs text-white/60">BS 7671 Max</p>
+                  <p className="text-xs text-white">BS 7671 Max</p>
                   <p className="text-sm text-white">{ex.maxBs}Ω</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-2.5">
-                  <p className="text-xs text-white/60">80% Limit</p>
+                  <p className="text-xs text-white">80% Limit</p>
                   <p className="text-sm text-yellow-400 font-semibold">{ex.eightyPercent}Ω</p>
                 </div>
               </div>
-              <p className="text-sm text-white/80">{ex.explanation}</p>
+              <p className="text-sm text-white">{ex.explanation}</p>
             </div>
           </motion.div>
         ))}

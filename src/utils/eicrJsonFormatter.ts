@@ -5,7 +5,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
-import { MAIN_BOARD_ID } from '@/types/distributionBoard';
+import { getBoardWays, MAIN_BOARD_ID } from '@/types/distributionBoard';
 import type { EICRPayload } from '@/types/eicr-payload';
 
 const toSnakeCase = (str: string): string =>
@@ -25,6 +25,9 @@ const convertToSnakeCase = (obj: any): any => {
   }
   return obj == null ? '' : obj;
 };
+
+const normaliseRcdTimeDelay = (value: string): string =>
+  value === '__custom__' ? '' : value;
 
 export const formatEICRJson = async (formData: any, reportId: string): Promise<EICRPayload> => {
   // CRITICAL DEBUG: Log exactly what's coming in
@@ -185,25 +188,24 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       item_5_21: '5.21',
       item_5_22: '5.22',
       item_5_23: '5.23',
-      item_6_0: '6.0',
-      item_6_1: '6.1',
-      item_6_2: '6.2',
-      item_6_3: '6.3',
-      item_6_4: '6.4',
-      item_6_5: '6.5',
-      item_6_6: '6.6',
-      item_6_7: '6.7',
-      item_6_8: '6.8',
+      item_6_0: '6.1',
+      item_6_1: '6.2',
+      item_6_2: '6.3',
+      item_6_3: '6.4',
+      item_6_4: '6.5',
+      item_6_5: '6.6',
+      item_6_6: '6.7',
+      item_6_7: '6.8',
       item_6_9: '6.9',
       item_6_10: '6.10',
       item_6_11: '6.11',
       item_6_12: '6.12',
       item_6_13: '6.13',
-      item_7_0: '7.0',
+      item_7_0: '7.1',
       item_7_1: '7.1',
       item_7_2: '7.2',
       item_7_3: '7.3',
-      item_8_0: '8.0',
+      item_8_0: '8.1',
       item_8_1: '8.1',
       item_8_2: '8.2',
       item_8_3: '8.3',
@@ -290,27 +292,30 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
 
     // Skip the first board (main board) and return the rest
     // Use field names from DistributionBoard type: name, reference, location, make, type, totalWays, zdb, ipf
-    return boards.slice(1).map((board: any) => ({
-      designation: board.name || board.reference || board.designation || '',
-      location: board.location || '',
-      manufacturer: board.make || board.manufacturer || '',
-      board_type: board.type || board.boardType || '',
-      ways: board.totalWays?.toString() || board.ways || '',
-      zdb: board.zdb || '',
-      ipf: board.ipf || '',
-      polarity_confirmed: board.confirmedCorrectPolarity ?? false,
-      phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
-      spd_operational: board.spdOperationalStatus ?? false,
-      spd_na: board.spdNA ?? false,
-      spd_type: board.spdType || '',
-      spd_t1: board.spdT1 ?? false,
-      spd_t2: board.spdT2 ?? false,
-      spd_t3: board.spdT3 ?? false,
-      spd_location: board.spdLocation || '',
-      spd_make: board.spdMake || '',
-      spd_model: board.spdModel || '',
-      spd_rated_current_ka: board.spdRatedCurrentKa || '',
-    }));
+    return boards.slice(1).map((board: any) => {
+      const boardWays = getBoardWays(board);
+      return {
+        designation: board.name || board.reference || board.designation || '',
+        location: board.location || '',
+        manufacturer: board.make || board.manufacturer || '',
+        board_type: board.type || board.boardType || '',
+        ways: boardWays?.toString() || board.ways || '',
+        zdb: board.zdb || '',
+        ipf: board.ipf || '',
+        polarity_confirmed: board.confirmedCorrectPolarity ?? false,
+        phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
+        spd_operational: board.spdOperationalStatus ?? false,
+        spd_na: board.spdNA ?? false,
+        spd_type: board.spdType || '',
+        spd_t1: board.spdT1 ?? false,
+        spd_t2: board.spdT2 ?? false,
+        spd_t3: board.spdT3 ?? false,
+        spd_location: board.spdLocation || '',
+        spd_make: board.spdMake || '',
+        spd_model: board.spdModel || '',
+        spd_rated_current_ka: board.spdRatedCurrentKa || '',
+      };
+    });
   };
 
   // Format circuits/test results
@@ -598,6 +603,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       const boardCircuits = testResults.filter(
         (r: any) => (r.boardId || MAIN_BOARD_ID) === boardId
       );
+      const boardWays = getBoardWays(board);
 
       return {
         // Board metadata
@@ -605,7 +611,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         db_location: board.location || '',
         db_manufacturer: board.make || '',
         db_type: board.type || '',
-        db_ways: board.totalWays?.toString() || '',
+        db_ways: boardWays?.toString() || '',
         db_zdb: board.zdb || '',
         db_ipf: board.ipf || '',
         // Aliases for template compatibility (some template sections use board.zdb / board.ipf)
@@ -873,12 +879,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       return {
         bs_en: mainBoard?.mainSwitchBsEn || '',
         device_type: get('mainProtectiveDevice'),
-        main_switch_rating: get('mainSwitchRating'),
+        main_switch_rating: get('mainSwitchRating') === '__custom__' ? get('fuseDeviceRating') : get('mainSwitchRating'),
         main_switch_location: get('cuLocation') || mainBoard?.location || '',
         main_switch_poles: get('mainSwitchPoles'),
         main_switch_voltage_rating: get('mainSwitchVoltageRating'),
         fuse_device_rating: get('fuseDeviceRating'),
-        breaking_capacity: get('breakingCapacity'),
+        fuse_sub_type: get('fuseSubType'),
+        breaking_capacity: get('breakingCapacity') === '__custom__' ? get('breakingCapacityCustom') : get('breakingCapacity'),
       };
     })(),
 
@@ -886,14 +893,15 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       rcd_main_switch: get('rcdMainSwitch'),
       rcd_rating: get('rcdRating'),
       rcd_type: get('rcdType'),
-      rcd_time_delay: get('rcdTimeDelay'),
+      rcd_time_delay: normaliseRcdTimeDelay(get('rcdTimeDelay')),
       rcd_measured_time: get('rcdMeasuredTime'),
     },
 
     distribution_board: (() => {
       // Read from distributionBoards array if available, fall back to legacy flat fields
       const mainBoard = formData.distributionBoards?.[0];
-      const boardSize = mainBoard?.totalWays ? `${mainBoard.totalWays}-way` : get('boardSize');
+      const mainBoardWays = getBoardWays(mainBoard);
+      const boardSize = mainBoardWays ? `${mainBoardWays}-way` : get('boardSize');
       return {
         board_designation:
           mainBoard?.name || mainBoard?.reference || get('boardDesignation', 'Main DB'),
@@ -901,14 +909,14 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         board_type: mainBoard?.type || get('cuType'),
         board_location: mainBoard?.location || get('cuLocation'),
         board_manufacturer: mainBoard?.make || get('cuManufacturer'),
-        board_ways: mainBoard?.totalWays?.toString() || get('cuNumberOfWays') || '',
+        board_ways: mainBoardWays?.toString() || get('cuNumberOfWays') || '',
       };
     })(),
 
     cables: {
-      intake_cable_size: stripUnit(get('intakeCableSize')),
+      intake_cable_size: get('intakeCableSize') === 'custom' ? get('intakeCableSizeCustom') : stripUnit(get('intakeCableSize')),
       intake_cable_type: get('intakeCableType'),
-      tails_size: stripUnit(get('tailsSize')),
+      tails_size: get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
       tails_length: get('tailsLength'),
     },
 
@@ -1098,7 +1106,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       company_phone: get('companyPhone'),
       company_email: get('companyEmail'),
       company_website: get('companyWebsite'),
-      company_logo: get('companyLogo'),
+      company_logo: (() => { const l = get('companyLogo'); return l && l.length > 100 && !l.includes('placeholder') ? l : ''; })(),
       company_tagline: get('companyTagline'),
       company_accent_color: get('companyAccentColor'),
       company_registration_number: get('companyRegistrationNumber'),
@@ -1218,7 +1226,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     db_location: formData.distributionBoards?.[0]?.location || get('cuLocation'),
     db_manufacturer: formData.distributionBoards?.[0]?.make || get('cuManufacturer'),
     db_type: formData.distributionBoards?.[0]?.type || get('cuType'),
-    db_ways: formData.distributionBoards?.[0]?.totalWays?.toString() || '',
+    db_ways: getBoardWays(formData.distributionBoards?.[0])?.toString() || '',
     db_reference:
       formData.distributionBoards?.[0]?.reference ||
       formData.distributionBoards?.[0]?.name ||
@@ -1226,13 +1234,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     db_zdb: formData.distributionBoards?.[0]?.zdb || '',
     db_ipf: formData.distributionBoards?.[0]?.ipf || '',
 
-    // Cables (flat) - stripUnit prevents double-mm (e.g., "25mmmm²")
-    intake_cable_size: stripUnit(get('intakeCableSize')),
-    intakeCableSize: stripUnit(get('intakeCableSize')),
+    // Cables (flat) - handle custom sizes
+    intake_cable_size: get('intakeCableSize') === 'custom' ? get('intakeCableSizeCustom') : stripUnit(get('intakeCableSize')),
+    intakeCableSize: get('intakeCableSize') === 'custom' ? get('intakeCableSizeCustom') : stripUnit(get('intakeCableSize')),
     intake_cable_type: get('intakeCableType'),
     intakeCableType: get('intakeCableType'),
-    tails_size: stripUnit(get('tailsSize')),
-    tailsSize: stripUnit(get('tailsSize')),
+    tails_size: get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
+    tailsSize: get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
     tails_length: get('tailsLength'),
     tailsLength: get('tailsLength'),
 
@@ -1341,12 +1349,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     test_instrument_serial: get('testInstrumentSerial'),
     calibration_date: get('calibrationDate'),
 
-    // Main Switch fields (flat)
-    main_switch_rating: get('mainSwitchRating'),
+    // Main Switch fields (flat) — handle custom values
+    main_switch_rating: get('mainSwitchRating') === '__custom__' ? get('fuseDeviceRating') : get('mainSwitchRating'),
     main_switch_poles: get('mainSwitchPoles'),
     main_switch_voltage_rating: get('mainSwitchVoltageRating'),
     fuse_device_rating: get('fuseDeviceRating'),
-    breaking_capacity: get('breakingCapacity'),
+    fuse_sub_type: get('fuseSubType'),
+    breaking_capacity: get('breakingCapacity') === '__custom__' ? get('breakingCapacityCustom') : get('breakingCapacity'),
     service_entry: get('serviceEntry'),
 
     // ============================================
@@ -1382,7 +1391,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     bonding_conductor_continuity_verified: getBool('bondingConductorContinuityVerified'),
 
     // RCD details (flat)
-    rcd_time_delay: get('rcdTimeDelay'),
+    rcd_time_delay: normaliseRcdTimeDelay(get('rcdTimeDelay')),
     rcd_measured_time: get('rcdMeasuredTime'),
 
     // Section K - Observations

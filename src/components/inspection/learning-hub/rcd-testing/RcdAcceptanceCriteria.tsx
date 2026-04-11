@@ -61,9 +61,9 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Test Current</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Test Current</th>
                     <th className="text-left p-3 text-xs font-semibold text-yellow-400">Limit</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Purpose</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Purpose</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
                     <tr key={i} className="border-b border-white/[0.04]">
                       <td className="p-3 text-white font-medium text-xs">{row[0]}</td>
                       <td className="p-3 text-yellow-400 font-semibold">{row[1]}</td>
-                      <td className="p-3 text-white/70 text-xs">{row[2]}</td>
+                      <td className="p-3 text-white text-xs">{row[2]}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -88,9 +88,9 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Test Current</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Test Current</th>
                     <th className="text-left p-3 text-xs font-semibold text-yellow-400">Limit</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Purpose</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Purpose</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -98,7 +98,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
                     <tr key={i} className="border-b border-white/[0.04]">
                       <td className="p-3 text-white font-medium text-xs">{row[0]}</td>
                       <td className="p-3 text-yellow-400 font-semibold">{row[1]}</td>
-                      <td className="p-3 text-white/70 text-xs">{row[2]}</td>
+                      <td className="p-3 text-white text-xs">{row[2]}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -115,7 +115,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Test</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Test</th>
                     <th className="text-left p-3 text-xs font-semibold text-green-400">Healthy</th>
                     <th className="text-left p-3 text-xs font-semibold text-yellow-400">Marginal</th>
                     <th className="text-left p-3 text-xs font-semibold text-red-400">Failing</th>
@@ -134,7 +134,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
               </table>
             </div>
             <div className="p-3 border-t border-white/[0.06]">
-              <p className="text-xs text-white/70">A new RCD typically trips in 15-30ms at 1×IΔn. Trip times consistently above 100ms, while still technically within the 300ms limit, suggest the RCD is deteriorating and should be flagged for monitoring or replacement.</p>
+              <p className="text-xs text-white">A new RCD typically trips in 15-30ms at 1×IΔn. Trip times consistently above 100ms, while still technically within the 300ms limit, suggest the RCD is deteriorating and should be flagged for monitoring or replacement.</p>
             </div>
           </div>
         </motion.div>
@@ -153,7 +153,7 @@ const RcdAcceptanceCriteria = ({ onBack }: Props) => {
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ${item.severity === 'C1' ? 'text-red-400 bg-red-400/10' : 'text-orange-400 bg-orange-400/10'}`}>{item.severity}</span>
                 )}
               </div>
-              <p className="text-sm text-white/80 leading-relaxed">{item.action}</p>
+              <p className="text-sm text-white leading-relaxed">{item.action}</p>
             </div>
           </motion.div>
         ))}

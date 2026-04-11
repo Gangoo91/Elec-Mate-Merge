@@ -79,7 +79,7 @@ const EnhancedInspectionChecklistCard: React.FC<EnhancedInspectionChecklistCardP
                 BS 7671 Inspection Checklist
               </CardTitle>
               <p className="bs7671-subtitle mt-2">
-                Electrical installation inspection as per BS 7671:18+A3:2024 requirements
+                Electrical installation inspection as per the IET BS 7671:2018+A2:2022 model form
               </p>
             </div>
           </div>

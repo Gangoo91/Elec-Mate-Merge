@@ -46,19 +46,19 @@ const BS7671StructurePage = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
               <div className="flex items-stretch">
                 <div className={`w-14 ${i === 7 ? 'bg-yellow-400/15' : 'bg-white/[0.04]'} flex items-center justify-center border-r border-white/[0.06] shrink-0`}>
-                  <span className={`text-lg font-black ${i === 7 ? 'text-yellow-400' : 'text-white/60'}`}>{i + 1}</span>
+                  <span className={`text-lg font-black ${i === 7 ? 'text-yellow-400' : 'text-white'}`}>{i + 1}</span>
                 </div>
                 <div className="flex-1 p-4 space-y-2">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-sm font-semibold text-white">{p.title}</p>
-                    <span className="text-[10px] text-white/40 shrink-0">{p.chapters}</span>
+                    <span className="text-[10px] text-white shrink-0">{p.chapters}</span>
                   </div>
-                  <p className="text-sm text-white/80 leading-relaxed">{p.summary}</p>
+                  <p className="text-sm text-white leading-relaxed">{p.summary}</p>
                   <div className="space-y-1">
                     {p.keyRegs.map((reg, j) => (
                       <div key={j} className="flex items-start gap-2">
                         <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5" />
-                        <p className="text-xs text-white/60">{reg}</p>
+                        <p className="text-xs text-white">{reg}</p>
                       </div>
                     ))}
                   </div>

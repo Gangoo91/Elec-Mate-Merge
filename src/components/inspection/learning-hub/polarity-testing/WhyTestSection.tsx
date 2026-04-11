@@ -171,7 +171,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-yellow-400">F</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Fault</p>
+                    <p className="text-xs font-medium text-white">Fault</p>
                     <p className="text-sm text-white">{example.fault}</p>
                   </div>
                 </div>
@@ -181,7 +181,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-orange-400">C</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Consequence</p>
+                    <p className="text-xs font-medium text-white">Consequence</p>
                     <p className="text-sm text-white">{example.consequence}</p>
                   </div>
                 </div>
@@ -191,7 +191,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-green-400">D</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Detection</p>
+                    <p className="text-xs font-medium text-white">Detection</p>
                     <p className="text-sm text-white">{example.detection}</p>
                   </div>
                 </div>

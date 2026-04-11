@@ -63,7 +63,7 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
 
   // Create main board from legacy verification data
   const mainBoard = createMainBoard();
-  mainBoard.reference = formData.dbReference || 'Main CU';
+  mainBoard.reference = formData.dbReference || 'DB';
   mainBoard.zdb = formData.zdb || '';
   mainBoard.ipf = formData.ipf || '';
   mainBoard.confirmedCorrectPolarity = formData.confirmedCorrectPolarity || false;

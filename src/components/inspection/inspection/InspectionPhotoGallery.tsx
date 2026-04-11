@@ -193,7 +193,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
         <DialogContent className="max-w-2xl sm:max-w-4xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Photo Evidence & AI Quality Assurance</DialogTitle>
-            <p className="text-sm text-muted-foreground">BS7671:2018+A3:2024 Compliance Check</p>
+            <p className="text-sm text-muted-foreground">BS7671:2018+A2:2022 Compliance Check</p>
           </DialogHeader>
           {selectedPhoto && (
             <div className="space-y-4">

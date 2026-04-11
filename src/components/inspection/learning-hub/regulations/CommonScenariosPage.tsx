@@ -132,7 +132,7 @@ const CommonScenariosPage = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{s.question}</p>
-              <p className="text-sm text-white/80 leading-relaxed">{s.answer}</p>
+              <p className="text-sm text-white leading-relaxed">{s.answer}</p>
               <div className="flex flex-wrap gap-1.5">
                 {s.regs.map((reg, j) => (
                   <span key={j} className="text-[10px] font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">{reg}</span>

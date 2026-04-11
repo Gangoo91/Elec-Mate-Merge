@@ -124,7 +124,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
               <p className="text-sm font-semibold text-white">{item.problem}</p>
               <div className="grid grid-cols-1 gap-2">
                 <div className="flex items-start gap-2">
-                  <span className="text-xs font-semibold text-white/60 mt-0.5 shrink-0">Cause</span>
+                  <span className="text-xs font-semibold text-white mt-0.5 shrink-0">Cause</span>
                   <p className="text-sm text-white">{item.cause}</p>
                 </div>
                 <div className="flex items-start gap-2">
@@ -157,7 +157,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
               ].map((item, i) => (
                 <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
                   <p className="text-sm font-medium text-white">{item.defect}</p>
-                  <p className="text-sm text-white/70 mt-1">{item.detail}</p>
+                  <p className="text-sm text-white mt-1">{item.detail}</p>
                 </div>
               ))}
             </div>
@@ -182,7 +182,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
                 <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
                 <div>
                   <p className="text-sm font-medium text-white">{item.tip}</p>
-                  <p className="text-sm text-white/80 mt-0.5">{item.detail}</p>
+                  <p className="text-sm text-white mt-0.5">{item.detail}</p>
                 </div>
               </div>
             ))}

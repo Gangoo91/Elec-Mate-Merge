@@ -9,6 +9,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { supabase } from '@/integrations/supabase/client';
+import { getBoardWays } from '@/types/distributionBoard';
 import type { EICPayload } from '@/types/eic-payload';
 
 /* ------------------------------------------------------------------ */
@@ -261,7 +262,12 @@ export async function formatEicJson(
       rcd_rating: formData.rcdRating || formData.mainSwitchRcdRating || 'N/A',
       rcd_type: formData.rcdType || formData.mainSwitchRcdType || 'N/A',
       rcd_operating_time: formData.rcdOperatingTime || formData.mainSwitchRcdOperatingTime || 'N/A',
-      rcd_rated_time_delay: formData.rcdTimeDelay || formData.rcdRatedTimeDelay || 'N/A',
+      rcd_rated_time_delay:
+        (formData.rcdTimeDelay && formData.rcdTimeDelay !== '__custom__'
+          ? formData.rcdTimeDelay
+          : '') ||
+        formData.rcdRatedTimeDelay ||
+        'N/A',
       rcd_measured_operating_time:
         formData.rcdMeasuredTime || formData.rcdMeasuredOperatingTime || 'N/A',
     },
@@ -279,7 +285,7 @@ export async function formatEicJson(
       board_type: board.boardType || board.type || '',
       board_make: board.make || board.boardMake || '',
       board_model: board.model || board.boardModel || '',
-      total_ways: board.totalWays || board.ways || '',
+      total_ways: getBoardWays(board) || board.ways || '',
       used_ways: board.usedWays || '',
       spare_ways: board.spareWays || '',
       zdb: board.zdb || '',

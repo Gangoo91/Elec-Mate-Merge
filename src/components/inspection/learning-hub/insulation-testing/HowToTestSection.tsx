@@ -90,7 +90,7 @@ const HowToTestSection = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-red-400/10 border border-red-400/20 p-4">
             <p className="text-sm font-semibold text-white mb-2">You MUST Disconnect These Before Testing</p>
-            <p className="text-sm text-white/70 mb-3">The 500V DC test voltage will destroy the following — no exceptions:</p>
+            <p className="text-sm text-white mb-3">The 500V DC test voltage will destroy the following — no exceptions:</p>
             <div className="space-y-1.5">
               {mustDisconnect.map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
@@ -128,7 +128,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white">{item.name}</p>
-                  <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                  <p className="text-sm text-white mt-0.5">{item.detail}</p>
                 </div>
               </div>
             ))}
@@ -143,21 +143,21 @@ const HowToTestSection = ({ onBack }: Props) => {
               <div className="grid grid-cols-3 gap-2">
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
                   <p className="text-lg font-bold text-white">250V</p>
-                  <p className="text-xs text-white/60">SELV/PELV</p>
-                  <p className="text-xs text-white/60">≤50V circuits</p>
+                  <p className="text-xs text-white">SELV/PELV</p>
+                  <p className="text-xs text-white">≤50V circuits</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center border border-yellow-400/30">
                   <p className="text-lg font-bold text-yellow-400">500V</p>
-                  <p className="text-xs text-white/60">Standard LV</p>
+                  <p className="text-xs text-white">Standard LV</p>
                   <p className="text-xs text-yellow-400">Most common</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3 text-center">
                   <p className="text-lg font-bold text-white">1000V</p>
-                  <p className="text-xs text-white/60">500V-1000V</p>
-                  <p className="text-xs text-white/60">HV circuits</p>
+                  <p className="text-xs text-white">500V-1000V</p>
+                  <p className="text-xs text-white">HV circuits</p>
                 </div>
               </div>
-              <p className="text-sm text-white/70">Minimum acceptable IR for all: <span className="font-semibold text-white">≥1.0MΩ</span> (except SELV: ≥0.5MΩ)</p>
+              <p className="text-sm text-white">Minimum acceptable IR for all: <span className="font-semibold text-white">≥1.0MΩ</span> (except SELV: ≥0.5MΩ)</p>
             </div>
           </div>
         </motion.div>
@@ -201,7 +201,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white">{item.mistake}</p>
-                    <p className="text-sm text-white/70 mt-0.5">{item.fix}</p>
+                    <p className="text-sm text-white mt-0.5">{item.fix}</p>
                   </div>
                 </div>
               ))}

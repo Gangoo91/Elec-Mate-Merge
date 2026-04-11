@@ -12,7 +12,7 @@ import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Quote) => {
   const { saveQuote } = useQuoteStorage();
-  const { companyProfile, refetch } = useCompanyProfile();
+  const { companyProfile } = useCompanyProfile();
 
   const [quote, setQuote] = useState<Partial<Quote>>(
     initialQuote || {
@@ -140,72 +140,41 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
   // Cloud auto-save — upserts draft to Supabase every 10s when data changes
   const lastSavedRef = useRef<string>('');
+  const isPersistingDraftRef = useRef(false);
   const [cloudSaveStatus, setCloudSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
 
-  useEffect(() => {
-    if (!quote.client?.name && (!quote.items || quote.items.length === 0)) return;
+  const getDraftSnapshot = useCallback(
+    () =>
+      JSON.stringify({
+        client: quote.client,
+        jobDetails: quote.jobDetails,
+        items: quote.items,
+        settings: quote.settings,
+      }),
+    [quote.client, quote.jobDetails, quote.items, quote.settings]
+  );
 
-    const timer = setInterval(async () => {
-      const snapshot = JSON.stringify({ client: quote.client, jobDetails: quote.jobDetails, items: quote.items, settings: quote.settings });
-      if (snapshot === lastSavedRef.current) return; // No changes
+  const persistDraft = useCallback(async () => {
+    if (!quote.client?.name && (!quote.items || quote.items.length === 0)) {
+      return false;
+    }
 
-      try {
-        setCloudSaveStatus('saving');
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) return;
+    const snapshot = getDraftSnapshot();
+    if (snapshot === lastSavedRef.current || isPersistingDraftRef.current) {
+      return false;
+    }
 
-        const finalQuote = calculateTotals();
-        const dbData: Record<string, unknown> = {
-          id: quote.id,
-          user_id: user.id,
-          quote_number: quote.quoteNumber || null,
-          client_data: quote.client || {},
-          job_details: quote.jobDetails || {},
-          items: quote.items || [],
-          settings: quote.settings || { vatRate: 20, vatRegistered: false },
-          subtotal: finalQuote.subtotal || 0,
-          overhead: 0,
-          profit: 0,
-          discount_amount: finalQuote.discountAmount || 0,
-          vat_amount: finalQuote.vatAmount || 0,
-          total: finalQuote.total || 0,
-          status: 'draft',
-          notes: quote.notes || null,
-          updated_at: new Date().toISOString(),
-        };
+    try {
+      isPersistingDraftRef.current = true;
+      setCloudSaveStatus('saving');
 
-        // Only set created_at and expiry on first save
-        if (!lastSavedRef.current) {
-          dbData.created_at = new Date().toISOString();
-          dbData.expiry_date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
-        }
-
-        const { error } = await supabase.from('quotes').upsert(dbData, { onConflict: 'id' });
-        if (error) throw error;
-
-        lastSavedRef.current = snapshot;
-        setCloudSaveStatus('saved');
-      } catch (err) {
-        console.warn('[QuoteBuilder] Cloud auto-save failed:', err);
-        setCloudSaveStatus('error');
-      }
-    }, 10000);
-
-    return () => clearInterval(timer);
-  }, [quote, calculateTotals]);
-
-  // Also save on unmount (beforeunload)
-  useEffect(() => {
-    const handleBeforeUnload = async () => {
-      if (!quote.client?.name) return;
-      const snapshot = JSON.stringify({ client: quote.client, jobDetails: quote.jobDetails, items: quote.items, settings: quote.settings });
-      if (snapshot === lastSavedRef.current) return;
-
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return false;
 
       const finalQuote = calculateTotals();
-      await supabase.from('quotes').upsert({
+      const dbData: Record<string, unknown> = {
         id: quote.id,
         user_id: user.id,
         quote_number: quote.quoteNumber || null,
@@ -220,13 +189,60 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         vat_amount: finalQuote.vatAmount || 0,
         total: finalQuote.total || 0,
         status: 'draft',
+        notes: quote.notes || null,
         updated_at: new Date().toISOString(),
-      }, { onConflict: 'id' });
+      };
+
+      if (!lastSavedRef.current) {
+        dbData.created_at = new Date().toISOString();
+        dbData.expiry_date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+      }
+
+      const { error } = await supabase.from('quotes').upsert(dbData, { onConflict: 'id' });
+      if (error) throw error;
+
+      lastSavedRef.current = snapshot;
+      setCloudSaveStatus('saved');
+      return true;
+    } catch (err) {
+      console.warn('[QuoteBuilder] Cloud auto-save failed:', err);
+      setCloudSaveStatus('error');
+      return false;
+    } finally {
+      isPersistingDraftRef.current = false;
+    }
+  }, [calculateTotals, getDraftSnapshot, quote]);
+
+  useEffect(() => {
+    if (!quote.client?.name && (!quote.items || quote.items.length === 0)) return;
+
+    const timer = window.setInterval(() => {
+      void persistDraft();
+    }, 10000);
+
+    return () => window.clearInterval(timer);
+  }, [persistDraft, quote.client?.name, quote.items]);
+
+  // Best-effort persistence when the page is backgrounded or closed.
+  useEffect(() => {
+    const handlePageHide = () => {
+      void persistDraft();
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [quote, calculateTotals]);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        void persistDraft();
+      }
+    };
+
+    window.addEventListener('pagehide', handlePageHide);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('pagehide', handlePageHide);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [persistDraft]);
 
   const nextStep = useCallback(() => {
     setCurrentStep((prev) => Math.min(prev + 1, 2));

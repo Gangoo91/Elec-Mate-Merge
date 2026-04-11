@@ -76,7 +76,7 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.item}</p>
-              <p className="text-sm text-white/80 mt-1">{item.detail}</p>
+              <p className="text-sm text-white mt-1">{item.detail}</p>
             </div>
           </motion.div>
         ))}
@@ -102,7 +102,7 @@ const SupplementaryBondingSection = ({ onBack }: Props) => {
             {commonDefects.map((item, i) => (
               <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.defect}</p>
-                <p className="text-sm text-white/70 mt-1">{item.detail}</p>
+                <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
             ))}
           </div>

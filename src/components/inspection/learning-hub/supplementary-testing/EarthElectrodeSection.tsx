@@ -51,11 +51,11 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
             <p className="text-sm font-semibold text-white mb-2">Acceptance Criteria</p>
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-xl bg-white/[0.05] p-3 text-center">
-                <p className="text-xs text-white/60">Formula</p>
+                <p className="text-xs text-white">Formula</p>
                 <p className="text-sm font-bold text-white">Ra ≤ U₀ ÷ IΔn</p>
               </div>
               <div className="rounded-xl bg-white/[0.05] p-3 text-center">
-                <p className="text-xs text-white/60">30mA RCD target</p>
+                <p className="text-xs text-white">30mA RCD target</p>
                 <p className="text-sm font-bold text-yellow-400">&lt;200Ω</p>
               </div>
             </div>
@@ -88,7 +88,7 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
             {commonDefects.map((item, i) => (
               <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.defect}</p>
-                <p className="text-sm text-white/70 mt-1">{item.detail}</p>
+                <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
             ))}
           </div>
@@ -108,7 +108,7 @@ const EarthElectrodeSection = ({ onBack }: Props) => {
             ].map((item, i) => (
               <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.type}</p>
-                <p className="text-sm text-white/70 mt-1">{item.detail}</p>
+                <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
             ))}
           </div>

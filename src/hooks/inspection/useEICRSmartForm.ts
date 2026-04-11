@@ -127,6 +127,21 @@ export function useEICRSmartForm(formData: any, onUpdate?: (field: string, value
       });
     }
 
+    // 7. Ze reading too high for earthing system
+    if (formData.externalZe && formData.earthingArrangement) {
+      const ze = parseFloat(formData.externalZe);
+      const maxZe: Record<string, number> = { 'TN-S': 0.8, 'TN-C-S': 0.35, 'TN-C': 0.35, 'TT': 200, 'IT': 200 };
+      const max = maxZe[formData.earthingArrangement];
+      if (max && ze > max) {
+        w.push({
+          field: 'externalZe',
+          message: `Ze reading (${ze}Ω) exceeds typical maximum for ${formData.earthingArrangement} (${max}Ω)`,
+          severity: 'warning',
+          regulation: 'Table 4Ab',
+        });
+      }
+    }
+
     return w;
   }, [
     formData.earthingArrangement,
@@ -139,6 +154,7 @@ export function useEICRSmartForm(formData: any, onUpdate?: (field: string, value
     formData.bondingCompliance,
     formData.distributionBoards,
     formData.scheduleOfTests,
+    formData.externalZe,
   ]);
 
   // Generate smart suggestions

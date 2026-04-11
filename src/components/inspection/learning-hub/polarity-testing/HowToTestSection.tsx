@@ -62,7 +62,7 @@ const twoWaySwitching = [
 
 const StepList = ({ steps, label }: { steps: string[]; label?: string }) => (
   <div className="space-y-2">
-    {label && <p className="text-xs font-medium text-white/60 uppercase tracking-wider mb-1">{label}</p>}
+    {label && <p className="text-xs font-medium text-white uppercase tracking-wider mb-1">{label}</p>}
     {steps.map((step, i) => (
       <div key={i} className="flex items-start gap-3 rounded-xl bg-white/[0.03] border border-white/10 p-3.5">
         <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center">
@@ -136,7 +136,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white">{item.name}</p>
-                  <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                  <p className="text-sm text-white mt-0.5">{item.detail}</p>
                 </div>
               </div>
             ))}
@@ -168,7 +168,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">Low reading (continuity) to line terminal</p>
-                  <p className="text-sm text-white/70">Line conductor correctly connected</p>
+                  <p className="text-sm text-white">Line conductor correctly connected</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -177,7 +177,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">Open circuit to neutral terminal</p>
-                  <p className="text-sm text-white/70">No cross-connection — polarity correct</p>
+                  <p className="text-sm text-white">No cross-connection — polarity correct</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -186,7 +186,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">Continuity to neutral instead of line</p>
-                  <p className="text-sm text-white/70">Reversed polarity — line and neutral swapped. Rectify immediately.</p>
+                  <p className="text-sm text-white">Reversed polarity — line and neutral swapped. Rectify immediately.</p>
                 </div>
               </div>
             </div>
@@ -246,7 +246,7 @@ const HowToTestSection = ({ onBack }: Props) => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white">{item.mistake}</p>
-                    <p className="text-sm text-white/70 mt-0.5">{item.fix}</p>
+                    <p className="text-sm text-white mt-0.5">{item.fix}</p>
                   </div>
                 </div>
               ))}

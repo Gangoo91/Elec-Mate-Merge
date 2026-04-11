@@ -52,7 +52,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
               <p className="text-sm font-semibold text-white">{s.title}</p>
-              <p className="text-sm text-white/70">{s.scenario}</p>
+              <p className="text-sm text-white">{s.scenario}</p>
               <div className="space-y-1.5">
                 {s.steps.map((step, j) => (
                   <div key={j} className="flex items-start gap-3">
@@ -98,7 +98,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
                 <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
                 <div>
                   <p className="text-sm font-medium text-white">{item.tip}</p>
-                  <p className="text-sm text-white/80 mt-0.5">{item.detail}</p>
+                  <p className="text-sm text-white mt-0.5">{item.detail}</p>
                 </div>
               </div>
             ))}

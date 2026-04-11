@@ -18,13 +18,13 @@ export interface InspectionSection {
 }
 
 /**
- * IET Model Forms - BS 7671:2018+A2:2022 Compliant EICR Inspection Checklist
+ * IET Model Forms - BS 7671:2018+A2:2022 EICR Inspection Checklist
  * FOR RESIDENTIAL AND SIMILAR PREMISES WITH UP TO 100 A SUPPLY
  *
  * This checklist aligns with the IET (Institution of Engineering and Technology)
  * model forms for Electrical Installation Condition Reports.
  *
- * Total: 8 Sections, 60 Inspection Items
+ * Total: 8 Sections, 65 Inspection Items
  */
 export const bs7671InspectionSections: InspectionSection[] = [
   {
@@ -416,61 +416,55 @@ export const bs7671InspectionSections: InspectionSection[] = [
     title: 'LOCATION(S) CONTAINING A BATH OR SHOWER',
     description: 'Special requirements for bathrooms and shower rooms',
     isConditional: true,
-    conditionalNote: 'Items 6.0–6.8 apply only if the location contains a bath or shower.',
+    conditionalNote: 'Items 6.1–6.8 apply only if the location contains a bath or shower.',
     items: [
       {
         id: 'item_6_0',
-        number: '6.0',
+        number: '6.1',
         item: 'Additional protection for all low voltage (LV) circuits by RCD not exceeding 30 mA',
         clause: '701.411.3.3',
       },
       {
         id: 'item_6_1',
-        number: '6.1',
+        number: '6.2',
         item: 'Where used as a protective measure, requirements for SELV or PELV met',
         clause: '701.414.4.5',
       },
       {
         id: 'item_6_2',
-        number: '6.2',
+        number: '6.3',
         item: 'Shaver supply units comply with BS EN 61558-2-5 (formerly BS 3535)',
         clause: '701.512.3',
       },
       {
         id: 'item_6_3',
-        number: '6.3',
+        number: '6.4',
         item: 'Presence of supplementary bonding conductors, unless not required by BS 7671:2018',
         clause: '701.415.2',
       },
       {
         id: 'item_6_4',
-        number: '6.4',
+        number: '6.5',
         item: 'Low voltage (e.g. 230 V) socket-outlets sited at least 2.5 m from zone 1',
         clause: '701.512.3',
       },
       {
         id: 'item_6_5',
-        number: '6.5',
+        number: '6.6',
         item: 'Suitability of equipment for external influences for installed location in terms of IP rating',
         clause: '701.512.2',
       },
       {
         id: 'item_6_6',
-        number: '6.6',
+        number: '6.7',
         item: 'Suitability of accessories and controlgear etc. for a particular zone',
         clause: '701.512.3',
       },
       {
         id: 'item_6_7',
-        number: '6.7',
+        number: '6.8',
         item: 'Suitability of current-using equipment for particular position within the location',
         clause: '701.55',
-      },
-      {
-        id: 'item_6_8',
-        number: '6.8',
-        item: '(No further items – reserved for additional items if required)',
-        clause: 'Reserved',
       },
     ],
   },
@@ -482,7 +476,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
     items: [
       {
         id: 'item_7_0',
-        number: '7.0',
+        number: '7.1',
         item: 'List all other special installations or locations present, if any. (Record separately the results of particular inspections applied.)',
         clause: 'Part 7',
       },
@@ -496,7 +490,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
     items: [
       {
         id: 'item_8_0',
-        number: '8.0',
+        number: '8.1',
         item: 'Where the installation includes additional requirements and recommendations relating to Chapter 82, additional inspection items should be added to the checklist.',
         clause: 'Chapter 82',
       },

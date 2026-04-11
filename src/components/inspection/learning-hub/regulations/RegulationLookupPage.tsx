@@ -96,12 +96,12 @@ const RegulationLookupPage = ({ onBack }: Props) => {
         {/* Search */}
         <motion.div variants={itemVariants}>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
             <Input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by number, title or keyword..."
-              className="h-11 pl-10 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/30"
+              className="h-11 pl-10 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white"
             />
           </div>
         </motion.div>
@@ -116,7 +116,7 @@ const RegulationLookupPage = ({ onBack }: Props) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-white">{reg.title}</p>
-                  <p className="text-sm text-white/80 mt-1">{reg.summary}</p>
+                  <p className="text-sm text-white mt-1">{reg.summary}</p>
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@ const RegulationLookupPage = ({ onBack }: Props) => {
         {filtered.length === 0 && (
           <motion.div variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-6 text-center">
-              <p className="text-sm text-white/60">No regulations match your search. Try a different number or keyword.</p>
+              <p className="text-sm text-white">No regulations match your search. Try a different number or keyword.</p>
             </div>
           </motion.div>
         )}

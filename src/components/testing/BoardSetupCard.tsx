@@ -177,15 +177,15 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
           </div>
           <div>
             <label className="text-[10px] text-white block mb-1">From</label>
-            <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'Main CU'} className={inputCn} />
+            <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'DB'} className={inputCn} />
           </div>
         </div>
 
-        {/* Ways as toggle buttons */}
+        {/* Ways as toggle buttons + custom */}
         <div>
           <label className="text-[10px] text-white block mb-1">Ways</label>
-          <div className="grid grid-cols-8 gap-1">
-            {[6, 8, 10, 12, 14, 16, 18, 20].map((w) => (
+          <div className="grid grid-cols-6 sm:grid-cols-9 gap-1">
+            {[4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24].map((w) => (
               <button
                 key={w}
                 type="button"
@@ -200,28 +200,75 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 {w}
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => onUpdate('totalWays', board.totalWays === -1 ? 0 : -1)}
+              className={cn(
+                'h-9 rounded-md font-semibold transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                board.totalWays === -1
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              Other
+            </button>
           </div>
+          {board.totalWays === -1 && (
+            <Input
+              type="number"
+              inputMode="numeric"
+              value={(board as any).totalWaysCustom || ''}
+              onChange={(e) => onUpdate('totalWaysCustom' as any, e.target.value)}
+              placeholder="e.g. 32"
+              className={cn(inputCn, 'mt-1')}
+            />
+          )}
         </div>
 
-        {/* Board Type as toggle buttons */}
-        <div>
-          <label className="text-[10px] text-white block mb-1">Type</label>
-          <div className="grid grid-cols-4 gap-1">
-            {BOARD_TYPES.slice(0, 4).map((t) => (
-              <button
-                key={t.value}
-                type="button"
-                onClick={() => onUpdate('type', board.type === t.value ? '' : t.value as BoardType)}
-                className={cn(
-                  'h-9 rounded-md font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                  board.type === t.value
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {t.label.split(' ')[0]}
-              </button>
-            ))}
+        {/* Board Type — dual select: Enclosure + Mounting */}
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <label className="text-[10px] text-white block mb-1">Enclosure</label>
+            <div className="grid grid-cols-2 gap-1">
+              {[{ value: 'metal-clad', label: 'Metal' }, { value: 'plastic', label: 'Plastic' }].map((t) => (
+                <button
+                  key={t.value}
+                  type="button"
+                  onClick={() => onUpdate('type', board.type === t.value || board.type?.startsWith(t.value) ? '' : t.value as BoardType)}
+                  className={cn(
+                    'h-9 rounded-md font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                    board.type?.includes(t.value.split('-')[0])
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="text-[10px] text-white block mb-1">Mounting</label>
+            <div className="grid grid-cols-2 gap-1">
+              {[{ value: 'flush-mount', label: 'Flush' }, { value: 'surface-mount', label: 'Surface' }].map((t) => (
+                <button
+                  key={t.value}
+                  type="button"
+                  onClick={() => {
+                    const mounting = (board as any).boardMounting === t.value ? '' : t.value;
+                    onUpdate('boardMounting' as any, mounting);
+                  }}
+                  className={cn(
+                    'h-9 rounded-md font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                    (board as any).boardMounting === t.value
+                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  )}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -231,6 +278,8 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         const incomingTypeOptions = getTypeOptionsForBsEn(board.incomingDeviceBsEn || '');
         const incomingRatings = getRatingOptionsForBsEn(board.incomingDeviceBsEn || '');
         const isRCD = board.incomingDeviceBsEn === '61008';
+        const isRCBO = board.incomingDeviceBsEn === '61009';
+        const hasRcdFields = isRCD || isRCBO || ['RCD', 'RCCB', 'RCBO'].includes(board.incomingDeviceType || '');
         const ratingUnit = isRCD ? 'mA' : 'A';
         return (
           <div className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.04] space-y-2">
@@ -274,6 +323,33 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 />
               </div>
             </div>
+            {/* RCD/RCBO mA and trip time */}
+            {hasRcdFields && (
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[10px] text-white block mb-1">RCD mA</label>
+                  <MobileSelectPicker
+                    value={(board as any).incomingRcdMa || ''}
+                    onValueChange={(value) => onUpdate('incomingRcdMa' as any, value)}
+                    options={[{ value: '30', label: '30mA' }, { value: '100', label: '100mA' }, { value: '300', label: '300mA' }]}
+                    placeholder="Select"
+                    title="RCD Rating (mA)"
+                    triggerClassName="text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-white block mb-1">Trip Time (ms)</label>
+                  <MobileSelectPicker
+                    value={(board as any).incomingRcdMs || ''}
+                    onValueChange={(value) => onUpdate('incomingRcdMs' as any, value)}
+                    options={[{ value: '0', label: '0ms' }, { value: '40', label: '40ms' }, { value: '150', label: '150ms' }, { value: '300', label: '300ms' }, { value: '500', label: '500ms' }]}
+                    placeholder="Select"
+                    title="Trip Time (ms)"
+                    triggerClassName="text-white"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         );
       })()}
@@ -283,6 +359,8 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         const switchTypeOptions = getTypeOptionsForBsEn(board.mainSwitchBsEn || '');
         const switchRatings = getRatingOptionsForBsEn(board.mainSwitchBsEn || '');
         const isRCD = board.mainSwitchBsEn === '61008';
+        const isRCBO = board.mainSwitchBsEn === '61009';
+        const hasRcdFields = isRCD || isRCBO || ['RCD', 'RCCB', 'RCBO'].includes(board.mainSwitchType || '');
         const ratingUnit = isRCD ? 'mA' : 'A';
         const typeOptions = switchTypeOptions || SWITCH_TYPE_OPTIONS.map((o) => ({ value: o.value, label: o.label }));
         const ratingOptions = board.mainSwitchBsEn
@@ -328,6 +406,33 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
                 />
               </div>
             </div>
+            {/* RCD/RCBO mA and trip time */}
+            {hasRcdFields && (
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[10px] text-white block mb-1">RCD mA</label>
+                  <MobileSelectPicker
+                    value={(board as any).mainSwitchRcdMa || ''}
+                    onValueChange={(value) => onUpdate('mainSwitchRcdMa' as any, value)}
+                    options={[{ value: '30', label: '30mA' }, { value: '100', label: '100mA' }, { value: '300', label: '300mA' }]}
+                    placeholder="Select"
+                    title="RCD Rating (mA)"
+                    triggerClassName="text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-white block mb-1">Trip Time (ms)</label>
+                  <MobileSelectPicker
+                    value={(board as any).mainSwitchRcdMs || ''}
+                    onValueChange={(value) => onUpdate('mainSwitchRcdMs' as any, value)}
+                    options={[{ value: '0', label: '0ms' }, { value: '40', label: '40ms' }, { value: '150', label: '150ms' }, { value: '300', label: '300ms' }, { value: '500', label: '500ms' }]}
+                    placeholder="Select"
+                    title="Trip Time (ms)"
+                    triggerClassName="text-white"
+                  />
+                </div>
+              </div>
+            )}
             {/* Poles as toggle buttons */}
             <div>
               <label className="text-[10px] text-white block mb-1">Poles</label>

@@ -103,11 +103,6 @@ const EnhancedInspectionOutcomeSelect = ({
   const currentOption = outcomeOptions.find(option => option.value === currentOutcome);
   
   const handleValueChange = (value: InspectionItem['outcome']) => {
-      oldOutcome: currentOutcome,
-      newValue: value,
-      timestamp: new Date().toISOString()
-    });
-    
     onOutcomeChange(itemId, value);
   };
 

@@ -95,7 +95,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
               </div>
               <div>
                 <p className="text-sm font-medium text-white">{item.step}</p>
-                <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                <p className="text-sm text-white mt-0.5">{item.detail}</p>
               </div>
             </div>
           </motion.div>
@@ -111,7 +111,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
             {commonDefects.map((item, i) => (
               <div key={i} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
                 <p className="text-sm font-medium text-white">{item.defect}</p>
-                <p className="text-sm text-white/70 mt-1">{item.detail}</p>
+                <p className="text-sm text-white mt-1">{item.detail}</p>
               </div>
             ))}
           </div>
@@ -150,7 +150,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
                 <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-2" />
                 <div>
                   <p className="text-sm font-medium text-white">{item.tip}</p>
-                  <p className="text-sm text-white/80 mt-0.5">{item.detail}</p>
+                  <p className="text-sm text-white mt-0.5">{item.detail}</p>
                 </div>
               </div>
             ))}
@@ -170,7 +170,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
             <div className="rounded-xl bg-white/[0.05] p-3">
               <p className="text-sm font-semibold text-white mb-1">TT Acceptance Formula</p>
               <p className="text-sm text-white">Ra × IΔn ≤ 50V — where Ra is the total earth electrode resistance and IΔn is the RCD rated residual current.</p>
-              <p className="text-sm text-white/70 mt-1">For a 30mA RCD: Ra ≤ 50 ÷ 0.03 = 1,667Ω. In practice, aim for Ra below 200Ω for reliability.</p>
+              <p className="text-sm text-white mt-1">For a 30mA RCD: Ra ≤ 50 ÷ 0.03 = 1,667Ω. In practice, aim for Ra below 200Ω for reliability.</p>
             </div>
           </div>
         </motion.div>
@@ -178,7 +178,7 @@ const PracticalGuidanceSection = ({ onBack }: Props) => {
         <motion.div variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
             <p className="text-sm font-semibold text-white mb-1">TT Troubleshooting — Persistent RCD Tripping</p>
-            <p className="text-sm text-white/70 mb-2">Diagnostic workflow from IET/BS 7430 guidance:</p>
+            <p className="text-sm text-white mb-2">Diagnostic workflow from IET/BS 7430 guidance:</p>
             <div className="space-y-2">
               {[
                 'Isolate the supply and prove dead where necessary before accessing terminations.',

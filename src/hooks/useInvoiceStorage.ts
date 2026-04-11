@@ -17,6 +17,19 @@ export const useInvoiceStorage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
+  const parseNumber = (value: unknown): number => {
+    if (typeof value === 'number') {
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    if (typeof value === 'string') {
+      const parsed = Number.parseFloat(value);
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    return 0;
+  };
+
   // Convert database row to Quote object with invoice data
   const convertDbRowToQuote = useCallback(
     (row: any): Quote => ({
@@ -26,11 +39,12 @@ export const useInvoiceStorage = () => {
       items: row.items,
       settings: row.settings,
       jobDetails: row.job_details,
-      subtotal: parseFloat(row.subtotal),
-      overhead: parseFloat(row.overhead),
-      profit: parseFloat(row.profit),
-      vatAmount: parseFloat(row.vat_amount),
-      total: parseFloat(row.total),
+      subtotal: parseNumber(row.subtotal),
+      overhead: parseNumber(row.overhead),
+      profit: parseNumber(row.profit),
+      discountAmount: parseNumber(row.discount_amount),
+      vatAmount: parseNumber(row.vat_amount),
+      total: parseNumber(row.total),
       status: row.status,
       tags: row.tags || [],
       createdAt: new Date(row.created_at),
@@ -63,6 +77,7 @@ export const useInvoiceStorage = () => {
       invoice_notes: row.invoice_notes,
       additional_invoice_items: row.additional_invoice_items || [],
       pdf_document_id: row.pdf_document_id,
+      pdf_url: row.pdf_url,
       pdf_generated_at: row.pdf_generated_at ? new Date(row.pdf_generated_at) : undefined,
       pdf_version: row.pdf_version,
       // Linked certificate fields
@@ -73,6 +88,53 @@ export const useInvoiceStorage = () => {
     }),
     []
   );
+
+  const fetchInvoices = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        toast({
+          title: 'Authentication required',
+          description: 'Please sign in to view invoices',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('quotes')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('invoice_raised', true)
+        .is('deleted_at', null)
+        .order('updated_at', { ascending: false });
+
+      if (error) throw error;
+
+      const convertedInvoices = (data || []).map(convertDbRowToQuote);
+      setInvoices(convertedInvoices);
+      setLastUpdated(new Date());
+    } catch (error) {
+      captureApiError(
+        error instanceof Error ? error : new Error(String(error)),
+        'invoices/fetch',
+        {
+          errorMessage: error instanceof Error ? error.message : String(error),
+        }
+      );
+      toast({
+        title: 'Error loading invoices',
+        description: 'Failed to load invoices. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [convertDbRowToQuote]);
 
   useEffect(() => {
     fetchInvoices();
@@ -136,50 +198,7 @@ export const useInvoiceStorage = () => {
     return () => {
       if (channel) supabase.removeChannel(channel);
     };
-  }, []);
-
-  const fetchInvoices = async () => {
-    try {
-      setIsLoading(true);
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        toast({
-          title: 'Authentication required',
-          description: 'Please sign in to view invoices',
-          variant: 'destructive',
-        });
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from('quotes')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('invoice_raised', true)
-        .is('deleted_at', null)
-        .order('updated_at', { ascending: false });
-
-      if (error) throw error;
-
-      const convertedInvoices = (data || []).map(convertDbRowToQuote);
-      setInvoices(convertedInvoices);
-      setLastUpdated(new Date());
-    } catch (error) {
-      captureApiError(error instanceof Error ? error : new Error(String(error)), 'invoices/fetch', {
-        errorMessage: error instanceof Error ? error.message : String(error),
-      });
-      toast({
-        title: 'Error loading invoices',
-        description: 'Failed to load invoices. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [fetchInvoices]);
 
   const saveInvoice = async (invoice: Partial<Invoice>, retryCount = 0): Promise<boolean> => {
     const MAX_RETRIES = 3;
@@ -352,6 +371,7 @@ export const useInvoiceStorage = () => {
         // 3. Poll if needed & update PDF metadata
         let pdfUrl = pdfData?.downloadUrl;
         const documentId = pdfData?.documentId;
+        let newVersion = updatedQuote.pdf_version || 0;
 
         if (!pdfUrl && documentId) {
           // Poll for PDF completion
@@ -370,11 +390,12 @@ export const useInvoiceStorage = () => {
 
         // 4. Store PDF metadata with incremented version
         if (documentId) {
-          const newVersion = (updatedQuote.pdf_version || 0) + 1;
+          newVersion = (updatedQuote.pdf_version || 0) + 1;
           const { error: pdfUpdateError } = await supabase
             .from('quotes')
             .update({
               pdf_document_id: documentId,
+              pdf_url: pdfUrl || null,
               pdf_generated_at: new Date().toISOString(),
               pdf_version: newVersion,
             })
@@ -382,6 +403,14 @@ export const useInvoiceStorage = () => {
 
           // PDF metadata update error is non-blocking
         }
+
+        updatedQuote = {
+          ...updatedQuote,
+          pdf_document_id: documentId || updatedQuote.pdf_document_id,
+          pdf_url: pdfUrl || updatedQuote.pdf_url,
+          pdf_generated_at: new Date().toISOString(),
+          pdf_version: newVersion,
+        };
 
         // Show single success toast after everything is done
         toast({
@@ -399,9 +428,8 @@ export const useInvoiceStorage = () => {
       }
 
       // 5. Return success without refetching (database trigger handles updated_at)
-      setInvoices((prev) =>
-        prev.map((inv) => (inv.id === invoice.id ? convertDbRowToQuote(updatedQuote) : inv))
-      );
+      const savedInvoice = convertDbRowToQuote(updatedQuote);
+      setInvoices((prev) => [savedInvoice, ...prev.filter((inv) => inv.id !== savedInvoice.id)]);
       trackMilestone('Invoice Saved', {
         invoiceId: updatedQuote.id,
         invoiceNumber: finalInvoiceNumber,

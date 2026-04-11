@@ -118,7 +118,7 @@ const FaultFindingRegulations = ({ onBack }: Props) => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">{item.description}</p>
-                  <p className="text-xs text-white/60 mt-0.5">{item.examples}</p>
+                  <p className="text-xs text-white mt-0.5">{item.examples}</p>
                 </div>
               </div>
             ))}

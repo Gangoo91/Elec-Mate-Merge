@@ -79,18 +79,24 @@ export interface DistributionBoard {
   model?: string; // Model number/name
   type?: BoardType; // Board enclosure type
   totalWays?: number; // Board size (from BOARD_SIZES)
+  totalWaysCustom?: string; // Custom board size when "Other" is selected
+  boardMounting?: string; // Separate mounting detail when tracked independently
 
   // Schedule page headers (BS 7671 model form)
   suppliedFrom?: string; // "Main DB", "Sub-DB1" - which board feeds this one
   incomingDeviceBsEn?: string; // BS EN standard of incoming protective device
   incomingDeviceType?: string; // Type of incoming protective device (MCB, MCCB, etc.)
   incomingDeviceRating?: string; // Rating (A) of incoming protective device
+  incomingRcdMa?: string;
+  incomingRcdMs?: string;
 
   // Main switch details (per-board, for EICR schedule)
   mainSwitchBsEn?: string; // BS EN standard of main switch
   mainSwitchType?: string; // Type of main switch (e.g. isolator, RCCB, RCD)
   mainSwitchRating?: string; // Rating (A) of main switch
   mainSwitchPoles?: string; // Number of poles (e.g. SP, DP, TP, TPN)
+  mainSwitchRcdMa?: string;
+  mainSwitchRcdMs?: string;
 
   // Timestamps
   createdAt?: Date;
@@ -105,7 +111,7 @@ export const MAIN_BOARD_ID = 'main-cu';
  */
 export const createDefaultBoard = (
   id: string,
-  name: string = 'Main CU',
+  name: string = 'DB',
   order: number = 0
 ): DistributionBoard => ({
   id,
@@ -129,7 +135,25 @@ export const createDefaultBoard = (
  * Create the default main consumer unit board
  */
 export const createMainBoard = (): DistributionBoard =>
-  createDefaultBoard(MAIN_BOARD_ID, 'Main CU', 0);
+  createDefaultBoard(MAIN_BOARD_ID, 'DB', 0);
+
+const parseWays = (value: unknown): number | undefined => {
+  if (value === null || value === undefined || value === '') return undefined;
+  const parsed =
+    typeof value === 'number' ? value : Number.parseInt(String(value), 10);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
+};
+
+export const getBoardWays = (
+  board?: Partial<DistributionBoard> & { ways?: string | number }
+): number | undefined => {
+  if (!board) return undefined;
+  return (
+    parseWays(board.totalWays) ??
+    parseWays(board.totalWaysCustom) ??
+    parseWays(board.ways)
+  );
+};
 
 /**
  * Generate next sub-board name based on existing boards

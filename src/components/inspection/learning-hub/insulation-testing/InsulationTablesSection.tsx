@@ -47,17 +47,17 @@ const InsulationTablesSection = ({ onBack }: Props) => {
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Quick Reference</p>
           <div className="grid grid-cols-3 gap-2">
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
-              <p className="text-xs text-white/60">New installation</p>
+              <p className="text-xs text-white">New installation</p>
               <p className="text-lg font-bold text-white">&gt;200MΩ</p>
               <p className="text-xs text-green-400">Excellent</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
-              <p className="text-xs text-white/60">Existing (good)</p>
+              <p className="text-xs text-white">Existing (good)</p>
               <p className="text-lg font-bold text-white">2-200MΩ</p>
               <p className="text-xs text-yellow-400">Acceptable</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3 text-center">
-              <p className="text-xs text-white/60">Investigate</p>
+              <p className="text-xs text-white">Investigate</p>
               <p className="text-lg font-bold text-white">&lt;1MΩ</p>
               <p className="text-xs text-red-400">Below minimum</p>
             </div>
@@ -72,8 +72,8 @@ const InsulationTablesSection = ({ onBack }: Props) => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Circuit Voltage</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Test Voltage</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Circuit Voltage</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Test Voltage</th>
                     <th className="text-left p-3 text-xs font-semibold text-yellow-400">Min IR</th>
                   </tr>
                 </thead>
@@ -133,15 +133,15 @@ const InsulationTablesSection = ({ onBack }: Props) => {
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
             <div className="p-4 border-b border-white/[0.06]">
               <p className="text-sm font-semibold text-white">IR corrected = IR measured × correction factor</p>
-              <p className="text-xs text-white/60 mt-0.5">Multiply your reading by the factor to get the equivalent value at 20°C</p>
+              <p className="text-xs text-white mt-0.5">Multiply your reading by the factor to get the equivalent value at 20°C</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Temp (°C)</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Temp (°C)</th>
                     <th className="text-left p-3 text-xs font-semibold text-yellow-400">Factor</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Note</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Note</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -149,7 +149,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
                     <tr key={i} className="border-b border-white/[0.04]">
                       <td className="p-3 text-white font-medium">{row[0]}°C</td>
                       <td className="p-3 text-yellow-400 font-semibold">{row[1]}</td>
-                      <td className="p-3 text-white/60 text-xs">{row[2]}</td>
+                      <td className="p-3 text-white text-xs">{row[2]}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -168,7 +168,7 @@ const InsulationTablesSection = ({ onBack }: Props) => {
             <p className="text-sm text-white mt-2">
               IR at 20°C = 2.5 × <span className="font-semibold text-orange-400">0.475</span> (reciprocal of 2.11) = <span className="font-semibold text-yellow-400">1.19MΩ</span>
             </p>
-            <p className="text-sm text-white/70 mt-2">
+            <p className="text-sm text-white mt-2">
               This circuit passes (≥1MΩ) but only just. At 20°C the reading would be significantly lower than the 2.5MΩ measured in cold conditions. Flag for monitoring at next inspection.
             </p>
           </div>

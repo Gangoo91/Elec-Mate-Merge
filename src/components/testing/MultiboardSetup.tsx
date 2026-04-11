@@ -7,6 +7,7 @@ import {
   createDefaultBoard,
   createMainBoard,
   generateBoardId,
+  getBoardWays,
   getNextSubBoardName,
 } from '@/types/distributionBoard';
 import BoardSetupCard from './BoardSetupCard';
@@ -46,9 +47,9 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
   // Calculate summary stats
   const stats = useMemo(() => {
     const totalBoards = currentBoards.length;
-    const totalWays = currentBoards.reduce((sum, b) => sum + (b.totalWays || 0), 0);
+    const totalWays = currentBoards.reduce((sum, b) => sum + (getBoardWays(b) || 0), 0);
     const configuredBoards = currentBoards.filter(
-      (b) => b.location && b.make && b.totalWays
+      (b) => b.location && b.make && getBoardWays(b)
     ).length;
     return { totalBoards, totalWays, configuredBoards };
   }, [currentBoards]);
@@ -64,7 +65,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
       currentBoards.length
     );
     // Smart: auto-populate "Supplied From" with main board name
-    newBoard.suppliedFrom = mainBoard?.name || 'Main CU';
+    newBoard.suppliedFrom = mainBoard?.name || 'DB';
     onBoardsChange([...currentBoards, newBoard]);
   };
 

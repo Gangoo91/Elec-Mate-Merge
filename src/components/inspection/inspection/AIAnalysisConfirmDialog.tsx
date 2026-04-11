@@ -52,7 +52,7 @@ const AIAnalysisConfirmDialog: React.FC<AIAnalysisConfirmDialogProps> = ({
           <Alert className="border-primary/30">
             <Shield className="h-4 w-4" />
             <AlertDescription className="text-xs">
-              AI provides a second opinion based on visible evidence and BS7671:2018+A3:2024
+              AI provides a second opinion based on visible evidence and BS7671:2018+A2:2022
               regulations. Final classification decision remains with the inspector.
             </AlertDescription>
           </Alert>

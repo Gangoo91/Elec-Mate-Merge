@@ -56,7 +56,7 @@ const A3ChangesPage = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
               <p className="text-sm font-semibold text-white">{change.title}</p>
-              <p className="text-sm text-white/80 leading-relaxed">{change.description}</p>
+              <p className="text-sm text-white leading-relaxed">{change.description}</p>
               <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-3">
                 <p className="text-xs text-white"><span className="font-semibold text-yellow-400">Impact on your work:</span> {change.impact}</p>
               </div>

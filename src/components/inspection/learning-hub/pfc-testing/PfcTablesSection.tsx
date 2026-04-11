@@ -19,13 +19,13 @@ const PfcTable = ({ title, subtitle, rows, multiplier }: { title: string; subtit
   <div className="rounded-2xl bg-white/[0.03] border border-white/10 overflow-hidden">
     <div className="p-4 border-b border-white/[0.06]">
       <p className="text-sm font-semibold text-white">{title}</p>
-      <p className="text-xs text-white/60 mt-0.5">{subtitle} — Magnetic trip at {multiplier}</p>
+      <p className="text-xs text-white mt-0.5">{subtitle} — Magnetic trip at {multiplier}</p>
     </div>
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-white/[0.08]">
-            <th className="text-left p-3 text-xs font-semibold text-white/60">Rating (A)</th>
+            <th className="text-left p-3 text-xs font-semibold text-white">Rating (A)</th>
             <th className="text-left p-3 text-xs font-semibold text-yellow-400">Min PFC (A)</th>
           </tr>
         </thead>
@@ -62,22 +62,22 @@ const PfcTablesSection = ({ onBack }: Props) => {
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider mb-3">Quick Reference — Common Domestic Circuits</p>
           <div className="grid grid-cols-2 gap-3">
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <p className="text-xs text-white/60">Lighting (6A Type B)</p>
+              <p className="text-xs text-white">Lighting (6A Type B)</p>
               <p className="text-lg font-bold text-white">30A</p>
               <p className="text-xs text-yellow-400">minimum PFC</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <p className="text-xs text-white/60">Ring Main (32A Type B)</p>
+              <p className="text-xs text-white">Ring Main (32A Type B)</p>
               <p className="text-lg font-bold text-white">160A</p>
               <p className="text-xs text-yellow-400">minimum PFC</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <p className="text-xs text-white/60">Shower (40A Type B)</p>
+              <p className="text-xs text-white">Shower (40A Type B)</p>
               <p className="text-lg font-bold text-white">200A</p>
               <p className="text-xs text-yellow-400">minimum PFC</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
-              <p className="text-xs text-white/60">Cooker (32A Type C)</p>
+              <p className="text-xs text-white">Cooker (32A Type C)</p>
               <p className="text-lg font-bold text-white">320A</p>
               <p className="text-xs text-yellow-400">minimum PFC</p>
             </div>
@@ -131,17 +131,17 @@ const PfcTablesSection = ({ onBack }: Props) => {
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3">
               <p className="text-xs text-green-400 font-semibold">Excellent</p>
               <p className="text-sm font-bold text-white">&gt;10× min</p>
-              <p className="text-[10px] text-white/60 mt-1">Large safety margin. Future-proof.</p>
+              <p className="text-[10px] text-white mt-1">Large safety margin. Future-proof.</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3">
               <p className="text-xs text-yellow-400 font-semibold">Acceptable</p>
               <p className="text-sm font-bold text-white">2-10× min</p>
-              <p className="text-[10px] text-white/60 mt-1">Meets BS 7671. Monitor.</p>
+              <p className="text-[10px] text-white mt-1">Meets BS 7671. Monitor.</p>
             </div>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-3">
               <p className="text-xs text-red-400 font-semibold">Investigate</p>
               <p className="text-sm font-bold text-white">&lt;2× min</p>
-              <p className="text-[10px] text-white/60 mt-1">Marginal. Remedial action.</p>
+              <p className="text-[10px] text-white mt-1">Marginal. Remedial action.</p>
             </div>
           </div>
         </motion.div>

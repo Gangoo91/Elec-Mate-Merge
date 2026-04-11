@@ -104,7 +104,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">{item.component}</p>
-                    <p className="text-sm text-white/70">{item.detail}</p>
+                    <p className="text-sm text-white">{item.detail}</p>
                   </div>
                 </div>
               ))}
@@ -162,7 +162,7 @@ const WhyTestSection = ({ onBack }: Props) => {
             </p>
             <div className="rounded-xl bg-white/[0.05] p-3 mb-3">
               <p className="text-sm text-white"><span className="font-semibold text-yellow-400">TT Formula:</span> Ra ≤ U₀ ÷ IΔn</p>
-              <p className="text-sm text-white/70 mt-1">For a 30mA RCD: Ra ≤ 230 ÷ 0.03 = 7,667Ω. In practice, aim for Ra below 200Ω for service reliability.</p>
+              <p className="text-sm text-white mt-1">For a 30mA RCD: Ra ≤ 230 ÷ 0.03 = 7,667Ω. In practice, aim for Ra below 200Ω for service reliability.</p>
             </div>
             <div className="space-y-1.5">
               <div className="flex items-start gap-3">
@@ -188,14 +188,14 @@ const WhyTestSection = ({ onBack }: Props) => {
             <div className="space-y-2">
               <div className="grid grid-cols-2 gap-2">
                 <div className="rounded-xl bg-white/[0.05] p-3">
-                  <p className="text-xs text-white/60">Final circuits ≤63A (sockets)</p>
+                  <p className="text-xs text-white">Final circuits ≤63A (sockets)</p>
                   <p className="text-lg font-bold text-white">0.4s</p>
-                  <p className="text-xs text-white/60">Maximum disconnection time</p>
+                  <p className="text-xs text-white">Maximum disconnection time</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-3">
-                  <p className="text-xs text-white/60">Distribution circuits & fixed equipment</p>
+                  <p className="text-xs text-white">Distribution circuits & fixed equipment</p>
                   <p className="text-lg font-bold text-white">5s</p>
-                  <p className="text-xs text-white/60">Maximum disconnection time</p>
+                  <p className="text-xs text-white">Maximum disconnection time</p>
                 </div>
               </div>
               <div className="rounded-xl bg-white/[0.05] p-3">
@@ -220,7 +220,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-yellow-400">F</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Finding</p>
+                    <p className="text-xs font-medium text-white">Finding</p>
                     <p className="text-sm text-white">{example.fault}</p>
                   </div>
                 </div>
@@ -229,7 +229,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-orange-400">C</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Consequence</p>
+                    <p className="text-xs font-medium text-white">Consequence</p>
                     <p className="text-sm text-white">{example.consequence}</p>
                   </div>
                 </div>
@@ -238,7 +238,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                     <span className="text-xs font-bold text-green-400">R</span>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60">Resolution</p>
+                    <p className="text-xs font-medium text-white">Resolution</p>
                     <p className="text-sm text-white">{example.resolution}</p>
                   </div>
                 </div>

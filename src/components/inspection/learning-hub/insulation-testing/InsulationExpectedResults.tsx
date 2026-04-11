@@ -60,7 +60,7 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
                 <p className="text-sm font-semibold text-white">{item.scenario}</p>
                 <span className="text-xs font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg whitespace-nowrap">{item.expected}</span>
               </div>
-              <p className="text-sm text-white/80 leading-relaxed">{item.detail}</p>
+              <p className="text-sm text-white leading-relaxed">{item.detail}</p>
             </div>
           </motion.div>
         ))}
@@ -81,7 +81,7 @@ const InsulationExpectedResults = ({ onBack }: Props) => {
                   'text-orange-400 bg-orange-400/10'
                 }`}>{item.severity}</span>
               </div>
-              <p className="text-sm text-white/80 leading-relaxed">{item.action}</p>
+              <p className="text-sm text-white leading-relaxed">{item.action}</p>
             </div>
           </motion.div>
         ))}

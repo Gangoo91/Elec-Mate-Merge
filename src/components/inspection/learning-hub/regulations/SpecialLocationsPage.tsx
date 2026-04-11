@@ -131,12 +131,12 @@ const SpecialLocationsPage = ({ onBack }: Props) => {
                 {/* Zones if applicable */}
                 {loc.zones.length > 0 && (
                   <div className="space-y-1.5">
-                    <p className="text-xs font-semibold text-white/60 mb-2">Zones</p>
+                    <p className="text-xs font-semibold text-white mb-2">Zones</p>
                     {loc.zones.map((z, j) => (
                       <div key={j} className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
                         <div className="flex items-center justify-between mb-1">
                           <p className="text-xs font-bold text-yellow-400">{z.zone}</p>
-                          <p className="text-[10px] text-white/40">{z.area}</p>
+                          <p className="text-[10px] text-white">{z.area}</p>
                         </div>
                         <p className="text-xs text-white">{z.rules}</p>
                       </div>
@@ -146,7 +146,7 @@ const SpecialLocationsPage = ({ onBack }: Props) => {
 
                 {/* Key rules */}
                 <div className="space-y-1.5">
-                  {loc.zones.length > 0 && <p className="text-xs font-semibold text-white/60 mb-1">Key Rules</p>}
+                  {loc.zones.length > 0 && <p className="text-xs font-semibold text-white mb-1">Key Rules</p>}
                   {loc.keyRules.map((rule, j) => (
                     <div key={j} className="flex items-start gap-2">
                       <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5" />

@@ -51,7 +51,7 @@ const OverloadPage = ({ onBack }: Props) => (
         <motion.div key={i} variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
-            <p className="text-sm text-white/80 leading-relaxed">{item.detail}</p>
+            <p className="text-sm text-white leading-relaxed">{item.detail}</p>
             <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
@@ -78,7 +78,7 @@ const OverloadPage = ({ onBack }: Props) => (
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Kitchen Ring — Clamp Meter Reveals Overload</p>
-          <p className="text-sm text-white/80">Client complains MCB trips every evening around dinner time. Never trips during the day.</p>
+          <p className="text-sm text-white">Client complains MCB trips every evening around dinner time. Never trips during the day.</p>
           <div className="rounded-xl bg-white/[0.05] p-3">
             <p className="text-xs text-white">Clamp meter reading during evening meal preparation: 34A on a 32A MCB. Kettle (13A) + oven (13A) + microwave (6A) + dishwasher (10A) running simultaneously. The MCB thermal element trips after ~15 minutes at 106% overload.</p>
           </div>

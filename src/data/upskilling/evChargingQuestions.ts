@@ -96,6 +96,5 @@ export const evChargingQuestions: QuizQuestion[] = [
     correctAnswer: 0,
     explanation: "For 32A Type B RCD, maximum Zs is 1.44Ω to ensure disconnection within required time limits.",
     moduleId: 4
-  },
-  {
-
+  }
+];

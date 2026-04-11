@@ -575,7 +575,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     setTestResults(updatedResults);
     onUpdate('scheduleOfTests', updatedResults);
     toast.success(
-      `Circuit C${nextCircuitNum} added to ${boardId === MAIN_BOARD_ID ? 'Main CU' : boardId}`
+      `Circuit C${nextCircuitNum} added to ${boardId === MAIN_BOARD_ID ? 'DB' : boardId}`
     );
   };
 

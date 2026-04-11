@@ -420,6 +420,36 @@ const EICRInspectionChecklist = ({
 
   // Quick mark mode
   const [quickMarkMode, setQuickMarkMode] = React.useState(false);
+  const [showProfileMenu, setShowProfileMenu] = React.useState(false);
+
+  // Load inspection profile — pre-fills all items based on installation type
+  const loadProfile = (profileType: 'domestic' | 'domestic-lv' | 'commercial' | 'all-sat') => {
+    const items = getInspectionItems();
+    // Items that are typically N/A for domestic without LV
+    const domesticNAItems = new Set([
+      'item_2_0', // Microgenerators
+      'item_7_0', 'item_7_1', 'item_7_2', 'item_7_3', // Special installations (unless applicable)
+      'item_8_0', // Prosumer
+    ]);
+    // Additional N/A items for domestic without LV
+    const noLVItems = new Set([
+      'item_5_17', 'item_5_18', 'item_5_19', // LV items if they exist
+    ]);
+
+    const updatedItems = items.map((item) => {
+      if (profileType === 'all-sat') {
+        return { ...item, outcome: 'satisfactory' as const, inspected: true };
+      }
+      const isDomesticNA = domesticNAItems.has(item.id);
+      const isNoLVNA = profileType === 'domestic' && noLVItems.has(item.id);
+      if (isDomesticNA || isNoLVNA) {
+        return { ...item, outcome: 'not-applicable' as const, inspected: true };
+      }
+      return { ...item, outcome: 'satisfactory' as const, inspected: true };
+    });
+    onUpdate('inspectionItems', updatedItems);
+    setShowProfileMenu(false);
+  };
 
   // Auto-scroll to next incomplete section when one completes
   React.useEffect(() => {
@@ -482,6 +512,28 @@ const EICRInspectionChecklist = ({
         >
           {quickMarkMode ? 'Quick Mark ON — tap item = OK' : 'Quick Mark Mode'}
         </button>
+
+        {/* Load Profile — auto-fill entire checklist */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setShowProfileMenu(!showProfileMenu)}
+            className="w-full h-10 rounded-xl text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all flex items-center justify-center gap-2 bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow"
+          >
+            Load Profile
+          </button>
+          {showProfileMenu && (
+            <div className="absolute top-12 left-0 right-0 z-50 bg-background border border-white/10 rounded-xl shadow-2xl p-2 space-y-1">
+              <button onClick={() => loadProfile('domestic')} className="w-full text-left px-3 py-2.5 rounded-lg text-xs text-white hover:bg-white/[0.06] touch-manipulation">Domestic (no LV)</button>
+              <button onClick={() => loadProfile('domestic-lv')} className="w-full text-left px-3 py-2.5 rounded-lg text-xs text-white hover:bg-white/[0.06] touch-manipulation">Domestic (with LV)</button>
+              <button onClick={() => loadProfile('commercial')} className="w-full text-left px-3 py-2.5 rounded-lg text-xs text-white hover:bg-white/[0.06] touch-manipulation">Commercial / Industrial</button>
+              <button onClick={() => loadProfile('all-sat')} className="w-full text-left px-3 py-2.5 rounded-lg text-xs text-white hover:bg-white/[0.06] touch-manipulation">All Satisfactory</button>
+              <div className="border-t border-white/[0.06] pt-1 mt-1">
+                <button onClick={() => setShowProfileMenu(false)} className="w-full text-left px-3 py-2 rounded-lg text-[10px] text-white hover:bg-white/[0.06] touch-manipulation">Cancel</button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Checklist Sections */}

@@ -114,17 +114,17 @@ const EICRCodingPage = ({ onBack }: Props) => {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-white">{c.title}</p>
-                    <p className="text-xs text-white/70">{c.description}</p>
+                    <p className="text-xs text-white">{c.description}</p>
                   </div>
                 </div>
               </div>
               <div className="p-4 space-y-3">
                 <div className="rounded-xl bg-white/[0.05] p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-1">Required Action</p>
+                  <p className="text-xs font-semibold text-white mb-1">Required Action</p>
                   <p className="text-sm text-white">{c.action}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-white/60 mb-2">Examples</p>
+                  <p className="text-xs font-semibold text-white mb-2">Examples</p>
                   <div className="space-y-1">
                     {c.examples.map((ex, j) => (
                       <div key={j} className="flex items-start gap-2">

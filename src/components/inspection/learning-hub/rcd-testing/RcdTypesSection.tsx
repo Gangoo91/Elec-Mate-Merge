@@ -65,7 +65,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
               <p className="text-sm text-yellow-400/80">{rcd.detects}</p>
               <div className="grid grid-cols-1 gap-2">
                 <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-1.5">Applications</p>
+                  <p className="text-xs font-semibold text-white mb-1.5">Applications</p>
                   <div className="space-y-1">
                     {rcd.applications.map((app, j) => (
                       <div key={j} className="flex items-start gap-2">
@@ -76,7 +76,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
                   </div>
                 </div>
                 <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-1.5">Limitations</p>
+                  <p className="text-xs font-semibold text-white mb-1.5">Limitations</p>
                   <div className="space-y-1">
                     {rcd.limitations.map((lim, j) => (
                       <div key={j} className="flex items-start gap-2">
@@ -99,9 +99,9 @@ const RcdTypesSection = ({ onBack }: Props) => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Rating</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Use</th>
-                    <th className="text-left p-3 text-xs font-semibold text-white/60">Protection</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Rating</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Use</th>
+                    <th className="text-left p-3 text-xs font-semibold text-white">Protection</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -109,7 +109,7 @@ const RcdTypesSection = ({ onBack }: Props) => {
                     <tr key={i} className="border-b border-white/[0.04]">
                       <td className="p-3 text-yellow-400 font-semibold">{row.rating}</td>
                       <td className="p-3 text-white text-xs">{row.use}</td>
-                      <td className="p-3 text-white/70 text-xs">{row.protection}</td>
+                      <td className="p-3 text-white text-xs">{row.protection}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -129,15 +129,15 @@ const RcdTypesSection = ({ onBack }: Props) => {
               <p className="text-sm font-semibold text-white mb-2">{tc.type}</p>
               <div className="grid grid-cols-2 gap-2 mb-2">
                 <div className="rounded-xl bg-white/[0.05] p-2.5 text-center">
-                  <p className="text-xs text-white/60">At 1×IΔn</p>
+                  <p className="text-xs text-white">At 1×IΔn</p>
                   <p className="text-sm font-bold text-white">{tc.atRated}</p>
                 </div>
                 <div className="rounded-xl bg-white/[0.05] p-2.5 text-center">
-                  <p className="text-xs text-white/60">At 5×IΔn</p>
+                  <p className="text-xs text-white">At 5×IΔn</p>
                   <p className="text-sm font-bold text-yellow-400">{tc.atFiveX}</p>
                 </div>
               </div>
-              <p className="text-sm text-white/80">{tc.use}</p>
+              <p className="text-sm text-white">{tc.use}</p>
             </div>
           </motion.div>
         ))}

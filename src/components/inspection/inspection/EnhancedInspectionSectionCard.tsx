@@ -45,11 +45,6 @@ const EnhancedInspectionSectionCard = ({
   onBulkMarkNotApplicable
 }: EnhancedInspectionSectionCardProps) => {
   const handleOutcomeChange = (itemId: string, outcome: InspectionItem['outcome']) => {
-      itemId,
-      newOutcome: outcome,
-      timestamp: new Date().toISOString()
-    });
-    
     const currentInspectionItem = inspectionItems.find(item => item.id === itemId);
     
     if (!currentInspectionItem) {
@@ -74,6 +69,7 @@ const EnhancedInspectionSectionCard = ({
         onAutoCreateObservation(updatedItem);
       }
     } catch (error) {
+      console.error('[EnhancedInspectionSectionCard] Failed to update inspection outcome', error);
     }
   };
 
@@ -176,7 +172,7 @@ const EnhancedInspectionSectionCard = ({
                       {/* Meta Info - Stacked on mobile */}
                       <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-[11px] sm:text-xs">
                         <span className="text-muted-foreground font-medium">
-                          BS 7671:18+A3:2024
+                          BS 7671:2018+A2:2022
                         </span>
                         <span className="text-muted-foreground">
                           <span className="font-semibold text-foreground">{completedCount}</span>

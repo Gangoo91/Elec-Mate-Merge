@@ -238,6 +238,42 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     toast.success(`All Polarity fields filled with ${value}`);
   };
 
+  const handleFillAllWiringType = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('typeOfWiring', value);
+    } else {
+      testResults.forEach((result) => { onUpdate(result.id, 'typeOfWiring', value); });
+    }
+    toast.success(`All Wiring Type fields filled with ${value}`);
+  };
+
+  const handleFillAllRefMethod = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('referenceMethod', value);
+    } else {
+      testResults.forEach((result) => { onUpdate(result.id, 'referenceMethod', value); });
+    }
+    toast.success(`All Reference Method fields filled with ${value}`);
+  };
+
+  const handleFillAllKa = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('protectiveDeviceKaRating', value);
+    } else {
+      testResults.forEach((result) => { onUpdate(result.id, 'protectiveDeviceKaRating', value); });
+    }
+    toast.success(`All kA fields filled with ${value}`);
+  };
+
+  const handleFillAllAfddNA = () => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('afddTest', 'N/A');
+    } else {
+      testResults.forEach((result) => { onUpdate(result.id, 'afddTest', 'N/A'); });
+    }
+    toast.success('All AFDD fields filled with N/A');
+  };
+
   const isEmpty = testResults.length === 0;
 
   return (
@@ -301,6 +337,10 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
                     onFillAllPolarity={handleFillAllPolarity}
                     onFillAllFunctional={handleFillAllFunctional}
+                    onFillAllWiringType={handleFillAllWiringType}
+                    onFillAllRefMethod={handleFillAllRefMethod}
+                    onFillAllKa={handleFillAllKa}
+                    onFillAllAfddNA={handleFillAllAfddNA}
                   />
                   <TableBody>
                     {testResults.map((result, index) => (

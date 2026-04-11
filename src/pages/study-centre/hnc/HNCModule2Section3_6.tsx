@@ -121,7 +121,7 @@ const quizQuestions = [
   },
   {
     question: "An economiser saves 150 kWh per day during 180 suitable days per year. At £0.15/kWh, what is the annual saving?",
-    options: ["£2,700", £4,050", "£5,400", "£6,750"],
+    options: ["£2,700", "£4,050", "£5,400", "£6,750"],
     correctIndex: 1,
     explanation: "Annual saving = 150 × 180 × 0.15 = 27,000 × 0.15 = £4,050. Economiser cycles provide significant energy savings in temperate climates."
   },

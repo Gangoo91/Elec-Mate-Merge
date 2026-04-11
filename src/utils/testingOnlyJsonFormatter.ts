@@ -8,6 +8,8 @@
  * NO branding fields — intentionally omitted for Testing Only certificates.
  */
 
+import { getBoardWays } from '@/types/distributionBoard';
+
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
 const str = (value: unknown, fallback = ''): string => {
@@ -123,7 +125,7 @@ const formatBoards = (formData: Record<string, any>, testResults: any[]) => {
       db_location: board.location || '',
       db_manufacturer: board.make || '',
       db_type: board.type || '',
-      db_ways: board.totalWays?.toString() || '',
+      db_ways: getBoardWays(board)?.toString() || '',
       db_zdb: board.zdb || '',
       db_ipf: board.ipf || '',
       zdb: board.zdb || '',

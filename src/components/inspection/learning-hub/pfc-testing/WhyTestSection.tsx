@@ -66,7 +66,7 @@ const WhyTestSection = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.term}</p>
-              <p className="text-sm text-white/80 mt-1 leading-relaxed">{item.definition}</p>
+              <p className="text-sm text-white mt-1 leading-relaxed">{item.definition}</p>
             </div>
           </motion.div>
         ))}
@@ -77,7 +77,7 @@ const WhyTestSection = ({ onBack }: Props) => {
             <p className="text-sm font-semibold text-white mb-3">The Key Formula</p>
             <div className="rounded-xl bg-white/[0.05] p-4 text-center mb-3">
               <p className="text-lg font-bold text-white">Ipf = U₀ ÷ Zs</p>
-              <p className="text-xs text-white/60 mt-2">Prospective fault current = Supply voltage ÷ Loop impedance</p>
+              <p className="text-xs text-white mt-2">Prospective fault current = Supply voltage ÷ Loop impedance</p>
             </div>
             <p className="text-sm text-white leading-relaxed">
               Lower impedance = higher fault current = faster disconnection. The relationship between PFC and Zs is inverse — they test the same thing from different angles. High Zs means low PFC, and vice versa.
@@ -118,7 +118,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                 <p className="text-sm font-semibold text-white">{zone.zone}</p>
                 <span className="text-xs font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">{zone.time}</span>
               </div>
-              <p className="text-sm text-white/80 leading-relaxed">{zone.description}</p>
+              <p className="text-sm text-white leading-relaxed">{zone.description}</p>
             </div>
           </motion.div>
         ))}
@@ -136,7 +136,7 @@ const WhyTestSection = ({ onBack }: Props) => {
                 <span className={`text-[10px] font-bold px-2 py-0.5 rounded-lg ${ex.result === 'PASS' ? 'text-green-400 bg-green-400/10' : ex.result === 'MARGINAL' ? 'text-yellow-400 bg-yellow-400/10' : 'text-orange-400 bg-orange-400/10'}`}>{ex.result}</span>
               </div>
               <p className="text-sm text-white">{ex.finding}</p>
-              <p className="text-sm text-white/70">{ex.outcome}</p>
+              <p className="text-sm text-white">{ex.outcome}</p>
             </div>
           </motion.div>
         ))}

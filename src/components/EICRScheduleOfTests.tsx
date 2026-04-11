@@ -1150,7 +1150,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     setTestResults(updatedResults);
     onUpdate('scheduleOfTests', updatedResults);
     toast.success(
-      `Circuit C${nextCircuitNum} added to ${boardId === 'main' || boardId === 'main-cu' ? 'Main CU' : boardId}`
+      `Circuit C${nextCircuitNum} added to ${boardId === 'main' || boardId === 'main-cu' ? 'DB' : boardId}`
     );
   };
 
@@ -1353,7 +1353,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       setTestResults(updatedResults);
       onUpdate('scheduleOfTests', updatedResults);
       setShowAutoFillPrompt(false);
-      const boardName = targetBoardId === MAIN_BOARD_ID ? 'Main CU' : targetBoardId;
+      const boardName = targetBoardId === MAIN_BOARD_ID ? 'DB' : targetBoardId;
       toast.success(`Circuit C${newCircuitNumber} added to ${boardName}`);
     }
 
@@ -2103,7 +2103,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     setDetectedCircuits([]);
 
     // Show toast with board info
-    const boardName = targetBoardId === MAIN_BOARD_ID ? 'Main CU' : targetBoardId;
+    const boardName = targetBoardId === MAIN_BOARD_ID ? 'DB' : targetBoardId;
     toast.success(`${selectedCircuits.length} circuit(s) added to ${boardName}`);
   };
 

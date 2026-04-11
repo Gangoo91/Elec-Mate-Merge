@@ -80,7 +80,7 @@ const QuickLinksPage = ({ onBack }: Props) => {
           <motion.div key={i} variants={itemVariants}>
             <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
               <p className="text-sm font-semibold text-white">{item.location}</p>
-              <p className="text-sm text-white/80 mt-1">{item.key}</p>
+              <p className="text-sm text-white mt-1">{item.key}</p>
             </div>
           </motion.div>
         ))}

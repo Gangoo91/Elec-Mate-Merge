@@ -52,7 +52,7 @@ const OpenCircuitPage = ({ onBack }: Props) => (
         <motion.div key={i} variants={itemVariants}>
           <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-2">
             <p className="text-sm font-semibold text-white">{item.cause}</p>
-            <p className="text-sm text-white/80 leading-relaxed">{item.detail}</p>
+            <p className="text-sm text-white leading-relaxed">{item.detail}</p>
             <div className="rounded-xl bg-yellow-400/5 border border-yellow-400/10 p-2.5">
               <p className="text-xs text-yellow-400/80">{item.tip}</p>
             </div>
@@ -79,7 +79,7 @@ const OpenCircuitPage = ({ onBack }: Props) => (
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
           <p className="text-xs font-medium text-yellow-400 uppercase tracking-wider">Real-World Case</p>
           <p className="text-sm font-semibold text-white">Landing Light — Intermittent Open Circuit</p>
-          <p className="text-sm text-white/80">Landing light works sometimes and fails other times. No pattern. Lamp is fine. Switch clicks normally.</p>
+          <p className="text-sm text-white">Landing light works sometimes and fails other times. No pattern. Lamp is fine. Switch clicks normally.</p>
           <div className="rounded-xl bg-white/[0.05] p-3">
             <p className="text-xs text-white">Continuity test with switch ON: 0.3Ω (good). But when the switch faceplate was disturbed during testing, the reading jumped to infinity. The switched live conductor was barely held by the terminal screw — making contact under some conditions and losing contact when the faceplate was slightly moved. Years of thermal cycling had loosened the screw.</p>
           </div>

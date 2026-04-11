@@ -1174,7 +1174,7 @@ export const exportCompleteEICRToPDF = async (
   yPos = drawFormRow(
     pdf,
     'DB Reference:',
-    sanitizedFormData.dbReference || 'Main CU',
+    sanitizedFormData.dbReference || 'DB',
     col1X,
     yPos,
     35,

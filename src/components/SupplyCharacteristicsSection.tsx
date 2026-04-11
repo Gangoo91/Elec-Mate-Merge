@@ -39,6 +39,8 @@ const SUPPLY_SECTION_FIELDS = [
   'mainSwitchPoles',
   'fuseDeviceRating',
   'mainSwitchVoltageRating',
+  'fuseSubType',
+  'breakingCapacityCustom',
   'earthingArrangement',
   'earthElectrodeType',
   'rcdMainSwitch',
@@ -210,7 +212,7 @@ const SupplyCharacteristicsSectionInner = ({
   // Smart rating options based on selected device type
   const deviceRatings: Record<string, string[]> = {
     'BS 1361 Fuse': ['45', '60', '80', '100'],
-    'BS 88 HRC Fuse': ['16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200'],
+    'BS 88 HRC Fuse': ['2', '4', '6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100', '125', '160', '200', '250', '315', '400', '500', '630', '800', '1000', '1250'],
     'BS 3036 Rewireable Fuse': ['5', '15', '20', '30', '45', '60'],
     'MCB Type B': ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'],
     'MCB Type C': ['6', '10', '16', '20', '25', '32', '40', '50', '63', '80', '100'],
@@ -243,7 +245,7 @@ const SupplyCharacteristicsSectionInner = ({
   // Smart breaking capacity options based on selected device type
   const deviceBreakingCapacity: Record<string, string[]> = {
     'BS 1361 Fuse': ['16.5', '33'],
-    'BS 88 HRC Fuse': ['80'],
+    'BS 88 HRC Fuse': ['50', '80', '120'],
     'BS 3036 Rewireable Fuse': ['1', '2', '4'],
     'MCB Type B': ['6', '10', '15', '25'],
     'MCB Type C': ['6', '10', '15', '25'],
@@ -368,9 +370,10 @@ const SupplyCharacteristicsSectionInner = ({
           {/* Row 1: Phases + Voltage */}
           <div className="grid grid-cols-2 gap-3 items-end">
             <FormField label="Phases *">
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 {[
                   { value: '1', label: 'Single' },
+                  { value: '2', label: 'Two' },
                   { value: '3', label: 'Three' },
                 ].map((option) => (
                   <button
@@ -604,6 +607,7 @@ const SupplyCharacteristicsSectionInner = ({
                 <SelectItem value="__clear__">
                   <span className="text-white">Clear selection</span>
                 </SelectItem>
+                <SelectItem value="other">Other (specify)</SelectItem>
                 {(() => {
                   let lastGroup = '';
                   return mainProtectiveDeviceOptions.map((option) => {
@@ -621,10 +625,6 @@ const SupplyCharacteristicsSectionInner = ({
                     );
                   });
                 })()}
-                <div className="px-2 py-1.5 text-xs font-semibold text-white uppercase tracking-wider border-t border-white/[0.06] mt-1">
-                  Custom
-                </div>
-                <SelectItem value="other">Other (specify)</SelectItem>
               </SelectContent>
             </Select>
           </FormField>
@@ -640,7 +640,9 @@ const SupplyCharacteristicsSectionInner = ({
                   value={formData.mainSwitchRating || ''}
                   onValueChange={(value) => {
                     haptic.light();
-                    onUpdate('mainSwitchRating', value === '__clear__' ? '' : value);
+                    if (value === '__clear__') { onUpdate('mainSwitchRating', ''); }
+                    else if (value === '__custom__') { onUpdate('mainSwitchRating', '__custom__'); }
+                    else { onUpdate('mainSwitchRating', value); }
                   }}
                 >
                   <SelectTrigger className="h-11 touch-manipulation">
@@ -650,6 +652,7 @@ const SupplyCharacteristicsSectionInner = ({
                     <SelectItem value="__clear__">
                       <span className="text-white">Clear</span>
                     </SelectItem>
+                    <SelectItem value="__custom__">Other (specify)</SelectItem>
                     {currentRatings.map((r) => (
                       <SelectItem key={r} value={r}>
                         {r}A
@@ -670,6 +673,48 @@ const SupplyCharacteristicsSectionInner = ({
             </FormField>
           </div>
 
+          {/* Custom rating input when "Other (specify)" selected */}
+          {formData.mainSwitchRating === '__custom__' && (
+            <FormField label="Custom Rating (A)">
+              <Input
+                value={formData.fuseDeviceRating || ''}
+                onChange={(e) => onUpdate('fuseDeviceRating', e.target.value)}
+                placeholder="e.g. 800"
+                type="number"
+                min="0"
+                className="h-11 text-base touch-manipulation"
+              />
+            </FormField>
+          )}
+
+          {/* BS 88 Fuse sub-type (gG, gM, aM, Type 2/3/4) */}
+          {formData.mainProtectiveDevice === 'BS 88 HRC Fuse' && (
+            <FormField label="Fuse Type">
+              <Select
+                value={formData.fuseSubType || ''}
+                onValueChange={(value) => {
+                  haptic.light();
+                  onUpdate('fuseSubType', value === '__clear__' ? '' : value);
+                }}
+              >
+                <SelectTrigger className="h-11 touch-manipulation">
+                  <SelectValue placeholder="Select fuse type" />
+                </SelectTrigger>
+                <SelectContent className="z-[100]">
+                  <SelectItem value="__clear__"><span className="text-white">Clear</span></SelectItem>
+                  <div className="px-2 py-1 text-xs font-semibold text-white uppercase tracking-wider border-t border-white/[0.06] mt-1">Application</div>
+                  <SelectItem value="gG">gG — General Purpose</SelectItem>
+                  <SelectItem value="gM">gM — Motor Circuit</SelectItem>
+                  <SelectItem value="aM">aM — Motor Starter</SelectItem>
+                  <div className="px-2 py-1 text-xs font-semibold text-white uppercase tracking-wider border-t border-white/[0.06] mt-1">Utilisation Category</div>
+                  <SelectItem value="Type 2">Type 2</SelectItem>
+                  <SelectItem value="Type 3">Type 3</SelectItem>
+                  <SelectItem value="Type 4">Type 4</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormField>
+          )}
+
           {showCustomProtectiveDevice && (
             <FormField label="Custom Device">
               <Input
@@ -689,7 +734,9 @@ const SupplyCharacteristicsSectionInner = ({
                   value={formData.breakingCapacity || ''}
                   onValueChange={(value) => {
                     haptic.light();
-                    onUpdate('breakingCapacity', value === '__clear__' ? '' : value);
+                    if (value === '__clear__') { onUpdate('breakingCapacity', ''); }
+                    else if (value === '__custom__') { onUpdate('breakingCapacity', '__custom__'); }
+                    else { onUpdate('breakingCapacity', value); }
                   }}
                   disabled={formData.mainSwitchRating === 'LIM'}
                 >
@@ -697,9 +744,8 @@ const SupplyCharacteristicsSectionInner = ({
                     <SelectValue placeholder="Select kA" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                    <SelectItem value="__clear__">
-                      <span className="text-white">Clear</span>
-                    </SelectItem>
+                    <SelectItem value="__clear__"><span className="text-white">Clear</span></SelectItem>
+                    <SelectItem value="__custom__">Other (specify)</SelectItem>
                     {currentBreakingCapacities.map((kA) => (
                       <SelectItem key={kA} value={kA}>
                         {kA} kA
@@ -770,6 +816,21 @@ const SupplyCharacteristicsSectionInner = ({
               />
             </FormField>
           </div>
+
+          {/* Custom kA input when "Other (specify)" selected */}
+          {formData.breakingCapacity === '__custom__' && (
+            <FormField label="Custom Breaking Capacity (kA)">
+              <Input
+                value={formData.breakingCapacityCustom || ''}
+                onChange={(e) => onUpdate('breakingCapacityCustom', e.target.value)}
+                placeholder="e.g. 100"
+                type="number"
+                min="0"
+                step="0.1"
+                className="h-11 text-base touch-manipulation"
+              />
+            </FormField>
+          )}
         </div>
       </div>
 
@@ -889,8 +950,8 @@ const SupplyCharacteristicsSectionInner = ({
           {/* Row 2: Type */}
           {showRCDFields && (
             <FormField label="RCD Type *">
-              <div className="grid grid-cols-5 gap-2">
-                  {['AC', 'A', 'B', 'F', 'S'].map((type) => (
+              <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+                  {['AC', 'A', 'A-APR', 'F', 'EV', 'B', 'B+', 'S'].map((type) => (
                     <button
                       key={type}
                       type="button"
@@ -928,7 +989,7 @@ const SupplyCharacteristicsSectionInner = ({
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="__clear__">Clear</SelectItem>
-                    <SelectItem value="0">0ms</SelectItem>
+                    <SelectItem value="0">0ms (Instantaneous)</SelectItem>
                     <SelectItem value="40">40ms</SelectItem>
                     <SelectItem value="150">150ms</SelectItem>
                     <SelectItem value="200">200ms</SelectItem>

@@ -56,7 +56,7 @@ const ChecklistSection = ({ title, items }: { title: string; items: { item: stri
       <motion.div key={i} variants={itemVariants}>
         <div className="rounded-2xl bg-white/[0.03] border border-white/10 p-4">
           <p className="text-sm font-semibold text-white">{item.item}</p>
-          <p className="text-sm text-white/80 mt-1">{item.check}</p>
+          <p className="text-sm text-white mt-1">{item.check}</p>
         </div>
       </motion.div>
     ))}

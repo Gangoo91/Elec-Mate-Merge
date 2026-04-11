@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, ChevronRight, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import DashboardStatsBar from './dashboard/DashboardStatsBar';
@@ -123,25 +123,17 @@ const ContinueCard = ({ reportType, clientName, address, onClick }: ContinueCard
       className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
     >
       <div className="group relative overflow-hidden card-surface-interactive active:scale-[0.98] transition-all duration-200">
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 opacity-40 group-hover:opacity-100 transition-opacity duration-200" />
-        <div className="relative z-10 flex items-center gap-3.5 p-4">
+        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400" />
+        <div className="relative z-10 flex items-center gap-3 p-3.5">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/15 text-blue-400">
-                {getTypeLabel(reportType)}
-              </span>
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-amber-500/15 text-amber-400">
-                In Progress
-              </span>
-            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-500/15 text-blue-400 inline-block mb-1">
+              {getTypeLabel(reportType)}
+            </span>
             <h4 className="text-sm font-semibold text-white truncate">{clientName || 'Untitled'}</h4>
-            <p className="text-[12px] text-white truncate mt-0.5">{address || 'No address'}</p>
+            <p className="text-[11px] text-white truncate">{address || 'No address'}</p>
           </div>
-          <div className="flex flex-col items-center gap-1 flex-shrink-0">
-            <span className="text-[10px] font-medium text-elec-yellow">Continue</span>
-            <div className="w-7 h-7 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
-              <ChevronRight className="w-4 h-4 text-elec-yellow group-hover:text-black group-hover:translate-x-0.5 transition-all" />
-            </div>
+          <div className="w-8 h-8 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+            <ChevronRight className="w-4 h-4 text-elec-yellow" />
           </div>
         </div>
       </div>
@@ -280,31 +272,29 @@ const Dashboard = ({
           animate="visible"
           className="px-4 py-4 space-y-5"
         >
-          {/* New Certificate CTA */}
-          <motion.div variants={itemVariants}>
+          {/* Continue + New Certificate side by side */}
+          <motion.div variants={itemVariants} className={recentDraft ? 'grid grid-cols-2 gap-3' : ''}>
+            {recentDraft && (
+              <ContinueCard
+                reportType={recentDraft.report_type}
+                clientName={recentDraft.client_name}
+                address={recentDraft.installation_address}
+                onClick={handleContinue}
+              />
+            )}
             <HeroCTA />
           </motion.div>
 
           {/* Recover Unsaved Work */}
           <RecoverUnsavedWork onNavigate={onNavigate} />
 
-          {/* Continue where you left off */}
-          {recentDraft && (
-            <ContinueCard
-              reportType={recentDraft.report_type}
-              clientName={recentDraft.client_name}
-              address={recentDraft.installation_address}
-              onClick={handleContinue}
-            />
-          )}
-
           {/* Hub Card Grid */}
           <motion.section variants={itemVariants} className="space-y-3">
             <div className="grid grid-cols-2 gap-3 auto-rows-fr">
               <HubCard
-                title="EICR, EIC & MW"
-                description="Core certificates"
-                liveSubtitle={inProgressCount > 0 ? `${inProgressCount} in progress` : 'Core certificates'}
+                title="Certificates"
+                description="4 core certificate types"
+                liveSubtitle={inProgressCount > 0 ? `${inProgressCount} in progress` : '4 certificate types'}
                 accentColor="from-blue-500 via-blue-400 to-cyan-400"
                 onClick={() => onNavigate('certificates')}
               />
@@ -322,11 +312,11 @@ const Dashboard = ({
                 onClick={() => onNavigate('my-reports')}
               />
               <HubCard
-                title="Part P"
-                description="Building regulations"
-                liveSubtitle={partPSubtitle}
-                accentColor="from-amber-500 via-amber-400 to-yellow-400"
-                onClick={() => onNavigate('notifications')}
+                title="Notices & Labels"
+                description="11 document types"
+                liveSubtitle="11 document types"
+                accentColor="from-red-500 via-orange-400 to-amber-400"
+                onClick={() => onNavigate('labels-warnings')}
               />
               <HubCard
                 title="Expiring Certs"
@@ -342,18 +332,18 @@ const Dashboard = ({
                 href="/customers"
               />
               <HubCard
+                title="Part P"
+                description="Building regulations"
+                liveSubtitle={partPSubtitle}
+                accentColor="from-amber-500 via-amber-400 to-yellow-400"
+                onClick={() => onNavigate('notifications')}
+              />
+              <HubCard
                 title="Circuit Designer"
                 description="AI-powered design"
                 liveSubtitle={pendingDesigns > 0 ? `${pendingDesigns} pending` : 'AI-powered design'}
                 accentColor="from-cyan-500 via-cyan-400 to-blue-400"
                 href="/electrician/circuit-designer"
-              />
-              <HubCard
-                title="Labels & Warnings"
-                description="Notices, permits & labels"
-                liveSubtitle={savedDocsCount > 0 ? `${savedDocsCount} document${savedDocsCount !== 1 ? 's' : ''}` : 'Notices, permits & labels'}
-                accentColor="from-red-500 via-orange-400 to-amber-400"
-                onClick={() => onNavigate('labels-warnings')}
               />
               <HubCard
                 title="I&T Hub"

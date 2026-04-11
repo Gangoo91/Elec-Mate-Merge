@@ -55,9 +55,9 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
               <table className="w-full text-xs">
                 <thead>
                   <tr className="border-b border-white/[0.08]">
-                    <th className="text-left p-3 font-semibold text-white/60">Premises</th>
+                    <th className="text-left p-3 font-semibold text-white">Premises</th>
                     <th className="text-left p-3 font-semibold text-yellow-400">Max Interval</th>
-                    <th className="text-left p-3 font-semibold text-white/60">Also On</th>
+                    <th className="text-left p-3 font-semibold text-white">Also On</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -65,7 +65,7 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
                     <tr key={i} className="border-b border-white/[0.04]">
                       <td className="p-3 text-white font-medium">{row.premises}</td>
                       <td className="p-3 text-yellow-400 font-bold">{row.interval}</td>
-                      <td className="p-3 text-white/60">{row.change}</td>
+                      <td className="p-3 text-white">{row.change}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -86,7 +86,7 @@ const InspectionIntervalsPage = ({ onBack }: Props) => {
                 <p className="text-sm font-semibold text-white">{item.premises}</p>
                 <span className="text-[10px] font-bold text-yellow-400 bg-yellow-400/10 px-2 py-0.5 rounded-lg">{item.interval}</span>
               </div>
-              <p className="text-xs text-white/80">{item.notes}</p>
+              <p className="text-xs text-white">{item.notes}</p>
             </div>
           </motion.div>
         ))}

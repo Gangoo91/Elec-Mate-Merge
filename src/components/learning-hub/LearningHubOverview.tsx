@@ -51,7 +51,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
       <motion.div variants={itemVariants}>
         <button
           type="button"
-          onClick={() => onNavigateToSection('testing')}
+          onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); onNavigateToSection('testing'); }}
           className="w-full text-left touch-manipulation active:scale-[0.98] transition-transform"
         >
           <div className="relative rounded-2xl bg-red-500/15 border border-red-500/30 p-4 overflow-hidden">
@@ -72,7 +72,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
 
       {/* Required Test Sequence — brighter cards */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-[11px] font-bold text-white/70 uppercase tracking-widest px-0.5">
+        <h2 className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5">
           Required Test Sequence
         </h2>
 
@@ -104,7 +104,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
                   >
                     <p className={`text-lg font-black ${isLive ? 'text-emerald-400' : 'text-amber-400'}`}>{i + 1}</p>
                     <p className="text-[10px] text-white font-semibold mt-0.5 leading-tight">{test.label}</p>
-                    <p className="text-[9px] text-white/60 mt-0.5 leading-tight">{test.abbrev}</p>
+                    <p className="text-[9px] text-white mt-0.5 leading-tight">{test.abbrev}</p>
                   </div>
                 </React.Fragment>
               );
@@ -115,7 +115,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
 
       {/* Learning Modules — hero variant for more visual weight */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-[11px] font-bold text-white/70 uppercase tracking-widest px-0.5">
+        <h2 className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5">
           Learning Modules
         </h2>
         <div className="grid grid-cols-2 gap-3">
@@ -152,7 +152,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
 
       {/* Quick Reference — brighter contrast */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-[11px] font-bold text-white/70 uppercase tracking-widest px-0.5">
+        <h2 className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5">
           Quick Reference
         </h2>
         <div className="grid grid-cols-2 gap-3">
@@ -160,36 +160,36 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-amber-500/60 rounded-l-2xl" />
             <p className="text-[13px] font-bold text-amber-400">Zs 80% Limits</p>
             <div className="space-y-1.5 text-[11px]">
-              <div className="flex justify-between"><span className="text-white/80">6A Type B</span><span className="font-bold text-white">5.82Ω</span></div>
-              <div className="flex justify-between"><span className="text-white/80">32A Type B</span><span className="font-bold text-yellow-400">1.09Ω</span></div>
-              <div className="flex justify-between"><span className="text-white/80">40A Type B</span><span className="font-bold text-white">0.87Ω</span></div>
+              <div className="flex justify-between"><span className="text-white">6A Type B</span><span className="font-bold text-white">5.82Ω</span></div>
+              <div className="flex justify-between"><span className="text-white">32A Type B</span><span className="font-bold text-yellow-400">1.09Ω</span></div>
+              <div className="flex justify-between"><span className="text-white">40A Type B</span><span className="font-bold text-white">0.87Ω</span></div>
             </div>
           </div>
           <div className="relative rounded-2xl bg-white/[0.06] border border-red-500/20 p-4 space-y-2 overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-red-500/60 rounded-l-2xl" />
             <p className="text-[13px] font-bold text-red-400">RCD 30mA</p>
             <div className="space-y-1.5 text-[11px]">
-              <div className="flex justify-between"><span className="text-white/80">0.5× (15mA)</span><span className="font-bold text-white">No trip</span></div>
-              <div className="flex justify-between"><span className="text-white/80">1× (30mA)</span><span className="font-bold text-yellow-400">≤300ms</span></div>
-              <div className="flex justify-between"><span className="text-white/80">5× (150mA)</span><span className="font-bold text-yellow-400">≤40ms</span></div>
+              <div className="flex justify-between"><span className="text-white">0.5× (15mA)</span><span className="font-bold text-white">No trip</span></div>
+              <div className="flex justify-between"><span className="text-white">1× (30mA)</span><span className="font-bold text-yellow-400">≤300ms</span></div>
+              <div className="flex justify-between"><span className="text-white">5× (150mA)</span><span className="font-bold text-yellow-400">≤40ms</span></div>
             </div>
           </div>
           <div className="relative rounded-2xl bg-white/[0.06] border border-blue-500/20 p-4 space-y-2 overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500/60 rounded-l-2xl" />
             <p className="text-[13px] font-bold text-blue-400">IR Minimum</p>
             <div className="space-y-1.5 text-[11px]">
-              <div className="flex justify-between"><span className="text-white/80">SELV ≤50V</span><span className="font-bold text-white">0.5MΩ</span></div>
-              <div className="flex justify-between"><span className="text-white/80">LV ≤500V</span><span className="font-bold text-yellow-400">1.0MΩ</span></div>
-              <div className="flex justify-between"><span className="text-white/80">500-1000V</span><span className="font-bold text-white">1.0MΩ</span></div>
+              <div className="flex justify-between"><span className="text-white">SELV ≤50V</span><span className="font-bold text-white">0.5MΩ</span></div>
+              <div className="flex justify-between"><span className="text-white">LV ≤500V</span><span className="font-bold text-yellow-400">1.0MΩ</span></div>
+              <div className="flex justify-between"><span className="text-white">500-1000V</span><span className="font-bold text-white">1.0MΩ</span></div>
             </div>
           </div>
           <div className="relative rounded-2xl bg-white/[0.06] border border-emerald-500/20 p-4 space-y-2 overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500/60 rounded-l-2xl" />
             <p className="text-[13px] font-bold text-emerald-400">Disconnection</p>
             <div className="space-y-1.5 text-[11px]">
-              <div className="flex justify-between"><span className="text-white/80">Sockets ≤63A</span><span className="font-bold text-white">0.4s</span></div>
-              <div className="flex justify-between"><span className="text-white/80">Fixed equip</span><span className="font-bold text-white">5s</span></div>
-              <div className="flex justify-between"><span className="text-white/80">TT (230V)</span><span className="font-bold text-white">0.2s</span></div>
+              <div className="flex justify-between"><span className="text-white">Sockets ≤63A</span><span className="font-bold text-white">0.4s</span></div>
+              <div className="flex justify-between"><span className="text-white">Fixed equip</span><span className="font-bold text-white">5s</span></div>
+              <div className="flex justify-between"><span className="text-white">TT (230V)</span><span className="font-bold text-white">0.2s</span></div>
             </div>
           </div>
         </div>
@@ -197,7 +197,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
 
       {/* On-Site Essentials — brighter list items */}
       <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-[11px] font-bold text-white/70 uppercase tracking-widest px-0.5">
+        <h2 className="text-[11px] font-bold text-white uppercase tracking-widest px-0.5">
           On-Site Essentials
         </h2>
         <div className="space-y-2">
@@ -216,7 +216,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
               <button
                 key={i}
                 type="button"
-                onClick={() => onNavigateToSection(item.section)}
+                onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); onNavigateToSection(item.section); }}
                 className="w-full text-left touch-manipulation active:scale-[0.98] transition-transform"
               >
                 <div className="flex items-center gap-3 rounded-2xl bg-white/[0.06] border border-white/[0.12] p-3.5 hover:bg-white/[0.08] transition-colors">
@@ -225,9 +225,9 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[13px] font-semibold text-white">{item.title}</p>
-                    <p className="text-[11px] text-white/60">{item.desc}</p>
+                    <p className="text-[11px] text-white">{item.desc}</p>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-white/30 shrink-0" />
+                  <ChevronRight className="h-4 w-4 text-white shrink-0" />
                 </div>
               </button>
             );
@@ -242,7 +242,7 @@ const LearningHubOverview = ({ onNavigateToSection }: LearningHubOverviewProps) 
           <div className="flex items-center justify-between pl-1">
             <div>
               <p className="text-[12px] font-bold text-yellow-400">BS 7671:2018+A3:2024</p>
-              <p className="text-[11px] text-white/70 leading-relaxed mt-0.5">
+              <p className="text-[11px] text-white leading-relaxed mt-0.5">
                 All content verified against the current edition. A4 update coming.
               </p>
             </div>
