@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = '2391 Inspection and Testing Course Online | C&G 2391-52 | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Study for the City & Guilds 2391-52 Inspection and Testing qualification online. AI-powered quiz prep, GN3 testing sequence walkthroughs, mock exams, and practical assessment guidance. From £4.99/mo.';
+  'Study for the City & Guilds 2391-52 Inspection and Testing qualification online. AI-powered quiz prep, GN3 testing sequence walkthroughs, mock exams, and practical assessment guidance. From £5.99/mo.';
 
 const faqs = [
   {
@@ -115,7 +115,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £4.99/month with 7-day free trial',
+    description: 'From £5.99/month with 7-day free trial',
   },
 };
 
@@ -609,7 +609,7 @@ export default function CityGuilds2391Page() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Pass the C&G 2391-52 with Elec-Mate"
-            description="AI-powered quiz prep, GN3 testing walkthroughs, certificate practice, and scenario simulations — everything you need to pass the Inspection and Testing qualification first time. From £4.99/month."
+            description="AI-powered quiz prep, GN3 testing walkthroughs, certificate practice, and scenario simulations — everything you need to pass the Inspection and Testing qualification first time. From £5.99/month."
             ctaText="Start 7-day free trial"
             ctaHref="/auth/signup"
           />

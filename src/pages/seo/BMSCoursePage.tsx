@@ -118,7 +118,7 @@ const courseSchema = {
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
     validFrom: '2024-01-01',
-    description: '7-day free trial, then from £4.99/month',
+    description: '7-day free trial, then from £5.99/month',
   },
 };
 
@@ -214,7 +214,7 @@ export default function BMSCoursePage() {
             >
               Start 7-Day Free Trial
             </a>
-            <span className="text-white text-sm">From £4.99/mo after trial — cancel anytime</span>
+            <span className="text-white text-sm">From £5.99/mo after trial — cancel anytime</span>
           </div>
         </div>
       </section>

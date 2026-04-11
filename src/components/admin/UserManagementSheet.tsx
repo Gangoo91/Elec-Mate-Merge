@@ -84,8 +84,8 @@ interface UserManagementSheetProps {
 }
 
 const tierPricing: Record<string, string> = {
-  Apprentice: '£4.99/mo',
-  Electrician: '£9.99/mo',
+  Apprentice: '£5.99/mo',
+  Electrician: '£12.99/mo',
   Employer: '£29.99/mo',
 };
 
@@ -965,13 +965,13 @@ export default function UserManagementSheet({
                       <SelectItem value="Apprentice">
                         <div className="flex items-center gap-2">
                           <GraduationCap className="h-4 w-4 text-yellow-400" />
-                          Apprentice - £4.99/mo
+                          Apprentice - £5.99/mo
                         </div>
                       </SelectItem>
                       <SelectItem value="Electrician">
                         <div className="flex items-center gap-2">
                           <Zap className="h-4 w-4 text-yellow-400" />
-                          Electrician - £9.99/mo
+                          Electrician - £12.99/mo
                         </div>
                       </SelectItem>
                       <SelectItem value="Employer">

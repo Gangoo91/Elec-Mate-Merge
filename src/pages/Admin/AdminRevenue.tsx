@@ -174,8 +174,8 @@ export default function AdminRevenue() {
   // Tier colors and icons
   const tierConfig = {
     founder: { color: 'yellow', icon: Crown, price: '£3.99' },
-    apprentice: { color: 'cyan', icon: GraduationCap, price: '£4.99' },
-    electrician: { color: 'blue', icon: Zap, price: '£9.99' },
+    apprentice: { color: 'cyan', icon: GraduationCap, price: '£5.99' },
+    electrician: { color: 'blue', icon: Zap, price: '£12.99' },
     employer: { color: 'purple', icon: Building2, price: '£29.99' },
   };
 

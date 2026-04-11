@@ -20,7 +20,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Inspection and Testing Course Online | C&G 2391 Preparation | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Study for the C&G 2391 Inspection and Testing qualification online. AI-powered study assistant, mock exams, and practical scenario walkthroughs. From £4.99/mo.';
+  'Study for the C&G 2391 Inspection and Testing qualification online. AI-powered study assistant, mock exams, and practical scenario walkthroughs. From £5.99/mo.';
 
 const faqs = [
   {
@@ -135,7 +135,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £4.99/month with 7-day free trial',
+    description: 'From £5.99/month with 7-day free trial',
   },
 };
 

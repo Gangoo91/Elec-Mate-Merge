@@ -10,9 +10,11 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const SEND_DELAY_MS = 500;
 
 // Direct Stripe payment links for trial winback CTA
+// TODO: Create new Payment Links in Stripe dashboard for updated prices (£5.99/mo, £59.99/yr)
+// and replace these URLs. These currently point to the old £4.99/£49.99 prices.
 const APPRENTICE_WINBACK_CONFIG = {
-  monthlyPaymentLink: 'https://buy.stripe.com/aFa14g4sy8fi5Q57JkbjW05', // £4.99/mo — price_1SmUef2RKw5t5RAmRIMTWTqU
-  yearlyPaymentLink: 'https://buy.stripe.com/9B628k9MS8fi6U9fbMbjW06', // £49.99/yr — price_1SmUfK2RKw5t5RAml6bj1I77
+  monthlyPaymentLink: 'https://buy.stripe.com/aFa14g4sy8fi5Q57JkbjW05', // £4.99/mo — price_1SmUef2RKw5t5RAmRIMTWTqU (OLD — needs new link)
+  yearlyPaymentLink: 'https://buy.stripe.com/9B628k9MS8fi6U9fbMbjW06', // £49.99/yr — price_1SmUfK2RKw5t5RAml6bj1I77 (OLD — needs new link)
 };
 
 const corsHeaders = {

@@ -493,13 +493,17 @@ async function sendPaymentFailedEmail(
 // Map Stripe price IDs to subscription tiers
 // CURRENT ACTIVE PRICES (as of Jan 2026)
 const PRICE_TO_TIER: Record<string, string> = {
-  // Apprentice - £4.99/month, £49.99/year
-  price_1SmUef2RKw5t5RAmRIMTWTqU: 'apprentice', // £4.99/month (current)
-  price_1SmUfK2RKw5t5RAml6bj1I77: 'apprentice_yearly', // £49.99/year (current)
+  // Apprentice - £5.99/month (new), £49.99/year
+  price_1TKlA22RKw5t5RAmpvhojy0b: 'apprentice', // £5.99/month (current — Apr 2026)
+  price_1SmUef2RKw5t5RAmRIMTWTqU: 'apprentice', // £4.99/month (legacy — keep for existing subs)
+  price_1TKlKK2RKw5t5RAmGVR5EcF9: 'apprentice_yearly', // £59.99/year (current — Apr 2026)
+  price_1SmUfK2RKw5t5RAml6bj1I77: 'apprentice_yearly', // £49.99/year (legacy — keep for existing subs)
 
-  // Electrician Pro - £9.99/month, £99.99/year
-  price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (current)
-  price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (current)
+  // Electrician Pro - £12.99/month (new), £129.99/year (new)
+  price_1TKlA12RKw5t5RAmdhZyhX1I: 'electrician', // £12.99/month (current — Apr 2026)
+  price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (legacy — keep for existing subs)
+  price_1TKlKL2RKw5t5RAmpD8FH7qp: 'electrician_yearly', // £129.99/year (current — Apr 2026)
+  price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (legacy — keep for existing subs)
 
   // Business AI - £29.99/month, £299.99/year (Electrician + AI Agent)
   price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai', // £29.99/month
@@ -895,22 +899,41 @@ serve(async (req) => {
                 // Get referrer's Stripe customer ID
                 const { data: referrerProfile } = await supabase
                   .from('profiles')
-                  .select('stripe_customer_id, successful_referrals, referral_credits_pence')
+                  .select('stripe_customer_id, successful_referrals, referral_credits_pence, subscription_tier')
                   .eq('id', profile.referred_by)
                   .single();
 
                 if (referrerProfile?.stripe_customer_id) {
-                  // Calculate reward based on tier
+                  // Calculate reward — 1 free month, one-time only
                   const successfulReferrals = (referrerProfile.successful_referrals || 0) + 1;
-                  let creditPence: number;
 
-                  if (successfulReferrals >= 3 && successfulReferrals <= 4) {
-                    // Silver tier: 2 free months per referral
-                    creditPence = priceId ? (await getMonthlyPrice(stripe, priceId)) * 2 : 999 * 2;
+                  if (successfulReferrals > 1) {
+                    // Already claimed free month — update stats only, no more credit
+                    logger.info('Referrer already claimed free month, updating stats only', {
+                      referrerId: profile.referred_by,
+                      successfulReferrals,
+                    });
+                    await supabase
+                      .from('referrals')
+                      .update({ status: 'rewarded', updated_at: new Date().toISOString() })
+                      .eq('id', referralRow.id);
+                    await supabase
+                      .from('profiles')
+                      .update({
+                        successful_referrals: successfulReferrals,
+                        total_referrals: successfulReferrals,
+                      })
+                      .eq('id', profile.referred_by);
                   } else {
-                    // Bronze / standard: 1 free month credit
-                    creditPence = priceId ? await getMonthlyPrice(stripe, priceId) : 999;
-                  }
+                  // 1 month credit based on referrer's subscription tier
+                  const tierPrices: Record<string, number> = {
+                    apprentice: 599, apprentice_yearly: 599,
+                    electrician: 1299, electrician_yearly: 1299,
+                    business_ai: 2999, business_ai_yearly: 2999,
+                    employer: 2999, employer_yearly: 2999,
+                  };
+                  const creditPence = tierPrices[referrerProfile.subscription_tier || ''] ||
+                    (priceId ? await getMonthlyPrice(stripe, priceId) : 1299);
 
                   // Apply Stripe balance credit (negative amount = credit to customer)
                   try {
@@ -919,7 +942,7 @@ serve(async (req) => {
                       {
                         amount: -creditPence, // Negative = credit
                         currency: 'gbp',
-                        description: `Referral reward: ${successfulReferrals >= 3 ? '2' : '1'} free month(s) credit`,
+                        description: `Referral reward: 1 free month credit`,
                         metadata: {
                           referral_id: referralRow.id,
                           referred_user_id: userId,
@@ -980,6 +1003,7 @@ serve(async (req) => {
                       error: (balanceErr as Error)?.message,
                     });
                   }
+                  } // end else (under cap)
                 }
               }
             }

@@ -31,7 +31,7 @@ const SubscriptionFAQ = () => {
     },
     {
       q: 'How does annual billing save me money?',
-      a: 'Annual subscriptions offer significant savings compared to monthly billing. Apprentice is just £49.99 per year (vs £59.88 if paid monthly), and Electrician is £99.99 per year (vs £119.88 if paid monthly).',
+      a: 'Annual subscriptions offer significant savings compared to monthly billing. Apprentice is just £59.99 per year (vs £71.88 if paid monthly), and Electrician is £129.99 per year (vs £155.88 if paid monthly).',
     },
     {
       q: 'What payment methods do you accept?',

@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Apprentice Portfolio Guide | Evidence Tracking | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Complete guide to building your electrical apprentice portfolio. Digital evidence tracking, photo documentation, criteria mapping, employer review, and EPAO submission. From £4.99/mo.';
+  'Complete guide to building your electrical apprentice portfolio. Digital evidence tracking, photo documentation, criteria mapping, employer review, and EPAO submission. From £5.99/mo.';
 
 const faqs = [
   {
@@ -113,7 +113,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £4.99/month with 7-day free trial',
+    description: 'From £5.99/month with 7-day free trial',
   },
 };
 

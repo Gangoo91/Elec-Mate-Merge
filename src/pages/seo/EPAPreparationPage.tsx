@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Electrical EPA Preparation | End Point Assessment Simulator | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Prepare for the electrical apprenticeship End Point Assessment with AI-graded simulators. Practice knowledge tests, practical assessments, and professional discussions. ST0215 standard. From £4.99/mo.';
+  'Prepare for the electrical apprenticeship End Point Assessment with AI-graded simulators. Practice knowledge tests, practical assessments, and professional discussions. ST0215 standard. From £5.99/mo.';
 
 const faqs = [
   {
@@ -115,7 +115,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £4.99/month with 7-day free trial',
+    description: 'From £5.99/month with 7-day free trial',
   },
 };
 

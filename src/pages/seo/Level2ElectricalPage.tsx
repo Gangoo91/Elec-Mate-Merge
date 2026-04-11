@@ -22,7 +22,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Level 2 Electrical Installation Course Online | C&G 2365 | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Study for the City & Guilds 2365-02 Level 2 Diploma in Electrical Installation online. AI study assistant, interactive modules covering electrical science, installation methods, earthing and bonding. From £4.99/mo.';
+  'Study for the City & Guilds 2365-02 Level 2 Diploma in Electrical Installation online. AI study assistant, interactive modules covering electrical science, installation methods, earthing and bonding. From £5.99/mo.';
 
 const faqs = [
   {
@@ -118,7 +118,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £4.99/month with 7-day free trial',
+    description: 'From £5.99/month with 7-day free trial',
   },
 };
 

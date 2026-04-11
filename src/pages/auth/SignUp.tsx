@@ -300,8 +300,8 @@ const SignUp = () => {
   };
 
   const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string }> = {
-    electrician: { planId: 'electrician-monthly', priceId: 'price_1SqJVr2RKw5t5RAmaiTGelLN' },
-    apprentice: { planId: 'apprentice-monthly', priceId: 'price_1SmUef2RKw5t5RAmRIMTWTqU' },
+    electrician: { planId: 'electrician-monthly', priceId: 'price_1TKlA12RKw5t5RAmdhZyhX1I' },
+    apprentice: { planId: 'apprentice-monthly', priceId: 'price_1TKlA22RKw5t5RAmpvhojy0b' },
   };
 
   const handleFinalSubmit = async () => {

@@ -228,7 +228,7 @@ export default function FounderClaim() {
             </div>
 
             <div className="flex items-center justify-center gap-3 text-sm mb-4">
-              <span className="line-through text-muted-foreground">£9.99/mo</span>
+              <span className="line-through text-muted-foreground">£12.99/mo</span>
               <Badge className="bg-green-500/20 text-green-400 border-green-500/30">SAVE 60%</Badge>
             </div>
 

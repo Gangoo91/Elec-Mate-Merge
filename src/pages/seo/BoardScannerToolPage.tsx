@@ -419,7 +419,7 @@ export default function BoardScannerToolPage() {
         {
           question: 'Is the Board Scanner included in all Elec-Mate plans?',
           answer:
-            'Yes. The AI Board Scanner is included in all Elec-Mate subscription plans from £4.99 per month. There are no additional charges for scans and no usage limits. You can scan as many boards as you need. The feature is available on both iPhone and Android devices.',
+            'Yes. The AI Board Scanner is included in all Elec-Mate subscription plans from £5.99 per month. There are no additional charges for scans and no usage limits. You can scan as many boards as you need. The feature is available on both iPhone and Android devices.',
         },
       ]}
       relatedPages={[

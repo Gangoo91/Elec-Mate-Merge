@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'AM2 Exam Preparation Online | Practice Tests & Mock Exams | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Prepare for the AM2 practical assessment online. Timed mock exercises, consumer unit build, ring final, lighting circuit, and fault finding practice. From £4.99/mo.';
+  'Prepare for the AM2 practical assessment online. Timed mock exercises, consumer unit build, ring final, lighting circuit, and fault finding practice. From £5.99/mo.';
 
 const faqs = [
   {
@@ -136,7 +136,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £4.99/month with 7-day free trial',
+    description: 'From £5.99/month with 7-day free trial',
   },
 };
 

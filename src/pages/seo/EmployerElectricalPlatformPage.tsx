@@ -413,7 +413,7 @@ export default function EmployerElectricalPlatformPage() {
         {
           question: 'Does the employer platform cost extra?',
           answer:
-            'The employer platform is included in Elec-Mate business plans. Each team member needs their own subscription (from £4.99/month each). The employer dashboard and management features are included at no additional cost. Volume discounts are available for larger teams. Contact us for enterprise pricing with 10 or more users.',
+            'The employer platform is included in Elec-Mate business plans. Each team member needs their own subscription (from £5.99/month each). The employer dashboard and management features are included at no additional cost. Volume discounts are available for larger teams. Contact us for enterprise pricing with 10 or more users.',
         },
         {
           question: 'Can I export analytics and reports?',

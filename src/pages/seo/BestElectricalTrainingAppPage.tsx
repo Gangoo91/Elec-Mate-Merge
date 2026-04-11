@@ -198,7 +198,7 @@ export default function BestElectricalTrainingAppPage() {
               </p>
               <p>
                 <strong>Pricing:</strong> All training is included in the standard Elec-Mate
-                subscription from £4.99/month. There are no separate training fees or per-course
+                subscription from £5.99/month. There are no separate training fees or per-course
                 charges. The 7-day free trial includes full access to all courses.
               </p>
             </>
@@ -417,7 +417,7 @@ export default function BestElectricalTrainingAppPage() {
                     </tr>
                     <tr>
                       <td className="py-2 pr-4">Price</td>
-                      <td className="py-2 px-3 text-centre font-semibold">From £4.99/mo</td>
+                      <td className="py-2 px-3 text-centre font-semibold">From £5.99/mo</td>
                       <td className="py-2 px-3 text-centre">Per app</td>
                       <td className="py-2 px-3 text-centre">Free (ads)</td>
                       <td className="py-2 px-3 text-centre">£100-500+/course</td>
@@ -448,7 +448,7 @@ export default function BestElectricalTrainingAppPage() {
               </p>
               <SEOAppBridge
                 title="Study and Work in One App"
-                description="46+ courses, 2,000+ questions, flashcards, mock exams, EPA simulator, AM2 simulator — plus 8 certificate types, 70+ calculators, and AI tools. All from £4.99/month."
+                description="46+ courses, 2,000+ questions, flashcards, mock exams, EPA simulator, AM2 simulator — plus 8 certificate types, 70+ calculators, and AI tools. All from £5.99/month."
                 icon={GraduationCap}
               />
               <p>
@@ -467,7 +467,7 @@ export default function BestElectricalTrainingAppPage() {
         {
           question: 'What is the best training app for electrical apprentices in the UK?',
           answer:
-            'Elec-Mate is the most comprehensive training app for UK electrical apprentices in 2026. It includes 46+ courses covering Level 2 and Level 3 Electrical Installation, 18th Edition (BS 7671:2018+A3:2024), AM2 assessment preparation, and EPA simulator. The platform offers 2,000+ practice questions with detailed explanations, flashcards with spaced repetition for maximum retention, mock exams under timed conditions, and an AI study assistant that can explain any topic with BS 7671 regulation references. All training is included in the standard subscription from £4.99/month — there are no per-course charges. Apprentices also get access to professional tools (8 certificate types, 70+ calculators, AI tools, business management) that they will use throughout their career.',
+            'Elec-Mate is the most comprehensive training app for UK electrical apprentices in 2026. It includes 46+ courses covering Level 2 and Level 3 Electrical Installation, 18th Edition (BS 7671:2018+A3:2024), AM2 assessment preparation, and EPA simulator. The platform offers 2,000+ practice questions with detailed explanations, flashcards with spaced repetition for maximum retention, mock exams under timed conditions, and an AI study assistant that can explain any topic with BS 7671 regulation references. All training is included in the standard subscription from £5.99/month — there are no per-course charges. Apprentices also get access to professional tools (8 certificate types, 70+ calculators, AI tools, business management) that they will use throughout their career.',
         },
         {
           question: 'Is there an app for 18th Edition revision?',
@@ -497,7 +497,7 @@ export default function BestElectricalTrainingAppPage() {
         {
           question: 'How much does electrical training cost?',
           answer:
-            'Training costs vary enormously depending on the delivery method. Traditional classroom courses for the 18th Edition typically cost £200-400 per course. Online courses from training providers range from £100-500+ per course. Individual BS 7671 quiz apps may be free or a few pounds but cover only one topic. Elec-Mate includes 46+ courses, 2,000+ practice questions, flashcards, mock exams, simulators, and an AI study assistant — all for £4.99/month with the standard subscription. For an apprentice who needs Level 2, Level 3, 18th Edition, AM2 preparation, and EPA simulator, Elec-Mate provides all of these for less than the cost of a single traditional course.',
+            'Training costs vary enormously depending on the delivery method. Traditional classroom courses for the 18th Edition typically cost £200-400 per course. Online courses from training providers range from £100-500+ per course. Individual BS 7671 quiz apps may be free or a few pounds but cover only one topic. Elec-Mate includes 46+ courses, 2,000+ practice questions, flashcards, mock exams, simulators, and an AI study assistant — all for £5.99/month with the standard subscription. For an apprentice who needs Level 2, Level 3, 18th Edition, AM2 preparation, and EPA simulator, Elec-Mate provides all of these for less than the cost of a single traditional course.',
         },
       ]}
       relatedPages={[

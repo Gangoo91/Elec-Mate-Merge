@@ -136,7 +136,7 @@ export default function ElecMateVsEasyEICRPage() {
                 integration.
               </p>
               <p>
-                Pricing starts from £4.99 per month with unlimited usage across all features. Every
+                Pricing starts from £5.99 per month with unlimited usage across all features. Every
                 plan includes a 7-day free trial with full access.
               </p>
             </>
@@ -235,7 +235,7 @@ export default function ElecMateVsEasyEICRPage() {
                 client, and collect payment — all before leaving the property.
               </p>
               <SEOAppBridge
-                title="Everything in One App — From £4.99/Month"
+                title="Everything in One App — From £5.99/Month"
                 description="Certificates, calculators, AI tools, training, quoting, invoicing, and payments. One subscription, unlimited usage. No per-certificate charges. 7-day free trial."
                 icon={Sparkles}
               />
@@ -329,7 +329,7 @@ export default function ElecMateVsEasyEICRPage() {
         {
           question: 'How much does Easy EICR cost compared to Elec-Mate?',
           answer:
-            'Easy EICR offers various pricing options for its certificate functionality. Check their website for current pricing as it may change. Elec-Mate starts from £4.99 per month with unlimited usage across all features — all 8 certificate types, all 70+ calculators, all AI tools, all 46+ training courses, and all business management features. There are no per-certificate charges and no feature restrictions. When you consider that Elec-Mate includes calculators, AI tools, training, and business management that Easy EICR does not offer, the value proposition is significantly stronger for electricians who use more than just certificates in their daily work.',
+            'Easy EICR offers various pricing options for its certificate functionality. Check their website for current pricing as it may change. Elec-Mate starts from £5.99 per month with unlimited usage across all features — all 8 certificate types, all 70+ calculators, all AI tools, all 46+ training courses, and all business management features. There are no per-certificate charges and no feature restrictions. When you consider that Elec-Mate includes calculators, AI tools, training, and business management that Easy EICR does not offer, the value proposition is significantly stronger for electricians who use more than just certificates in their daily work.',
         },
         {
           question: 'Do both apps work offline?',

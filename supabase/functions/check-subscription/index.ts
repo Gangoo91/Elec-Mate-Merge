@@ -134,11 +134,15 @@ serve(async (req) => {
     // Complete price-to-tier mapping (matches webhook)
     const PRICE_TO_TIER: Record<string, string> = {
       // Apprentice
-      price_1SmUef2RKw5t5RAmRIMTWTqU: 'apprentice',
-      price_1SmUfK2RKw5t5RAml6bj1I77: 'apprentice_yearly',
+      price_1TKlA22RKw5t5RAmpvhojy0b: 'apprentice', // £5.99/month (current — Apr 2026)
+      price_1SmUef2RKw5t5RAmRIMTWTqU: 'apprentice', // £4.99/month (legacy)
+      price_1TKlKK2RKw5t5RAmGVR5EcF9: 'apprentice_yearly', // £59.99/year (current — Apr 2026)
+      price_1SmUfK2RKw5t5RAml6bj1I77: 'apprentice_yearly', // £49.99/year (legacy)
       // Electrician Pro
-      price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician',
-      price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly',
+      price_1TKlA12RKw5t5RAmdhZyhX1I: 'electrician', // £12.99/month (current — Apr 2026)
+      price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (legacy)
+      price_1TKlKL2RKw5t5RAmpD8FH7qp: 'electrician_yearly', // £129.99/year (current — Apr 2026)
+      price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (legacy)
       // Business AI - £29.99/month, £299.99/year
       price_1T6DUx2RKw5t5RAmpb177NJV: 'business_ai',
       price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly',

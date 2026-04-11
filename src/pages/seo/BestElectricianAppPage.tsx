@@ -32,7 +32,7 @@ const faqs = [
   {
     question: 'What is the best app for electricians in the UK?',
     answer:
-      'The best electrician app depends on your needs. If you only need certificates, iCertifi and CertsApp are solid options with a focused feature set. If you want everything in one place — certificates, BS 7671 calculators, AI tools, apprentice training, and business management — Elec-Mate is the most comprehensive platform available in the UK market as of 2026. It combines 8 certificate types, 70 calculators, 8 Elec-AI specialist tools, full 18th Edition training courses, and business features like quoting, invoicing, and job scheduling into a single app starting from £4.99 per month with a 7-day free trial.',
+      'The best electrician app depends on your needs. If you only need certificates, iCertifi and CertsApp are solid options with a focused feature set. If you want everything in one place — certificates, BS 7671 calculators, AI tools, apprentice training, and business management — Elec-Mate is the most comprehensive platform available in the UK market as of 2026. It combines 8 certificate types, 70 calculators, 8 Elec-AI specialist tools, full 18th Edition training courses, and business features like quoting, invoicing, and job scheduling into a single app starting from £5.99 per month with a 7-day free trial.',
   },
   {
     question: 'Is there an app for EICR certificates?',
@@ -47,7 +47,7 @@ const faqs = [
   {
     question: 'How much do electrician apps cost in the UK?',
     answer:
-      'Pricing models vary significantly. Some apps charge per certificate (typically £2 to £5 per cert), which can add up quickly if you produce many certificates each month. Others use a monthly subscription model. iCertifi offers various subscription tiers. CertsApp uses a credit-based system. Elec-Mate uses a flat monthly subscription starting from £4.99 per month with unlimited certificates, calculators, and AI tools included. All plans include a 7-day free trial so you can test the full feature set before committing.',
+      'Pricing models vary significantly. Some apps charge per certificate (typically £2 to £5 per cert), which can add up quickly if you produce many certificates each month. Others use a monthly subscription model. iCertifi offers various subscription tiers. CertsApp uses a credit-based system. Elec-Mate uses a flat monthly subscription starting from £5.99 per month with unlimited certificates, calculators, and AI tools included. All plans include a 7-day free trial so you can test the full feature set before committing.',
   },
   {
     question: 'Can I use an electrician app for BS 7671 calculations?',
@@ -111,7 +111,7 @@ const softwareAppSchema = {
     '@type': 'Offer',
     price: '4.99',
     priceCurrency: 'GBP',
-    description: 'Monthly subscription from £4.99. 7-day free trial.',
+    description: 'Monthly subscription from £5.99. 7-day free trial.',
   },
   aggregateRating: {
     '@type': 'AggregateRating',
@@ -309,7 +309,7 @@ export default function BestElectricianAppPage() {
               Fault Finder, Regulation Lookup), full training courses (18th Edition, Level 2, Level
               3, AM2, EPA), and business management features (quoting, invoicing, job scheduling,
               Stripe payments, Xero integration) into a single mobile-first app. Pricing starts from
-              £4.99 per month with unlimited usage and a 7-day free trial. It works on iOS, Android,
+              £5.99 per month with unlimited usage and a 7-day free trial. It works on iOS, Android,
               and desktop via PWA.
             </p>
             <p>
@@ -430,7 +430,7 @@ export default function BestElectricianAppPage() {
               },
               {
                 feature: 'Pricing Model',
-                elecmate: 'Flat monthly from £4.99, unlimited',
+                elecmate: 'Flat monthly from £5.99, unlimited',
                 icertifi: 'Subscription tiers / per-certificate options',
                 certsapp: 'Credit-based / subscription',
                 generic: 'Free or one-time purchase (limited features)',
@@ -624,7 +624,7 @@ export default function BestElectricianAppPage() {
             </p>
             <p>
               <strong>Flat monthly pricing with unlimited usage</strong> is the model Elec-Mate
-              uses. Starting from £4.99 per month, every feature is included: all 8 certificate
+              uses. Starting from £5.99 per month, every feature is included: all 8 certificate
               types, all 70 calculators, all 8 Elec-AI tools, all training courses, and all business
               management features. There is no per-certificate charge, no feature gating, and no
               surprise costs. The 7-day free trial gives you full access to everything so you can

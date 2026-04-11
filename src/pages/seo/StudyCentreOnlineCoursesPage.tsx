@@ -88,7 +88,7 @@ export default function StudyCentreOnlineCoursesPage() {
               </p>
               <p>
                 All 46+ courses are included in the standard Elec-Mate subscription from
-                £4.99/month. There are no per-course charges. You have unlimited access to every
+                £5.99/month. There are no per-course charges. You have unlimited access to every
                 course, quiz, flashcard set, and mock exam. For employers, see the{' '}
                 <SEOInternalLink href="/tools/employer-electrical-platform">
                   employer platform
@@ -100,7 +100,7 @@ export default function StudyCentreOnlineCoursesPage() {
           appBridge: {
             title: '46+ Courses, Unlimited Access',
             description:
-              'Level 2, Level 3, 18th Edition, 2391, AM2 preparation, and CPD. Video lessons, quizzes, flashcards, and mock exams. From £4.99/month with 7-day free trial.',
+              'Level 2, Level 3, 18th Edition, 2391, AM2 preparation, and CPD. Video lessons, quizzes, flashcards, and mock exams. From £5.99/month with 7-day free trial.',
             icon: GraduationCap,
           },
         },

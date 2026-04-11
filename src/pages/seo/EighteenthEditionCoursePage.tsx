@@ -38,7 +38,7 @@ const faqs = [
   {
     question: 'What is included in the subscription for the 18th Edition course?',
     answer:
-      'Your subscription includes full access to all seven parts of BS 7671 study material, hundreds of practice questions mapped to the exam syllabus, an AI study assistant that answers your regulation queries in plain English, progress tracking dashboards, spaced-repetition flashcards, and timed mock exams. Everything starts with a 7-day free trial at no cost, then from just £4.99 per month.',
+      'Your subscription includes full access to all seven parts of BS 7671 study material, hundreds of practice questions mapped to the exam syllabus, an AI study assistant that answers your regulation queries in plain English, progress tracking dashboards, spaced-repetition flashcards, and timed mock exams. Everything starts with a 7-day free trial at no cost, then from just £5.99 per month.',
   },
   {
     question: 'What is the difference between the 17th and 18th Edition wiring regulations?',
@@ -116,7 +116,7 @@ const courseSchema = {
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
     validFrom: '2024-01-01',
-    description: '7-day free trial, then from £4.99/month',
+    description: '7-day free trial, then from £5.99/month',
   },
 };
 
@@ -139,7 +139,7 @@ export default function EighteenthEditionCoursePage() {
   useSEO({
     title: '18th Edition Course Online | BS 7671 Amendment 3 Training',
     description:
-      'Study BS 7671:2018 + Amendment 3:2024 online. AI-powered study assistant, practice quizzes, and progress tracking. From £4.99/mo with 7-day free trial.',
+      'Study BS 7671:2018 + Amendment 3:2024 online. AI-powered study assistant, practice quizzes, and progress tracking. From £5.99/mo with 7-day free trial.',
     schema: {
       '@type': 'Course',
       name: '18th Edition Course Online',
@@ -213,7 +213,7 @@ export default function EighteenthEditionCoursePage() {
             >
               Start 7-Day Free Trial
             </a>
-            <span className="text-white text-sm">From £4.99/mo after trial — cancel anytime</span>
+            <span className="text-white text-sm">From £5.99/mo after trial — cancel anytime</span>
           </div>
         </div>
       </section>
@@ -409,7 +409,7 @@ export default function EighteenthEditionCoursePage() {
               tracked and synced across all devices.
             </p>
             <p>
-              The cost difference is substantial. At just £4.99 per month with a 7-day free trial,
+              The cost difference is substantial. At just £5.99 per month with a 7-day free trial,
               you get access to the full course plus all of Elec-Mate's other tools including EICR
               certification software, cable sizing calculators, and the electrician's AI assistant.
               Most users complete their 18th Edition preparation within one to two months, making

@@ -406,7 +406,7 @@ const LandingPage = () => {
             </motion.div>
 
             <p className="text-center text-white text-sm mt-3">
-              Plans from <span className="text-yellow-400 font-semibold">£4.99/mo</span> after your
+              Plans from <span className="text-yellow-400 font-semibold">£5.99/mo</span> after your
               free trial
             </p>
 
@@ -493,7 +493,7 @@ const LandingPage = () => {
               icon={<GraduationCap className="w-6 h-6" />}
               title="Apprentices"
               painPoint="Training courses cost thousands and revision materials are scattered everywhere"
-              tagline="Everything to ace your training — from £4.99/mo"
+              tagline="Everything to ace your training — from £5.99/mo"
               features={[
                 '46+ courses — Level 2, 3, AM2 & upskilling',
                 'EPA Simulator with AI scoring',
@@ -920,7 +920,7 @@ const LandingPage = () => {
           <div className="grid sm:grid-cols-3 gap-5">
             <PricingCard
               name="Apprentice"
-              price="£4.99"
+              price="£5.99"
               description="Everything to ace your training"
               features={[
                 '46+ courses (Level 2, 3, AM2 & upskilling)',
@@ -934,7 +934,7 @@ const LandingPage = () => {
             />
             <PricingCard
               name="Electrician"
-              price="£9.99"
+              price="£12.99"
               description="Your complete site companion"
               features={[
                 'Everything in Apprentice',

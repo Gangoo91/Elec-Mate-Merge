@@ -126,7 +126,7 @@ export default function ElecMateVsSimplyEICRPage() {
                 Elec-Mate also provides 46+ training courses covering the 18th Edition (BS
                 7671:2018+A3:2024), City and Guilds Level 2 and Level 3 Electrical Installation, AM2
                 assessment preparation, EPA simulator, and specialist courses for EV charging, solar
-                PV, fire alarm systems, and BMS. Pricing starts from £4.99 per month with unlimited
+                PV, fire alarm systems, and BMS. Pricing starts from £5.99 per month with unlimited
                 usage across all features and a 7-day free trial.
               </p>
             </>
@@ -204,7 +204,7 @@ export default function ElecMateVsSimplyEICRPage() {
                 and mock exams.
               </p>
               <SEOAppBridge
-                title="Everything in One App — From £4.99/Month"
+                title="Everything in One App — From £5.99/Month"
                 description="Certificates, calculators, AI tools, training, quoting, invoicing, and payments. One subscription, unlimited usage. No per-certificate charges. 7-day free trial."
                 icon={Sparkles}
               />
@@ -229,7 +229,7 @@ export default function ElecMateVsSimplyEICRPage() {
           <p>
             However, most electricians need more than one certificate type, and nearly all need
             calculators on site, accurate job pricing, RAMS for commercial work, and ongoing
-            training. Elec-Mate covers all of this in a single subscription starting from £4.99 per
+            training. Elec-Mate covers all of this in a single subscription starting from £5.99 per
             month.
           </p>
           <p>
@@ -287,7 +287,7 @@ export default function ElecMateVsSimplyEICRPage() {
         {
           question: 'Is Elec-Mate better than SimplyEICR?',
           answer:
-            'For most electricians, yes. SimplyEICR is a focused EICR tool, and it does that job competently. But Elec-Mate includes everything SimplyEICR offers plus AI-powered features (Board Scanner, Voice Test Entry, Defect Code AI, Remedial Cost Estimator), 50+ BS 7671 calculators, 46+ training courses, and full business management tools (quoting, invoicing, Stripe payments, Xero integration). If you need more than just EICRs — and most electricians do — Elec-Mate provides significantly more value in a single subscription from £4.99 per month.',
+            'For most electricians, yes. SimplyEICR is a focused EICR tool, and it does that job competently. But Elec-Mate includes everything SimplyEICR offers plus AI-powered features (Board Scanner, Voice Test Entry, Defect Code AI, Remedial Cost Estimator), 50+ BS 7671 calculators, 46+ training courses, and full business management tools (quoting, invoicing, Stripe payments, Xero integration). If you need more than just EICRs — and most electricians do — Elec-Mate provides significantly more value in a single subscription from £5.99 per month.',
         },
         {
           question: 'Can I switch from SimplyEICR to Elec-Mate?',
@@ -302,7 +302,7 @@ export default function ElecMateVsSimplyEICRPage() {
         {
           question: 'How much does SimplyEICR cost compared to Elec-Mate?',
           answer:
-            'SimplyEICR offers various pricing options for its EICR functionality. Check their website for current pricing. Elec-Mate starts from £4.99 per month with unlimited usage across all features — 8 certificate types, 50+ calculators, all AI tools, 46+ training courses, and business management. There are no per-certificate charges. When you factor in everything Elec-Mate includes that SimplyEICR does not, the value proposition is considerably stronger.',
+            'SimplyEICR offers various pricing options for its EICR functionality. Check their website for current pricing. Elec-Mate starts from £5.99 per month with unlimited usage across all features — 8 certificate types, 50+ calculators, all AI tools, 46+ training courses, and business management. There are no per-certificate charges. When you factor in everything Elec-Mate includes that SimplyEICR does not, the value proposition is considerably stronger.',
         },
         {
           question: 'What certificate types does Elec-Mate support that SimplyEICR does not?',

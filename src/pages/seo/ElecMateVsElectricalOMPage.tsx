@@ -68,7 +68,7 @@ export default function ElecMateVsElectricalOMPage() {
         { feature: 'Full Training Platform (18th Ed, AM2 etc.)', values: [true, false] },
         { feature: 'Quoting, Invoicing & Payments', values: [true, 'Basic'] },
         { feature: 'Offline Mode', values: [true, 'Limited'] },
-        { feature: 'Pricing From', values: ['£4.99/mo', 'Varies'] },
+        { feature: 'Pricing From', values: ['£5.99/mo', 'Varies'] },
       ]}
       comparisonHeading="Feature Comparison"
       keyTakeaways={[
@@ -181,7 +181,7 @@ export default function ElecMateVsElectricalOMPage() {
             separate invoicing software, or separate AI subscriptions.
           </p>
           <p>
-            The value calculation is straightforward: Elec-Mate from £4.99 per month includes
+            The value calculation is straightforward: Elec-Mate from £5.99 per month includes
             everything, whereas using Electrical OM for certificates plus separate apps for
             calculators, quoting, and training adds up to significantly more. Try Elec-Mate free for
             7 days to compare the experience directly.
@@ -256,7 +256,7 @@ export default function ElecMateVsElectricalOMPage() {
         {
           question: 'How much does Elec-Mate cost compared to Electrical OM?',
           answer:
-            'Elec-Mate starts from £4.99 per month and includes all features: 8 certificate types, 70+ calculators, 8 AI tools, training courses, and business management. Electrical OM pricing varies. When you factor in the cost of separate calculator apps, training platforms, and invoicing software that Elec-Mate replaces, the all-in-one approach typically saves money.',
+            'Elec-Mate starts from £5.99 per month and includes all features: 8 certificate types, 70+ calculators, 8 AI tools, training courses, and business management. Electrical OM pricing varies. When you factor in the cost of separate calculator apps, training platforms, and invoicing software that Elec-Mate replaces, the all-in-one approach typically saves money.',
         },
         {
           question: 'Does Elec-Mate work on iPhone and Android?',
@@ -313,7 +313,7 @@ export default function ElecMateVsElectricalOMPage() {
         },
       ]}
       ctaHeading="More than just certificates"
-      ctaSubheading="Try Elec-Mate free for 7 days. Certificates, calculators, AI tools, training, and business management — all from £4.99/month."
+      ctaSubheading="Try Elec-Mate free for 7 days. Certificates, calculators, AI tools, training, and business management — all from £5.99/month."
       comparePath="/compare/elec-mate-vs-electrical-om"
     />
   );

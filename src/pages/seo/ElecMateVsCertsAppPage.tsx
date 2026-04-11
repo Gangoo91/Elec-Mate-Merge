@@ -44,7 +44,7 @@ const faqs = [
   {
     question: 'How does CertsApp pricing compare to Elec-Mate?',
     answer:
-      'CertsApp uses a credit-based pricing model where you purchase credits to generate certificates. The cost per certificate depends on your credit package. This can be economical if you produce very few certificates per month but becomes expensive for busier electricians. Elec-Mate uses a flat monthly subscription starting from £4.99 with unlimited certificates, unlimited calculator use, full AI tools access, complete training courses, and business management features included. There are no per-certificate charges or credit limits.',
+      'CertsApp uses a credit-based pricing model where you purchase credits to generate certificates. The cost per certificate depends on your credit package. This can be economical if you produce very few certificates per month but becomes expensive for busier electricians. Elec-Mate uses a flat monthly subscription starting from £5.99 with unlimited certificates, unlimited calculator use, full AI tools access, complete training courses, and business management features included. There are no per-certificate charges or credit limits.',
   },
   {
     question: 'Which app has better calculators, Elec-Mate or CertsApp?',
@@ -109,7 +109,7 @@ const softwareAppSchema = {
     '@type': 'Offer',
     price: '4.99',
     priceCurrency: 'GBP',
-    description: 'Monthly subscription from £4.99. 7-day free trial.',
+    description: 'Monthly subscription from £5.99. 7-day free trial.',
   },
   aggregateRating: {
     '@type': 'AggregateRating',
@@ -244,7 +244,7 @@ export default function ElecMateVsCertsAppPage() {
             <p>
               Elec-Mate works on iOS, Android, and desktop via a Progressive Web App (PWA). It
               provides full offline support with automatic local saves every 10 seconds and cloud
-              syncing every 30 seconds when connectivity returns. Pricing starts from £4.99 per
+              syncing every 30 seconds when connectivity returns. Pricing starts from £5.99 per
               month with unlimited usage across all features, and every plan includes a 7-day free
               trial with full access.
             </p>
@@ -558,7 +558,7 @@ export default function ElecMateVsCertsAppPage() {
                 per-certificate cost, which is not ideal from a compliance perspective.
               </p>
               <p>
-                Elec-Mate uses a flat monthly subscription starting from £4.99 per month. All
+                Elec-Mate uses a flat monthly subscription starting from £5.99 per month. All
                 features are included: all 8 certificate types (unlimited), all 70 calculators, all
                 8 Elec-AI tools, all training courses, and all business management features. There
                 are no per-certificate charges, no credit limits, and no feature restrictions. Every
@@ -735,7 +735,7 @@ export default function ElecMateVsCertsAppPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="See Why Electricians Are Switching to Elec-Mate"
-            description="Unlimited certificates, 70+ calculators, 8 Elec-AI tools, full training courses, and business management — all from £4.99/month with a 7-day free trial. No credit limits, no per-certificate fees."
+            description="Unlimited certificates, 70+ calculators, 8 Elec-AI tools, full training courses, and business management — all from £5.99/month with a 7-day free trial. No credit limits, no per-certificate fees."
             ctaText="Try Elec-Mate free for 7 days"
             ctaHref="/auth/signup"
           />

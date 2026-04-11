@@ -58,7 +58,7 @@ const softwareApplicationSchema = {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
-    description: '7-day free trial, then from £9.99/month',
+    description: '7-day free trial, then from £12.99/month',
   },
   aggregateRating: {
     '@type': 'AggregateRating',

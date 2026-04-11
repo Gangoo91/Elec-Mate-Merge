@@ -114,7 +114,7 @@ export default function BestApprenticeAppPage() {
                 <strong>Elec-Mate</strong> — All-in-one platform with 46+ training courses covering
                 Level 2/3, AM2, EPA, 18th Edition, and specialist topics. Also includes 8
                 certificate types, 50+ calculators, AI tools, and business management. From
-                £4.99/month.
+                £5.99/month.
               </p>
               <p>
                 <strong>eCertificates</strong> — Primarily a certificate generation app for
@@ -215,7 +215,7 @@ export default function BestApprenticeAppPage() {
           <p>
             The additional value of Elec-Mate — 8 certificate types, 50+ calculators, AI tools, and
             business management — means you do not need to switch apps when you qualify. One
-            subscription from £4.99 per month covers your entire career progression, with a 7-day
+            subscription from £5.99 per month covers your entire career progression, with a 7-day
             free trial to evaluate every feature.
           </p>
         </>
@@ -293,7 +293,7 @@ export default function BestApprenticeAppPage() {
         {
           question: 'How much does Elec-Mate cost for apprentices?',
           answer:
-            'Elec-Mate starts from £4.99 per month with unlimited access to all features including all 46+ training courses, 2,000+ practice questions, flashcards, mock exams, certificates, calculators, and AI tools. There is a 7-day free trial with full access so you can evaluate everything before committing. Compared to buying separate revision books, question banks, and certificate apps, Elec-Mate is significantly more cost-effective.',
+            'Elec-Mate starts from £5.99 per month with unlimited access to all features including all 46+ training courses, 2,000+ practice questions, flashcards, mock exams, certificates, calculators, and AI tools. There is a 7-day free trial with full access so you can evaluate everything before committing. Compared to buying separate revision books, question banks, and certificate apps, Elec-Mate is significantly more cost-effective.',
         },
       ]}
       relatedPages={[
@@ -347,7 +347,7 @@ export default function BestApprenticeAppPage() {
         },
       ]}
       ctaHeading="Start learning smarter today"
-      ctaSubheading="Try Elec-Mate free for 7 days. 46+ training courses, 2,000+ practice questions, AM2 prep, EPA simulator, flashcards, mock exams, and everything else you need to qualify. From £4.99/month."
+      ctaSubheading="Try Elec-Mate free for 7 days. 46+ training courses, 2,000+ practice questions, AM2 prep, EPA simulator, flashcards, mock exams, and everything else you need to qualify. From £5.99/month."
       comparePath="/compare/best-apprentice-app"
     />
   );

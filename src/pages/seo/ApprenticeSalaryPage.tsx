@@ -473,7 +473,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start Your Free Trial Today"
-          description="Join 430+ UK apprentices accelerating their qualification with Elec-Mate. Flashcards, mock exams, portfolio builder, and career tools — all from £4.99/month after your 7-day free trial."
+          description="Join 430+ UK apprentices accelerating their qualification with Elec-Mate. Flashcards, mock exams, portfolio builder, and career tools — all from £5.99/month after your 7-day free trial."
           icon={GraduationCap}
         />
       </>

@@ -433,7 +433,7 @@ export default function FounderSignup() {
                 </div>
               </div>
               <div className="text-right">
-                <span className="line-through text-sm text-muted-foreground">£9.99</span>
+                <span className="line-through text-sm text-muted-foreground">£12.99</span>
                 <Badge className="ml-2 bg-green-500/20 text-green-400 border-green-500/30">
                   60% OFF
                 </Badge>

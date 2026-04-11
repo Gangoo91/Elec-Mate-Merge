@@ -22,7 +22,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Level 3 Electrical Installation Course Online | Advanced Diploma | Elec-Mate';
 const PAGE_DESCRIPTION =
-  'Study for the City & Guilds 2365-03 Level 3 Advanced Diploma in Electrical Installation online. Circuit design, inspection and testing, fault diagnosis, BS 7671 special locations. AI study assistant. From £4.99/mo.';
+  'Study for the City & Guilds 2365-03 Level 3 Advanced Diploma in Electrical Installation online. Circuit design, inspection and testing, fault diagnosis, BS 7671 special locations. AI study assistant. From £5.99/mo.';
 
 const faqs = [
   {
@@ -119,7 +119,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £4.99/month with 7-day free trial',
+    description: 'From £5.99/month with 7-day free trial',
   },
 };
 

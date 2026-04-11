@@ -114,7 +114,7 @@ export default function BestQuotingAppPage() {
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform for UK electricians with quoting,
                 invoicing, Stripe payments, Xero integration, plus 8 certificate types, 50+
-                calculators, AI tools, and 46+ training courses. From £4.99/month.
+                calculators, AI tools, and 46+ training courses. From £5.99/month.
               </p>
               <p>
                 <strong>Powered Now</strong> — General trades management app offering quotes,
@@ -212,7 +212,7 @@ export default function BestQuotingAppPage() {
           <p>
             The cost argument is straightforward: a Powered Now or Tradify subscription plus a
             separate certificate app costs more than a single Elec-Mate subscription that includes
-            everything. From £4.99 per month with a 7-day free trial, Elec-Mate is the most
+            everything. From £5.99 per month with a 7-day free trial, Elec-Mate is the most
             cost-effective choice for electricians.
           </p>
         </>
@@ -344,7 +344,7 @@ export default function BestQuotingAppPage() {
         },
       ]}
       ctaHeading="One app for quotes, certificates, and everything else"
-      ctaSubheading="Try Elec-Mate free for 7 days. Quoting, invoicing, Stripe payments, Xero integration, certificates, calculators, AI tools, and training. All from £4.99/month."
+      ctaSubheading="Try Elec-Mate free for 7 days. Quoting, invoicing, Stripe payments, Xero integration, certificates, calculators, AI tools, and training. All from £5.99/month."
       comparePath="/compare/best-quoting-app-electricians"
     />
   );

@@ -142,7 +142,7 @@ export default function BestEICRSoftwareUKPage() {
                 courses cover the 18th Edition, Level 2/3, AM2, EPA, and specialist topics.
               </p>
               <p>
-                <strong>Pricing:</strong> From £4.99/month with unlimited certificates. 7-day free
+                <strong>Pricing:</strong> From £5.99/month with unlimited certificates. 7-day free
                 trial with full access to every feature. No per-certificate charges.
               </p>
               <p>
@@ -420,7 +420,7 @@ export default function BestEICRSoftwareUKPage() {
                     </tr>
                     <tr>
                       <td className="py-2 pr-4">Pricing</td>
-                      <td className="py-2 px-3 text-centre font-semibold">From £4.99/mo</td>
+                      <td className="py-2 px-3 text-centre font-semibold">From £5.99/mo</td>
                       <td className="py-2 px-3 text-centre">Subscription</td>
                       <td className="py-2 px-3 text-centre">Credits</td>
                       <td className="py-2 px-3 text-centre">Varies</td>
@@ -441,7 +441,7 @@ export default function BestEICRSoftwareUKPage() {
                 Elec-Mate is the clear choice. It is the only platform that combines AI board
                 scanning, voice test entry, defect code AI, and remedial cost estimation with 8
                 certificate types, 70+ calculators, 46+ training courses, and full business
-                management — all in a single subscription starting from £4.99 per month.
+                management — all in a single subscription starting from £5.99 per month.
               </p>
               <p>
                 The AI features alone justify the switch. Photographing a consumer unit instead of
@@ -492,7 +492,7 @@ export default function BestEICRSoftwareUKPage() {
         {
           question: 'How much does EICR software cost?',
           answer:
-            'EICR software pricing varies significantly. Per-certificate models charge £2-5 per certificate, which adds up quickly for busy electricians. Subscription models range from free (very limited) to £20+ per month depending on features. Elec-Mate starts from £4.99 per month with unlimited certificates and all features included — 8 certificate types, 70+ calculators, AI tools, training courses, and business management. Traditional desktop software can cost £200-500+ per year. The best value depends on your volume of work and which features you actually use.',
+            'EICR software pricing varies significantly. Per-certificate models charge £2-5 per certificate, which adds up quickly for busy electricians. Subscription models range from free (very limited) to £20+ per month depending on features. Elec-Mate starts from £5.99 per month with unlimited certificates and all features included — 8 certificate types, 70+ calculators, AI tools, training courses, and business management. Traditional desktop software can cost £200-500+ per year. The best value depends on your volume of work and which features you actually use.',
         },
         {
           question: 'What AI features help with EICRs?',

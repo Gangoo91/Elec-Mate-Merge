@@ -109,7 +109,7 @@ const softwareAppSchema = {
     '@type': 'Offer',
     price: '4.99',
     priceCurrency: 'GBP',
-    description: 'Monthly subscription from £4.99. 7-day free trial.',
+    description: 'Monthly subscription from £5.99. 7-day free trial.',
   },
   aggregateRating: {
     '@type': 'AggregateRating',
@@ -246,7 +246,7 @@ export default function ElecMateVsICertifiPage() {
               Elec-Mate is a newer platform than iCertifi but was designed with the advantage of
               building on the lessons learned from existing tools in the market. It works on iOS,
               Android, and desktop via a Progressive Web App, with full offline support and
-              automatic syncing. Pricing starts from £4.99 per month with unlimited usage across all
+              automatic syncing. Pricing starts from £5.99 per month with unlimited usage across all
               features and a 7-day free trial.
             </p>
           </div>
@@ -502,7 +502,7 @@ export default function ElecMateVsICertifiPage() {
                 structures can change.
               </p>
               <p>
-                Elec-Mate uses a flat monthly subscription starting from £4.99 per month. All
+                Elec-Mate uses a flat monthly subscription starting from £5.99 per month. All
                 features are included at every tier — all 8 certificate types, all 70 calculators,
                 all 8 Elec-AI tools, all training courses, and all business management features.
                 There are no per-certificate charges and no feature gating. Every plan includes a
@@ -669,7 +669,7 @@ export default function ElecMateVsICertifiPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="More Than Just Certificates — Try Elec-Mate Free"
-            description="Unlimited certificates, 70+ BS 7671 calculators, 8 Elec-AI specialist tools, full training courses, and business management. Everything iCertifi offers, and much more — from £4.99/month."
+            description="Unlimited certificates, 70+ BS 7671 calculators, 8 Elec-AI specialist tools, full training courses, and business management. Everything iCertifi offers, and much more — from £5.99/month."
             ctaText="Try Elec-Mate free for 7 days"
             ctaHref="/auth/signup"
           />

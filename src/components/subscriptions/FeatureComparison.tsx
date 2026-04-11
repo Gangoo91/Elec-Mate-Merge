@@ -203,11 +203,11 @@ const features: Feature[] = [
 ];
 
 const plans = [
-  { key: 'apprentice' as const, name: 'Apprentice', price: 'From £4.99/mo', icon: GraduationCap },
+  { key: 'apprentice' as const, name: 'Apprentice', price: 'From £5.99/mo', icon: GraduationCap },
   {
     key: 'electrician' as const,
     name: 'Electrician',
-    price: 'From £9.99/mo',
+    price: 'From £12.99/mo',
     icon: Zap,
     popular: true,
   },

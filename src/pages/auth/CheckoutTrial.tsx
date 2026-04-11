@@ -25,8 +25,8 @@ import { useRevenueCat } from '@/hooks/useRevenueCat';
 
 // Role → Stripe price mapping
 const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string }> = {
-  electrician: { planId: 'electrician-monthly', priceId: 'price_1SqJVr2RKw5t5RAmaiTGelLN' },
-  apprentice: { planId: 'apprentice-monthly', priceId: 'price_1SmUef2RKw5t5RAmRIMTWTqU' },
+  electrician: { planId: 'electrician-monthly', priceId: 'price_1TKlA12RKw5t5RAmdhZyhX1I' },
+  apprentice: { planId: 'apprentice-monthly', priceId: 'price_1TKlA22RKw5t5RAmpvhojy0b' },
 };
 
 const MAX_PACKAGE_RETRIES = 3;
@@ -201,6 +201,18 @@ const CheckoutTrial = () => {
         // Clear subscription status cache so ProtectedRoute gets fresh data
         if (user?.id) {
           sessionStorage.removeItem(`elecmate_sub_cache_${user.id}`);
+        }
+
+        // Process referral reward for native purchases (Stripe webhook won't fire)
+        if (user?.id) {
+          supabase.functions
+            .invoke('process-referral-reward', {
+              body: { referred_user_id: user.id },
+            })
+            .then(({ error: refErr }) => {
+              if (refErr) console.warn('Referral reward processing failed (non-fatal):', refErr);
+              else console.log('Referral reward processed for native purchase');
+            });
         }
       } catch (updateErr) {
         console.warn('Profile update after purchase failed (webhook will handle):', updateErr);

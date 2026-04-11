@@ -89,7 +89,7 @@ export default function DigitalCertificatesAppPage() {
               </p>
               <p>
                 All 8 certificate types, all AI features, and unlimited certificate generation are
-                included in the standard Elec-Mate subscription from £4.99/month. There are no
+                included in the standard Elec-Mate subscription from £5.99/month. There are no
                 per-certificate charges. You can produce as many certificates as you need, for any
                 type of work, without worrying about credit limits or usage caps.
               </p>
@@ -98,7 +98,7 @@ export default function DigitalCertificatesAppPage() {
           appBridge: {
             title: '8 Certificate Types, Unlimited Usage',
             description:
-              'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. AI-powered, digitally signed, professional PDF output. From £4.99/month with 7-day free trial.',
+              'EICR, EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, and PAT. AI-powered, digitally signed, professional PDF output. From £5.99/month with 7-day free trial.',
             icon: FileCheck2,
           },
         },
@@ -444,7 +444,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'How much does Elec-Mate cost for certificates?',
           answer:
-            'Elec-Mate starts from £4.99 per month with unlimited certificate generation across all 8 types. There are no per-certificate charges, no credit limits, and no usage caps. The subscription also includes 70+ BS 7671 calculators, 5 AI specialist agents, 46+ training courses, and business management features. Every plan includes a 7-day free trial with full access.',
+            'Elec-Mate starts from £5.99 per month with unlimited certificate generation across all 8 types. There are no per-certificate charges, no credit limits, and no usage caps. The subscription also includes 70+ BS 7671 calculators, 5 AI specialist agents, 46+ training courses, and business management features. Every plan includes a 7-day free trial with full access.',
         },
       ]}
       relatedPages={[

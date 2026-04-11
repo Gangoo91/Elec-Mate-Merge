@@ -264,48 +264,26 @@ const ReferralsTab: React.FC = () => {
         </div>
       </motion.div>
 
-      {/* Tier Progress */}
+      {/* Referral Reward */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className={cn('p-5 rounded-2xl border', tierConfig.bg, tierConfig.border)}
+        className="p-5 rounded-2xl border border-elec-yellow/20 bg-elec-yellow/5"
       >
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <Crown className={cn('h-5 w-5', tierConfig.colour)} />
-            <span className={cn('text-base font-bold', tierConfig.colour)}>
-              {tierConfig.label} Tier
-            </span>
-          </div>
-          {nextTierConfig && (
-            <span className="text-xs text-white">
-              {stats?.referrals_to_next_tier || 0} to {nextTierConfig.label}
-            </span>
-          )}
+        <div className="flex items-center gap-2 mb-3">
+          <Crown className="h-5 w-5 text-elec-yellow" />
+          <span className="text-base font-bold text-elec-yellow">
+            Your Reward
+          </span>
         </div>
 
-        {/* Progress bar */}
-        <div className="w-full h-2.5 rounded-full bg-white/10 overflow-hidden mb-3">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${progressPercent}%` }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className={cn('h-full rounded-full', {
-              'bg-amber-600': tier === 'bronze',
-              'bg-gray-300': tier === 'silver',
-              'bg-elec-yellow': tier === 'gold',
-              'bg-cyan-300': tier === 'platinum',
-            })}
-          />
-        </div>
-
-        {/* Tier benefits */}
         <div className="text-xs text-white space-y-1">
-          {tier === 'bronze' && <p>Standard rewards: 1 free month per referral</p>}
-          {tier === 'silver' && <p>2 free months credit per referral</p>}
-          {tier === 'gold' && <p>Free tier upgrade for 1 month per referral</p>}
-          {tier === 'platinum' && <p>Permanent 20% off + "Community Champion" on Elec-ID</p>}
+          {successfulReferrals >= 1 ? (
+            <p className="text-elec-yellow font-semibold">Free month claimed — nice one! Keep sharing to help your mates.</p>
+          ) : (
+            <p>Get <span className="text-elec-yellow font-semibold">1 free month</span> when a mate signs up and subscribes with your link.</p>
+          )}
         </div>
       </motion.div>
 

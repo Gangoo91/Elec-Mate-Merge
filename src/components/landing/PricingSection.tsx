@@ -22,7 +22,7 @@ const tiers: PricingTier[] = [
   {
     name: 'Apprentice',
     icon: <GraduationCap className="w-5 h-5" />,
-    price: '£4.99',
+    price: '£5.99',
     period: '/month',
     description: 'Everything you need to pass your exams.',
     features: [
@@ -40,7 +40,7 @@ const tiers: PricingTier[] = [
   {
     name: 'Electrician',
     icon: <Sparkles className="w-5 h-5" />,
-    price: '£9.99',
+    price: '£12.99',
     period: '/month',
     description: 'Everything for professional electrical work.',
     features: [

@@ -112,14 +112,14 @@ export const nativePriceData = {
 // Define Stripe price IDs for each plan
 export const stripePrices = {
   monthly: {
-    apprentice: 'price_1SmUef2RKw5t5RAmRIMTWTqU', // £4.99 Apprentice Monthly (web)
-    electrician: 'price_1SqJVr2RKw5t5RAmaiTGelLN', // £9.99 Electrician Monthly (web)
+    apprentice: 'price_1TKlA22RKw5t5RAmpvhojy0b', // £5.99 Apprentice Monthly (web)
+    electrician: 'price_1TKlA12RKw5t5RAmdhZyhX1I', // £12.99 Electrician Monthly (web)
     business_ai: 'price_1T6DUx2RKw5t5RAmpb177NJV', // £29.99 Business AI Monthly
     employer: 'price_1SlyAT2RKw5t5RAmUmTRGimH', // £29.99 Employer Monthly (will become £49.99)
   },
   yearly: {
-    apprentice: 'price_1SmUfK2RKw5t5RAml6bj1I77', // £49.99 Apprentice Yearly (web)
-    electrician: 'price_1SqJVs2RKw5t5RAmVeD2QVsb', // £99.99 Electrician Yearly (web)
+    apprentice: 'price_1TKlKK2RKw5t5RAmGVR5EcF9', // £59.99 Apprentice Yearly (web)
+    electrician: 'price_1TKlKL2RKw5t5RAmpD8FH7qp', // £129.99 Electrician Yearly (web)
     business_ai: 'price_1T6DUy2RKw5t5RAmo9HgAukW', // £299.99 Business AI Yearly
     employer: 'price_1SlyB82RKw5t5RAmN447YJUW', // £299.99 Employer Yearly (will become £499.99)
   },
@@ -132,7 +132,7 @@ export const stripePriceData = {
     {
       id: 'apprentice-monthly',
       name: 'Apprentice',
-      price: '£4.99',
+      price: '£5.99',
       period: '/month',
       description: 'Study guides, calculators & exam prep for apprentices',
       features: [
@@ -153,7 +153,7 @@ export const stripePriceData = {
     {
       id: 'electrician-monthly',
       name: 'Electrician',
-      price: '£9.99',
+      price: '£12.99',
       period: '/month',
       description: 'Certs, testing, quoting & AI agents for qualified sparks',
       features: [
@@ -220,7 +220,7 @@ export const stripePriceData = {
     {
       id: 'apprentice-yearly',
       name: 'Apprentice',
-      price: '£49.99',
+      price: '£59.99',
       period: '/year',
       description: 'Study guides, calculators & exam prep for apprentices',
       features: [
@@ -236,13 +236,13 @@ export const stripePriceData = {
       notIncluded: ['8 AI Specialist Agents', 'Inspection & Testing suite'],
       popular: false,
       color: 'bg-gradient-to-br from-elec-gray to-elec-dark',
-      savings: 'Save £9.89 vs monthly',
+      savings: 'Save £11.89 vs monthly',
       priceId: stripePrices.yearly.apprentice,
     },
     {
       id: 'electrician-yearly',
       name: 'Electrician',
-      price: '£99.99',
+      price: '£129.99',
       period: '/year',
       description: 'Certs, testing, quoting & AI agents for qualified sparks',
       features: [
@@ -258,7 +258,7 @@ export const stripePriceData = {
       notIncluded: [],
       popular: true,
       color: 'bg-gradient-to-br from-elec-gray to-elec-dark',
-      savings: 'Save £19.89 vs monthly',
+      savings: 'Save £25.89 vs monthly',
       priceId: stripePrices.yearly.electrician,
     },
     {

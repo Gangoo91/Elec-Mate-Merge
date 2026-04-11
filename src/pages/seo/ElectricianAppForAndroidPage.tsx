@@ -75,7 +75,7 @@ export default function ElectricianAppForAndroidPage() {
         'All four apps work offline on Android, which is essential for basements, plant rooms, and sites without signal. Elec-Mate saves locally every 10 seconds and syncs when connectivity returns.',
         'Elec-Mate is the only Android electrician app with AI Board Scanner, Voice Test Entry, and Defect Code AI — features that transform the certification workflow on site.',
         'iCertifi and CertsApp are certificate-focused apps. Easy EICR concentrates on EICRs. Only Elec-Mate covers certificates plus calculators, AI, training, and business management in a single subscription.',
-        'CertsApp uses a credit-based pricing model where you pay per certificate. Elec-Mate charges a flat rate from £4.99/month with unlimited certificates — better value for electricians producing regular volumes of certificates.',
+        'CertsApp uses a credit-based pricing model where you pay per certificate. Elec-Mate charges a flat rate from £5.99/month with unlimited certificates — better value for electricians producing regular volumes of certificates.',
       ]}
       sections={[
         {
@@ -113,7 +113,7 @@ export default function ElectricianAppForAndroidPage() {
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform with 8 certificate types, 50+
                 calculators, AI tools, 46+ training courses, and business management. Runs as an
-                optimised PWA on Android with native-like performance. From £4.99/month.
+                optimised PWA on Android with native-like performance. From £5.99/month.
               </p>
               <p>
                 <strong>iCertifi</strong> — Certificate generation app supporting multiple
@@ -299,7 +299,7 @@ export default function ElectricianAppForAndroidPage() {
         {
           question: 'Does CertsApp charge per certificate on Android?',
           answer:
-            'Yes. CertsApp uses a credit-based pricing model where you purchase credits and each certificate costs a certain number of credits. This model becomes expensive if you produce certificates regularly. Elec-Mate charges a flat rate from £4.99 per month with unlimited certificates — no per-certificate charges regardless of volume.',
+            'Yes. CertsApp uses a credit-based pricing model where you purchase credits and each certificate costs a certain number of credits. This model becomes expensive if you produce certificates regularly. Elec-Mate charges a flat rate from £5.99 per month with unlimited certificates — no per-certificate charges regardless of volume.',
         },
         {
           question: 'Can I use the AI Board Scanner on an Android phone?',
