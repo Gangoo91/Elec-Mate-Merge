@@ -1,47 +1,38 @@
 import { useNavigate } from 'react-router-dom';
 import { Skeleton } from '@/components/ui/skeleton';
 
-interface KPICardProps {
+interface KPIItemProps {
   label: string;
   value: string;
   href: string;
-  highlight: 'green' | 'amber' | 'red' | 'neutral';
+  dotColour: string;
   isLoading: boolean;
 }
 
-const highlightClasses: Record<KPICardProps['highlight'], string> = {
-  green: 'border-emerald-500/30 bg-emerald-500/10',
-  amber: 'border-amber-500/30 bg-amber-500/10',
-  red: 'border-red-500/30 bg-red-500/10',
-  neutral: 'border-white/10 bg-white/5',
-};
-
-const valueColourClasses: Record<KPICardProps['highlight'], string> = {
-  green: 'text-emerald-400',
-  amber: 'text-amber-400',
-  red: 'text-red-400',
-  neutral: 'text-white',
-};
-
-function KPICard({ label, value, href, highlight, isLoading }: KPICardProps) {
+function KPIItem({ label, value, href, dotColour, isLoading }: KPIItemProps) {
   const navigate = useNavigate();
 
   return (
     <button
       onClick={() => navigate(href)}
-      className={`flex flex-col items-start justify-center rounded-xl border px-3 py-2 h-14 touch-manipulation active:scale-[0.97] transition-all ${highlightClasses[highlight]}`}
+      className="flex-1 flex flex-col items-center gap-1 py-3 touch-manipulation active:opacity-70 transition-opacity"
     >
       {isLoading ? (
         <>
-          <Skeleton className="h-3 w-16 mb-1.5" />
-          <Skeleton className="h-5 w-12" />
+          <Skeleton className="h-5 w-14 mb-0.5" />
+          <Skeleton className="h-3 w-10" />
         </>
       ) : (
         <>
-          <span className="text-[11px] font-medium text-white leading-tight">{label}</span>
-          <span className={`text-base font-bold leading-tight ${valueColourClasses[highlight]}`}>
+          <span className="text-[15px] font-bold text-white leading-none tracking-tight">
             {value}
           </span>
+          <div className="flex items-center gap-1 mt-0.5">
+            <div className={`w-1.5 h-1.5 rounded-full ${dotColour}`} />
+            <span className="text-[10px] text-white/40 leading-none uppercase tracking-wide">
+              {label}
+            </span>
+          </div>
         </>
       )}
     </button>
@@ -66,35 +57,40 @@ export default function BusinessKPIStrip({
   formatCurrency,
 }: BusinessKPIStripProps) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-      <KPICard
-        label="Paid This Month"
-        value={formatCurrency(paidThisMonth)}
-        href="/electrician/invoices"
-        highlight={paidThisMonth > 0 ? 'green' : 'neutral'}
-        isLoading={isLoading}
-      />
-      <KPICard
-        label="Outstanding"
-        value={formatCurrency(outstanding)}
-        href="/electrician/invoices"
-        highlight="amber"
-        isLoading={isLoading}
-      />
-      <KPICard
-        label="Overdue"
-        value={formatCurrency(overdueAmount)}
-        href="/electrician/invoices"
-        highlight={overdueAmount > 0 ? 'red' : 'neutral'}
-        isLoading={isLoading}
-      />
-      <KPICard
-        label="Win Rate"
-        value={`${winRate}%`}
-        href="/electrician/quotes"
-        highlight={winRate >= 50 ? 'green' : 'amber'}
-        isLoading={isLoading}
-      />
+    <div className="card-surface-interactive">
+      <div className="flex items-center">
+        <KPIItem
+          label="Paid"
+          value={formatCurrency(paidThisMonth)}
+          href="/electrician/invoices"
+          dotColour="bg-emerald-400"
+          isLoading={isLoading}
+        />
+        <div className="w-px h-8 bg-white/[0.06]" />
+        <KPIItem
+          label="Owed"
+          value={formatCurrency(outstanding)}
+          href="/electrician/invoices"
+          dotColour="bg-amber-400"
+          isLoading={isLoading}
+        />
+        <div className="w-px h-8 bg-white/[0.06]" />
+        <KPIItem
+          label="Overdue"
+          value={formatCurrency(overdueAmount)}
+          href="/electrician/invoices"
+          dotColour={overdueAmount > 0 ? 'bg-red-400' : 'bg-white/20'}
+          isLoading={isLoading}
+        />
+        <div className="w-px h-8 bg-white/[0.06]" />
+        <KPIItem
+          label="Win Rate"
+          value={`${winRate}%`}
+          href="/electrician/quotes"
+          dotColour="bg-blue-400"
+          isLoading={isLoading}
+        />
+      </div>
     </div>
   );
 }

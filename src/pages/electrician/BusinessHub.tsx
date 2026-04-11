@@ -115,14 +115,14 @@ const BusinessHub = () => {
       </Helmet>
 
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50">
         <div className="px-4 py-2">
           <div className="flex items-center gap-3 h-11">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => navigate('/electrician')}
-              className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+              className="text-foreground hover:bg-accent rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -130,7 +130,7 @@ const BusinessHub = () => {
               <div className="p-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <Briefcase className="h-4 w-4 text-elec-yellow" />
               </div>
-              <h1 className="text-base font-semibold text-white">Business Hub</h1>
+              <h1 className="text-base font-semibold text-foreground">Business Hub</h1>
             </div>
           </div>
         </div>
@@ -157,10 +157,10 @@ const BusinessHub = () => {
 
         {/* YOUR DAY */}
         <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
             Your Day
           </h2>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <BusinessCard
               title="Tasks"
               description="To-dos & reminders"
@@ -170,7 +170,6 @@ const BusinessHub = () => {
               accentColor="from-elec-yellow via-amber-400 to-orange-400"
               iconColor="text-elec-yellow"
               iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
-              liveSubtitle={overdueCount > 0 ? `${overdueCount} overdue` : 'All clear'}
             />
             <BusinessCard
               title="Calendar"
@@ -199,7 +198,7 @@ const BusinessHub = () => {
 
         {/* FINANCIALS */}
         <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
             Financials
           </h2>
           <div className="grid grid-cols-2 gap-3">
@@ -255,7 +254,7 @@ const BusinessHub = () => {
 
         {/* ON THE JOB */}
         <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
             On the Job
           </h2>
           <div className="grid grid-cols-2 gap-3">
@@ -301,7 +300,7 @@ const BusinessHub = () => {
 
         {/* MONEY & STOCK */}
         <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
             Money & Stock
           </h2>
           <div className="grid grid-cols-2 gap-3">
@@ -370,7 +369,7 @@ const BusinessHub = () => {
 
         {/* GROW YOUR BUSINESS */}
         <motion.section variants={itemVariants} className="space-y-3">
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
+          <h2 className="text-xs font-medium text-muted-foreground uppercase tracking-wider px-0.5">
             Grow Your Business
           </h2>
           <div className="grid grid-cols-2 gap-3">

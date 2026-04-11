@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, Image as ImageIcon, Folder, ArrowLeft } from 'lucide-react';
+import { Camera, ChevronLeft } from 'lucide-react';
 import { useSafetyPhotos } from '@/hooks/useSafetyPhotos';
 import { usePhotoProjects, PhotoProject } from '@/hooks/usePhotoProjects';
 import { SafetyPhoto } from '@/hooks/useSafetyPhotos';
@@ -14,14 +14,7 @@ import ProjectsTab from './photo-docs/ProjectsTab';
 import ProjectDetailView from './photo-docs/ProjectDetailView';
 import ShareProjectSheet from './photo-docs/ShareProjectSheet';
 
-type TabId = 'projects' | 'photos' | 'camera';
-
-interface Tab {
-  id: TabId;
-  label: string;
-  icon: React.ReactNode;
-  badge?: number;
-}
+type ViewState = 'home' | 'all-photos' | 'camera';
 
 interface PhotoDocumentationProps {
   onBack?: () => void;
@@ -30,15 +23,15 @@ interface PhotoDocumentationProps {
 
 export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumentationProps) {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TabId>('projects');
+  const [viewState, setViewState] = useState<ViewState>('home');
   const { stats } = useSafetyPhotos();
   const { projects } = usePhotoProjects('active');
   const { pendingCount: offlinePendingCount } = useOfflinePhotoQueue();
 
-  // Project detail view state (lifted to this level)
+  // Project detail view state
   const [viewingProject, setViewingProject] = useState<PhotoProject | null>(null);
 
-  // Camera context: when navigating from a project, camera knows the project
+  // Camera context
   const [cameraProjectRef, setCameraProjectRef] = useState<string | undefined>();
   const [cameraProjectId, setCameraProjectId] = useState<string | undefined>();
 
@@ -47,53 +40,11 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
   const [shareProject, setShareProject] = useState<PhotoProject | null>(null);
   const [sharePhotos, setSharePhotos] = useState<SafetyPhoto[]>([]);
 
-  const tabs: Tab[] = [
-    {
-      id: 'projects',
-      label: 'Projects',
-      icon: <Folder className="h-[22px] w-[22px]" />,
-      badge: projects.length > 0 ? projects.length : undefined,
-    },
-    {
-      id: 'photos',
-      label: 'All Photos',
-      icon: <ImageIcon className="h-[22px] w-[22px]" />,
-      badge: stats.total > 0 ? stats.total : undefined,
-    },
-    {
-      id: 'camera',
-      label: 'Camera',
-      icon: <Camera className="h-[22px] w-[22px]" />,
-      badge: offlinePendingCount > 0 ? offlinePendingCount : undefined,
-    },
-  ];
-
   const handlePhotoUploaded = useCallback(() => {
     setCameraProjectRef(undefined);
     setCameraProjectId(undefined);
-    setActiveTab('projects');
+    setViewState('home');
   }, []);
-
-  const handleTabChange = useCallback(
-    (tabId: TabId) => {
-      // If switching to camera from a project, pass context
-      if (tabId === 'camera' && viewingProject) {
-        setCameraProjectRef(viewingProject.name);
-        setCameraProjectId(viewingProject.id);
-      } else if (tabId !== 'camera') {
-        setCameraProjectRef(undefined);
-        setCameraProjectId(undefined);
-      }
-
-      // If switching away from project detail, close it
-      if (tabId !== 'projects' && viewingProject) {
-        setViewingProject(null);
-      }
-
-      setActiveTab(tabId);
-    },
-    [viewingProject]
-  );
 
   const handleSelectProject = useCallback((project: PhotoProject) => {
     setViewingProject(project);
@@ -110,14 +61,18 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
   }, []);
 
   const handleBack = () => {
+    if (viewState !== 'home') {
+      setViewState('home');
+      return;
+    }
     if (onBack) {
       onBack();
     } else {
-      navigate('/electrician/site-safety');
+      navigate('/electrician/business');
     }
   };
 
-  // When viewing a project, show full-page ProjectDetailView (hide tabs)
+  // When viewing a project, show full-page ProjectDetailView
   if (viewingProject) {
     return (
       <div className="flex flex-col h-[calc(100vh-80px)] bg-background">
@@ -128,11 +83,9 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
           onOpenCamera={() => {
             setCameraProjectRef(viewingProject.name);
             setCameraProjectId(viewingProject.id);
-            setActiveTab('camera');
+            setViewState('camera');
           }}
         />
-
-        {/* Share Sheet */}
         {shareProject && (
           <ShareProjectSheet
             open={shareOpen}
@@ -146,92 +99,80 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
     );
   }
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'projects':
-        return <ProjectsTab onSelectProject={handleSelectProject} />;
-      case 'photos':
-        return <AllPhotosTab />;
-      case 'camera':
-        return (
+  // Camera or All Photos sub-views
+  if (viewState === 'camera') {
+    return (
+      <div className="flex flex-col h-[calc(100vh-80px)] bg-background">
+        <div className="flex-shrink-0 bg-background border-b border-white/10 px-2 py-2">
+          <button
+            onClick={() => setViewState('home')}
+            className="flex items-center gap-2 text-white h-11 px-2 rounded-lg active:bg-white/5 touch-manipulation"
+          >
+            <ChevronLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">Photo Docs</span>
+          </button>
+        </div>
+        <div className="flex-1 overflow-hidden">
           <CameraTab
             onPhotoUploaded={handlePhotoUploaded}
             projectReference={cameraProjectRef}
             projectId={cameraProjectId}
+            onClose={() => setViewState('home')}
           />
-        );
-      default:
-        return null;
-    }
-  };
+        </div>
+      </div>
+    );
+  }
 
-  return (
-    <div className="flex flex-col h-[calc(100vh-80px)] bg-background">
-      {/* Header with back button */}
-      <div className="flex-shrink-0 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-2">
+  if (viewState === 'all-photos') {
+    return (
+      <div className="flex flex-col h-[calc(100vh-80px)] bg-background">
+        <div className="flex-shrink-0 bg-background border-b border-white/10 px-2 py-2">
           <button
-            onClick={handleBack}
-            className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
+            onClick={() => setViewState('home')}
+            className="flex items-center gap-2 text-white h-11 px-2 rounded-lg active:bg-white/5 touch-manipulation"
           >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">{backLabel || 'Site Safety'}</span>
+            <ChevronLeft className="h-5 w-5" />
+            <span className="text-sm font-medium">Photo Docs</span>
           </button>
         </div>
-      </div>
-
-      {/* Tab content area - full height */}
-      <div className="flex-1 overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className="h-full"
-          >
-            {renderTabContent()}
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Bottom tab bar */}
-      <div className="flex-shrink-0 bg-background/95 backdrop-blur-xl border-t border-white/10">
-        <div className="flex items-stretch">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => handleTabChange(tab.id)}
-                className={`flex-1 flex flex-col items-center justify-center py-2.5 touch-manipulation transition-colors ${
-                  isActive ? 'text-elec-yellow' : 'text-white active:text-white'
-                }`}
-              >
-                {/* Icon with badge */}
-                <div className="relative">
-                  {tab.icon}
-                  {tab.badge !== undefined && tab.badge > 0 && (
-                    <span className="absolute -top-1 -right-2.5 min-w-[16px] h-[16px] px-1 rounded-full bg-elec-yellow text-black text-[9px] font-bold flex items-center justify-center">
-                      {tab.badge > 99 ? '99+' : tab.badge}
-                    </span>
-                  )}
-                </div>
-
-                {/* Label */}
-                <span
-                  className={`text-[10px] mt-1 font-medium ${isActive ? 'text-elec-yellow' : ''}`}
-                >
-                  {tab.label}
-                </span>
-              </button>
-            );
-          })}
+        <div className="flex-1 overflow-hidden">
+          <AllPhotosTab />
         </div>
-        {/* Safe area spacer */}
-        <div className="h-[env(safe-area-inset-bottom)]" />
       </div>
+    );
+  }
+
+  // Home view — hero + projects
+  return (
+    <div className="flex flex-col h-[calc(100vh-80px)] bg-background relative">
+      <div className="flex-1 overflow-hidden">
+        <ProjectsTab
+          onSelectProject={handleSelectProject}
+          onViewAllPhotos={() => setViewState('all-photos')}
+          totalPhotoCount={stats.total}
+          totalBytes={stats.totalBytes}
+          projectCount={projects.length}
+          onBack={handleBack}
+          backLabel={backLabel}
+        />
+      </div>
+
+      {/* Floating Camera FAB */}
+      <motion.button
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.2 }}
+        onClick={() => setViewState('camera')}
+        className="absolute bottom-6 right-4 h-14 w-14 rounded-full bg-elec-yellow shadow-lg shadow-elec-yellow/30 flex items-center justify-center touch-manipulation active:scale-95 transition-transform z-20"
+      >
+        <Camera className="h-6 w-6 text-black" />
+        {offlinePendingCount > 0 && (
+          <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+            {offlinePendingCount}
+          </span>
+        )}
+      </motion.button>
 
       {/* Share Sheet */}
       {shareProject && (

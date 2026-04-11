@@ -5,10 +5,8 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { PhotoProject, PHOTO_TYPES, getPhotoTypeLabel } from '@/hooks/usePhotoProjects';
 import { SafetyPhoto, getCategoryLabel } from '@/hooks/useSafetyPhotos';
 import { toast } from '@/hooks/use-toast';
-import jsPDF from 'jspdf';
 import { format } from 'date-fns';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
-import JSZip from 'jszip';
 
 interface Annotation {
   x: number;
@@ -133,6 +131,7 @@ export default function ProjectExportSheet({
     setExportProgress(0);
 
     try {
+      const { default: jsPDF } = await import('jspdf');
       const doc = new jsPDF();
       const pageWidth = doc.internal.pageSize.getWidth();
       const pageHeight = doc.internal.pageSize.getHeight();
@@ -324,6 +323,7 @@ export default function ProjectExportSheet({
     setExportProgress(0);
 
     try {
+      const { default: JSZip } = await import('jszip');
       const zip = new JSZip();
       const byType = new Map<string, typeof filteredPhotos>();
 
