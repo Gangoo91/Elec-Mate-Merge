@@ -1,17 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Zap, Plus, Minus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ArrowLeft, Plus, Minus } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { generateWarningLabelsPdf, type LabelForPdf } from '@/utils/generate-warning-labels-pdf';
 
-const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.04 } } };
-const itemVariants = { hidden: { opacity: 0, y: 8 }, visible: { opacity: 1, y: 0, transition: { duration: 0.25 } } };
-const inputCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
+const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 
 interface LabelDef {
   id: string;
@@ -78,9 +74,21 @@ interface SelectedLabel {
   testedBy?: string;
 }
 
+const SectionHeader = ({ title }: { title: string }) => (
+  <div className="border-b border-white/[0.06] pb-1">
+    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+    <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
+  </div>
+);
+
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div><Label className="text-white text-xs mb-1.5 block">{label}</Label>{children}</div>
+);
+
 export default function WarningLabelsPage() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState<SelectedLabel[]>([]);
+  const [activeCategory, setActiveCategory] = useState<'warning' | 'testing' | 'cable' | 'custom'>('warning');
 
   const getSelectedForLabel = (id: string) => selected.find((s) => s.labelId === id);
   const toggleLabel = (id: string) => {
@@ -114,98 +122,116 @@ export default function WarningLabelsPage() {
     }
   };
 
+  const filteredLabels = allLabels.filter((l) => l.category === activeCategory);
+
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
-        <div className="px-4 py-2">
-          <div className="flex items-center gap-3 h-11">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
+    <div className="bg-background min-h-screen">
+      <div className="bg-background">
+        <div className="px-2 py-2.5">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
-                <Zap className="h-4 w-4 text-yellow-400" />
-              </div>
-              <h1 className="text-base font-semibold text-white">Warning Labels</h1>
+              <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]">
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+              <h1 className="text-sm font-bold text-white leading-tight">Warning Labels</h1>
             </div>
             {totalLabels > 0 && (
-              <span className="ml-auto text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-elec-yellow/15 text-elec-yellow">{totalLabels} selected</span>
+              <span className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-elec-yellow/15 text-elec-yellow">{totalLabels} selected</span>
             )}
           </div>
         </div>
+        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      <motion.main variants={containerVariants} initial="hidden" animate="visible" className="px-4 py-4 space-y-4 max-w-3xl mx-auto">
-        <motion.div variants={itemVariants} className="border-b border-white/[0.06] pb-3">
-          <p className="text-sm font-semibold text-white">Printable Labels</p>
-          <p className="text-xs text-white mt-1">Select labels and quantities. Generates a printable A4 sheet with cut lines. Use on self-adhesive label paper (Avery L7163) or print on plain A4 and cut to size.</p>
-        </motion.div>
+      <main className="py-4 pb-48 sm:px-4 sm:pb-8 space-y-6">
+        {/* Info banner */}
+        <div className="px-4 sm:px-0">
+          <div className="rounded-lg bg-white/[0.04] border border-white/[0.06] p-3">
+            <p className="text-xs text-white leading-relaxed">Select labels and quantities. Generates a printable A4 sheet with cut lines. Use on self-adhesive label paper (Avery L7163) or print on plain A4 and cut to size.</p>
+          </div>
+        </div>
 
-        {labelCategories.map((cat) => {
-          const catLabels = allLabels.filter((l) => l.category === cat.key);
-          return (
-            <motion.div key={cat.key} variants={itemVariants} className="space-y-3">
-              <div className="border-b border-white/[0.06] pb-1">
-                <h3 className="text-xs font-medium text-white uppercase tracking-wider">{cat.title}</h3>
-                <p className="text-[11px] text-white mt-0.5">{cat.description}</p>
-              </div>
-              {catLabels.map((label) => {
-                const sel = getSelectedForLabel(label.id);
-                const isSelected = !!sel;
-                const style = colourStyles[label.colour] || colourStyles.warning;
+        {/* Category toggles */}
+        <div className="px-4 sm:px-0">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {labelCategories.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => setActiveCategory(cat.key)}
+                className={cn(
+                  'h-9 rounded-lg text-[11px] font-semibold border touch-manipulation active:scale-[0.98] transition-all',
+                  activeCategory === cat.key
+                    ? 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.06] border-white/[0.08] text-white'
+                )}
+              >
+                {cat.title}
+              </button>
+            ))}
+          </div>
+        </div>
 
-                return (
-                  <div key={label.id} className={cn('rounded-2xl border overflow-hidden transition-all', isSelected ? 'border-elec-yellow/30 bg-white/[0.04]' : 'border-white/[0.06] bg-white/[0.02]')}>
-                    <button onClick={() => toggleLabel(label.id)} className="w-full flex items-center gap-3.5 p-4 text-left touch-manipulation active:bg-white/[0.04] transition-colors">
-                      <div className={cn('flex-shrink-0 w-14 h-9 rounded-lg flex items-center justify-center border-2', style.bg, style.border)}>
-                        <span className={cn('text-[6px] font-black text-center leading-tight px-1', style.text)}>{label.text || 'CUSTOM'}</span>
+        {/* Active category section */}
+        <div className="px-4 sm:px-0 space-y-3">
+          <SectionHeader title={labelCategories.find((c) => c.key === activeCategory)?.title || ''} />
+          <p className="text-[11px] text-white">{labelCategories.find((c) => c.key === activeCategory)?.description}</p>
+
+          {filteredLabels.map((label) => {
+            const sel = getSelectedForLabel(label.id);
+            const isSelected = !!sel;
+            const style = colourStyles[label.colour] || colourStyles.warning;
+
+            return (
+              <div key={label.id} className={cn('rounded-xl border overflow-hidden transition-all', isSelected ? 'border-elec-yellow/30 bg-white/[0.04]' : 'border-white/[0.06] bg-white/[0.02]')}>
+                <button onClick={() => toggleLabel(label.id)} className="w-full flex items-center gap-3.5 p-3.5 text-left touch-manipulation active:bg-white/[0.04] transition-colors">
+                  <div className={cn('flex-shrink-0 w-14 h-9 rounded-lg flex items-center justify-center border-2', style.bg, style.border)}>
+                    <span className={cn('text-[6px] font-black text-center leading-tight px-1', style.text)}>{label.text || 'CUSTOM'}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-white">{label.title}</p>
+                    {label.regulation && <p className="text-[11px] text-white mt-0.5">{label.regulation}</p>}
+                  </div>
+                  <span className={cn('text-[11px] font-semibold px-3 py-1.5 rounded-lg flex-shrink-0 transition-all touch-manipulation', isSelected ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] border border-white/[0.08] text-white')}>
+                    {isSelected ? 'Added' : 'Add'}
+                  </span>
+                </button>
+                {isSelected && (
+                  <div className="px-3.5 pb-3.5 space-y-3 border-t border-white/[0.06] pt-3">
+                    <div className="flex items-center gap-3">
+                      <Label className="text-white text-xs flex-1">Quantity</Label>
+                      <div className="flex items-center gap-2">
+                        <button onClick={() => updateQuantity(label.id, -1)} className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center touch-manipulation active:scale-[0.95]"><Minus className="w-3.5 h-3.5 text-white" /></button>
+                        <span className="w-8 text-center text-sm font-semibold text-white">{sel?.quantity}</span>
+                        <button onClick={() => updateQuantity(label.id, 1)} className="w-11 h-11 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center touch-manipulation active:scale-[0.95]"><Plus className="w-3.5 h-3.5 text-white" /></button>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white">{label.title}</p>
-                        {label.regulation && <p className="text-[11px] text-white mt-0.5">{label.regulation}</p>}
-                      </div>
-                      <span className={cn('text-[11px] font-semibold px-3 py-1.5 rounded-lg flex-shrink-0 transition-all touch-manipulation', isSelected ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] border border-white/[0.08] text-white')}>
-                        {isSelected ? 'Added' : 'Add'}
-                      </span>
-                    </button>
-                    {isSelected && (
-                      <div className="px-4 pb-4 space-y-3 border-t border-white/[0.06] pt-3">
-                        <div className="flex items-center gap-3">
-                          <Label className="text-white text-xs flex-1">Quantity</Label>
-                          <div className="flex items-center gap-2">
-                            <button onClick={() => updateQuantity(label.id, -1)} className="w-10 h-10 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center touch-manipulation active:scale-[0.95]"><Minus className="w-3.5 h-3.5 text-white" /></button>
-                            <span className="w-8 text-center text-sm font-semibold text-white">{sel?.quantity}</span>
-                            <button onClick={() => updateQuantity(label.id, 1)} className="w-10 h-10 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center touch-manipulation active:scale-[0.95]"><Plus className="w-3.5 h-3.5 text-white" /></button>
-                          </div>
-                        </div>
-                        {label.hasDateField && (
-                          <div><Label className="text-white text-xs">Date</Label><Input type="date" value={sel?.nextTestDate || ''} onChange={(e) => updateField(label.id, 'nextTestDate', e.target.value)} className={cn(inputCn, '[color-scheme:dark]')} /></div>
-                        )}
-                        {label.hasTestedByField && (
-                          <div><Label className="text-white text-xs">Tested By</Label><Input value={sel?.testedBy || ''} onChange={(e) => updateField(label.id, 'testedBy', e.target.value)} className={inputCn} placeholder="Name" /></div>
-                        )}
-                        {label.hasCustomText && (
-                          <div><Label className="text-white text-xs">Label Text</Label><Input value={sel?.customText || ''} onChange={(e) => updateField(label.id, 'customText', e.target.value)} className={inputCn} placeholder="Enter label text..." /></div>
-                        )}
-                      </div>
+                    </div>
+                    {label.hasDateField && (
+                      <Field label="Date"><Input type="date" value={sel?.nextTestDate || ''} onChange={(e) => updateField(label.id, 'nextTestDate', e.target.value)} className={inputCn} /></Field>
+                    )}
+                    {label.hasTestedByField && (
+                      <Field label="Tested By"><Input value={sel?.testedBy || ''} onChange={(e) => updateField(label.id, 'testedBy', e.target.value)} className={inputCn} placeholder="Name" /></Field>
+                    )}
+                    {label.hasCustomText && (
+                      <Field label="Label Text"><Input value={sel?.customText || ''} onChange={(e) => updateField(label.id, 'customText', e.target.value)} className={inputCn} placeholder="Enter label text..." /></Field>
                     )}
                   </div>
-                );
-              })}
-            </motion.div>
-          );
-        })}
-
-        {totalLabels > 0 && <div className="h-20" />}
-      </motion.main>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </main>
 
       {/* Sticky generate button */}
       {totalLabels > 0 && (
         <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-t border-white/[0.06] px-4 py-3">
           <div className="max-w-3xl mx-auto">
-            <Button className="w-full h-12 text-sm font-medium touch-manipulation active:scale-[0.98] bg-elec-yellow text-black hover:bg-elec-yellow/90 shadow-lg shadow-elec-yellow/20" onClick={handleGenerate}>
+            <button
+              className="w-full h-11 rounded-lg text-sm font-semibold touch-manipulation active:scale-[0.98] bg-elec-yellow text-black transition-all"
+              onClick={handleGenerate}
+            >
               Generate PDF — {totalLabels} label{totalLabels !== 1 ? 's' : ''} selected
-            </Button>
+            </button>
           </div>
         </div>
       )}

@@ -25,8 +25,9 @@ export const useG99CommissioningTabs = (formData: any) => {
 
   const canNavigateNext = currentTabIndex < totalTabs - 1;
   const canNavigatePrevious = currentTabIndex > 0;
-  const navigateNext = () => { if (canNavigateNext) setCurrentTab(tabConfigs[currentTabIndex + 1].id); };
-  const navigatePrevious = () => { if (canNavigatePrevious) setCurrentTab(tabConfigs[currentTabIndex - 1].id); };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const navigateNext = () => { if (canNavigateNext) { setCurrentTab(tabConfigs[currentTabIndex + 1].id); scrollToTop(); } };
+  const navigatePrevious = () => { if (canNavigatePrevious) { setCurrentTab(tabConfigs[currentTabIndex - 1].id); scrollToTop(); } };
   const getProgressPercentage = () => Math.round((tabConfigs.filter((t) => isTabComplete(t.id)).length / totalTabs) * 100);
 
   return {
