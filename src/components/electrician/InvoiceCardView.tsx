@@ -287,7 +287,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                             ) : (invoice as any).external_invoice_id ? (
                               'Synced'
                             ) : (
-                              `Sync${connectedProvider ? '' : ''}`
+                              connectedProvider ? `Sync` : 'Sync'
                             )}
                           </button>
                         )}

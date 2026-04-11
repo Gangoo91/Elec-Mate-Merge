@@ -48,7 +48,7 @@ const InvoiceViewPage = () => {
   const [isSyncing, setIsSyncing] = useState(false);
   const { hasConnectedProvider, syncInvoice, integrations } = useAccountingIntegrations();
 
-  const connectedProvider = integrations.find((i) => i.connected);
+  const connectedProvider = integrations.find((i) => i.status === 'connected');
   const providerName = connectedProvider?.provider
     ? connectedProvider.provider.charAt(0).toUpperCase() + connectedProvider.provider.slice(1)
     : 'Accounting';
@@ -686,6 +686,40 @@ const InvoiceViewPage = () => {
                 <span className="text-[12px] text-white">→</span>
               </button>
             )}
+            {isDraft && (
+              <button
+                onClick={async () => {
+                  setShowActionsSheet(false);
+                  const { error } = await supabase.from('quotes').update({ invoice_status: 'sent', invoice_sent_at: new Date().toISOString() }).eq('id', invoice.id);
+                  if (error) { toast({ title: 'Failed to update', variant: 'destructive' }); }
+                  else { toast({ title: 'Invoice marked as sent' }); fetchInvoice(); }
+                }}
+                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+              >
+                <span className="text-[15px] font-medium text-blue-400">Mark as Sent</span>
+              </button>
+            )}
+            <button
+              onClick={() => {
+                setShowActionsSheet(false);
+                // Store invoice data in session for duplication
+                const sessionId = `dup-${Date.now()}`;
+                sessionStorage.setItem(sessionId, JSON.stringify({
+                  quoteData: {
+                    client: invoice.client,
+                    jobDetails: invoice.jobDetails,
+                    items: [...(invoice.items || []), ...((invoice as any).additional_invoice_items || [])],
+                    settings: invoice.settings,
+                    notes: invoice.notes,
+                  },
+                }));
+                navigate(`/electrician/invoice-builder/create?quoteSessionId=${sessionId}`);
+              }}
+              className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+            >
+              <span className="text-[15px] font-medium text-white">Duplicate Invoice</span>
+              <span className="text-[12px] text-white">→</span>
+            </button>
             {isOverdue && (
               <>
                 <button

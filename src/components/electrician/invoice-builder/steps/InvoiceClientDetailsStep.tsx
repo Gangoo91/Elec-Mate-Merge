@@ -140,8 +140,8 @@ export const InvoiceClientDetailsStep = ({
       };
       onUpdate(client, jobDetails);
 
-      // Show save prompt if details complete but no customer linked
-      if (!customerId && !savePromptDismissed && value.name?.trim()) {
+      // Show save prompt if details complete but no customer linked (and not already selected one)
+      if (!customerId && !savePromptDismissed && !selectedCustomer && value.name?.trim()) {
         setShowSavePrompt(true);
       }
     });

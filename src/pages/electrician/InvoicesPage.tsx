@@ -523,44 +523,122 @@ const InvoicesPage = () => {
         <link rel="canonical" href={canonical} />
       </Helmet>
 
-      {/* Header — exact QuotesPage pattern */}
+      {/* Full-screen search overlay */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-background flex flex-col"
+          >
+            <div className="px-4 pt-4 pb-3 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="flex-1 relative">
+                  <input
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Client, invoice number, job..."
+                    className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[15px] text-white placeholder:text-white/50 outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 touch-manipulation"
+                    autoFocus
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation"
+                    >
+                      <X className="h-3 w-3 text-white" />
+                    </button>
+                  )}
+                </div>
+                <button
+                  className="text-[13px] text-white font-medium flex-shrink-0 touch-manipulation h-12 px-2"
+                  onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                >
+                  Cancel
+                </button>
+              </div>
+              {searchQuery.trim() && (
+                <p className="text-[12px] text-white/50">{filteredInvoices.length} result{filteredInvoices.length !== 1 ? 's' : ''}</p>
+              )}
+            </div>
+            <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-3">
+              {searchQuery.trim() ? (
+                filteredInvoices.length > 0 ? (
+                  filteredInvoices.map((invoice) => (
+                    <button
+                      key={invoice.id}
+                      onClick={() => {
+                        setIsSearchOpen(false);
+                        setSearchQuery('');
+                        navigate(`/electrician/invoices/${invoice.id}/view`);
+                      }}
+                      className="w-full flex items-center justify-between py-3 border-b border-white/[0.08] touch-manipulation active:bg-white/[0.04] transition-all text-left"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[14px] font-medium text-white truncate">{invoice.client?.name || 'No client'}</p>
+                        <p className="text-[12px] text-white/50 mt-0.5">{invoice.invoice_number} · {invoice.items?.length || 0} items</p>
+                      </div>
+                      <span className="text-[14px] font-semibold text-white tabular-nums ml-3">
+                        {formatCurrency(invoice.total)}
+                      </span>
+                    </button>
+                  ))
+                ) : (
+                  <div className="text-center py-16">
+                    <p className="text-[15px] font-medium text-white">No results</p>
+                    <p className="text-[13px] text-white/50 mt-1">Try a different search term</p>
+                  </div>
+                )
+              ) : (
+                <div className="space-y-4 pt-2">
+                  <div>
+                    <p className="text-[11px] text-white/50 uppercase tracking-wider mb-2">Recent Invoices</p>
+                    <div className="space-y-2">
+                      {invoices.slice(0, 5).map((invoice) => (
+                        <button
+                          key={invoice.id}
+                          onClick={() => {
+                            setIsSearchOpen(false);
+                            navigate(`/electrician/invoices/${invoice.id}/view`);
+                          }}
+                          className="w-full flex items-center justify-between py-3 border-b border-white/[0.08] touch-manipulation active:bg-white/[0.04] transition-all text-left"
+                        >
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[14px] font-medium text-white truncate">{invoice.client?.name || 'No client'}</p>
+                            <p className="text-[12px] text-white/50 mt-0.5">{invoice.invoice_number} · {invoice.items?.length || 0} items</p>
+                          </div>
+                          <span className="text-[14px] font-semibold text-white tabular-nums ml-3">
+                            {formatCurrency(invoice.total)}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Header */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-white/[0.06]">
         <div className="flex items-center h-14 px-4 gap-2">
-          {isSearchOpen ? (
-            <>
-              <div className="flex-1 relative">
-                <Input
-                  autoFocus
-                  placeholder="Search invoices..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-11 pl-4 pr-10 bg-white/[0.06] border-0 rounded-full text-base touch-manipulation"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center"
-                  >
-                    <X className="h-4 w-4 text-white" />
-                  </button>
-                )}
-              </div>
-              <button
-                onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
-                className="text-sm text-white font-medium px-2 touch-manipulation"
-              >
-                Cancel
-              </button>
-            </>
-          ) : (
-            <>
               <button
                 onClick={() => navigate('/electrician/business')}
                 className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
-              <h1 className="flex-1 text-lg font-semibold text-white">Invoices</h1>
+              <h1 className="flex-1 text-lg font-semibold text-white truncate">Invoices</h1>
+              <button
+                onClick={() => navigate('/electrician/quotes')}
+                className="h-8 px-2.5 rounded-lg bg-white/[0.06] border border-white/[0.08] text-[10px] font-semibold text-white touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
+              >
+                Quotes
+              </button>
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
@@ -573,12 +651,9 @@ const InvoicesPage = () => {
               >
                 <Plus className="h-5 w-5 text-black" />
               </button>
-            </>
-          )}
         </div>
 
         {/* Filter pills */}
-        {!isSearchOpen && (
           <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
             {filters.map((filter) => (
               <button
@@ -598,7 +673,6 @@ const InvoicesPage = () => {
               </button>
             ))}
           </div>
-        )}
       </header>
 
       {/* Content */}

@@ -193,31 +193,46 @@ const QuotesPage = () => {
       <AnimatePresence>
         {showSearch && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 bg-background flex flex-col"
           >
-            <div className="flex items-center gap-2 px-4 py-3 h-14 border-b border-white/[0.06]">
-              <Search className="h-5 w-5 text-white flex-shrink-0" />
-              <Input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by client, quote number, job..."
-                className="h-10 flex-1 text-base bg-transparent border-0 focus:ring-0 focus:border-0 placeholder:text-white touch-manipulation"
-                autoFocus
-              />
-              <button
-                className="text-elec-yellow font-medium text-sm flex-shrink-0 touch-manipulation"
-                onClick={() => {
-                  setShowSearch(false);
-                  setSearchQuery('');
-                }}
-              >
-                Cancel
-              </button>
+            {/* Search header */}
+            <div className="px-4 pt-4 pb-3 space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="flex-1 relative">
+                  <input
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Client, quote number, job title..."
+                    className="w-full h-12 pl-4 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[15px] text-white placeholder:text-white/50 outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 touch-manipulation"
+                    autoFocus
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery('')}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation"
+                    >
+                      <X className="h-3 w-3 text-white" />
+                    </button>
+                  )}
+                </div>
+                <button
+                  className="text-[13px] text-white font-medium flex-shrink-0 touch-manipulation h-12 px-2"
+                  onClick={() => { setShowSearch(false); setSearchQuery(''); }}
+                >
+                  Cancel
+                </button>
+              </div>
+              {searchQuery.trim() && (
+                <p className="text-[12px] text-white/50">{filteredQuotes.length} result{filteredQuotes.length !== 1 ? 's' : ''}</p>
+              )}
             </div>
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
+
+            {/* Results */}
+            <div className="flex-1 overflow-y-auto px-4 pb-8 space-y-3">
               {searchQuery.trim() ? (
                 filteredQuotes.length > 0 ? (
                   filteredQuotes.map((quote) => (
@@ -234,13 +249,37 @@ const QuotesPage = () => {
                     />
                   ))
                 ) : (
-                  <div className="text-center py-12">
-                    <p className="text-white text-sm">No quotes matching "{searchQuery}"</p>
+                  <div className="text-center py-16">
+                    <p className="text-[15px] font-medium text-white">No results</p>
+                    <p className="text-[13px] text-white/50 mt-1">Try a different search term</p>
                   </div>
                 )
               ) : (
-                <div className="text-center py-12">
-                  <p className="text-white text-sm">Search by client name, quote number, or job title</p>
+                <div className="space-y-4 pt-2">
+                  {/* Recent quotes — show last 5 */}
+                  <div>
+                    <p className="text-[11px] text-white/50 uppercase tracking-wider mb-2">Recent Quotes</p>
+                    <div className="space-y-2">
+                      {savedQuotes.slice(0, 5).map((quote) => (
+                        <button
+                          key={quote.id}
+                          onClick={() => {
+                            setShowSearch(false);
+                            navigate(`/electrician/quotes/view/${quote.id}`);
+                          }}
+                          className="w-full flex items-center justify-between py-3 border-b border-white/[0.08] touch-manipulation active:bg-white/[0.04] transition-all text-left"
+                        >
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[14px] font-medium text-white truncate">{quote.client?.name || 'No client'}</p>
+                            <p className="text-[12px] text-white/50 mt-0.5">{quote.quoteNumber} · {quote.items?.length || 0} items</p>
+                          </div>
+                          <span className="text-[14px] font-semibold text-white tabular-nums ml-3">
+                            {formatGBP(quote.total)}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
@@ -257,7 +296,13 @@ const QuotesPage = () => {
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
-          <h1 className="flex-1 text-lg font-semibold text-white">Quotes</h1>
+          <h1 className="flex-1 text-lg font-semibold text-white truncate">Quotes</h1>
+          <button
+            onClick={() => navigate('/electrician/invoices')}
+            className="h-8 px-2.5 rounded-lg bg-white/[0.06] border border-white/[0.08] text-[10px] font-semibold text-white touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
+          >
+            Invoices
+          </button>
           <button
             onClick={() => setShowSearch(true)}
             className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"

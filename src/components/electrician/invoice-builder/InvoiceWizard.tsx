@@ -136,15 +136,19 @@ export const InvoiceWizard = ({
         (invoice.additional_invoice_items && invoice.additional_invoice_items.length > 0)
       ) {
         setIsSaving(true);
-        draftStorage.saveDraft('invoice', invoice.id || null, {
-          client: invoice.client,
-          jobDetails: invoice.jobDetails,
-          items: invoice.items,
-          additional_invoice_items: invoice.additional_invoice_items,
-          settings: invoice.settings,
-          invoice_notes: invoice.invoice_notes,
-        });
-        setLastSaved(new Date());
+        try {
+          draftStorage.saveDraft('invoice', invoice.id || null, {
+            client: invoice.client,
+            jobDetails: invoice.jobDetails,
+            items: invoice.items,
+            additional_invoice_items: invoice.additional_invoice_items,
+            settings: invoice.settings,
+            invoice_notes: invoice.invoice_notes,
+          });
+          setLastSaved(new Date());
+        } catch (e) {
+          console.warn('Auto-save failed:', e);
+        }
         setTimeout(() => setIsSaving(false), 500);
       }
     }, 10000);

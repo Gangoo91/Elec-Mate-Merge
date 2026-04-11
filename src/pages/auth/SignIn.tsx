@@ -30,7 +30,7 @@ const SignIn = () => {
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [showBiometricPrompt, setShowBiometricPrompt] = useState(false);
   const [isBiometricLoggingIn, setIsBiometricLoggingIn] = useState(false);
-  const [userCount, setUserCount] = useState('500+');
+  const [userCount, setUserCount] = useState('700+');
 
   const pendingCredentials = useRef<{ email: string; password: string } | null>(null);
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -44,7 +44,7 @@ const SignIn = () => {
       .from('profiles')
       .select('*', { count: 'exact', head: true })
       .then(({ count }) => {
-        if (count && count > 0) setUserCount(`${Math.floor(count / 10) * 10}+`);
+        if (count && count > 0) setUserCount(`${count}`);
       });
   }, []);
 
@@ -382,7 +382,7 @@ const SignIn = () => {
             transition={{ delay: 0.5 }}
             className="text-[11px] text-white text-center mt-6 flex items-center justify-center gap-1.5"
           >
-            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-green-500/50" />
+            <span className="inline-flex h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
             {userCount} electricians use Elec-Mate
           </motion.p>
         </div>

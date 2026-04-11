@@ -396,6 +396,18 @@ export const InvoiceItemsStep = ({
           <span className="text-[13px] text-white">Subtotal</span>
           <span className="text-[14px] text-white tabular-nums">{formatCurrency(subtotal)}</span>
         </div>
+        {settings?.discountEnabled && (settings?.discountValue || 0) > 0 && (
+          <div className="flex items-center justify-between">
+            <span className="text-[13px] text-red-400">{settings?.discountLabel || 'Discount'}</span>
+            <span className="text-[14px] text-red-400 tabular-nums">
+              -{formatCurrency(
+                (settings?.discountType || 'percentage') === 'percentage'
+                  ? subtotal * ((settings?.discountValue || 0) / 100)
+                  : (settings?.discountValue || 0)
+              )}
+            </span>
+          </div>
+        )}
         {settings?.vatRegistered && (
           <div className="flex items-center justify-between">
             <span className="text-[13px] text-white">VAT ({settings?.vatRate || 20}%)</span>
@@ -457,7 +469,7 @@ export const InvoiceItemsStep = ({
                       </p>
                     )}
                     <div className="flex items-center gap-1 ml-2">
-                      <p className="text-[13px] font-bold text-white mr-1">
+                      <p className={cn('text-[13px] font-bold mr-1', (item.quantity || 0) * (item.unitPrice || 0) === 0 ? 'text-red-400' : 'text-white')}>
                         {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
                       </p>
                       <button
@@ -519,7 +531,7 @@ export const InvoiceItemsStep = ({
       )}
 
       {/* Add Method Tabs */}
-      <div className="flex gap-2 pt-2">
+      <div className="flex gap-1.5 pt-2">
         {[
           { id: 'quick' as AddMethod, label: 'Quick' },
           { id: 'manual' as AddMethod, label: 'Manual' },
@@ -546,7 +558,7 @@ export const InvoiceItemsStep = ({
       {activeAddMethod === 'quick' && (
         <div className="space-y-3">
           {/* Category Tabs */}
-          <div className="flex gap-2">
+          <div className="flex gap-1.5">
             {[
               { id: 'labour' as Category, label: 'Labour' },
               { id: 'materials' as Category, label: 'Materials' },

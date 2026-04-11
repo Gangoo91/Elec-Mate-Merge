@@ -22,7 +22,7 @@ interface InvoiceSettingsStepProps {
 const inputClass =
   'w-full h-11 px-3 rounded-lg text-[15px] text-white bg-white/[0.06] border border-white/[0.12] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white/60';
 
-const labelClass = 'text-[11px] text-white uppercase tracking-wider block mb-1.5';
+const labelClass = 'text-[11px] text-white uppercase tracking-wider block mb-1.5 truncate';
 
 export const InvoiceSettingsStep = ({
   settings,
@@ -31,6 +31,18 @@ export const InvoiceSettingsStep = ({
   onUpdateNotes,
 }: InvoiceSettingsStepProps) => {
   const darkStyle: React.CSSProperties = { colorScheme: 'dark' };
+
+  const updateBankField = (field: string, value: string) => {
+    onUpdateSettings({
+      bankDetails: {
+        bankName: settings?.bankDetails?.bankName || '',
+        accountName: settings?.bankDetails?.accountName || '',
+        accountNumber: settings?.bankDetails?.accountNumber || '',
+        sortCode: settings?.bankDetails?.sortCode || '',
+        [field]: value,
+      },
+    });
+  };
 
   return (
     <div className="space-y-6 text-left">
@@ -267,9 +279,7 @@ export const InvoiceSettingsStep = ({
             <input
               style={darkStyle}
               value={settings?.bankDetails?.bankName || ''}
-              onChange={(e) =>
-                onUpdateSettings({ bankDetails: { bankName: e.target.value, accountName: settings?.bankDetails?.accountName || '', accountNumber: settings?.bankDetails?.accountNumber || '', sortCode: settings?.bankDetails?.sortCode || '' } })
-              }
+              onChange={(e) => updateBankField('bankName', e.target.value)}
               placeholder="e.g. Barclays"
               className={inputClass}
             />
@@ -279,9 +289,7 @@ export const InvoiceSettingsStep = ({
             <input
               style={darkStyle}
               value={settings?.bankDetails?.accountName || ''}
-              onChange={(e) =>
-                onUpdateSettings({ bankDetails: { bankName: settings?.bankDetails?.bankName || '', accountName: e.target.value, accountNumber: settings?.bankDetails?.accountNumber || '', sortCode: settings?.bankDetails?.sortCode || '' } })
-              }
+              onChange={(e) => updateBankField('accountName', e.target.value)}
               placeholder="e.g. Smith Electrical"
               className={inputClass}
             />
@@ -293,10 +301,7 @@ export const InvoiceSettingsStep = ({
             <input
               style={darkStyle}
               value={settings?.bankDetails?.accountNumber || ''}
-              onChange={(e) => {
-                const numericValue = e.target.value.replace(/\D/g, '').slice(0, 8);
-                onUpdateSettings({ bankDetails: { bankName: settings?.bankDetails?.bankName || '', accountName: settings?.bankDetails?.accountName || '', accountNumber: numericValue, sortCode: settings?.bankDetails?.sortCode || '' } });
-              }}
+              onChange={(e) => updateBankField('accountNumber', e.target.value.replace(/\D/g, '').slice(0, 8))}
               inputMode="numeric"
               placeholder="12345678"
               className={inputClass}
@@ -312,7 +317,7 @@ export const InvoiceSettingsStep = ({
                 if (v.length > 6) v = v.slice(0, 6);
                 if (v.length > 4) v = `${v.slice(0, 2)}-${v.slice(2, 4)}-${v.slice(4)}`;
                 else if (v.length > 2) v = `${v.slice(0, 2)}-${v.slice(2)}`;
-                onUpdateSettings({ bankDetails: { bankName: settings?.bankDetails?.bankName || '', accountName: settings?.bankDetails?.accountName || '', accountNumber: settings?.bankDetails?.accountNumber || '', sortCode: v } });
+                updateBankField('sortCode', v);
               }}
               inputMode="numeric"
               placeholder="12-34-56"

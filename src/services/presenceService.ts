@@ -270,7 +270,13 @@ export class PresenceManager {
       this.activityTimeout = null;
     }
 
-    // Set offline when stopping
-    setOffline(this.userId);
+    // Set offline when stopping — only if still authenticated
+    supabase.auth.getSession().then(({ data }) => {
+      if (data?.session) {
+        setOffline(this.userId);
+      }
+    }).catch(() => {
+      // Ignore — user already logged out
+    });
   }
 }

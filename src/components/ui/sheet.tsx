@@ -5,7 +5,27 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-const Sheet = SheetPrimitive.Root;
+/**
+ * Sheet wrapper that preserves scroll position on iOS.
+ * Radix Dialog sets overflow:hidden on body which causes scroll-to-top on iOS.
+ * This wrapper saves/restores scroll position around open/close.
+ */
+const Sheet = ({ open, onOpenChange, ...props }: React.ComponentPropsWithoutRef<typeof SheetPrimitive.Root>) => {
+  const scrollPos = React.useRef(0);
+
+  React.useEffect(() => {
+    if (open) {
+      scrollPos.current = window.scrollY;
+    } else {
+      // Restore scroll after Radix removes overflow:hidden
+      const timer = setTimeout(() => window.scrollTo(0, scrollPos.current), 0);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
+
+  return <SheetPrimitive.Root open={open} onOpenChange={onOpenChange} {...props} />;
+};
+Sheet.displayName = 'Sheet';
 
 const SheetTrigger = SheetPrimitive.Trigger;
 

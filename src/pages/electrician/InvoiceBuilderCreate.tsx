@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 import { Helmet } from 'react-helmet';
 import { X } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 import { InvoiceWizard } from '@/components/electrician/invoice-builder/InvoiceWizard';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { useState, useEffect } from 'react';
@@ -62,6 +63,7 @@ const InvoiceBuilderCreate = () => {
 
   const handleInvoiceGenerated = async (invoiceId: string) => {
     fetchInvoices();
+    toast({ title: 'Invoice created', description: 'Your invoice has been saved.' });
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) trackFeatureUse(user.id, 'invoice_created', {});
     });

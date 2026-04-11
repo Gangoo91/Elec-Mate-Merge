@@ -44,7 +44,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
 
   return (
     <div className="space-y-2">
-      <Label className="text-white text-[10px] uppercase tracking-wider mb-1 block">Select Client</Label>
+      <p className="text-white text-[10px] uppercase tracking-wider mb-1">Select Client</p>
 
       {selectedCustomer ? (
         <div className="relative p-3.5 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.05]">
@@ -81,7 +81,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
 
       {/* Customer Search Sheet */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent side="bottom" className="h-[70dvh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent side="bottom" className="h-[75dvh] p-0 rounded-t-2xl overflow-hidden">
           {/* Handle bar */}
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
@@ -106,7 +106,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
           </div>
 
           {/* Customer List */}
-          <div className="overflow-y-auto overscroll-contain h-[calc(70dvh-110px)] border-t border-white/[0.08]">
+          <div className="overflow-y-auto overscroll-contain h-[calc(75dvh-110px)] border-t border-white/[0.08]">
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-16">
                 <Loader2 className="h-5 w-5 animate-spin text-white mb-2" />
