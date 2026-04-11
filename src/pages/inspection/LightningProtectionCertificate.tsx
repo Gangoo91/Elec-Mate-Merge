@@ -14,13 +14,12 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Zap, Save, Loader2 } from 'lucide-react';
+import { ArrowLeft, Save, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
 import { draftStorage } from '@/utils/draftStorage';
@@ -155,28 +154,31 @@ export default function LightningProtectionCertificate() {
   if (isLoading) return <div className="p-4 space-y-4"><Skeleton className="h-12 w-full" /><Skeleton className="h-64 w-full" /><Skeleton className="h-64 w-full" /></div>;
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-4">
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
-        <div className="px-4 py-2">
-          <div className="flex items-center justify-between h-11">
-            <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"><ArrowLeft className="h-5 w-5" /></Button>
-              <div className="flex items-center gap-2.5">
-                <div className="p-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20"><Zap className="h-4 w-4 text-yellow-400" /></div>
-                <h1 className="text-base font-semibold text-white">Lightning Protection</h1>
+    <div className="bg-background min-h-screen">
+      <div className="bg-background">
+        <div className="px-2 py-2.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <button onClick={() => navigate(-1)} className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98]">
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+              <div>
+                <h1 className="text-sm font-bold text-white leading-tight">Lightning Protection</h1>
+                {formData.certificateNumber && <p className="text-[10px] text-white font-mono mt-0.5">{formData.certificateNumber}</p>}
               </div>
             </div>
             <div className="flex items-center gap-2">
               <SyncStatusBadge status={syncStatus} />
-              <Button variant="ghost" size="icon" onClick={handleSaveDraft} disabled={isSaving} className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation">
+              <button onClick={handleSaveDraft} disabled={isSaving} className="w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white touch-manipulation active:scale-[0.98] disabled:opacity-50">
                 {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-              </Button>
+              </button>
             </div>
           </div>
         </div>
+        <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      <div className="px-4 pt-4">
+      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
         <LPFormTabs
           formData={formData} onUpdate={handleUpdate}
           currentTab={currentTab} onTabChange={handleTabChange}
@@ -186,12 +188,12 @@ export default function LightningProtectionCertificate() {
           isCurrentTabComplete={isCurrentTabComplete} progress={getProgressPercentage()}
           onGenerate={handleGenerateCertificate} isGenerating={isGenerating}
         />
-      </div>
+      </main>
 
       <AlertDialog open={showRecoveryDialog} onOpenChange={setShowRecoveryDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader><AlertDialogTitle>Recover Draft?</AlertDialogTitle><AlertDialogDescription>A previous unsaved lightning protection certificate was found. Would you like to recover it?</AlertDialogDescription></AlertDialogHeader>
-          <AlertDialogFooter><AlertDialogCancel onClick={handleDiscardDraft}>Discard</AlertDialogCancel><AlertDialogAction onClick={handleRecoverDraft}>Recover Draft</AlertDialogAction></AlertDialogFooter>
+        <AlertDialogContent className="bg-[#1a1a1e] border-white/[0.08] text-white">
+          <AlertDialogHeader><AlertDialogTitle className="text-white">Recover Draft?</AlertDialogTitle><AlertDialogDescription className="text-white">A previous unsaved lightning protection certificate was found. Would you like to recover it?</AlertDialogDescription></AlertDialogHeader>
+          <AlertDialogFooter><AlertDialogCancel onClick={handleDiscardDraft} className="border-white/[0.12] text-white hover:bg-white/[0.06]">Discard</AlertDialogCancel><AlertDialogAction onClick={handleRecoverDraft} className="bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30">Recover Draft</AlertDialogAction></AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 

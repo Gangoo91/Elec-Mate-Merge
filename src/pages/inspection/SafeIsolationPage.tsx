@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { reportCloud } from '@/utils/reportCloud';
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const inputCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 const textareaCn = 'touch-manipulation text-base min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
 
 const SectionHeader = ({ title }: { title: string }) => (
@@ -195,53 +195,51 @@ export default function SafeIsolationPage() {
         <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8 space-y-6">
+      <main className="px-3 py-4 pb-48 sm:px-4 sm:pb-8 space-y-5">
         {/* Details */}
-        <section className="space-y-3 px-4 sm:px-0">
+        <section className="space-y-3">
           <SectionHeader title="Details" />
-          <div className="grid grid-cols-2 gap-3">
-            <Field label="Reference"><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+          <Field label="Reference"><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+          <div className="grid grid-cols-2 gap-2">
             <Field label="Date"><Input type="date" value={data.date} onChange={(e) => update('date', e.target.value)} className={inputCn} /></Field>
+            <Field label="Time"><Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={inputCn} /></Field>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <Field label="Time"><Input type="time" value={data.time} onChange={(e) => update('time', e.target.value)} className={inputCn} /></Field>
-            <Field label="Circuit Reference"><Input value={data.circuitReference} onChange={(e) => update('circuitReference', e.target.value)} className={inputCn} placeholder="e.g. Circuit 5" /></Field>
+            <Field label="Circuit Ref"><Input value={data.circuitReference} onChange={(e) => update('circuitReference', e.target.value)} className={inputCn} placeholder="Circuit 5" /></Field>
+            <Field label="Location"><Input value={data.location} onChange={(e) => update('location', e.target.value)} className={inputCn} placeholder="Plant room" /></Field>
           </div>
-          <Field label="Location"><Input value={data.location} onChange={(e) => update('location', e.target.value)} className={inputCn} placeholder="e.g. Plant room, Floor 2" /></Field>
-          <Field label="Equipment Description"><Input value={data.equipmentDescription} onChange={(e) => update('equipmentDescription', e.target.value)} className={inputCn} placeholder="e.g. Distribution board DB3" /></Field>
+          <Field label="Equipment"><Input value={data.equipmentDescription} onChange={(e) => update('equipmentDescription', e.target.value)} className={inputCn} placeholder="Distribution board DB3" /></Field>
         </section>
 
         {/* Isolation Steps */}
-        <section className="space-y-3 px-4 sm:px-0">
+        <section className="space-y-3">
           <div className="flex items-center justify-between">
-            <SectionHeader title="Isolation Steps" />
+            <SectionHeader title="Isolation Steps (GS 38)" />
             <span className={cn(
-              'text-[11px] font-semibold px-2.5 py-1 rounded-lg',
+              'text-[10px] font-bold px-2 py-0.5 rounded',
               allStepsComplete ? 'bg-green-500/15 text-green-400' : 'bg-amber-500/15 text-amber-400'
             )}>
               {completedSteps}/{isolationSteps.length}
             </span>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {isolationSteps.map((step, index) => (
-              <div key={index} className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-3.5">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <span className="text-[11px] font-bold text-elec-yellow">Step {index + 1}</span>
-                    <p className="text-sm text-white mt-0.5">{step}</p>
-                  </div>
-                  <div className="flex gap-1.5 shrink-0">
-                    <button type="button" onClick={() => { if (!data.steps[index]) toggleStep(index); }}
-                      className={cn('w-14 h-9 rounded-lg text-xs font-semibold touch-manipulation transition-all',
-                        data.steps[index] ? 'bg-green-500 text-white' : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
-                      Yes
-                    </button>
-                    <button type="button" onClick={() => { if (data.steps[index]) toggleStep(index); }}
-                      className={cn('w-14 h-9 rounded-lg text-xs font-semibold touch-manipulation transition-all',
-                        !data.steps[index] ? 'bg-red-500/80 text-white' : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
-                      No
-                    </button>
-                  </div>
+              <div key={index} className="flex items-center justify-between gap-2 rounded-lg bg-white/[0.03] border border-white/[0.06] px-3 py-2">
+                <div className="flex items-start gap-2 flex-1 min-w-0">
+                  <span className="text-[10px] font-bold text-elec-yellow mt-0.5 shrink-0">{index + 1}</span>
+                  <p className="text-[11px] text-white leading-tight">{step}</p>
+                </div>
+                <div className="flex gap-1 shrink-0">
+                  <button type="button" onClick={() => { if (!data.steps[index]) toggleStep(index); }}
+                    className={cn('w-11 h-7 rounded text-[10px] font-semibold touch-manipulation transition-all',
+                      data.steps[index] ? 'bg-green-500 text-white' : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                    Yes
+                  </button>
+                  <button type="button" onClick={() => { if (data.steps[index]) toggleStep(index); }}
+                    className={cn('w-11 h-7 rounded text-[10px] font-semibold touch-manipulation transition-all',
+                      !data.steps[index] ? 'bg-red-500/80 text-white' : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                    No
+                  </button>
                 </div>
               </div>
             ))}
@@ -249,38 +247,38 @@ export default function SafeIsolationPage() {
         </section>
 
         {/* Test Instruments */}
-        <section className="space-y-3 px-4 sm:px-0">
+        <section className="space-y-3">
           <SectionHeader title="Test Instruments" />
           <Sub title="Voltage Tester" />
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2">
             <Field label="Make"><Input value={data.testerMake} onChange={(e) => update('testerMake', e.target.value)} className={inputCn} /></Field>
             <Field label="Model"><Input value={data.testerModel} onChange={(e) => update('testerModel', e.target.value)} className={inputCn} /></Field>
-            <Field label="Serial No."><Input value={data.testerSerialNumber} onChange={(e) => update('testerSerialNumber', e.target.value)} className={inputCn} /></Field>
+            <Field label="Serial"><Input value={data.testerSerialNumber} onChange={(e) => update('testerSerialNumber', e.target.value)} className={inputCn} /></Field>
           </div>
           <Sub title="Proving Unit" />
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2">
             <Field label="Make"><Input value={data.provingUnitMake} onChange={(e) => update('provingUnitMake', e.target.value)} className={inputCn} /></Field>
             <Field label="Model"><Input value={data.provingUnitModel} onChange={(e) => update('provingUnitModel', e.target.value)} className={inputCn} /></Field>
           </div>
         </section>
 
         {/* Sign-Off */}
-        <section className="space-y-3 px-4 sm:px-0">
+        <section className="space-y-3">
           <SectionHeader title="Sign-Off" />
-          <Field label="Person Carrying Out Isolation"><Input value={data.personName} onChange={(e) => update('personName', e.target.value)} className={inputCn} /></Field>
+          <Field label="Name"><Input value={data.personName} onChange={(e) => update('personName', e.target.value)} className={inputCn} /></Field>
           <SignatureInput label="Signature" value={data.personSignature} onChange={(sig) => update('personSignature', sig || '')} />
           <Field label="Notes"><Textarea value={data.notes} onChange={(e) => update('notes', e.target.value)} className={textareaCn} /></Field>
         </section>
 
         {/* Actions */}
-        <div className="flex gap-3 pt-2 px-4 sm:px-0">
-          <button onClick={handleSaveDraft}
-            className="flex-1 h-12 rounded-lg text-sm font-medium touch-manipulation active:scale-[0.98] bg-white/[0.06] border border-white/[0.08] text-white">
-            Save Draft
-          </button>
+        <div className="space-y-2 pt-2">
           <button onClick={handleSave} disabled={!allStepsComplete || isSaving}
-            className="flex-1 h-12 rounded-lg text-sm font-semibold touch-manipulation active:scale-[0.98] bg-gradient-to-r from-elec-yellow to-amber-500 text-black disabled:opacity-50">
-            {isSaving ? <Loader2 className="h-4 w-4 animate-spin mx-auto" /> : existingReportId ? 'Update Record' : 'Save Record'}
+            className="w-full h-11 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow disabled:opacity-50">
+            {isSaving ? 'Saving...' : existingReportId ? 'Update Record' : 'Save Record'}
+          </button>
+          <button onClick={handleSaveDraft}
+            className="w-full h-11 rounded-lg text-xs font-medium touch-manipulation active:scale-[0.98] border border-white/[0.12] text-white hover:bg-white/[0.06]">
+            Save Draft
           </button>
         </div>
       </main>

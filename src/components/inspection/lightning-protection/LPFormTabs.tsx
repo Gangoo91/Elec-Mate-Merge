@@ -1,5 +1,4 @@
-import { SmartTabs, SmartTab } from '@/components/ui/ui/smart-tabs';
-import { FileText, Shield, Eye, Gauge, AlertTriangle } from 'lucide-react';
+import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { LPTabValue } from '@/hooks/useLightningProtectionTabs';
 import LPCertificateDetails from './LPCertificateDetails';
 import LPInstallationDetails from './LPInstallationDetails';
@@ -39,14 +38,14 @@ export default function LPFormTabs({
   };
 
   const smartTabs: SmartTab[] = [
-    { value: 'certificate', label: 'Certificate & Site', shortLabel: 'Site', icon: <FileText className="h-4 w-4" />, content: (<div className="space-y-4"><LPCertificateDetails formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'installation', label: 'Installation', shortLabel: 'Install', icon: <Shield className="h-4 w-4" />, content: (<div className="space-y-4"><LPInstallationDetails formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'visual', label: 'Visual Inspection', shortLabel: 'Visual', icon: <Eye className="h-4 w-4" />, content: (<div className="space-y-4"><LPVisualInspection formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'testing', label: 'Test Schedule', shortLabel: 'Testing', icon: <Gauge className="h-4 w-4" />, content: (<div className="space-y-4"><LPTestSchedule formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
-    { value: 'observations', label: 'Sign-off', shortLabel: 'Sign-off', icon: <AlertTriangle className="h-4 w-4" />, content: (<div className="space-y-4"><LPObservations formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'certificate', label: 'Certificate', shortLabel: 'Cert', content: (<div className="space-y-6"><LPCertificateDetails formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'installation', label: 'Installation', shortLabel: 'Install', content: (<div className="space-y-6"><LPInstallationDetails formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'visual', label: 'Visual', shortLabel: 'Visual', content: (<div className="space-y-6"><LPVisualInspection formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'testing', label: 'Testing', shortLabel: 'Tests', content: (<div className="space-y-6"><LPTestSchedule formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
+    { value: 'observations', label: 'Sign-off', shortLabel: 'Sign', content: (<div className="space-y-6"><LPObservations formData={formData} onUpdate={onUpdate} /><LPTabNavigation {...tabNavigationProps} /></div>) },
   ];
 
   return (
-    <SmartTabs tabs={smartTabs} value={currentTab} onValueChange={(v) => onTabChange(v as LPTabValue)} className="space-y-4" breakpoint={3} />
+    <SmartTabs tabs={smartTabs} value={currentTab} onValueChange={(v) => onTabChange(v as LPTabValue)} className="space-y-4" />
   );
 }

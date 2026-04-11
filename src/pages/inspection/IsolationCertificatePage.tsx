@@ -161,9 +161,9 @@ const defaultData = (): IsolationData => ({
 
 const DRAFT_KEY = 'elec-mate-draft-isolation-cert';
 
-const inputCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
-const textareaCn = 'touch-manipulation text-base min-h-[100px] bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500';
-const dateTimeCn = 'h-12 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white focus:border-yellow-500 focus:ring-yellow-500 [color-scheme:dark]';
+const inputCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const textareaCn = 'touch-manipulation text-xs min-h-[80px] bg-white/[0.06] border-white/[0.08] text-white';
+const dateTimeCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 
 // --- Reusable components ---
 

@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { generateWarningLabelsPdf, type LabelForPdf } from '@/utils/generate-warning-labels-pdf';
 
-const inputCn = 'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
+const inputCn = 'h-10 text-xs touch-manipulation bg-white/[0.06] border-white/[0.08] text-white [color-scheme:dark]';
 
 interface LabelDef {
   id: string;

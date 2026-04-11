@@ -326,6 +326,11 @@ export const generateBulkPDFs = async (
           const { formatG98Json } = await import('./g98JsonFormatter');
           dataForPdf = formatG98Json(validation.data);
         }
+        // Lightning Protection
+        else if (rtLower === 'lightning-protection') {
+          const { formatLightningProtectionJson } = await import('./lightningProtectionJsonFormatter');
+          dataForPdf = formatLightningProtectionJson(validation.data);
+        }
         // Minor Works, notices: edge function handles transform internally
       }
 

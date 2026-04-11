@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, CheckCircle2, Download } from 'lucide-react';
 
 interface Props {
   currentTabIndex: number;
@@ -15,64 +14,51 @@ interface Props {
   isGenerating?: boolean;
 }
 
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
 export default function LPTabNavigation({
   currentTabIndex, totalTabs, canNavigateNext, canNavigatePrevious,
-  onNext, onPrevious, isCurrentTabComplete, progress, isLastTab,
+  onNext, onPrevious, progress, isLastTab,
   onGenerate, isGenerating,
 }: Props) {
+  const handleNext = () => { onNext(); scrollToTop(); };
+  const handlePrevious = () => { onPrevious(); scrollToTop(); };
+
   return (
-    <div className="sticky bottom-0 left-0 right-0 bg-[#242428] border-t border-border p-3 sm:p-4">
-      {/* Progress bar */}
+    <div className="sticky bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-white/[0.08] p-4">
       <div className="mb-3">
-        <div className="flex items-center justify-between mb-1">
-          <span className="text-sm text-white">Section {currentTabIndex + 1} of {totalTabs}</span>
-          <div className="flex items-center gap-2">
-            {isCurrentTabComplete && (
-              <div className="flex items-center gap-1 text-green-500 text-xs">
-                <CheckCircle2 className="h-3.5 w-3.5" />
-                <span>Complete</span>
-              </div>
-            )}
-            <span className="text-sm font-medium text-white">{progress}% complete</span>
-          </div>
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[10px] text-white">Section {currentTabIndex + 1} of {totalTabs}</span>
+          <span className="text-[10px] font-medium text-white">{progress}%</span>
         </div>
-        <div className="h-2 bg-muted rounded-full overflow-hidden">
-          <div className="h-full bg-green-500 transition-all duration-300 rounded-full" style={{ width: `${progress}%` }} />
+        <div className="h-1 bg-white/[0.12] rounded-full overflow-hidden">
+          <div className="h-full bg-elec-yellow rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
         </div>
       </div>
 
-      {/* Navigation — flex-1 on both buttons so they share space equally */}
-      <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          onClick={onPrevious}
-          disabled={!canNavigatePrevious}
-          className="flex-1 h-12 touch-manipulation active:scale-[0.98]"
-        >
-          <ChevronLeft className="h-5 w-5 mr-1 shrink-0" />
-          Previous
-        </Button>
-
-        {isLastTab ? (
-          <Button
-            onClick={onGenerate}
-            disabled={isGenerating}
-            className="flex-1 h-12 bg-green-600 hover:bg-green-700 touch-manipulation active:scale-[0.98]"
-          >
-            <Download className="h-4 w-4 mr-2 shrink-0" />
-            <span className="truncate">{isGenerating ? 'Generating…' : 'Generate Certificate'}</span>
+      {isLastTab ? (
+        <div className="space-y-2">
+          <Button onClick={onGenerate} disabled={isGenerating}
+            className="w-full h-11 bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg">
+            {isGenerating ? 'Generating...' : 'Generate Certificate'}
           </Button>
-        ) : (
-          <Button
-            onClick={onNext}
-            disabled={!canNavigateNext}
-            className="flex-1 h-12 touch-manipulation active:scale-[0.98]"
-          >
+          <Button variant="outline" onClick={handlePrevious} disabled={!canNavigatePrevious}
+            className="w-full h-11 border-white/[0.12] text-white hover:bg-white/[0.06] text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg">
+            Previous
+          </Button>
+        </div>
+      ) : (
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handlePrevious} disabled={!canNavigatePrevious}
+            className="flex-1 h-11 border-white/[0.12] text-white hover:bg-white/[0.06] text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg">
+            Previous
+          </Button>
+          <Button onClick={handleNext} disabled={!canNavigateNext}
+            className="flex-1 h-11 bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/30 text-xs font-semibold touch-manipulation active:scale-[0.98] rounded-lg">
             Next
-            <ChevronRight className="h-5 w-5 ml-1 shrink-0" />
           </Button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
