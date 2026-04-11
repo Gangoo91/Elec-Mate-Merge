@@ -57,7 +57,7 @@ const BusinessCard = ({
         'group relative overflow-hidden touch-manipulation',
         'card-surface-interactive',
         'active:scale-[0.98] transition-all duration-200',
-        isHero ? 'min-h-[150px]' : isCompact ? 'min-h-[110px]' : 'min-h-[130px]',
+        isHero ? 'min-h-[150px]' : isCompact ? 'h-[110px]' : 'min-h-[130px]',
         comingSoon && 'opacity-50 cursor-not-allowed',
         className
       )}
@@ -85,7 +85,7 @@ const BusinessCard = ({
         {/* Title */}
         <h3
           className={cn(
-            'font-semibold text-white leading-tight',
+            'font-semibold text-foreground leading-tight truncate',
             'group-hover:text-elec-yellow transition-colors',
             isHero ? 'text-[15px] sm:text-base' : 'text-[13px] sm:text-sm'
           )}
@@ -100,10 +100,22 @@ const BusinessCard = ({
               'mt-0.5 leading-tight',
               isHero ? 'line-clamp-2' : 'line-clamp-1',
               isHero ? 'text-[12px] sm:text-[13px]' : 'text-[11px] sm:text-[12px]',
-              isOverdue ? 'text-red-400 font-semibold' : 'text-white'
+              isOverdue ? 'text-red-400 font-semibold' : 'text-muted-foreground'
             )}
           >
             {subtitle}
+          </p>
+        )}
+
+        {/* Compact subtitle */}
+        {isCompact && liveSubtitle && (
+          <p
+            className={cn(
+              'mt-0.5 leading-tight truncate text-[10px] sm:text-[11px]',
+              isOverdue ? 'text-red-400 font-semibold' : 'text-muted-foreground'
+            )}
+          >
+            {liveSubtitle}
           </p>
         )}
 
@@ -124,7 +136,7 @@ const BusinessCard = ({
           >
             <ChevronRight
               className={cn(
-                'w-3.5 h-3.5 text-white',
+                'w-3.5 h-3.5 text-foreground',
                 'group-hover:text-black group-hover:translate-x-0.5',
                 'transition-all'
               )}

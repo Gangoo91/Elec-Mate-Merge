@@ -184,26 +184,20 @@ const itemVariants = {
 // Skeleton loader for lazy components
 const ToolLoader = SectionSkeleton;
 
-// Stats card for the safety dashboard bar
+// Stats card — minimal, clean
 function SafetyStatCard({ label, value, icon: Icon, variant }: {
   label: string;
   value: number;
   icon: LucideIcon;
   variant?: 'success' | 'danger';
 }) {
-  const accentColor = variant === 'success' ? 'text-green-500'
-    : variant === 'danger' ? 'text-red-500' : 'text-orange-400';
+  const color = variant === 'success' ? 'text-green-400'
+    : variant === 'danger' ? 'text-red-400' : 'text-white';
   return (
-    <div className="rounded-xl p-3 sm:p-4 bg-white/[0.04] border border-white/[0.06] transition-colors duration-150">
-      <div className="flex flex-col items-start text-left">
-        <div className="flex items-center gap-1.5 mb-1.5">
-          <Icon className={`h-3.5 w-3.5 ${accentColor}`} />
-          <p className="text-[11px] sm:text-xs text-white">{label}</p>
-        </div>
-        <span className={`text-xl sm:text-2xl font-bold tracking-tight ${accentColor}`}>
-          {value}
-        </span>
-      </div>
+    <div className="text-center py-3">
+      <Icon className={`h-4 w-4 mx-auto mb-1.5 ${variant === 'danger' ? 'text-red-400' : variant === 'success' ? 'text-green-400' : 'text-white/40'}`} />
+      <p className={`text-lg font-bold ${color}`}>{value}</p>
+      <p className="text-[10px] text-white/40 mt-0.5">{label}</p>
     </div>
   );
 }
@@ -366,25 +360,12 @@ const SiteSafety = () => {
           animate="visible"
           className="px-4 py-4 space-y-6"
         >
-          {/* Glass Hero Header */}
+          {/* Page Title */}
           <motion.div variants={itemVariants}>
-            <div className="relative overflow-hidden glass-premium rounded-2xl glow-yellow">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-400 via-amber-400 to-orange-400" />
-              <div className="absolute top-0 right-0 w-40 sm:w-56 h-40 sm:h-56 bg-orange-400/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-              <div className="relative z-10 p-5 sm:p-6">
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
-                    <Shield className="h-7 w-7 text-orange-400" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white mb-0.5">Site Safety</p>
-                    <h1 className="text-xl sm:text-2xl font-bold text-orange-400 tracking-tight">
-                      RAMS & Compliance
-                    </h1>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              Site Safety
+            </h1>
+            <p className="text-sm text-white/50 mt-1">RAMS, compliance, and documentation</p>
           </motion.div>
 
           {/* Recent Documents */}
@@ -642,48 +623,47 @@ const SiteSafety = () => {
             </motion.div>
           </motion.section>
 
-          {/* Stats Bar */}
+          {/* Overview Stats */}
           <motion.section variants={itemVariants}>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <SafetyStatCard label="Documents" value={dashboardStats.totalDocuments} icon={FileText} />
-              <SafetyStatCard
-                label="Equipment Due"
-                value={dashboardStats.equipmentDue + dashboardStats.equipmentOverdue}
-                icon={Wrench}
-                variant={dashboardStats.equipmentOverdue > 0 ? 'danger' : 'success'}
-              />
-              <SafetyStatCard
-                label="Safety Score"
-                value={weeklySummary?.safetyScore ?? 0}
-                icon={Shield}
-                variant={(weeklySummary?.safetyScore ?? 0) >= 80 ? 'success' : (weeklySummary?.safetyScore ?? 0) >= 60 ? undefined : 'danger'}
-              />
-              <SafetyStatCard label="Active Permits" value={dashboardStats.activePermits} icon={Lock} />
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+              <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
+                <SafetyStatCard label="Documents" value={dashboardStats.totalDocuments} icon={FileText} />
+                <SafetyStatCard
+                  label="Equipment"
+                  value={dashboardStats.equipmentDue + dashboardStats.equipmentOverdue}
+                  icon={Wrench}
+                  variant={dashboardStats.equipmentOverdue > 0 ? 'danger' : 'success'}
+                />
+                <SafetyStatCard
+                  label="Score"
+                  value={weeklySummary?.safetyScore ?? 0}
+                  icon={Shield}
+                  variant={(weeklySummary?.safetyScore ?? 0) >= 80 ? 'success' : (weeklySummary?.safetyScore ?? 0) >= 60 ? undefined : 'danger'}
+                />
+                <SafetyStatCard label="Permits" value={dashboardStats.activePermits} icon={Lock} />
+              </div>
             </div>
           </motion.section>
 
-          {/* Collapsible Alerts Section */}
+          {/* Alerts */}
           <motion.section variants={itemVariants}>
             <Collapsible open={alertsOpen} onOpenChange={setAlertsOpen}>
               <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
-                  <div className="flex items-center gap-2.5">
-                    <div className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                    <h2 className="text-base font-bold text-white">Alerts</h2>
+                <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation h-12 active:bg-white/[0.06] transition-colors">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-amber-400" />
+                    <span className="text-sm font-semibold text-white">Alerts</span>
                     {equipmentOverdue.length + coshhOverdue.length > 0 && (
-                      <Badge
-                        variant="secondary"
-                        className="bg-red-500/20 text-red-400 border-red-500/30 text-xs"
-                      >
-                        {equipmentOverdue.length + coshhOverdue.length} Overdue
-                      </Badge>
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-red-500/15 text-red-400">
+                        {equipmentOverdue.length + coshhOverdue.length}
+                      </span>
                     )}
                   </div>
                   <motion.div
                     animate={{ rotate: alertsOpen ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ChevronDown className="h-4 w-4 text-white" />
+                    <ChevronDown className="h-4 w-4 text-white/40" />
                   </motion.div>
                 </button>
               </CollapsibleTrigger>
@@ -705,38 +685,32 @@ const SiteSafety = () => {
             </Collapsible>
           </motion.section>
 
-          {/* Collapsible Analytics & Insights Section */}
+          {/* Analytics */}
           <motion.section variants={itemVariants}>
             <Collapsible open={analyticsOpen} onOpenChange={setAnalyticsOpen}>
               <CollapsibleTrigger asChild>
-                <button className="w-full flex items-center justify-between p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
-                  <div className="flex items-center gap-2.5">
-                    <div className="h-1.5 w-1.5 rounded-full bg-indigo-400" />
-                    <h2 className="text-base font-bold text-white">Analytics & Insights</h2>
+                <button className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation h-12 active:bg-white/[0.06] transition-colors">
+                  <div className="flex items-center gap-2">
+                    <BarChart3 className="h-4 w-4 text-indigo-400" />
+                    <span className="text-sm font-semibold text-white">Analytics</span>
                     {weeklySummary?.safetyScore != null && (
-                      <Badge
-                        variant="secondary"
-                        className={`text-xs ${
-                          weeklySummary.safetyScore >= 80
-                            ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                            : weeklySummary.safetyScore >= 60
-                              ? 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                              : 'bg-red-500/20 text-red-400 border-red-500/30'
-                        }`}
-                      >
-                        Score: {weeklySummary.safetyScore}
-                      </Badge>
+                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                        weeklySummary.safetyScore >= 80
+                          ? 'bg-green-500/15 text-green-400'
+                          : weeklySummary.safetyScore >= 60
+                            ? 'bg-amber-500/15 text-amber-400'
+                            : 'bg-red-500/15 text-red-400'
+                      }`}>
+                        {weeklySummary.safetyScore}%
+                      </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <BarChart3 className="h-4 w-4 text-white" />
-                    <motion.div
-                      animate={{ rotate: analyticsOpen ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ChevronDown className="h-4 w-4 text-white" />
-                    </motion.div>
-                  </div>
+                  <motion.div
+                    animate={{ rotate: analyticsOpen ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown className="h-4 w-4 text-white/40" />
+                  </motion.div>
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent>

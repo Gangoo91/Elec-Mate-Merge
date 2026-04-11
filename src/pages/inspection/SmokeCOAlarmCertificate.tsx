@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import SignatureInput from '@/components/signature/SignatureInput';
+import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
@@ -198,6 +199,10 @@ export default function SmokeCOAlarmCertificate() {
   const { id: editId } = useParams<{ id: string }>();
   const isNew = editId === 'new' || !editId;
   const [isSaving, setIsSaving] = useState(false);
+  const [showGenerationDialog, setShowGenerationDialog] = useState(false);
+  const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = useState('document.pdf');
+  const [generationError, setGenerationError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(!isNew);
   const [savedReportId, setSavedReportId] = useState<string | null>(editId !== 'new' ? editId || null : null);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
@@ -308,6 +313,9 @@ export default function SmokeCOAlarmCertificate() {
   const handleGeneratePDF = async () => {
     if (!data.propertyAddress) { toast.error('Property address required'); return; }
     setIsSaving(true);
+    setGeneratedPdfUrl(null);
+    setGenerationError(null);
+    setShowGenerationDialog(true);
     try {
       await syncNowImmediate();
       const { data: { user } } = await supabase.auth.getUser();
@@ -318,16 +326,22 @@ export default function SmokeCOAlarmCertificate() {
       const { formatSmokeCOJson } = await import('@/utils/smokeCOJsonFormatter');
       const payload = formatSmokeCOJson(data, branding);
       const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-smoke-co-alarm-pdf', { body: { formData: payload } });
-      if (pdfError) { toast.error('PDF generation failed'); }
-      else if (pdfResult?.download_url) {
-        let url = pdfResult.download_url;
-        const reportId = savedReportId || data.referenceNumber;
-        try { const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage'); const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.download_url, user.id, reportId, data.referenceNumber); url = permanentUrl; await supabase.from('reports').update({ storage_path: storagePath, pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId); } catch { await supabase.from('reports').update({ pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId); }
-        const { openOrDownloadPdf } = await import('@/utils/pdf-download');
-        await openOrDownloadPdf(url, `Smoke-CO-Alarm-${data.referenceNumber}.pdf`);
-        toast.success('Smoke & CO alarm certificate generated');
-      }
-    } catch { toast.error('Failed to generate PDF'); } finally { setIsSaving(false); }
+      if (pdfError) throw new Error(pdfError.message || 'PDF generation failed');
+      if (!pdfResult?.download_url) throw new Error('No PDF URL returned');
+
+      const filename = `Smoke-CO-Alarm-${data.referenceNumber}.pdf`;
+      let url = pdfResult.download_url;
+      const reportId = savedReportId || data.referenceNumber;
+      try { const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage'); const { permanentUrl, storagePath } = await saveCertificatePdf(pdfResult.download_url, user.id, reportId, data.referenceNumber); url = permanentUrl; await supabase.from('reports').update({ storage_path: storagePath, pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId); } catch { await supabase.from('reports').update({ pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId); }
+
+      setGeneratedPdfUrl(url);
+      setPdfFilename(filename);
+      toast.success('Smoke & CO alarm certificate generated');
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : 'Failed to generate PDF';
+      setGenerationError(msg);
+      toast.error(msg);
+    } finally { setIsSaving(false); }
   };
 
   return (
@@ -701,6 +715,16 @@ export default function SmokeCOAlarmCertificate() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <CertificateGenerationDialog
+        open={showGenerationDialog}
+        onOpenChange={setShowGenerationDialog}
+        isGenerating={isSaving}
+        pdfUrl={generatedPdfUrl}
+        pdfFilename={pdfFilename}
+        errorMessage={generationError}
+        documentLabel="Certificate"
+      />
     </div>
   );
 }
