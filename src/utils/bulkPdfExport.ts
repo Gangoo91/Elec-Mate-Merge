@@ -311,6 +311,11 @@ export const generateBulkPDFs = async (
           const { formatBESSJson } = await import('./bessJsonFormatter');
           dataForPdf = formatBESSJson(validation.data);
         }
+        // Smoke & CO Alarm
+        else if (rtLower === 'smoke-co-alarm') {
+          const { formatSmokeCOJson } = await import('./smokeCOJsonFormatter');
+          dataForPdf = formatSmokeCOJson(validation.data);
+        }
         // Minor Works, G98/99, notices: edge function handles transform internally
       }
 

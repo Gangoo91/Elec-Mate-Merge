@@ -210,7 +210,6 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by make or model..."
                 className="h-11 text-base bg-white/[0.06] border-white/[0.08] text-white placeholder:text-white/30"
-                autoFocus
               />
             </div>
 
@@ -256,7 +255,6 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search chargers..."
               className="h-9 border-0 bg-transparent focus-visible:ring-0 px-0 text-base text-white placeholder:text-white/30"
-              autoFocus
             />
           </div>
 

@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { Search, X, ChevronDown, Loader2 } from 'lucide-react';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import { X, ChevronDown, Loader2 } from 'lucide-react';
 import { useCustomers, Customer } from '@/hooks/inspection/useCustomers';
 
 interface ClientSelectorProps {
@@ -84,86 +81,70 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
 
       {/* Customer Search Sheet */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent side="bottom" className="h-[85dvh] p-0 rounded-t-2xl flex flex-col">
-          <div className="flex flex-col h-full bg-background">
-            {/* Header */}
-            <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.06]">
-              <div className="flex items-center justify-between">
-                <SheetTitle className="text-lg font-bold text-white">Select Client</SheetTitle>
-                {!isLoading && resultCount > 0 && (
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-white/[0.08] px-2.5 py-1 rounded">
-                    {resultCount}
-                  </span>
-                )}
-              </div>
-            </SheetHeader>
+        <SheetContent side="bottom" className="h-[70dvh] p-0 rounded-t-2xl overflow-hidden">
+          {/* Handle bar */}
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-10 h-1 rounded-full bg-white/20" />
+          </div>
 
-            {/* Search Input */}
-            <div className="px-4 py-3 border-b border-white/[0.06]">
-              <div className="flex items-center gap-2.5 h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08]">
-                <Search className="h-4 w-4 text-white flex-shrink-0" />
-                <input
-                  placeholder="Search by name, email, phone..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="flex-1 bg-transparent text-base text-white placeholder:text-white outline-none"
-                  autoFocus
-                />
-                {searchTerm && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchTerm('')}
-                    className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation"
-                  >
-                    <X className="h-3 w-3 text-white" />
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {/* Customer List */}
-            <div className="flex-1 overflow-y-auto overscroll-contain px-3 py-3">
-              {isLoading ? (
-                <div className="flex flex-col items-center justify-center py-16">
-                  <Loader2 className="h-5 w-5 animate-spin text-white mb-2" />
-                  <p className="text-sm text-white">Loading clients...</p>
-                </div>
-              ) : customers.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-                  <p className="text-sm font-medium text-white">
-                    {searchTerm ? 'No clients found' : 'No clients yet'}
-                  </p>
-                  <p className="text-xs text-white mt-1">
-                    {searchTerm
-                      ? 'Try a different search term'
-                      : 'Add clients from the CRM section'}
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  {customers.map((customer) => (
-                    <button
-                      key={customer.id}
-                      type="button"
-                      onClick={() => handleSelectCustomer(customer)}
-                      className="w-full text-left p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] active:scale-[0.98] transition-all touch-manipulation"
-                    >
-                      <p className="font-semibold text-white text-sm">{customer.name}</p>
-                      {(customer.email || customer.phone) && (
-                        <p className="text-xs text-white truncate mt-1">
-                          {[customer.email, customer.phone].filter(Boolean).join('  \u00B7  ')}
-                        </p>
-                      )}
-                      {customer.address && (
-                        <p className="text-xs text-white truncate mt-0.5">
-                          {customer.address}
-                        </p>
-                      )}
-                    </button>
-                  ))}
-                </div>
+          {/* Header + Search — compact */}
+          <div className="px-4 pb-3">
+            <div className="flex items-center justify-between mb-3">
+              <SheetTitle className="text-base font-bold text-white">Select Client</SheetTitle>
+              {!isLoading && resultCount > 0 && (
+                <span className="text-[10px] font-bold uppercase tracking-wider text-white/50">
+                  {resultCount} clients
+                </span>
               )}
             </div>
+            <input
+              placeholder="Search by name, email, phone..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.12] text-[15px] text-white placeholder:text-white/60 outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 touch-manipulation"
+            />
+          </div>
+
+          {/* Customer List */}
+          <div className="overflow-y-auto overscroll-contain h-[calc(70dvh-110px)] border-t border-white/[0.08]">
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center py-16">
+                <Loader2 className="h-5 w-5 animate-spin text-white mb-2" />
+                <p className="text-sm text-white">Loading clients...</p>
+              </div>
+            ) : customers.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+                <p className="text-[14px] font-medium text-white">
+                  {searchTerm ? 'No clients found' : 'No clients yet'}
+                </p>
+                <p className="text-[12px] text-white/50 mt-1">
+                  {searchTerm ? 'Try a different search term' : 'Add clients from the CRM section'}
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-white/[0.08]">
+                {customers.map((customer) => (
+                  <button
+                    key={customer.id}
+                    type="button"
+                    onClick={() => handleSelectCustomer(customer)}
+                    className="w-full text-left px-4 py-3.5 hover:bg-white/[0.04] active:bg-white/[0.06] transition-all touch-manipulation"
+                  >
+                    <p className="font-semibold text-white text-[15px]">{customer.name}</p>
+                    {(customer.email || customer.phone) && (
+                      <p className="text-[12px] text-white/50 truncate mt-0.5">
+                        {[customer.email, customer.phone].filter(Boolean).join('  ·  ')}
+                      </p>
+                    )}
+                    {customer.address && (
+                      <p className="text-[12px] text-white/50 truncate mt-0.5">
+                        {customer.address}
+                      </p>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </SheetContent>
       </Sheet>

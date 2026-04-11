@@ -139,7 +139,6 @@ const LuminaireAutocomplete: React.FC<LuminaireAutocompleteProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by make or model..."
-                autoFocus
                 className="h-11 bg-white/[0.06] border-white/[0.08] text-white text-base"
               />
             </div>

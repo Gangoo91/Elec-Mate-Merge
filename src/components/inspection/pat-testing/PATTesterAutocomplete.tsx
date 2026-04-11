@@ -265,7 +265,6 @@ export function PATTesterAutocomplete({
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search testers..."
                 className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
-                autoFocus
               />
               {search && (
                 <Button

@@ -209,7 +209,6 @@ export function PVPanelAutocomplete({
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search by make, model, wattage..."
                   className="flex-1 bg-transparent text-base text-white placeholder:text-white/40 outline-none"
-                  autoFocus
                 />
                 {search && (
                   <button onClick={() => setSearch('')} className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation">
