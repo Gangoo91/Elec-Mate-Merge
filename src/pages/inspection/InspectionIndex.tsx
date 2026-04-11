@@ -111,6 +111,9 @@ const InspectionIndex = () => {
     } else if (reportType === 'pat-testing') {
       navigate(`/electrician/inspection-testing/pat-testing/${reportId}`);
       return;
+    } else if (reportType === 'testing-only') {
+      navigate(`/electrician/inspection-testing/testing-only/${reportId}`);
+      return;
     }
 
     // Legacy certificate types use section-based routing
@@ -125,7 +128,7 @@ const InspectionIndex = () => {
 
   const handleNavigate = (section: string, reportId?: string, reportType?: string) => {
     // Cert types with dedicated routes — navigate directly
-    const dedicatedRouteTypes = ['ev-charging', 'fire-alarm', 'emergency-lighting', 'pat-testing', 'solar-pv'];
+    const dedicatedRouteTypes = ['ev-charging', 'fire-alarm', 'emergency-lighting', 'pat-testing', 'solar-pv', 'testing-only'];
     const effectiveType = reportType || section;
     if (dedicatedRouteTypes.includes(effectiveType) && reportId) {
       navigate(`/electrician/inspection-testing/${effectiveType}/${reportId}`);

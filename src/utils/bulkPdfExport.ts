@@ -332,6 +332,11 @@ export const generateBulkPDFs = async (
           const { formatLightningProtectionJson } = await import('./lightningProtectionJsonFormatter');
           dataForPdf = formatLightningProtectionJson(validation.data);
         }
+        // Testing Only
+        else if (rtLower === 'testing-only') {
+          const { formatTestingOnlyJson } = await import('./testingOnlyJsonFormatter');
+          dataForPdf = formatTestingOnlyJson(validation.data);
+        }
         // Minor Works, notices: edge function handles transform internally
       }
 

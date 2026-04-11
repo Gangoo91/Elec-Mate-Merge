@@ -363,6 +363,7 @@ export const reportCloud = {
         if (data.certificateGenerated) return 'completed';
         if (data.satisfactoryForContinuedUse && data.inspectorSignature) return 'completed';
         if (reportType === 'minor-works' && data.signature && data.workDate) return 'completed';
+        if (reportType === 'testing-only' && data.testerSignature) return 'completed';
         const hasContent =
           data.clientName ||
           data.inspectionDate ||

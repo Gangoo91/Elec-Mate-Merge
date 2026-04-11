@@ -46,6 +46,10 @@ interface TestingOnlyData {
   testDate: string;
   testerName: string;
   testerQualifications: string;
+  testerPhone: string;
+  testerEmail: string;
+  clientName: string;
+  declarationConfirmed: boolean;
   mftMake: string;
   mftModel: string;
   mftSerial: string;
@@ -72,7 +76,8 @@ const newCircuit = (): TestCircuit => ({
 const defaultData = (): TestingOnlyData => ({
   referenceNumber: `TOC-${Date.now().toString(36).toUpperCase()}`,
   testDate: new Date().toISOString().split('T')[0],
-  testerName: '', testerQualifications: '',
+  testerName: '', testerQualifications: '', testerPhone: '', testerEmail: '',
+  clientName: '', declarationConfirmed: false,
   mftMake: '', mftModel: '', mftSerial: '', mftCalDate: '',
   loopMake: '', loopSerial: '', rcdTesterMake: '', rcdTesterSerial: '',
   installationAddress: '', installationDescription: '', numberOfCircuits: '',
@@ -129,7 +134,7 @@ export default function TestingOnlyCertificate() {
     hasRecoverableDraft, recoverDraft, discardDraft,
   } = useReportSync({
     reportId: savedReportId,
-    reportType: 'testing-only' as any,
+    reportType: 'testing-only',
     formData: data,
     enabled: !isLoading,
     onReportCreated: (newId) => {
@@ -154,7 +159,7 @@ export default function TestingOnlyCertificate() {
 
   useEffect(() => {
     if (!isNew || !hasRecoverableDraft) return;
-    const draft = draftStorage.loadDraft('testing-only' as any, null);
+    const draft = draftStorage.loadDraft('testing-only', null);
     if (draft) { setRecoveryDraft(draft); setShowRecoveryDialog(true); }
   }, [isNew, hasRecoverableDraft]);
 
@@ -165,7 +170,12 @@ export default function TestingOnlyCertificate() {
       if (!user) return;
       const { data: cpData } = await supabase.rpc('get_my_company_profile');
       const cp = Array.isArray(cpData) ? cpData[0] : cpData;
-      if (cp) setData((prev) => ({ ...prev, testerName: prev.testerName || cp.inspector_name || cp.company_name || '' }));
+      if (cp) setData((prev) => ({
+        ...prev,
+        testerName: prev.testerName || cp.inspector_name || cp.company_name || '',
+        testerPhone: prev.testerPhone || cp.company_phone || '',
+        testerEmail: prev.testerEmail || cp.company_email || '',
+      }));
     });
   }, []);
 
@@ -204,9 +214,33 @@ export default function TestingOnlyCertificate() {
   const handleSaveDraft = () => { saveNow(); toast.success('Draft saved'); };
 
   const handleGeneratePDF = async () => {
-    // Similar to SmokeCO but uses 'generate-testing-only-pdf' edge function
-    // No company branding — intentionally omitted
-    toast.info('PDF generation coming soon');
+    if (!data.testerSignature) { toast.error('Tester signature required'); return; }
+    setIsSaving(true);
+    try {
+      await syncNowImmediate();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { toast.error('Please sign in'); setIsSaving(false); return; }
+
+      // No company branding — intentionally omitted for Testing Only
+      const payload = { ...data };
+      const { data: pdfResult, error: pdfError } = await supabase.functions.invoke('generate-testing-only-pdf', { body: { formData: payload } });
+      if (pdfError) { toast.error('PDF generation failed'); }
+      else if (pdfResult?.download_url) {
+        let url = pdfResult.download_url;
+        const reportId = savedReportId || data.referenceNumber;
+        try {
+          const { saveCertificatePdf } = await import('@/utils/certificate-pdf-storage');
+          const { permanentUrl, storagePath } = await saveCertificatePdf(url, user.id, reportId, data.referenceNumber);
+          url = permanentUrl;
+          await supabase.from('reports').update({ storage_path: storagePath, pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId);
+        } catch {
+          await supabase.from('reports').update({ pdf_url: url, pdf_generated_at: new Date().toISOString(), status: 'completed' }).eq('report_id', reportId);
+        }
+        const { openOrDownloadPdf } = await import('@/utils/pdf-download');
+        await openOrDownloadPdf(url, `Testing-Only-${data.referenceNumber}.pdf`);
+        toast.success('Testing record generated');
+      }
+    } catch { toast.error('Failed to generate PDF'); } finally { setIsSaving(false); }
   };
 
   return (
@@ -243,7 +277,14 @@ export default function TestingOnlyCertificate() {
             <Field label="Name" required><Input value={data.testerName} onChange={(e) => update('testerName', e.target.value)} className={inputCn} /></Field>
             <Field label="Qualifications"><Input value={data.testerQualifications} onChange={(e) => update('testerQualifications', e.target.value)} className={inputCn} placeholder="e.g. 2391" /></Field>
           </div>
-          <Field label="Test Date"><Input type="date" value={data.testDate} onChange={(e) => update('testDate', e.target.value)} className={inputCn} /></Field>
+          <div className="grid grid-cols-2 gap-2">
+            <Field label="Phone"><Input type="tel" value={data.testerPhone} onChange={(e) => update('testerPhone', e.target.value)} className={inputCn} /></Field>
+            <Field label="Email"><Input type="email" value={data.testerEmail} onChange={(e) => update('testerEmail', e.target.value)} className={inputCn} /></Field>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <Field label="Reference No."><Input value={data.referenceNumber} onChange={(e) => update('referenceNumber', e.target.value)} className={inputCn} /></Field>
+            <Field label="Test Date"><Input type="date" value={data.testDate} onChange={(e) => update('testDate', e.target.value)} className={inputCn} /></Field>
+          </div>
         </section>
 
         {/* 2. Test Instruments */}
@@ -282,6 +323,7 @@ export default function TestingOnlyCertificate() {
         {/* 3. Installation */}
         <section className="space-y-3">
           <SectionHeader title="Installation" />
+          <Field label="Client / Main Contractor"><Input value={data.clientName} onChange={(e) => update('clientName', e.target.value)} className={inputCn} placeholder="e.g. ABC Electrical Ltd" /></Field>
           <Field label="Address"><Input value={data.installationAddress} onChange={(e) => update('installationAddress', e.target.value)} className={inputCn} /></Field>
           <Field label="Description"><Textarea value={data.installationDescription} onChange={(e) => update('installationDescription', e.target.value)} className={textareaCn} placeholder="e.g. Single-phase domestic, consumer unit replacement" /></Field>
           <Field label="No. of Circuits"><Input type="number" inputMode="numeric" value={data.numberOfCircuits} onChange={(e) => update('numberOfCircuits', e.target.value)} className={inputCn} /></Field>
@@ -339,7 +381,27 @@ export default function TestingOnlyCertificate() {
           </button>
         </section>
 
-        {/* 5. Sign-off */}
+        {/* 5. Declaration */}
+        <section className="space-y-3">
+          <SectionHeader title="Declaration" />
+          <div className="rounded-lg bg-white/[0.03] border border-white/[0.06] p-3">
+            <p className="text-[11px] text-white leading-relaxed">I confirm that the tests recorded in this document have been carried out by me in accordance with BS 7671:2018+A3:2024, using calibrated instruments, and the results are a true record of the readings obtained.</p>
+          </div>
+          <div className="flex items-center justify-between">
+            <Label className="text-white text-xs font-medium">I confirm the above</Label>
+            <div className="flex gap-1.5">
+              {[true, false].map((v) => (
+                <button key={String(v)} type="button" onClick={() => update('declarationConfirmed', v)}
+                  className={cn('w-11 h-7 rounded text-[10px] font-semibold touch-manipulation transition-all',
+                    data.declarationConfirmed === v ? (v ? 'bg-green-500 text-white' : 'bg-red-500 text-white') : 'bg-white/[0.06] text-white border border-white/[0.08]')}>
+                  {v ? 'Yes' : 'No'}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 6. Sign-off */}
         <section className="space-y-3">
           <SectionHeader title="Sign-off" />
           <SignatureInput label="Tester Signature" value={data.testerSignature} onChange={(sig) => update('testerSignature', sig || '')} />
@@ -352,6 +414,10 @@ export default function TestingOnlyCertificate() {
           <button onClick={handleSave} disabled={isSaving}
             className="w-full h-11 bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow text-xs font-semibold rounded-lg touch-manipulation active:scale-[0.98] disabled:opacity-50">
             {isSaving ? 'Saving...' : savedReportId ? 'Update Record' : 'Save Record'}
+          </button>
+          <button onClick={handleGeneratePDF} disabled={isSaving || !data.testerSignature}
+            className="w-full h-11 bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow text-xs font-semibold rounded-lg touch-manipulation active:scale-[0.98] disabled:opacity-50">
+            {isSaving ? 'Generating...' : 'Generate PDF'}
           </button>
           <button onClick={handleSaveDraft}
             className="w-full h-11 border border-white/[0.12] text-white text-xs font-medium rounded-lg touch-manipulation active:scale-[0.98]">
