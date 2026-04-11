@@ -41,7 +41,7 @@ const keyTakeaways = [
   'A full house rewire in Exeter typically costs £2,300 to £5,800 depending on property size. Devon labour rates make Exeter one of the more affordable cities in England for rewiring work.',
   'All rewiring work must comply with BS 7671:2018+A3:2024 and be notified under Part P of the Building Regulations 2010.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work in Exeter — they notify Exeter City Council building control on your behalf.',
-  'Exeter has significant Georgian, Victorian, and Edwardian housing stock in areas such as St Leonards, St David\'s, and Heavitree that may retain rubber-insulated wiring requiring a full rewire.',
+  "Exeter has significant Georgian, Victorian, and Edwardian housing stock in areas such as St Leonards, St David's, and Heavitree that may retain rubber-insulated wiring requiring a full rewire.",
   'Student rental properties near the University of Exeter in Heavitree, St James, and Polsloe should have current EICRs and may have wiring issues from heavy multi-occupancy use.',
   'On completion of a rewire in Exeter, your electrician must issue an Electrical Installation Certificate (EIC) — a legal requirement under BS 7671 and essential for property sales.',
 ];
@@ -55,12 +55,12 @@ const faqs = [
   {
     question: 'How long does a house rewire take in Exeter?',
     answer:
-      'A two-bedroom terrace in Exeter typically takes 2 to 3 days. Three-bedroom semi-detached properties common in Heavitree, Pinhoe, and Wonford take 3 to 5 days. Larger four-bedroom detached properties take 5 to 7 days. Georgian and Victorian properties in St Leonards and St David\'s with solid stone or brick walls may take an additional 1 to 3 days due to the complexity of cable routing.',
+      "A two-bedroom terrace in Exeter typically takes 2 to 3 days. Three-bedroom semi-detached properties common in Heavitree, Pinhoe, and Wonford take 3 to 5 days. Larger four-bedroom detached properties take 5 to 7 days. Georgian and Victorian properties in St Leonards and St David's with solid stone or brick walls may take an additional 1 to 3 days due to the complexity of cable routing.",
   },
   {
     question: 'Does rewiring in Exeter need Part P notification?',
     answer:
-      'Yes. A full rewire is notifiable work under Part P of the Building Regulations 2010. NICEIC, NAPIT, and ELECSA registered electricians can self-certify rewiring work in Exeter and notify Exeter City Council building control on your behalf. If the electrician is not scheme registered, you must apply to the council\'s building control department before work begins.',
+      "Yes. A full rewire is notifiable work under Part P of the Building Regulations 2010. NICEIC, NAPIT, and ELECSA registered electricians can self-certify rewiring work in Exeter and notify Exeter City Council building control on your behalf. If the electrician is not scheme registered, you must apply to the council's building control department before work begins.",
   },
   {
     question: 'What certificate should I receive after a rewire in Exeter?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'Is it worth rewiring before selling a house in Exeter?',
     answer:
-      'If an EICR reveals C1 or C2 observations, buyers\' solicitors and mortgage lenders will typically require these to be resolved before exchange of contracts. Rewiring before marketing can prevent delays and price reductions at the negotiation stage. An updated installation also typically adds more value than the cost of the rewire in the current Devon property market. Always get a survey and quotes before deciding.',
+      "If an EICR reveals C1 or C2 observations, buyers' solicitors and mortgage lenders will typically require these to be resolved before exchange of contracts. Rewiring before marketing can prevent delays and price reductions at the negotiation stage. An updated installation also typically adds more value than the cost of the rewire in the current Devon property market. Always get a survey and quotes before deciding.",
   },
   {
     question: 'How do I find a qualified rewire electrician in Exeter?',
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/house-rewire-cost',
     title: 'House Rewire Cost Guide',
-    description: 'National rewire cost guide covering all property sizes, what\'s included, and how to compare quotes.',
+    description:
+      "National rewire cost guide covering all property sizes, what's included, and how to compare quotes.",
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -102,14 +103,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
-    description: 'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
+    description:
+      'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'Electrical Installation Certificate App',
-    description: 'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
+    description:
+      'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -134,9 +137,9 @@ const sections = [
       <>
         <p>
           Exeter rewire costs are among the more affordable for a county town in England, reflecting
-          Devon's lower labour rates compared with the South East. The city's diverse housing
-          stock — from Georgian townhouses in the Cathedral Quarter to 1960s estates in Pinhoe —
-          means costs vary with construction type as well as property size.
+          Devon's lower labour rates compared with the South East. The city's diverse housing stock
+          — from Georgian townhouses in the Cathedral Quarter to 1960s estates in Pinhoe — means
+          costs vary with construction type as well as property size.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -159,15 +162,15 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — £3,200 to £4,800. Common across
-                Exeter's suburbs including Heavitree, Wonford, Pinhoe, and Alphington. Typically
-                12 to 16 circuits.
+                Exeter's suburbs including Heavitree, Wonford, Pinhoe, and Alphington. Typically 12
+                to 16 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom detached</strong> — £4,200 to £5,800. Larger properties in
-                St Leonards, Topsham, and Cranbrook.
+                <strong>Four-bedroom detached</strong> — £4,200 to £5,800. Larger properties in St
+                Leonards, Topsham, and Cranbrook.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -212,8 +215,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse box</strong> — ceramic fuse holders with fuse wire indicate
-                a pre-1970s installation with no modern protection. Common in Exeter's older terrace
+                <strong>Rewirable fuse box</strong> — ceramic fuse holders with fuse wire indicate a
+                pre-1970s installation with no modern protection. Common in Exeter's older terrace
                 stock.
               </span>
             </li>
@@ -229,16 +232,16 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Student rental wear and damage</strong> — heavy multi-occupancy use in
-                student properties near the university can accelerate socket and accessory damage.
-                A periodic inspection can reveal whether a rewire is needed.
+                student properties near the university can accelerate socket and accessory damage. A
+                periodic inspection can reveal whether a rewire is needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unsatisfactory EICR</strong> — C1 or C2 observations that cannot be
-                resolved economically through targeted repairs indicate a full rewire is likely
-                the best investment.
+                <strong>Unsatisfactory EICR</strong> — C1 or C2 observations that cannot be resolved
+                economically through targeted repairs indicate a full rewire is likely the best
+                investment.
               </span>
             </li>
           </ul>
@@ -260,8 +263,8 @@ const sections = [
       <>
         <p>
           A full rewire replaces all fixed electrical wiring from the incoming mains connection
-          throughout the property. The process follows the same sequence in Exeter as anywhere
-          in the UK.
+          throughout the property. The process follows the same sequence in Exeter as anywhere in
+          the UK.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -278,8 +281,8 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Second fix</strong> — fitting the consumer unit, connecting circuits,
-                installing sockets, switches, and light fittings. Power is restored at the end
-                of this stage.
+                installing sockets, switches, and light fittings. Power is restored at the end of
+                this stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -331,8 +334,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom detached</strong> — 5 to 7 days. Larger properties with
-                more circuits and longer cable runs.
+                <strong>Four-bedroom detached</strong> — 5 to 7 days. Larger properties with more
+                circuits and longer cable runs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -375,9 +378,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building control route</strong> — for non-scheme electricians, notify
-                Exeter City Council building control before work begins. An inspector may check
-                the installation before issuing a completion notice.
+                <strong>Building control route</strong> — for non-scheme electricians, notify Exeter
+                City Council building control before work begins. An inspector may check the
+                installation before issuing a completion notice.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -415,8 +418,8 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three written quotes</strong> — itemised quotes covering circuits, consumer
-                unit specification, accessories, EIC, and Part P notification. Compare on a like
-                for like basis.
+                unit specification, accessories, EIC, and Part P notification. Compare on a like for
+                like basis.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -468,16 +471,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workmanship guarantee</strong> — typically 1 to 5 years from reputable
-                Devon contractors. Confirm scope and duration before work begins.
+                <strong>Workmanship guarantee</strong> — typically 1 to 5 years from reputable Devon
+                contractors. Confirm scope and duration before work begins.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Next inspection</strong> — owner-occupied: EICR in 10 years. Rental:
-                EICR every 5 years under the Electrical Safety Standards in the Private Rented
-                Sector (England) Regulations 2020.
+                <strong>Next inspection</strong> — owner-occupied: EICR in 10 years. Rental: EICR
+                every 5 years under the Electrical Safety Standards in the Private Rented Sector
+                (England) Regulations 2020.
               </span>
             </li>
           </ul>
@@ -492,8 +495,8 @@ const sections = [
       <>
         <p>
           Exeter's student rental market and older housing stock create consistent demand for
-          rewiring and periodic inspection work. Electricians who complete professional certification
-          efficiently and quote competitively build strong local reputations.
+          rewiring and periodic inspection work. Electricians who complete professional
+          certification efficiently and quote competitively build strong local reputations.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -503,12 +506,10 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete your Electrical Installation Certificate on your phone before leaving
-                  the property. No paperwork in the evening — the customer receives their certificate
-                  the same day.
+                  the property. No paperwork in the evening — the customer receives their
+                  certificate the same day.
                 </p>
               </div>
             </div>
@@ -550,7 +551,7 @@ export default function RewireCostExeterPage() {
       title="House Rewire Cost Exeter 2025 | Rewire Devon"
       description="House rewire costs in Exeter for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs your Exeter property needs rewiring, timescales, and certification explained."
       datePublished="2025-01-01"
-      dateModified="2025-06-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rewire Cost Guide"

@@ -129,11 +129,11 @@ const sections = [
     content: (
       <>
         <p>
-          Night storage heaters were the dominant form of electric heating in UK homes built
-          between the 1960s and 1990s. They work by storing heat in ceramic bricks during
-          off-peak hours (typically overnight on an Economy 7 tariff) and releasing that heat
-          gradually during the day. While this approach made sense when off-peak electricity was
-          substantially cheaper, several factors have changed the economics significantly.
+          Night storage heaters were the dominant form of electric heating in UK homes built between
+          the 1960s and 1990s. They work by storing heat in ceramic bricks during off-peak hours
+          (typically overnight on an Economy 7 tariff) and releasing that heat gradually during the
+          day. While this approach made sense when off-peak electricity was substantially cheaper,
+          several factors have changed the economics significantly.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -149,39 +149,38 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Lot 20 non-compliance</strong> — heaters manufactured before January 2018
-                do not meet the Ecodesign minimum performance standards. Lot 20 requires
-                electronic thermostats, open window detection, and adaptive charge control as
-                minimum standards for new heaters placed on the market.
+                <strong>Lot 20 non-compliance</strong> — heaters manufactured before January 2018 do
+                not meet the Ecodesign minimum performance standards. Lot 20 requires electronic
+                thermostats, open window detection, and adaptive charge control as minimum standards
+                for new heaters placed on the market.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Narrowing Economy 7 price differential</strong> — the gap between
-                Economy 7 day and night rates has narrowed over recent years. The benefit of
-                off-peak charging is less pronounced than it was in the 1980s, making the
-                storage heater proposition less attractive financially.
+                <strong>Narrowing Economy 7 price differential</strong> — the gap between Economy 7
+                day and night rates has narrowed over recent years. The benefit of off-peak charging
+                is less pronounced than it was in the 1980s, making the storage heater proposition
+                less attractive financially.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heat pump compatibility</strong> — properties heated by storage heaters
-                are increasingly prime candidates for air source heat pump (ASHP) retrofits,
-                particularly following the introduction of the Boiler Upgrade Scheme (BUS) grant
-                of up to \u00a37,500 for ASHPs in England and Wales.
+                <strong>Heat pump compatibility</strong> — properties heated by storage heaters are
+                increasingly prime candidates for air source heat pump (ASHP) retrofits,
+                particularly following the introduction of the Boiler Upgrade Scheme (BUS) grant of
+                up to \u00a37,500 for ASHPs in England and Wales.
               </span>
             </li>
           </ul>
         </div>
         <p>
           For electricians, storage heater replacements are a growing area of domestic work.
-          Understanding the wiring implications, tariff considerations, and Lot 20 requirements
-          is essential for providing accurate advice and completing compliant installations.
-          Use the{' '}
-          <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate tool" /> to generate
-          an Electrical Installation Certificate for any new heating circuit.
+          Understanding the wiring implications, tariff considerations, and Lot 20 requirements is
+          essential for providing accurate advice and completing compliant installations. Use the{' '}
+          <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate tool" /> to generate an
+          Electrical Installation Certificate for any new heating circuit.
         </p>
       </>
     ),
@@ -192,12 +191,14 @@ const sections = [
     content: (
       <>
         <p>
-          There are three main categories of modern electric heating that can replace night
-          storage heaters, each with different installation requirements, running costs, and
-          suitability depending on the property type and insulation standard.
+          There are three main categories of modern electric heating that can replace night storage
+          heaters, each with different installation requirements, running costs, and suitability
+          depending on the property type and insulation standard.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-4">1. Lot 20-Compliant Storage Heaters</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">
+            1. Lot 20-Compliant Storage Heaters
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -211,7 +212,8 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Best suited to properties with existing Economy 7 wiring and meter. Minimal
-                electrical work required. Cost: \u00a3400 to \u00a3900 per heater supplied and fitted.
+                electrical work required. Cost: \u00a3400 to \u00a3900 per heater supplied and
+                fitted.
               </span>
             </li>
           </ul>
@@ -231,8 +233,8 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Economy 7 tariff no longer required. Single-rate tariff may be more cost-effective.
-                Supply cost: \u00a3150 to \u00a3500 per unit. Installation: \u00a350 to \u00a3150 per heater
-                if connecting to existing circuits.
+                Supply cost: \u00a3150 to \u00a3500 per unit. Installation: \u00a350 to \u00a3150
+                per heater if connecting to existing circuits.
               </span>
             </li>
           </ul>
@@ -243,16 +245,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Radiant heat panels rated typically 350W to 1,000W. Heat objects and people
-                directly rather than the air, making them more efficient in poorly insulated rooms.
-                Can be ceiling or wall mounted. Suitable for most domestic circuits.
+                Radiant heat panels rated typically 350W to 1,000W. Heat objects and people directly
+                rather than the air, making them more efficient in poorly insulated rooms. Can be
+                ceiling or wall mounted. Suitable for most domestic circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Installation is straightforward — most panels connect via a standard 13A plug
-                or fused spur. Supply cost: \u00a3200 to \u00a3600 per panel. No Off-Peak tariff needed.
+                Installation is straightforward — most panels connect via a standard 13A plug or
+                fused spur. Supply cost: \u00a3200 to \u00a3600 per panel. No Off-Peak tariff
+                needed.
               </span>
             </li>
           </ul>
@@ -263,17 +266,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Whole-house heating solution. Requires wet underfloor heating or suitable
-                radiators (low-flow temperature compatible). Typical system cost: \u00a38,000 to
-                \u00a315,000. Boiler Upgrade Scheme grant of \u00a37,500 available in England and Wales.
+                Whole-house heating solution. Requires wet underfloor heating or suitable radiators
+                (low-flow temperature compatible). Typical system cost: \u00a38,000 to \u00a315,000.
+                Boiler Upgrade Scheme grant of \u00a37,500 available in England and Wales.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Requires a dedicated electrical supply — typically a 32A or 40A radial circuit
-                with appropriate cable sizing per BS 7671. Part P notification required.
-                MCS certification needed to access grant funding.
+                Requires a dedicated electrical supply — typically a 32A or 40A radial circuit with
+                appropriate cable sizing per BS 7671. Part P notification required. MCS
+                certification needed to access grant funding.
               </span>
             </li>
           </ul>
@@ -288,51 +291,51 @@ const sections = [
       <>
         <p>
           Economy 7 is a dual-rate electricity tariff offering cheaper overnight electricity
-          (typically between midnight and 07:00, though the exact hours vary by supplier and
-          region) with a higher day rate. The tariff requires a dual-rate meter — either an
-          older electromechanical type or a modern smart meter configured for two rates.
+          (typically between midnight and 07:00, though the exact hours vary by supplier and region)
+          with a higher day rate. The tariff requires a dual-rate meter — either an older
+          electromechanical type or a modern smart meter configured for two rates.
         </p>
         <p>
-          Night storage heaters are designed specifically to exploit this tariff by charging
-          during the cheap-rate period. When storage heaters are removed or replaced with
-          on-demand heaters, the Economy 7 arrangement may no longer be beneficial because:
+          Night storage heaters are designed specifically to exploit this tariff by charging during
+          the cheap-rate period. When storage heaters are removed or replaced with on-demand
+          heaters, the Economy 7 arrangement may no longer be beneficial because:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Higher day rate applies to all on-demand heating</strong> — panel
-                heaters and infrared heaters operate during the day at the higher Economy 7
-                day rate, which is typically 20 to 30% more expensive than a standard single-rate
-                tariff for the same consumption.
+                <strong>Higher day rate applies to all on-demand heating</strong> — panel heaters
+                and infrared heaters operate during the day at the higher Economy 7 day rate, which
+                is typically 20 to 30% more expensive than a standard single-rate tariff for the
+                same consumption.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Switching tariff requires a meter change</strong> — if moving from
-                Economy 7 to a single-rate tariff, the supplier may need to reconfigure the
-                smart meter or replace an older dual-rate meter. This is arranged through the
-                energy supplier and is usually free.
+                <strong>Switching tariff requires a meter change</strong> — if moving from Economy 7
+                to a single-rate tariff, the supplier may need to reconfigure the smart meter or
+                replace an older dual-rate meter. This is arranged through the energy supplier and
+                is usually free.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Economy 7 remains beneficial for electric vehicle charging</strong> — if
-                the property has or plans to install an electric vehicle charge point, Economy 7
-                overnight cheap rates may still provide value for overnight EV charging even
-                without storage heaters.
+                <strong>Economy 7 remains beneficial for electric vehicle charging</strong> — if the
+                property has or plans to install an electric vehicle charge point, Economy 7
+                overnight cheap rates may still provide value for overnight EV charging even without
+                storage heaters.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Dual-rate wiring may be present</strong> — properties with storage
-                heaters often have a separate Economy 7 consumer unit or a dual-tariff wiring
-                arrangement with a separate off-peak circuit. When replacing heaters, check
-                whether this dedicated wiring can be repurposed or must be decommissioned.
+                <strong>Dual-rate wiring may be present</strong> — properties with storage heaters
+                often have a separate Economy 7 consumer unit or a dual-tariff wiring arrangement
+                with a separate off-peak circuit. When replacing heaters, check whether this
+                dedicated wiring can be repurposed or must be decommissioned.
               </span>
             </li>
           </ul>
@@ -346,42 +349,57 @@ const sections = [
     content: (
       <>
         <p>
-          The Lot 20 Ecodesign requirements derive from EU Commission Regulation (EU) 2015/1188
-          and have been retained in UK law through the Ecodesign for Energy-Related Products and
-          Energy Information Regulations 2021. They set minimum energy performance standards for
-          local space heaters, a category that includes electric storage heaters, panel heaters,
-          and infrared heaters placed on the UK market on or after 1 January 2018.
+          The Lot 20 Ecodesign requirements derive from EU Commission Regulation (EU) 2015/1188 and
+          have been retained in UK law through the Ecodesign for Energy-Related Products and Energy
+          Information Regulations 2021. They set minimum energy performance standards for local
+          space heaters, a category that includes electric storage heaters, panel heaters, and
+          infrared heaters placed on the UK market on or after 1 January 2018.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Minimum Requirements for Electric Heaters (Lot 20)</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">
+            Minimum Requirements for Electric Heaters (Lot 20)
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Electronic thermostat</strong> with minimum 1\u00b0C precision</span>
+              <span>
+                <strong>Electronic thermostat</strong> with minimum 1\u00b0C precision
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Open window detection</strong> — heater reduces output when a rapid temperature drop is detected (window opened)</span>
+              <span>
+                <strong>Open window detection</strong> — heater reduces output when a rapid
+                temperature drop is detected (window opened)
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Adaptive start</strong> — heater learns the thermal characteristics of the room and adjusts heat-up timing</span>
+              <span>
+                <strong>Adaptive start</strong> — heater learns the thermal characteristics of the
+                room and adjusts heat-up timing
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Weekly programming</strong> — 24/7 time programming as a minimum</span>
+              <span>
+                <strong>Weekly programming</strong> — 24/7 time programming as a minimum
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Presence detection capability</strong> (for heaters above certain wattage thresholds)</span>
+              <span>
+                <strong>Presence detection capability</strong> (for heaters above certain wattage
+                thresholds)
+              </span>
             </li>
           </ul>
         </div>
         <p>
-          Pre-2018 storage heaters — particularly older manual dial-controlled units — do not
-          meet these requirements. They can still legally be used in a property, but cannot be
-          supplied as new. When a landlord or homeowner asks about replacement, installing a
-          Lot 20-compliant model is the appropriate recommendation.
+          Pre-2018 storage heaters — particularly older manual dial-controlled units — do not meet
+          these requirements. They can still legally be used in a property, but cannot be supplied
+          as new. When a landlord or homeowner asks about replacement, installing a Lot 20-compliant
+          model is the appropriate recommendation.
         </p>
         <p>
           Electricians are not required to verify Lot 20 compliance as part of an electrical
@@ -398,17 +416,20 @@ const sections = [
       <>
         <p>
           Fixed electric heating installations must comply with BS 7671:2018+A3:2024 (the Wiring
-          Regulations). The key requirements for storage heater and replacement heating circuits
-          are covered in Part 5 (Selection and Erection of Equipment) and Chapter 43 (Protection
-          Against Overcurrent).
+          Regulations). The key requirements for storage heater and replacement heating circuits are
+          covered in Part 5 (Selection and Erection of Equipment) and Chapter 43 (Protection Against
+          Overcurrent).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Circuit Sizing for Fixed Heating</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">
+            Circuit Sizing for Fixed Heating
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Up to 2kW (8.7A):</strong> 2.5mm\u00b2 twin and earth cable, 16A MCB (Type B)
+                <strong>Up to 2kW (8.7A):</strong> 2.5mm\u00b2 twin and earth cable, 16A MCB (Type
+                B)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -420,13 +441,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Up to 3.68kW (16A):</strong> 2.5mm\u00b2 twin and earth cable, 20A MCB (Type B)
+                <strong>Up to 3.68kW (16A):</strong> 2.5mm\u00b2 twin and earth cable, 20A MCB (Type
+                B)
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3.68kW to 4.6kW (20A):</strong> 4mm\u00b2 twin and earth cable, 20A MCB (Type B)
+                <strong>3.68kW to 4.6kW (20A):</strong> 4mm\u00b2 twin and earth cable, 20A MCB
+                (Type B)
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -444,33 +467,33 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>RCD protection</strong> — fixed electric heaters installed in domestic
-                premises must have 30mA RCD protection under Regulation 411.3.3. This applies
-                to heaters in all rooms including bedrooms and living rooms.
+                premises must have 30mA RCD protection under Regulation 411.3.3. This applies to
+                heaters in all rooms including bedrooms and living rooms.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Local isolation</strong> — each fixed heater requires a means of
-                isolation accessible without the use of a tool (Regulation 537.2). A double-pole
-                fused spur with neon indicator is the standard solution.
+                <strong>Local isolation</strong> — each fixed heater requires a means of isolation
+                accessible without the use of a tool (Regulation 537.2). A double-pole fused spur
+                with neon indicator is the standard solution.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Part P notification</strong> — new circuits for fixed heating in dwellings
-                in England are notifiable under Part P of the Building Regulations. Use a
-                registered competent person scheme (NICEIC, NAPIT, ELECSA) for self-certification.
+                in England are notifiable under Part P of the Building Regulations. Use a registered
+                competent person scheme (NICEIC, NAPIT, ELECSA) for self-certification.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Before replacing storage heaters, always test the existing circuit: verify the earth
-          loop impedance, insulation resistance, and RCD operation time. Record findings on an{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained" label="EICR" /> or
-          minor works certificate as appropriate.
+          Before replacing storage heaters, always test the existing circuit: verify the earth loop
+          impedance, insulation resistance, and RCD operation time. Record findings on an{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained" label="EICR" /> or minor
+          works certificate as appropriate.
         </p>
       </>
     ),
@@ -481,33 +504,33 @@ const sections = [
     content: (
       <>
         <p>
-          Replacement costs vary significantly depending on the heating type chosen, the number
-          of heaters, whether existing circuits are suitable, and whether any consumer unit
-          upgrades are required.
+          Replacement costs vary significantly depending on the heating type chosen, the number of
+          heaters, whether existing circuits are suitable, and whether any consumer unit upgrades
+          are required.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Like-for-like Lot 20 storage heater replacement:</strong> \u00a3450 to \u00a3950
-                per unit (supply and fit). No new circuits required if existing wiring is
+                <strong>Like-for-like Lot 20 storage heater replacement:</strong> \u00a3450 to
+                \u00a3950 per unit (supply and fit). No new circuits required if existing wiring is
                 satisfactory.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electric panel heaters:</strong> \u00a3200 to \u00a3650 per heater (supply and
-                fit). May require new circuits or fused spurs. Additional cost if Economy 7
+                <strong>Electric panel heaters:</strong> \u00a3200 to \u00a3650 per heater (supply
+                and fit). May require new circuits or fused spurs. Additional cost if Economy 7
                 wiring needs decommissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Infrared panel heaters:</strong> \u00a3250 to \u00a3700 per panel (supply and
-                fit). Wiring is typically simpler. Ceiling-mounted panels may require more
+                <strong>Infrared panel heaters:</strong> \u00a3250 to \u00a3700 per panel (supply
+                and fit). Wiring is typically simpler. Ceiling-mounted panels may require more
                 labour for cable routing.
               </span>
             </li>
@@ -538,32 +561,34 @@ const sections = [
     content: (
       <>
         <p>
-          Storage heater replacement jobs typically involve an initial inspection, a minor works
-          or full installation certificate, and sometimes a consumer unit upgrade. Elec-Mate
-          provides the tools you need to manage the paperwork efficiently on-site.
+          Storage heater replacement jobs typically involve an initial inspection, a minor works or
+          full installation certificate, and sometimes a consumer unit upgrade. Elec-Mate provides
+          the tools you need to manage the paperwork efficiently on-site.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eic-certificate" label="Electrical Installation Certificate" />{' '}
+                <SEOAppBridge
+                  href="/tools/eic-certificate"
+                  label="Electrical Installation Certificate"
+                />{' '}
                 — generate compliant EICs for new heating circuits with instant PDF export.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" />{' '}
-                — document the condition of existing storage heater circuits before replacement.
+                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — document
+                the condition of existing storage heater circuits before replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" />{' '}
-                — issue minor works certificates for small additions like fused spurs for panel
-                heaters.
+                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                minor works certificates for small additions like fused spurs for panel heaters.
               </span>
             </li>
           </ul>
@@ -583,7 +608,7 @@ export default function NightStorageHeaterReplacementPage() {
       title="Night Storage Heater Replacement — Complete UK Electrician Guide 2024"
       description="Full guide to replacing night storage heaters: Lot 20 regulations, wiring requirements under BS 7671, Economy 7 implications, and costs for panel heaters, infrared panels, and heat pumps."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Heating Guide"

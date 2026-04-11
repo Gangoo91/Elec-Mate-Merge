@@ -60,7 +60,7 @@ const faqs = [
   {
     question: 'What is a Group 2 medical location and what electrical systems does it require?',
     answer:
-      'BS 7671 Section 710 classifies medical locations into Group 1 (where failure of supply does not immediately endanger a patient\'s life — wards, corridors, consultation rooms) and Group 2 (where failure of supply to applied parts used on or in the patient would immediately endanger life — operating theatres, ICUs, catheterisation labs, cardiac surgery wards). Group 2 locations require: medical IT systems (isolated power supplies, IPS) to provide a fault-tolerant power supply with insulation monitoring; automatic changeover to essential services within 0.5 seconds; equipotential bonding to IEC 60364-7-710; and additional RCD protection requirements.',
+      "BS 7671 Section 710 classifies medical locations into Group 1 (where failure of supply does not immediately endanger a patient's life — wards, corridors, consultation rooms) and Group 2 (where failure of supply to applied parts used on or in the patient would immediately endanger life — operating theatres, ICUs, catheterisation labs, cardiac surgery wards). Group 2 locations require: medical IT systems (isolated power supplies, IPS) to provide a fault-tolerant power supply with insulation monitoring; automatic changeover to essential services within 0.5 seconds; equipotential bonding to IEC 60364-7-710; and additional RCD protection requirements.",
   },
   {
     question: 'What is a medical IT system (isolated power supply)?',
@@ -75,7 +75,7 @@ const faqs = [
   {
     question: 'How often does a hospital need an electrical inspection?',
     answer:
-      'HTM 06-01 requires that healthcare electrical installations are subject to a formal inspection and testing programme. The frequency is risk-based: Group 2 medical locations (operating theatres, ICU) require annual inspection and testing of all critical systems including IPS panels, ATS, and emergency systems. General ward and clinical areas: every 5 years. Life-safety systems (emergency lighting, fire alarm) have their own annual service requirements. All test results must be recorded in the hospital\'s electrical safety management system.',
+      "HTM 06-01 requires that healthcare electrical installations are subject to a formal inspection and testing programme. The frequency is risk-based: Group 2 medical locations (operating theatres, ICU) require annual inspection and testing of all critical systems including IPS panels, ATS, and emergency systems. General ward and clinical areas: every 5 years. Life-safety systems (emergency lighting, fire alarm) have their own annual service requirements. All test results must be recorded in the hospital's electrical safety management system.",
   },
   {
     question: 'What is the cost of an operating theatre electrical installation?',
@@ -88,14 +88,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/care-home-electrical-cost',
     title: 'Care Home Electrical Installation Cost',
-    description: 'Nurse call systems, assisted bathing electrical, fire alarms to BS 5839-1 Category L1.',
+    description:
+      'Nurse call systems, assisted bathing electrical, fire alarms to BS 5839-1 Category L1.',
     icon: Heart,
     category: 'Guide',
   },
   {
     href: '/school-electrical-cost',
     title: 'School Electrical Installation Cost',
-    description: 'BB93 compliance, ICT infrastructure, emergency lighting, and solar PV for schools.',
+    description:
+      'BB93 compliance, ICT infrastructure, emergency lighting, and solar PV for schools.',
     icon: Building2,
     category: 'Guide',
   },
@@ -136,8 +138,8 @@ const sections = [
           Hospital electrical installations represent the highest standard of electrical engineering
           in the built environment. The combination of HTM 06-01 compliance requirements, BS 7671
           Section 710 medical location provisions, essential services infrastructure, and the
-          absolute requirement for supply continuity to life-critical equipment means that
-          hospital electrical work is fundamentally different from any other building type.
+          absolute requirement for supply continuity to life-critical equipment means that hospital
+          electrical work is fundamentally different from any other building type.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -179,8 +181,8 @@ const sections = [
               <span>
                 <strong>Specialist contractors</strong> — NHS hospital electrical work is typically
                 carried out by contractors with specific healthcare sector accreditation (NICEIC
-                Healthcare Approved, or equivalent) and is subject to independent commissioning
-                and verification by the client's authorised engineer (electrical).
+                Healthcare Approved, or equivalent) and is subject to independent commissioning and
+                verification by the client's authorised engineer (electrical).
               </span>
             </li>
           </ul>
@@ -196,44 +198,45 @@ const sections = [
         <p>
           Health Technical Memorandum 06-01 (Electrical Services Supply and Distribution) is the
           definitive guidance document for electrical installations in NHS England healthcare
-          premises. It must be read alongside BS 7671 and takes precedence where requirements differ.
+          premises. It must be read alongside BS 7671 and takes precedence where requirements
+          differ.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Distribution system design</strong> — HTM 06-01 requires a ring-main
-                or dual-fed distribution architecture for essential services to ensure continuity
-                of supply if a cable section is lost. Single-radial feeds to essential services
-                boards are not acceptable. This significantly increases cable costs compared to
-                equivalent commercial installations.
+                <strong>Distribution system design</strong> — HTM 06-01 requires a ring-main or
+                dual-fed distribution architecture for essential services to ensure continuity of
+                supply if a cable section is lost. Single-radial feeds to essential services boards
+                are not acceptable. This significantly increases cable costs compared to equivalent
+                commercial installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Switchgear and automatic transfer</strong> — all essential services
-                panels must have automatic transfer switching (ATS) with a maximum changeover
-                time to generator supply of 15 seconds (5 seconds for critical essential
-                services). ATS panels must be tested regularly and documented.
+                <strong>Switchgear and automatic transfer</strong> — all essential services panels
+                must have automatic transfer switching (ATS) with a maximum changeover time to
+                generator supply of 15 seconds (5 seconds for critical essential services). ATS
+                panels must be tested regularly and documented.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing and bonding</strong> — hospitals require multiple earthing
-                systems: TN-S (utility supply), IT (Medical IT in Group 2 locations), and
-                equipotential bonding in clinical areas. All equipotential bonding must be to
-                IEC 60364-7-710 and independently tested.
+                <strong>Earthing and bonding</strong> — hospitals require multiple earthing systems:
+                TN-S (utility supply), IT (Medical IT in Group 2 locations), and equipotential
+                bonding in clinical areas. All equipotential bonding must be to IEC 60364-7-710 and
+                independently tested.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Documentation and handover</strong> — HTM 06-01 requires comprehensive
-                as-built drawings, test results, commissioning records, O&M manuals, and a
-                formal handover to the client's authorised engineer (electrical). Documentation
+                as-built drawings, test results, commissioning records, O&M manuals, and a formal
+                handover to the client's authorised engineer (electrical). Documentation
                 requirements are far more extensive than for standard commercial projects.
               </span>
             </li>
@@ -258,21 +261,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medical IT panel (IPS)</strong> — contains the isolation transformer,
-                line insulation monitor (LIM), and distribution to medical outlets. The LIM
-                continuously monitors insulation and sounds an alarm at the first fault —
-                without tripping the circuit. Cost per panel: £4,000–£12,000. A typical
-                operating theatre complex may have 6–12 IPS panels.
+                <strong>Medical IT panel (IPS)</strong> — contains the isolation transformer, line
+                insulation monitor (LIM), and distribution to medical outlets. The LIM continuously
+                monitors insulation and sounds an alarm at the first fault — without tripping the
+                circuit. Cost per panel: £4,000–£12,000. A typical operating theatre complex may
+                have 6–12 IPS panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Surgical pendants (electrical infrastructure)</strong> — surgical and
-                anaesthetic pendants deliver electrical power, medical gas, data, and lighting
-                to the patient zone without floor-level cables. The electrical infrastructure
-                for each pendant arm (conduit, cable, connection box) costs £3,000–£8,000
-                to install. The pendant itself is a separate procurement.
+                anaesthetic pendants deliver electrical power, medical gas, data, and lighting to
+                the patient zone without floor-level cables. The electrical infrastructure for each
+                pendant arm (conduit, cable, connection box) costs £3,000–£8,000 to install. The
+                pendant itself is a separate procurement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -280,17 +283,17 @@ const sections = [
               <span>
                 <strong>Medical outlets</strong> — IEC 60309 (BS EN 60309) blue 16A or 32A
                 industrial outlets are used in clinical areas for medical equipment connection.
-                These are more robust than standard 13A sockets and are colour-coded to
-                distinguish between normal, essential, and critical essential supplies.
+                These are more robust than standard 13A sockets and are colour-coded to distinguish
+                between normal, essential, and critical essential supplies.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Equipotential bonding rail</strong> — a copper equipotential bonding
-                rail is installed in each clinical area, connected to the hospital earth bar.
-                All metal equipment frames in the clinical area are bonded to this rail to
-                prevent potential differences that could cause microshock.
+                <strong>Equipotential bonding rail</strong> — a copper equipotential bonding rail is
+                installed in each clinical area, connected to the hospital earth bar. All metal
+                equipment frames in the clinical area are bonded to this rail to prevent potential
+                differences that could cause microshock.
               </span>
             </li>
           </ul>
@@ -313,22 +316,21 @@ const sections = [
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No-break supply (UPS)</strong> — provides uninterrupted power to the
-                most critical loads: operating theatre lighting and equipment, ICU life-support,
-                cardiac monitoring. Achieved by online double-conversion UPS systems with battery
-                autonomy of 15–60 minutes pending generator start. Cost per 20kVA UPS unit:
-                £8,000–£20,000. A large theatre complex may require central UPS of 100–500kVA:
-                £60,000–£200,000.
+                <strong>No-break supply (UPS)</strong> — provides uninterrupted power to the most
+                critical loads: operating theatre lighting and equipment, ICU life-support, cardiac
+                monitoring. Achieved by online double-conversion UPS systems with battery autonomy
+                of 15–60 minutes pending generator start. Cost per 20kVA UPS unit: £8,000–£20,000. A
+                large theatre complex may require central UPS of 100–500kVA: £60,000–£200,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Essential services (generator within 15 seconds)</strong> — covers
-                critical clinical areas, emergency lighting, fire alarm, lift power, and
-                key HVAC systems. Achieved by automatic transfer switching to standby
-                generator. Hospital generators: 500kVA–4MVA depending on bed count. A
-                1MVA hospital generator set: £200,000–£500,000 installed.
+                <strong>Essential services (generator within 15 seconds)</strong> — covers critical
+                clinical areas, emergency lighting, fire alarm, lift power, and key HVAC systems.
+                Achieved by automatic transfer switching to standby generator. Hospital generators:
+                500kVA–4MVA depending on bed count. A 1MVA hospital generator set: £200,000–£500,000
+                installed.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -343,11 +345,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <Battery className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ATS (Automatic Transfer Switching)</strong> — ATS panels monitor the
-                mains supply and automatically switch to generator upon failure. Open-transition
-                ATS (brief supply break) for non-critical loads; closed-transition ATS (no
-                break) for critical loads. ATS panel cost: £3,000–£20,000 depending on current
-                rating and transition type.
+                <strong>ATS (Automatic Transfer Switching)</strong> — ATS panels monitor the mains
+                supply and automatically switch to generator upon failure. Open-transition ATS
+                (brief supply break) for non-critical loads; closed-transition ATS (no break) for
+                critical loads. ATS panel cost: £3,000–£20,000 depending on current rating and
+                transition type.
               </span>
             </li>
           </ul>
@@ -361,58 +363,56 @@ const sections = [
     content: (
       <>
         <p>
-          Hospital electrical costs are often expressed on a per-ward or per-department basis
-          for budgeting and planning purposes. The figures below represent 2025 costs for UK
-          NHS acute hospital refurbishment projects.
+          Hospital electrical costs are often expressed on a per-ward or per-department basis for
+          budgeting and planning purposes. The figures below represent 2025 costs for UK NHS acute
+          hospital refurbishment projects.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>General acute ward (28–32 beds)</strong> — £80,000–£140,000. Group 1
-                medical location requirements. Nurse call, bedhead trunking with IEC 60309
-                outlets, staff base lighting, emergency lighting.
+                <strong>General acute ward (28–32 beds)</strong> — £80,000–£140,000. Group 1 medical
+                location requirements. Nurse call, bedhead trunking with IEC 60309 outlets, staff
+                base lighting, emergency lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High dependency unit (HDU, 8–12 beds)</strong> — £120,000–£220,000.
-                Elevated outlet density, enhanced monitoring infrastructure, partial Group 2
-                requirements at some bed positions.
+                <strong>High dependency unit (HDU, 8–12 beds)</strong> — £120,000–£220,000. Elevated
+                outlet density, enhanced monitoring infrastructure, partial Group 2 requirements at
+                some bed positions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Intensive Care Unit (ICU, 8–12 beds)</strong> — £180,000–£380,000.
-                Full Group 2 requirements, Medical IT systems, UPS, extensive bedhead
-                infrastructure, higher outlet density (20–30+ outlets per bed position).
+                <strong>Intensive Care Unit (ICU, 8–12 beds)</strong> — £180,000–£380,000. Full
+                Group 2 requirements, Medical IT systems, UPS, extensive bedhead infrastructure,
+                higher outlet density (20–30+ outlets per bed position).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outpatient department (per suite)</strong> — £40,000–£90,000.
-                Consultation rooms, waiting areas, reception, basic clinical rooms.
-                Group 1 requirements.
+                <strong>Outpatient department (per suite)</strong> — £40,000–£90,000. Consultation
+                rooms, waiting areas, reception, basic clinical rooms. Group 1 requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Pharmacy</strong> — £35,000–£80,000. Controlled drug security systems,
-                cold storage monitoring circuits, laboratory lighting, UPS for dispensing
-                systems.
+                <strong>Pharmacy</strong> — £35,000–£80,000. Controlled drug security systems, cold
+                storage monitoring circuits, laboratory lighting, UPS for dispensing systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Radiology / imaging department</strong> — £90,000–£200,000. High-power
-                imaging equipment (MRI, CT — kVA loads requiring dedicated 3-phase supply),
-                RF screening (MRI rooms), UPS for imaging systems.
+                imaging equipment (MRI, CT — kVA loads requiring dedicated 3-phase supply), RF
+                screening (MRI rooms), UPS for imaging systems.
               </span>
             </li>
           </ul>
@@ -436,36 +436,36 @@ const sections = [
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medical IT system (IPS)</strong> — each operating theatre requires at
-                least one dedicated Medical IT panel (typically 8–16kVA transformer). Some
-                larger theatres require two IPS panels (one for anaesthetic zone, one for
-                surgical zone). Cost per IPS panel: £6,000–£14,000.
+                <strong>Medical IT system (IPS)</strong> — each operating theatre requires at least
+                one dedicated Medical IT panel (typically 8–16kVA transformer). Some larger theatres
+                require two IPS panels (one for anaesthetic zone, one for surgical zone). Cost per
+                IPS panel: £6,000–£14,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Surgical lighting</strong> — ceiling-mounted surgical luminaires
-                (Maquet, Trumpf, Stryker) require a 13A–32A circuit and structural reinforcement
-                to the ceiling slab. A twin-dome surgical light with satellite display arm:
-                £18,000–£50,000 for the fitting. Electrical infrastructure: £2,500–£5,000.
+                <strong>Surgical lighting</strong> — ceiling-mounted surgical luminaires (Maquet,
+                Trumpf, Stryker) require a 13A–32A circuit and structural reinforcement to the
+                ceiling slab. A twin-dome surgical light with satellite display arm: £18,000–£50,000
+                for the fitting. Electrical infrastructure: £2,500–£5,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Anaesthetic machine circuit</strong> — a dedicated 32A 3-phase circuit
-                for the anaesthetic machine. This circuit must be on the Medical IT system
-                and UPS-backed. Separate circuit for the anaesthetic agent evacuator (scavenging
-                system blower).
+                <strong>Anaesthetic machine circuit</strong> — a dedicated 32A 3-phase circuit for
+                the anaesthetic machine. This circuit must be on the Medical IT system and
+                UPS-backed. Separate circuit for the anaesthetic agent evacuator (scavenging system
+                blower).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Activity className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>TIVA (Total Intravenous Anaesthesia) infrastructure</strong> — ceiling-
-                or pendant-mounted syringe driver bars require power, data, and nurse call
-                integration. Electrical supply: 4 x 13A IEC outlets per bar position.
+                <strong>TIVA (Total Intravenous Anaesthesia) infrastructure</strong> — ceiling- or
+                pendant-mounted syringe driver bars require power, data, and nurse call integration.
+                Electrical supply: 4 x 13A IEC outlets per bar position.
               </span>
             </li>
           </ul>
@@ -484,46 +484,45 @@ const sections = [
     content: (
       <>
         <p>
-          Hospital fire alarm and emergency lighting systems must comply with BS 5839-1 and
-          BS 5266-1 respectively, with additional requirements imposed by HTM 06-01, the NHS
-          Fire Safety Policy, and Firecode (the NHS fire safety guidance series).
+          Hospital fire alarm and emergency lighting systems must comply with BS 5839-1 and BS
+          5266-1 respectively, with additional requirements imposed by HTM 06-01, the NHS Fire
+          Safety Policy, and Firecode (the NHS fire safety guidance series).
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fire alarm — Category L1</strong> — hospitals require full property
-                coverage automatic detection (Category L1 to BS 5839-1) across all areas
-                including patient rooms, plant rooms, and roof voids. An addressable fire alarm
-                system is mandatory for a building of this complexity. Large hospitals may have
-                1,000–5,000+ detectors on a single fire alarm system.
+                <strong>Fire alarm — Category L1</strong> — hospitals require full property coverage
+                automatic detection (Category L1 to BS 5839-1) across all areas including patient
+                rooms, plant rooms, and roof voids. An addressable fire alarm system is mandatory
+                for a building of this complexity. Large hospitals may have 1,000–5,000+ detectors
+                on a single fire alarm system.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Refuge communication systems</strong> — fire-fighting lifts and refuge
-                areas must have two-way voice communication systems (compliant with BS 5839-9)
-                linked to the building management centre. These are wired as part of the fire
-                alarm installation.
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
-              <span>
-                <strong>Emergency lighting — 3 hours minimum</strong> — BS 5266-1 requires
-                3-hour emergency lighting duration for premises with sleeping accommodation.
-                Central battery systems (CBS) are the norm in large hospitals, providing
-                centralised battery management and monitoring for the entire emergency lighting
+                <strong>Refuge communication systems</strong> — fire-fighting lifts and refuge areas
+                must have two-way voice communication systems (compliant with BS 5839-9) linked to
+                the building management centre. These are wired as part of the fire alarm
                 installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PAVA (Public Address and Voice Alarm)</strong> — large hospitals require
-                a BS 5839-8 compliant PAVA system for emergency announcement and evacuation
+                <strong>Emergency lighting — 3 hours minimum</strong> — BS 5266-1 requires 3-hour
+                emergency lighting duration for premises with sleeping accommodation. Central
+                battery systems (CBS) are the norm in large hospitals, providing centralised battery
+                management and monitoring for the entire emergency lighting installation.
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
+              <span>
+                <strong>PAVA (Public Address and Voice Alarm)</strong> — large hospitals require a
+                BS 5839-8 compliant PAVA system for emergency announcement and evacuation
                 management. PAVA system installation for a district general hospital:
                 £80,000–£250,000.
               </span>
@@ -539,17 +538,17 @@ const sections = [
     content: (
       <>
         <p>
-          The following costs are indicative for a new-build or major refurbishment of a
-          200-bed district general hospital (approximately 30,000m² GIA). Labour and materials
-          excluding VAT.
+          The following costs are indicative for a new-build or major refurbishment of a 200-bed
+          district general hospital (approximately 30,000m² GIA). Labour and materials excluding
+          VAT.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HV/LV distribution and main switchgear</strong> — £800,000–£2,000,000.
-                HV substation, main LV switchboards, essential services switchgear, cable routes.
+                <strong>HV/LV distribution and main switchgear</strong> — £800,000–£2,000,000. HV
+                substation, main LV switchboards, essential services switchgear, cable routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -568,14 +567,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medical IT systems (IPS panels)</strong> — £150,000–£350,000.
-                Operating theatres, ICU, cardiac labs.
+                <strong>Medical IT systems (IPS panels)</strong> — £150,000–£350,000. Operating
+                theatres, ICU, cardiac labs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ward and clinical electrical (8 wards, 2 ICU)</strong> — £1,200,000–£2,500,000.
+                <strong>Ward and clinical electrical (8 wards, 2 ICU)</strong> —
+                £1,200,000–£2,500,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -600,8 +600,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Total — 200-bed district general hospital</strong> —{' '}
-                <strong>£8,000,000–£18,000,000</strong>. Per m²: £270–£600. New-build 500-bed
-                acute hospital total electrical: £25,000,000–£50,000,000.
+                <strong>£8,000,000–£18,000,000</strong>. Per m²: £270–£600. New-build 500-bed acute
+                hospital total electrical: £25,000,000–£50,000,000.
               </span>
             </li>
           </ul>
@@ -615,10 +615,10 @@ const sections = [
     content: (
       <>
         <p>
-          Hospital and healthcare electrical work is a specialist discipline that requires
-          specific training, accreditation, and an understanding of HTM 06-01, BS 7671
-          Section 710, and the NHS's authorised engineer (electrical) governance structure.
-          Contractors who develop this specialism work on high-value, long-term NHS frameworks.
+          Hospital and healthcare electrical work is a specialist discipline that requires specific
+          training, accreditation, and an understanding of HTM 06-01, BS 7671 Section 710, and the
+          NHS's authorised engineer (electrical) governance structure. Contractors who develop this
+          specialism work on high-value, long-term NHS frameworks.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -632,11 +632,9 @@ const sections = [
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
                   for each phase of hospital electrical work. Generate{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  for periodic inspections — critical in an environment where documentation
-                  is required by the authorised engineer and the NHS estates team.
+                  <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> for
+                  periodic inspections — critical in an environment where documentation is required
+                  by the authorised engineer and the NHS estates team.
                 </p>
               </div>
             </div>
@@ -662,7 +660,7 @@ export default function HospitalElectricalCostPage() {
       title="Hospital Electrical Cost UK | Healthcare Electrical Installation Costs"
       description="Hospital electrical installation costs UK 2025. HTM 06-01 compliance, Medical IT systems, essential services, UPS, standby generation, operating theatres. Costs per ward and department. 200-bed DGH: £8m–£18m."
       datePublished="2025-01-01"
-      dateModified="2025-09-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Healthcare Electrical Guide"

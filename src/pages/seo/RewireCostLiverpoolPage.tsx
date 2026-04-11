@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A full house rewire in Liverpool costs between £2,200 and £7,500+ in 2025. Electrician day rates of £270 to £380 are below the national average, reflecting Merseyside\'s lower cost of living compared with London and the South East.',
+  "A full house rewire in Liverpool costs between £2,200 and £7,500+ in 2025. Electrician day rates of £270 to £380 are below the national average, reflecting Merseyside's lower cost of living compared with London and the South East.",
   'Liverpool has extensive Victorian and Edwardian terraced housing across areas such as Toxteth, Wavertree, Kensington, Anfield, and the Georgian Quarter. These properties have lath-and-plaster walls and are more time-consuming to rewire than modern plasterboard construction.',
   'A full rewire is notifiable under Part P of the Building Regulations (England). Use a NICEIC, NAPIT, or ELECSA-registered electrician to self-certify and avoid building control inspection fees.',
   'A typical rewire takes 3–5 days for a 2-bed terraced house and 5–8 days for a 3-bed property. Wall chasing, replastering, and temporary power loss are all part of the process.',
@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'Are there any grants for rewiring in Liverpool?',
     answer:
-      'Liverpool City Council and Merseycare NHS Trust operate schemes to improve housing conditions for vulnerable residents, which may cover electrical work in certain circumstances. The national ECO4 (Energy Company Obligation) scheme can fund some electrical work linked to energy efficiency improvements for eligible households. The Warmer Homes Merseyside scheme may offer support. Contact Liverpool City Council\'s private housing team or call the national Home Energy Scotland / Warm Homes helpline for guidance on what is available.',
+      "Liverpool City Council and Merseycare NHS Trust operate schemes to improve housing conditions for vulnerable residents, which may cover electrical work in certain circumstances. The national ECO4 (Energy Company Obligation) scheme can fund some electrical work linked to energy efficiency improvements for eligible households. The Warmer Homes Merseyside scheme may offer support. Contact Liverpool City Council's private housing team or call the national Home Energy Scotland / Warm Homes helpline for guidance on what is available.",
   },
   {
     question: 'What does a full Liverpool rewire include?',
@@ -183,8 +183,8 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
-          , and Part P notification. Making good (plastering and decoration) is quoted separately
-          — budget an additional £400 to £1,000 for a standard Liverpool Victorian terrace.
+          , and Part P notification. Making good (plastering and decoration) is quoted separately —
+          budget an additional £400 to £1,000 for a standard Liverpool Victorian terrace.
         </p>
         <p>
           Victorian terraces in Toxteth, Wavertree, Kensington, Anfield, and the Georgian Quarter
@@ -200,8 +200,8 @@ const sections = [
     content: (
       <>
         <p>
-          Liverpool has a diverse housing stock shaped by Victorian expansion, inter-war growth,
-          and post-war redevelopment. Each era presents different rewire challenges.
+          Liverpool has a diverse housing stock shaped by Victorian expansion, inter-war growth, and
+          post-war redevelopment. Each era presents different rewire challenges.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -219,8 +219,8 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Georgian Quarter properties (late 18th–early 19th century):</strong>
-                Huskisson Street, Canning Street, and Falkner Square. Many are listed and have
-                been converted into flats. High ceilings, deep solid walls, and ornate plasterwork.
+                Huskisson Street, Canning Street, and Falkner Square. Many are listed and have been
+                converted into flats. High ceilings, deep solid walls, and ornate plasterwork.
                 Listed building consent may be required for any external works.
               </span>
             </li>
@@ -237,16 +237,17 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inter-war council and private housing (1920s–1940s):</strong> Norris Green,
-                Croxteth, Huyton, and Walton. Cavity brick with accessible lofts. Many have
-                original PVC wiring from 1950s–1960s upgrades without earthing on lighting circuits.
+                Croxteth, Huyton, and Walton. Cavity brick with accessible lofts. Many have original
+                PVC wiring from 1950s–1960s upgrades without earthing on lighting circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Post-war estates (1950s–1970s):</strong> Halewood, Speke, Cantril Farm,
-                and Kirkby. Plasterboard or large-panel construction — the most straightforward to
-                rewire. Consumer units often have BS 3036 rewirable fuses or early single-RCD boards.
+                <strong>Post-war estates (1950s–1970s):</strong> Halewood, Speke, Cantril Farm, and
+                Kirkby. Plasterboard or large-panel construction — the most straightforward to
+                rewire. Consumer units often have BS 3036 rewirable fuses or early single-RCD
+                boards.
               </span>
             </li>
           </ul>
@@ -260,9 +261,8 @@ const sections = [
     content: (
       <>
         <p>
-          An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the definitive
-          way to confirm whether a rewire is needed. These warning signs indicate urgent
+          An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the
+          definitive way to confirm whether a rewire is needed. These warning signs indicate urgent
           inspection is required:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
@@ -270,15 +270,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring
-                beyond its safe service life, very common in Liverpool's Victorian terrace stock.
+                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring beyond
+                its safe service life, very common in Liverpool's Victorian terrace stock.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse board</strong> — a wooden-backed board with wire fuses.
-                No RCD protection — a serious fire and electric shock risk.
+                <strong>Rewirable fuse board</strong> — a wooden-backed board with wire fuses. No
+                RCD protection — a serious fire and electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -344,8 +344,8 @@ const sections = [
         </div>
         <p>
           Allow additional time if asbestos is present (common in Liverpool properties from the
-          1950s and 1960s — artex ceilings and floor tiles are the most frequent sources), or if
-          a supply upgrade from Electricity North West is needed (3 to 8 weeks to schedule).
+          1950s and 1960s — artex ceilings and floor tiles are the most frequent sources), or if a
+          supply upgrade from Electricity North West is needed (3 to 8 weeks to schedule).
         </p>
       </>
     ),
@@ -386,8 +386,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing and bonding</strong> — main earth conductor, main bonding to
-                gas, water, and oil pipework.
+                <strong>Earthing and bonding</strong> — main earth conductor, main bonding to gas,
+                water, and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -419,16 +419,15 @@ const sections = [
         <p>
           A full rewire is notifiable work under Part P of the Building Regulations (England). The
           work must be carried out by an electrician registered with a competent person scheme —
-          such as{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA —
-          or the homeowner must notify Liverpool City Council Building Control before work starts.
+          such as <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA — or
+          the homeowner must notify Liverpool City Council Building Control before work starts.
         </p>
         <p>
-          Using a registered electrician is strongly recommended. They self-certify the work,
-          notify Liverpool City Council, and you receive a Building Regulations Compliance
-          Certificate within 30 days. An unregistered electrician means a building control
-          inspection fee of £180–£300 and a longer process.
+          Using a registered electrician is strongly recommended. They self-certify the work, notify
+          Liverpool City Council, and you receive a Building Regulations Compliance Certificate
+          within 30 days. An unregistered electrician means a building control inspection fee of
+          £180–£300 and a longer process.
         </p>
         <p>
           On completion, the electrician must issue an{' '}
@@ -448,8 +447,8 @@ const sections = [
       <>
         <p>
           A full rewire involves significant disruption, particularly in Victorian terraced houses
-          with lath-and-plaster walls. Understanding what to expect helps you plan accommodation
-          and the total project budget.
+          with lath-and-plaster walls. Understanding what to expect helps you plan accommodation and
+          the total project budget.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -464,9 +463,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power is off during first fix</strong> — the supply is isolated while
-                new circuits are installed. Plan for no cooking, heating, or power for several
-                days during first fix.
+                <strong>Power is off during first fix</strong> — the supply is isolated while new
+                circuits are installed. Plan for no cooking, heating, or power for several days
+                during first fix.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -505,9 +504,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by
-                Liverpool or Merseyside postcode on the scheme's online register.
-                Non-negotiable for Part P compliance.
+                <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by Liverpool
+                or Merseyside postcode on the scheme's online register. Non-negotiable for Part P
+                compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -528,15 +527,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Confirm minimum £2 million public liability insurance</strong> — ask for
-                a copy of the certificate before work starts.
+                <strong>Confirm minimum £2 million public liability insurance</strong> — ask for a
+                copy of the certificate before work starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check EIC and Part P notification are included</strong> — mandatory for
-                all rewires in England. If absent from the quote, the quote is incomplete.
+                <strong>Check EIC and Part P notification are included</strong> — mandatory for all
+                rewires in England. If absent from the quote, the quote is incomplete.
               </span>
             </li>
           </ul>
@@ -561,15 +560,14 @@ export default function RewireCostLiverpoolPage() {
       title="House Rewire Cost Liverpool 2025 | Rewire Prices Merseyside"
       description="How much does a house rewire cost in Liverpool in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Toxteth and Wavertree, Part P notification, disruption, replastering costs, and finding a NICEIC-registered electrician in Liverpool."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          House Rewire Cost Liverpool:{' '}
-          <span className="text-yellow-400">2025 Price Guide</span>
+          House Rewire Cost Liverpool: <span className="text-yellow-400">2025 Price Guide</span>
         </>
       }
       heroSubtitle="Liverpool rewire costs in 2025 — from Victorian terraces in Toxteth and Wavertree to post-war semis in Huyton and Halewood. Real prices by property size, Part P explained, and what to expect from wall chasing and replastering on Merseyside."

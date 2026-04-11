@@ -40,8 +40,8 @@ const tocItems = [
 
 const keyTakeaways = [
   'Employed electricians in Bristol earn £35,000 to £50,000 per year at JIB Approved Electrician grade, with senior and specialist roles reaching £55,000+. Bristol rates are 8 to 15% above the national JIB baseline due to high local demand.',
-  'Self-employed electricians in Bristol typically charge £350 to £600 per day for domestic work and £500 to £900 per day for commercial and specialist work. Bristol\'s technology sector drives premium rates for data centre, laboratory, and cleanroom electrical work.',
-  'Bristol\'s booming technology, aerospace, and life sciences sectors create strong demand for specialist electricians with industrial, high-voltage, or instrumentation experience — often earning 20 to 35% above standard rates.',
+  "Self-employed electricians in Bristol typically charge £350 to £600 per day for domestic work and £500 to £900 per day for commercial and specialist work. Bristol's technology sector drives premium rates for data centre, laboratory, and cleanroom electrical work.",
+  "Bristol's booming technology, aerospace, and life sciences sectors create strong demand for specialist electricians with industrial, high-voltage, or instrumentation experience — often earning 20 to 35% above standard rates.",
   'JIB (Joint Industry Board) sets national pay scales for the electrical contracting industry. The 2024/2025 JIB Approved Electrician rate is £21.81 per hour (Monday to Friday, day work) — equivalent to approximately £42,500 to £45,000 per year with standard allowances.',
   'Benefits for Bristol electricians working in larger firms typically include a tool allowance (£500 to £1,500 per year), employer pension contribution (5 to 8%), private health insurance in some firms, and a van or mileage allowance.',
 ];
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'What is the average electrician salary in Bristol in 2025?',
     answer:
-      'The average employed electrician salary in Bristol in 2025 is approximately £38,000 to £48,000 per year at Approved Electrician grade. Senior electricians and working foremen earn £48,000 to £58,000. Bristol\'s strong local economy and high demand from the technology, aerospace, and construction sectors pushes salaries 8 to 15% above the national JIB baseline. Self-employed electricians in Bristol typically earn more — £70,000 to £150,000 gross depending on workload and specialisation.',
+      "The average employed electrician salary in Bristol in 2025 is approximately £38,000 to £48,000 per year at Approved Electrician grade. Senior electricians and working foremen earn £48,000 to £58,000. Bristol's strong local economy and high demand from the technology, aerospace, and construction sectors pushes salaries 8 to 15% above the national JIB baseline. Self-employed electricians in Bristol typically earn more — £70,000 to £150,000 gross depending on workload and specialisation.",
   },
   {
     question: 'What are the JIB electrician rates for 2024/2025?',
@@ -58,9 +58,9 @@ const faqs = [
       'The Joint Industry Board (JIB) sets the following national rates for 2024/2025: Approved Electrician — £21.81 per hour; Electrician — £20.62 per hour; Electrical Technician — £22.74 per hour; Working Foreman — £23.67 per hour; Approved Electrician (ECS Gold Card holder) — industry standard for most Bristol commercial and industrial sites. These are the agreed minimum rates — many Bristol employers pay 10 to 20% above JIB minimums to attract and retain staff.',
   },
   {
-    question: 'How does Bristol\'s tech economy affect electrician salaries?',
+    question: "How does Bristol's tech economy affect electrician salaries?",
     answer:
-      'Bristol is one of the UK\'s leading technology hubs, home to major employers including Airbus, BAE Systems, Rolls-Royce, and a large cluster of software and semiconductors companies around Temple Quarter and the harbourside. These employers require specialist electrical contractors for data centres, cleanrooms, aerospace facilities, and instrumentation work. Day rates for electricians on these sites typically range from £500 to £900 per day — 40 to 80% above standard domestic rates. Electricians with 18th edition, instrumentation, or high-voltage experience are in particularly high demand.',
+      "Bristol is one of the UK's leading technology hubs, home to major employers including Airbus, BAE Systems, Rolls-Royce, and a large cluster of software and semiconductors companies around Temple Quarter and the harbourside. These employers require specialist electrical contractors for data centres, cleanrooms, aerospace facilities, and instrumentation work. Day rates for electricians on these sites typically range from £500 to £900 per day — 40 to 80% above standard domestic rates. Electricians with 18th edition, instrumentation, or high-voltage experience are in particularly high demand.",
   },
   {
     question: 'What do self-employed electricians earn in Bristol per day?',
@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'How much do Bristol electricians earn in overtime?',
     answer:
-      'JIB overtime rates are: first four hours overtime (Monday to Friday after standard hours) — time and a third (133%); thereafter and Saturday morning — time and a half (150%); Saturday afternoon — time and three quarters (175%); Sunday and public holidays — double time (200%). In Bristol\'s active construction market, overtime is readily available on large commercial sites. An Approved Electrician earning £21.81 basic earns £29.08 at Saturday rate and £43.62 at Sunday rate.',
+      "JIB overtime rates are: first four hours overtime (Monday to Friday after standard hours) — time and a third (133%); thereafter and Saturday morning — time and a half (150%); Saturday afternoon — time and three quarters (175%); Sunday and public holidays — double time (200%). In Bristol's active construction market, overtime is readily available on large commercial sites. An Approved Electrician earning £21.81 basic earns £29.08 at Saturday rate and £43.62 at Sunday rate.",
   },
 ];
 
@@ -109,7 +109,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
-    description: 'Quote jobs professionally and maximise your day rate as a self-employed electrician.',
+    description:
+      'Quote jobs professionally and maximise your day rate as a self-employed electrician.',
     icon: FileCheck2,
     category: 'Tool',
   },
@@ -193,8 +194,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Trainee (ET)</strong> — £10.42 to £16.48 per hour. Paid at
-                JIB apprentice rates during the four-year NVQ Level 3 programme.
+                <strong>Electrical Trainee (ET)</strong> — £10.42 to £16.48 per hour. Paid at JIB
+                apprentice rates during the four-year NVQ Level 3 programme.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -217,16 +218,16 @@ const sections = [
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Technician</strong> — £22.74 per hour (£44,340 per year). For
-                engineers with HNC/HND or degree-level qualifications. Common in Bristol's
-                aerospace and instrumentation sectors.
+                engineers with HNC/HND or degree-level qualifications. Common in Bristol's aerospace
+                and instrumentation sectors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Working Foreman</strong> — £23.67 per hour (£46,150 per year). Responsible
-                for supervising a gang of electricians on site. Bristol premium often pushes this
-                to £25 to £28 per hour, with site allowances adding further.
+                for supervising a gang of electricians on site. Bristol premium often pushes this to
+                £25 to £28 per hour, with site allowances adding further.
               </span>
             </li>
           </ul>
@@ -271,16 +272,16 @@ const sections = [
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Large commercial and industrial</strong> — £500 to £750 per day. Major
-                construction sites, factories, distribution centres. Bristol's growth corridor
-                along the M4/M5 junction has a substantial industrial park and logistics hub demand.
+                construction sites, factories, distribution centres. Bristol's growth corridor along
+                the M4/M5 junction has a substantial industrial park and logistics hub demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Briefcase className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specialist and tech sector</strong> — £550 to £900 per day. Aerospace,
-                data centres, pharmaceutical, cleanrooms. Airbus at Filton, Leonardo, and BAE
-                Systems sites drive some of the highest day rates in the South West of England.
+                <strong>Specialist and tech sector</strong> — £550 to £900 per day. Aerospace, data
+                centres, pharmaceutical, cleanrooms. Airbus at Filton, Leonardo, and BAE Systems
+                sites drive some of the highest day rates in the South West of England.
               </span>
             </li>
           </ul>
@@ -289,39 +290,39 @@ const sections = [
           After deducting public liability insurance (£400 to £800 per year), tool insurance,
           vehicle costs, professional subscriptions, and corporation or income tax, self-employed
           Bristol electricians typically net 55 to 65% of gross earnings. Good quote management,
-          fast invoicing, and minimal wasted time between jobs are critical to maximising take-home pay.
+          fast invoicing, and minimal wasted time between jobs are critical to maximising take-home
+          pay.
         </p>
       </>
     ),
   },
   {
     id: 'tech-premium',
-    heading: 'How Bristol\'s Technology Economy Drives Electrician Pay',
+    heading: "How Bristol's Technology Economy Drives Electrician Pay",
     content: (
       <>
         <p>
-          Bristol's status as one of the UK's leading technology and aerospace hubs has a direct
-          and significant effect on electrician earnings in the city. Companies with exacting
-          technical requirements pay premium rates to attract and retain qualified electricians.
+          Bristol's status as one of the UK's leading technology and aerospace hubs has a direct and
+          significant effect on electrician earnings in the city. Companies with exacting technical
+          requirements pay premium rates to attract and retain qualified electricians.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Aerospace cluster (Filton)</strong> — Airbus, Leonardo, BAE Systems, and
-                GKN Aerospace at Filton are among the largest employers in the Bristol area.
-                Electrical maintenance, instrumentation, and project work at these sites commands
-                day rates of £600 to £900 for suitably experienced and security-cleared
-                electricians.
+                <strong>Aerospace cluster (Filton)</strong> — Airbus, Leonardo, BAE Systems, and GKN
+                Aerospace at Filton are among the largest employers in the Bristol area. Electrical
+                maintenance, instrumentation, and project work at these sites commands day rates of
+                £600 to £900 for suitably experienced and security-cleared electricians.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Data centres</strong> — Bristol hosts several hyperscale and colocation
-                data centres. Critical systems electricians with UPS, PDU, and generator experience
-                are in persistent high demand at rates of £500 to £750 per day.
+                <strong>Data centres</strong> — Bristol hosts several hyperscale and colocation data
+                centres. Critical systems electricians with UPS, PDU, and generator experience are
+                in persistent high demand at rates of £500 to £750 per day.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -368,17 +369,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Instrumentation and control (I&C)</strong> — 20 to 35% above standard.
-                C&G 2395 (Inspection and Testing) plus I&C experience commands £500 to £800 per
-                day at Bristol's aerospace and pharmaceutical sites.
+                <strong>Instrumentation and control (I&C)</strong> — 20 to 35% above standard. C&G
+                2395 (Inspection and Testing) plus I&C experience commands £500 to £800 per day at
+                Bristol's aerospace and pharmaceutical sites.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charging installation</strong> — OZEV-authorised installer status adds
-                15 to 25% to day rate. Strong demand from Bristol Council's EV infrastructure
-                programme and OLEV-funded commercial site installations.
+                <strong>EV charging installation</strong> — OZEV-authorised installer status adds 15
+                to 25% to day rate. Strong demand from Bristol Council's EV infrastructure programme
+                and OLEV-funded commercial site installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -409,15 +410,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Year 1 (aged 16 to 18)</strong> — £7.56 per hour (National Minimum Wage
-                for this age bracket). Approximately £14,700 per year.
+                <strong>Year 1 (aged 16 to 18)</strong> — £7.56 per hour (National Minimum Wage for
+                this age bracket). Approximately £14,700 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Users className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Year 1 (aged 19+)</strong> — £10.42 per hour. Approximately £20,300 per
-                year. Adult entrants to electrical apprenticeships are increasingly common in Bristol.
+                year. Adult entrants to electrical apprenticeships are increasingly common in
+                Bristol.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -445,8 +447,8 @@ const sections = [
         </div>
         <p>
           Bristol has strong JTL (Joint Training Limited) provision through local colleges including
-          City of Bristol College and Weston College. The Electrical Apprenticeship Standard (Level 3)
-          is the recognised route for new entrants to the profession.
+          City of Bristol College and Weston College. The Electrical Apprenticeship Standard (Level
+          3) is the recognised route for new entrants to the profession.
         </p>
       </>
     ),
@@ -458,8 +460,8 @@ const sections = [
       <>
         <p>
           Beyond base salary, Bristol electricians working for larger electrical contractors
-          typically receive a range of allowances and benefits that can add £4,000 to £10,000
-          of effective annual value.
+          typically receive a range of allowances and benefits that can add £4,000 to £10,000 of
+          effective annual value.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -474,17 +476,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Employer pension contribution</strong> — JIB members benefit from the
-                JIB Pension Fund, with employer contributions of 5 to 8%. On a £45,000 salary,
-                this represents £2,250 to £3,600 of additional annual value.
+                <strong>Employer pension contribution</strong> — JIB members benefit from the JIB
+                Pension Fund, with employer contributions of 5 to 8%. On a £45,000 salary, this
+                represents £2,250 to £3,600 of additional annual value.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Star className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Van or mileage</strong> — most Bristol electrical contractors provide a
-                works van for site use, or pay mileage at HMRC approved rates (45p per mile up
-                to 10,000 miles). A van has an effective value of £3,000 to £6,000 per year.
+                works van for site use, or pay mileage at HMRC approved rates (45p per mile up to
+                10,000 miles). A van has an effective value of £3,000 to £6,000 per year.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -516,8 +518,8 @@ const sections = [
     content: (
       <>
         <p>
-          Career progression in Bristol's electrical contracting sector follows a well-defined
-          path from apprentice to senior management, with each step bringing meaningful pay increases.
+          Career progression in Bristol's electrical contracting sector follows a well-defined path
+          from apprentice to senior management, with each step bringing meaningful pay increases.
         </p>
         <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -531,16 +533,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>4 to 8 years</strong> — Approved Electrician. £38,000 to £48,000 in
-                Bristol. Build specialist skills (18th edition, inspection and testing, EV
-                charging) to access premium sectors.
+                <strong>4 to 8 years</strong> — Approved Electrician. £38,000 to £48,000 in Bristol.
+                Build specialist skills (18th edition, inspection and testing, EV charging) to
+                access premium sectors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>8 to 12 years</strong> — Senior Electrician / Working Foreman. £48,000
-                to £58,000. Leadership of site gangs, client liaison, and programme management.
+                <strong>8 to 12 years</strong> — Senior Electrician / Working Foreman. £48,000 to
+                £58,000. Leadership of site gangs, client liaison, and programme management.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -565,15 +567,17 @@ const sections = [
         <p>
           Bristol's diverse economy offers multiple pathways to higher earnings for ambitious
           electricians. The key is matching your qualifications and experience to the sectors
-          offering the highest rates — and running your business efficiently to keep more of
-          what you earn.
+          offering the highest rates — and running your business efficiently to keep more of what
+          you earn.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Quote Jobs Faster, Invoice Immediately</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Quote Jobs Faster, Invoice Immediately
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Self-employed Bristol electricians lose income through slow quoting and late
                   invoicing. Use the{' '}
@@ -593,8 +597,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Add EV Charging to Your Portfolio</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Bristol has the highest EV ownership rate per capita in the South West.
-                  OZEV-authorised EV charger installers can charge £400 to £600 per day for a
-                  skill set that takes two to three days to acquire. The{' '}
+                  OZEV-authorised EV charger installers can charge £400 to £600 per day for a skill
+                  set that takes two to three days to acquire. The{' '}
                   <SEOInternalLink href="/guides/ev-charging-installation">
                     EV charging installation guide
                   </SEOInternalLink>{' '}
@@ -624,7 +628,7 @@ export default function ElectricianSalaryBristolPage() {
       title="Electrician Salary Bristol 2025 | Electrician Pay Southwest England"
       description="Electrician salary guide for Bristol 2025. JIB rates, employed vs self-employed earnings, specialist uplifts for tech and aerospace sectors, apprentice rates, overtime, and benefits for Bristol electricians."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

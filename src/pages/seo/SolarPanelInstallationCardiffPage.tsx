@@ -38,7 +38,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'Cardiff and South Wales benefit from the Warm Homes Programme — the Welsh Government\'s flagship energy efficiency scheme that can provide free or subsidised solar PV for eligible households on low incomes or benefits.',
+  "Cardiff and South Wales benefit from the Warm Homes Programme — the Welsh Government's flagship energy efficiency scheme that can provide free or subsidised solar PV for eligible households on low incomes or benefits.",
   'A typical 4kWp solar PV system in Cardiff costs £6,000 to £9,000 installed. Cardiff receives approximately 3.4 to 3.7 peak sun hours per day — comparable to Bristol and the South West.',
   'Solar installations in Cardiff conservation areas (including Pontcanna, Cathedral Road, and Roath Park) require prior approval from Cardiff Council. Listed building consent may be required for listed properties.',
   'The Smart Export Guarantee pays Cardiff homeowners for electricity exported to the grid. Top SEG tariffs in 2025 range from 10p to 24p per kWh, earning £150 to £430 per year for a 4kWp system.',
@@ -49,7 +49,7 @@ const faqs = [
   {
     question: 'Are there Welsh Government grants for solar panels in Cardiff?',
     answer:
-      'Yes. The Welsh Government\'s Warm Homes Programme (delivered by local councils and registered social landlords) offers free or heavily subsidised energy efficiency improvements including solar PV for eligible households. Eligibility is based on income, benefit receipt, and property energy rating. Cardiff residents should contact Cardiff Council or visit the Welsh Government\'s Warm Homes portal. The Nest scheme (delivered by Swalec/Welsh Government) also provides free measures for households in or at risk of fuel poverty.',
+      "Yes. The Welsh Government's Warm Homes Programme (delivered by local councils and registered social landlords) offers free or heavily subsidised energy efficiency improvements including solar PV for eligible households. Eligibility is based on income, benefit receipt, and property energy rating. Cardiff residents should contact Cardiff Council or visit the Welsh Government's Warm Homes portal. The Nest scheme (delivered by Swalec/Welsh Government) also provides free measures for households in or at risk of fuel poverty.",
   },
   {
     question: 'How much does solar panel installation cost in Cardiff?',
@@ -59,17 +59,17 @@ const faqs = [
   {
     question: 'Does solar work well in Cardiff?',
     answer:
-      'Yes. Cardiff benefits from its position in South Wales, which receives more sunshine than most of England north of Bristol. Cardiff averages approximately 3.4 to 3.7 peak sun hours per day annually. A 4kWp system in Cardiff typically generates 3,800 to 4,200 kWh per year — enough to cover 80 to 100% of an average Welsh household\'s electricity consumption.',
+      "Yes. Cardiff benefits from its position in South Wales, which receives more sunshine than most of England north of Bristol. Cardiff averages approximately 3.4 to 3.7 peak sun hours per day annually. A 4kWp system in Cardiff typically generates 3,800 to 4,200 kWh per year — enough to cover 80 to 100% of an average Welsh household's electricity consumption.",
   },
   {
     question: 'Do I need planning permission for solar panels in Cardiff?',
     answer:
-      'In most cases, no. Residential solar panels are permitted development under the Town and Country Planning (General Permitted Development) Order 1995 (as amended for Wales). However, properties in Cardiff\'s conservation areas (including Pontcanna, Cathedral Road, Roath Park, and parts of Whitchurch) may require prior approval. Listed buildings require listed building consent. Always check with Cardiff Planning Department if your property is in a conservation area or is listed.',
+      "In most cases, no. Residential solar panels are permitted development under the Town and Country Planning (General Permitted Development) Order 1995 (as amended for Wales). However, properties in Cardiff's conservation areas (including Pontcanna, Cathedral Road, Roath Park, and parts of Whitchurch) may require prior approval. Listed buildings require listed building consent. Always check with Cardiff Planning Department if your property is in a conservation area or is listed.",
   },
   {
     question: 'What is the Warm Homes Programme and how do I apply in Cardiff?',
     answer:
-      'The Warm Homes Programme is the Welsh Government\'s energy efficiency scheme replacing the previous Nest and Arbed schemes. It offers free energy efficiency improvements — potentially including solar PV — to households that are fuel poor or at risk of fuel poverty. Eligibility depends on income, benefit receipt, and your home\'s EPC rating. Cardiff residents can apply via Cardiff Council\'s housing energy team or the Welsh Government\'s Warm Homes portal. The scheme is delivered through Local Area Co-ordinators in each county.',
+      "The Warm Homes Programme is the Welsh Government's energy efficiency scheme replacing the previous Nest and Arbed schemes. It offers free energy efficiency improvements — potentially including solar PV — to households that are fuel poor or at risk of fuel poverty. Eligibility depends on income, benefit receipt, and your home's EPC rating. Cardiff residents can apply via Cardiff Council's housing energy team or the Welsh Government's Warm Homes portal. The scheme is delivered through Local Area Co-ordinators in each county.",
   },
   {
     question: 'Which DNO covers Cardiff and what notification is required?',
@@ -155,9 +155,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Leaf className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Welsh net zero ambitions</strong> — Wales has committed to reach net zero
-                by 2050 under the Environment (Wales) Act 2016. The Welsh Government's Future
-                Wales National Plan 1 specifically supports renewable energy generation, and local
+                <strong>Welsh net zero ambitions</strong> — Wales has committed to reach net zero by
+                2050 under the Environment (Wales) Act 2016. The Welsh Government's Future Wales
+                National Plan 1 specifically supports renewable energy generation, and local
                 planning authorities in Cardiff are supportive of residential solar PV.
               </span>
             </li>
@@ -165,9 +165,9 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cardiff housing stock</strong> — Cardiff's mix of Victorian terraces
-                (Pontcanna, Roath, Canton), Edwardian semis, and modern new builds all present
-                solar opportunities. The city's rapid population growth and new-build development
-                has increased demand for integrated solar installations.
+                (Pontcanna, Roath, Canton), Edwardian semis, and modern new builds all present solar
+                opportunities. The city's rapid population growth and new-build development has
+                increased demand for integrated solar installations.
               </span>
             </li>
           </ul>
@@ -182,8 +182,8 @@ const sections = [
       <>
         <p>
           Wales has distinct energy support schemes that differ from those available in England.
-          Cardiff homeowners should investigate these Welsh-specific routes before paying full
-          price for a solar installation.
+          Cardiff homeowners should investigate these Welsh-specific routes before paying full price
+          for a solar installation.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -200,10 +200,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ECO4 (UK-wide)</strong> — the Energy Company Obligation scheme operates
-                in Wales as in England. Households receiving qualifying benefits (Universal Credit,
-                Child Tax Credit, Pension Credit, etc.) may qualify for free solar panels as part
-                of an ECO4 package. Local energy charities in Cardiff can help households navigate
+                <strong>ECO4 (UK-wide)</strong> — the Energy Company Obligation scheme operates in
+                Wales as in England. Households receiving qualifying benefits (Universal Credit,
+                Child Tax Credit, Pension Credit, etc.) may qualify for free solar panels as part of
+                an ECO4 package. Local energy charities in Cardiff can help households navigate
                 applications.
               </span>
             </li>
@@ -240,8 +240,8 @@ const sections = [
     content: (
       <>
         <p>
-          Cardiff installation costs are broadly in line with the national average. Labour costs
-          are generally lower than London and the South East but higher than rural Wales.
+          Cardiff installation costs are broadly in line with the national average. Labour costs are
+          generally lower than London and the South East but higher than rural Wales.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -262,24 +262,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>6kWp system</strong> — £9,500 to £14,000. Suitable for larger properties
-                or homes with heat pumps and EVs. Typically 15 to 18 panels.
+                <strong>6kWp system</strong> — £9,500 to £14,000. Suitable for larger properties or
+                homes with heat pumps and EVs. Typically 15 to 18 panels.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery storage</strong> — £2,500 to £5,000 for a 5 to 10kWh unit.
-                Popular choices in Cardiff include Givenergy, Tesla Powerwall, and Solax.
-                Increasingly bundled with solar at a reduced combined price.
+                <strong>Battery storage</strong> — £2,500 to £5,000 for a 5 to 10kWh unit. Popular
+                choices in Cardiff include Givenergy, Tesla Powerwall, and Solax. Increasingly
+                bundled with solar at a reduced combined price.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Victorian Cardiff terraces in Roath, Canton, and Pontcanna may incur additional costs
-          for slate roof mounting and scaffolding. Conservation area restrictions can also add
-          planning costs. Always obtain at least three quotes from MCS-certified Cardiff installers.
+          Victorian Cardiff terraces in Roath, Canton, and Pontcanna may incur additional costs for
+          slate roof mounting and scaffolding. Conservation area restrictions can also add planning
+          costs. Always obtain at least three quotes from MCS-certified Cardiff installers.
         </p>
       </>
     ),
@@ -300,7 +300,8 @@ const sections = [
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Annual generation (4kWp, Cardiff)</strong> — 3,800 to 4,400 kWh per year.
-                Consuming 50% on site saves approximately £570 to £880 per year at 30 to 40p per kWh.
+                Consuming 50% on site saves approximately £570 to £880 per year at 30 to 40p per
+                kWh.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -313,8 +314,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Total annual benefit</strong> — £760 to £1,100 per year. Payback period of
-                6 to 10 years on a £8,000 installation. Systems typically last 25 to 30 years,
+                <strong>Total annual benefit</strong> — £760 to £1,100 per year. Payback period of 6
+                to 10 years on a £8,000 installation. Systems typically last 25 to 30 years,
                 providing 15 to 20 years of returns after payback.
               </span>
             </li>
@@ -346,8 +347,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Current best rates (2025)</strong> — Octopus Outgoing Agile (time-of-use,
-                up to 24p at peak), E.ON Next Drive Export (up to 15p), Ovo Greener Energy Export
+                <strong>Current best rates (2025)</strong> — Octopus Outgoing Agile (time-of-use, up
+                to 24p at peak), E.ON Next Drive Export (up to 15p), Ovo Greener Energy Export
                 (around 12p). Rates change regularly — compare at Ofgem's SEG register.
               </span>
             </li>
@@ -397,27 +398,26 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Listed buildings</strong> — Cardiff has numerous listed buildings,
-                particularly in Pontcanna, Cathays, and the Victorian terraces of Canton.
-                Listed building consent is required for solar panel installation on or within
-                the curtilage of a listed building. Consent may be granted for discreet
-                rear-facing installations.
+                particularly in Pontcanna, Cathays, and the Victorian terraces of Canton. Listed
+                building consent is required for solar panel installation on or within the curtilage
+                of a listed building. Consent may be granted for discreet rear-facing installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flat roofs</strong> — ground-mounted or flat-roof installations are
-                treated differently to sloped roof installations. Panels on flat roofs should not
-                be visible from a public road to benefit from permitted development rights.
+                <strong>Flat roofs</strong> — ground-mounted or flat-roof installations are treated
+                differently to sloped roof installations. Panels on flat roofs should not be visible
+                from a public road to benefit from permitted development rights.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Technical requirement</strong> — panels must not protrude more than 200mm
-                from the roof plane and must be removed when no longer needed. The installation
-                must not result in the total area of panels exceeding the total area of the roof
-                surface from which they protrude.
+                from the roof plane and must be removed when no longer needed. The installation must
+                not result in the total area of panels exceeding the total area of the roof surface
+                from which they protrude.
               </span>
             </li>
           </ul>
@@ -468,9 +468,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>DNO (Distribution Network Operator)</strong> — National Grid Electricity
-                Distribution (NGED, formerly Western Power Distribution) covers South Wales.
-                G98 notification is handled by your installer for systems up to 3.68kW. G99
-                approval for larger systems should begin well before installation.
+                Distribution (NGED, formerly Western Power Distribution) covers South Wales. G98
+                notification is handled by your installer for systems up to 3.68kW. G99 approval for
+                larger systems should begin well before installation.
               </span>
             </li>
           </ul>
@@ -501,8 +501,8 @@ const sections = [
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce professional solar PV quotes that include Welsh Government grant
-                  eligibility notes, SEG earnings projections, and estimated payback periods —
-                  all in a branded PDF sent before leaving the property.
+                  eligibility notes, SEG earnings projections, and estimated payback periods — all
+                  in a branded PDF sent before leaving the property.
                 </p>
               </div>
             </div>
@@ -541,7 +541,7 @@ export default function SolarPanelInstallationCardiffPage() {
       title="Solar Panel Installation Cardiff 2025 | Solar PV Wales"
       description="Complete guide to solar panel installation in Cardiff. Welsh Government grants (Warm Homes Programme), costs, SEG payments, planning rules for conservation areas, and MCS certification requirements."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

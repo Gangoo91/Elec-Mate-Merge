@@ -84,14 +84,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/consumer-unit-types-guide',
     title: 'Consumer Unit Types Guide',
-    description: 'Metal clad, split-load, high-integrity, and RCBO boards explained with upgrade costs.',
+    description:
+      'Metal clad, split-load, high-integrity, and RCBO boards explained with upgrade costs.',
     icon: Zap,
     category: 'Guide',
   },
   {
     href: '/new-home-electrical-checklist',
     title: 'New Home Electrical Checklist',
-    description: 'Things to check when moving into a new property — RCDs, smoke detectors, meter registration.',
+    description:
+      'Things to check when moving into a new property — RCDs, smoke detectors, meter registration.',
     icon: Home,
     category: 'Guide',
   },
@@ -105,7 +107,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -131,39 +134,38 @@ const sections = [
         <p>
           Smart meters in Great Britain are deployed in two generations, known as SMETS1 (Smart
           Metering Equipment Technical Specifications version 1) and SMETS2. Understanding the
-          difference matters because it affects whether your meter retains its smart functions
-          when you switch energy supplier.
+          difference matters because it affects whether your meter retains its smart functions when
+          you switch energy supplier.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SMETS1 (first generation, deployed 2012 to 2019)</strong> — communicated
-                via each energy supplier's own proprietary network. When you switched supplier,
-                the meter often lost smart functionality and reverted to dumb mode, requiring
-                manual meter readings. Many SMETS1 meters have since been migrated to the DCC
-                network and restored to smart operation.
+                <strong>SMETS1 (first generation, deployed 2012 to 2019)</strong> — communicated via
+                each energy supplier's own proprietary network. When you switched supplier, the
+                meter often lost smart functionality and reverted to dumb mode, requiring manual
+                meter readings. Many SMETS1 meters have since been migrated to the DCC network and
+                restored to smart operation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SMETS2 (second generation, deployed from 2019)</strong> — communicates
-                via the Data Communications Company (DCC) national network. SMETS2 meters retain
-                full smart functionality regardless of which energy supplier you use, because
-                they all connect to the same DCC infrastructure. All new smart meter
-                installations now use SMETS2.
+                <strong>SMETS2 (second generation, deployed from 2019)</strong> — communicates via
+                the Data Communications Company (DCC) national network. SMETS2 meters retain full
+                smart functionality regardless of which energy supplier you use, because they all
+                connect to the same DCC infrastructure. All new smart meter installations now use
+                SMETS2.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DCC migration of SMETS1 meters</strong> — Smart Energy GB and the DCC
-                have been progressively migrating SMETS1 meters onto the national network. If
-                you have a SMETS1 meter that lost smart functions after switching supplier,
-                contact your current supplier to check whether migration has been completed for
-                your meter.
+                <strong>DCC migration of SMETS1 meters</strong> — Smart Energy GB and the DCC have
+                been progressively migrating SMETS1 meters onto the national network. If you have a
+                SMETS1 meter that lost smart functions after switching supplier, contact your
+                current supplier to check whether migration has been completed for your meter.
               </span>
             </li>
           </ul>
@@ -184,8 +186,8 @@ const sections = [
       <>
         <p>
           Smart meter installation involves several parties with distinct responsibilities.
-          Understanding who does what helps homeowners and electricians identify the correct
-          point of contact when problems arise.
+          Understanding who does what helps homeowners and electricians identify the correct point
+          of contact when problems arise.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -194,29 +196,28 @@ const sections = [
               <span>
                 <strong>Distribution Network Operator (DNO)</strong> — owns and maintains the
                 electricity network from the substation to the service head (cutout) at your
-                property. The DNO is responsible for the service head, service cable, and
-                anything upstream of the meter. The six DNO areas in England, Scotland, and
-                Wales are National Grid Electricity Distribution, UK Power Networks, Northern
-                Powergrid, Electricity North West, SP Energy Networks, and SSEN.
+                property. The DNO is responsible for the service head, service cable, and anything
+                upstream of the meter. The six DNO areas in England, Scotland, and Wales are
+                National Grid Electricity Distribution, UK Power Networks, Northern Powergrid,
+                Electricity North West, SP Energy Networks, and SSEN.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electricity supplier</strong> — your energy company is responsible for
-                the meter itself. The supplier arranges and books the smart meter installation
-                and sends their own engineer or a third-party metering contractor to carry
-                out the work.
+                <strong>Electricity supplier</strong> — your energy company is responsible for the
+                meter itself. The supplier arranges and books the smart meter installation and sends
+                their own engineer or a third-party metering contractor to carry out the work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>The homeowner and their electrician</strong> — responsible for
-                everything downstream of the meter: the meter tails from the meter to the
-                consumer unit, the consumer unit itself, all circuits, and the earthing
-                arrangement within the property. If any of these require attention before a
-                smart meter can be fitted, a registered electrician must carry out the work.
+                <strong>The homeowner and their electrician</strong> — responsible for everything
+                downstream of the meter: the meter tails from the meter to the consumer unit, the
+                consumer unit itself, all circuits, and the earthing arrangement within the
+                property. If any of these require attention before a smart meter can be fitted, a
+                registered electrician must carry out the work.
               </span>
             </li>
           </ul>
@@ -237,31 +238,31 @@ const sections = [
       <>
         <p>
           A significant proportion of smart meter installation appointments fail or are aborted
-          because of conditions at the property. The smart meter engineer — who is not a
-          qualified electrician — is not permitted to carry out electrical work on your
-          installation. If problems are found, they will typically leave and refer the homeowner
-          back to their supplier or to an electrician.
+          because of conditions at the property. The smart meter engineer — who is not a qualified
+          electrician — is not permitted to carry out electrical work on your installation. If
+          problems are found, they will typically leave and refer the homeowner back to their
+          supplier or to an electrician.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Defective or undersized service head</strong> — the service head (cutout)
-                is the sealed unit that contains the DNO's main fuse. If it is old, damaged,
-                undersized, or in the wrong location, the DNO must attend before the meter can
-                be changed. Service head issues are outside the electrician's scope — contact
-                the DNO directly.
+                <strong>Defective or undersized service head</strong> — the service head (cutout) is
+                the sealed unit that contains the DNO's main fuse. If it is old, damaged,
+                undersized, or in the wrong location, the DNO must attend before the meter can be
+                changed. Service head issues are outside the electrician's scope — contact the DNO
+                directly.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Meter tails in poor condition</strong> — the cables between the service
-                head and the meter (meter tails) must be in sound condition. Old rubber-insulated
-                or lead-sheathed tails, or tails with damaged insulation, will prevent the
-                installation. Replacement of meter tails is a job for a registered electrician
-                and is notifiable under Part P in England.
+                <strong>Meter tails in poor condition</strong> — the cables between the service head
+                and the meter (meter tails) must be in sound condition. Old rubber-insulated or
+                lead-sheathed tails, or tails with damaged insulation, will prevent the
+                installation. Replacement of meter tails is a job for a registered electrician and
+                is notifiable under Part P in England.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -287,8 +288,8 @@ const sections = [
               <span>
                 <strong>Wireless signal issues</strong> — SMETS2 meters communicate via the DCC
                 wide-area network using a SMETS2 communications hub. In some rural or shielded
-                locations, the signal is weak. Where signal is insufficient, the installation may
-                be deferred pending network improvements or an alternative communications solution.
+                locations, the signal is weak. Where signal is insufficient, the installation may be
+                deferred pending network improvements or an alternative communications solution.
               </span>
             </li>
           </ul>
@@ -308,11 +309,11 @@ const sections = [
         </p>
         <p>
           Many older properties still have consumer units with rewirable fuse carriers (fuse wire)
-          or early cartridge fuse types, with no RCD protection. While a smart meter engineer is
-          not required to refuse installation solely because of an old consumer unit, some
-          engineers and some supplier policies will not proceed where there is an obvious safety
-          concern. Upgrading to a modern metal-clad consumer unit with RCD or RCBO protection
-          resolves this and brings the installation closer to the current edition of BS 7671.
+          or early cartridge fuse types, with no RCD protection. While a smart meter engineer is not
+          required to refuse installation solely because of an old consumer unit, some engineers and
+          some supplier policies will not proceed where there is an obvious safety concern.
+          Upgrading to a modern metal-clad consumer unit with RCD or RCBO protection resolves this
+          and brings the installation closer to the current edition of BS 7671.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -321,8 +322,8 @@ const sections = [
               <span>
                 <strong>TT earthing systems</strong> — in a TT system, the earth path for fault
                 current passes through a local earth electrode rather than through the supplier's
-                network. The electrode resistance must be low enough to allow protective devices
-                to operate within the required disconnection time. An electrician should test the
+                network. The electrode resistance must be low enough to allow protective devices to
+                operate within the required disconnection time. An electrician should test the
                 electrode resistance using a loop impedance tester and document the result. RCD
                 protection is essential in all TT installations under BS 7671 Regulation 411.5.3.
               </span>
@@ -330,10 +331,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PME (TN-C-S) earthing and modern loads</strong> — properties on a PME
-                supply should be aware that connecting certain loads such as EV chargers requires
-                specific precautions under BS 7671. This is separate from smart metering but
-                increasingly relevant as electric vehicle charging and smart tariffs converge.
+                <strong>PME (TN-C-S) earthing and modern loads</strong> — properties on a PME supply
+                should be aware that connecting certain loads such as EV chargers requires specific
+                precautions under BS 7671. This is separate from smart metering but increasingly
+                relevant as electric vehicle charging and smart tariffs converge.
               </span>
             </li>
           </ul>
@@ -354,39 +355,39 @@ const sections = [
     content: (
       <>
         <p>
-          The In-Home Display (IHD) is a small wireless screen provided free with every smart
-          meter installation. It communicates with the smart meter using Zigbee (a low-power
-          wireless protocol) via the Home Area Network (HAN) and displays real-time energy
-          consumption data for both electricity and gas.
+          The In-Home Display (IHD) is a small wireless screen provided free with every smart meter
+          installation. It communicates with the smart meter using Zigbee (a low-power wireless
+          protocol) via the Home Area Network (HAN) and displays real-time energy consumption data
+          for both electricity and gas.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What the IHD shows</strong> — current electricity consumption in watts
-                or kilowatts, cost per hour at current consumption rate, cumulative daily and
-                weekly usage, gas consumption where a smart gas meter is also fitted, and a
-                traffic light indicator for low, medium, and high consumption.
+                <strong>What the IHD shows</strong> — current electricity consumption in watts or
+                kilowatts, cost per hour at current consumption rate, cumulative daily and weekly
+                usage, gas consumption where a smart gas meter is also fitted, and a traffic light
+                indicator for low, medium, and high consumption.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>What the IHD does not do</strong> — it does not control appliances, it
-                does not communicate with the internet directly, and it does not replace a smart
-                home hub. It is a display device only. It requires no electrical installation
-                work — it simply plugs into a standard socket outlet.
+                <strong>What the IHD does not do</strong> — it does not control appliances, it does
+                not communicate with the internet directly, and it does not replace a smart home
+                hub. It is a display device only. It requires no electrical installation work — it
+                simply plugs into a standard socket outlet.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Range limitations</strong> — the IHD communicates wirelessly with the
-                meter via Zigbee. The range is typically 10 to 30 metres through walls. If your
-                meter is in an outbuilding or in a remote location, the IHD may not receive a
-                reliable signal. In this case, a third-party smart energy monitor connected
-                directly to the electricity supply may be a better solution.
+                <strong>Range limitations</strong> — the IHD communicates wirelessly with the meter
+                via Zigbee. The range is typically 10 to 30 metres through walls. If your meter is
+                in an outbuilding or in a remote location, the IHD may not receive a reliable
+                signal. In this case, a third-party smart energy monitor connected directly to the
+                electricity supply may be a better solution.
               </span>
             </li>
           </ul>
@@ -420,32 +421,30 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Upgrading the consumer unit</strong> — replacing an old fuse board with
-                a modern, metal-clad split-load or RCBO consumer unit complying with BS EN
-                61439-3. This is notifiable work under Part P and must be certified with an
-                Electrical Installation Certificate (EIC) and a Building Regulations compliance
-                certificate from a registered competent person scheme.
+                <strong>Upgrading the consumer unit</strong> — replacing an old fuse board with a
+                modern, metal-clad split-load or RCBO consumer unit complying with BS EN 61439-3.
+                This is notifiable work under Part P and must be certified with an Electrical
+                Installation Certificate (EIC) and a Building Regulations compliance certificate
+                from a registered competent person scheme.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Earthing system assessment and improvement</strong> — testing earth
-                electrode resistance on TT systems, installing additional electrodes where
-                required, and documenting the results on the appropriate certificate. Issuing
-                an{' '}
-                <SEOInternalLink href="/tools/eicr-certificate">EICR or EIC</SEOInternalLink>{' '}
-                that the homeowner can provide to the smart meter installer as evidence of
-                compliance.
+                electrode resistance on TT systems, installing additional electrodes where required,
+                and documenting the results on the appropriate certificate. Issuing an{' '}
+                <SEOInternalLink href="/tools/eicr-certificate">EICR or EIC</SEOInternalLink> that
+                the homeowner can provide to the smart meter installer as evidence of compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main bonding</strong> — ensuring main protective bonding conductors are
-                in place for gas and water services under BS 7671 Regulation 411.3.1.2. Old
-                properties sometimes lack bonding on one or both services, which is a C2
-                deficiency on an EICR and should be rectified before any new meter work.
+                <strong>Main bonding</strong> — ensuring main protective bonding conductors are in
+                place for gas and water services under BS 7671 Regulation 411.3.1.2. Old properties
+                sometimes lack bonding on one or both services, which is a C2 deficiency on an EICR
+                and should be rectified before any new meter work.
               </span>
             </li>
           </ul>
@@ -470,8 +469,8 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Smart meter installation</strong> — free, arranged by your supplier. The
-                appointment typically takes 30 to 90 minutes. You do not need to be present for
-                the electricity meter only, but you must be present if a gas meter is also being
+                appointment typically takes 30 to 90 minutes. You do not need to be present for the
+                electricity meter only, but you must be present if a gas meter is also being
                 changed.
               </span>
             </li>
@@ -486,8 +485,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit upgrade</strong> — typically £300 to £900 for a full
-                consumer unit replacement in a domestic property. See the{' '}
+                <strong>Consumer unit upgrade</strong> — typically £300 to £900 for a full consumer
+                unit replacement in a domestic property. See the{' '}
                 <SEOInternalLink href="/consumer-unit-types-guide">
                   consumer unit types guide
                 </SEOInternalLink>{' '}
@@ -499,16 +498,16 @@ const sections = [
               <span>
                 <strong>Earthing system assessment</strong> — an EICR including earthing tests
                 typically costs £150 to £350 for a domestic property. Where additional earth
-                electrodes or bonding conductors are required, allow an additional £100 to £250
-                for materials and labour.
+                electrodes or bonding conductors are required, allow an additional £100 to £250 for
+                materials and labour.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Electricians working on smart meter-related preparatory work should issue the
-          appropriate certificate: a Minor Electrical Installation Works Certificate (MEWC) for
-          minor additions and alterations, or an{' '}
+          Electricians working on smart meter-related preparatory work should issue the appropriate
+          certificate: a Minor Electrical Installation Works Certificate (MEWC) for minor additions
+          and alterations, or an{' '}
           <SEOInternalLink href="/tools/eicr-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
@@ -530,7 +529,7 @@ export default function SmartMeterInstallationPage() {
       title="Smart Meter Installation — An Electrician's Guide | Elec-Mate"
       description="Understand what happens during a smart meter installation from an electrician's perspective. SMETS1 vs SMETS2, DNO vs supplier responsibilities, TT earthing complications, consumer unit issues, and when to call an electrician."
       datePublished="2024-06-01"
-      dateModified="2025-03-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

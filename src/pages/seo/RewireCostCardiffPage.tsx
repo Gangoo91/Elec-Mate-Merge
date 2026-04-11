@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/house-rewire-cost',
     title: 'House Rewire Cost Guide',
-    description: 'National rewire cost guide covering all property sizes, what\'s included, and how to compare quotes.',
+    description:
+      "National rewire cost guide covering all property sizes, what's included, and how to compare quotes.",
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -103,14 +104,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
-    description: 'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
+    description:
+      'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'Electrical Installation Certificate App',
-    description: 'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
+    description:
+      'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -160,8 +163,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — £3,500 to £5,000. Widespread across
-                suburbs such as Rhiwbina, Whitchurch, Llandaff, and Pontprennau. Typically 12 to
-                16 circuits.
+                suburbs such as Rhiwbina, Whitchurch, Llandaff, and Pontprennau. Typically 12 to 16
+                circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -198,8 +201,8 @@ const sections = [
         <p>
           Wales uses the same electrical safety technical standards as England. BS 7671:2018+A3:2024
           (the IET Wiring Regulations, 18th Edition) applies across all of the United Kingdom.
-          Building Regulations for dwellings in Wales are approved by the Welsh Government under
-          the Building Regulations 2010.
+          Building Regulations for dwellings in Wales are approved by the Welsh Government under the
+          Building Regulations 2010.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -233,8 +236,8 @@ const sections = [
         </div>
         <p>
           Cardiff homeowners can be confident that NICEIC and NAPIT registered contractors operating
-          in Wales work to exactly the same standards and certification requirements as anywhere else
-          in Great Britain.
+          in Wales work to exactly the same standards and certification requirements as anywhere
+          else in Great Britain.
         </p>
       </>
     ),
@@ -262,23 +265,23 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse box</strong> — ceramic fuse holders with fuse wire indicate
-                a pre-1970s installation with no modern overcurrent or RCD protection.
+                <strong>Rewirable fuse box</strong> — ceramic fuse holders with fuse wire indicate a
+                pre-1970s installation with no modern overcurrent or RCD protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Round-pin sockets</strong> — original pre-1947 sockets indicate a very
-                old installation that will require a full rewire.
+                <strong>Round-pin sockets</strong> — original pre-1947 sockets indicate a very old
+                installation that will require a full rewire.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No RCD protection</strong> — a consumer unit without residual current
-                device protection on socket circuits is a C2 (potentially dangerous) observation
-                under BS 7671 Regulation 411.3.3.
+                <strong>No RCD protection</strong> — a consumer unit without residual current device
+                protection on socket circuits is a C2 (potentially dangerous) observation under BS
+                7671 Regulation 411.3.3.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -316,9 +319,9 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>First fix</strong> — removal of existing wiring, cable routing through
-                floors, walls, and ceiling voids, installation of back boxes and containment.
-                The most disruptive stage involving lifted floorboards and chased or surface-run
-                cable routes.
+                floors, walls, and ceiling voids, installation of back boxes and containment. The
+                most disruptive stage involving lifted floorboards and chased or surface-run cable
+                routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -340,8 +343,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Certification</strong> — EIC issued and Part P notification submitted.
-                You receive both the EIC and the compliance certificate.
+                <strong>Certification</strong> — EIC issued and Part P notification submitted. You
+                receive both the EIC and the compliance certificate.
               </span>
             </li>
           </ul>
@@ -399,8 +402,8 @@ const sections = [
         </div>
         <p>
           The property will be without mains power during working hours. Plan for this disruption
-          and make arrangements for any medical equipment, vulnerable occupants, or business use
-          of the property. Many Cardiff electricians can arrange a phased power-off schedule to
+          and make arrangements for any medical equipment, vulnerable occupants, or business use of
+          the property. Many Cardiff electricians can arrange a phased power-off schedule to
           minimise inconvenience.
         </p>
       </>
@@ -429,9 +432,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cardiff Council building control</strong> — if the electrician is not
-                scheme registered, notify Cardiff Council's building control service before work
-                begins. An inspector may visit to check the installation before sign-off.
+                <strong>Cardiff Council building control</strong> — if the electrician is not scheme
+                registered, notify Cardiff Council's building control service before work begins. An
+                inspector may visit to check the installation before sign-off.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -454,8 +457,8 @@ const sections = [
       <>
         <p>
           Cardiff has a strong pool of qualified electrical contractors serving the city and the
-          broader South Wales region. Follow these steps to appoint a reliable electrician for
-          your rewire.
+          broader South Wales region. Follow these steps to appoint a reliable electrician for your
+          rewire.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -479,16 +482,16 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Verify insurance</strong> — confirm the contractor holds public liability
-                insurance of at least £1 million. Scheme members are required to maintain cover
-                as a condition of registration.
+                insurance of at least £1 million. Scheme members are required to maintain cover as a
+                condition of registration.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Read recent reviews</strong> — check Google, Checkatrade, and Which?
-                Trusted Traders for independent reviews from Cardiff customers. Recent reviews
-                from rewire projects are the most relevant.
+                <strong>Read recent reviews</strong> — check Google, Checkatrade, and Which? Trusted
+                Traders for independent reviews from Cardiff customers. Recent reviews from rewire
+                projects are the most relevant.
               </span>
             </li>
           </ul>
@@ -502,8 +505,8 @@ const sections = [
     content: (
       <>
         <p>
-          On completion of your Cardiff rewire, ensure you receive and store the following
-          documents safely. They are required for property sales and remortgaging.
+          On completion of your Cardiff rewire, ensure you receive and store the following documents
+          safely. They are required for property sales and remortgaging.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -524,8 +527,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workmanship guarantee</strong> — most reputable Cardiff contractors offer
-                1 to 5 years. Confirm the scope and duration in your written contract.
+                <strong>Workmanship guarantee</strong> — most reputable Cardiff contractors offer 1
+                to 5 years. Confirm the scope and duration in your written contract.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -559,9 +562,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete and sign off your Electrical Installation Certificate on your phone
                   before you leave the property. Auto-populated test schedules and instant PDF
                   export mean the customer receives their certificate the same day.
@@ -606,7 +607,7 @@ export default function RewireCostCardiffPage() {
       title="House Rewire Cost Cardiff 2025 | Rewire Prices Wales"
       description="House rewire costs in Cardiff for 2025. Prices for all property sizes, Part P compliance in Wales, NICEIC and NAPIT contractors, signs you need a rewire, timescales, and certification explained."
       datePublished="2025-01-01"
-      dateModified="2025-06-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rewire Cost Guide"

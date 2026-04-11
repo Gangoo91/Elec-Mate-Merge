@@ -39,7 +39,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A typical 4kWp solar PV system in Leeds costs £6,000 to £9,000 installed, with payback periods of 7 to 11 years depending on energy usage and export tariff.',
-  'Yorkshire receives an average of 3.2 to 3.5 peak sun hours per day, making solar PV a viable investment despite the North of England\'s reputation for cloud cover.',
+  "Yorkshire receives an average of 3.2 to 3.5 peak sun hours per day, making solar PV a viable investment despite the North of England's reputation for cloud cover.",
   'The Smart Export Guarantee (SEG) requires energy suppliers with 150,000+ customers to pay for electricity exported to the grid. Rates range from 1p to 24p per kWh depending on the supplier.',
   'All solar PV installations must be carried out by an MCS-certified installer. MCS certification is required to claim SEG payments and access most grant schemes.',
   'Battery storage is increasingly popular in Yorkshire, adding £2,500 to £5,000 to installation cost but significantly improving self-consumption and reducing reliance on grid electricity.',
@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'Does solar work well in Leeds given the Yorkshire weather?',
     answer:
-      'Yes. Leeds and West Yorkshire receive approximately 3.2 to 3.5 peak sun hours per day annually — less than London (3.8) but comparable to many German regions where solar PV has been highly successful for decades. Modern monocrystalline panels perform well in diffuse light conditions. A 4kWp system in Leeds typically generates 3,200 to 3,800 kWh per year, covering 75 to 100% of an average household\'s electricity needs.',
+      "Yes. Leeds and West Yorkshire receive approximately 3.2 to 3.5 peak sun hours per day annually — less than London (3.8) but comparable to many German regions where solar PV has been highly successful for decades. Modern monocrystalline panels perform well in diffuse light conditions. A 4kWp system in Leeds typically generates 3,200 to 3,800 kWh per year, covering 75 to 100% of an average household's electricity needs.",
   },
   {
     question: 'Are there any grants for solar panels in Leeds?',
@@ -144,8 +144,8 @@ const sections = [
               <span>
                 <strong>Yorkshire solar resource</strong> — Leeds receives approximately 1,100 to
                 1,200 peak sun hours per year, sufficient to generate 900 to 1,050 kWh per kWp
-                installed annually. A 4kWp system generates 3,600 to 4,200 kWh — enough to cover
-                the majority of a typical household's electricity needs.
+                installed annually. A 4kWp system generates 3,600 to 4,200 kWh — enough to cover the
+                majority of a typical household's electricity needs.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -210,16 +210,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery storage add-on</strong> — £2,500 to £5,000 for a 5 to 10kWh
-                battery. Popular brands include Tesla Powerwall, Givenergy, and SolarEdge.
+                <strong>Battery storage add-on</strong> — £2,500 to £5,000 for a 5 to 10kWh battery.
+                Popular brands include Tesla Powerwall, Givenergy, and SolarEdge.
               </span>
             </li>
           </ul>
         </div>
         <p>
           All prices include 0% VAT (since April 2022 under the Energy Saving Materials relief).
-          Labour costs in Leeds are typically 10 to 15% lower than London but broadly comparable
-          to other Northern English cities. Scaffolding on Yorkshire stone terraces or awkward roof
+          Labour costs in Leeds are typically 10 to 15% lower than London but broadly comparable to
+          other Northern English cities. Scaffolding on Yorkshire stone terraces or awkward roof
           pitches can add £400 to £800 to the total.
         </p>
       </>
@@ -240,32 +240,32 @@ const sections = [
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Self-consumption savings</strong> — a Leeds household consuming 50% of its
-                solar generation (roughly 1,750 kWh on a 4kWp system) saves approximately £525
-                to £700 per year at current electricity prices of 30 to 40p per kWh.
+                solar generation (roughly 1,750 kWh on a 4kWp system) saves approximately £525 to
+                £700 per year at current electricity prices of 30 to 40p per kWh.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>SEG export income</strong> — exporting 50% of generation at an average SEG
-                rate of 10p per kWh adds £175 to £210 per year. Higher SEG tariffs (up to 24p)
-                can significantly increase this figure.
+                rate of 10p per kWh adds £175 to £210 per year. Higher SEG tariffs (up to 24p) can
+                significantly increase this figure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Combined annual benefit</strong> — total financial benefit of £700 to
-                £910 per year for a 4kWp system. This gives a payback period of approximately
-                7 to 11 years on an £8,000 installation.
+                <strong>Combined annual benefit</strong> — total financial benefit of £700 to £910
+                per year for a 4kWp system. This gives a payback period of approximately 7 to 11
+                years on an £8,000 installation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <TrendingUp className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery impact</strong> — adding a battery increases self-consumption to
-                75 to 90%, saving an additional £200 to £350 per year but adding 5 to 7 years to
-                the overall payback period depending on battery cost.
+                <strong>Battery impact</strong> — adding a battery increases self-consumption to 75
+                to 90%, saving an additional £200 to £350 per year but adding 5 to 7 years to the
+                overall payback period depending on battery cost.
               </span>
             </li>
           </ul>
@@ -279,8 +279,8 @@ const sections = [
     content: (
       <>
         <p>
-          England does not currently offer a universal residential solar grant, but several
-          targeted schemes can help reduce upfront costs for eligible Leeds households.
+          England does not currently offer a universal residential solar grant, but several targeted
+          schemes can help reduce upfront costs for eligible Leeds households.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -296,24 +296,24 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>ECO4 scheme</strong> — for low-income households receiving qualifying
-                benefits, ECO4 can fund solar PV as part of a whole-home energy efficiency
-                package. Contact Leeds City Council or an ECO4 registered installer.
+                benefits, ECO4 can fund solar PV as part of a whole-home energy efficiency package.
+                Contact Leeds City Council or an ECO4 registered installer.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>West Yorkshire Combined Authority</strong> — periodically offers
-                retrofit grants and low-interest green loans for energy improvements including
-                solar. Check the West Yorkshire Retrofit programme for current availability.
+                <strong>West Yorkshire Combined Authority</strong> — periodically offers retrofit
+                grants and low-interest green loans for energy improvements including solar. Check
+                the West Yorkshire Retrofit programme for current availability.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Green mortgages and loans</strong> — several lenders offer preferential
-                rates for energy improvements. Barclays, NatWest, and Nationwide have offered
-                green additional borrowing products that can be used for solar installation.
+                rates for energy improvements. Barclays, NatWest, and Nationwide have offered green
+                additional borrowing products that can be used for solar installation.
               </span>
             </li>
           </ul>
@@ -327,9 +327,9 @@ const sections = [
     content: (
       <>
         <p>
-          The Smart Export Guarantee replaced the Feed-in Tariff (FiT) in January 2020. Unlike
-          the FiT, SEG rates are set competitively by each supplier rather than by government,
-          so shopping around for the best tariff is important for Leeds solar owners.
+          The Smart Export Guarantee replaced the Feed-in Tariff (FiT) in January 2020. Unlike the
+          FiT, SEG rates are set competitively by each supplier rather than by government, so
+          shopping around for the best tariff is important for Leeds solar owners.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -344,19 +344,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Best rates (2025)</strong> — rates change frequently. As of 2025, top
-                rates include Octopus Outgoing Agile (up to 24p per kWh at peak times), E.ON
-                Next Drive Export (up to 15p), and OVO Greener Energy Export (around 12p). The
-                minimum rate offered by obligated suppliers is typically 1p to 4p — always
-                compare before signing.
+                <strong>Best rates (2025)</strong> — rates change frequently. As of 2025, top rates
+                include Octopus Outgoing Agile (up to 24p per kWh at peak times), E.ON Next Drive
+                Export (up to 15p), and OVO Greener Energy Export (around 12p). The minimum rate
+                offered by obligated suppliers is typically 1p to 4p — always compare before
+                signing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Switching your SEG tariff</strong> — you can switch your SEG supplier
-                independently of your import tariff. Many Leeds solar owners use a specialist
-                export tariff with one supplier while buying electricity from another.
+                independently of your import tariff. Many Leeds solar owners use a specialist export
+                tariff with one supplier while buying electricity from another.
               </span>
             </li>
           </ul>
@@ -370,8 +370,8 @@ const sections = [
     content: (
       <>
         <p>
-          Yorkshire's building stock and climate present specific considerations for solar PV
-          system design that differ from southern England.
+          Yorkshire's building stock and climate present specific considerations for solar PV system
+          design that differ from southern England.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -388,27 +388,27 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Shading analysis</strong> — urban Leeds has significant shading from
-                chimneys, trees, and neighbouring properties. A professional shading analysis
-                (using tools like PVGis or Solargis) is essential. Micro-inverters or power
-                optimisers (DC-DC converters) can mitigate partial shading losses.
+                chimneys, trees, and neighbouring properties. A professional shading analysis (using
+                tools like PVGis or Solargis) is essential. Micro-inverters or power optimisers
+                (DC-DC converters) can mitigate partial shading losses.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Roof orientation</strong> — south-facing is optimal but east/west splits
-                are increasingly common in Leeds terraces where rear roofs face varied directions.
-                An east/west split generates around 15 to 20% less annually but produces a
-                more even daily generation profile.
+                <strong>Roof orientation</strong> — south-facing is optimal but east/west splits are
+                increasingly common in Leeds terraces where rear roofs face varied directions. An
+                east/west split generates around 15 to 20% less annually but produces a more even
+                daily generation profile.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DNO notification</strong> — National Grid Electricity Distribution
-                (NGED) covers Yorkshire. G98 notification (systems up to 3.68kW) is straightforward
-                and handled by your installer. G99 applications (over 3.68kW) require formal
-                approval and can take two to eight weeks. Plan installation timelines accordingly.
+                <strong>DNO notification</strong> — National Grid Electricity Distribution (NGED)
+                covers Yorkshire. G98 notification (systems up to 3.68kW) is straightforward and
+                handled by your installer. G99 applications (over 3.68kW) require formal approval
+                and can take two to eight weeks. Plan installation timelines accordingly.
               </span>
             </li>
           </ul>
@@ -423,17 +423,17 @@ const sections = [
       <>
         <p>
           Solar PV installations in the UK must comply with several technical standards and
-          regulatory requirements. MCS certification is non-negotiable for SEG eligibility and
-          most grant schemes.
+          regulatory requirements. MCS certification is non-negotiable for SEG eligibility and most
+          grant schemes.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCS certification</strong> — the Microgeneration Certification Scheme
-                (MCS) certifies both installers and products. Always check that your Leeds
-                installer is MCS-certified at mcs.org.uk before agreeing a contract.
+                <strong>MCS certification</strong> — the Microgeneration Certification Scheme (MCS)
+                certifies both installers and products. Always check that your Leeds installer is
+                MCS-certified at mcs.org.uk before agreeing a contract.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -444,16 +444,16 @@ const sections = [
                   BS 7671:2018+A3:2024
                 </SEOInternalLink>{' '}
                 (the IET Wiring Regulations). The connection of the solar inverter to the consumer
-                unit is notifiable work under Building Regulations Part P and must be carried out
-                by a competent person registered with a scheme such as NICEIC or NAPIT.
+                unit is notifiable work under Building Regulations Part P and must be carried out by
+                a competent person registered with a scheme such as NICEIC or NAPIT.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G98/G99 engineering recommendation</strong> — the connection of solar PV
-                to the low voltage distribution network must comply with ENA Engineering
-                Recommendation G98 (systems up to 3.68kW per phase) or G99 (larger systems).
+                <strong>G98/G99 engineering recommendation</strong> — the connection of solar PV to
+                the low voltage distribution network must comply with ENA Engineering Recommendation
+                G98 (systems up to 3.68kW per phase) or G99 (larger systems).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -532,7 +532,7 @@ export default function SolarPanelInstallationLeedsPage() {
       title="Solar Panel Installation Leeds 2025 | Solar PV Yorkshire"
       description="Complete guide to solar panel installation in Leeds and West Yorkshire. Costs, savings, payback periods, grants, Smart Export Guarantee, MCS certification, and system design for Yorkshire homes."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar Guide"

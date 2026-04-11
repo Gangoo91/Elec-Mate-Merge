@@ -2,14 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Zap,
-  AlertTriangle,
-  CheckCircle2,
-  FileCheck2,
-  ShieldCheck,
-  Wrench,
-} from 'lucide-react';
+import { Zap, AlertTriangle, CheckCircle2, FileCheck2, ShieldCheck, Wrench } from 'lucide-react';
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
@@ -31,7 +24,7 @@ const keyTakeaways = [
   'Smart meters (SMETS2) belong to the energy supplier and are installed and maintained by them. Electricians must not open, alter, or remove smart meters without specific written authorisation from the energy supplier.',
   'Meter tails — the cables between the meter and the consumer unit — are the responsibility of the property owner (in most cases), not the DNO or energy supplier. An electrician can replace or upgrade meter tails, but must safely isolate at the cut-out fuse first.',
   'Consumer unit replacements with a smart meter already installed are common and straightforward. The electrician works on the consumer unit side (load side) of the meter. The meter itself is not affected.',
-  'The main fuse (cut-out fuse) in the service head belongs to the DNO and must not be removed without the DNO\'s authorisation. If the fuse needs to be removed for safe isolation during consumer unit work, the DNO must be contacted in advance.',
+  "The main fuse (cut-out fuse) in the service head belongs to the DNO and must not be removed without the DNO's authorisation. If the fuse needs to be removed for safe isolation during consumer unit work, the DNO must be contacted in advance.",
   'SMETS2 meters support remote reading, remote switching, and load limiting by the energy supplier via the Smart Metering Wide Area Network (WAN). An electrician working near the meter must not inadvertently interfere with the communications module.',
   'All new circuits installed in a property with a smart meter must still be notified under Part P Building Regulations and certified with the appropriate electrical certificate, exactly as for a property without a smart meter.',
 ];
@@ -43,11 +36,11 @@ const howToSteps = [
   },
   {
     name: 'Notify the DNO if cut-out fuse removal is required',
-    text: "If your work requires safe isolation at the cut-out fuse (for example, replacing meter tails or the main switch), contact the DNO in advance. UK Power Networks, National Grid ED, and other DNOs have a process for authorised fuse removal. They will either send an engineer or issue a formal permit. Never remove a DNO cut-out fuse without authorisation — it is an offence under the Electricity Act 1989.",
+    text: 'If your work requires safe isolation at the cut-out fuse (for example, replacing meter tails or the main switch), contact the DNO in advance. UK Power Networks, National Grid ED, and other DNOs have a process for authorised fuse removal. They will either send an engineer or issue a formal permit. Never remove a DNO cut-out fuse without authorisation — it is an offence under the Electricity Act 1989.',
   },
   {
     name: 'Isolate the consumer unit circuit you are working on',
-    text: "For most electrical work in the property (adding circuits, replacing socket outlets, installing new lighting), you only need to isolate the relevant circuit MCB at the consumer unit. You do not need to touch the meter or the cut-out fuse. Prove dead with an approved voltage indicator before proceeding.",
+    text: 'For most electrical work in the property (adding circuits, replacing socket outlets, installing new lighting), you only need to isolate the relevant circuit MCB at the consumer unit. You do not need to touch the meter or the cut-out fuse. Prove dead with an approved voltage indicator before proceeding.',
   },
   {
     name: 'Complete the consumer unit upgrade or new circuit installation',
@@ -72,7 +65,7 @@ const faqs = [
   {
     question: 'Will a consumer unit replacement affect my SMETS2 smart meter?',
     answer:
-      "A consumer unit replacement does not affect the smart meter in most cases. The meter sits between the cut-out fuse and the consumer unit. During a consumer unit replacement, the electrician works on the consumer unit side (load side) of the meter — the meter and its communications module are not involved. After the work is complete, the smart meter should continue to record consumption and communicate with the energy supplier normally. Check that the in-home display (IHD) is still showing live consumption data after the work is finished. If it has lost connection, it typically reconnects automatically within a few minutes.",
+      'A consumer unit replacement does not affect the smart meter in most cases. The meter sits between the cut-out fuse and the consumer unit. During a consumer unit replacement, the electrician works on the consumer unit side (load side) of the meter — the meter and its communications module are not involved. After the work is complete, the smart meter should continue to record consumption and communicate with the energy supplier normally. Check that the in-home display (IHD) is still showing live consumption data after the work is finished. If it has lost connection, it typically reconnects automatically within a few minutes.',
   },
   {
     question: 'What is the difference between SMETS1 and SMETS2 meters?',
@@ -85,9 +78,10 @@ const faqs = [
       "No. Smart meters belong to the energy supplier (not the property owner). An electrician cannot remove or relocate a smart meter without written authorisation from the energy supplier. If a smart meter needs to be relocated (for example, because a consumer unit is being moved), the electrician should agree the new position with the energy supplier and arrange for the energy supplier's engineer to move the meter. Attempting to move a smart meter without authorisation constitutes tampering with energy supplier equipment, which is an offence.",
   },
   {
-    question: 'Do I need to notify my energy supplier before doing electrical work near my smart meter?',
+    question:
+      'Do I need to notify my energy supplier before doing electrical work near my smart meter?',
     answer:
-      "For most electrical work (replacing socket outlets, adding circuits, changing light fittings), there is no need to notify your energy supplier, as the work does not affect the meter. If the work involves the meter tails, the main switch, or the cut-out fuse — or if there is any risk of interrupting the supply to the meter — you should inform your energy supplier in advance and arrange for DNO authorisation to access the cut-out fuse if needed. If the smart meter loses power during works, it will typically restore comms automatically when re-energised. However, if the meter data logging is interrupted, you may wish to notify your supplier so they can note the gap in readings.",
+      'For most electrical work (replacing socket outlets, adding circuits, changing light fittings), there is no need to notify your energy supplier, as the work does not affect the meter. If the work involves the meter tails, the main switch, or the cut-out fuse — or if there is any risk of interrupting the supply to the meter — you should inform your energy supplier in advance and arrange for DNO authorisation to access the cut-out fuse if needed. If the smart meter loses power during works, it will typically restore comms automatically when re-energised. However, if the meter data logging is interrupted, you may wish to notify your supplier so they can note the gap in readings.',
   },
   {
     question: 'What is an in-home display (IHD) device and can I relocate it?',
@@ -105,7 +99,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/consumer-unit-replacement',
     title: 'Consumer Unit Replacement Guide',
-    description: 'Full guide to replacing a consumer unit — what to expect, cost, and certification.',
+    description:
+      'Full guide to replacing a consumer unit — what to expect, cost, and certification.',
     icon: Zap,
     category: 'Guide',
   },
@@ -119,7 +114,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
-    description: 'Systematic approach to finding earth faults, open circuits, and high resistance faults.',
+    description:
+      'Systematic approach to finding earth faults, open circuits, and high resistance faults.',
     icon: Wrench,
     category: 'Guide',
   },
@@ -146,43 +142,41 @@ const sections = [
     content: (
       <>
         <p>
-          Second-generation smart meters (SMETS2) are now the standard installation across
-          Great Britain. Understanding the SMETS2 architecture helps electricians know which
-          parts of the metering system they can and cannot interact with.
+          Second-generation smart meters (SMETS2) are now the standard installation across Great
+          Britain. Understanding the SMETS2 architecture helps electricians know which parts of the
+          metering system they can and cannot interact with.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Service head (cut-out)</strong> — owned by the DNO. Contains the
-                main fuse (typically 60A or 100A). Cannot be accessed without DNO
-                authorisation.
+                <strong>Service head (cut-out)</strong> — owned by the DNO. Contains the main fuse
+                (typically 60A or 100A). Cannot be accessed without DNO authorisation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart meter</strong> — owned by the energy supplier. Measures
-                consumption and communicates with the DCC via the Wide Area Network
-                (WAN) using GPRS or mesh radio. Electricians must not open or alter the
-                meter.
+                <strong>Smart meter</strong> — owned by the energy supplier. Measures consumption
+                and communicates with the DCC via the Wide Area Network (WAN) using GPRS or mesh
+                radio. Electricians must not open or alter the meter.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Meter tails</strong> — the cables from the service head to the
-                meter and from the meter to the consumer unit main switch. Typically 16mm\u00b2
-                or 25mm\u00b2 singles. Owned by the property owner (in most cases). Can be
-                replaced by an electrician with DNO authorisation for cut-out isolation.
+                <strong>Meter tails</strong> — the cables from the service head to the meter and
+                from the meter to the consumer unit main switch. Typically 16mm\u00b2 or 25mm\u00b2
+                singles. Owned by the property owner (in most cases). Can be replaced by an
+                electrician with DNO authorisation for cut-out isolation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit (distribution board)</strong> — owned by the property
-                owner. Electricians work on this side. Not affected by the smart meter.
+                <strong>Consumer unit (distribution board)</strong> — owned by the property owner.
+                Electricians work on this side. Not affected by the smart meter.
               </span>
             </li>
           </ul>
@@ -196,8 +190,8 @@ const sections = [
     content: (
       <>
         <p>
-          The boundary between energy supplier/DNO equipment and the customer installation
-          is critical. Crossing it without authorisation is illegal and dangerous.
+          The boundary between energy supplier/DNO equipment and the customer installation is
+          critical. Crossing it without authorisation is illegal and dangerous.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -205,24 +199,27 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Permitted:</strong> All work on the consumer unit and all circuits
-                downstream of the main switch. Replacing meter tails (with DNO authorisation
-                for cut-out isolation). Installing new circuits, adding socket outlets, and
-                replacing accessories throughout the property.
+                downstream of the main switch. Replacing meter tails (with DNO authorisation for
+                cut-out isolation). Installing new circuits, adding socket outlets, and replacing
+                accessories throughout the property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Not permitted without authorisation:</strong> Opening, altering, or
-                removing the smart meter. Removing the cut-out fuse. Interfering with the
-                communications hub or Home Area Network (HAN) equipment. Relocating the meter.
+                <strong>Not permitted without authorisation:</strong> Opening, altering, or removing
+                the smart meter. Removing the cut-out fuse. Interfering with the communications hub
+                or Home Area Network (HAN) equipment. Relocating the meter.
               </span>
             </li>
           </ul>
         </div>
         <p>
           For guidance on safe isolation procedures, see our{' '}
-          <SEOInternalLink href="/electrical-fault-finding-guide">electrical fault finding guide</SEOInternalLink>.
+          <SEOInternalLink href="/electrical-fault-finding-guide">
+            electrical fault finding guide
+          </SEOInternalLink>
+          .
         </p>
       </>
     ),
@@ -233,38 +230,37 @@ const sections = [
     content: (
       <>
         <p>
-          A consumer unit replacement is one of the most common electrical jobs in properties
-          with smart meters. The presence of a smart meter does not significantly change the
-          procedure, but there are a few important considerations.
+          A consumer unit replacement is one of the most common electrical jobs in properties with
+          smart meters. The presence of a smart meter does not significantly change the procedure,
+          but there are a few important considerations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Isolation at the main switch</strong> — in most consumer unit
-                replacements, isolation is achieved at the consumer unit main switch,
-                which is on the load side of the meter. The smart meter remains energised
-                throughout — only the consumer unit and circuits beyond the main switch
-                are de-energised.
+                <strong>Isolation at the main switch</strong> — in most consumer unit replacements,
+                isolation is achieved at the consumer unit main switch, which is on the load side of
+                the meter. The smart meter remains energised throughout — only the consumer unit and
+                circuits beyond the main switch are de-energised.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>When the cut-out fuse must be removed</strong> — if the meter tails
-                need to be replaced, or if access to the back of the consumer unit requires
-                removal of the tails, contact the DNO in advance to arrange authorised
-                removal of the cut-out fuse. Do not remove the cut-out fuse unilaterally.
+                <strong>When the cut-out fuse must be removed</strong> — if the meter tails need to
+                be replaced, or if access to the back of the consumer unit requires removal of the
+                tails, contact the DNO in advance to arrange authorised removal of the cut-out fuse.
+                Do not remove the cut-out fuse unilaterally.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IHD reconnection</strong> — after restoring the supply, check that
-                the in-home display (IHD) is showing live data. If it has lost connection,
-                follow the energy supplier&apos;s reconnection procedure. This is typically
-                automatic within a few minutes.
+                <strong>IHD reconnection</strong> — after restoring the supply, check that the
+                in-home display (IHD) is showing live data. If it has lost connection, follow the
+                energy supplier&apos;s reconnection procedure. This is typically automatic within a
+                few minutes.
               </span>
             </li>
           </ul>
@@ -283,39 +279,38 @@ const sections = [
     content: (
       <>
         <p>
-          Meter tails are the large-section cables that carry the full supply current
-          between the service head, the meter, and the consumer unit. They require careful
-          handling and DNO coordination.
+          Meter tails are the large-section cables that carry the full supply current between the
+          service head, the meter, and the consumer unit. They require careful handling and DNO
+          coordination.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Typical specification</strong> — meter tails for a 100A domestic
-                supply are typically 25mm\u00b2 singles (line and neutral) with a 16mm\u00b2 earth.
-                For supplies up to 60A (less common), 16mm\u00b2 tails may be adequate. Check
-                the supply current rating and calculate the appropriate cable size.
+                <strong>Typical specification</strong> — meter tails for a 100A domestic supply are
+                typically 25mm\u00b2 singles (line and neutral) with a 16mm\u00b2 earth. For
+                supplies up to 60A (less common), 16mm\u00b2 tails may be adequate. Check the supply
+                current rating and calculate the appropriate cable size.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DNO authorisation for cut-out removal</strong> — before replacing
-                meter tails, contact the local DNO (UK Power Networks, National Grid ED,
-                SP Energy Networks, etc.) to request authorised removal of the cut-out
-                fuse. They will provide a specific time and procedure. Lead times vary —
-                allow at least 5 to 10 working days for the appointment.
+                <strong>DNO authorisation for cut-out removal</strong> — before replacing meter
+                tails, contact the local DNO (UK Power Networks, National Grid ED, SP Energy
+                Networks, etc.) to request authorised removal of the cut-out fuse. They will provide
+                a specific time and procedure. Lead times vary — allow at least 5 to 10 working days
+                for the appointment.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Colour-coding of meter tails</strong> — meter tails in the UK
-                use the current harmonised colour code: brown for line, blue for neutral,
-                green-yellow for earth. Where old red/black tails are found, re-identification
-                with correct colour sleeving is required under BS 7671 Regulation 514.4.2
-                when the tails are replaced.
+                <strong>Colour-coding of meter tails</strong> — meter tails in the UK use the
+                current harmonised colour code: brown for line, blue for neutral, green-yellow for
+                earth. Where old red/black tails are found, re-identification with correct colour
+                sleeving is required under BS 7671 Regulation 514.4.2 when the tails are replaced.
               </span>
             </li>
           </ul>
@@ -329,29 +324,29 @@ const sections = [
     content: (
       <>
         <p>
-          The in-home display (IHD) is a wireless device supplied by the energy supplier
-          that shows real-time gas and electricity consumption data. It communicates with
-          the smart meter via the Home Area Network (HAN).
+          The in-home display (IHD) is a wireless device supplied by the energy supplier that shows
+          real-time gas and electricity consumption data. It communicates with the smart meter via
+          the Home Area Network (HAN).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Relocating the IHD</strong> — the IHD can be moved anywhere within
-                the wireless range of the communications hub (typically up to 30m inside a
-                building). No electrical work is required — the IHD is battery-powered or
-                uses a small USB/mains adapter.
+                <strong>Relocating the IHD</strong> — the IHD can be moved anywhere within the
+                wireless range of the communications hub (typically up to 30m inside a building). No
+                electrical work is required — the IHD is battery-powered or uses a small USB/mains
+                adapter.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IHD lost connection after electrical work</strong> — if the supply
-                was interrupted during electrical work, the IHD may need time to reconnect
-                to the HAN. Allow 10 to 15 minutes after restoring supply before concluding
-                that there is a fault. If the IHD does not reconnect, contact the energy
-                supplier&apos;s smart meter support line.
+                <strong>IHD lost connection after electrical work</strong> — if the supply was
+                interrupted during electrical work, the IHD may need time to reconnect to the HAN.
+                Allow 10 to 15 minutes after restoring supply before concluding that there is a
+                fault. If the IHD does not reconnect, contact the energy supplier&apos;s smart meter
+                support line.
               </span>
             </li>
           </ul>
@@ -365,27 +360,26 @@ const sections = [
     content: (
       <>
         <p>
-          The presence of a smart meter has no effect on Part P Building Regulations
-          requirements. All notifiable electrical work must still be certified in the
-          usual way.
+          The presence of a smart meter has no effect on Part P Building Regulations requirements.
+          All notifiable electrical work must still be certified in the usual way.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Installation Certificate (EIC)</strong> — required for
-                new circuits and consumer unit replacements. Must include test results from
-                all circuits: insulation resistance, continuity, polarity, RCD times, and
-                loop impedance.
+                <strong>Electrical Installation Certificate (EIC)</strong> — required for new
+                circuits and consumer unit replacements. Must include test results from all
+                circuits: insulation resistance, continuity, polarity, RCD times, and loop
+                impedance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minor Works Certificate (MWC)</strong> — for additions to existing
-                circuits. Issued after testing the addition and confirming compliance of the
-                existing circuit it is added to.
+                <strong>Minor Works Certificate (MWC)</strong> — for additions to existing circuits.
+                Issued after testing the addition and confirming compliance of the existing circuit
+                it is added to.
               </span>
             </li>
           </ul>
@@ -406,7 +400,7 @@ export default function SmartMeterElectricalWorkPage() {
       title="Electrical Work Around Smart Meters — UK Electrician Guide 2024"
       description="Guide for electricians working near SMETS2 smart meters — what is and is not allowed, consumer unit upgrades, meter tails, safe isolation, IHD devices, and Part P compliance."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

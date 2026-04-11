@@ -39,9 +39,9 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A full house rewire in Edinburgh costs between £2,800 and £9,000+ in 2025. Edinburgh electrician day rates of £320 to £450 are above the Scottish average, reflecting the capital\'s higher cost of living and property values.',
-  'Scotland operates its own Building Standards system — Edinburgh rewires are notified to the City of Edinburgh Council\'s Building Standards department, not under Part P as in England. The process is similar but uses Scottish warrant procedures.',
-  'Edinburgh\'s New Town Georgian terraces, Old Town tenements, and Victorian villas in Morningside and Marchmont are complex to rewire due to sandstone construction, high ceilings, and listed building designations in many areas.',
+  "A full house rewire in Edinburgh costs between £2,800 and £9,000+ in 2025. Edinburgh electrician day rates of £320 to £450 are above the Scottish average, reflecting the capital's higher cost of living and property values.",
+  "Scotland operates its own Building Standards system — Edinburgh rewires are notified to the City of Edinburgh Council's Building Standards department, not under Part P as in England. The process is similar but uses Scottish warrant procedures.",
+  "Edinburgh's New Town Georgian terraces, Old Town tenements, and Victorian villas in Morningside and Marchmont are complex to rewire due to sandstone construction, high ceilings, and listed building designations in many areas.",
   'A typical rewire takes 3–5 days for a 2-bed property and 5–8 days for a 3-bed. Wall chasing in sandstone Edinburgh properties generates significant debris, and replastering is a separate cost.',
   'On completion of any rewire in Scotland, the electrician must issue an Electrical Installation Certificate confirming compliance with BS 7671:2018+A3:2024 and submit a completion certificate to Building Standards.',
 ];
@@ -50,7 +50,7 @@ const faqs = [
   {
     question: 'How much does it cost to rewire a house in Edinburgh in 2025?',
     answer:
-      'A full rewire in Edinburgh in 2025 typically costs £2,800–£4,500 for a 2-bed flat or terraced house, £4,000–£6,500 for a 3-bed semi-detached, and £5,500–£9,000 for a 4-bed detached property. Edinburgh prices are above the Scottish average and slightly above the England average outside London, driven by higher electrician day rates (£320 to £450) and the complexity of the city\'s Georgian and Victorian housing stock with solid sandstone walls.',
+      "A full rewire in Edinburgh in 2025 typically costs £2,800–£4,500 for a 2-bed flat or terraced house, £4,000–£6,500 for a 3-bed semi-detached, and £5,500–£9,000 for a 4-bed detached property. Edinburgh prices are above the Scottish average and slightly above the England average outside London, driven by higher electrician day rates (£320 to £450) and the complexity of the city's Georgian and Victorian housing stock with solid sandstone walls.",
   },
   {
     question: 'Do I need Building Warrant approval for a rewire in Edinburgh?',
@@ -184,8 +184,8 @@ const sections = [
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , and Building Standards completion certificate submission. Making good (plastering and
-          decoration) is quoted separately — budget an additional £800 to £2,000 for a sandstone
-          New Town flat, and £400 to £1,000 for a post-war property.
+          decoration) is quoted separately — budget an additional £800 to £2,000 for a sandstone New
+          Town flat, and £400 to £1,000 for a post-war property.
         </p>
       </>
     ),
@@ -197,19 +197,19 @@ const sections = [
       <>
         <p>
           Scotland operates a separate Building Standards system from England and Wales. Edinburgh
-          rewires are governed by the Building (Scotland) Regulations 2004, administered by City
-          of Edinburgh Council Building Standards. There is no Part P equivalent in Scotland —
-          instead, the regulatory process works as follows:
+          rewires are governed by the Building (Scotland) Regulations 2004, administered by City of
+          Edinburgh Council Building Standards. There is no Part P equivalent in Scotland — instead,
+          the regulatory process works as follows:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Warrant</strong> — significant electrical work (full rewires,
-                major alterations to fixed installations) may require a building warrant from City
-                of Edinburgh Council before work starts. Your electrician will advise whether a
-                warrant is needed for your specific project.
+                <strong>Building Warrant</strong> — significant electrical work (full rewires, major
+                alterations to fixed installations) may require a building warrant from City of
+                Edinburgh Council before work starts. Your electrician will advise whether a warrant
+                is needed for your specific project.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -226,8 +226,8 @@ const sections = [
               <span>
                 <strong>BS 7671 compliance</strong> — despite Scotland's separate regulatory system,
                 the technical standard for electrical installations is still BS 7671:2018+A3:2024
-                (the IET Wiring Regulations). An EIC is issued on completion in the same way as
-                in England.
+                (the IET Wiring Regulations). An EIC is issued on completion in the same way as in
+                England.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -265,8 +265,8 @@ const sections = [
               <span>
                 <strong>New Town Georgian flats (1770s–1840s):</strong> Stockbridge, the West End,
                 and the New Town itself. Extremely high ceilings (3.5 to 4.5 metres), solid
-                sandstone walls with no cavity, ornate plasterwork cornicing and ceiling roses,
-                and Category A listing in most cases. The most complex and expensive Edinburgh
+                sandstone walls with no cavity, ornate plasterwork cornicing and ceiling roses, and
+                Category A listing in most cases. The most complex and expensive Edinburgh
                 properties to rewire.
               </span>
             </li>
@@ -276,8 +276,8 @@ const sections = [
                 <strong>Victorian stone tenements (1860s–1900s):</strong> Marchmont, Bruntsfield,
                 Dalry, Leith, and Gorgie. Solid sandstone construction with shared stairwells. Many
                 tenement flats retain original wiring in poor condition, sometimes with aluminium
-                conductors from 1970s upgrades. Communal areas require coordination with the
-                factors (property management companies) common in Scottish tenement ownership.
+                conductors from 1970s upgrades. Communal areas require coordination with the factors
+                (property management companies) common in Scottish tenement ownership.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -301,9 +301,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Post-war estates (1960s–1980s):</strong> Craigmillar, Wester Hailes, Oxgangs,
-                and Clermiston. Plasterboard or large-panel construction — the most straightforward
-                to rewire. Consumer units often have BS 3036 rewirable fuses or early single-RCD boards.
+                <strong>Post-war estates (1960s–1980s):</strong> Craigmillar, Wester Hailes,
+                Oxgangs, and Clermiston. Plasterboard or large-panel construction — the most
+                straightforward to rewire. Consumer units often have BS 3036 rewirable fuses or
+                early single-RCD boards.
               </span>
             </li>
           </ul>
@@ -317,18 +318,17 @@ const sections = [
     content: (
       <>
         <p>
-          An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the definitive
-          method to confirm rewire need. These warning signs indicate an inspection is urgent:
+          An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the
+          definitive method to confirm rewire need. These warning signs indicate an inspection is
+          urgent:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring
-                beyond its safe service life, extremely common in Edinburgh tenements and Victorian
-                villas.
+                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring beyond
+                its safe service life, extremely common in Edinburgh tenements and Victorian villas.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -342,8 +342,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse board</strong> — wooden-backed board with wire fuses. No
-                RCD protection — a serious fire and electric shock risk.
+                <strong>Rewirable fuse board</strong> — wooden-backed board with wire fuses. No RCD
+                protection — a serious fire and electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -452,8 +452,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing and certification</strong> — initial verification testing, EIC,
-                and Building Standards completion certificate submission.
+                <strong>Testing and certification</strong> — initial verification testing, EIC, and
+                Building Standards completion certificate submission.
               </span>
             </li>
           </ul>
@@ -487,25 +487,25 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Sandstone chasing is extremely dusty</strong> — cutting channels in
-                sandstone walls with an angle grinder or chasing tool produces much more debris
-                than brick or plasterboard. Plan to seal off rooms and cover all furniture.
+                sandstone walls with an angle grinder or chasing tool produces much more debris than
+                brick or plasterboard. Plan to seal off rooms and cover all furniture.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power is off during first fix</strong> — the supply is isolated for
-                extended periods. Many Edinburgh residents stay elsewhere during the first fix
-                phase, particularly in smaller flats where space to escape the dust is limited.
+                <strong>Power is off during first fix</strong> — the supply is isolated for extended
+                periods. Many Edinburgh residents stay elsewhere during the first fix phase,
+                particularly in smaller flats where space to escape the dust is limited.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Replastering requires lime-based products</strong> — in Category A or B
-                listed properties, heritage lime plaster must be used to match the original
-                finish. This is specialist work and more expensive than standard plastering.
-                Budget £800 to £2,000 for making good in a New Town flat.
+                listed properties, heritage lime plaster must be used to match the original finish.
+                This is specialist work and more expensive than standard plastering. Budget £800 to
+                £2,000 for making good in a New Town flat.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -538,15 +538,15 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Verify NICEIC, NAPIT, or SELECT registration</strong> — SELECT is the
-                Scottish electrical contractor trade association. Search by Edinburgh postcode
-                on any of these registers. Non-negotiable for Building Standards compliance.
+                Scottish electrical contractor trade association. Search by Edinburgh postcode on
+                any of these registers. Non-negotiable for Building Standards compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ask about sandstone and listed building experience</strong> — rewiring a
-                New Town Georgian flat requires specific expertise. Ask for references from similar
+                <strong>Ask about sandstone and listed building experience</strong> — rewiring a New
+                Town Georgian flat requires specific expertise. Ask for references from similar
                 Edinburgh properties, particularly if your flat is listed.
               </span>
             </li>
@@ -562,16 +562,16 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Get three comparable quotes</strong> — ensure each quote specifies the
-                consumer unit type, number of circuits, and whether making good is included.
-                Quotes vary significantly for Edinburgh stone properties.
+                consumer unit type, number of circuits, and whether making good is included. Quotes
+                vary significantly for Edinburgh stone properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Confirm EIC is included</strong> — the Electrical Installation Certificate
-                is mandatory on completion of any rewire regardless of whether it is in Scotland
-                or England.
+                is mandatory on completion of any rewire regardless of whether it is in Scotland or
+                England.
               </span>
             </li>
           </ul>
@@ -596,7 +596,7 @@ export default function RewireCostEdinburghPage() {
       title="House Rewire Cost Edinburgh 2025 | Rewire Prices Scotland"
       description="How much does a house rewire cost in Edinburgh in 2025? Real prices for flats, semis, and period properties — Scottish Building Standards explained, sandstone replastering costs, listed buildings, and finding a qualified Edinburgh electrician."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

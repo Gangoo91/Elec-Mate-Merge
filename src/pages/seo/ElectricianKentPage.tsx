@@ -36,7 +36,7 @@ const tocItems = [
 const keyTakeaways = [
   'Kent is served by UK Power Networks (UKPN) for electricity distribution. All new connections, supply upgrades, solar PV notifications, and EV charger registrations go through UKPN.',
   'Kent has an exceptionally large stock of period properties — from medieval buildings in Canterbury to Victorian and Edwardian terraces across Maidstone, Folkestone, and Margate. Full rewires and EICRs are consistently in high demand.',
-  'Dover\'s port infrastructure, Eurotunnel operations at Folkestone, and the Port of Sheerness create specialist commercial and industrial electrical work including high-current supplies, marine-adjacent corrosion considerations, and critical infrastructure requirements.',
+  "Dover's port infrastructure, Eurotunnel operations at Folkestone, and the Port of Sheerness create specialist commercial and industrial electrical work including high-current supplies, marine-adjacent corrosion considerations, and critical infrastructure requirements.",
   'Ashford is a significant growth area with major distribution and logistics parks along the M20 corridor, driving strong commercial electrical demand for warehouse fit-outs and EV fleet charging infrastructure.',
   'Canterbury has one of the highest concentrations of listed buildings in the UK, making it essential that electricians working in the city centre understand Listed Building Consent requirements and sympathetic wiring approaches.',
   'The Medway towns (Rochester, Chatham, Gillingham, Strood) have a large stock of Victorian and Edwardian terraces with aging wiring, creating substantial EICR and rewire demand for contractors in the area.',
@@ -51,12 +51,12 @@ const faqs = [
   {
     question: 'Who is the DNO for Kent?',
     answer:
-      "Kent is served by UK Power Networks (UKPN), which operates the distribution network across South East England, East of England, and London. Apply for new connections and supply upgrades at ukpowernetworks.co.uk. For power cuts, call 105. When completing an EIC or EICR anywhere in Kent, record UKPN as the DNO. The majority of Kent properties are connected via TN-C-S (PME) earthing arrangements, though rural properties — particularly on the Weald and Romney Marsh — may be TT earthed via a local earth rod.",
+      'Kent is served by UK Power Networks (UKPN), which operates the distribution network across South East England, East of England, and London. Apply for new connections and supply upgrades at ukpowernetworks.co.uk. For power cuts, call 105. When completing an EIC or EICR anywhere in Kent, record UKPN as the DNO. The majority of Kent properties are connected via TN-C-S (PME) earthing arrangements, though rural properties — particularly on the Weald and Romney Marsh — may be TT earthed via a local earth rod.',
   },
   {
-    question: 'What are the electrical challenges of working on Canterbury\'s historic buildings?',
+    question: "What are the electrical challenges of working on Canterbury's historic buildings?",
     answer:
-      "Canterbury has a higher proportion of listed buildings than almost any other UK city. The historic core is a UNESCO World Heritage Site. Electricians working in listed buildings in Canterbury must be aware that any works affecting the character of the building — including new cable routes in original plasterwork, new accessory positions, and external installations — require Listed Building Consent from Canterbury City Council in addition to the standard Part P notification. Works in the World Heritage Site buffer zone may also require additional archaeological consideration. Surface-mounted wiring in steel conduit or period-appropriate trunking is usually the only acceptable approach in the most sensitive buildings.",
+      'Canterbury has a higher proportion of listed buildings than almost any other UK city. The historic core is a UNESCO World Heritage Site. Electricians working in listed buildings in Canterbury must be aware that any works affecting the character of the building — including new cable routes in original plasterwork, new accessory positions, and external installations — require Listed Building Consent from Canterbury City Council in addition to the standard Part P notification. Works in the World Heritage Site buffer zone may also require additional archaeological consideration. Surface-mounted wiring in steel conduit or period-appropriate trunking is usually the only acceptable approach in the most sensitive buildings.',
   },
   {
     question: 'What electrical work is required for Dover port and logistics operations?',
@@ -66,7 +66,7 @@ const faqs = [
   {
     question: 'Do electricians in Kent need any special qualifications for coastal properties?',
     answer:
-      "There is no specific qualification for coastal electrical work in Kent, but practical experience matters. Properties within 500 metres of the sea — particularly along the Thanet coast, Folkestone, Hythe, and Whitstable — are exposed to salt air that accelerates corrosion of standard electrical fittings, exposed metalwork, and external enclosures. Best practice includes: using marine-grade stainless steel fixings for external installations; specifying external accessories with a minimum IP44 rating (IP65 within 1 metre of the sea); checking earth continuity of all metalwork more frequently (corrosion can compromise CPCs in exposed locations); and avoiding uncoated mild steel back boxes on external or seafront walls.",
+      'There is no specific qualification for coastal electrical work in Kent, but practical experience matters. Properties within 500 metres of the sea — particularly along the Thanet coast, Folkestone, Hythe, and Whitstable — are exposed to salt air that accelerates corrosion of standard electrical fittings, exposed metalwork, and external enclosures. Best practice includes: using marine-grade stainless steel fixings for external installations; specifying external accessories with a minimum IP44 rating (IP65 within 1 metre of the sea); checking earth continuity of all metalwork more frequently (corrosion can compromise CPCs in exposed locations); and avoiding uncoated mild steel back boxes on external or seafront walls.',
   },
   {
     question: 'Is there strong demand for solar PV and EV charging in Kent?',
@@ -74,9 +74,10 @@ const faqs = [
       "Yes. Kent has significant solar PV potential given its position as one of the UK's sunniest counties, and adoption rates for solar PV and battery storage are growing strongly. The MCS-certified market requires electricians to hold or work under an MCS accreditation. For EV charging, the M20, M2, and A2 corridors through Kent are high-priority areas for both residential and commercial charge point installations. Ashford International's logistics zone and the Medway commercial areas are active markets for fleet charging infrastructure. OZEV-approved installer status is required to access LEVI (Large Electric Vehicle Infrastructure) grant funding for commercial sites.",
   },
   {
-    question: 'Are there areas of Kent with conservation area restrictions affecting electrical work?',
+    question:
+      'Are there areas of Kent with conservation area restrictions affecting electrical work?',
     answer:
-      "Yes, extensively. Kent has over 600 conservation areas covering historic town centres, villages, and landscapes. Key areas where electricians encounter planning constraints include: Canterbury historic core (World Heritage Site); Tunbridge Wells Calverley Park and historic town centre; Faversham historic market town; Sandwich (one of the best-preserved medieval towns in England); and dozens of rural villages on the Kent Downs Area of Outstanding Natural Beauty. In conservation areas, overhead cable routes, visible external electrical equipment, and some internal works affecting original fabric may require planning permission. Always advise clients to check with the relevant district council before committing to a design.",
+      'Yes, extensively. Kent has over 600 conservation areas covering historic town centres, villages, and landscapes. Key areas where electricians encounter planning constraints include: Canterbury historic core (World Heritage Site); Tunbridge Wells Calverley Park and historic town centre; Faversham historic market town; Sandwich (one of the best-preserved medieval towns in England); and dozens of rural villages on the Kent Downs Area of Outstanding Natural Beauty. In conservation areas, overhead cable routes, visible external electrical equipment, and some internal works affecting original fabric may require planning permission. Always advise clients to check with the relevant district council before committing to a design.',
   },
 ];
 
@@ -91,7 +92,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrician-hertfordshire',
     title: 'Electricians in Hertfordshire',
-    description: 'Find qualified electricians across St Albans, Watford, Stevenage, and Hemel Hempstead.',
+    description:
+      'Find qualified electricians across St Albans, Watford, Stevenage, and Hemel Hempstead.',
     icon: MapPin,
     category: 'Location',
   },
@@ -125,42 +127,40 @@ const sections = [
     content: (
       <>
         <p>
-          Kent — the Garden County of England — is home to 1.9 million people spread across
-          a diverse mix of historic market towns, coastal resorts, commuter settlements,
-          and rural countryside. From the World Heritage Site of Canterbury to the port
-          infrastructure of Dover, the county presents a wide range of electrical work
-          from heritage conservation to large-scale commercial and industrial installations.
+          Kent — the Garden County of England — is home to 1.9 million people spread across a
+          diverse mix of historic market towns, coastal resorts, commuter settlements, and rural
+          countryside. From the World Heritage Site of Canterbury to the port infrastructure of
+          Dover, the county presents a wide range of electrical work from heritage conservation to
+          large-scale commercial and industrial installations.
         </p>
         <p>
-          The county's large stock of Victorian and Edwardian properties — in Maidstone,
-          Folkestone, Margate, and the Medway towns — creates consistent demand for EICRs,
-          full rewires, and consumer unit upgrades. At the same time, Ashford's rapid growth
-          as a distribution and logistics hub, Canterbury's heritage sector, and the expanding
-          Medway commercial and retail park network create strong commercial electrical
-          opportunities.
+          The county's large stock of Victorian and Edwardian properties — in Maidstone, Folkestone,
+          Margate, and the Medway towns — creates consistent demand for EICRs, full rewires, and
+          consumer unit upgrades. At the same time, Ashford's rapid growth as a distribution and
+          logistics hub, Canterbury's heritage sector, and the expanding Medway commercial and
+          retail park network create strong commercial electrical opportunities.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Always check NICEIC, NAPIT, or ELECSA registration</strong> before
-                booking. Verify the registration number on the scheme website.
+                <strong>Always check NICEIC, NAPIT, or ELECSA registration</strong> before booking.
+                Verify the registration number on the scheme website.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>UK Power Networks (UKPN)</strong> is the DNO for all of Kent. All
-                connection applications, solar PV notifications (G98/G99), and supply
-                upgrades go through UKPN.
+                <strong>UK Power Networks (UKPN)</strong> is the DNO for all of Kent. All connection
+                applications, solar PV notifications (G98/G99), and supply upgrades go through UKPN.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Elec-Mate</strong> allows Kent electricians to issue EICR reports
-                and EIC certificates on site, reducing paperwork and speeding up completion.
+                <strong>Elec-Mate</strong> allows Kent electricians to issue EICR reports and EIC
+                certificates on site, reducing paperwork and speeding up completion.
               </span>
             </li>
           </ul>
@@ -174,16 +174,16 @@ const sections = [
     content: (
       <>
         <p>
-          Kent is one of the largest counties in England, with a wide variety of urban,
-          suburban, and rural areas. The main centres for electrical work include:
+          Kent is one of the largest counties in England, with a wide variety of urban, suburban,
+          and rural areas. The main centres for electrical work include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Maidstone</strong> — county town with a mix of Victorian terraces,
-                1930s semis, and modern estates. High volume of EICR and rewire work.
+                <strong>Maidstone</strong> — county town with a mix of Victorian terraces, 1930s
+                semis, and modern estates. High volume of EICR and rewire work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -196,29 +196,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tunbridge Wells</strong> — affluent commuter town with high-value
-                period properties and strong demand for smart home, EV, and solar installations.
+                <strong>Tunbridge Wells</strong> — affluent commuter town with high-value period
+                properties and strong demand for smart home, EV, and solar installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Folkestone and Dover</strong> — port towns with specialist commercial
-                and marine-adjacent electrical requirements.
+                <strong>Folkestone and Dover</strong> — port towns with specialist commercial and
+                marine-adjacent electrical requirements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ashford</strong> — fast-growing hub on the M20 with substantial
-                logistics, distribution, and commercial development. Strong contractor demand.
+                <strong>Ashford</strong> — fast-growing hub on the M20 with substantial logistics,
+                distribution, and commercial development. Strong contractor demand.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medway (Rochester, Chatham, Gillingham)</strong> — large conurbation
-                with significant Victorian housing stock and a growing commercial sector.
+                <strong>Medway (Rochester, Chatham, Gillingham)</strong> — large conurbation with
+                significant Victorian housing stock and a growing commercial sector.
               </span>
             </li>
           </ul>
@@ -228,21 +228,24 @@ const sections = [
   },
   {
     id: 'qualifications',
-    heading: 'How to Verify an Electrician\'s Qualifications in Kent',
+    heading: "How to Verify an Electrician's Qualifications in Kent",
     content: (
       <>
         <p>
-          Part P of the Building Regulations requires that notifiable domestic electrical
-          work is either carried out by a competent person registered with an approved scheme,
-          or inspected and certified by building control. Competent person scheme registration
-          is the most common approach, and registration is easy to verify online.
+          Part P of the Building Regulations requires that notifiable domestic electrical work is
+          either carried out by a competent person registered with an approved scheme, or inspected
+          and certified by building control. Competent person scheme registration is the most common
+          approach, and registration is easy to verify online.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">What to Ask For</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>NICEIC, NAPIT, ELECSA, or STROMA competent person scheme registration number — verify online</span>
+              <span>
+                NICEIC, NAPIT, ELECSA, or STROMA competent person scheme registration number —
+                verify online
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -250,11 +253,16 @@ const sections = [
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>Public liability insurance — minimum £2 million, £5 million for listed building work</span>
+              <span>
+                Public liability insurance — minimum £2 million, £5 million for listed building work
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span>For listed building or conservation area work, ask for specific heritage experience and references</span>
+              <span>
+                For listed building or conservation area work, ask for specific heritage experience
+                and references
+              </span>
             </li>
           </ul>
         </div>
@@ -267,33 +275,43 @@ const sections = [
     content: (
       <>
         <p>
-          Electrician costs in Kent vary significantly by location. North Kent commuter
-          areas (Tonbridge, Sevenoaks, Tunbridge Wells, Swanley) attract rates comparable
-          to the South East premium. Coastal and more rural areas (Thanet, Romney Marsh,
-          the Weald) tend to be 10% to 20% lower.
+          Electrician costs in Kent vary significantly by location. North Kent commuter areas
+          (Tonbridge, Sevenoaks, Tunbridge Wells, Swanley) attract rates comparable to the South
+          East premium. Coastal and more rural areas (Thanet, Romney Marsh, the Weald) tend to be
+          10% to 20% lower.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">Typical Job Costs (2025)</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>EICR (3-bed house):</strong> £160 to £270</span>
+              <span>
+                <strong>EICR (3-bed house):</strong> £160 to £270
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Consumer unit upgrade:</strong> £480 to £740</span>
+              <span>
+                <strong>Consumer unit upgrade:</strong> £480 to £740
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Full rewire (3-bed Victorian terrace):</strong> £3,800 to £6,500</span>
+              <span>
+                <strong>Full rewire (3-bed Victorian terrace):</strong> £3,800 to £6,500
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>EV charger installation:</strong> £800 to £1,250</span>
+              <span>
+                <strong>EV charger installation:</strong> £800 to £1,250
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Solar PV electrical connection:</strong> £550 to £950</span>
+              <span>
+                <strong>Solar PV electrical connection:</strong> £550 to £950
+              </span>
             </li>
           </ul>
         </div>
@@ -306,9 +324,9 @@ const sections = [
     content: (
       <>
         <p>
-          Kent's housing stock includes some of the oldest residential buildings in England.
-          For electricians, this creates a consistent market for sympathetic rewiring,
-          heritage compliance, and EICR inspections of aging installations.
+          Kent's housing stock includes some of the oldest residential buildings in England. For
+          electricians, this creates a consistent market for sympathetic rewiring, heritage
+          compliance, and EICR inspections of aging installations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -334,17 +352,20 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Oast houses and rural conversions:</strong> Kent's distinctive oast
-                houses and rural barn conversions often involve complex cable routing,
-                damp or agricultural environments, and non-standard building layouts.
-                IP-rated accessories and moisture management are important considerations.
+                <strong>Oast houses and rural conversions:</strong> Kent's distinctive oast houses
+                and rural barn conversions often involve complex cable routing, damp or agricultural
+                environments, and non-standard building layouts. IP-rated accessories and moisture
+                management are important considerations.
               </span>
             </li>
           </ul>
         </div>
         <p>
           See the{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained" label="EICR observation codes guide" />{' '}
+          <SEOInternalLink
+            href="/guides/eicr-observation-codes-explained"
+            label="EICR observation codes guide"
+          />{' '}
           for guidance on how findings in Kent's period properties are typically graded.
         </p>
       </>
@@ -356,39 +377,39 @@ const sections = [
     content: (
       <>
         <p>
-          The Port of Dover is the UK's busiest passenger and freight port, handling over
-          10 million passengers and 2.5 million lorries annually. The port's electrical
-          infrastructure — combined with the Channel Tunnel terminal at Folkestone and the
-          Port of Sheerness on the Isle of Sheppey — creates a specialist commercial
-          electrical sector unlike any other county in England.
+          The Port of Dover is the UK's busiest passenger and freight port, handling over 10 million
+          passengers and 2.5 million lorries annually. The port's electrical infrastructure —
+          combined with the Channel Tunnel terminal at Folkestone and the Port of Sheerness on the
+          Isle of Sheppey — creates a specialist commercial electrical sector unlike any other
+          county in England.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Marine-adjacent environments:</strong> Port-area electrical work
-                requires IP54 minimum enclosures, marine-grade fixings, and enhanced
-                corrosion protection. Salt spray and high humidity significantly accelerate
-                the degradation of standard accessories.
+                <strong>Marine-adjacent environments:</strong> Port-area electrical work requires
+                IP54 minimum enclosures, marine-grade fixings, and enhanced corrosion protection.
+                Salt spray and high humidity significantly accelerate the degradation of standard
+                accessories.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Critical infrastructure resilience:</strong> Standby generator
-                systems, UPS provision, and automatic transfer switches are standard
-                requirements for port operations, cross-channel communication systems,
-                and customs and border control facilities.
+                <strong>Critical infrastructure resilience:</strong> Standby generator systems, UPS
+                provision, and automatic transfer switches are standard requirements for port
+                operations, cross-channel communication systems, and customs and border control
+                facilities.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HGV and fleet charging:</strong> The Ashford lorry park, Dover
-                Eastern Docks, and M20 lorry parks are priority sites for large-scale
-                HGV charging infrastructure — a fast-growing market requiring three-phase
-                supplies and load management systems.
+                <strong>HGV and fleet charging:</strong> The Ashford lorry park, Dover Eastern
+                Docks, and M20 lorry parks are priority sites for large-scale HGV charging
+                infrastructure — a fast-growing market requiring three-phase supplies and load
+                management systems.
               </span>
             </li>
           </ul>
@@ -402,43 +423,42 @@ const sections = [
     content: (
       <>
         <p>
-          All of Kent is served by UK Power Networks (UKPN). Understanding UKPN's processes
-          is essential for electricians working on connection applications, solar PV
-          notifications, and supply capacity upgrades across the county.
+          All of Kent is served by UK Power Networks (UKPN). Understanding UKPN's processes is
+          essential for electricians working on connection applications, solar PV notifications, and
+          supply capacity upgrades across the county.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G98 notifications:</strong> Solar PV and battery systems up to
-                3.68kW single-phase can be notified to UKPN after installation. Use the
-                UKPN online portal within 28 days of commissioning.
+                <strong>G98 notifications:</strong> Solar PV and battery systems up to 3.68kW
+                single-phase can be notified to UKPN after installation. Use the UKPN online portal
+                within 28 days of commissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99 applications:</strong> Systems above 3.68kW per phase require
-                prior UKPN approval. Allow 45 working days for a G99 assessment on a standard
-                residential application.
+                <strong>G99 applications:</strong> Systems above 3.68kW per phase require prior UKPN
+                approval. Allow 45 working days for a G99 assessment on a standard residential
+                application.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rural earthing:</strong> TT earthing is common in rural Kent —
-                Romney Marsh, the Weald, and North Downs villages. Always verify the earthing
-                arrangement under BS 7671 Regulation 542 before carrying out earthing work
-                or connecting renewable energy systems.
+                <strong>Rural earthing:</strong> TT earthing is common in rural Kent — Romney Marsh,
+                the Weald, and North Downs villages. Always verify the earthing arrangement under BS
+                7671 Regulation 542 before carrying out earthing work or connecting renewable energy
+                systems.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Use <SEOAppBridge href="/tools/eicr-certificate" label="Elec-Mate" /> to generate
-          EICR and EIC certificates on site, recording the DNO as UK Power Networks for
-          all Kent addresses.
+          Use <SEOAppBridge href="/tools/eicr-certificate" label="Elec-Mate" /> to generate EICR and
+          EIC certificates on site, recording the DNO as UK Power Networks for all Kent addresses.
         </p>
       </>
     ),
@@ -455,15 +475,14 @@ export default function ElectricianKentPage() {
       title="Electrician Kent — Find Qualified Electricians in Maidstone, Canterbury, Tunbridge Wells, Dover"
       description="Find NICEIC and NAPIT registered electricians across Kent, covering Maidstone, Canterbury, Tunbridge Wells, Folkestone, Dover, Ashford, and the Medway towns. EICR, rewires, EV charging, and commercial electrical work."
       datePublished="2025-01-01"
-      dateModified="2025-03-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"
       badgeIcon={MapPin}
       heroTitle={
         <>
-          Electrician Kent{' '}
-          <span className="text-yellow-400">— Qualified & Registered</span>
+          Electrician Kent <span className="text-yellow-400">— Qualified & Registered</span>
         </>
       }
       heroSubtitle="Find NICEIC and NAPIT registered electricians across Maidstone, Canterbury, Tunbridge Wells, Folkestone, Dover, Ashford, and the Medway towns. EICRs, rewires, EV charging, solar PV, and port infrastructure electrical work throughout Kent."

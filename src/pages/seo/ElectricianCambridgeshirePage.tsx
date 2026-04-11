@@ -49,7 +49,8 @@ const faqs = [
       'Yes. Part P of the Building Regulations applies across England, including all of Cambridgeshire. Any new circuit, consumer unit replacement, or electrical work in a kitchen, bathroom, or outdoors must either be notified to the local authority building control department or self-certified by a registered competent person. Electricians registered with NICEIC, ELECSA, or NAPIT can self-certify and issue certificates without separate building control notification. A Minor Works Certificate is sufficient for additions to existing circuits that do not create a new circuit.',
   },
   {
-    question: 'What electrical work is typically needed on fenland agricultural properties in Cambridgeshire?',
+    question:
+      'What electrical work is typically needed on fenland agricultural properties in Cambridgeshire?',
     answer:
       'Agricultural properties on the Cambridgeshire fens often require three-phase supplies for grain drying, irrigation pumps, cold stores, and workshop equipment. Rural supply distances can be significant, meaning voltage drop calculations under BS 7671 Regulation 525 must be carefully assessed. Cable sizing for long agricultural runs typically uses 25mm\u00b2 or 35mm\u00b2 SWA cable rather than standard domestic cable. Temporary site supplies for seasonal workers, external lighting for yards and driveways, and EV charging for farm vehicles are also common requirements.',
   },
@@ -61,7 +62,7 @@ const faqs = [
   {
     question: 'What EV charging regulations apply to new builds in Cambridgeshire?',
     answer:
-      "From 15 June 2022, Approved Document S of the Building Regulations requires all new residential buildings with associated parking to be provided with EV charge points or cable routes (passive provision). In Cambridgeshire, this applies to all new houses and flats with designated parking spaces. Each new dwelling must have at least one 7kW single-phase EV charge point (or cable route for flats). The electrical installation must comply with BS 7671 and the charge point must meet the relevant product standards. Local planning conditions from South Cambridgeshire District Council and other authorities may impose additional EV charging requirements beyond the minimum.",
+      'From 15 June 2022, Approved Document S of the Building Regulations requires all new residential buildings with associated parking to be provided with EV charge points or cable routes (passive provision). In Cambridgeshire, this applies to all new houses and flats with designated parking spaces. Each new dwelling must have at least one 7kW single-phase EV charge point (or cable route for flats). The electrical installation must comply with BS 7671 and the charge point must meet the relevant product standards. Local planning conditions from South Cambridgeshire District Council and other authorities may impose additional EV charging requirements beyond the minimum.',
   },
   {
     question: 'What is the standard for electrical installations in Silicon Fen tech offices?',
@@ -86,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrician-norfolk',
     title: 'Electrician Norfolk',
-    description: 'Find registered electricians across Norfolk including Norwich and Great Yarmouth.',
+    description:
+      'Find registered electricians across Norfolk including Norwich and Great Yarmouth.',
     icon: MapPin,
     category: 'Location',
   },
@@ -120,9 +122,9 @@ const sections = [
     content: (
       <>
         <p>
-          Cambridgeshire is a large and varied county stretching from the outskirts of north
-          London to the edge of the Lincolnshire Fens. Registered electricians on Elec-Mate
-          cover the full county, including:
+          Cambridgeshire is a large and varied county stretching from the outskirts of north London
+          to the edge of the Lincolnshire Fens. Registered electricians on Elec-Mate cover the full
+          county, including:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -143,8 +145,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ely &amp; the Fens</strong> — Ely, March, Chatteris, Wisbech,
-                Manea, and the wider Fenland district
+                <strong>Ely &amp; the Fens</strong> — Ely, March, Chatteris, Wisbech, Manea, and the
+                wider Fenland district
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -158,7 +160,9 @@ const sections = [
         </div>
         <p>
           Whether you need a{' '}
-          <SEOInternalLink href="/consumer-unit-replacement">consumer unit replacement</SEOInternalLink>{' '}
+          <SEOInternalLink href="/consumer-unit-replacement">
+            consumer unit replacement
+          </SEOInternalLink>{' '}
           in Cambridge or a three-phase agricultural supply connection near Wisbech, Elec-Mate
           connects you with qualified, insured local electricians.
         </p>
@@ -171,33 +175,33 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding which Distribution Network Operator (DNO) covers your area is
-          important when arranging new supply connections, capacity upgrades, or reporting
-          faults on the public network.
+          Understanding which Distribution Network Operator (DNO) covers your area is important when
+          arranging new supply connections, capacity upgrades, or reporting faults on the public
+          network.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>UK Power Networks</strong> — covers Cambridge, South Cambridgeshire,
-                East Cambridgeshire (Ely), Fenland (March, Wisbech), Huntingdonshire
-                (St Ives, Huntingdon, St Neots). Power cuts: 0800 783 8866.
+                <strong>UK Power Networks</strong> — covers Cambridge, South Cambridgeshire, East
+                Cambridgeshire (Ely), Fenland (March, Wisbech), Huntingdonshire (St Ives,
+                Huntingdon, St Neots). Power cuts: 0800 783 8866.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>National Grid Electricity Distribution</strong> — covers Peterborough
-                and the northern fringes of the county. Power cuts: 0800 678 3105.
+                <strong>National Grid Electricity Distribution</strong> — covers Peterborough and
+                the northern fringes of the county. Power cuts: 0800 678 3105.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          New supply connections and metering upgrades must be arranged directly with the
-          relevant DNO. Your electrician can assist with the application process and prepare
-          the necessary installation documentation.
+          New supply connections and metering upgrades must be arranged directly with the relevant
+          DNO. Your electrician can assist with the application process and prepare the necessary
+          installation documentation.
         </p>
       </>
     ),
@@ -216,35 +220,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Silicon Fen technology companies</strong> — Cambridge Science Park,
-                Granta Park, and Babraham Research Campus host hundreds of tech and biotech
-                firms requiring three-phase power, UPS installations, clean earth systems,
-                and data centre electrical infrastructure.
+                <strong>Silicon Fen technology companies</strong> — Cambridge Science Park, Granta
+                Park, and Babraham Research Campus host hundreds of tech and biotech firms requiring
+                three-phase power, UPS installations, clean earth systems, and data centre
+                electrical infrastructure.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>University and college buildings</strong> — the University of Cambridge
-                and Anglia Ruskin University have extensive legacy electrical infrastructure.
-                Work in Listed and historic buildings requires sympathetic installation methods
-                and, in some cases, listed building consent.
+                <strong>University and college buildings</strong> — the University of Cambridge and
+                Anglia Ruskin University have extensive legacy electrical infrastructure. Work in
+                Listed and historic buildings requires sympathetic installation methods and, in some
+                cases, listed building consent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Fenland agricultural electrical</strong> — grain drying, cold storage,
-                irrigation pumps, and poultry housing on the fens require three-phase supplies
-                and specialist agricultural wiring in compliance with BS 7671 Section 705.
+                irrigation pumps, and poultry housing on the fens require three-phase supplies and
+                specialist agricultural wiring in compliance with BS 7671 Section 705.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Rural longline connections</strong> — remote fenland properties may
-                experience voltage regulation issues due to extended LV network lengths.
-                Cable sizing must account for voltage drop under BS 7671 Regulation 525.
+                experience voltage regulation issues due to extended LV network lengths. Cable
+                sizing must account for voltage drop under BS 7671 Regulation 525.
               </span>
             </li>
           </ul>
@@ -258,35 +262,35 @@ const sections = [
     content: (
       <>
         <p>
-          Cambridgeshire is one of the fastest-growing counties for new housing development.
-          From 15 June 2022, Approved Document S of the Building Regulations requires EV
-          charge points or passive provision on all new residential buildings with associated
-          parking. Key requirements include:
+          Cambridgeshire is one of the fastest-growing counties for new housing development. From 15
+          June 2022, Approved Document S of the Building Regulations requires EV charge points or
+          passive provision on all new residential buildings with associated parking. Key
+          requirements include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New houses:</strong> at least one 7kW EV charge point per dwelling
-                with a designated parking space. The circuit must be dedicated and metered
-                separately from the main supply where practical.
+                <strong>New houses:</strong> at least one 7kW EV charge point per dwelling with a
+                designated parking space. The circuit must be dedicated and metered separately from
+                the main supply where practical.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New flats:</strong> passive provision (cable route and consumer unit
-                capacity reserved) for at least 20% of parking spaces, with at least one
-                active charge point in communal areas where feasible.
+                capacity reserved) for at least 20% of parking spaces, with at least one active
+                charge point in communal areas where feasible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Smart charging requirement:</strong> all new EV charge points must
-                support smart charging functionality (scheduled charging, demand response)
-                under the Electric Vehicles (Smart Charge Points) Regulations 2021.
+                <strong>Smart charging requirement:</strong> all new EV charge points must support
+                smart charging functionality (scheduled charging, demand response) under the
+                Electric Vehicles (Smart Charge Points) Regulations 2021.
               </span>
             </li>
           </ul>
@@ -305,8 +309,8 @@ const sections = [
     content: (
       <>
         <p>
-          All electrical installations in Cambridgeshire must comply with BS 7671:2018+A3:2024
-          (the 18th Edition Wiring Regulations). Key requirements relevant to Cambridgeshire
+          All electrical installations in Cambridgeshire must comply with BS 7671:2018+A3:2024 (the
+          18th Edition Wiring Regulations). Key requirements relevant to Cambridgeshire
           installations include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -314,34 +318,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.3</strong> — all circuits supplying socket outlets
-                in domestic premises must be protected by 30mA RCD. Modern split-load or
-                fully RCD-protected consumer units are standard for new and replacement
-                installations.
+                <strong>Regulation 411.3.3</strong> — all circuits supplying socket outlets in
+                domestic premises must be protected by 30mA RCD. Modern split-load or fully
+                RCD-protected consumer units are standard for new and replacement installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Section 705</strong> — agricultural and horticultural premises have
-                specific requirements for wiring systems, IP ratings, and equipotential
-                bonding. A supplementary equipotential bonding zone must be established in
-                locations accessible to livestock.
+                <strong>Section 705</strong> — agricultural and horticultural premises have specific
+                requirements for wiring systems, IP ratings, and equipotential bonding. A
+                supplementary equipotential bonding zone must be established in locations accessible
+                to livestock.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 525</strong> — voltage drop in supply cables must not
-                exceed 3% for lighting or 5% for power under normal conditions. For long
-                fenland cable runs this requires careful calculation and upsizing.
+                <strong>Regulation 525</strong> — voltage drop in supply cables must not exceed 3%
+                for lighting or 5% for power under normal conditions. For long fenland cable runs
+                this requires careful calculation and upsizing.
               </span>
             </li>
           </ul>
         </div>
         <p>
           See our{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">EICR observation codes guide</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            EICR observation codes guide
+          </SEOInternalLink>{' '}
           for information on common compliance defects found during periodic inspection.
         </p>
       </>
@@ -353,35 +358,34 @@ const sections = [
     content: (
       <>
         <p>
-          Every qualifying electrical installation in Cambridgeshire must be accompanied by
-          the correct certification. Elec-Mate makes it straightforward for electricians to
-          generate compliant certificates on-site.
+          Every qualifying electrical installation in Cambridgeshire must be accompanied by the
+          correct certification. Elec-Mate makes it straightforward for electricians to generate
+          compliant certificates on-site.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical Installation Certificate (EIC)</strong> — required for
-                all new circuits, consumer unit replacements, and new installations. Must
-                include test results (insulation resistance, continuity, loop impedance, RCD
-                test times).
+                <strong>Electrical Installation Certificate (EIC)</strong> — required for all new
+                circuits, consumer unit replacements, and new installations. Must include test
+                results (insulation resistance, continuity, loop impedance, RCD test times).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minor Works Certificate (MWC)</strong> — for additions and alterations
-                to existing circuits (adding a socket, extending a lighting circuit). Does
-                not cover new circuits or consumer unit replacements.
+                <strong>Minor Works Certificate (MWC)</strong> — for additions and alterations to
+                existing circuits (adding a socket, extending a lighting circuit). Does not cover
+                new circuits or consumer unit replacements.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical Installation Condition Report (EICR)</strong> — periodic
-                inspection required every 5 years for rented properties and every 10 years
-                (or on change of occupancy) for owner-occupied homes.
+                inspection required every 5 years for rented properties and every 10 years (or on
+                change of occupancy) for owner-occupied homes.
               </span>
             </li>
           </ul>
@@ -402,7 +406,7 @@ export default function ElectricianCambridgeshirePage() {
       title="Electrician Cambridgeshire — Find Registered Electricians Near You"
       description="Find NICEIC, ELECSA, and NAPIT-registered electricians across Cambridgeshire including Cambridge, Peterborough, Ely, St Ives, March, Huntingdon, and Wisbech. Part P compliant, fully insured."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

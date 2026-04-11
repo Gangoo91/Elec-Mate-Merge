@@ -129,54 +129,53 @@ const sections = [
     content: (
       <>
         <p>
-          Staffordshire is one of the largest counties in the Midlands, covering a mix of
-          urban industrial areas, market towns, and rural villages. Electricians in the county
-          typically operate within specific geographic areas rather than across the full county.
-          Key areas and their electrical characteristics include:
+          Staffordshire is one of the largest counties in the Midlands, covering a mix of urban
+          industrial areas, market towns, and rural villages. Electricians in the county typically
+          operate within specific geographic areas rather than across the full county. Key areas and
+          their electrical characteristics include:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Stoke-on-Trent (ST1–ST6):</strong> The largest city in Staffordshire.
-                Dense Victorian and Edwardian terraced housing stock. High volume of consumer
-                unit replacement work, EICR inspections for landlords, and rewires in older
-                properties. Strong demand from the rental sector.
+                <strong>Stoke-on-Trent (ST1–ST6):</strong> The largest city in Staffordshire. Dense
+                Victorian and Edwardian terraced housing stock. High volume of consumer unit
+                replacement work, EICR inspections for landlords, and rewires in older properties.
+                Strong demand from the rental sector.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Stafford (ST16–ST20):</strong> County town. Mix of older and newer
-                residential development. Growing commercial sector. Consumer unit upgrades,
-                EV charge point installations, and solar PV electrical work are increasingly
-                common.
+                residential development. Growing commercial sector. Consumer unit upgrades, EV
+                charge point installations, and solar PV electrical work are increasingly common.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Burton upon Trent (DE13–DE15):</strong> East Staffordshire. Former
-                brewing town with significant industrial heritage. Mix of older housing and
-                modern development. EICRs for HMOs and landlord compliance are common in
-                the rental market around the town centre.
+                <strong>Burton upon Trent (DE13–DE15):</strong> East Staffordshire. Former brewing
+                town with significant industrial heritage. Mix of older housing and modern
+                development. EICRs for HMOs and landlord compliance are common in the rental market
+                around the town centre.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lichfield (WS13–WS14):</strong> Cathedral city in south Staffordshire.
-                Affluent residential area with demand for high-specification electrical work,
-                smart home systems, and home extension electrical installations.
+                Affluent residential area with demand for high-specification electrical work, smart
+                home systems, and home extension electrical installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tamworth (B77–B79):</strong> Southern Staffordshire, bordering the
-                West Midlands. New build housing developments. EV charge point installation
-                and new home electrical commissioning are significant work streams.
+                <strong>Tamworth (B77–B79):</strong> Southern Staffordshire, bordering the West
+                Midlands. New build housing developments. EV charge point installation and new home
+                electrical commissioning are significant work streams.
               </span>
             </li>
           </ul>
@@ -191,9 +190,9 @@ const sections = [
       <>
         <p>
           Selecting a competent, registered electrician is the single most important step when
-          commissioning electrical work in Staffordshire. Registration with an approved
-          competent person scheme provides assurance of technical competence and gives
-          homeowners automatic Building Regulations compliance certification.
+          commissioning electrical work in Staffordshire. Registration with an approved competent
+          person scheme provides assurance of technical competence and gives homeowners automatic
+          Building Regulations compliance certification.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -201,25 +200,24 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC registered:</strong> National Inspection Council for Electrical
-                Installation Contracting. The largest electrical competent person scheme in
-                the UK. Search niceic.com for registered contractors in your Staffordshire
-                postcode.
+                Installation Contracting. The largest electrical competent person scheme in the UK.
+                Search niceic.com for registered contractors in your Staffordshire postcode.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>NAPIT registered:</strong> National Association of Professional
-                Inspectors and Testers. Another Government-approved scheme. Covers electrical,
-                plumbing, heating, and building fabric. Search napit.org.uk.
+                <strong>NAPIT registered:</strong> National Association of Professional Inspectors
+                and Testers. Another Government-approved scheme. Covers electrical, plumbing,
+                heating, and building fabric. Search napit.org.uk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ELECSA registered:</strong> Division of NICEIC Group focusing on
-                domestic and small commercial work. Electricians registered with ELECSA
-                can self-certify Part P work in the same way as NICEIC members.
+                <strong>ELECSA registered:</strong> Division of NICEIC Group focusing on domestic
+                and small commercial work. Electricians registered with ELECSA can self-certify Part
+                P work in the same way as NICEIC members.
               </span>
             </li>
           </ul>
@@ -229,19 +227,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Always request certificates</strong> — any registered electrician
-                completing notifiable work must issue an Electrical Installation Certificate
-                (EIC) for new work or a Minor Works Certificate (MWC) for additions to
-                existing circuits. If your electrician cannot produce these documents, the
-                work may not be compliant.
+                <strong>Always request certificates</strong> — any registered electrician completing
+                notifiable work must issue an Electrical Installation Certificate (EIC) for new work
+                or a Minor Works Certificate (MWC) for additions to existing circuits. If your
+                electrician cannot produce these documents, the work may not be compliant.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check registration before work starts</strong> — verify the electrician
-                is currently registered (schemes publish online registers) rather than relying
-                on logos on vehicles or websites. Registration must be current, not historical.
+                <strong>Check registration before work starts</strong> — verify the electrician is
+                currently registered (schemes publish online registers) rather than relying on logos
+                on vehicles or websites. Registration must be current, not historical.
               </span>
             </li>
           </ul>
@@ -256,11 +253,10 @@ const sections = [
       <>
         <p>
           National Grid Electricity Distribution (National Grid ED) is the Distribution Network
-          Operator for Staffordshire and the rest of the Midlands region. Formerly known as
-          Western Power Distribution (WPD) until its rebranding in 2023, National Grid ED
-          maintains the electricity distribution network — the cables, substations, and
-          infrastructure that deliver electricity from the national transmission network to
-          homes and businesses.
+          Operator for Staffordshire and the rest of the Midlands region. Formerly known as Western
+          Power Distribution (WPD) until its rebranding in 2023, National Grid ED maintains the
+          electricity distribution network — the cables, substations, and infrastructure that
+          deliver electricity from the national transmission network to homes and businesses.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -268,36 +264,36 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>New connections:</strong> applications for new electricity service
-                connections in Staffordshire are made through National Grid ED. Processing
-                times and costs vary by project complexity. A single domestic connection
-                typically takes 6 to 12 weeks.
+                connections in Staffordshire are made through National Grid ED. Processing times and
+                costs vary by project complexity. A single domestic connection typically takes 6 to
+                12 weeks.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Service alterations:</strong> where an existing service cable needs
-                to be moved or upgraded (for example, to allow building work or to increase
-                supply capacity), this must be arranged through National Grid ED. A supply
-                upgrade from single-phase to three-phase also requires a DNO application.
+                <strong>Service alterations:</strong> where an existing service cable needs to be
+                moved or upgraded (for example, to allow building work or to increase supply
+                capacity), this must be arranged through National Grid ED. A supply upgrade from
+                single-phase to three-phase also requires a DNO application.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power cuts:</strong> to report a power cut or downed cable in
-                Staffordshire, call 105 (the national power cut number, free from any
-                phone) or contact National Grid ED directly. Do not attempt to repair
-                DNO network cables — this is the responsibility of the DNO.
+                <strong>Power cuts:</strong> to report a power cut or downed cable in Staffordshire,
+                call 105 (the national power cut number, free from any phone) or contact National
+                Grid ED directly. Do not attempt to repair DNO network cables — this is the
+                responsibility of the DNO.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>G99/G98 connections for generation:</strong> solar PV systems and
-                other generation equipment connecting to the distribution network require
-                notification to National Grid ED under G99 (above 3.68kW per phase) or
-                G98 (below 3.68kW per phase). Your MCS-certified installer handles this.
+                <strong>G99/G98 connections for generation:</strong> solar PV systems and other
+                generation equipment connecting to the distribution network require notification to
+                National Grid ED under G99 (above 3.68kW per phase) or G98 (below 3.68kW per phase).
+                Your MCS-certified installer handles this.
               </span>
             </li>
           </ul>
@@ -311,13 +307,15 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations applies across England, including all of
-          Staffordshire. It requires that electrical installation work in dwellings is either
-          carried out by a registered competent person or notified to the relevant local
-          authority building control before work begins.
+          Part P of the Building Regulations applies across England, including all of Staffordshire.
+          It requires that electrical installation work in dwellings is either carried out by a
+          registered competent person or notified to the relevant local authority building control
+          before work begins.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Staffordshire Local Authority Building Control Areas</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">
+            Staffordshire Local Authority Building Control Areas
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
@@ -350,10 +348,10 @@ const sections = [
           </ul>
         </div>
         <p>
-          A registered electrician working in any of these areas can self-certify Part P work
-          and automatically notify the relevant building control. The homeowner receives a
-          Building Regulations compliance certificate directly from the competent person scheme.
-          This certificate is important for future property sales.
+          A registered electrician working in any of these areas can self-certify Part P work and
+          automatically notify the relevant building control. The homeowner receives a Building
+          Regulations compliance certificate directly from the competent person scheme. This
+          certificate is important for future property sales.
         </p>
       </>
     ),
@@ -364,49 +362,49 @@ const sections = [
     content: (
       <>
         <p>
-          The type of electrical work most in demand varies across Staffordshire depending on
-          the age and character of the local housing stock. Across the county, the following
-          categories account for the majority of domestic electrical work:
+          The type of electrical work most in demand varies across Staffordshire depending on the
+          age and character of the local housing stock. Across the county, the following categories
+          account for the majority of domestic electrical work:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Consumer unit replacement:</strong> replacing rewirable fuse boards
-                or older single-RCD boards with modern RCBO consumer units. Particularly
-                common in Stoke-on-Trent where older terraced housing stock is prevalent.
+                <strong>Consumer unit replacement:</strong> replacing rewirable fuse boards or older
+                single-RCD boards with modern RCBO consumer units. Particularly common in
+                Stoke-on-Trent where older terraced housing stock is prevalent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR for landlords:</strong> mandatory 5-year electrical inspection
-                reports for the significant private rental sector in Stoke-on-Trent, Burton
-                upon Trent, and Stafford.
+                <strong>EICR for landlords:</strong> mandatory 5-year electrical inspection reports
+                for the significant private rental sector in Stoke-on-Trent, Burton upon Trent, and
+                Stafford.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EV charge point installation:</strong> growing demand across all
-                areas as electric vehicle adoption increases. Typical installations involve
-                a 7kW single-phase charge point on a dedicated 32A circuit.
+                <strong>EV charge point installation:</strong> growing demand across all areas as
+                electric vehicle adoption increases. Typical installations involve a 7kW
+                single-phase charge point on a dedicated 32A circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Kitchen and bathroom rewires:</strong> electrical upgrades as part
-                of kitchen and bathroom renovation projects. Notifiable under Part P.
+                <strong>Kitchen and bathroom rewires:</strong> electrical upgrades as part of
+                kitchen and bathroom renovation projects. Notifiable under Part P.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solar PV electrical connection:</strong> connecting solar panel
-                inverters to the consumer unit and installing generation metering and
-                G98/G99 notification equipment.
+                <strong>Solar PV electrical connection:</strong> connecting solar panel inverters to
+                the consumer unit and installing generation metering and G98/G99 notification
+                equipment.
               </span>
             </li>
           </ul>
@@ -420,34 +418,50 @@ const sections = [
     content: (
       <>
         <p>
-          Labour rates in Staffordshire are generally competitive compared to the South East.
-          The following cost ranges are indicative for 2024 and will vary by contractor.
+          Labour rates in Staffordshire are generally competitive compared to the South East. The
+          following cost ranges are indicative for 2024 and will vary by contractor.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Electrician hourly rate:</strong> \u00a345 to \u00a370 per hour</span>
+              <span>
+                <strong>Electrician hourly rate:</strong> \u00a345 to \u00a370 per hour
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Consumer unit replacement (10-way RCBO board):</strong> \u00a3500 to \u00a31,200</span>
+              <span>
+                <strong>Consumer unit replacement (10-way RCBO board):</strong> \u00a3500 to
+                \u00a31,200
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>EICR (3-bedroom house):</strong> \u00a3150 to \u00a3300</span>
+              <span>
+                <strong>EICR (3-bedroom house):</strong> \u00a3150 to \u00a3300
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>New circuit installation:</strong> \u00a3200 to \u00a3500 depending on length and complexity</span>
+              <span>
+                <strong>New circuit installation:</strong> \u00a3200 to \u00a3500 depending on
+                length and complexity
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>EV charge point (7kW, home):</strong> \u00a3800 to \u00a31,500 supply and fit</span>
+              <span>
+                <strong>EV charge point (7kW, home):</strong> \u00a3800 to \u00a31,500 supply and
+                fit
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Full rewire (3-bedroom house):</strong> \u00a33,500 to \u00a36,000 depending on property age and access</span>
+              <span>
+                <strong>Full rewire (3-bedroom house):</strong> \u00a33,500 to \u00a36,000 depending
+                on property age and access
+              </span>
             </li>
           </ul>
         </div>
@@ -469,23 +483,26 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" />{' '}
-                — complete landlord EICRs with AI board scanning. Essential for the large
-                private rental market in Stoke-on-Trent and Burton upon Trent.
+                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — complete
+                landlord EICRs with AI board scanning. Essential for the large private rental market
+                in Stoke-on-Trent and Burton upon Trent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate" />{' '}
-                — generate compliant Electrical Installation Certificates for consumer unit
-                replacements and new circuits.
+                <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate" /> — generate
+                compliant Electrical Installation Certificates for consumer unit replacements and
+                new circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOInternalLink href="/guides/eicr-observation-codes-explained" label="EICR observation codes" />{' '}
+                <SEOInternalLink
+                  href="/guides/eicr-observation-codes-explained"
+                  label="EICR observation codes"
+                />{' '}
                 — reference guide for grading observations on Staffordshire landlord inspections.
               </span>
             </li>
@@ -506,7 +523,7 @@ export default function ElectricianStaffordshirePage() {
       title="Electrician Staffordshire — Find NICEIC Registered Electricians 2024"
       description="Find a registered electrician in Staffordshire. Covers Stoke-on-Trent, Stafford, Burton upon Trent, Lichfield, and Tamworth. NICEIC/NAPIT registered, Part P, DNO (National Grid ED), and local cost guide."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Local Guide"

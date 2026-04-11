@@ -87,14 +87,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/pub-electrical-cost',
     title: 'Pub Electrical Installation Cost',
-    description: 'Cellar cooling, bar equipment, gaming machines, EICR — full cost guide for licensed premises.',
+    description:
+      'Cellar cooling, bar equipment, gaming machines, EICR — full cost guide for licensed premises.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/industrial-electrical-cost',
     title: 'Industrial Electrical Installation Cost',
-    description: 'Per square metre estimates, 3-phase distribution, and motor control for factories.',
+    description:
+      'Per square metre estimates, 3-phase distribution, and motor control for factories.',
     icon: Zap,
     category: 'Guide',
   },
@@ -143,18 +145,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <ChefHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Kitchen electrical systems</strong> — 3-phase distribution boards, individual
-                circuits for each major appliance (combination ovens, fryers, dishwashers, blast
-                chillers), socket circuits for small equipment, and dedicated circuits for kitchen
-                display systems (KDS).
+                <strong>Kitchen electrical systems</strong> — 3-phase distribution boards,
+                individual circuits for each major appliance (combination ovens, fryers,
+                dishwashers, blast chillers), socket circuits for small equipment, and dedicated
+                circuits for kitchen display systems (KDS).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ChefHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Front-of-house electrical systems</strong> — general lighting (ambient,
-                task, feature), socket outlets for tills and card readers, audio-visual systems,
-                and outdoor lighting where applicable.
+                task, feature), socket outlets for tills and card readers, audio-visual systems, and
+                outdoor lighting where applicable.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -171,16 +173,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ChefHat className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Data and communications</strong> — structured cabling for POS systems,
-                EPOS tills, customer Wi-Fi, music systems, and CCTV infrastructure.
+                <strong>Data and communications</strong> — structured cabling for POS systems, EPOS
+                tills, customer Wi-Fi, music systems, and CCTV infrastructure.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          All of the above must be designed, installed, inspected, and tested in accordance with
-          BS 7671:2018+A3:2024 (the IET Wiring Regulations). For wet kitchen areas, Section 706
-          applies special requirements for protective measures in restrictive conductive locations.
+          All of the above must be designed, installed, inspected, and tested in accordance with BS
+          7671:2018+A3:2024 (the IET Wiring Regulations). For wet kitchen areas, Section 706 applies
+          special requirements for protective measures in restrictive conductive locations.
         </p>
       </>
     ),
@@ -192,8 +194,8 @@ const sections = [
       <>
         <p>
           The single most important electrical decision in a restaurant fit-out is whether the
-          existing supply is adequate for the catering equipment load. In most cases it is not,
-          and a 3-phase supply upgrade is required before any other electrical work proceeds.
+          existing supply is adequate for the catering equipment load. In most cases it is not, and
+          a 3-phase supply upgrade is required before any other electrical work proceeds.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -202,31 +204,32 @@ const sections = [
               <span>
                 <strong>Typical catering equipment loads</strong> — a combination oven (Rational,
                 Houno, or similar) draws 10–15kW. A commercial fryer draws 6–10kW. A commercial
-                dishwasher (rack type) draws 10–16kW. An induction hob section draws 3–7kW per
-                zone. Running multiple items simultaneously requires a 3-phase 400V supply to
-                avoid excessive single-phase loading.
+                dishwasher (rack type) draws 10–16kW. An induction hob section draws 3–7kW per zone.
+                Running multiple items simultaneously requires a 3-phase 400V supply to avoid
+                excessive single-phase loading.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DNO application</strong> — upgrading from single-phase to 3-phase requires
-                a Distribution Network Operator (DNO) application. UK Power Networks (London),
-                Western Power Distribution, and SP Energy Networks each have their own application
-                process. Lead times range from 6 to 18 weeks. DNO connection charges for a new
-                3-phase service typically cost £1,500 to £6,000 depending on distance from the
-                nearest 3-phase point.
+                <strong>DNO application</strong> — upgrading from single-phase to 3-phase requires a
+                Distribution Network Operator (DNO) application. UK Power Networks (London), Western
+                Power Distribution, and SP Energy Networks each have their own application process.
+                Lead times range from 6 to 18 weeks. DNO connection charges for a new 3-phase
+                service typically cost £1,500 to £6,000 depending on distance from the nearest
+                3-phase point.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Main distribution board</strong> — a commercial kitchen will typically
-                require a 3-phase 100A to 200A TPN (Three Pole and Neutral) distribution board,
-                with separate ways for each major appliance. IP-rated enclosures (minimum IP4X)
-                are required in kitchen areas. Budget £2,500–£8,000 for the board, incomer, and
+                require a 3-phase 100A to 200A TPN (Three Pole and Neutral) distribution board, with
+                separate ways for each major appliance. IP-rated enclosures (minimum IP4X) are
+                required in kitchen areas. Budget £2,500–£8,000 for the board, incomer, and
                 installation — a small café installation may sit at the lower end, while a full
-                commercial kitchen MCC with metering and bespoke containment can reach £15,000–£20,000.
+                commercial kitchen MCC with metering and bespoke containment can reach
+                £15,000–£20,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -250,9 +253,9 @@ const sections = [
       <>
         <p>
           Commercial kitchen canopy extract systems have specific electrical requirements that go
-          beyond simply wiring a fan motor. The extract system must be electrically interlocked
-          with the gas supply and, where a fire suppression system is installed, with the
-          suppression system controls.
+          beyond simply wiring a fan motor. The extract system must be electrically interlocked with
+          the gas supply and, where a fire suppression system is installed, with the suppression
+          system controls.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -261,8 +264,8 @@ const sections = [
               <span>
                 <strong>Gas interlock system</strong> — a solenoid valve is fitted to the gas
                 supply. An airflow sensor (pressure differential switch or paddle switch) in the
-                extract duct confirms the fan is running before allowing gas flow. If the fan
-                fails, the solenoid closes. Electrical installation cost: £500–£1,200 depending on
+                extract duct confirms the fan is running before allowing gas flow. If the fan fails,
+                the solenoid closes. Electrical installation cost: £500–£1,200 depending on
                 complexity — this covers pressure switches, solenoid valve supply and wiring,
                 control panel, and commissioning.
               </span>
@@ -272,19 +275,19 @@ const sections = [
               <span>
                 <strong>Canopy fan wiring</strong> — extract fans in commercial kitchens typically
                 run on 3-phase 400V for larger installations (11kW+), or single-phase 230V for
-                smaller canopies. Variable speed drive (VSD/inverter) control is increasingly
-                common for energy efficiency compliance. Each fan motor requires a dedicated
-                isolator within sight.
+                smaller canopies. Variable speed drive (VSD/inverter) control is increasingly common
+                for energy efficiency compliance. Each fan motor requires a dedicated isolator
+                within sight.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Flame className="w-5 h-5 text-orange-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Interlock wiring complexity</strong> — where a wet chemical (Ansul) or
-                CO₂ fire suppression system is fitted, the electrical interlock must also shut
-                down the gas solenoid on suppression activation and simultaneously cut power to
-                the extract fan (to prevent the system from blowing agent away from the hazard).
-                This requires careful coordination between the suppression engineer and electrician.
+                <strong>Interlock wiring complexity</strong> — where a wet chemical (Ansul) or CO₂
+                fire suppression system is fitted, the electrical interlock must also shut down the
+                gas solenoid on suppression activation and simultaneously cut power to the extract
+                fan (to prevent the system from blowing agent away from the hazard). This requires
+                careful coordination between the suppression engineer and electrician.
               </span>
             </li>
           </ul>
@@ -299,19 +302,19 @@ const sections = [
       <>
         <p>
           Emergency lighting is a legal requirement in all restaurants, cafés, and catering premises
-          open to the public. The applicable standard is BS 5266-1:2016 (Emergency lighting. Code
-          of practice for the emergency lighting of premises). Non-compliance is a fire safety
-          offence under the Regulatory Reform (Fire Safety) Order 2005.
+          open to the public. The applicable standard is BS 5266-1:2016 (Emergency lighting. Code of
+          practice for the emergency lighting of premises). Non-compliance is a fire safety offence
+          under the Regulatory Reform (Fire Safety) Order 2005.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Escape route lighting</strong> — minimum 1 lux on the centreline of
-                escape routes (corridors, stairways). Maintained or non-maintained fittings are
-                both acceptable; maintained is more common in restaurants as it doubles as
-                decorative lighting.
+                <strong>Escape route lighting</strong> — minimum 1 lux on the centreline of escape
+                routes (corridors, stairways). Maintained or non-maintained fittings are both
+                acceptable; maintained is more common in restaurants as it doubles as decorative
+                lighting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -327,9 +330,9 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen emergency lighting</strong> — the kitchen must have emergency
-                lighting to allow safe shutdown of gas and electrical equipment. A minimum of
-                10 lux on task areas is recommended by BS 5266-1 to allow cooks to isolate
-                equipment safely in an emergency.
+                lighting to allow safe shutdown of gas and electrical equipment. A minimum of 10 lux
+                on task areas is recommended by BS 5266-1 to allow cooks to isolate equipment safely
+                in an emergency.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -337,8 +340,8 @@ const sections = [
               <span>
                 <strong>Test and maintenance</strong> — self-test emergency luminaires (compliant
                 with BS EN 62034) simplify the monthly and annual testing requirements. Standard
-                fittings require manual monthly function tests and an annual 3-hour discharge
-                test. All tests must be logged.
+                fittings require manual monthly function tests and an annual 3-hour discharge test.
+                All tests must be logged.
               </span>
             </li>
           </ul>
@@ -358,9 +361,9 @@ const sections = [
       <>
         <p>
           Where a fixed fire suppression system is installed over cooking equipment (wet chemical
-          Ansul-type systems are most common in UK commercial kitchens), electrical interlocking
-          is mandatory. The suppression system activation must automatically cut power to all
-          cooking equipment and gas supplies.
+          Ansul-type systems are most common in UK commercial kitchens), electrical interlocking is
+          mandatory. The suppression system activation must automatically cut power to all cooking
+          equipment and gas supplies.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -368,9 +371,9 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Shunt trip breakers</strong> — each circuit supplying cooking equipment
-                under the suppression system canopy must have a shunt trip circuit breaker wired
-                to the suppression panel's auxiliary contacts. On suppression activation, the
-                panel opens all shunt trips simultaneously.
+                under the suppression system canopy must have a shunt trip circuit breaker wired to
+                the suppression panel's auxiliary contacts. On suppression activation, the panel
+                opens all shunt trips simultaneously.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -386,15 +389,15 @@ const sections = [
               <span>
                 <strong>Gas solenoid</strong> — the gas interlock solenoid must also close on
                 suppression activation. This is typically achieved via the same auxiliary contact
-                output used for the gas interlock, but the suppression engineer and electrician
-                must confirm the logic together.
+                output used for the gas interlock, but the suppression engineer and electrician must
+                confirm the logic together.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The electrical interlock wiring for a suppression system adds approximately £600–£1,500
-          to the kitchen electrical costs. This work must be documented and an{' '}
+          The electrical interlock wiring for a suppression system adds approximately £600–£1,500 to
+          the kitchen electrical costs. This work must be documented and an{' '}
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>{' '}
@@ -409,19 +412,19 @@ const sections = [
     content: (
       <>
         <p>
-          Most UK restaurants install CCTV for security, insurance compliance, and staff safety.
-          The electrical requirements for a restaurant CCTV system are relatively modest compared
-          to the kitchen installation but must be planned from the outset to avoid costly cable
-          chasing after the fit-out is complete.
+          Most UK restaurants install CCTV for security, insurance compliance, and staff safety. The
+          electrical requirements for a restaurant CCTV system are relatively modest compared to the
+          kitchen installation but must be planned from the outset to avoid costly cable chasing
+          after the fit-out is complete.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP CCTV systems</strong> — modern restaurant CCTV uses IP cameras powered
-                by PoE (Power over Ethernet) switches. The electrician supplies a dedicated circuit
-                to the NVR and PoE switch, typically 13A fused spur from the comms cabinet. Data
+                <strong>IP CCTV systems</strong> — modern restaurant CCTV uses IP cameras powered by
+                PoE (Power over Ethernet) switches. The electrician supplies a dedicated circuit to
+                the NVR and PoE switch, typically 13A fused spur from the comms cabinet. Data
                 cabling (Cat6) runs to each camera position.
               </span>
             </li>
@@ -452,10 +455,10 @@ const sections = [
     content: (
       <>
         <p>
-          The table below reflects typical 2025 costs for a new restaurant electrical fit-out in
-          the UK. Prices include labour and materials but exclude VAT and DNO connection charges.
-          London and South East rates are typically 20–35% higher than the national average,
-          reflecting 2025/2026 labour cost escalation and skilled trade scarcity in the region.
+          The table below reflects typical 2025 costs for a new restaurant electrical fit-out in the
+          UK. Prices include labour and materials but exclude VAT and DNO connection charges. London
+          and South East rates are typically 20–35% higher than the national average, reflecting
+          2025/2026 labour cost escalation and skilled trade scarcity in the region.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -479,7 +482,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Gas interlock system (electrical works)</strong> — £500–£1,200. Includes
-                pressure switches, solenoid valve wiring, airflow sensor, control panel, and commissioning.
+                pressure switches, solenoid valve wiring, airflow sensor, control panel, and
+                commissioning.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -512,9 +516,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Total new restaurant fit-out</strong> — <strong>£8,000–£25,000</strong>.
-                A 40-cover café with basic catering kitchen: £8,000–£12,000. A 100-cover
-                restaurant with full commercial kitchen: £18,000–£25,000+.
+                <strong>Total new restaurant fit-out</strong> — <strong>£8,000–£25,000</strong>. A
+                40-cover café with basic catering kitchen: £8,000–£12,000. A 100-cover restaurant
+                with full commercial kitchen: £18,000–£25,000+.
               </span>
             </li>
           </ul>
@@ -524,20 +528,20 @@ const sections = [
           payable directly to the network operator and are separate from the electrician's quote.
         </p>
         <p>
-          <strong>2025/2026 labour rate escalation:</strong> Restaurant fit-outs in London and
-          the South East have seen 15–20% labour cost increases since 2023, driven by rising
-          material costs and ongoing scarcity of skilled electricians with commercial catering
-          experience. London restaurant electrical fit-outs typically run 20–35% above the
-          national average figures quoted above. Operators budgeting for a London or South East
-          site should apply this uplift to all labour-inclusive line items.
+          <strong>2025/2026 labour rate escalation:</strong> Restaurant fit-outs in London and the
+          South East have seen 15–20% labour cost increases since 2023, driven by rising material
+          costs and ongoing scarcity of skilled electricians with commercial catering experience.
+          London restaurant electrical fit-outs typically run 20–35% above the national average
+          figures quoted above. Operators budgeting for a London or South East site should apply
+          this uplift to all labour-inclusive line items.
         </p>
         <p>
           <strong>DNO 3-phase upgrade lead times:</strong> Restaurants frequently need a 3-phase
           supply upgrade, and the DNO application lead time consistently catches owners off guard.
-          Lead times for a new or upgraded 3-phase service range from 6 to 18 weeks depending
-          on the network operator and the distance from the nearest 3-phase point. This application
-          must be made at the very start of the project — before fit-out works begin — to avoid
-          costly programme delays.
+          Lead times for a new or upgraded 3-phase service range from 6 to 18 weeks depending on the
+          network operator and the distance from the nearest 3-phase point. This application must be
+          made at the very start of the project — before fit-out works begin — to avoid costly
+          programme delays.
         </p>
       </>
     ),
@@ -560,9 +564,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EIC for new work</strong> — every new circuit, distribution board change,
-                or significant alteration must be accompanied by an EIC or Minor Works Certificate
-                as appropriate. This is a legal requirement under the Building Regulations.
+                <strong>EIC for new work</strong> — every new circuit, distribution board change, or
+                significant alteration must be accompanied by an EIC or Minor Works Certificate as
+                appropriate. This is a legal requirement under the Building Regulations.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -577,9 +581,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency lighting log book</strong> — BS 5266-1 requires a log book to
-                be maintained recording all monthly tests, annual tests, and any remedial actions.
-                This must be available for inspection by the responsible person and enforcement
+                <strong>Emergency lighting log book</strong> — BS 5266-1 requires a log book to be
+                maintained recording all monthly tests, annual tests, and any remedial actions. This
+                must be available for inspection by the responsible person and enforcement
                 authorities.
               </span>
             </li>
@@ -594,8 +598,8 @@ const sections = [
     content: (
       <>
         <p>
-          Restaurant fit-outs are high-value, multi-week contracts that generate strong revenue
-          and excellent follow-on business (EICRs, emergency lighting maintenance, reactive call-outs).
+          Restaurant fit-outs are high-value, multi-week contracts that generate strong revenue and
+          excellent follow-on business (EICRs, emergency lighting maintenance, reactive call-outs).
           Electricians who develop expertise in catering kitchen installations — particularly
           3-phase distribution, gas interlock wiring, and suppression interlocking — are in high
           demand.
@@ -641,7 +645,7 @@ export default function RestaurantElectricalCostPage() {
       title="Restaurant Electrical Installation Cost UK 2025 | Catering Electrical"
       description="Restaurant electrical installation costs UK 2025. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1, fire suppression interlocks, CCTV. Typical fit-out £8,000–£25,000."
       datePublished="2025-01-01"
-      dateModified="2025-09-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Cost Guide"

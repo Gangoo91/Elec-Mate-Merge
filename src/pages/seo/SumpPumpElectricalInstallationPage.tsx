@@ -2,14 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Zap,
-  AlertTriangle,
-  CheckCircle2,
-  FileCheck2,
-  ShieldCheck,
-  Wrench,
-} from 'lucide-react';
+import { Zap, AlertTriangle, CheckCircle2, FileCheck2, ShieldCheck, Wrench } from 'lucide-react';
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
@@ -105,14 +98,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/electrical-damp-proofing',
     title: 'Electrical Work in Damp Buildings',
-    description: 'Electrical issues in damp buildings — rewiring after DPC injection and EICR requirements.',
+    description:
+      'Electrical issues in damp buildings — rewiring after DPC injection and EICR requirements.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/electrical-fault-finding-guide',
     title: 'Electrical Fault Finding Guide',
-    description: 'Systematic approach to finding earth faults, open circuits, and high resistance faults.',
+    description:
+      'Systematic approach to finding earth faults, open circuits, and high resistance faults.',
     icon: Wrench,
     category: 'Guide',
   },
@@ -146,35 +141,35 @@ const sections = [
     content: (
       <>
         <p>
-          A sump pump is typically the last line of defence against basement flooding. If
-          the electrical installation fails — through inadequate protection, poor isolation,
-          or insufficient IP rating — the pump may not operate when it is needed most, or
-          worse, may present an electric shock hazard in an already wet environment.
+          A sump pump is typically the last line of defence against basement flooding. If the
+          electrical installation fails — through inadequate protection, poor isolation, or
+          insufficient IP rating — the pump may not operate when it is needed most, or worse, may
+          present an electric shock hazard in an already wet environment.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Never use a standard 13A socket as the sole connection point</strong>{' '}
-                for a sump pump that runs unattended. A dedicated circuit with proper
-                isolation and RCD protection is the only safe and compliant approach.
+                <strong>Never use a standard 13A socket as the sole connection point</strong> for a
+                sump pump that runs unattended. A dedicated circuit with proper isolation and RCD
+                protection is the only safe and compliant approach.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flooding and electricity is a lethal combination.</strong> A 30mA
-                earth leakage current flowing through a human body in contact with flood
-                water can cause cardiac arrest. The electrical installation around a sump
-                pump must be designed to minimise this risk.
+                <strong>Flooding and electricity is a lethal combination.</strong> A 30mA earth
+                leakage current flowing through a human body in contact with flood water can cause
+                cardiac arrest. The electrical installation around a sump pump must be designed to
+                minimise this risk.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          This guide covers the key BS 7671 requirements and practical installation guidance
-          for sump pump circuits in domestic basements and cellars. Always engage a registered
+          This guide covers the key BS 7671 requirements and practical installation guidance for
+          sump pump circuits in domestic basements and cellars. Always engage a registered
           electrician for this work.
         </p>
       </>
@@ -186,31 +181,30 @@ const sections = [
     content: (
       <>
         <p>
-          A sump pump should be supplied by a dedicated radial circuit from the consumer
-          unit, separate from any other load. This ensures:
+          A sump pump should be supplied by a dedicated radial circuit from the consumer unit,
+          separate from any other load. This ensures:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Uninterrupted operation</strong> — the pump circuit cannot be
-                accidentally switched off by isolating another appliance.
+                <strong>Uninterrupted operation</strong> — the pump circuit cannot be accidentally
+                switched off by isolating another appliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Correct overcurrent protection</strong> — a 6A or 10A MCB matched
-                to the pump&apos;s rated current provides closer protection than a 32A ring
-                main MCB.
+                <strong>Correct overcurrent protection</strong> — a 6A or 10A MCB matched to the
+                pump&apos;s rated current provides closer protection than a 32A ring main MCB.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fault isolation</strong> — a fault in the pump circuit trips only
-                the pump MCB/RCBO, not the whole house supply.
+                <strong>Fault isolation</strong> — a fault in the pump circuit trips only the pump
+                MCB/RCBO, not the whole house supply.
               </span>
             </li>
           </ul>
@@ -218,8 +212,8 @@ const sections = [
         <p>
           This new circuit is notifiable under Part P Building Regulations and requires an
           Electrical Installation Certificate. See our{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC certificate guide</SEOInternalLink>{' '}
-          for what test results must be recorded.
+          <SEOInternalLink href="/tools/eic-certificate">EIC certificate guide</SEOInternalLink> for
+          what test results must be recorded.
         </p>
       </>
     ),
@@ -230,34 +224,33 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Regulation 411.3.3 requires all circuits in domestic premises to be
-          protected by a 30mA RCD. This requirement is absolute for sump pump circuits
-          given the damp environment.
+          BS 7671 Regulation 411.3.3 requires all circuits in domestic premises to be protected by a
+          30mA RCD. This requirement is absolute for sump pump circuits given the damp environment.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCBO (preferred)</strong> — combines MCB overcurrent protection
-                and 30mA RCD earth fault protection in a single unit. A fault in the pump
-                circuit trips only the RCBO, leaving other circuits unaffected.
+                <strong>RCBO (preferred)</strong> — combines MCB overcurrent protection and 30mA RCD
+                earth fault protection in a single unit. A fault in the pump circuit trips only the
+                RCBO, leaving other circuits unaffected.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>MCB on an RCD-protected split way</strong> — if the consumer unit
-                has a dual-RCD arrangement, the pump circuit must be on an RCD-protected
-                way. An unprotected way is not permissible.
+                <strong>MCB on an RCD-protected split way</strong> — if the consumer unit has a
+                dual-RCD arrangement, the pump circuit must be on an RCD-protected way. An
+                unprotected way is not permissible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test the RCD regularly</strong> — press the test button quarterly
-                and verify the RCD trips within the required time (BS 7671 requires
-                disconnection within 40ms at I\u0394n for 30mA RCDs supplying socket outlets).
+                <strong>Test the RCD regularly</strong> — press the test button quarterly and verify
+                the RCD trips within the required time (BS 7671 requires disconnection within 40ms
+                at I\u0394n for 30mA RCDs supplying socket outlets).
               </span>
             </li>
           </ul>
@@ -271,36 +264,35 @@ const sections = [
     content: (
       <>
         <p>
-          The Ingress Protection (IP) rating of electrical equipment specifies its resistance
-          to the ingress of solid objects and water. In a basement sump installation, the
-          following IP ratings apply:
+          The Ingress Protection (IP) rating of electrical equipment specifies its resistance to the
+          ingress of solid objects and water. In a basement sump installation, the following IP
+          ratings apply:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP44 minimum</strong> — for junction boxes, isolating switches,
-                and any accessories in the damp basement environment. IP44 provides
-                protection against 1mm solid objects and water splashing from any direction.
+                <strong>IP44 minimum</strong> — for junction boxes, isolating switches, and any
+                accessories in the damp basement environment. IP44 provides protection against 1mm
+                solid objects and water splashing from any direction.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IPX7/IPX8</strong> — for submersible pump motor and its cable
-                entry. The pump manufacturer specifies the appropriate submersion rating.
-                Do not use a surface pump rated IPX4 in a position where it could be
-                submerged.
+                <strong>IPX7/IPX8</strong> — for submersible pump motor and its cable entry. The
+                pump manufacturer specifies the appropriate submersion rating. Do not use a surface
+                pump rated IPX4 in a position where it could be submerged.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cable selection</strong> — 1.5mm\u00b2 twin and earth in conduit or
-                SWA armoured cable for mechanical protection. In flood-risk routes, use
-                LSZH (Low Smoke Zero Halogen) cable to reduce toxic gas emission if the
-                installation is ever caught in a fire following flooding.
+                <strong>Cable selection</strong> — 1.5mm\u00b2 twin and earth in conduit or SWA
+                armoured cable for mechanical protection. In flood-risk routes, use LSZH (Low Smoke
+                Zero Halogen) cable to reduce toxic gas emission if the installation is ever caught
+                in a fire following flooding.
               </span>
             </li>
           </ul>
@@ -314,36 +306,36 @@ const sections = [
     content: (
       <>
         <p>
-          Most domestic sump pumps are activated by a float switch that detects the water
-          level in the sump pit. The float switch must be correctly wired and protected for
-          safe and reliable operation.
+          Most domestic sump pumps are activated by a float switch that detects the water level in
+          the sump pit. The float switch must be correctly wired and protected for safe and reliable
+          operation.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Series connection in the line conductor</strong> — the float switch
-                is wired in series with the line (live) conductor feeding the pump. When the
-                float rises to the set level, the switch closes and the pump starts.
+                <strong>Series connection in the line conductor</strong> — the float switch is wired
+                in series with the line (live) conductor feeding the pump. When the float rises to
+                the set level, the switch closes and the pump starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>SELV control circuit (preferred)</strong> — for the highest level
-                of safety, use a SELV relay circuit. The float switch operates at 12V or
-                24V SELV, activating a contactor or relay in the mains supply to the pump.
-                This keeps the float switch wiring at safe voltage.
+                <strong>SELV control circuit (preferred)</strong> — for the highest level of safety,
+                use a SELV relay circuit. The float switch operates at 12V or 24V SELV, activating a
+                contactor or relay in the mains supply to the pump. This keeps the float switch
+                wiring at safe voltage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High-level alarm float</strong> — install a second float switch
-                set above the pump activation level, wired to an audible alarm or indicator.
-                If the primary pump fails, the high-level float provides early warning.
-                The alarm circuit can also be on a SELV supply.
+                <strong>High-level alarm float</strong> — install a second float switch set above
+                the pump activation level, wired to an audible alarm or indicator. If the primary
+                pump fails, the high-level float provides early warning. The alarm circuit can also
+                be on a SELV supply.
               </span>
             </li>
           </ul>
@@ -357,33 +349,32 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 Regulation 537.2 requires every piece of fixed electrical equipment to
-          have a suitable means of isolation. For a sump pump, this means:
+          BS 7671 Regulation 537.2 requires every piece of fixed electrical equipment to have a
+          suitable means of isolation. For a sump pump, this means:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Double-pole isolator</strong> — must disconnect both line and
-                neutral simultaneously. Single-pole switches are not acceptable as
-                isolators under BS 7671.
+                <strong>Double-pole isolator</strong> — must disconnect both line and neutral
+                simultaneously. Single-pole switches are not acceptable as isolators under BS 7671.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Positioned above flood level</strong> — the isolator must be
-                accessible without having to enter a flooded area. Mount at 1.2m to 1.5m
-                height on the basement wall, above the maximum anticipated flood level.
+                <strong>Positioned above flood level</strong> — the isolator must be accessible
+                without having to enter a flooded area. Mount at 1.2m to 1.5m height on the basement
+                wall, above the maximum anticipated flood level.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Clearly labelled</strong> — the isolator must be clearly labelled
-                to identify the equipment it controls (Regulation 514.1). Use a durable
-                label: &quot;SUMP PUMP ISOLATOR — switch off before servicing pump.&quot;
+                <strong>Clearly labelled</strong> — the isolator must be clearly labelled to
+                identify the equipment it controls (Regulation 514.1). Use a durable label:
+                &quot;SUMP PUMP ISOLATOR — switch off before servicing pump.&quot;
               </span>
             </li>
           </ul>
@@ -404,7 +395,7 @@ export default function SumpPumpElectricalInstallationPage() {
       title="Sump Pump Electrical Installation Guide — BS 7671 Wiring Requirements"
       description="How to wire a sump pump correctly — dedicated circuit, 30mA RCD protection, IP ratings, float switch wiring, and isolation requirements under BS 7671. UK Part P compliance guide."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

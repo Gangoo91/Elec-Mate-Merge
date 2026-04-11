@@ -83,7 +83,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/cable-jointing-guide',
     title: 'Cable Jointing Guide',
-    description: 'MV and LV cable jointing techniques, heat shrink vs cold shrink, and BS 7671 requirements.',
+    description:
+      'MV and LV cable jointing techniques, heat shrink vs cold shrink, and BS 7671 requirements.',
     icon: Wrench,
     category: 'Guide',
   },
@@ -97,7 +98,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/external-lighting-installation',
     title: 'External Lighting Installation',
-    description: 'IP ratings, cable burial depth, PIR wiring and BS 7671 outdoor installation requirements.',
+    description:
+      'IP ratings, cable burial depth, PIR wiring and BS 7671 outdoor installation requirements.',
     icon: Zap,
     category: 'Guide',
   },
@@ -111,7 +113,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Generate compliant Electrical Installation Certificates on your phone with instant PDF export.',
+    description:
+      'Generate compliant Electrical Installation Certificates on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -131,8 +134,8 @@ const sections = [
           Conduit is one of the most widely used cable management systems in UK electrical
           installations, providing mechanical protection, a tidy finish, and — in the case of steel
           conduit — a circuit protective conductor path. The choice between steel and PVC conduit
-          depends on the environment, mechanical demands, and whether the conduit is to serve as
-          the CPC.
+          depends on the environment, mechanical demands, and whether the conduit is to serve as the
+          CPC.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-4">Steel Conduit</h3>
@@ -141,24 +144,24 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Material:</strong> Hot-dip galvanised or stove-enamelled mild steel.
-                Standard sizes: 16mm, 20mm, 25mm, 32mm, 38mm, 50mm outside diameter.
-                Conforms to BS EN 61386-21 (rigid steel conduit).
+                Standard sizes: 16mm, 20mm, 25mm, 32mm, 38mm, 50mm outside diameter. Conforms to BS
+                EN 61386-21 (rigid steel conduit).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Advantages:</strong> Superior mechanical protection, fire resistance,
-                can serve as CPC, EMC shielding for sensitive circuits, suitable for hazardous
-                areas (with appropriate fittings), long service life.
+                <strong>Advantages:</strong> Superior mechanical protection, fire resistance, can
+                serve as CPC, EMC shielding for sensitive circuits, suitable for hazardous areas
+                (with appropriate fittings), long service life.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Disadvantages:</strong> Heavier, more time-consuming to install,
-                requires screwed fittings, susceptible to corrosion in wet environments unless
-                stainless steel or galvanised grade is specified.
+                <strong>Disadvantages:</strong> Heavier, more time-consuming to install, requires
+                screwed fittings, susceptible to corrosion in wet environments unless stainless
+                steel or galvanised grade is specified.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -176,42 +179,42 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Material:</strong> Unplasticised PVC (UPVC). Standard sizes: 16mm,
-                20mm, 25mm, 32mm outside diameter. Conforms to BS EN 61386-22 (rigid
-                non-metallic conduit).
+                <strong>Material:</strong> Unplasticised PVC (UPVC). Standard sizes: 16mm, 20mm,
+                25mm, 32mm outside diameter. Conforms to BS EN 61386-22 (rigid non-metallic
+                conduit).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Advantages:</strong> Lightweight, corrosion-resistant, faster to
-                install, lower material cost, push-fit or solvent-welded fittings available,
-                no metallic continuity issues.
+                <strong>Advantages:</strong> Lightweight, corrosion-resistant, faster to install,
+                lower material cost, push-fit or solvent-welded fittings available, no metallic
+                continuity issues.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Disadvantages:</strong> Cannot serve as CPC (separate CPC required),
-                less impact-resistant than steel, becomes brittle at low temperatures,
-                melts in fire, requires separate bonding to exposed metalwork.
+                <strong>Disadvantages:</strong> Cannot serve as CPC (separate CPC required), less
+                impact-resistant than steel, becomes brittle at low temperatures, melts in fire,
+                requires separate bonding to exposed metalwork.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Typical applications:</strong> Domestic surface wiring, office
-                installations, concealed runs in dry environments, underground ducts
-                (heavy-duty grade).
+                installations, concealed runs in dry environments, underground ducts (heavy-duty
+                grade).
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Performance classification under <strong>BS EN 61386</strong> uses a four-digit code.
-          For most commercial and industrial applications, specify conduit classified to at least
-          medium mechanical protection (third digit 3 or above). Always check the manufacturer
-          data sheet against the installation environment requirements.
+          Performance classification under <strong>BS EN 61386</strong> uses a four-digit code. For
+          most commercial and industrial applications, specify conduit classified to at least medium
+          mechanical protection (third digit 3 or above). Always check the manufacturer data sheet
+          against the installation environment requirements.
         </p>
       </>
     ),
@@ -223,9 +226,8 @@ const sections = [
       <>
         <p>
           Overloading conduit or trunking with too many cables is one of the most common
-          installation defects identified on EICRs. The fill limits in BS 7671 Appendix 5 exist
-          to ensure cables can dissipate heat safely and can be withdrawn and replaced without
-          damage.
+          installation defects identified on EICRs. The fill limits in BS 7671 Appendix 5 exist to
+          ensure cables can dissipate heat safely and can be withdrawn and replaced without damage.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">How to Calculate Conduit Fill</h3>
@@ -233,34 +235,34 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1:</strong> Identify the cable type and conductor size for each
-                cable to be installed. Look up the cable factor from BS 7671 Appendix 5
-                Table 5A (single-core PVC), Table 5B (multi-core PVC), or equivalent.
+                <strong>Step 1:</strong> Identify the cable type and conductor size for each cable
+                to be installed. Look up the cable factor from BS 7671 Appendix 5 Table 5A
+                (single-core PVC), Table 5B (multi-core PVC), or equivalent.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2:</strong> Add up the cable factors for all cables to be
-                installed in the conduit. This gives the total cable factor.
+                <strong>Step 2:</strong> Add up the cable factors for all cables to be installed in
+                the conduit. This gives the total cable factor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3:</strong> Compare the total cable factor against the conduit
-                factor from Table 5C. Use the straight run column for runs without bends, or
-                the bend column if one or more bends are present. Select the conduit size
-                whose factor exceeds the total cable factor.
+                <strong>Step 3:</strong> Compare the total cable factor against the conduit factor
+                from Table 5C. Use the straight run column for runs without bends, or the bend
+                column if one or more bends are present. Select the conduit size whose factor
+                exceeds the total cable factor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Example:</strong> Six 2.5mm\u00b2 single-core PVC cables (factor 30 each)
-                in a straight run = total factor 180. A 20mm conduit has a straight-run
-                factor of 460. A 16mm conduit has a factor of 290. Either would accommodate
-                the cables, but 20mm is preferred to allow future capacity.
+                <strong>Example:</strong> Six 2.5mm\u00b2 single-core PVC cables (factor 30 each) in
+                a straight run = total factor 180. A 20mm conduit has a straight-run factor of 460.
+                A 16mm conduit has a factor of 290. Either would accommodate the cables, but 20mm is
+                preferred to allow future capacity.
               </span>
             </li>
           </ul>
@@ -270,28 +272,31 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Derating for grouping:</strong> Where cables are grouped together,
-                the current-carrying capacity of each cable must be derated using BS 7671
-                Table 4C1 (for cables in conduit) or Table 4B1 (for trunking). This is
-                separate from the fill calculation — both must be applied.
+                <strong>Derating for grouping:</strong> Where cables are grouped together, the
+                current-carrying capacity of each cable must be derated using BS 7671 Table 4C1 (for
+                cables in conduit) or Table 4B1 (for trunking). This is separate from the fill
+                calculation — both must be applied.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Trunking space factor:</strong> For cable trunking, BS 7671 Appendix 5
-                specifies that the ratio of the sum of cable cross-sectional areas to the
-                internal trunking cross-sectional area (the space factor) should not exceed
-                45%. This applies to all new installations.
+                specifies that the ratio of the sum of cable cross-sectional areas to the internal
+                trunking cross-sectional area (the space factor) should not exceed 45%. This applies
+                to all new installations.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Always document your fill calculations as part of the installation records. If
-          completing an{' '}
-          <SEOInternalLink href="/tools/eic-certificate" label="Electrical Installation Certificate" />,
-          note the conduit sizes and cable quantities in the circuit schedule.
+          Always document your fill calculations as part of the installation records. If completing
+          an{' '}
+          <SEOInternalLink
+            href="/tools/eic-certificate"
+            label="Electrical Installation Certificate"
+          />
+          , note the conduit sizes and cable quantities in the circuit schedule.
         </p>
       </>
     ),
@@ -302,9 +307,9 @@ const sections = [
     content: (
       <>
         <p>
-          Neat, correctly made bends are a mark of professional conduit installation. Poorly
-          formed bends reduce the conduit internal cross-section, making cable pulling difficult
-          and risking cable damage. The following techniques apply to both steel and PVC conduit.
+          Neat, correctly made bends are a mark of professional conduit installation. Poorly formed
+          bends reduce the conduit internal cross-section, making cable pulling difficult and
+          risking cable damage. The following techniques apply to both steel and PVC conduit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">Steel Conduit Bending</h3>
@@ -312,26 +317,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Use a purpose-made conduit bender (hickey bender) for 20mm and 25mm. For
-                32mm and above, a hydraulic bender is recommended. The minimum bending
-                radius is 2.5 times the outside diameter for metal conduit per BS EN 61386.
+                Use a purpose-made conduit bender (hickey bender) for 20mm and 25mm. For 32mm and
+                above, a hydraulic bender is recommended. The minimum bending radius is 2.5 times
+                the outside diameter for metal conduit per BS EN 61386.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 Mark set distances accurately with a chinagraph pencil or felt tip. For a
-                right-angle bend, measure from the end of the conduit to the centre of the
-                bend, subtract the take-up (typically 100mm for 20mm conduit), and mark
-                the bending point.
+                right-angle bend, measure from the end of the conduit to the centre of the bend,
+                subtract the take-up (typically 100mm for 20mm conduit), and mark the bending point.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Cut steel conduit with a pipe slice or junior hacksaw. Deburr all cut ends
-                with a conduit reamer before drawing cables — sharp edges will damage cable
-                insulation. Bush all conduit entries to boxes with PVC or rubber bushes.
+                Cut steel conduit with a pipe slice or junior hacksaw. Deburr all cut ends with a
+                conduit reamer before drawing cables — sharp edges will damage cable insulation.
+                Bush all conduit entries to boxes with PVC or rubber bushes.
               </span>
             </li>
           </ul>
@@ -342,18 +346,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Insert a correctly sized conduit spring inside the conduit before bending.
-                For cold bending, lever the conduit gently over your knee — do not rush or
-                the conduit will kink. Remove the spring by attaching a length of cord before
-                insertion and pulling it free after bending.
+                Insert a correctly sized conduit spring inside the conduit before bending. For cold
+                bending, lever the conduit gently over your knee — do not rush or the conduit will
+                kink. Remove the spring by attaching a length of cord before insertion and pulling
+                it free after bending.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 For warm bending, apply a hot air gun evenly along the bend area (approximately
-                100mm length for 20mm conduit). Rotate the conduit to heat evenly. When
-                pliable, bend over a former and hold until cool. Never use a naked flame.
+                100mm length for 20mm conduit). Rotate the conduit to heat evenly. When pliable,
+                bend over a former and hold until cool. Never use a naked flame.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -361,8 +365,8 @@ const sections = [
               <span>
                 Cut PVC conduit with a junior hacksaw or pipe cutter. Deburr with a file or
                 deburring tool. Use solvent cement or push-fit couplers for jointing. Ensure
-                push-fit joints are fully engaged — a partial joint will leak in wet
-                environments and is mechanically weak.
+                push-fit joints are fully engaged — a partial joint will leak in wet environments
+                and is mechanically weak.
               </span>
             </li>
           </ul>
@@ -386,18 +390,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Screwed fittings only:</strong> Every joint in a conduit system used
-                as a CPC must be made with screwed couplers and screwed-entry boxes. Push-fit
-                or clip-together fittings do not provide reliable electrical continuity and
-                must not be used where the conduit is the CPC.
+                <strong>Screwed fittings only:</strong> Every joint in a conduit system used as a
+                CPC must be made with screwed couplers and screwed-entry boxes. Push-fit or
+                clip-together fittings do not provide reliable electrical continuity and must not be
+                used where the conduit is the CPC.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flexible conduit sections:</strong> Flexible conduit (also known as
-                Anaconda or SWA flexible) does not provide reliable CPC continuity. A separate
-                insulated CPC must be run inside flexible sections and connected at both ends.
+                <strong>Flexible conduit sections:</strong> Flexible conduit (also known as Anaconda
+                or SWA flexible) does not provide reliable CPC continuity. A separate insulated CPC
+                must be run inside flexible sections and connected at both ends.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -405,17 +409,17 @@ const sections = [
               <span>
                 <strong>Continuity testing:</strong> After installation, verify end-to-end
                 continuity of the conduit system as a CPC. The resistance measured should be
-                consistent with the cross-sectional area of the conduit and the length of run.
-                Test at each circuit termination point.
+                consistent with the cross-sectional area of the conduit and the length of run. Test
+                at each circuit termination point.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Cross-sectional area check:</strong> Verify that the steel conduit
-                provides sufficient CPC cross-sectional area per BS 7671 Table 54.7 for the
-                phase conductor size. A 20mm steel conduit provides approximately 35mm\u00b2
-                equivalent CPC cross-section.
+                <strong>Cross-sectional area check:</strong> Verify that the steel conduit provides
+                sufficient CPC cross-sectional area per BS 7671 Table 54.7 for the phase conductor
+                size. A 20mm steel conduit provides approximately 35mm\u00b2 equivalent CPC
+                cross-section.
               </span>
             </li>
           </ul>
@@ -424,7 +428,11 @@ const sections = [
           Where conduit runs are long or the fault current could be high, consider installing a
           separate insulated CPC inside the conduit in addition to relying on the steel for
           continuity. Record the CPC type used on the circuit schedule of the{' '}
-          <SEOInternalLink href="/tools/eic-certificate" label="Electrical Installation Certificate" />.
+          <SEOInternalLink
+            href="/tools/eic-certificate"
+            label="Electrical Installation Certificate"
+          />
+          .
         </p>
       </>
     ),
@@ -436,9 +444,9 @@ const sections = [
       <>
         <p>
           Ingress Protection (IP) ratings define the degree of protection provided by conduit
-          fittings and boxes against solid particles and liquids. The rating is defined in
-          BS EN 60529 and consists of two digits — the first for solid particle protection
-          (0–6), the second for liquid ingress protection (0–9).
+          fittings and boxes against solid particles and liquids. The rating is defined in BS EN
+          60529 and consists of two digits — the first for solid particle protection (0–6), the
+          second for liquid ingress protection (0–9).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
@@ -453,24 +461,24 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP44:</strong> Dust protection (solid objects over 1mm) and splash
-                protection from any direction. Minimum for outdoor above-ground conduit fittings
-                and boxes in exposed locations.
+                protection from any direction. Minimum for outdoor above-ground conduit fittings and
+                boxes in exposed locations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP65:</strong> Complete dust exclusion and protection against water jets
-                from any direction. Required for conduit boxes in car washes, external walls
-                exposed to direct rain, and food production areas.
+                from any direction. Required for conduit boxes in car washes, external walls exposed
+                to direct rain, and food production areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>IP67/IP68:</strong> Complete dust exclusion and temporary/permanent
-                submersion protection. Required for underground junction boxes and conduit
-                systems installed below ground level.
+                submersion protection. Required for underground junction boxes and conduit systems
+                installed below ground level.
               </span>
             </li>
           </ul>
@@ -490,40 +498,39 @@ const sections = [
     content: (
       <>
         <p>
-          Every penetration through a fire-resisting wall, floor, or ceiling must be fire-stopped
-          to maintain the element's fire resistance rating. This is a legal requirement under
-          Building Regulations Approved Document B (England), Section 7 of the Technical
-          Handbooks (Scotland), and Part B of the Building Regulations (Wales and Northern Ireland).
+          Every penetration through a fire-resisting wall, floor, or ceiling must be fire-stopped to
+          maintain the element's fire resistance rating. This is a legal requirement under Building
+          Regulations Approved Document B (England), Section 7 of the Technical Handbooks
+          (Scotland), and Part B of the Building Regulations (Wales and Northern Ireland).
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Steel conduit penetrations:</strong> Steel conduit does not melt or
-                combust, so the main concern is any annular gap around the conduit. Pack with
-                mineral wool and seal with intumescent mastic rated to match the wall's fire
-                resistance (30, 60, or 90 minutes). Some manufacturers provide tested steel
-                conduit sealing systems.
+                <strong>Steel conduit penetrations:</strong> Steel conduit does not melt or combust,
+                so the main concern is any annular gap around the conduit. Pack with mineral wool
+                and seal with intumescent mastic rated to match the wall's fire resistance (30, 60,
+                or 90 minutes). Some manufacturers provide tested steel conduit sealing systems.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>PVC conduit penetrations:</strong> PVC melts in fire, leaving an open
-                hole. Intumescent collars must be fitted around PVC conduit at every penetration
-                through a fire-resisting element. The collar expands on heating, sealing the
-                gap left by the melting conduit. Use products with third-party test evidence
-                to the required fire resistance period.
+                <strong>PVC conduit penetrations:</strong> PVC melts in fire, leaving an open hole.
+                Intumescent collars must be fitted around PVC conduit at every penetration through a
+                fire-resisting element. The collar expands on heating, sealing the gap left by the
+                melting conduit. Use products with third-party test evidence to the required fire
+                resistance period.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Record keeping:</strong> Retain product data sheets, installation
-                instructions, and photographs as evidence of compliance. Building control
-                may request this evidence during inspections, and it is invaluable if a
-                subsequent EICR or fire risk assessment raises questions.
+                instructions, and photographs as evidence of compliance. Building control may
+                request this evidence during inspections, and it is invaluable if a subsequent EICR
+                or fire risk assessment raises questions.
               </span>
             </li>
           </ul>
@@ -546,25 +553,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eic-certificate" label="Electrical Installation Certificate" />{' '}
-                — record conduit type, cable sizes, circuit protective conductor details,
-                and test results in a fully compliant EIC with instant PDF export.
+                <SEOAppBridge
+                  href="/tools/eic-certificate"
+                  label="Electrical Installation Certificate"
+                />{' '}
+                — record conduit type, cable sizes, circuit protective conductor details, and test
+                results in a fully compliant EIC with instant PDF export.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" />{' '}
-                — document overfilled conduit, missing earth continuity, or absent fire
-                stopping as C2 or C3 observations with full supporting evidence.
+                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — document
+                overfilled conduit, missing earth continuity, or absent fire stopping as C2 or C3
+                observations with full supporting evidence.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" />{' '}
-                — issue minor electrical installation works certificates for small conduit
-                extensions or additional circuit outlets.
+                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                minor electrical installation works certificates for small conduit extensions or
+                additional circuit outlets.
               </span>
             </li>
           </ul>
@@ -584,7 +594,7 @@ export default function ElectricalInstallationConduitPage() {
       title="Electrical Installation Conduit Guide — Steel, PVC, Fill Calculations & Earthing"
       description="Complete UK guide to electrical conduit installation: steel vs PVC conduit, BS EN 61386 classification, trunking fill calculations per BS 7671 Appendix 5, earthing of steel conduit, IP ratings, and fire stopping requirements."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -41,7 +41,7 @@ const tocItems = [
 const keyTakeaways = [
   'A full house rewire in Glasgow costs between £2,200 and £8,000+ in 2025. Glasgow electrician day rates of £280 to £400 are competitive within Scotland, making Glasgow slightly more affordable than Edinburgh for comparable property types.',
   'Scotland operates its own Building Standards system. Glasgow rewires are notified to Glasgow City Council Building Standards, not under Part P as in England. The completion certificate process differs from the English competent person scheme approach.',
-  'Glasgow\'s tenement stock — particularly in the West End, Southside, and the Victorian suburbs — presents rewire challenges similar to Edinburgh, with solid sandstone construction, high ceilings, and shared stairwells.',
+  "Glasgow's tenement stock — particularly in the West End, Southside, and the Victorian suburbs — presents rewire challenges similar to Edinburgh, with solid sandstone construction, high ceilings, and shared stairwells.",
   'A typical rewire takes 3–5 days for a 2-bed tenement flat and 5–8 days for a 3-bed villa. Wall chasing in sandstone generates significant debris and replastering is a separate cost.',
   'On completion of any Glasgow rewire, the electrician must issue an Electrical Installation Certificate confirming compliance with BS 7671:2018+A3:2024 and submit a completion certificate to Building Standards.',
 ];
@@ -75,12 +75,12 @@ const faqs = [
   {
     question: 'How much does replastering cost after a Glasgow rewire?',
     answer:
-      'Replastering costs after a Glasgow rewire depend on the property type. In a sandstone West End tenement flat, expect to budget £600 to £1,500 for making good the chased channels. Victorian villas in the Southside (Shawlands, Langside, Pollokshields) are similar. Post-war flats with plasterboard walls cost significantly less — typically £200 to £500. If the property is listed (several areas of Glasgow\'s West End and Merchant City have listed building designations), heritage lime plaster matching may be required, adding cost.',
+      "Replastering costs after a Glasgow rewire depend on the property type. In a sandstone West End tenement flat, expect to budget £600 to £1,500 for making good the chased channels. Victorian villas in the Southside (Shawlands, Langside, Pollokshields) are similar. Post-war flats with plasterboard walls cost significantly less — typically £200 to £500. If the property is listed (several areas of Glasgow's West End and Merchant City have listed building designations), heritage lime plaster matching may be required, adding cost.",
   },
   {
     question: 'Are there grants for rewiring in Glasgow?',
     answer:
-      'Glasgow City Council and Home Energy Scotland (the Scottish Government\'s advice service) offer grants and loans for essential home improvements, including electrical work, for eligible homeowners and private tenants. The Warmer Homes Scotland scheme provides free energy efficiency improvements (including some electrical work) for homeowners and private tenants on qualifying benefits. ECO4 funding may also apply to electrical work linked to energy efficiency improvements. Contact Home Energy Scotland (0808 808 2282) or Glasgow City Council\'s housing improvement team for current eligibility information.',
+      "Glasgow City Council and Home Energy Scotland (the Scottish Government's advice service) offer grants and loans for essential home improvements, including electrical work, for eligible homeowners and private tenants. The Warmer Homes Scotland scheme provides free energy efficiency improvements (including some electrical work) for homeowners and private tenants on qualifying benefits. ECO4 funding may also apply to electrical work linked to energy efficiency improvements. Contact Home Energy Scotland (0808 808 2282) or Glasgow City Council's housing improvement team for current eligibility information.",
   },
 ];
 
@@ -184,8 +184,8 @@ const sections = [
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
           , and Building Standards completion certificate submission. Making good (plastering and
-          decoration) is quoted separately — budget £600 to £1,500 for a sandstone West End flat
-          and £200 to £500 for a post-war property with plasterboard walls.
+          decoration) is quoted separately — budget £600 to £1,500 for a sandstone West End flat and
+          £200 to £500 for a post-war property with plasterboard walls.
         </p>
         <p>
           West End Glasgow properties (Partick, Hyndland, Dowanhill, Kelvinside) sit at the upper
@@ -202,17 +202,17 @@ const sections = [
       <>
         <p>
           Scotland operates a separate Building Standards system from England and Wales. Glasgow
-          rewires fall under the Building (Scotland) Regulations 2004, administered by Glasgow
-          City Council Building Standards. The process differs from England's Part P system:
+          rewires fall under the Building (Scotland) Regulations 2004, administered by Glasgow City
+          Council Building Standards. The process differs from England's Part P system:
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Building Warrant</strong> — significant electrical alterations may require
-                a building warrant from Glasgow City Council before work starts. Your electrician
-                will advise whether a warrant is needed for your specific scope of work.
+                <strong>Building Warrant</strong> — significant electrical alterations may require a
+                building warrant from Glasgow City Council before work starts. Your electrician will
+                advise whether a warrant is needed for your specific scope of work.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -220,8 +220,8 @@ const sections = [
               <span>
                 <strong>Completion Certificate</strong> — on completion, the electrician (or the
                 building owner) submits a completion certificate to Building Standards confirming
-                compliance with the Building (Scotland) Regulations. Building Standards may
-                inspect the work before accepting the certificate.
+                compliance with the Building (Scotland) Regulations. Building Standards may inspect
+                the work before accepting the certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -244,8 +244,8 @@ const sections = [
         </div>
         <p>
           Always use a Glasgow-based electrician who is familiar with Scottish Building Standards
-          procedures. An electrician who usually works in England may not understand the
-          completion certificate process or Building Warrant requirements.
+          procedures. An electrician who usually works in England may not understand the completion
+          certificate process or Building Warrant requirements.
         </p>
       </>
     ),
@@ -257,8 +257,8 @@ const sections = [
       <>
         <p>
           Glasgow has one of the UK's most distinctive housing stocks, dominated by sandstone
-          tenements in the inner city and a wide range of villa and semi-detached properties in
-          the suburbs.
+          tenements in the inner city and a wide range of villa and semi-detached properties in the
+          suburbs.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -266,10 +266,10 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>West End tenements (1880s–1910s):</strong> Partick, Hyndland, Dowanhill,
-                Hillhead, Kelvinside. Red or blonde sandstone, high ceilings (3 to 4 metres),
-                shared sandstone stairwells, and original wiring in varying states. Many tenement
-                flats have had piecemeal electrical additions over the decades with no coherent
-                design. An EICR often finds circuits from two or three different eras.
+                Hillhead, Kelvinside. Red or blonde sandstone, high ceilings (3 to 4 metres), shared
+                sandstone stairwells, and original wiring in varying states. Many tenement flats
+                have had piecemeal electrical additions over the decades with no coherent design. An
+                EICR often finds circuits from two or three different eras.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -285,10 +285,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inter-war semis and bungalows (1920s–1940s):</strong> Bearsden, Bishopbriggs,
-                Newton Mearns, Clarkston. Rendered brick or harl construction. Accessible loft
-                spaces and less challenging cable routes than sandstone properties. Many have
-                original wiring approaching the end of its safe service life.
+                <strong>Inter-war semis and bungalows (1920s–1940s):</strong> Bearsden,
+                Bishopbriggs, Newton Mearns, Clarkston. Rendered brick or harl construction.
+                Accessible loft spaces and less challenging cable routes than sandstone properties.
+                Many have original wiring approaching the end of its safe service life.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -320,18 +320,17 @@ const sections = [
     content: (
       <>
         <p>
-          An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the definitive
-          way to confirm whether a rewire is needed. These warning signs indicate an urgent
-          inspection is required:
+          An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the
+          definitive way to confirm whether a rewire is needed. These warning signs indicate an
+          urgent inspection is required:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring
-                beyond its safe service life, very common in Glasgow's tenement stock.
+                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring beyond
+                its safe service life, very common in Glasgow's tenement stock.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -345,15 +344,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse board</strong> — wooden-backed board with wire fuses.
-                No RCD protection and a serious fire and electric shock risk.
+                <strong>Rewirable fuse board</strong> — wooden-backed board with wire fuses. No RCD
+                protection and a serious fire and electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Repeatedly tripping circuit breakers</strong> — overloaded circuits or
-                cable insulation that has deteriorated and can no longer safely carry load.
+                <strong>Repeatedly tripping circuit breakers</strong> — overloaded circuits or cable
+                insulation that has deteriorated and can no longer safely carry load.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -390,8 +389,8 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">First Fix</h3>
             <p className="text-white text-sm leading-relaxed">
               Chasing sandstone walls, running cables through floor and ceiling voids, installing
-              back boxes. In a West End tenement flat: 2–4 days. In a post-war semi: 1–2 days.
-              Power is off during working hours. Significant dust and debris in sandstone properties.
+              back boxes. In a West End tenement flat: 2–4 days. In a post-war semi: 1–2 days. Power
+              is off during working hours. Significant dust and debris in sandstone properties.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
@@ -494,10 +493,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power is off during first fix</strong> — the electricity supply is
-                isolated while new circuits are installed. Plan for no cooking, heating, or power
-                for several days. Many Glasgow residents stay with friends or family during the
-                first fix phase, particularly in smaller tenement flats.
+                <strong>Power is off during first fix</strong> — the electricity supply is isolated
+                while new circuits are installed. Plan for no cooking, heating, or power for several
+                days. Many Glasgow residents stay with friends or family during the first fix phase,
+                particularly in smaller tenement flats.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -505,9 +504,9 @@ const sections = [
               <span>
                 <strong>Replastering is a separate cost</strong> — after chases are filled, a
                 plasterer is needed to reinstate the wall surfaces. In listed properties or where
-                the original plaster is lime-based, a specialist is required. Budget £600 to
-                £1,500 for making good in a West End tenement flat. Post-war properties with
-                plasterboard: £200 to £500.
+                the original plaster is lime-based, a specialist is required. Budget £600 to £1,500
+                for making good in a West End tenement flat. Post-war properties with plasterboard:
+                £200 to £500.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -529,8 +528,8 @@ const sections = [
     content: (
       <>
         <p>
-          Glasgow has a large and well-qualified electrician workforce. Use these criteria to find
-          a reliable contractor experienced in Glasgow's distinctive housing stock:
+          Glasgow has a large and well-qualified electrician workforce. Use these criteria to find a
+          reliable contractor experienced in Glasgow's distinctive housing stock:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -538,8 +537,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Verify NICEIC, NAPIT, or SELECT registration</strong> — SELECT is the
-                Electrical Contractors Association of Scotland. Search by Glasgow postcode on
-                any of these online registers. Non-negotiable for Building Standards compliance.
+                Electrical Contractors Association of Scotland. Search by Glasgow postcode on any of
+                these online registers. Non-negotiable for Building Standards compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -568,8 +567,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Confirm EIC and minimum £2 million public liability insurance</strong>
-                {' '}— both are mandatory. Ask for copies before work starts.
+                <strong>Confirm EIC and minimum £2 million public liability insurance</strong> —
+                both are mandatory. Ask for copies before work starts.
               </span>
             </li>
           </ul>
@@ -594,15 +593,14 @@ export default function RewireCostGlasgowPage() {
       title="House Rewire Cost Glasgow 2025 | Full Rewire Glasgow"
       description="How much does a house rewire cost in Glasgow in 2025? Real prices for tenement flats, semis, and period properties — Scottish Building Standards explained, sandstone replastering costs, and finding a NICEIC or SELECT-registered electrician in Glasgow."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          House Rewire Cost Glasgow:{' '}
-          <span className="text-yellow-400">2025 Price Guide</span>
+          House Rewire Cost Glasgow: <span className="text-yellow-400">2025 Price Guide</span>
         </>
       }
       heroSubtitle="Glasgow rewire costs in 2025 — from West End sandstone tenements and Victorian Southside villas to post-war estates. Scotland's Building Standards system explained, real prices by property type, and what rewiring a sandstone flat actually involves."

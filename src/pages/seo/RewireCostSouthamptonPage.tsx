@@ -42,7 +42,7 @@ const keyTakeaways = [
   'All rewiring work must comply with BS 7671:2018+A3:2024 and be notified under Part P of the Building Regulations 2010.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work in Southampton — they notify Southampton City Council building control on your behalf.',
   'Southampton has a large stock of interwar and post-war housing in areas such as Shirley, Bitterne, and Woolston that may retain wiring from the 1940s to 1970s requiring assessment or rewiring.',
-  'The port city\'s maritime and industrial heritage means some older commercial-to-residential conversions in the waterfront areas may have complex or non-standard wiring requiring specialist assessment.',
+  "The port city's maritime and industrial heritage means some older commercial-to-residential conversions in the waterfront areas may have complex or non-standard wiring requiring specialist assessment.",
   'On completion, your electrician must issue an Electrical Installation Certificate (EIC) — this is a legal document required for property sales.',
 ];
 
@@ -55,12 +55,12 @@ const faqs = [
   {
     question: 'How long does a rewire take in Southampton?',
     answer:
-      'A two-bedroom terrace common in areas such as Shirley and Freemantle typically takes 2 to 3 days. A three-bedroom semi-detached takes 3 to 5 days. Larger detached properties in areas such as Chandler\'s Ford and Hedge End may take 5 to 7 days. Victorian terraces in St Denys and Portswood with solid walls can add 1 to 2 additional days compared with cavity wall construction.',
+      "A two-bedroom terrace common in areas such as Shirley and Freemantle typically takes 2 to 3 days. A three-bedroom semi-detached takes 3 to 5 days. Larger detached properties in areas such as Chandler's Ford and Hedge End may take 5 to 7 days. Victorian terraces in St Denys and Portswood with solid walls can add 1 to 2 additional days compared with cavity wall construction.",
   },
   {
     question: 'Does rewiring in Southampton need Part P notification?',
     answer:
-      'Yes. A full rewire is notifiable work under Part P of the Building Regulations 2010. NICEIC, NAPIT, and ELECSA registered electricians can self-certify the work and notify Southampton City Council building control on your behalf. If the electrician is not scheme registered, you must apply to the council\'s building control department before work begins.',
+      "Yes. A full rewire is notifiable work under Part P of the Building Regulations 2010. NICEIC, NAPIT, and ELECSA registered electricians can self-certify the work and notify Southampton City Council building control on your behalf. If the electrician is not scheme registered, you must apply to the council's building control department before work begins.",
   },
   {
     question: 'What certificate do I get after a rewire in Southampton?',
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/house-rewire-cost',
     title: 'House Rewire Cost Guide',
-    description: 'National rewire cost guide covering all property sizes, what\'s included, and how to compare quotes.',
+    description:
+      "National rewire cost guide covering all property sizes, what's included, and how to compare quotes.",
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -102,14 +103,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
-    description: 'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
+    description:
+      'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'Electrical Installation Certificate App',
-    description: 'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
+    description:
+      'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -135,8 +138,8 @@ const sections = [
         <p>
           Southampton rewire costs reflect South of England labour rates, which sit slightly above
           the national average but well below London. The city's diverse housing stock — from
-          Victorian terraces to post-war estates and modern waterfront apartments — means costs
-          vary depending on construction type as well as size.
+          Victorian terraces to post-war estates and modern waterfront apartments — means costs vary
+          depending on construction type as well as size.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -158,8 +161,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three-bedroom semi-detached</strong> — £3,500 to £5,000. The most common
-                rewire in Southampton's interwar suburbs including Bassett, Lordshill, and Swaythling.
-                Typically 12 to 16 circuits.
+                rewire in Southampton's interwar suburbs including Bassett, Lordshill, and
+                Swaythling. Typically 12 to 16 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -180,9 +183,9 @@ const sections = [
           </ul>
         </div>
         <p>
-          Prices include stripping out existing wiring, installing new twin-and-earth cables, fitting
-          a new consumer unit with RCD protection, installing new accessories, and issuing the
-          Electrical Installation Certificate. Redecoration and plastering are not included.
+          Prices include stripping out existing wiring, installing new twin-and-earth cables,
+          fitting a new consumer unit with RCD protection, installing new accessories, and issuing
+          the Electrical Installation Certificate. Redecoration and plastering are not included.
         </p>
       </>
     ),
@@ -260,7 +263,8 @@ const sections = [
               <span>
                 <strong>First fix</strong> — removal of existing wiring, routing new cables through
                 floors, walls, and ceiling voids, installing back boxes and containment. The most
-                disruptive stage involving lifted floorboards and chased or surface-run cable routes.
+                disruptive stage involving lifted floorboards and chased or surface-run cable
+                routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -319,8 +323,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom detached</strong> — 5 to 7 days. More circuits and longer
-                cable runs add time to the programme.
+                <strong>Four-bedroom detached</strong> — 5 to 7 days. More circuits and longer cable
+                runs add time to the programme.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -347,9 +351,9 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations 2010 applies to all fixed electrical installation
-          work in dwellings in England. A full rewire is notifiable work and must comply with
-          BS 7671:2018+A3:2024.
+          Part P of the Building Regulations 2010 applies to all fixed electrical installation work
+          in dwellings in England. A full rewire is notifiable work and must comply with BS
+          7671:2018+A3:2024.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -366,8 +370,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building control route</strong> — if the electrician is not scheme
-                registered, notify Southampton City Council building control before work begins.
-                A building control officer may inspect the installation before issuing a completion
+                registered, notify Southampton City Council building control before work begins. A
+                building control officer may inspect the installation before issuing a completion
                 certificate.
               </span>
             </li>
@@ -375,8 +379,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EIC mandatory</strong> — an Electrical Installation Certificate must be
-                issued on completion of any rewiring work. This is a legal requirement under
-                BS 7671 and is needed for property sales.
+                issued on completion of any rewiring work. This is a legal requirement under BS 7671
+                and is needed for property sales.
               </span>
             </li>
           </ul>
@@ -407,15 +411,15 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Three written quotes minimum</strong> — each quote should itemise circuits,
-                consumer unit type, accessories, EIC, and Part P notification. Compare like for
-                like before selecting a contractor.
+                consumer unit type, accessories, EIC, and Part P notification. Compare like for like
+                before selecting a contractor.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check insurance</strong> — confirm public liability insurance of at least
-                £1 million. Scheme membership requires this as a standard condition.
+                <strong>Check insurance</strong> — confirm public liability insurance of at least £1
+                million. Scheme membership requires this as a standard condition.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -467,8 +471,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Next periodic inspection</strong> — for owner-occupied properties, plan
-                for an EICR in 10 years. For rental properties, every 5 years is required by law.
+                <strong>Next periodic inspection</strong> — for owner-occupied properties, plan for
+                an EICR in 10 years. For rental properties, every 5 years is required by law.
               </span>
             </li>
           </ul>
@@ -483,8 +487,8 @@ const sections = [
       <>
         <p>
           Southampton and the wider Hampshire market offer consistent demand for domestic rewiring.
-          Electricians who combine technical quality with fast, professional certification win repeat
-          business and grow through referrals.
+          Electricians who combine technical quality with fast, professional certification win
+          repeat business and grow through referrals.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -494,11 +498,9 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
-                  to complete your Electrical Installation Certificate on your phone before you leave
-                  the property. Auto-populated test schedules and instant PDF export mean no
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
+                  to complete your Electrical Installation Certificate on your phone before you
+                  leave the property. Auto-populated test schedules and instant PDF export mean no
                   paperwork in the evening.
                 </p>
               </div>
@@ -541,7 +543,7 @@ export default function RewireCostSouthamptonPage() {
       title="House Rewire Cost Southampton 2025 | Rewire Hampshire"
       description="House rewire costs in Southampton for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs you need a rewire, timescales, and what certificate you should receive."
       datePublished="2025-01-01"
-      dateModified="2025-06-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rewire Cost Guide"

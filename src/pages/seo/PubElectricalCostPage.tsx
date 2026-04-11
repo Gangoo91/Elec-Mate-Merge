@@ -87,14 +87,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/restaurant-electrical-cost',
     title: 'Restaurant Electrical Installation Cost',
-    description: 'Full cost guide for commercial kitchen electrical, 3-phase supply, gas interlocks, and emergency lighting.',
+    description:
+      'Full cost guide for commercial kitchen electrical, 3-phase supply, gas interlocks, and emergency lighting.',
     icon: Building2,
     category: 'Guide',
   },
   {
     href: '/care-home-electrical-cost',
     title: 'Care Home Electrical Installation Cost',
-    description: 'Nurse call, emergency lighting, fire alarms, and healthcare-grade electrical for care homes.',
+    description:
+      'Nurse call, emergency lighting, fire alarms, and healthcare-grade electrical for care homes.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -132,11 +134,11 @@ const sections = [
     content: (
       <>
         <p>
-          Electrical installations in pubs, bars, and other licensed premises combine the demands
-          of a commercial food and drink environment with the specific requirements of a licensed
-          venue — gaming machine circuits, cellar cooling, CO₂ detection, extensive AV systems,
-          and the highest standards of life-safety electrical systems because of the concentration
-          of public patrons.
+          Electrical installations in pubs, bars, and other licensed premises combine the demands of
+          a commercial food and drink environment with the specific requirements of a licensed venue
+          — gaming machine circuits, cellar cooling, CO₂ detection, extensive AV systems, and the
+          highest standards of life-safety electrical systems because of the concentration of public
+          patrons.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -151,8 +153,8 @@ const sections = [
               <Beer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Bar and gaming</strong> — dedicated circuits for gaming machines, POS
-                systems, card payment terminals, chilled display cabinets, glasswashers, and
-                coffee machines.
+                systems, card payment terminals, chilled display cabinets, glasswashers, and coffee
+                machines.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -169,16 +171,16 @@ const sections = [
               <Beer className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Entertainment and AV</strong> — sports TV screens (commercial display
-                circuits), audio amplifier rack supplies, outdoor sound system wiring, quiz
-                machine circuits, and external lighting.
+                circuits), audio amplifier rack supplies, outdoor sound system wiring, quiz machine
+                circuits, and external lighting.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          All electrical work must comply with BS 7671:2018+A3:2024. Cellar areas are subject
-          to Section 706 (restrictive conductive locations). The premises licence under the
-          Licensing Act 2003 may impose specific electrical requirements as licence conditions.
+          All electrical work must comply with BS 7671:2018+A3:2024. Cellar areas are subject to
+          Section 706 (restrictive conductive locations). The premises licence under the Licensing
+          Act 2003 may impose specific electrical requirements as licence conditions.
         </p>
       </>
     ),
@@ -191,8 +193,7 @@ const sections = [
         <p>
           The cellar is one of the highest electrical load areas in a pub. Multiple cooling
           compressors, glycol coolers, and beer line refrigeration units all run continuously,
-          creating a constant base load that must be properly designed into the distribution
-          system.
+          creating a constant base load that must be properly designed into the distribution system.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -200,20 +201,20 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Cellar cooling units</strong> — cellar coolers for ale and lager typically
-                draw 0.5–2.5kW each. A pub running 4–6 cooling units has a continuous cellar
-                cooling load of 3–12kW. Each unit requires a dedicated circuit with an isolator
-                within sight of the unit, as required by BS 7671 Regulation 462.1.
+                draw 0.5–2.5kW each. A pub running 4–6 cooling units has a continuous cellar cooling
+                load of 3–12kW. Each unit requires a dedicated circuit with an isolator within sight
+                of the unit, as required by BS 7671 Regulation 462.1.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>CO₂ and N₂ gas detection</strong> — cellar CO₂ and nitrogen gas detection
-                systems are required by HSE guidance where gas cylinders are stored (HSG187).
-                The gas detection panel requires a dedicated mains supply and must trigger
+                systems are required by HSE guidance where gas cylinders are stored (HSG187). The
+                gas detection panel requires a dedicated mains supply and must trigger
                 audible/visual alarms at the bar level. This wiring is typically small in scope
-                (£300–£600) but must not be omitted — CO₂ build-up in an unventilated cellar
-                is a serious risk.
+                (£300–£600) but must not be omitted — CO₂ build-up in an unventilated cellar is a
+                serious risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -276,8 +277,8 @@ const sections = [
                 <strong>FOBTs in betting-licensed pubs</strong> — where a pub holds an ancillary
                 betting licence permitting Fixed Odds Betting Terminals, machine positions require
                 additional network connectivity (typically Cat6 or fibre) in addition to the
-                electrical supply. The electrician may be asked to install containment for the
-                data cabling as part of the electrical works.
+                electrical supply. The electrician may be asked to install containment for the data
+                cabling as part of the electrical works.
               </span>
             </li>
           </ul>
@@ -292,8 +293,8 @@ const sections = [
       <>
         <p>
           Emergency lighting in pubs and bars is a legal requirement under the Regulatory Reform
-          (Fire Safety) Order 2005 and the Licensing Act 2003. Inadequate emergency lighting
-          is one of the most common reasons for licensing authority enforcement action.
+          (Fire Safety) Order 2005 and the Licensing Act 2003. Inadequate emergency lighting is one
+          of the most common reasons for licensing authority enforcement action.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -327,10 +328,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installation costs</strong> — emergency lighting for a typical community
-                pub (ground floor only): £900–£2,500. A larger two-floor managed house with
-                letting rooms: £2,500–£5,500. Self-test fittings add 20–35% to supply cost but
-                reduce annual maintenance cost.
+                <strong>Installation costs</strong> — emergency lighting for a typical community pub
+                (ground floor only): £900–£2,500. A larger two-floor managed house with letting
+                rooms: £2,500–£5,500. Self-test fittings add 20–35% to supply cost but reduce annual
+                maintenance cost.
               </span>
             </li>
           </ul>
@@ -344,10 +345,10 @@ const sections = [
     content: (
       <>
         <p>
-          The fire alarm system category for a pub is determined by the fire risk assessment
-          (a legal obligation under the Regulatory Reform (Fire Safety) Order 2005). Wiring
-          is governed by BS 5839-1. The licensing authority and fire safety officer both have
-          powers to require specific fire alarm provisions as conditions of the licence.
+          The fire alarm system category for a pub is determined by the fire risk assessment (a
+          legal obligation under the Regulatory Reform (Fire Safety) Order 2005). Wiring is governed
+          by BS 5839-1. The licensing authority and fire safety officer both have powers to require
+          specific fire alarm provisions as conditions of the licence.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -355,27 +356,27 @@ const sections = [
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Category M (manual only)</strong> — a basic pub without sleeping
-                accommodation may require only a manual system with break-glass call points at
-                all exits, connected to a panel and alarm sounders. Cost: £1,200–£3,000.
+                accommodation may require only a manual system with break-glass call points at all
+                exits, connected to a panel and alarm sounders. Cost: £1,200–£3,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Category L3/L2 (automatic detection)</strong> — pubs with sleeping
-                accommodation require automatic detection in high-risk areas (kitchen, plant
-                rooms) and all escape routes. An addressable or conventional panel with heat
-                and smoke detectors, beam detectors in large open spaces, and duct detectors
-                in HVAC systems is typical. Cost: £3,000–£9,000.
+                accommodation require automatic detection in high-risk areas (kitchen, plant rooms)
+                and all escape routes. An addressable or conventional panel with heat and smoke
+                detectors, beam detectors in large open spaces, and duct detectors in HVAC systems
+                is typical. Cost: £3,000–£9,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Kitchen detection</strong> — standard ionisation or optical smoke detectors
-                are not suitable for kitchens. BS 5839-1 requires either rate-of-rise heat
-                detectors or fixed temperature heat detectors in kitchen areas to avoid false
-                alarms. Multi-sensor or specialist kitchen-grade detectors are available.
+                are not suitable for kitchens. BS 5839-1 requires either rate-of-rise heat detectors
+                or fixed temperature heat detectors in kitchen areas to avoid false alarms.
+                Multi-sensor or specialist kitchen-grade detectors are available.
               </span>
             </li>
           </ul>
@@ -390,28 +391,28 @@ const sections = [
       <>
         <p>
           CCTV is frequently a condition of the premises licence under the Licensing Act 2003,
-          particularly in premises located in Cumulative Impact Zones (CIZs) or with a history
-          of licensing concerns. The licensing authority specifies the coverage requirements
-          in the licence conditions.
+          particularly in premises located in Cumulative Impact Zones (CIZs) or with a history of
+          licensing concerns. The licensing authority specifies the coverage requirements in the
+          licence conditions.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Standard licence CCTV requirements</strong> — main entrance (internal
-                and external), bar area covering all points of sale, gaming machine positions,
-                and exit doors. Footage retention typically 28–31 days as specified by the
-                licensing authority.
+                <strong>Standard licence CCTV requirements</strong> — main entrance (internal and
+                external), bar area covering all points of sale, gaming machine positions, and exit
+                doors. Footage retention typically 28–31 days as specified by the licensing
+                authority.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Electrical installation</strong> — NVR/DVR supply circuit (typically
-                5A or 13A fused spur), PoE switch for IP cameras, cable containment for Cat6
-                cabling, and outdoor camera weatherproof conduit routes. Estimated electrical
-                cost: £350–£900 for a typical pub.
+                <strong>Electrical installation</strong> — NVR/DVR supply circuit (typically 5A or
+                13A fused spur), PoE switch for IP cameras, cable containment for Cat6 cabling, and
+                outdoor camera weatherproof conduit routes. Estimated electrical cost: £350–£900 for
+                a typical pub.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -469,8 +470,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Emergency lighting to BS 5266-1</strong> — £900–£5,500 depending on
-                floor area and whether letting rooms are present.
+                <strong>Emergency lighting to BS 5266-1</strong> — £900–£5,500 depending on floor
+                area and whether letting rooms are present.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -496,8 +497,8 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Total new pub fit-out or full refurbishment</strong> —{' '}
-                <strong>£12,000–£35,000</strong>. A small community pub: £12,000–£18,000. A
-                large managed house with full kitchen, letting rooms, and extensive gaming:
+                <strong>£12,000–£35,000</strong>. A small community pub: £12,000–£18,000. A large
+                managed house with full kitchen, letting rooms, and extensive gaming:
                 £28,000–£35,000+.
               </span>
             </li>
@@ -512,19 +513,18 @@ const sections = [
     content: (
       <>
         <p>
-          Pubs and licensed premises have multiple parties with an interest in the EICR —
-          the pub company or freeholder, the tenant or leaseholder, the insurer, and the
-          licensing authority. Understanding who requires what, and when, avoids compliance gaps.
+          Pubs and licensed premises have multiple parties with an interest in the EICR — the pub
+          company or freeholder, the tenant or leaseholder, the insurer, and the licensing
+          authority. Understanding who requires what, and when, avoids compliance gaps.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Five-year maximum</strong> — commercial EICR maximum interval is five
-                years. Pub company leases typically require an EICR on each change of tenant,
-                meaning the interval is often driven by tenant turnover rather than the five-year
-                limit.
+                <strong>Five-year maximum</strong> — commercial EICR maximum interval is five years.
+                Pub company leases typically require an EICR on each change of tenant, meaning the
+                interval is often driven by tenant turnover rather than the five-year limit.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -547,10 +547,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>EICR costs for a pub</strong> — a typical pub EICR costs £350–£900
-                depending on size, number of distribution boards, and the scope of life-safety
-                systems to be tested. Pubs with extensive cellar installations and multiple
-                sub-boards are at the upper end.
+                <strong>EICR costs for a pub</strong> — a typical pub EICR costs £350–£900 depending
+                on size, number of distribution boards, and the scope of life-safety systems to be
+                tested. Pubs with extensive cellar installations and multiple sub-boards are at the
+                upper end.
               </span>
             </li>
           </ul>
@@ -564,8 +564,8 @@ const sections = [
     content: (
       <>
         <p>
-          Licensed premises electrical work is high-value and generates reliable repeat business
-          — EICR cycles, emergency lighting maintenance contracts, reactive call-outs, and gaming
+          Licensed premises electrical work is high-value and generates reliable repeat business —
+          EICR cycles, emergency lighting maintenance contracts, reactive call-outs, and gaming
           machine position additions when licence conditions change. Electricians who understand
           licensing conditions and life-safety system requirements are highly valued by pub
           operators.
@@ -581,12 +581,9 @@ const sections = [
                   <SEOInternalLink href="/tools/eic-certificate">
                     Electrical Installation Certificates
                   </SEOInternalLink>{' '}
-                  and{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  from your phone while still on site. Pub operators need documentation fast —
-                  licensing visits can happen with short notice.
+                  and <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> from
+                  your phone while still on site. Pub operators need documentation fast — licensing
+                  visits can happen with short notice.
                 </p>
               </div>
             </div>
@@ -612,7 +609,7 @@ export default function PubElectricalCostPage() {
       title="Pub Electrical Installation Cost UK 2025 | Licensed Premises Electrical"
       description="Pub electrical installation costs UK 2025. Cellar cooling circuits, gaming machine wiring, emergency lighting to BS 5266-1, fire alarms, CCTV, and EICR requirements for licensed premises. Typical pub fit-out £12,000–£35,000."
       datePublished="2025-01-01"
-      dateModified="2025-09-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Cost Guide"

@@ -70,7 +70,7 @@ const faqs = [
   {
     question: 'Are there any grants for rewiring in Newcastle or the North East?',
     answer:
-      'The North East has historically had access to above-average government energy efficiency funding. The national ECO4 scheme funds energy efficiency improvements for eligible households, which can include electrical work. The Warm Homes Fund and various local authority schemes have also operated in the North East. Northumbrian Water\'s Warm Homes Discount and various North East councils\' empty homes schemes may offer support. Contact the national Home Energy helpline (0300 123 1234) or Newcastle City Council\'s housing improvement team for current options.',
+      "The North East has historically had access to above-average government energy efficiency funding. The national ECO4 scheme funds energy efficiency improvements for eligible households, which can include electrical work. The Warm Homes Fund and various local authority schemes have also operated in the North East. Northumbrian Water's Warm Homes Discount and various North East councils' empty homes schemes may offer support. Contact the national Home Energy helpline (0300 123 1234) or Newcastle City Council's housing improvement team for current options.",
   },
   {
     question: 'What does a full Newcastle rewire include?',
@@ -95,7 +95,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/rewire-cost-sheffield',
     title: 'Rewire Cost Sheffield',
-    description: 'Sheffield rewire costs — another affordable North of England city for comparison.',
+    description:
+      'Sheffield rewire costs — another affordable North of England city for comparison.',
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -141,10 +142,10 @@ const sections = [
       <>
         <p>
           Newcastle upon Tyne and the wider North East region offer some of the most competitive
-          electrician rates in England. Day rates of £250 to £360 are typically 20–30% below
-          London and 10–15% below the national average, making the North East one of the most
-          affordable regions for a full house rewire. Victorian and Edwardian properties in
-          central Newcastle areas take longer to rewire and sit closer to the national average cost.
+          electrician rates in England. Day rates of £250 to £360 are typically 20–30% below London
+          and 10–15% below the national average, making the North East one of the most affordable
+          regions for a full house rewire. Victorian and Edwardian properties in central Newcastle
+          areas take longer to rewire and sit closer to the national average cost.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -183,8 +184,8 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
-          , and Part P notification. Making good (plastering and decoration) is quoted separately
-          — budget an additional £300 to £800 for a standard Newcastle Victorian terrace.
+          , and Part P notification. Making good (plastering and decoration) is quoted separately —
+          budget an additional £300 to £800 for a standard Newcastle Victorian terrace.
         </p>
         <p>
           Victorian and Edwardian terraces in Jesmond, Heaton, Fenham, and the West End sit at the
@@ -208,29 +209,29 @@ const sections = [
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Victorian terraces and semis (1870s–1910s):</strong> Heaton, Fenham,
-                Walker, Byker, Elswick, and Scotswood. Brick with lath-and-plaster interiors.
-                Many have had piecemeal wiring additions over decades and contain circuits from
-                different eras. An EICR commonly finds rubber-insulated wiring and rewirable
-                fuse boards in these areas.
+                <strong>Victorian terraces and semis (1870s–1910s):</strong> Heaton, Fenham, Walker,
+                Byker, Elswick, and Scotswood. Brick with lath-and-plaster interiors. Many have had
+                piecemeal wiring additions over decades and contain circuits from different eras. An
+                EICR commonly finds rubber-insulated wiring and rewirable fuse boards in these
+                areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Edwardian villas and semis (1900s–1920s):</strong> Jesmond, Gosforth,
-                Sandyford, and South Gosforth. Larger properties with accessible loft spaces.
-                Many have original wiring or 1960s/1970s partial upgrades. Often easier to rewire
-                than the older Victorian terraces, but considerable cable quantities are needed.
+                Sandyford, and South Gosforth. Larger properties with accessible loft spaces. Many
+                have original wiring or 1960s/1970s partial upgrades. Often easier to rewire than
+                the older Victorian terraces, but considerable cable quantities are needed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Inter-war semis and bungalows (1920s–1940s):</strong> Denton Burn,
-                Benwell, Westerhope, and Kingston Park. Cavity brick construction with accessible
-                lofts. Many have VIR wiring approaching the end of its safe service life or early
-                PVC wiring without earthing on lighting circuits.
+                <strong>Inter-war semis and bungalows (1920s–1940s):</strong> Denton Burn, Benwell,
+                Westerhope, and Kingston Park. Cavity brick construction with accessible lofts. Many
+                have VIR wiring approaching the end of its safe service life or early PVC wiring
+                without earthing on lighting circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -238,8 +239,8 @@ const sections = [
               <span>
                 <strong>Post-war council estates (1950s–1970s):</strong> Kenton, Newbiggin Hall,
                 Blakelaw, and Walker. Plasterboard or concrete panel construction — the most
-                straightforward to rewire. Consumer units commonly have BS 3036 rewirable fuses
-                or early single-RCD boards needing replacement.
+                straightforward to rewire. Consumer units commonly have BS 3036 rewirable fuses or
+                early single-RCD boards needing replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -247,8 +248,8 @@ const sections = [
               <span>
                 <strong>Converted flats (Jesmond and Heaton):</strong> Victorian houses subdivided
                 into flats, particularly prevalent in Jesmond and Heaton. Quality of electrical
-                installation varies considerably. Shared sub-mains, undersized consumer units,
-                and multi-era wiring are common findings on EICR.
+                installation varies considerably. Shared sub-mains, undersized consumer units, and
+                multi-era wiring are common findings on EICR.
               </span>
             </li>
           </ul>
@@ -262,24 +263,24 @@ const sections = [
     content: (
       <>
         <p>
-          An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the definitive
-          method to confirm rewire need. These warning signs indicate urgent attention is required:
+          An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the
+          definitive method to confirm rewire need. These warning signs indicate urgent attention is
+          required:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring
-                beyond its safe service life, very common in Newcastle's Victorian terrace areas.
+                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring beyond
+                its safe service life, very common in Newcastle's Victorian terrace areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse board</strong> — a wooden-backed board with wire fuses.
-                No RCD protection — a serious fire and electric shock risk.
+                <strong>Rewirable fuse board</strong> — a wooden-backed board with wire fuses. No
+                RCD protection — a serious fire and electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -322,23 +323,24 @@ const sections = [
       <>
         <p>
           Newcastle rewire timescales depend on property type. Victorian terraces with
-          lath-and-plaster are the most time-consuming; modern plasterboard construction is quickest.
+          lath-and-plaster are the most time-consuming; modern plasterboard construction is
+          quickest.
         </p>
         <div className="grid gap-4 sm:grid-cols-2 my-6">
           <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">First Fix</h3>
             <p className="text-white text-sm leading-relaxed">
-              Chasing walls, running cables through floors and ceiling voids, fitting back boxes.
-              In a Newcastle Victorian terrace: 2–3 days. In a modern semi: 1–2 days. Power is
-              off during working hours. Significant dust in lath-and-plaster properties.
+              Chasing walls, running cables through floors and ceiling voids, fitting back boxes. In
+              a Newcastle Victorian terrace: 2–3 days. In a modern semi: 1–2 days. Power is off
+              during working hours. Significant dust in lath-and-plaster properties.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Second Fix</h3>
             <p className="text-white text-sm leading-relaxed">
-              Fitting accessories, consumer unit, testing every circuit. In a Newcastle 3-bed:
-              2–3 days. Power is restored progressively as circuits are completed and tested.
-              The EIC and Part P notification are completed at the end of second fix.
+              Fitting accessories, consumer unit, testing every circuit. In a Newcastle 3-bed: 2–3
+              days. Power is restored progressively as circuits are completed and tested. The EIC
+              and Part P notification are completed at the end of second fix.
             </p>
           </div>
         </div>
@@ -385,15 +387,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing and bonding</strong> — main earth conductor, main bonding to
-                gas, water, and oil pipework.
+                <strong>Earthing and bonding</strong> — main earth conductor, main bonding to gas,
+                water, and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing and certification</strong> — initial verification testing, EIC,
-                and Part P notification.
+                <strong>Testing and certification</strong> — initial verification testing, EIC, and
+                Part P notification.
               </span>
             </li>
           </ul>
@@ -418,16 +420,15 @@ const sections = [
         <p>
           A full rewire is notifiable work under Part P of the Building Regulations (England). The
           work must be carried out by an electrician registered with a competent person scheme —
-          such as{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA —
-          or the homeowner must notify Newcastle City Council Building Control before work starts.
+          such as <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA — or
+          the homeowner must notify Newcastle City Council Building Control before work starts.
         </p>
         <p>
-          A registered electrician self-certifies the work, notifies Newcastle City Council, and
-          you receive a Building Regulations Compliance Certificate within 30 days. Using an
-          unregistered electrician means a building control inspection fee of £150–£280 and a
-          longer process. On completion, the electrician must issue an{' '}
+          A registered electrician self-certifies the work, notifies Newcastle City Council, and you
+          receive a Building Regulations Compliance Certificate within 30 days. Using an
+          unregistered electrician means a building control inspection fee of £150–£280 and a longer
+          process. On completion, the electrician must issue an{' '}
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
@@ -443,8 +444,8 @@ const sections = [
       <>
         <p>
           A full rewire causes significant disruption, particularly in Victorian terraces with
-          lath-and-plaster walls. Plan accommodation and budget for the full project cost —
-          not just the electrical work.
+          lath-and-plaster walls. Plan accommodation and budget for the full project cost — not just
+          the electrical work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -452,23 +453,23 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Wall chasing creates dust and noise</strong> — cutting channels in
-                lath-and-plaster or brick generates significant dust. Cover furniture and seal
-                off rooms during first fix.
+                lath-and-plaster or brick generates significant dust. Cover furniture and seal off
+                rooms during first fix.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power is off during first fix</strong> — the electricity supply is
-                isolated while new circuits are installed. Many residents stay elsewhere during
-                the first fix phase.
+                <strong>Power is off during first fix</strong> — the electricity supply is isolated
+                while new circuits are installed. Many residents stay elsewhere during the first fix
+                phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Replastering is a separate cost</strong> — after chases are filled,
-                a plasterer reinstates the wall surfaces. Budget £300 to £800 for a Victorian
+                <strong>Replastering is a separate cost</strong> — after chases are filled, a
+                plasterer reinstates the wall surfaces. Budget £300 to £800 for a Victorian
                 Newcastle terrace. Post-war properties with plasterboard: £100 to £300.
               </span>
             </li>
@@ -476,8 +477,8 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Decoration follows plastering</strong> — once the plaster has dried
-                (typically 2 to 4 weeks for new plaster), the walls can be painted. Budget
-                for this as part of the total project cost.
+                (typically 2 to 4 weeks for new plaster), the walls can be painted. Budget for this
+                as part of the total project cost.
               </span>
             </li>
           </ul>
@@ -499,16 +500,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by
-                Newcastle or Tyne and Wear postcode on the scheme's online register.
-                Non-negotiable for Part P compliance.
+                <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by Newcastle
+                or Tyne and Wear postcode on the scheme's online register. Non-negotiable for Part P
+                compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ask about local terrace and semi experience</strong> — rewiring a Heaton
-                or Fenham Victorian terrace differs from a Ponteland modern detached. Ask for
+                <strong>Ask about local terrace and semi experience</strong> — rewiring a Heaton or
+                Fenham Victorian terrace differs from a Ponteland modern detached. Ask for
                 references from similar North East properties.
               </span>
             </li>
@@ -522,15 +523,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Confirm minimum £2 million public liability insurance</strong> — ask for
-                a copy of the certificate before work starts.
+                <strong>Confirm minimum £2 million public liability insurance</strong> — ask for a
+                copy of the certificate before work starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check EIC and Part P notification are included</strong> — mandatory for
-                all rewires in England. If absent from the quote, the quote is incomplete.
+                <strong>Check EIC and Part P notification are included</strong> — mandatory for all
+                rewires in England. If absent from the quote, the quote is incomplete.
               </span>
             </li>
           </ul>
@@ -555,7 +556,7 @@ export default function RewireCostNewcastlePage() {
       title="House Rewire Cost Newcastle 2025 | Rewire Prices North East"
       description="How much does a house rewire cost in Newcastle in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Heaton and Jesmond, Part P notification, disruption, replastering costs, and finding a NICEIC-registered electrician in the North East."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -111,7 +111,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/tools/eic-certificate',
     title: 'EIC Certificate App',
-    description: 'Generate compliant Electrical Installation Certificates on your phone with instant PDF export.',
+    description:
+      'Generate compliant Electrical Installation Certificates on your phone with instant PDF export.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -128,17 +129,17 @@ const sections = [
     content: (
       <>
         <p>
-          Cable jointing is the process of creating a permanent, insulated connection between
-          two lengths of cable. In UK electrical installations, jointing arises in several
-          common scenarios: extending underground cable runs, repairing damaged cables,
-          connecting distribution cables to service cables, and jointing LV mains cables
-          in public and private distribution networks.
+          Cable jointing is the process of creating a permanent, insulated connection between two
+          lengths of cable. In UK electrical installations, jointing arises in several common
+          scenarios: extending underground cable runs, repairing damaged cables, connecting
+          distribution cables to service cables, and jointing LV mains cables in public and private
+          distribution networks.
         </p>
         <p>
-          The fundamental requirement — from BS 7671:2018+A3:2024 Regulation 526.1 — is that
-          a joint must provide electrical continuity and mechanical strength equivalent to the
-          cable itself, together with insulation and environmental protection commensurate with
-          the cable type and installation conditions.
+          The fundamental requirement — from BS 7671:2018+A3:2024 Regulation 526.1 — is that a joint
+          must provide electrical continuity and mechanical strength equivalent to the cable itself,
+          together with insulation and environmental protection commensurate with the cable type and
+          installation conditions.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">Types of Joint by Application</h3>
@@ -146,33 +147,33 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Straight joint:</strong> Joins two cable ends in line. The most
-                common type for underground cable extensions and cable repairs.
+                <strong>Straight joint:</strong> Joins two cable ends in line. The most common type
+                for underground cable extensions and cable repairs.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Tee joint:</strong> Branches off a through-cable to a tee connection.
-                Used in distribution networks and sub-mains from mains cable.
+                <strong>Tee joint:</strong> Branches off a through-cable to a tee connection. Used
+                in distribution networks and sub-mains from mains cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Termination:</strong> Seals the end of a cable for connection to
-                switchgear, transformer, or distribution board. Heat shrink termination kits
-                are the standard solution for LV and MV cables.
+                <strong>Termination:</strong> Seals the end of a cable for connection to switchgear,
+                transformer, or distribution board. Heat shrink termination kits are the standard
+                solution for LV and MV cables.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          For MV (medium voltage, 1kV to 36kV) jointing, specialist training and accreditation
-          is required. Network operators such as National Grid, SP Energy Networks, and UK Power
-          Networks require their own jointing accreditation schemes in addition to basic
-          electrical qualifications. LV jointing (up to 1kV) is within the competence of a
-          qualified electrician familiar with the techniques.
+          For MV (medium voltage, 1kV to 36kV) jointing, specialist training and accreditation is
+          required. Network operators such as National Grid, SP Energy Networks, and UK Power
+          Networks require their own jointing accreditation schemes in addition to basic electrical
+          qualifications. LV jointing (up to 1kV) is within the competence of a qualified
+          electrician familiar with the techniques.
         </p>
       </>
     ),
@@ -183,9 +184,8 @@ const sections = [
     content: (
       <>
         <p>
-          Heat shrink and cold shrink are the two dominant jointing technologies for LV and
-          MV power cables. Each has distinct advantages and is preferred in different
-          installation scenarios.
+          Heat shrink and cold shrink are the two dominant jointing technologies for LV and MV power
+          cables. Each has distinct advantages and is preferred in different installation scenarios.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-4">Heat Shrink Jointing Systems</h3>
@@ -193,25 +193,25 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Polyolefin tubing shrinks to grip the cable when heated with a hot air gun
-                at 120 to 200\u00b0C. Multi-layer MV systems include stress control,
-                insulation, and outer protection tubes applied sequentially.
+                Polyolefin tubing shrinks to grip the cable when heated with a hot air gun at 120 to
+                200\u00b0C. Multi-layer MV systems include stress control, insulation, and outer
+                protection tubes applied sequentially.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Advantages:</strong> Well-established technology, lower material
-                cost, wide range of cable sizes covered, joints can be made in field
-                conditions if a suitable heat source is available.
+                <strong>Advantages:</strong> Well-established technology, lower material cost, wide
+                range of cable sizes covered, joints can be made in field conditions if a suitable
+                heat source is available.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Limitations:</strong> Requires a gas torch or hot air gun — not
-                suitable near flammable materials or in confined spaces with poor ventilation.
-                Overheating can damage the cable insulation beneath the joint.
+                <strong>Limitations:</strong> Requires a gas torch or hot air gun — not suitable
+                near flammable materials or in confined spaces with poor ventilation. Overheating
+                can damage the cable insulation beneath the joint.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -230,33 +230,32 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                Silicone rubber components pre-expanded onto a rigid support tube. Remove
-                the tube by pulling a spiral cord — the silicone contracts to grip the cable
-                without any heat source.
+                Silicone rubber components pre-expanded onto a rigid support tube. Remove the tube
+                by pulling a spiral cord — the silicone contracts to grip the cable without any heat
+                source.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Advantages:</strong> No heat source required — safe in flammable
-                atmospheres, confined spaces, and underground chambers. Silicone provides
-                excellent dielectric properties and long service life. Faster installation
-                in adverse conditions.
+                atmospheres, confined spaces, and underground chambers. Silicone provides excellent
+                dielectric properties and long service life. Faster installation in adverse
+                conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Limitations:</strong> Higher material cost, larger installed size
-                than heat shrink, may not suit cables with irregular profiles or unusual
-                outer diameters.
+                <strong>Limitations:</strong> Higher material cost, larger installed size than heat
+                shrink, may not suit cables with irregular profiles or unusual outer diameters.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Key manufacturers:</strong> 3M Cold Shrink range, nkt Cables JCS
-                jointing systems, Prysmian Group cold shrink kits.
+                <strong>Key manufacturers:</strong> 3M Cold Shrink range, nkt Cables JCS jointing
+                systems, Prysmian Group cold shrink kits.
               </span>
             </li>
           </ul>
@@ -270,29 +269,28 @@ const sections = [
     content: (
       <>
         <p>
-          For smaller-conductor LV cable joints, insulation displacement connectors (IDCs) such
-          as 3M Scotchlok and various mechanical crimp connectors offer a fast and reliable
-          solution without requiring specialist jointing equipment or heat sources.
+          For smaller-conductor LV cable joints, insulation displacement connectors (IDCs) such as
+          3M Scotchlok and various mechanical crimp connectors offer a fast and reliable solution
+          without requiring specialist jointing equipment or heat sources.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Scotchlok IDCs:</strong> A metal contact pierces the cable insulation
-                to make contact with the conductor — no stripping required. Suitable for
-                solid or stranded conductors up to approximately 2.5mm\u00b2 depending on
-                product range. Widely used in telecom, data, and low-current control wiring.
+                <strong>Scotchlok IDCs:</strong> A metal contact pierces the cable insulation to
+                make contact with the conductor — no stripping required. Suitable for solid or
+                stranded conductors up to approximately 2.5mm\u00b2 depending on product range.
+                Widely used in telecom, data, and low-current control wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Crimp ferrules:</strong> Conductors are inserted into a copper or
-                aluminium ferrule and compressed with a ratchet crimping tool calibrated
-                for the ferrule size. Provides a gas-tight connection that resists corrosion.
-                Essential for aluminium conductors where screw-type connectors would cause
-                cold flow and loosening.
+                <strong>Crimp ferrules:</strong> Conductors are inserted into a copper or aluminium
+                ferrule and compressed with a ratchet crimping tool calibrated for the ferrule size.
+                Provides a gas-tight connection that resists corrosion. Essential for aluminium
+                conductors where screw-type connectors would cause cold flow and loosening.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -311,19 +309,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Current capacity:</strong> Always verify that the connector current
-                rating equals or exceeds the cable current-carrying capacity. IDC connectors
-                for data use are not suitable for power cables — the contact area is
-                insufficient for heating-cycle loads.
+                <strong>Current capacity:</strong> Always verify that the connector current rating
+                equals or exceeds the cable current-carrying capacity. IDC connectors for data use
+                are not suitable for power cables — the contact area is insufficient for
+                heating-cycle loads.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Protection after jointing:</strong> After connector installation,
-                the joint must be enclosed in a suitable enclosure providing appropriate
-                IP protection. Do not leave connectors exposed — moisture ingress leads to
-                corrosion and resistance increase over time.
+                <strong>Protection after jointing:</strong> After connector installation, the joint
+                must be enclosed in a suitable enclosure providing appropriate IP protection. Do not
+                leave connectors exposed — moisture ingress leads to corrosion and resistance
+                increase over time.
               </span>
             </li>
           </ul>
@@ -337,47 +335,46 @@ const sections = [
     content: (
       <>
         <p>
-          Correct cable stripping is fundamental to joint quality. Damage to cable insulation
-          during preparation is the leading cause of joint failure. Using the correct tools
-          for each cable type is non-negotiable on quality jointing work.
+          Correct cable stripping is fundamental to joint quality. Damage to cable insulation during
+          preparation is the leading cause of joint failure. Using the correct tools for each cable
+          type is non-negotiable on quality jointing work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outer sheath removal (LV SWA/XLPE):</strong> Use a rotary cable
-                stripper set to cut through the outer sheath without penetrating the armour
-                or bedding. Score a ring cut to the required strip length, then make a
-                longitudinal cut and peel back the sheath. Never use a craft knife around
-                the circumference of the cable.
+                <strong>Outer sheath removal (LV SWA/XLPE):</strong> Use a rotary cable stripper set
+                to cut through the outer sheath without penetrating the armour or bedding. Score a
+                ring cut to the required strip length, then make a longitudinal cut and peel back
+                the sheath. Never use a craft knife around the circumference of the cable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Armour removal:</strong> Cut individual armour wires with side
-                cutters one at a time, or use armour cutters for larger cables. Bend wires
-                back carefully to avoid damaging the cable bedding. Leave sufficient armour
-                for connection to the earth clamp.
+                <strong>Armour removal:</strong> Cut individual armour wires with side cutters one
+                at a time, or use armour cutters for larger cables. Bend wires back carefully to
+                avoid damaging the cable bedding. Leave sufficient armour for connection to the
+                earth clamp.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Core insulation removal:</strong> Use a calibrated wire stripper
-                set for the conductor cross-section. Automatic or ratchet strippers provide
-                the most consistent strip length and avoid nicking conductors. For XLPE
-                insulation, a thermal wire stripper provides the cleanest cut.
+                <strong>Core insulation removal:</strong> Use a calibrated wire stripper set for the
+                conductor cross-section. Automatic or ratchet strippers provide the most consistent
+                strip length and avoid nicking conductors. For XLPE insulation, a thermal wire
+                stripper provides the cleanest cut.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Semi-conducting layer (MV cables):</strong> Use a purpose-made
-                semi-con stripping tool. The semi-con must be removed cleanly to a precise
-                tapered pencil end — any residue left on the XLPE insulation will cause
-                electrical stress concentration and eventual joint failure.
+                <strong>Semi-conducting layer (MV cables):</strong> Use a purpose-made semi-con
+                stripping tool. The semi-con must be removed cleanly to a precise tapered pencil end
+                — any residue left on the XLPE insulation will cause electrical stress concentration
+                and eventual joint failure.
               </span>
             </li>
           </ul>
@@ -391,45 +388,43 @@ const sections = [
     content: (
       <>
         <p>
-          Insulation resistance (IR) testing must be carried out after every cable joint to
-          verify that the joint has not introduced insulation defects. Testing before and after
-          jointing provides a baseline comparison and demonstrates that the joint has not
-          degraded the circuit.
+          Insulation resistance (IR) testing must be carried out after every cable joint to verify
+          that the joint has not introduced insulation defects. Testing before and after jointing
+          provides a baseline comparison and demonstrates that the joint has not degraded the
+          circuit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Test voltage (BS 7671 Chapter 64):</strong> 500V DC for circuits
-                up to 500V nominal; 1,000V DC for circuits 500V to 1,000V. The test voltage
-                must not damage sensitive equipment — disconnect electronic devices before
-                testing.
+                <strong>Test voltage (BS 7671 Chapter 64):</strong> 500V DC for circuits up to 500V
+                nominal; 1,000V DC for circuits 500V to 1,000V. The test voltage must not damage
+                sensitive equipment — disconnect electronic devices before testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Minimum acceptable values:</strong> BS 7671 Table 64 specifies 1M\u03a9
-                minimum for circuits up to 500V and 1M\u03a9 for 500V to 1,000V circuits.
-                In practice, values below 10M\u03a9 on a new joint warrant investigation.
+                minimum for circuits up to 500V and 1M\u03a9 for 500V to 1,000V circuits. In
+                practice, values below 10M\u03a9 on a new joint warrant investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing methodology:</strong> Test between each conductor pair
-                (L1-L2, L1-L3, L2-L3, L1-E, L2-E, L3-E). For three-phase cables with
-                neutral, test N-E and each phase to neutral as well. Record all readings
-                on the test schedule.
+                <strong>Testing methodology:</strong> Test between each conductor pair (L1-L2,
+                L1-L3, L2-L3, L1-E, L2-E, L3-E). For three-phase cables with neutral, test N-E and
+                each phase to neutral as well. Record all readings on the test schedule.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Resin cure time:</strong> If a resin-poured enclosure is used, allow
-                the resin to fully cure per the manufacturer instructions before final IR
-                testing. Testing during cure can give misleadingly low readings.
+                <strong>Resin cure time:</strong> If a resin-poured enclosure is used, allow the
+                resin to fully cure per the manufacturer instructions before final IR testing.
+                Testing during cure can give misleadingly low readings.
               </span>
             </li>
           </ul>
@@ -443,45 +438,45 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671:2018+A3:2024 sets out specific requirements for cable joints and connections
-          in Part 5 (Selection and Erection of Equipment) and Chapter 52 (Selection and Erection
-          of Wiring Systems). Understanding these requirements is essential for compliant
-          installation and EICR assessment.
+          BS 7671:2018+A3:2024 sets out specific requirements for cable joints and connections in
+          Part 5 (Selection and Erection of Equipment) and Chapter 52 (Selection and Erection of
+          Wiring Systems). Understanding these requirements is essential for compliant installation
+          and EICR assessment.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 526.1:</strong> Every connection between conductors or
-                between a conductor and equipment must provide durable electrical continuity
-                and adequate mechanical strength. Connections must use suitable accessories
-                and be made by a skilled person.
+                <strong>Regulation 526.1:</strong> Every connection between conductors or between a
+                conductor and equipment must provide durable electrical continuity and adequate
+                mechanical strength. Connections must use suitable accessories and be made by a
+                skilled person.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 526.3:</strong> Joints must generally be accessible for
-                inspection unless in a compound-filled or encapsulated enclosure. Buried or
-                enclosed joints must be made with specifically designed and tested products.
+                inspection unless in a compound-filled or encapsulated enclosure. Buried or enclosed
+                joints must be made with specifically designed and tested products.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Regulation 543.1:</strong> The circuit protective conductor must be
-                continuous and of sufficient cross-sectional area. A joint in the CPC must
-                meet the same requirements as joints in phase conductors.
+                continuous and of sufficient cross-sectional area. A joint in the CPC must meet the
+                same requirements as joints in phase conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mechanical protection:</strong> Regulation 522.6 requires that cables
-                be protected against mechanical damage appropriate to the installation. Joints
-                in cable ducts or underground should be enclosed in a suitably rated junction
-                box or compound-filled system.
+                <strong>Mechanical protection:</strong> Regulation 522.6 requires that cables be
+                protected against mechanical damage appropriate to the installation. Joints in cable
+                ducts or underground should be enclosed in a suitably rated junction box or
+                compound-filled system.
               </span>
             </li>
           </ul>
@@ -490,7 +485,10 @@ const sections = [
           Record all jointing work on a{' '}
           <SEOInternalLink href="/tools/minor-works" label="Minor Works Certificate" /> for small
           repairs or an{' '}
-          <SEOInternalLink href="/tools/eic-certificate" label="Electrical Installation Certificate" />{' '}
+          <SEOInternalLink
+            href="/tools/eic-certificate"
+            label="Electrical Installation Certificate"
+          />{' '}
           for new circuit work. Test results must be documented.
         </p>
       </>
@@ -511,15 +509,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" />{' '}
-                — issue minor electrical installation works certificates for cable repairs
-                and joint work, including pre- and post-repair insulation resistance readings.
+                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                minor electrical installation works certificates for cable repairs and joint work,
+                including pre- and post-repair insulation resistance readings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eic-certificate" label="Electrical Installation Certificate" />{' '}
+                <SEOAppBridge
+                  href="/tools/eic-certificate"
+                  label="Electrical Installation Certificate"
+                />{' '}
                 — generate a compliant EIC for new underground cable installations including
                 jointing details and test schedules.
               </span>
@@ -527,9 +528,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" />{' '}
-                — document inaccessible or defective joints identified during periodic
-                inspection as C2 or C3 observations with photographic evidence.
+                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — document
+                inaccessible or defective joints identified during periodic inspection as C2 or C3
+                observations with photographic evidence.
               </span>
             </li>
           </ul>
@@ -549,7 +550,7 @@ export default function CableJointingGuidePage() {
       title="Cable Jointing Guide — LV and MV Jointing for UK Electricians"
       description="Complete guide to cable jointing for UK electricians: heat shrink vs cold shrink joints, Scotchlok connectors, cable stripping techniques, insulation testing after jointing, and BS 7671 Regulations 526.1 and 526.3 requirements."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cable Jointing"

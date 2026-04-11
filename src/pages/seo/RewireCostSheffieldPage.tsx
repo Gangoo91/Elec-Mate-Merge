@@ -40,7 +40,7 @@ const tocItems = [
 
 const keyTakeaways = [
   'A full house rewire in Sheffield costs between £2,100 and £7,200+ in 2025. Sheffield and South Yorkshire electrician day rates of £255 to £370 are competitive — broadly similar to Newcastle and below the national average.',
-  'Sheffield has one of the most topographically varied housing stocks in England. The city\'s hilly terrain means properties in areas such as Broomhill, Crookes, Walkley, and Hillsborough often have split-level layouts that add complexity to cable routing.',
+  "Sheffield has one of the most topographically varied housing stocks in England. The city's hilly terrain means properties in areas such as Broomhill, Crookes, Walkley, and Hillsborough often have split-level layouts that add complexity to cable routing.",
   'A full rewire is notifiable under Part P of the Building Regulations (England). Use a NICEIC, NAPIT, or ELECSA-registered electrician to self-certify and avoid Sheffield City Council building control inspection fees.',
   'A typical rewire takes 3–5 days for a 2-bed property and 5–8 days for a 3-bed. Wall chasing, replastering, and periods without power during first fix are all part of the process.',
   'An Electrical Installation Certificate (EIC) is mandatory on completion of every rewire, confirming compliance with BS 7671:2018+A3:2024.',
@@ -65,12 +65,12 @@ const faqs = [
   {
     question: 'What are the signs my Sheffield property needs a rewire?',
     answer:
-      'Key warning signs include: fabric-covered or rubber-insulated wiring (common in Sheffield properties built before 1960, particularly in the steel-industry workers\' terraces in the inner west), a wooden-backed rewirable fuse board with wire fuses, sockets or switches that feel warm or show scorch marks, circuit breakers that trip repeatedly or fuses that blow, no earth connection at sockets, and a burning smell from outlets or the consumer unit. An EICR will confirm the full picture and the extent of work needed.',
+      "Key warning signs include: fabric-covered or rubber-insulated wiring (common in Sheffield properties built before 1960, particularly in the steel-industry workers' terraces in the inner west), a wooden-backed rewirable fuse board with wire fuses, sockets or switches that feel warm or show scorch marks, circuit breakers that trip repeatedly or fuses that blow, no earth connection at sockets, and a burning smell from outlets or the consumer unit. An EICR will confirm the full picture and the extent of work needed.",
   },
   {
     question: 'Are there any grants for rewiring in Sheffield or South Yorkshire?',
     answer:
-      'The national ECO4 (Energy Company Obligation) scheme can fund some electrical work for eligible households linked to energy efficiency improvements. Sheffield City Council\'s private housing team has historically offered support for essential home improvements for vulnerable residents. The South Yorkshire Mayoral Combined Authority and local housing associations also operate various schemes. Contact Sheffield City Council\'s housing improvement team or the national Home Energy helpline (0300 123 1234) for current availability.',
+      "The national ECO4 (Energy Company Obligation) scheme can fund some electrical work for eligible households linked to energy efficiency improvements. Sheffield City Council's private housing team has historically offered support for essential home improvements for vulnerable residents. The South Yorkshire Mayoral Combined Authority and local housing associations also operate various schemes. Contact Sheffield City Council's housing improvement team or the national Home Energy helpline (0300 123 1234) for current availability.",
   },
   {
     question: 'What does a full Sheffield rewire include?',
@@ -183,8 +183,8 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
-          , and Part P notification. Making good (plastering and decoration) is quoted separately
-          — budget an additional £350 to £900 for a standard Sheffield Victorian terrace.
+          , and Part P notification. Making good (plastering and decoration) is quoted separately —
+          budget an additional £350 to £900 for a standard Sheffield Victorian terrace.
         </p>
         <p>
           Hillside Victorian terraces in Walkley, Crookes, Broomhill, and Hillsborough sit at the
@@ -200,10 +200,10 @@ const sections = [
     content: (
       <>
         <p>
-          Sheffield's housing stock reflects its industrial heritage — dense Victorian and
-          Edwardian working-class terraces in the inner west and north, larger inter-war semis
-          in the suburban south-west, and post-war estates throughout. The city's steep topography
-          adds a unique dimension to rewire complexity.
+          Sheffield's housing stock reflects its industrial heritage — dense Victorian and Edwardian
+          working-class terraces in the inner west and north, larger inter-war semis in the suburban
+          south-west, and post-war estates throughout. The city's steep topography adds a unique
+          dimension to rewire complexity.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -229,26 +229,26 @@ const sections = [
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Inter-war semis and bungalows (1920s–1940s):</strong> Woodseats, Norton,
-                Greenhill, Dore, and Totley. Cavity brick construction with accessible lofts.
-                Many have original VIR wiring or early PVC installations without adequate earthing.
+                Greenhill, Dore, and Totley. Cavity brick construction with accessible lofts. Many
+                have original VIR wiring or early PVC installations without adequate earthing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Post-war estates (1950s–1970s):</strong> Gleadless Valley, Arbourthorne,
-                Firth Park, and Parson Cross. Plasterboard or large-panel construction — the
-                easiest to rewire. Consumer units commonly have BS 3036 rewirable fuses or early
-                single-RCD boards needing replacement.
+                Firth Park, and Parson Cross. Plasterboard or large-panel construction — the easiest
+                to rewire. Consumer units commonly have BS 3036 rewirable fuses or early single-RCD
+                boards needing replacement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Building2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Converted flats (Broomhill, Crookesmoor, Broomhall):</strong> Student
-                and private rental market areas with many Victorian houses converted into flats.
-                Quality of conversion varies — multi-era wiring, shared circuits, and undersized
-                sub-mains are common EICR findings.
+                <strong>Converted flats (Broomhill, Crookesmoor, Broomhall):</strong> Student and
+                private rental market areas with many Victorian houses converted into flats. Quality
+                of conversion varies — multi-era wiring, shared circuits, and undersized sub-mains
+                are common EICR findings.
               </span>
             </li>
           </ul>
@@ -262,26 +262,25 @@ const sections = [
     content: (
       <>
         <p>
-          An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the definitive
-          method to confirm rewire need. These warning signs indicate an inspection is urgently
-          needed:
+          An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the
+          definitive method to confirm rewire need. These warning signs indicate an inspection is
+          urgently needed:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring
-                beyond its safe service life, very common in Sheffield's Victorian terrace stock
-                across Walkley, Crookes, and Heeley.
+                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring beyond
+                its safe service life, very common in Sheffield's Victorian terrace stock across
+                Walkley, Crookes, and Heeley.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse board</strong> — a wooden-backed board with wire fuses.
-                No RCD protection — a serious fire and electric shock risk.
+                <strong>Rewirable fuse board</strong> — a wooden-backed board with wire fuses. No
+                RCD protection — a serious fire and electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -332,24 +331,24 @@ const sections = [
             <h3 className="font-bold text-white text-lg mb-3">First Fix</h3>
             <p className="text-white text-sm leading-relaxed">
               Chasing walls, running cables through floors and ceiling voids, installing back boxes.
-              In a Sheffield Victorian terrace: 2–3 days. In a hillside split-level property:
-              3–4 days. In a modern semi: 1–2 days. Power is off during working hours.
+              In a Sheffield Victorian terrace: 2–3 days. In a hillside split-level property: 3–4
+              days. In a modern semi: 1–2 days. Power is off during working hours.
             </p>
           </div>
           <div className="rounded-2xl bg-green-500/10 border border-green-500/20 p-5">
             <h3 className="font-bold text-white text-lg mb-3">Second Fix</h3>
             <p className="text-white text-sm leading-relaxed">
-              Fitting accessories, consumer unit, testing every circuit. In a Sheffield 3-bed:
-              2–3 days. Power is restored progressively as circuits are completed. The EIC and
-              Part P notification are completed at the end of second fix.
+              Fitting accessories, consumer unit, testing every circuit. In a Sheffield 3-bed: 2–3
+              days. Power is restored progressively as circuits are completed. The EIC and Part P
+              notification are completed at the end of second fix.
             </p>
           </div>
         </div>
         <p>
           Allow additional time if asbestos is present (common in Sheffield properties from the
-          1950s and 1960s — artex ceilings and vinyl floor tiles are the most frequent sources),
-          or if Northern Powergrid need to be contacted for a supply upgrade (4 to 10 weeks
-          to schedule in South Yorkshire).
+          1950s and 1960s — artex ceilings and vinyl floor tiles are the most frequent sources), or
+          if Northern Powergrid need to be contacted for a supply upgrade (4 to 10 weeks to schedule
+          in South Yorkshire).
         </p>
       </>
     ),
@@ -360,8 +359,8 @@ const sections = [
     content: (
       <>
         <p>
-          A comprehensive rewire quote should itemise every element. Single-figure quotes without
-          a breakdown make it impossible to compare proposals properly.
+          A comprehensive rewire quote should itemise every element. Single-figure quotes without a
+          breakdown make it impossible to compare proposals properly.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-6">
           <ul className="space-y-4 text-white">
@@ -389,15 +388,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earthing and bonding</strong> — main earth conductor, main bonding to
-                gas, water, and oil pipework.
+                <strong>Earthing and bonding</strong> — main earth conductor, main bonding to gas,
+                water, and oil pipework.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Testing and certification</strong> — initial verification testing, EIC,
-                and Part P notification.
+                <strong>Testing and certification</strong> — initial verification testing, EIC, and
+                Part P notification.
               </span>
             </li>
           </ul>
@@ -422,16 +421,15 @@ const sections = [
         <p>
           A full rewire is notifiable work under Part P of the Building Regulations (England). The
           work must be carried out by an electrician registered with a competent person scheme —
-          such as{' '}
-          <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA —
-          or the homeowner must notify Sheffield City Council Building Control before the work starts.
+          such as <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA — or
+          the homeowner must notify Sheffield City Council Building Control before the work starts.
         </p>
         <p>
-          A registered electrician self-certifies the work, notifies Sheffield City Council, and
-          you receive a Building Regulations Compliance Certificate within 30 days. An unregistered
-          electrician means a building control inspection fee of £160–£290 and a longer process.
-          On completion, the electrician must issue an{' '}
+          A registered electrician self-certifies the work, notifies Sheffield City Council, and you
+          receive a Building Regulations Compliance Certificate within 30 days. An unregistered
+          electrician means a building control inspection fee of £160–£290 and a longer process. On
+          completion, the electrician must issue an{' '}
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>{' '}
@@ -455,34 +453,33 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Wall chasing creates dust and noise</strong> — cutting channels in
-                lath-and-plaster or brick generates significant debris. Cover furniture and seal
-                off rooms during first fix wherever possible.
+                lath-and-plaster or brick generates significant debris. Cover furniture and seal off
+                rooms during first fix wherever possible.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power is off during first fix</strong> — the electricity supply is
-                isolated while new circuits are installed. Many Sheffield residents stay elsewhere
-                during the first fix phase, particularly in smaller properties.
+                <strong>Power is off during first fix</strong> — the electricity supply is isolated
+                while new circuits are installed. Many Sheffield residents stay elsewhere during the
+                first fix phase, particularly in smaller properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Replastering is a separate cost</strong> — after chases are filled,
-                a plasterer reinstates the wall surfaces. Budget £350 to £900 for making good
-                in a Sheffield Victorian terrace. Post-war properties with plasterboard: £120
-                to £350.
+                <strong>Replastering is a separate cost</strong> — after chases are filled, a
+                plasterer reinstates the wall surfaces. Budget £350 to £900 for making good in a
+                Sheffield Victorian terrace. Post-war properties with plasterboard: £120 to £350.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Hillside properties may require more chasing</strong> — split-level
-                layouts in Walkley, Crookes, and Fulwood sometimes mean longer cable runs and
-                more wall chasing than a flat-site property of the same size. Factor this into
-                your planning and budget.
+                <strong>Hillside properties may require more chasing</strong> — split-level layouts
+                in Walkley, Crookes, and Fulwood sometimes mean longer cable runs and more wall
+                chasing than a flat-site property of the same size. Factor this into your planning
+                and budget.
               </span>
             </li>
           </ul>
@@ -504,17 +501,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by
-                Sheffield or South Yorkshire postcode on the scheme's online register.
-                Non-negotiable for Part P compliance.
+                <strong>Verify NICEIC, NAPIT, or ELECSA registration</strong> — search by Sheffield
+                or South Yorkshire postcode on the scheme's online register. Non-negotiable for Part
+                P compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about hillside terrace experience</strong> — rewiring a split-level
-                Walkley terrace is different from a flat-site semi in Gleadless. Ask for
-                references from similar Sheffield properties.
+                Walkley terrace is different from a flat-site semi in Gleadless. Ask for references
+                from similar Sheffield properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -527,15 +524,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Confirm minimum £2 million public liability insurance</strong> — ask for
-                a copy of the certificate before work starts.
+                <strong>Confirm minimum £2 million public liability insurance</strong> — ask for a
+                copy of the certificate before work starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check EIC and Part P notification are included</strong> — mandatory for
-                all rewires in England. If absent from the quote, the quote is incomplete.
+                <strong>Check EIC and Part P notification are included</strong> — mandatory for all
+                rewires in England. If absent from the quote, the quote is incomplete.
               </span>
             </li>
           </ul>
@@ -560,7 +557,7 @@ export default function RewireCostSheffieldPage() {
       title="House Rewire Cost Sheffield 2025 | Rewire Prices South Yorkshire"
       description="How much does a house rewire cost in Sheffield in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian hillside terraces in Walkley and Crookes, Part P notification, disruption, replastering costs, and finding a NICEIC-registered electrician in Sheffield."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -39,7 +39,7 @@ const tocItems = [
 ];
 
 const keyTakeaways = [
-  'A full house rewire in Bristol costs between £2,500 and £8,000+ in 2025, running 10–15% above the national average. Electrician day rates in Bristol are typically £300 to £420 — above the South West average, reflecting the city\'s strong economy and property values.',
+  "A full house rewire in Bristol costs between £2,500 and £8,000+ in 2025, running 10–15% above the national average. Electrician day rates in Bristol are typically £300 to £420 — above the South West average, reflecting the city's strong economy and property values.",
   'Bristol has extensive Victorian and Edwardian terraced housing in Clifton, Redland, Totterdown, Montpelier, and Bedminster. Lath-and-plaster walls take longer to chase than modern plasterboard, adding time and cost.',
   'A full rewire is notifiable under Part P of the Building Regulations (England). Use a NICEIC, NAPIT, or ELECSA-registered electrician to self-certify and avoid building control inspection fees.',
   'A typical rewire takes 3–5 days for a 2-bed house and 5–8 days for a 3-bed property. Expect wall chasing, replastering, and temporary loss of power during first fix.',
@@ -80,7 +80,7 @@ const faqs = [
   {
     question: 'Are there grants for rewiring a house in Bristol?',
     answer:
-      'Bristol City Council operates a private sector housing scheme that in some circumstances covers essential home repairs including electrical work, targeting older or disabled homeowners in poor housing conditions. The national ECO4 scheme may fund some electrical work linked to energy efficiency improvements. Contact Bristol City Council\'s housing options team to check current availability and eligibility criteria.',
+      "Bristol City Council operates a private sector housing scheme that in some circumstances covers essential home repairs including electrical work, targeting older or disabled homeowners in poor housing conditions. The national ECO4 scheme may fund some electrical work linked to energy efficiency improvements. Contact Bristol City Council's housing options team to check current availability and eligibility criteria.",
   },
 ];
 
@@ -182,12 +182,12 @@ const sections = [
           <SEOInternalLink href="/tools/eic-certificate">
             Electrical Installation Certificate (EIC)
           </SEOInternalLink>
-          , and Part P notification. Making good (plastering and decoration) is quoted separately
-          — budget an additional £500 to £1,500 for a standard Bristol Victorian terrace.
+          , and Part P notification. Making good (plastering and decoration) is quoted separately —
+          budget an additional £500 to £1,500 for a standard Bristol Victorian terrace.
         </p>
         <p>
-          Inner Bristol Victorian terraces (Clifton, Redland, Totterdown, Montpelier, Kingsdown)
-          sit at the upper end of each range. Suburban Bristol properties (Henleaze, Fishponds,
+          Inner Bristol Victorian terraces (Clifton, Redland, Totterdown, Montpelier, Kingsdown) sit
+          at the upper end of each range. Suburban Bristol properties (Henleaze, Fishponds,
           Westbury-on-Trym) and modern estates are at the lower end.
         </p>
       </>
@@ -261,25 +261,24 @@ const sections = [
     content: (
       <>
         <p>
-          An{' '}
-          <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the definitive
-          way to assess whether a rewire is required. These warning signs indicate urgent attention
-          is needed:
+          An <SEOInternalLink href="/guides/eicr-certificate">EICR</SEOInternalLink> is the
+          definitive way to assess whether a rewire is required. These warning signs indicate urgent
+          attention is needed:
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-6">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring
-                that is beyond its safe service life and common in older Bristol terraces.
+                <strong>Fabric-covered or rubber-insulated wiring</strong> — pre-1960s wiring that
+                is beyond its safe service life and common in older Bristol terraces.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse board</strong> — a wooden-backed board with wire fuses.
-                No RCD protection — a serious fire and electric shock risk.
+                <strong>Rewirable fuse board</strong> — a wooden-backed board with wire fuses. No
+                RCD protection — a serious fire and electric shock risk.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -345,10 +344,10 @@ const sections = [
           </div>
         </div>
         <p>
-          Allow additional time if asbestos is present (common in Bristol properties from the
-          1950s to 1970s — artex ceilings and floor tiles are the most common sources), or if a
-          supply upgrade from National Grid Electricity Distribution is needed, which can take 2 to
-          6 weeks to schedule.
+          Allow additional time if asbestos is present (common in Bristol properties from the 1950s
+          to 1970s — artex ceilings and floor tiles are the most common sources), or if a supply
+          upgrade from National Grid Electricity Distribution is needed, which can take 2 to 6 weeks
+          to schedule.
         </p>
       </>
     ),
@@ -382,8 +381,8 @@ const sections = [
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Accessories</strong> — sockets, switches, ceiling roses, and fused
-                connection units. Standard white plastic is included; upgraded finishes are
-                charged extra.
+                connection units. Standard white plastic is included; upgraded finishes are charged
+                extra.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -425,14 +424,14 @@ const sections = [
           means the work must be carried out by an electrician registered with a competent person
           scheme — such as{' '}
           <SEOInternalLink href="/guides/niceic-registration">NICEIC</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA —
-          or the homeowner must notify Bristol City Council Building Control before the work starts.
+          <SEOInternalLink href="/guides/napit-registration">NAPIT</SEOInternalLink>, or ELECSA — or
+          the homeowner must notify Bristol City Council Building Control before the work starts.
         </p>
         <p>
           Using a registered electrician is strongly recommended. They will self-certify the work,
           submit notification to Bristol City Council, and you will receive a Building Regulations
-          Compliance Certificate within 30 days of completion. An unregistered electrician means
-          you pay for a building control inspection (£200–£350) and the process takes longer.
+          Compliance Certificate within 30 days of completion. An unregistered electrician means you
+          pay for a building control inspection (£200–£350) and the process takes longer.
         </p>
         <p>
           On completion, the electrician must issue an{' '}
@@ -460,17 +459,17 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Wall chasing creates dust and debris</strong> — electricians use angle
-                grinders or chasing tools to cut channels for cables. In a Victorian Bristol
-                terrace with lath-and-plaster, this generates significant dust that spreads
-                throughout the property.
+                grinders or chasing tools to cut channels for cables. In a Victorian Bristol terrace
+                with lath-and-plaster, this generates significant dust that spreads throughout the
+                property.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Power is off during first fix</strong> — the supply is isolated while
-                new circuits are installed. Plan for no cooking, heating, or power for several
-                days. Many Bristol residents stay with friends or family during this phase.
+                <strong>Power is off during first fix</strong> — the supply is isolated while new
+                circuits are installed. Plan for no cooking, heating, or power for several days.
+                Many Bristol residents stay with friends or family during this phase.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -517,8 +516,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Ask about Bristol Victorian terrace experience</strong> — hillside terraces
-                in Clifton, Totterdown, and Kingsdown require specific knowledge. Ask for
-                references from similar Bristol properties.
+                in Clifton, Totterdown, and Kingsdown require specific knowledge. Ask for references
+                from similar Bristol properties.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -532,15 +531,15 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Confirm minimum £2 million public liability insurance</strong> — ask for
-                a copy of the certificate before work starts.
+                <strong>Confirm minimum £2 million public liability insurance</strong> — ask for a
+                copy of the certificate before work starts.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Check that EIC and Part P notification are included</strong> — mandatory
-                for all rewires in England. If absent from the quote, the quote is incomplete.
+                <strong>Check that EIC and Part P notification are included</strong> — mandatory for
+                all rewires in England. If absent from the quote, the quote is incomplete.
               </span>
             </li>
           </ul>
@@ -565,15 +564,14 @@ export default function RewireCostBristolPage() {
       title="House Rewire Cost Bristol 2025 | Full Rewire Prices Bristol"
       description="How much does a house rewire cost in Bristol in 2025? Real prices for 2-bed, 3-bed, and 4-bed properties — Victorian terraces in Clifton and Totterdown, Part P notification, disruption, replastering, and finding a NICEIC-registered electrician in Bristol."
       datePublished="2025-01-01"
-      dateModified="2025-03-27"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          House Rewire Cost Bristol:{' '}
-          <span className="text-yellow-400">2025 Price Guide</span>
+          House Rewire Cost Bristol: <span className="text-yellow-400">2025 Price Guide</span>
         </>
       }
       heroSubtitle="Bristol rewire costs in 2025 — from Victorian hillside terraces in Clifton and Totterdown to inter-war semis in Henleaze. Real prices by property size, Part P explained, and what to expect from wall chasing and replastering."

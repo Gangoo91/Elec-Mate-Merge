@@ -87,7 +87,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/restaurant-electrical-cost',
     title: 'Restaurant Electrical Installation Cost',
-    description: 'Commercial kitchen electrical, 3-phase supply, gas interlocks, and emergency lighting costs.',
+    description:
+      'Commercial kitchen electrical, 3-phase supply, gas interlocks, and emergency lighting costs.',
     icon: Building2,
     category: 'Guide',
   },
@@ -143,17 +144,17 @@ const sections = [
             <li className="flex items-start gap-3">
               <Factory className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>HV/LV distribution</strong> — incoming supply, substation or DNO
-                connection, main LV switchboard, power factor correction, sub-distribution
-                boards, and busbar trunking systems for high-density machine areas.
+                <strong>HV/LV distribution</strong> — incoming supply, substation or DNO connection,
+                main LV switchboard, power factor correction, sub-distribution boards, and busbar
+                trunking systems for high-density machine areas.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Factory className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Motor control</strong> — direct-on-line starters, soft starters, variable
-                speed drives, motor control centres, and PLC-based control panels. Often the
-                single largest cost element in a manufacturing facility.
+                speed drives, motor control centres, and PLC-based control panels. Often the single
+                largest cost element in a manufacturing facility.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -171,8 +172,8 @@ const sections = [
                 <SEOInternalLink href="/guides/emergency-lighting-bs5266">
                   BS 5266-1
                 </SEOInternalLink>
-                , fire alarm, machine safety guarding interlocks, and welfare facilities
-                (lighting, power, and hot water in toilets and canteen areas).
+                , fire alarm, machine safety guarding interlocks, and welfare facilities (lighting,
+                power, and hot water in toilets and canteen areas).
               </span>
             </li>
           </ul>
@@ -203,33 +204,33 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Medium manufacturing (moderate motor load)</strong> — £30–£50/m².
-                3-phase distribution, 5–15 motor-driven machines, compressed air ring, emergency
-                lighting. A 2,000m² light engineering factory: £60,000–£100,000.
+                <strong>Medium manufacturing (moderate motor load)</strong> — £30–£50/m². 3-phase
+                distribution, 5–15 motor-driven machines, compressed air ring, emergency lighting. A
+                2,000m² light engineering factory: £60,000–£100,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Heavy manufacturing / food processing (high motor load)</strong> —
-                £45–£65/m². Full MCC, VSD drives, extensive motor control, 3-phase busbar
-                trunking, substation. A 5,000m² food factory: £225,000–£325,000.
+                £45–£65/m². Full MCC, VSD drives, extensive motor control, 3-phase busbar trunking,
+                substation. A 5,000m² food factory: £225,000–£325,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specialist / hazardous area (ATEX zones)</strong> — £65–£120/m² or
-                higher in ATEX zones. Paint finishing, petrochemical, pharmaceutical, or grain
-                handling where explosion-protected equipment is required throughout.
+                <strong>Specialist / hazardous area (ATEX zones)</strong> — £65–£120/m² or higher in
+                ATEX zones. Paint finishing, petrochemical, pharmaceutical, or grain handling where
+                explosion-protected equipment is required throughout.
               </span>
             </li>
           </ul>
         </div>
         <p>
           These are guide rates for estimating purposes. A detailed tender from a qualified
-          industrial electrician based on drawings and equipment schedules is always required
-          before contract. Per-metre rates exclude the HV substation where required.
+          industrial electrician based on drawings and equipment schedules is always required before
+          contract. Per-metre rates exclude the HV substation where required.
         </p>
       </>
     ),
@@ -249,10 +250,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Main LV switchboard</strong> — the main LV switchboard receives the
-                incoming supply from the DNO or substation and distributes to sub-boards or
-                busbar trunking. For a medium industrial site, a 400A–800A TPN main switchboard
-                costs £8,000–£25,000 including MCCB main incomer, metering, and outgoing ways.
+                <strong>Main LV switchboard</strong> — the main LV switchboard receives the incoming
+                supply from the DNO or substation and distributes to sub-boards or busbar trunking.
+                For a medium industrial site, a 400A–800A TPN main switchboard costs £8,000–£25,000
+                including MCCB main incomer, metering, and outgoing ways.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -260,28 +261,28 @@ const sections = [
               <span>
                 <strong>Busbar trunking systems</strong> — for production areas with high plug-in
                 load density (overhead cranes, welding positions, machine tool rows), busbar
-                trunking (sandwich busbar) allows tap-off boxes to be inserted at any point.
-                Cost: £120–£300/m for a 400A busbar system, installed. Tap-off boxes: £300–£800
-                each depending on current rating.
+                trunking (sandwich busbar) allows tap-off boxes to be inserted at any point. Cost:
+                £120–£300/m for a 400A busbar system, installed. Tap-off boxes: £300–£800 each
+                depending on current rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Power factor correction</strong> — industrial sites with large induction
-                motor loads often have poor power factor (PF), resulting in reactive power
-                charges from the DNO. Automatic power factor correction (APFC) panels improve
-                PF to 0.95+ and reduce energy bills. Cost: £5,000–£20,000 depending on kVAr
-                rating. Payback: typically 2–5 years.
+                motor loads often have poor power factor (PF), resulting in reactive power charges
+                from the DNO. Automatic power factor correction (APFC) panels improve PF to 0.95+
+                and reduce energy bills. Cost: £5,000–£20,000 depending on kVAr rating. Payback:
+                typically 2–5 years.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>HV substation</strong> — sites with a maximum demand above approximately
-                800kVA are typically served by a privately-owned HV/LV substation. A 500kVA
-                package substation (transformer, HV switchgear, LV switchboard, civils):
-                £40,000–£80,000. A 1,000kVA or larger installation: £70,000–£150,000+.
+                800kVA are typically served by a privately-owned HV/LV substation. A 500kVA package
+                substation (transformer, HV switchgear, LV switchboard, civils): £40,000–£80,000. A
+                1,000kVA or larger installation: £70,000–£150,000+.
               </span>
             </li>
           </ul>
@@ -295,36 +296,36 @@ const sections = [
     content: (
       <>
         <p>
-          In a manufacturing facility, motor control equipment is frequently the single highest
-          cost element of the electrical installation, often exceeding the distribution and
-          containment costs combined. Understanding the different control options and their costs
-          is essential for accurate budgeting.
+          In a manufacturing facility, motor control equipment is frequently the single highest cost
+          element of the electrical installation, often exceeding the distribution and containment
+          costs combined. Understanding the different control options and their costs is essential
+          for accurate budgeting.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Direct On Line (DOL) starters</strong> — the simplest and lowest-cost
-                method for motors below 4kW (sometimes up to 7.5kW). A DOL starter with
-                contactor and thermal overload in a panel: £200–£600. Suitable for pumps, fans,
-                and conveyors where full-speed starting current is acceptable.
+                <strong>Direct On Line (DOL) starters</strong> — the simplest and lowest-cost method
+                for motors below 4kW (sometimes up to 7.5kW). A DOL starter with contactor and
+                thermal overload in a panel: £200–£600. Suitable for pumps, fans, and conveyors
+                where full-speed starting current is acceptable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Soft starters</strong> — reduce inrush current on starting. Cost for
-                a 15kW soft starter unit: £400–£900. Suitable for pumps, compressors, and
-                conveyors where starting torque is not critical. Do not provide energy savings
-                in steady-state running.
+                <strong>Soft starters</strong> — reduce inrush current on starting. Cost for a 15kW
+                soft starter unit: £400–£900. Suitable for pumps, compressors, and conveyors where
+                starting torque is not critical. Do not provide energy savings in steady-state
+                running.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Variable Speed Drives (VSDs/inverters)</strong> — vary the motor speed
-                to match the process requirement. Provide 30–60% energy savings on fan and pump
+                <strong>Variable Speed Drives (VSDs/inverters)</strong> — vary the motor speed to
+                match the process requirement. Provide 30–60% energy savings on fan and pump
                 applications. Cost for a 15kW VSD: £800–£2,000 for the drive unit. Significant
                 energy savings mean payback periods of 1–4 years are common for pumps and fans.
               </span>
@@ -332,10 +333,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <Settings className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Motor Control Centre (MCC)</strong> — a complete MCC housing starters
-                or VSDs for 20 motors, with PLC control interface: £80,000–£200,000 for the
-                panel assembly, drives, and associated control equipment. Installation and
-                commissioning: £15,000–£40,000 additional.
+                <strong>Motor Control Centre (MCC)</strong> — a complete MCC housing starters or
+                VSDs for 20 motors, with PLC control interface: £80,000–£200,000 for the panel
+                assembly, drives, and associated control equipment. Installation and commissioning:
+                £15,000–£40,000 additional.
               </span>
             </li>
           </ul>
@@ -351,18 +352,18 @@ const sections = [
         <p>
           Cable containment in industrial buildings serves both a protective and an organisational
           function. Heavy-gauge steel cable ladder supports main distribution cables at high level;
-          perforated cable tray handles secondary distribution; steel conduit protects final
-          circuit cables in areas subject to mechanical damage, vehicle traffic, or chemical attack.
+          perforated cable tray handles secondary distribution; steel conduit protects final circuit
+          cables in areas subject to mechanical damage, vehicle traffic, or chemical attack.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heavy cable ladder (main distribution)</strong> — 300–600mm wide, 50mm
-                deep galvanised steel cable ladder for main HV and LV distribution cables. Installed
-                cost including supports and fixings: £40–£120/m. Bends, tees, and reducers:
-                £80–£300 each depending on size.
+                <strong>Heavy cable ladder (main distribution)</strong> — 300–600mm wide, 50mm deep
+                galvanised steel cable ladder for main HV and LV distribution cables. Installed cost
+                including supports and fixings: £40–£120/m. Bends, tees, and reducers: £80–£300 each
+                depending on size.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -385,11 +386,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Armoured cable (SWA)</strong> — used for runs across vehicle traffic
-                areas, into pits and trenches, or where the cable must resist mechanical damage
-                without being enclosed in conduit. Sizes from 2.5mm² 3-core (small motor finals)
-                to 185mm² 4-core (large distribution). Budget an additional 30–50% for armoured
-                cable versus equivalent unarmoured cable in containment.
+                <strong>Armoured cable (SWA)</strong> — used for runs across vehicle traffic areas,
+                into pits and trenches, or where the cable must resist mechanical damage without
+                being enclosed in conduit. Sizes from 2.5mm² 3-core (small motor finals) to 185mm²
+                4-core (large distribution). Budget an additional 30–50% for armoured cable versus
+                equivalent unarmoured cable in containment.
               </span>
             </li>
           </ul>
@@ -413,28 +414,28 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Zone classification</strong> — Zone 0/1/2 (flammable gas/vapour),
-                Zone 20/21/22 (combustible dust). Zone 1 and 21 are the most common in
-                UK industrial premises (spray booths, flour mills, grain stores, solvent
-                storage areas). Zone 0 is relatively rare (inside tanks and vessels).
+                <strong>Zone classification</strong> — Zone 0/1/2 (flammable gas/vapour), Zone
+                20/21/22 (combustible dust). Zone 1 and 21 are the most common in UK industrial
+                premises (spray booths, flour mills, grain stores, solvent storage areas). Zone 0 is
+                relatively rare (inside tanks and vessels).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>ATEX-rated equipment cost premium</strong> — ATEX/UKCA-certified
-                light fittings, switches, junction boxes, motors, and sensors cost 50–150%
-                more than standard equivalents. A standard industrial LED floodlight: £80–£150.
-                ATEX Zone 1 equivalent: £200–£450.
+                <strong>ATEX-rated equipment cost premium</strong> — ATEX/UKCA-certified light
+                fittings, switches, junction boxes, motors, and sensors cost 50–150% more than
+                standard equivalents. A standard industrial LED floodlight: £80–£150. ATEX Zone 1
+                equivalent: £200–£450.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Installation requirements</strong> — wiring in Zone 1 must use
-                Ex-rated cable glands, conduit, and junction boxes. All equipment must be
-                installed by a competent person with specific ATEX training. Post-installation
-                inspection to BS EN IEC 60079-17 is required.
+                <strong>Installation requirements</strong> — wiring in Zone 1 must use Ex-rated
+                cable glands, conduit, and junction boxes. All equipment must be installed by a
+                competent person with specific ATEX training. Post-installation inspection to BS EN
+                IEC 60079-17 is required.
               </span>
             </li>
           </ul>
@@ -469,7 +470,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Motor control centre (10–20 motors, DOL/VSD mix)</strong> — £30,000–£120,000.
+                <strong>Motor control centre (10–20 motors, DOL/VSD mix)</strong> —
+                £30,000–£120,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -500,8 +502,9 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Total — 3,000m² medium manufacturing facility</strong> —{' '}
-                <strong>£100,000–£290,000</strong>. Light industrial unit (1,000m²): £15,000–£40,000.
-                Heavy manufacturing or food processing (10,000m²+): £500,000–£2,000,000+.
+                <strong>£100,000–£290,000</strong>. Light industrial unit (1,000m²):
+                £15,000–£40,000. Heavy manufacturing or food processing (10,000m²+):
+                £500,000–£2,000,000+.
               </span>
             </li>
           </ul>
@@ -524,36 +527,35 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Recommended interval</strong> — five years maximum; three years in
-                harsh environments (chemical exposure, high vibration, frequent switching) or
-                as recommended by the inspector based on the previous report findings.
+                <strong>Recommended interval</strong> — five years maximum; three years in harsh
+                environments (chemical exposure, high vibration, frequent switching) or as
+                recommended by the inspector based on the previous report findings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Production shutdown planning</strong> — a full EICR requires isolation
-                and testing of each circuit. This is typically planned during planned maintenance
-                shutdowns, annual leave periods, or overnight working to minimise production
-                impact.
+                <strong>Production shutdown planning</strong> — a full EICR requires isolation and
+                testing of each circuit. This is typically planned during planned maintenance
+                shutdowns, annual leave periods, or overnight working to minimise production impact.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Employer's liability implications</strong> — under the Electricity at
-                Work Regulations 1989 (EAW), employers have a duty to ensure electrical systems
-                are maintained in a safe condition. An EICR provides documentary evidence of
-                this duty being discharged. In the event of an electrical incident, absence of
-                an EICR is a significant adverse factor in any HSE investigation.
+                <strong>Employer's liability implications</strong> — under the Electricity at Work
+                Regulations 1989 (EAW), employers have a duty to ensure electrical systems are
+                maintained in a safe condition. An EICR provides documentary evidence of this duty
+                being discharged. In the event of an electrical incident, absence of an EICR is a
+                significant adverse factor in any HSE investigation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EICR cost for industrial premises</strong> — small factory: £600–£1,500.
-                Medium factory (3,000m², multiple boards): £1,500–£4,000. Large plant with MCC
-                and HV substation: £4,000–£12,000+.
+                Medium factory (3,000m², multiple boards): £1,500–£4,000. Large plant with MCC and
+                HV substation: £4,000–£12,000+.
               </span>
             </li>
           </ul>
@@ -567,11 +569,11 @@ const sections = [
     content: (
       <>
         <p>
-          Industrial electrical work demands a higher level of technical knowledge than domestic
-          or light commercial work — 3-phase distribution design, motor control, ATEX regulations,
-          and BS EN 60204-1 machine safety wiring. Electricians who develop these skills command
-          higher day rates and access a client base that provides long-term maintenance and
-          project contracts.
+          Industrial electrical work demands a higher level of technical knowledge than domestic or
+          light commercial work — 3-phase distribution design, motor control, ATEX regulations, and
+          BS EN 60204-1 machine safety wiring. Electricians who develop these skills command higher
+          day rates and access a client base that provides long-term maintenance and project
+          contracts.
         </p>
         <div className="space-y-4 my-4">
           <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-5">
@@ -585,10 +587,8 @@ const sections = [
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce detailed itemised quotes for industrial projects. Issue{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  for multi-board factory inspections and track each board separately.
+                  <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> for
+                  multi-board factory inspections and track each board separately.
                 </p>
               </div>
             </div>
@@ -614,7 +614,7 @@ export default function IndustrialElectricalCostPage() {
       title="Industrial Electrical Installation Cost UK 2025 | Factory Wiring Costs"
       description="Industrial electrical installation costs UK 2025. Per square metre estimates, 3-phase distribution, motor control centres, cable containment systems, ATEX hazardous areas. Typical manufacturing unit £15,000–£100,000+."
       datePublished="2025-01-01"
-      dateModified="2025-09-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Cost Guide"

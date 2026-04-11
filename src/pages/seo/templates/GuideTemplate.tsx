@@ -8,7 +8,10 @@ import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOSocialShare } from '@/components/seo/SEOSocialShare';
 import { SEOSocialFollow } from '@/components/seo/SEOSocialFollow';
 import { SEOHowToSteps } from '@/components/seo/SEOHowToSteps';
-import { ArrowRight, FileCheck2 } from 'lucide-react';
+import { SEOSocialProofBar } from '@/components/seo/SEOSocialProofBar';
+import { SEOTestimonialStrip } from '@/components/seo/SEOTestimonialStrip';
+import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { ArrowRight, FileCheck2, Zap } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import type { TOCItem } from '@/components/seo/SEOTableOfContents';
 import type { BreadcrumbItem } from '@/components/seo/SEOBreadcrumbs';
@@ -183,6 +186,9 @@ export default function GuideTemplate({
         </div>
       </section>
 
+      {/* Social Proof Bar */}
+      <SEOSocialProofBar />
+
       {/* Key Takeaways */}
       {keyTakeaways && keyTakeaways.length > 0 && (
         <section className="pb-10">
@@ -190,12 +196,24 @@ export default function GuideTemplate({
         </section>
       )}
 
-      {/* Content Sections */}
-      {sections.map((section) => (
-        <section key={section.id} id={section.id} className="pb-10 scroll-mt-24">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">{section.heading}</h2>
-          <div className="space-y-4 text-white leading-relaxed">{section.content}</div>
-        </section>
+      {/* Content Sections — with auto mid-content CTAs every 2 sections */}
+      {sections.map((section, index) => (
+        <div key={section.id}>
+          <section id={section.id} className="pb-10 scroll-mt-24">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">{section.heading}</h2>
+            <div className="space-y-4 text-white leading-relaxed">{section.content}</div>
+          </section>
+
+          {/* Insert mid-content CTA after every 2nd section (but not the last) */}
+          {(index + 1) % 2 === 0 && index < sections.length - 1 && (
+            <SEOAppBridge
+              title="Try Elec-Mate free for 7 days"
+              description="Calculators, certificates, AI agents, and training — everything an electrician needs in one app."
+              ctaText="Start free trial"
+              icon={Zap}
+            />
+          )}
+        </div>
       ))}
 
       {/* How-To Steps */}
@@ -218,6 +236,9 @@ export default function GuideTemplate({
           <SEORelatedPages pages={relatedPages} />
         </section>
       )}
+
+      {/* Testimonials — social proof before the final CTA */}
+      <SEOTestimonialStrip />
 
       {/* CTA */}
       <SEOCTASection heading={ctaHeading} subheading={ctaSubheading} />

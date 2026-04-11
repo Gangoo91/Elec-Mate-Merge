@@ -90,7 +90,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/cable-jointing-guide',
     title: 'Cable Jointing Guide',
-    description: 'Insulation testing after jointing, BS 7671 Regulation 526, and jointing techniques.',
+    description:
+      'Insulation testing after jointing, BS 7671 Regulation 526, and jointing techniques.',
     icon: Wrench,
     category: 'Guide',
   },
@@ -128,54 +129,87 @@ const sections = [
     content: (
       <>
         <p>
-          A multifunction tester (MFT) is the cornerstone instrument of every UK electrician's
-          test kit. It combines the most frequently used electrical installation tests in a
-          single portable instrument, making it indispensable for EICR work, new installation
-          verification, and fault finding.
+          A multifunction tester (MFT) is the cornerstone instrument of every UK electrician's test
+          kit. It combines the most frequently used electrical installation tests in a single
+          portable instrument, making it indispensable for EICR work, new installation verification,
+          and fault finding.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <h3 className="text-lg font-semibold text-white mb-3">What an MFT Must Measure</h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Insulation resistance (IR):</strong> 250V, 500V, and 1,000V DC test voltages. Required for circuits up to 1,000V per BS 7671 Chapter 64.</span>
+              <span>
+                <strong>Insulation resistance (IR):</strong> 250V, 500V, and 1,000V DC test
+                voltages. Required for circuits up to 1,000V per BS 7671 Chapter 64.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Earth continuity:</strong> Low resistance measurement using a 200mA test current per BS EN 61557-4 to verify CPC integrity.</span>
+              <span>
+                <strong>Earth continuity:</strong> Low resistance measurement using a 200mA test
+                current per BS EN 61557-4 to verify CPC integrity.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Earth fault loop impedance (Zs and Ze):</strong> Live measurement of loop impedance to verify disconnection times per BS 7671 Chapter 41.</span>
+              <span>
+                <strong>Earth fault loop impedance (Zs and Ze):</strong> Live measurement of loop
+                impedance to verify disconnection times per BS 7671 Chapter 41.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>RCD testing:</strong> Trip time at rated, half rated, and five times rated current; ramp test; plus high-current trip test for Type B RCDs on modern instruments.</span>
+              <span>
+                <strong>RCD testing:</strong> Trip time at rated, half rated, and five times rated
+                current; ramp test; plus high-current trip test for Type B RCDs on modern
+                instruments.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Prospective short-circuit current (PSCC):</strong> Measured at the supply origin to verify that protective devices have sufficient breaking capacity.</span>
+              <span>
+                <strong>Prospective short-circuit current (PSCC):</strong> Measured at the supply
+                origin to verify that protective devices have sufficient breaking capacity.
+              </span>
             </li>
           </ul>
         </div>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Recommended MFT Instruments (2024)</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">
+            Recommended MFT Instruments (2024)
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Megger MFT1741:</strong> Popular mid-range instrument, auto-sequence testing, 10mA RCD testing, USB connectivity. Street price approximately \u00a3450 to \u00a3550.</span>
+              <span>
+                <strong>Megger MFT1741:</strong> Popular mid-range instrument, auto-sequence
+                testing, 10mA RCD testing, USB connectivity. Street price approximately \u00a3450 to
+                \u00a3550.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Fluke 1664FC:</strong> Wireless connectivity to Fluke Connect app, auto-sequence, ramp RCD test, compact form factor. Street price approximately \u00a3600 to \u00a3750.</span>
+              <span>
+                <strong>Fluke 1664FC:</strong> Wireless connectivity to Fluke Connect app,
+                auto-sequence, ramp RCD test, compact form factor. Street price approximately
+                \u00a3600 to \u00a3750.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Metrel MI3152:</strong> Comprehensive RCD test range including Type B, EV charger testing capability, Bluetooth. Street price approximately \u00a3700 to \u00a3900.</span>
+              <span>
+                <strong>Metrel MI3152:</strong> Comprehensive RCD test range including Type B, EV
+                charger testing capability, Bluetooth. Street price approximately \u00a3700 to
+                \u00a3900.
+              </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
-              <span><strong>Kewtech KT65:</strong> Budget-friendly option for apprentices and occasional use. Good basic functionality at approximately \u00a3280 to \u00a3350.</span>
+              <span>
+                <strong>Kewtech KT65:</strong> Budget-friendly option for apprentices and occasional
+                use. Good basic functionality at approximately \u00a3280 to \u00a3350.
+              </span>
             </li>
           </ul>
         </div>
@@ -189,44 +223,43 @@ const sections = [
       <>
         <p>
           A clamp meter measures AC current by sensing the magnetic field around a conductor,
-          without requiring the circuit to be broken. This makes it an invaluable diagnostic
-          tool for measuring load currents, identifying unbalanced three-phase loads, and
-          tracing fault currents.
+          without requiring the circuit to be broken. This makes it an invaluable diagnostic tool
+          for measuring load currents, identifying unbalanced three-phase loads, and tracing fault
+          currents.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>AC clamp meters:</strong> The standard type, measuring fundamental
-                50Hz current. Suitable for most domestic and commercial electrical work.
-                Range: typically 0.1A to 600A or 1,000A depending on model.
+                <strong>AC clamp meters:</strong> The standard type, measuring fundamental 50Hz
+                current. Suitable for most domestic and commercial electrical work. Range: typically
+                0.1A to 600A or 1,000A depending on model.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>True RMS clamp meters:</strong> Measure the true root-mean-square
-                value of non-sinusoidal waveforms, giving accurate readings in circuits with
-                variable-speed drives, LED drivers, switch-mode power supplies, and other
-                non-linear loads. Recommended for modern commercial installations.
+                <strong>True RMS clamp meters:</strong> Measure the true root-mean-square value of
+                non-sinusoidal waveforms, giving accurate readings in circuits with variable-speed
+                drives, LED drivers, switch-mode power supplies, and other non-linear loads.
+                Recommended for modern commercial installations.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Flexible clamp (Rogowski coil):</strong> A flexible current sensor
-                that can be looped around large conductors or multiple conductors in tight
-                spaces where a rigid clamp cannot be positioned. Useful for busbars and
-                large LV cables.
+                <strong>Flexible clamp (Rogowski coil):</strong> A flexible current sensor that can
+                be looped around large conductors or multiple conductors in tight spaces where a
+                rigid clamp cannot be positioned. Useful for busbars and large LV cables.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Recommended models:</strong> Fluke 376FC (true RMS, wireless), Fluke
-                325 (compact, 400A), Megger DCM305E, Kewtech KC20. For occasional use,
-                a Uni-T or Klein Tools clamp meter provides basic functionality at lower cost.
+                <strong>Recommended models:</strong> Fluke 376FC (true RMS, wireless), Fluke 325
+                (compact, 400A), Megger DCM305E, Kewtech KC20. For occasional use, a Uni-T or Klein
+                Tools clamp meter provides basic functionality at lower cost.
               </span>
             </li>
           </ul>
@@ -241,31 +274,29 @@ const sections = [
       <>
         <p>
           Before working on any electrical circuit, proving the circuit is dead is a legal
-          requirement under the Electricity at Work Regulations 1989. The correct instrument
-          for this is a two-pole voltage indicator (also called a voltage tester), not a
-          multimeter.
+          requirement under the Electricity at Work Regulations 1989. The correct instrument for
+          this is a two-pole voltage indicator (also called a voltage tester), not a multimeter.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-pole voltage tester:</strong> Applies a load to the circuit under
-                test, detecting induced voltages that high-impedance multimeters would
-                misread as live. GS38 compliant probes and test leads required. Use a proving
-                unit before and after every dead test. Recommended: Fluke T5-600, Megger
-                LVD1500, Martindale VI15000, Kewtech KT150.
+                <strong>Two-pole voltage tester:</strong> Applies a load to the circuit under test,
+                detecting induced voltages that high-impedance multimeters would misread as live.
+                GS38 compliant probes and test leads required. Use a proving unit before and after
+                every dead test. Recommended: Fluke T5-600, Megger LVD1500, Martindale VI15000,
+                Kewtech KT150.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Non-contact voltage tester (NCV / proximity tester):</strong> A
-                useful supplementary tool for quickly identifying live conductors before
-                using a two-pole tester. NCV testers detect the electric field around
-                conductors without contact. Not acceptable as the sole method of proving dead
-                — always follow up with a two-pole test. Popular models: Fluke LVD2, Klein
-                Tools NCVT-3.
+                <strong>Non-contact voltage tester (NCV / proximity tester):</strong> A useful
+                supplementary tool for quickly identifying live conductors before using a two-pole
+                tester. NCV testers detect the electric field around conductors without contact. Not
+                acceptable as the sole method of proving dead — always follow up with a two-pole
+                test. Popular models: Fluke LVD2, Klein Tools NCVT-3.
               </span>
             </li>
           </ul>
@@ -279,37 +310,36 @@ const sections = [
     content: (
       <>
         <p>
-          Earth fault loop impedance testing and RCD testing are core elements of BS 7671
-          Chapter 64 verification requirements. Modern MFTs perform both, but standalone
-          instruments are available for sites with high volumes of RCDs or complex RCD types.
+          Earth fault loop impedance testing and RCD testing are core elements of BS 7671 Chapter 64
+          verification requirements. Modern MFTs perform both, but standalone instruments are
+          available for sites with high volumes of RCDs or complex RCD types.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No-trip loop testers:</strong> Standard loop impedance tests briefly
-                draw a high test current that may trip RCDs. No-trip loop measurement uses a
-                lower current method to measure loop impedance without tripping the RCD — useful
-                where circuit isolation is impractical. Available on most modern MFTs and
-                standalone loop testers.
+                <strong>No-trip loop testers:</strong> Standard loop impedance tests briefly draw a
+                high test current that may trip RCDs. No-trip loop measurement uses a lower current
+                method to measure loop impedance without tripping the RCD — useful where circuit
+                isolation is impractical. Available on most modern MFTs and standalone loop testers.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD ramp test:</strong> Gradually increases the test current from a
-                low starting value until the RCD trips, identifying the actual trip threshold.
-                Important for verifying 10mA and 30mA RCDs operate within limits and do not
-                trip prematurely (nuisance tripping) or late.
+                <strong>RCD ramp test:</strong> Gradually increases the test current from a low
+                starting value until the RCD trips, identifying the actual trip threshold. Important
+                for verifying 10mA and 30mA RCDs operate within limits and do not trip prematurely
+                (nuisance tripping) or late.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Type B RCD testing:</strong> EV chargers and some industrial equipment
-                require Type B RCDs (sensitive to DC fault current components). Type B RCD
-                testing requires specialist MFTs such as the Metrel MI3155 or Megger MFT1835.
+                require Type B RCDs (sensitive to DC fault current components). Type B RCD testing
+                requires specialist MFTs such as the Metrel MI3155 or Megger MFT1835.
               </span>
             </li>
           </ul>
@@ -323,43 +353,50 @@ const sections = [
     content: (
       <>
         <p>
-          CAT (Measurement Category) ratings are defined in BS EN 61010-1 and define the
-          overvoltage impulse withstand capability of a measuring instrument. Using an
-          under-rated instrument at higher CAT levels creates a serious risk of arc flash
-          injury when a transient overvoltage occurs.
+          CAT (Measurement Category) ratings are defined in BS EN 61010-1 and define the overvoltage
+          impulse withstand capability of a measuring instrument. Using an under-rated instrument at
+          higher CAT levels creates a serious risk of arc flash injury when a transient overvoltage
+          occurs.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CAT I:</strong> Protected electronic equipment and low-energy circuits. Household electronics on battery or isolated supply. Lowest impulse protection.
+                <strong>CAT I:</strong> Protected electronic equipment and low-energy circuits.
+                Household electronics on battery or isolated supply. Lowest impulse protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CAT II:</strong> Single-phase receptacle connected loads — domestic appliance testing, outlet-connected equipment. Typical domestic household socket circuits.
+                <strong>CAT II:</strong> Single-phase receptacle connected loads — domestic
+                appliance testing, outlet-connected equipment. Typical domestic household socket
+                circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CAT III 600V:</strong> Fixed electrical installation — consumer units, distribution boards, three-phase distribution, industrial equipment. This is the minimum standard for general electrical installation work.
+                <strong>CAT III 600V:</strong> Fixed electrical installation — consumer units,
+                distribution boards, three-phase distribution, industrial equipment. This is the
+                minimum standard for general electrical installation work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CAT IV 600V:</strong> Supply origin, service entrance, electricity metering, outdoor conductors subject to direct lightning exposure. Required for working at the cutout, meter tails, and DNO equipment.
+                <strong>CAT IV 600V:</strong> Supply origin, service entrance, electricity metering,
+                outdoor conductors subject to direct lightning exposure. Required for working at the
+                cutout, meter tails, and DNO equipment.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          When purchasing test equipment, verify the CAT rating and voltage rating are printed
-          on the instrument (not just the test leads). A CAT III 300V instrument is not
-          equivalent to a CAT III 600V instrument — the voltage rating matters.
+          When purchasing test equipment, verify the CAT rating and voltage rating are printed on
+          the instrument (not just the test leads). A CAT III 300V instrument is not equivalent to a
+          CAT III 600V instrument — the voltage rating matters.
         </p>
       </>
     ),
@@ -370,48 +407,47 @@ const sections = [
     content: (
       <>
         <p>
-          Calibration verifies that a test instrument produces accurate measurements within
-          its stated specifications. For electrical installation testing, calibration is essential
-          because incorrect test results can lead to unsafe installations being certified, or
-          safe installations being condemned.
+          Calibration verifies that a test instrument produces accurate measurements within its
+          stated specifications. For electrical installation testing, calibration is essential
+          because incorrect test results can lead to unsafe installations being certified, or safe
+          installations being condemned.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Calibration interval:</strong> Most MFTs should be calibrated annually.
-                The interval may be shorter if the instrument is subject to heavy use,
-                frequent transportation, physical shocks, or if used in demanding
-                environmental conditions.
+                <strong>Calibration interval:</strong> Most MFTs should be calibrated annually. The
+                interval may be shorter if the instrument is subject to heavy use, frequent
+                transportation, physical shocks, or if used in demanding environmental conditions.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>UKAS accreditation:</strong> Calibration by a UKAS (United Kingdom
-                Accreditation Service) accredited laboratory provides traceable calibration
-                linked to national measurement standards. UKAS calibration certificates are
-                the accepted standard for compliance evidence in the UK.
+                Accreditation Service) accredited laboratory provides traceable calibration linked
+                to national measurement standards. UKAS calibration certificates are the accepted
+                standard for compliance evidence in the UK.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Daily check:</strong> Before each use, verify the instrument against
-                a known reference — either a purpose-made calibration check adaptor or a known
-                circuit. Check that the battery is charged and the display is functioning.
-                Record the daily check in the instrument log.
+                <strong>Daily check:</strong> Before each use, verify the instrument against a known
+                reference — either a purpose-made calibration check adaptor or a known circuit.
+                Check that the battery is charged and the display is functioning. Record the daily
+                check in the instrument log.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Competent person scheme providers (NICEIC, NAPIT, ELECSA) may request evidence of
-          current calibration certificates as part of their annual audit process. Keep
-          calibration records accessible — the{' '}
-          <SEOInternalLink href="/tools/eicr-certificate" label="EICR Certificate app" />{' '}
-          can store instrument details alongside test records.
+          Competent person scheme providers (NICEIC, NAPIT, ELECSA) may request evidence of current
+          calibration certificates as part of their annual audit process. Keep calibration records
+          accessible — the{' '}
+          <SEOInternalLink href="/tools/eicr-certificate" label="EICR Certificate app" /> can store
+          instrument details alongside test records.
         </p>
       </>
     ),
@@ -422,27 +458,26 @@ const sections = [
     content: (
       <>
         <p>
-          Test instruments are only as useful as the records produced from them. Elec-Mate
-          helps you record all test results in compliant certificates, reducing paperwork
-          time on site.
+          Test instruments are only as useful as the records produced from them. Elec-Mate helps you
+          record all test results in compliant certificates, reducing paperwork time on site.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" />{' '}
-                — record all loop impedance, insulation resistance, continuity and RCD
-                test results in a structured BS 7671 Chapter 64 format. AI board scanning
-                speeds up schedule of circuits entry.
+                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — record
+                all loop impedance, insulation resistance, continuity and RCD test results in a
+                structured BS 7671 Chapter 64 format. AI board scanning speeds up schedule of
+                circuits entry.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate" />{' '}
-                — generate a complete Electrical Installation Certificate with test schedules,
-                instrument details, and calibration certificate references.
+                <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate" /> — generate a
+                complete Electrical Installation Certificate with test schedules, instrument
+                details, and calibration certificate references.
               </span>
             </li>
           </ul>
@@ -462,7 +497,7 @@ export default function ElectricalTestEquipmentGuidePage() {
       title="Electrical Test Equipment Guide — MFT, Clamp Meter, CAT Ratings, Calibration"
       description="Complete UK buying guide for electricians: multifunction testers (Megger MFT1741, Fluke 1664FC), clamp meters, voltage indicators, CAT III vs CAT IV safety ratings, GS38 compliance, and calibration requirements."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Test Equipment"

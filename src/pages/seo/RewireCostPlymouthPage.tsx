@@ -41,7 +41,7 @@ const keyTakeaways = [
   'A full house rewire in Plymouth typically costs £2,200 to £5,500 depending on property size. Devon labour rates are among the more affordable in England.',
   'All rewiring work must comply with BS 7671:2018+A3:2024 and be notified under Part P of the Building Regulations 2010.',
   'NICEIC and NAPIT registered contractors can self-certify rewiring work in Plymouth — they notify Plymouth City Council building control on your behalf.',
-  'Plymouth has a significant stock of post-war housing built under Plymouth\'s post-Blitz reconstruction programme. Some of this housing may retain original 1950s wiring requiring a full rewire or significant remedial work.',
+  "Plymouth has a significant stock of post-war housing built under Plymouth's post-Blitz reconstruction programme. Some of this housing may retain original 1950s wiring requiring a full rewire or significant remedial work.",
   'Victorian and Edwardian properties in Mutley, Lipson, and Greenbank may retain rubber-insulated wiring that is a C1 (danger present) finding under BS 7671.',
   'On completion, your electrician must issue an Electrical Installation Certificate (EIC) — a legal document required for property sales in Plymouth and Devon.',
 ];
@@ -60,12 +60,12 @@ const faqs = [
   {
     question: 'Does rewiring in Plymouth need Part P notification?',
     answer:
-      'Yes. A full rewire is notifiable work under Part P of the Building Regulations 2010. NICEIC, NAPIT, and ELECSA registered electricians can self-certify the work and notify Plymouth City Council building control on your behalf. If the electrician is not scheme registered, the work must be notified to the council\'s building control department before it begins.',
+      "Yes. A full rewire is notifiable work under Part P of the Building Regulations 2010. NICEIC, NAPIT, and ELECSA registered electricians can self-certify the work and notify Plymouth City Council building control on your behalf. If the electrician is not scheme registered, the work must be notified to the council's building control department before it begins.",
   },
   {
     question: 'What are the signs that a Plymouth property needs rewiring?',
     answer:
-      'Key signs include rubber-insulated or fabric-braided cables (pre-1960s), a rewirable fuse box with ceramic fuse holders, absence of RCD protection on socket circuits, single-core aluminium wiring (1960s–70s), and persistent circuit tripping or fuse failure. Plymouth\'s large stock of post-war reconstruction housing from the 1950s means some properties may retain original wiring that is now 70 years old and requires assessment.',
+      "Key signs include rubber-insulated or fabric-braided cables (pre-1960s), a rewirable fuse box with ceramic fuse holders, absence of RCD protection on socket circuits, single-core aluminium wiring (1960s–70s), and persistent circuit tripping or fuse failure. Plymouth's large stock of post-war reconstruction housing from the 1950s means some properties may retain original wiring that is now 70 years old and requires assessment.",
   },
   {
     question: 'What certificate should I receive after a rewire in Plymouth?',
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/house-rewire-cost',
     title: 'House Rewire Cost Guide',
-    description: 'National rewire cost guide covering all property sizes, what\'s included, and how to compare quotes.',
+    description:
+      "National rewire cost guide covering all property sizes, what's included, and how to compare quotes.",
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -102,14 +103,16 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
-    description: 'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
+    description:
+      'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'Electrical Installation Certificate App',
-    description: 'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
+    description:
+      'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
     icon: FileCheck2,
     category: 'Certificate',
   },
@@ -133,9 +136,9 @@ const sections = [
     content: (
       <>
         <p>
-          Plymouth offers some of the most affordable rewire prices of any major English city.
-          Devon labour rates are typically 15 to 25 per cent below the national average, and
-          significantly below South East England prices. Material costs are consistent across the UK.
+          Plymouth offers some of the most affordable rewire prices of any major English city. Devon
+          labour rates are typically 15 to 25 per cent below the national average, and significantly
+          below South East England prices. Material costs are consistent across the UK.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -157,16 +160,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom semi-detached</strong> — £3,000 to £4,500. Very common
-                across Plymouth's post-war estates in Plymstock, Plympton, Honicknowle, and
-                Whitleigh. Typically 12 to 16 circuits.
+                <strong>Three-bedroom semi-detached</strong> — £3,000 to £4,500. Very common across
+                Plymouth's post-war estates in Plymstock, Plympton, Honicknowle, and Whitleigh.
+                Typically 12 to 16 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom detached</strong> — £4,000 to £5,500. Larger properties
-                in Mannamead, Hartley, and Derriford.
+                <strong>Four-bedroom detached</strong> — £4,000 to £5,500. Larger properties in
+                Mannamead, Hartley, and Derriford.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -204,24 +207,24 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rubber-insulated or fabric-braided cables</strong> — pre-1960s wiring
-                with deteriorated rubber insulation. This is a C1 (danger present) observation
-                on an EICR requiring immediate remedial action.
+                <strong>Rubber-insulated or fabric-braided cables</strong> — pre-1960s wiring with
+                deteriorated rubber insulation. This is a C1 (danger present) observation on an EICR
+                requiring immediate remedial action.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Original 1950s post-war wiring</strong> — Plymouth's reconstruction
-                properties often contain original rubber-insulated wiring that is now 70 years
-                old and past its safe service life.
+                properties often contain original rubber-insulated wiring that is now 70 years old
+                and past its safe service life.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse box</strong> — ceramic fuse holders with fuse wire, common
-                in Plymouth's older housing stock. No RCD protection and limited overcurrent
+                <strong>Rewirable fuse box</strong> — ceramic fuse holders with fuse wire, common in
+                Plymouth's older housing stock. No RCD protection and limited overcurrent
                 protection.
               </span>
             </li>
@@ -236,8 +239,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unsatisfactory EICR</strong> — C1 or C2 observations that cannot be
-                resolved economically through targeted repairs indicate a full rewire is needed.
+                <strong>Unsatisfactory EICR</strong> — C1 or C2 observations that cannot be resolved
+                economically through targeted repairs indicate a full rewire is needed.
               </span>
             </li>
           </ul>
@@ -267,16 +270,16 @@ const sections = [
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>First fix</strong> — removal of existing wiring, routing new cables through
-                floors, walls, and ceiling voids, and installing back boxes and containment. Involves
-                lifted floorboards and chased or surface-run cable routes.
+                floors, walls, and ceiling voids, and installing back boxes and containment.
+                Involves lifted floorboards and chased or surface-run cable routes.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Second fix</strong> — fitting the consumer unit, connecting all circuits,
-                installing sockets, switches, and light fittings. Power is restored at the end
-                of this stage.
+                installing sockets, switches, and light fittings. Power is restored at the end of
+                this stage.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -356,8 +359,8 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations 2010 applies throughout England including Plymouth.
-          A full rewire is notifiable work and must comply with BS 7671:2018+A3:2024.
+          Part P of the Building Regulations 2010 applies throughout England including Plymouth. A
+          full rewire is notifiable work and must comply with BS 7671:2018+A3:2024.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -381,8 +384,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EIC mandatory</strong> — an Electrical Installation Certificate must be
-                issued on completion. This is required for property sales and should be stored
-                with your property deeds.
+                issued on completion. This is required for property sales and should be stored with
+                your property deeds.
               </span>
             </li>
           </ul>
@@ -419,8 +422,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify insurance</strong> — public liability insurance of at least £1 million
-                is required. Scheme members maintain this as a condition of registration.
+                <strong>Verify insurance</strong> — public liability insurance of at least £1
+                million is required. Scheme members maintain this as a condition of registration.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -499,9 +502,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Complete EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete your Electrical Installation Certificate on your phone before leaving
                   the property. Auto-populated test schedules and instant PDF export mean customers
                   receive their certificate the same day.
@@ -546,7 +547,7 @@ export default function RewireCostPlymouthPage() {
       title="House Rewire Cost Plymouth 2025 | Rewire Prices Devon"
       description="House rewire costs in Plymouth for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs your Devon property needs rewiring, timescales, and certification explained."
       datePublished="2025-01-01"
-      dateModified="2025-06-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rewire Cost Guide"

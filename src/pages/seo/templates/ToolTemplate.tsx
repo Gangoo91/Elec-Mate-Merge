@@ -7,6 +7,8 @@ import { SEORelatedPages, type RelatedPage } from '@/components/seo/SEORelatedPa
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
+import { SEOSocialProofBar } from '@/components/seo/SEOSocialProofBar';
+import { SEOTestimonialStrip } from '@/components/seo/SEOTestimonialStrip';
 import { SEOSocialShare } from '@/components/seo/SEOSocialShare';
 import { SEOSocialFollow } from '@/components/seo/SEOSocialFollow';
 import { SEOHowToSteps } from '@/components/seo/SEOHowToSteps';
@@ -189,6 +191,8 @@ export default function ToolTemplate({
         </div>
       </section>
 
+      <SEOSocialProofBar />
+
       {/* Key Takeaways */}
       {keyTakeaways && keyTakeaways.length > 0 && (
         <section className="pb-10">
@@ -197,18 +201,28 @@ export default function ToolTemplate({
       )}
 
       {/* Content Sections */}
-      {sections.map((section) => (
-        <section key={section.id} id={section.id} className="pb-10 scroll-mt-24">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">{section.heading}</h2>
-          <div className="space-y-4 text-white leading-relaxed">{section.content}</div>
-          {section.appBridge && (
+      {sections.map((section, index) => (
+        <div key={section.id}>
+          <section id={section.id} className="pb-10 scroll-mt-24">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">{section.heading}</h2>
+            <div className="space-y-4 text-white leading-relaxed">{section.content}</div>
+            {section.appBridge && (
+              <SEOAppBridge
+                title={section.appBridge.title}
+                description={section.appBridge.description}
+                icon={section.appBridge.icon}
+              />
+            )}
+          </section>
+          {(index + 1) % 2 === 0 && index < sections.length - 1 && (
             <SEOAppBridge
-              title={section.appBridge.title}
-              description={section.appBridge.description}
-              icon={section.appBridge.icon}
+              title="Try Elec-Mate free for 7 days"
+              description="Calculators, certificates, AI agents, and training — everything an electrician needs in one app."
+              ctaText="Start free trial"
+              icon={Zap}
             />
           )}
-        </section>
+        </div>
       ))}
 
       {/* How-To Steps */}
@@ -240,6 +254,8 @@ export default function ToolTemplate({
           <SEORelatedPages pages={relatedPages} />
         </section>
       )}
+
+      <SEOTestimonialStrip />
 
       {/* CTA */}
       <SEOCTASection heading={ctaHeading} subheading={ctaSubheading} />

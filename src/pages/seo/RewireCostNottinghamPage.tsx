@@ -65,7 +65,7 @@ const faqs = [
   {
     question: 'Does a rewire need to be notified under Part P in Nottingham?',
     answer:
-      'Yes. A full rewire is notifiable work under Part P of the Building Regulations in England. The work must be carried out by a competent person who is either registered with a Part P self-certification scheme (such as NICEIC or NAPIT) or the work must be notified to Nottingham City Council or the relevant district council\'s building control department. NICEIC and NAPIT registered contractors self-certify the work and notify building control on your behalf.',
+      "Yes. A full rewire is notifiable work under Part P of the Building Regulations in England. The work must be carried out by a competent person who is either registered with a Part P self-certification scheme (such as NICEIC or NAPIT) or the work must be notified to Nottingham City Council or the relevant district council's building control department. NICEIC and NAPIT registered contractors self-certify the work and notify building control on your behalf.",
   },
   {
     question: 'What certificate should I receive after a rewire in Nottingham?',
@@ -88,7 +88,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/house-rewire-cost',
     title: 'House Rewire Cost Guide',
-    description: 'National rewire cost guide covering all property sizes, what\'s included, and how to compare quotes.',
+    description:
+      "National rewire cost guide covering all property sizes, what's included, and how to compare quotes.",
     icon: PoundSterling,
     category: 'Guide',
   },
@@ -102,21 +103,24 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
-    description: 'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
+    description:
+      'What Part P means for homeowners and electricians — notifiable work, self-certification, and compliance.',
     icon: ShieldCheck,
     category: 'Guide',
   },
   {
     href: '/tools/eic-certificate',
     title: 'Electrical Installation Certificate App',
-    description: 'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
+    description:
+      'Issue EICs on your phone. Auto-populated test schedules, instant PDF, and Part P ready.',
     icon: FileCheck2,
     category: 'Certificate',
   },
   {
     href: '/rewire-cost-leicester',
     title: 'Rewire Cost Leicester',
-    description: 'House rewire costs in Leicester and Leicestershire with local contractor guidance.',
+    description:
+      'House rewire costs in Leicester and Leicestershire with local contractor guidance.',
     icon: Home,
     category: 'Guide',
   },
@@ -151,8 +155,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Two-bedroom terraced house</strong> — £2,500 to £3,500. Common in areas
-                such as Radford, Sneinton, Bulwell, and Basford. Typical 8 to 12 circuits.
+                <strong>Two-bedroom terraced house</strong> — £2,500 to £3,500. Common in areas such
+                as Radford, Sneinton, Bulwell, and Basford. Typical 8 to 12 circuits.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -166,9 +170,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Four-bedroom detached</strong> — £4,500 to £6,500. Larger properties in
-                West Bridgford, Edwalton, and Ruddington with complex layouts command the higher end
-                of this range.
+                <strong>Four-bedroom detached</strong> — £4,500 to £6,500. Larger properties in West
+                Bridgford, Edwalton, and Ruddington with complex layouts command the higher end of
+                this range.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -198,8 +202,8 @@ const sections = [
       <>
         <p>
           Many properties in Nottingham — particularly Victorian and Edwardian terraces in The
-          Meadows, Lenton, Sneinton, and Radford — retain original or mid-century wiring that is
-          now beyond its safe service life. The following are clear indicators that a rewire is
+          Meadows, Lenton, Sneinton, and Radford — retain original or mid-century wiring that is now
+          beyond its safe service life. The following are clear indicators that a rewire is
           necessary.
         </p>
         <div className="rounded-2xl bg-red-500/10 border border-red-500/20 p-6 my-4">
@@ -207,18 +211,18 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rubber-insulated or fabric-braided cables</strong> — wiring installed
-                before the 1960s uses rubber insulation that degrades, cracks, and exposes live
-                conductors. This is a C1 (danger present) finding on any EICR and requires urgent
-                remedial action.
+                <strong>Rubber-insulated or fabric-braided cables</strong> — wiring installed before
+                the 1960s uses rubber insulation that degrades, cracks, and exposes live conductors.
+                This is a C1 (danger present) finding on any EICR and requires urgent remedial
+                action.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Rewirable fuse box</strong> — an old fuse box with ceramic fuse holders
-                and fuse wire indicates a pre-1970s installation. These provide very limited
-                overcurrent protection and have no RCD protection for shock prevention.
+                <strong>Rewirable fuse box</strong> — an old fuse box with ceramic fuse holders and
+                fuse wire indicates a pre-1970s installation. These provide very limited overcurrent
+                protection and have no RCD protection for shock prevention.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -248,8 +252,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unsatisfactory EICR</strong> — a periodic inspection report containing C1
-                or C2 observations that cannot be resolved by targeted repairs indicates the
+                <strong>Unsatisfactory EICR</strong> — a periodic inspection report containing C1 or
+                C2 observations that cannot be resolved by targeted repairs indicates the
                 installation is beyond economic repair and a rewire is more cost-effective.
               </span>
             </li>
@@ -300,8 +304,8 @@ const sections = [
               <span>
                 <strong>Testing and inspection</strong> — comprehensive testing of all circuits
                 including insulation resistance, earth continuity, and RCD operation in accordance
-                with BS 7671 Chapter 64. Results are recorded on the test schedules forming part
-                of the Electrical Installation Certificate.
+                with BS 7671 Chapter 64. Results are recorded on the test schedules forming part of
+                the Electrical Installation Certificate.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -330,9 +334,9 @@ const sections = [
     content: (
       <>
         <p>
-          The duration of a rewire depends on property size, construction type, and the condition
-          of existing wiring. Nottingham properties span a wide range — from 1990s new-build estates
-          in Clifton and Chilwell to Victorian terraces in the inner city.
+          The duration of a rewire depends on property size, construction type, and the condition of
+          existing wiring. Nottingham properties span a wide range — from 1990s new-build estates in
+          Clifton and Chilwell to Victorian terraces in the inner city.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -346,9 +350,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Three-bedroom semi-detached</strong> — 3 to 5 days. The most common
-                rewire in Nottingham suburbs. A team of two electricians working efficiently can
-                complete first and second fix within this timeframe.
+                <strong>Three-bedroom semi-detached</strong> — 3 to 5 days. The most common rewire
+                in Nottingham suburbs. A team of two electricians working efficiently can complete
+                first and second fix within this timeframe.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -362,17 +366,17 @@ const sections = [
               <Clock className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Victorian solid-wall property</strong> — add 1 to 3 days. Surface-run
-                mini-trunking or conduit is often more practical than chasing solid brick walls,
-                and access to ceiling voids requires careful planning.
+                mini-trunking or conduit is often more practical than chasing solid brick walls, and
+                access to ceiling voids requires careful planning.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          The property will have no mains power during the rewire, typically from approximately
-          8am until late afternoon each day. Some electricians can provide a temporary supply
-          arrangement. Plan for no cooking, heating, or refrigeration during working hours, and
-          make arrangements for pets and any vulnerable occupants accordingly.
+          The property will have no mains power during the rewire, typically from approximately 8am
+          until late afternoon each day. Some electricians can provide a temporary supply
+          arrangement. Plan for no cooking, heating, or refrigeration during working hours, and make
+          arrangements for pets and any vulnerable occupants accordingly.
         </p>
       </>
     ),
@@ -411,8 +415,8 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>EIC required</strong> — all rewiring work must be accompanied by an
-                Electrical Installation Certificate issued by the electrician. The EIC confirms
-                the installation complies with BS 7671 and is a legal document. It is required for
+                Electrical Installation Certificate issued by the electrician. The EIC confirms the
+                installation complies with BS 7671 and is a legal document. It is required for
                 property sales and mortgage applications.
               </span>
             </li>
@@ -445,8 +449,9 @@ const sections = [
               <Search className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>NICEIC or NAPIT registration</strong> — use the online registers to confirm
-                the contractor is currently registered and their scope covers domestic installations.
-                Registration confirms qualifications, insurance, and regular technical assessment.
+                the contractor is currently registered and their scope covers domestic
+                installations. Registration confirms qualifications, insurance, and regular
+                technical assessment.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -502,8 +507,8 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Building Regulations Compliance Certificate</strong> — issued by the
-                competent person scheme or Nottingham City Council building control confirming Part P
-                notification and compliance.
+                competent person scheme or Nottingham City Council building control confirming Part
+                P notification and compliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -517,9 +522,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Workmanship guarantee</strong> — most reputable Nottingham contractors
-                offer a workmanship guarantee of 1 to 5 years. Confirm this in writing before work
-                begins and check what it covers.
+                <strong>Workmanship guarantee</strong> — most reputable Nottingham contractors offer
+                a workmanship guarantee of 1 to 5 years. Confirm this in writing before work begins
+                and check what it covers.
               </span>
             </li>
           </ul>
@@ -550,9 +555,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Issue EICs On Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
-                    Elec-Mate EIC app
-                  </SEOInternalLink>{' '}
+                  <SEOInternalLink href="/tools/eic-certificate">Elec-Mate EIC app</SEOInternalLink>{' '}
                   to complete your Electrical Installation Certificate and test schedules on your
                   phone while still at the property. Auto-populated circuit data, instant PDF
                   export, and no evening paperwork.
@@ -597,7 +600,7 @@ export default function RewireCostNottinghamPage() {
       title="House Rewire Cost Nottingham 2025 | Rewire Prices East Midlands"
       description="House rewire costs in Nottingham for 2025. Prices for all property sizes, Part P compliance, NICEIC and NAPIT contractors, signs you need a rewire, timescales, and what certificate you should receive."
       datePublished="2025-01-01"
-      dateModified="2025-06-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Rewire Cost Guide"

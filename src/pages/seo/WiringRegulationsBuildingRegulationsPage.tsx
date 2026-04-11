@@ -522,7 +522,7 @@ export default function WiringRegulationsBuildingRegulationsPage() {
       title="Wiring Regulations vs Building Regulations — BS 7671 and Part P Explained"
       description="How BS 7671:2018+A3:2024 relates to Part P Building Regulations: notifiable vs non-notifiable work, competent person schemes (NICEIC, NAPIT, ELECSA), building control route, and common misconceptions about Part P."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

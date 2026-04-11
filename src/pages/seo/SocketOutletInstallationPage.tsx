@@ -56,7 +56,7 @@ const faqs = [
   {
     question: 'How many sockets should a bedroom have?',
     answer:
-      "There is no minimum legal requirement for the number of socket outlets in a bedroom. Building Regulations Approved Document P does not specify a minimum. As a practical guide, a double bedroom should have at least four double socket outlets — two on each side of where the bed will be. Modern bedrooms with smart devices, phone chargers, televisions, and dressing table lighting have higher demands than older properties were designed for. Where there is insufficient capacity, adding sockets from the existing ring or adding a new radial circuit is the correct approach.",
+      'There is no minimum legal requirement for the number of socket outlets in a bedroom. Building Regulations Approved Document P does not specify a minimum. As a practical guide, a double bedroom should have at least four double socket outlets — two on each side of where the bed will be. Modern bedrooms with smart devices, phone chargers, televisions, and dressing table lighting have higher demands than older properties were designed for. Where there is insufficient capacity, adding sockets from the existing ring or adding a new radial circuit is the correct approach.',
   },
   {
     question: 'Do outdoor sockets need RCD protection?',
@@ -84,7 +84,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/rcbo-installation-guide',
     title: 'RCBO Installation Guide',
-    description: 'Types A, B, and F RCBOs, nuisance tripping on LED circuits, and BS 7671 Regulation 531.',
+    description:
+      'Types A, B, and F RCBOs, nuisance tripping on LED circuits, and BS 7671 Regulation 531.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -105,7 +106,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
-    description: 'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
+    description:
+      'Complete guide to landlord EICR requirements, compliance deadlines, and penalties.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -129,50 +131,47 @@ const sections = [
     content: (
       <>
         <p>
-          Socket outlet circuits in domestic premises in the UK are typically wired as either
-          ring final circuits or radial circuits. Both are permitted under BS 7671, but they
-          have different cable sizing, protective device ratings, and maximum floor area
-          limitations.
+          Socket outlet circuits in domestic premises in the UK are typically wired as either ring
+          final circuits or radial circuits. Both are permitted under BS 7671, but they have
+          different cable sizing, protective device ratings, and maximum floor area limitations.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Ring final circuit</strong> — 2.5mm² twin and earth cable, 32A MCB
-                or RCBO. The circuit starts at the consumer unit, loops around the floor
-                serving multiple socket outlets, and returns to the same way in the consumer
-                unit. Maximum floor area 100m². The ring configuration means that current
-                flows in both directions around the ring, halving the effective current in
-                each cable leg and allowing a smaller cable than a radial of equivalent
-                capacity would require.
+                <strong>Ring final circuit</strong> — 2.5mm² twin and earth cable, 32A MCB or RCBO.
+                The circuit starts at the consumer unit, loops around the floor serving multiple
+                socket outlets, and returns to the same way in the consumer unit. Maximum floor area
+                100m². The ring configuration means that current flows in both directions around the
+                ring, halving the effective current in each cable leg and allowing a smaller cable
+                than a radial of equivalent capacity would require.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Radial circuit (up to 20A)</strong> — 2.5mm² twin and earth cable,
-                20A MCB. A single cable run from the consumer unit to the final socket
-                outlet. Maximum floor area 50m². Used for smaller areas such as a single
-                room or where a ring is impractical.
+                <strong>Radial circuit (up to 20A)</strong> — 2.5mm² twin and earth cable, 20A MCB.
+                A single cable run from the consumer unit to the final socket outlet. Maximum floor
+                area 50m². Used for smaller areas such as a single room or where a ring is
+                impractical.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Radial circuit (up to 32A)</strong> — 4mm² twin and earth cable,
-                32A MCB. Maximum floor area 75m². Used for larger areas where a ring circuit
-                would be impractical — common in commercial and industrial settings but less
-                common in domestic work.
+                <strong>Radial circuit (up to 32A)</strong> — 4mm² twin and earth cable, 32A MCB.
+                Maximum floor area 75m². Used for larger areas where a ring circuit would be
+                impractical — common in commercial and industrial settings but less common in
+                domestic work.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          When adding socket outlets to an existing installation, confirm which type of
-          circuit is already in place before making additions. Adding to a ring is different
-          from adding a spur from a radial, and the rules for spurs only apply to ring final
-          circuits.
+          When adding socket outlets to an existing installation, confirm which type of circuit is
+          already in place before making additions. Adding to a ring is different from adding a spur
+          from a radial, and the rules for spurs only apply to ring final circuits.
         </p>
       </>
     ),
@@ -183,49 +182,49 @@ const sections = [
     content: (
       <>
         <p>
-          A spur is a branch cable taken from a ring final circuit to supply a socket outlet
-          or fused connection unit (FCU) that is not on the main ring. Spurs are a common
-          way to add socket outlets without rewiring the ring, but the rules are strict and
-          frequently misapplied.
+          A spur is a branch cable taken from a ring final circuit to supply a socket outlet or
+          fused connection unit (FCU) that is not on the main ring. Spurs are a common way to add
+          socket outlets without rewiring the ring, but the rules are strict and frequently
+          misapplied.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>One socket per spur</strong> — a spur from a ring may supply only
-                one single socket outlet, one twin socket outlet, or one FCU. It cannot supply
-                two socket outlets or another ring of sockets. This is because the spur cable
-                (2.5mm²) is protected by the ring's 32A device — a spur to two sockets could
-                allow a total load that the spur cable cannot safely carry.
+                <strong>One socket per spur</strong> — a spur from a ring may supply only one single
+                socket outlet, one twin socket outlet, or one FCU. It cannot supply two socket
+                outlets or another ring of sockets. This is because the spur cable (2.5mm²) is
+                protected by the ring's 32A device — a spur to two sockets could allow a total load
+                that the spur cable cannot safely carry.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>No spurs from spurs</strong> — a spur must originate from a point on
-                the ring: a socket on the ring, a junction box connected to the ring cable, or
-                the consumer unit. You cannot take a spur from an existing spur socket — the
-                spur socket is not part of the ring.
+                <strong>No spurs from spurs</strong> — a spur must originate from a point on the
+                ring: a socket on the ring, a junction box connected to the ring cable, or the
+                consumer unit. You cannot take a spur from an existing spur socket — the spur socket
+                is not part of the ring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Maximum number of spurs</strong> — the number of spurs must not exceed
-                the number of socket outlets and FCUs already wired as part of the ring. So if
-                the ring already has eight sockets directly on it, a maximum of eight spurs are
-                permitted. In practice, this limit is rarely reached in domestic work.
+                <strong>Maximum number of spurs</strong> — the number of spurs must not exceed the
+                number of socket outlets and FCUs already wired as part of the ring. So if the ring
+                already has eight sockets directly on it, a maximum of eight spurs are permitted. In
+                practice, this limit is rarely reached in domestic work.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Verify the ring first</strong> — before adding a spur, verify that
-                the circuit is genuinely a ring and not a radial. An R1+R2 test or continuity
-                test at each socket will confirm whether the circuit loops back to the
-                consumer unit. Spurring from what turns out to be a radial creates an
-                overloaded and potentially dangerous installation.
+                <strong>Verify the ring first</strong> — before adding a spur, verify that the
+                circuit is genuinely a ring and not a radial. An R1+R2 test or continuity test at
+                each socket will confirm whether the circuit loops back to the consumer unit.
+                Spurring from what turns out to be a radial creates an overloaded and potentially
+                dangerous installation.
               </span>
             </li>
           </ul>
@@ -245,34 +244,34 @@ const sections = [
     content: (
       <>
         <p>
-          BS 7671 limits the floor area that a ring final circuit may serve to 100m². This
-          limit is set not because a larger ring is inherently dangerous, but because above
-          this area the assessed maximum demand becomes unpredictable and the risk of overloading
-          the ring increases.
+          BS 7671 limits the floor area that a ring final circuit may serve to 100m². This limit is
+          set not because a larger ring is inherently dangerous, but because above this area the
+          assessed maximum demand becomes unpredictable and the risk of overloading the ring
+          increases.
         </p>
         <p>
-          In a typical three-bedroom semi-detached property of approximately 90m², a single
-          ring final circuit for the ground floor and a separate ring for the first floor is
-          standard practice. Each floor ring remains well within the 100m² limit.
+          In a typical three-bedroom semi-detached property of approximately 90m², a single ring
+          final circuit for the ground floor and a separate ring for the first floor is standard
+          practice. Each floor ring remains well within the 100m² limit.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Open-plan properties</strong> — large open-plan living areas or
-                properties exceeding 100m² per floor may require two or more ring circuits
-                per floor. Alternatively, a 32A radial circuit using 4mm² cable may serve
-                up to 75m² as a partial solution.
+                <strong>Open-plan properties</strong> — large open-plan living areas or properties
+                exceeding 100m² per floor may require two or more ring circuits per floor.
+                Alternatively, a 32A radial circuit using 4mm² cable may serve up to 75m² as a
+                partial solution.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Kitchen circuits</strong> — the kitchen is typically served by its
-                own ring or radial circuit due to the high load of kitchen appliances. This
-                is in addition to any whole-floor ring and does not count against the kitchen
-                area for the purpose of the 100m² calculation.
+                <strong>Kitchen circuits</strong> — the kitchen is typically served by its own ring
+                or radial circuit due to the high load of kitchen appliances. This is in addition to
+                any whole-floor ring and does not count against the kitchen area for the purpose of
+                the 100m² calculation.
               </span>
             </li>
           </ul>
@@ -286,50 +285,47 @@ const sections = [
     content: (
       <>
         <p>
-          USB socket outlets — socket accessories that incorporate one or more USB charging
-          ports alongside standard 13A sockets — are increasingly specified in domestic
-          installations. They are installed in exactly the same way as standard socket
-          outlets and are subject to the same BS 7671 requirements for the circuit they
-          are connected to.
+          USB socket outlets — socket accessories that incorporate one or more USB charging ports
+          alongside standard 13A sockets — are increasingly specified in domestic installations.
+          They are installed in exactly the same way as standard socket outlets and are subject to
+          the same BS 7671 requirements for the circuit they are connected to.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>USB-A vs USB-C</strong> — USB-A ports (the rectangular type) have
-                been the standard in socket accessories for a decade. USB-C socket outlets
-                are now widely available and are more appropriate given that modern devices
-                predominantly use USB-C for charging. Specify the port type based on the
-                client's likely device usage.
+                <strong>USB-A vs USB-C</strong> — USB-A ports (the rectangular type) have been the
+                standard in socket accessories for a decade. USB-C socket outlets are now widely
+                available and are more appropriate given that modern devices predominantly use USB-C
+                for charging. Specify the port type based on the client's likely device usage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Charging current rating</strong> — USB ports in socket accessories
-                are rated in amps (typically 2.4A to 5A per port) or watts. A higher charging
-                current allows faster charging for compatible devices. Check the accessory
-                manufacturer's datasheet for port ratings.
+                <strong>Charging current rating</strong> — USB ports in socket accessories are rated
+                in amps (typically 2.4A to 5A per port) or watts. A higher charging current allows
+                faster charging for compatible devices. Check the accessory manufacturer's datasheet
+                for port ratings.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Heat output</strong> — USB charging circuits generate heat within the
-                socket accessory. Ensure the accessory is installed in a suitable backbox
-                with adequate ventilation (metal backboxes dissipate heat better than plastic)
-                and that the accessory is not installed in an enclosed space without airflow.
+                <strong>Heat output</strong> — USB charging circuits generate heat within the socket
+                accessory. Ensure the accessory is installed in a suitable backbox with adequate
+                ventilation (metal backboxes dissipate heat better than plastic) and that the
+                accessory is not installed in an enclosed space without airflow.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Compatibility with surge protection</strong> — properties with SPDs
-                (Surge Protective Devices) installed at the consumer unit do not require
-                additional surge protection at USB outlets. Where no SPD is present, some
-                premium USB socket accessories incorporate integral surge protection for the
-                USB ports.
+                <strong>Compatibility with surge protection</strong> — properties with SPDs (Surge
+                Protective Devices) installed at the consumer unit do not require additional surge
+                protection at USB outlets. Where no SPD is present, some premium USB socket
+                accessories incorporate integral surge protection for the USB ports.
               </span>
             </li>
           </ul>
@@ -343,54 +339,53 @@ const sections = [
     content: (
       <>
         <p>
-          Outdoor socket outlets are subject to specific requirements under BS 7671 relating
-          to their ingress protection (IP) rating and their RCD protection. These requirements
-          exist because outdoor environments expose socket outlets to rain, condensation,
-          dirt, and insects, and because portable equipment used outdoors significantly
-          increases the risk of electric shock.
+          Outdoor socket outlets are subject to specific requirements under BS 7671 relating to
+          their ingress protection (IP) rating and their RCD protection. These requirements exist
+          because outdoor environments expose socket outlets to rain, condensation, dirt, and
+          insects, and because portable equipment used outdoors significantly increases the risk of
+          electric shock.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Minimum IP44 for outdoor sockets</strong> — a minimum ingress
-                protection rating of IP44 (protected against solid objects greater than 1mm
-                and protected against water splashing from any direction) is required for
-                socket outlets installed outdoors. This is achieved with a weatherproof
-                socket outlet complete with a self-closing lid or cover.
+                <strong>Minimum IP44 for outdoor sockets</strong> — a minimum ingress protection
+                rating of IP44 (protected against solid objects greater than 1mm and protected
+                against water splashing from any direction) is required for socket outlets installed
+                outdoors. This is achieved with a weatherproof socket outlet complete with a
+                self-closing lid or cover.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>IP55 or IP65 where water jets may be present</strong> — in garden
-                areas where hosepipes or pressure washers may be used near the socket, an
-                IP55 (protected against water jets) or IP65 (protected against dust and
-                water jets) rated socket is more appropriate. IP65 socket outlets are
-                suitable for most garden applications.
+                <strong>IP55 or IP65 where water jets may be present</strong> — in garden areas
+                where hosepipes or pressure washers may be used near the socket, an IP55 (protected
+                against water jets) or IP65 (protected against dust and water jets) rated socket is
+                more appropriate. IP65 socket outlets are suitable for most garden applications.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>30mA RCD protection required — BS 7671 Regulation 411.3.3</strong>
-                {' '}— all socket outlet circuits rated up to 32A that may supply portable
-                equipment for use outdoors must be protected by a 30mA RCD. This applies
-                both to sockets installed outdoors and to indoor sockets from which outdoor
-                extension leads are commonly used. An RCBO on the consumer unit circuit or
-                a dedicated outdoor socket RCD unit satisfies this requirement.
+                <strong>30mA RCD protection required — BS 7671 Regulation 411.3.3</strong> — all
+                socket outlet circuits rated up to 32A that may supply portable equipment for use
+                outdoors must be protected by a 30mA RCD. This applies both to sockets installed
+                outdoors and to indoor sockets from which outdoor extension leads are commonly used.
+                An RCBO on the consumer unit circuit or a dedicated outdoor socket RCD unit
+                satisfies this requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Underground cable for outbuilding sockets</strong> — where a socket
-                outlet is to be installed in a garden, shed, or garage served by a cable
-                buried underground, the cable must either be armoured (SWA) or a suitably
-                rated outdoor cable buried at a safe depth (minimum 500mm for SWA, with
-                mechanical protection markers at a shallower depth). Underground cables
-                must be recorded on a circuit chart or schedule provided to the client.
+                <strong>Underground cable for outbuilding sockets</strong> — where a socket outlet
+                is to be installed in a garden, shed, or garage served by a cable buried
+                underground, the cable must either be armoured (SWA) or a suitably rated outdoor
+                cable buried at a safe depth (minimum 500mm for SWA, with mechanical protection
+                markers at a shallower depth). Underground cables must be recorded on a circuit
+                chart or schedule provided to the client.
               </span>
             </li>
           </ul>
@@ -404,52 +399,45 @@ const sections = [
     content: (
       <>
         <p>
-          Part P of the Building Regulations applies to electrical work in dwellings in
-          England. Not all socket outlet work is notifiable, but work in certain locations
-          always requires notification or self-certification through a registered competent
-          person scheme.
+          Part P of the Building Regulations applies to electrical work in dwellings in England. Not
+          all socket outlet work is notifiable, but work in certain locations always requires
+          notification or self-certification through a registered competent person scheme.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Always notifiable</strong> — installing a new circuit anywhere in
-                a dwelling. Carrying out any electrical work in a kitchen, bathroom, or
-                other special location. Installing socket outlets outdoors or in a garage.
-                Adding a socket outlet in a garden outbuilding or shed.
+                <strong>Always notifiable</strong> — installing a new circuit anywhere in a
+                dwelling. Carrying out any electrical work in a kitchen, bathroom, or other special
+                location. Installing socket outlets outdoors or in a garage. Adding a socket outlet
+                in a garden outbuilding or shed.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Generally not notifiable</strong> — adding a socket outlet on an
-                existing ring final circuit in a bedroom, hallway, or living room (not a
-                kitchen or special location). Like-for-like replacement of a socket outlet
-                in any location.
+                <strong>Generally not notifiable</strong> — adding a socket outlet on an existing
+                ring final circuit in a bedroom, hallway, or living room (not a kitchen or special
+                location). Like-for-like replacement of a socket outlet in any location.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Competent person schemes</strong> — registered electricians working
-                through NICEIC, NAPIT, Elecsa, or other approved schemes can self-certify
-                notifiable work. The scheme notifies building control on the electrician's
-                behalf and issues a Building Regulations compliance certificate. Always issue
-                a Minor Electrical Installation Works Certificate or EIC in addition to the
-                Part P certificate.
+                <strong>Competent person schemes</strong> — registered electricians working through
+                NICEIC, NAPIT, Elecsa, or other approved schemes can self-certify notifiable work.
+                The scheme notifies building control on the electrician's behalf and issues a
+                Building Regulations compliance certificate. Always issue a Minor Electrical
+                Installation Works Certificate or EIC in addition to the Part P certificate.
               </span>
             </li>
           </ul>
         </div>
         <p>
-          Use{' '}
-          <SEOInternalLink href="/tools/eicr-certificate">
-            Elec-Mate
-          </SEOInternalLink>{' '}
-          to generate your Minor Works Certificates and EICs on site, ensuring every socket
-          outlet addition is properly documented regardless of whether Part P notification
-          is required.
+          Use <SEOInternalLink href="/tools/eicr-certificate">Elec-Mate</SEOInternalLink> to
+          generate your Minor Works Certificates and EICs on site, ensuring every socket outlet
+          addition is properly documented regardless of whether Part P notification is required.
         </p>
       </>
     ),
@@ -460,43 +448,42 @@ const sections = [
     content: (
       <>
         <p>
-          The cost of adding socket outlets varies depending on the location, the route of
-          the cable, the type of finish (surface-mounted or flush-mounted), and whether
-          Part P notification is required.
+          The cost of adding socket outlets varies depending on the location, the route of the
+          cable, the type of finish (surface-mounted or flush-mounted), and whether Part P
+          notification is required.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Single socket outlet addition (spur, surface mount)</strong> — £80
-                to £150 including labour, materials, and Minor Works Certificate. Surface
-                mounting avoids plastering costs but is less aesthetically finished.
+                <strong>Single socket outlet addition (spur, surface mount)</strong> — £80 to £150
+                including labour, materials, and Minor Works Certificate. Surface mounting avoids
+                plastering costs but is less aesthetically finished.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Single socket outlet addition (spur, flush mount)</strong> — £120
-                to £220 including labour, materials, chasing, making good, and Minor Works
-                Certificate. Flush mounting requires chasing the wall and making good the
-                plaster.
+                <strong>Single socket outlet addition (spur, flush mount)</strong> — £120 to £220
+                including labour, materials, chasing, making good, and Minor Works Certificate.
+                Flush mounting requires chasing the wall and making good the plaster.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outdoor socket outlet (weatherproof, RCD protected)</strong> — £150
-                to £350 depending on cable run length, whether a new circuit is required,
-                and the IP rating of the socket. Includes Part P compliance where applicable.
+                <strong>Outdoor socket outlet (weatherproof, RCD protected)</strong> — £150 to £350
+                depending on cable run length, whether a new circuit is required, and the IP rating
+                of the socket. Includes Part P compliance where applicable.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>New ring final circuit (e.g. for a new room)</strong> — £300 to
-                £700 depending on the length of the ring, number of socket outlets, and
-                whether the consumer unit has a spare way. Includes EIC and Part P compliance.
+                <strong>New ring final circuit (e.g. for a new room)</strong> — £300 to £700
+                depending on the length of the ring, number of socket outlets, and whether the
+                consumer unit has a spare way. Includes EIC and Part P compliance.
               </span>
             </li>
           </ul>
@@ -516,7 +503,7 @@ export default function SocketOutletInstallationPage() {
       title="Socket Outlet Installation Guide — Ring Main, Spurs, Outdoor, USB | Elec-Mate"
       description="Complete UK guide to adding socket outlets. Ring main vs radial circuits, spur rules, one socket per spur from a ring, maximum floor area, USB socket outlets, outdoor IP44 requirements, BS 7671 Regulation 411.3.3, Part P notification, and typical costs."
       datePublished="2024-07-01"
-      dateModified="2025-03-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

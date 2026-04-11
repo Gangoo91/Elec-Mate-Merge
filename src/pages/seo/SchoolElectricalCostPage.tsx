@@ -44,7 +44,7 @@ const keyTakeaways = [
   'BB93 (Building Bulletin 93 — Acoustic Design of Schools) imposes requirements on electrical equipment noise levels. Ventilation fans, transformers, and UPS equipment must meet specified noise criteria to avoid acoustic non-compliance.',
   'Emergency lighting to BS 5266-1 must cover all escape routes, assembly areas, and any internal rooms without natural light. Schools with more than 300 pupils typically require a maintained emergency lighting system.',
   'Modern schools require structured ICT cabling to every teaching space, often 4–6 Cat6A outlets per classroom plus 2–4 PoE access points for wireless coverage. Data infrastructure accounts for 10–20% of the electrical fit-out budget.',
-  'Schools are strong candidates for solar PV under the Department for Education\'s energy efficiency programmes. Roof-mounted systems of 30–100kWp are common; a 50kWp system typically generates £8,000–£14,000 worth of electricity annually at current rates.',
+  "Schools are strong candidates for solar PV under the Department for Education's energy efficiency programmes. Roof-mounted systems of 30–100kWp are common; a 50kWp system typically generates £8,000–£14,000 worth of electricity annually at current rates.",
 ];
 
 const faqs = [
@@ -89,7 +89,8 @@ const relatedPages: RelatedPage[] = [
   {
     href: '/care-home-electrical-cost',
     title: 'Care Home Electrical Installation Cost',
-    description: 'Nurse call, emergency lighting, fire alarms to BS 5839, and healthcare-grade electrical.',
+    description:
+      'Nurse call, emergency lighting, fire alarms to BS 5839, and healthcare-grade electrical.',
     icon: ShieldCheck,
     category: 'Guide',
   },
@@ -134,11 +135,11 @@ const sections = [
     content: (
       <>
         <p>
-          School electrical installations are among the most complex in the commercial sector.
-          A secondary school may have 50 or more distribution boards, extensive ICT infrastructure,
-          specialist electrical requirements for science laboratories and design technology workshops,
-          comprehensive life-safety systems, and increasingly significant renewable energy and
-          energy management infrastructure.
+          School electrical installations are among the most complex in the commercial sector. A
+          secondary school may have 50 or more distribution boards, extensive ICT infrastructure,
+          specialist electrical requirements for science laboratories and design technology
+          workshops, comprehensive life-safety systems, and increasingly significant renewable
+          energy and energy management infrastructure.
         </p>
         <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -161,10 +162,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <GraduationCap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Specialist room electrical</strong> — science laboratory RCD-protected
-                bench circuits (TT earthing systems in some lab configurations), DT workshop
-                3-phase machine supplies, music room isolated earth circuits, drama studio
-                stage lighting circuits (dimmers, DMX infrastructure).
+                <strong>Specialist room electrical</strong> — science laboratory RCD-protected bench
+                circuits (TT earthing systems in some lab configurations), DT workshop 3-phase
+                machine supplies, music room isolated earth circuits, drama studio stage lighting
+                circuits (dimmers, DMX infrastructure).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -183,8 +184,8 @@ const sections = [
         </div>
         <p>
           All school electrical installations must comply with BS 7671:2018+A3:2024 and the
-          Department for Education's output specification for school buildings. Scotland, Wales,
-          and Northern Ireland have separate education authority guidance.
+          Department for Education's output specification for school buildings. Scotland, Wales, and
+          Northern Ireland have separate education authority guidance.
         </p>
       </>
     ),
@@ -208,27 +209,28 @@ const sections = [
                 <strong>Noise criteria for teaching spaces</strong> — BB93 specifies maximum
                 background noise levels of 35 dB(A) for primary classrooms and 40 dB(A) for
                 secondary classrooms. Electrical equipment — particularly transformer hum,
-                fan-cooled switchgear, and UPS cooling fans — can contribute to background
-                noise if not carefully selected and located.
+                fan-cooled switchgear, and UPS cooling fans — can contribute to background noise if
+                not carefully selected and located.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Switch rooms and substations</strong> — main distribution switchrooms must
-                be located away from teaching spaces or adequately acoustically isolated. Transformer
-                hum transmits through structure and can cause compliance failures in adjacent
-                classrooms even when the room itself is not directly adjacent to the plant room.
+                be located away from teaching spaces or adequately acoustically isolated.
+                Transformer hum transmits through structure and can cause compliance failures in
+                adjacent classrooms even when the room itself is not directly adjacent to the plant
+                room.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Mechanical interlock with HVAC</strong> — heat recovery ventilation units
-                in classrooms must be selected for low noise output. As these units require
-                electrical supply and control wiring, the electrical contractor is typically
-                responsible for coordinating with the mechanical contractor to ensure the chosen
-                units are within BB93 noise limits.
+                <strong>Mechanical interlock with HVAC</strong> — heat recovery ventilation units in
+                classrooms must be selected for low noise output. As these units require electrical
+                supply and control wiring, the electrical contractor is typically responsible for
+                coordinating with the mechanical contractor to ensure the chosen units are within
+                BB93 noise limits.
               </span>
             </li>
           </ul>
@@ -260,8 +262,8 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wifi className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Interactive display circuits</strong> — each teaching space requires
-                a dedicated 13A circuit for the interactive flat panel display (IFPD), typically
+                <strong>Interactive display circuits</strong> — each teaching space requires a
+                dedicated 13A circuit for the interactive flat panel display (IFPD), typically
                 positioned at 2.0–2.2m height on the teaching wall. Additional circuits for
                 visualisers, document cameras, and teacher PC/laptop.
               </span>
@@ -296,10 +298,10 @@ const sections = [
     content: (
       <>
         <p>
-          Emergency lighting in schools must comply with BS 5266-1:2016 and is a requirement
-          under the Regulatory Reform (Fire Safety) Order 2005 and Building Regulations Part B.
-          The scale of a school building and the number of pupils creates specific requirements
-          for anti-panic open-area lighting that go beyond typical commercial premises.
+          Emergency lighting in schools must comply with BS 5266-1:2016 and is a requirement under
+          the Regulatory Reform (Fire Safety) Order 2005 and Building Regulations Part B. The scale
+          of a school building and the number of pupils creates specific requirements for anti-panic
+          open-area lighting that go beyond typical commercial premises.
         </p>
         <div className="rounded-2xl bg-yellow-500/10 border border-yellow-500/20 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -314,16 +316,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Sports hall and assembly hall</strong> — large open areas (typically
-                over 60m²) require anti-panic emergency lighting at 0.5 lux. A secondary school
-                sports hall may need 8–16 high-mounted emergency luminaires to achieve this.
+                <strong>Sports hall and assembly hall</strong> — large open areas (typically over
+                60m²) require anti-panic emergency lighting at 0.5 lux. A secondary school sports
+                hall may need 8–16 high-mounted emergency luminaires to achieve this.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Maintained vs non-maintained</strong> — schools with over 300 pupils
-                or with large assembly areas typically specify maintained emergency lighting (on
+                <strong>Maintained vs non-maintained</strong> — schools with over 300 pupils or with
+                large assembly areas typically specify maintained emergency lighting (on
                 continuously during school hours). This doubles as accent lighting and simplifies
                 fire drill compliance, as emergency luminaires are visibly operational at all times.
               </span>
@@ -331,10 +333,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Central battery systems</strong> — larger secondary schools increasingly
-                use central battery systems (CBS) to power emergency luminaires rather than
-                individual self-contained fittings. CBS systems offer longer battery life, central
-                monitoring, and reduced maintenance costs over the 25-year building lifecycle.
+                <strong>Central battery systems</strong> — larger secondary schools increasingly use
+                central battery systems (CBS) to power emergency luminaires rather than individual
+                self-contained fittings. CBS systems offer longer battery life, central monitoring,
+                and reduced maintenance costs over the 25-year building lifecycle.
               </span>
             </li>
           </ul>
@@ -349,9 +351,9 @@ const sections = [
       <>
         <p>
           Schools have a statutory safeguarding obligation under Keeping Children Safe in Education
-          (KCSIE) to control access to the premises and verify visitor identity. This drives specific
-          requirements for door entry systems, access control infrastructure, and CCTV that are
-          more demanding than most commercial premises.
+          (KCSIE) to control access to the premises and verify visitor identity. This drives
+          specific requirements for door entry systems, access control infrastructure, and CCTV that
+          are more demanding than most commercial premises.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -361,25 +363,25 @@ const sections = [
                 <strong>Main entrance video intercom</strong> — HD video door entry with reception
                 monitor and electric door release (electromagnetic lock or electric strike). System
                 must allow reception staff to view and verify visitors before releasing the door.
-                PoE-powered IP intercom systems are standard on new-build schools; electrical
-                supply to door release: dedicated 12/24V DC circuit from access control panel with
-                battery backup.
+                PoE-powered IP intercom systems are standard on new-build schools; electrical supply
+                to door release: dedicated 12/24V DC circuit from access control panel with battery
+                backup.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Staff access RFID</strong> — staff access to back-of-house and secure
-                areas (server room, data/comms room, safeguarding room) via RFID card readers.
-                Access controller panels require 230V supply with battery backup. Door controllers
+                <strong>Staff access RFID</strong> — staff access to back-of-house and secure areas
+                (server room, data/comms room, safeguarding room) via RFID card readers. Access
+                controller panels require 230V supply with battery backup. Door controllers
                 communicate via RS485 or TCP/IP.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ShieldCheck className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>CCTV</strong> — minimum coverage: main entrance (external and internal),
-                all perimeter gate access points, car park, and key internal areas (reception,
+                <strong>CCTV</strong> — minimum coverage: main entrance (external and internal), all
+                perimeter gate access points, car park, and key internal areas (reception,
                 corridors). Footage retained for minimum 31 days. Electrical: NVR supply, PoE
                 switches, Cat6 cabling runs.
               </span>
@@ -405,18 +407,18 @@ const sections = [
         <p>
           Schools are among the best candidates for solar PV in the UK. Large flat or low-pitched
           roof areas, high daytime electricity consumption (matching solar generation profiles
-          closely), strong DfE policy support, and access to favourable funding mechanisms make
-          the economics compelling.
+          closely), strong DfE policy support, and access to favourable funding mechanisms make the
+          economics compelling.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Typical system sizes</strong> — primary school: 20–50kWp. Secondary
-                school: 50–150kWp. Sixth form or large academy: 100–250kWp. System size is
-                constrained by available roof area, DNO export permission, and the school's
-                annual consumption profile.
+                <strong>Typical system sizes</strong> — primary school: 20–50kWp. Secondary school:
+                50–150kWp. Sixth form or large academy: 100–250kWp. System size is constrained by
+                available roof area, DNO export permission, and the school's annual consumption
+                profile.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -424,9 +426,9 @@ const sections = [
               <span>
                 <strong>Financial benefit</strong> — a 50kWp system generates approximately
                 45,000–50,000 kWh per year in the UK. At 2025 commercial electricity rates
-                (22–28p/kWh), self-consumed generation is worth £9,900–£14,000 per year.
-                Surplus exported via Smart Export Guarantee (SEG) earns an additional 4–15p/kWh
-                depending on the tariff.
+                (22–28p/kWh), self-consumed generation is worth £9,900–£14,000 per year. Surplus
+                exported via Smart Export Guarantee (SEG) earns an additional 4–15p/kWh depending on
+                the tariff.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -441,9 +443,9 @@ const sections = [
             <li className="flex items-start gap-3">
               <Sun className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Battery storage</strong> — school battery storage systems (50–100kWh) can
-                be added to capture afternoon generation that would otherwise be exported at low
-                SEG rates, for use during evening school activities, holiday clubs, and community
+                <strong>Battery storage</strong> — school battery storage systems (50–100kWh) can be
+                added to capture afternoon generation that would otherwise be exported at low SEG
+                rates, for use during evening school activities, holiday clubs, and community
                 lettings. Battery addition cost: £30,000–£70,000 depending on capacity.
               </span>
             </li>
@@ -468,19 +470,19 @@ const sections = [
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Smart metering and sub-metering</strong> — half-hourly metering at the
-                incoming supply, with sub-metering on main distribution boards to identify
-                energy use by zone. MODBUS or BACnet-connected metering enables integration
-                with the building management system (BMS).
+                incoming supply, with sub-metering on main distribution boards to identify energy
+                use by zone. MODBUS or BACnet-connected metering enables integration with the
+                building management system (BMS).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Lighting controls</strong> — PIR occupancy sensing and daylight-linked
-                dimming in all teaching spaces reduces lighting energy use by 40–70% versus
-                manually switched systems. DALI (Digital Addressable Lighting Interface) control
-                is standard on new school lighting designs, allowing individual luminaire
-                addressing and scene setting.
+                dimming in all teaching spaces reduces lighting energy use by 40–70% versus manually
+                switched systems. DALI (Digital Addressable Lighting Interface) control is standard
+                on new school lighting designs, allowing individual luminaire addressing and scene
+                setting.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -503,18 +505,18 @@ const sections = [
     content: (
       <>
         <p>
-          Costs below are for new-build installations, labour and materials excluding VAT. Refurbishment
-          costs vary significantly depending on the extent of existing installation retained.
+          Costs below are for new-build installations, labour and materials excluding VAT.
+          Refurbishment costs vary significantly depending on the extent of existing installation
+          retained.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Primary school (1FE, ~1,200m²)</strong> — £120,000–£180,000. General
-                power and lighting: £60,000–£90,000. ICT infrastructure: £20,000–£35,000.
-                Emergency lighting and fire alarm: £15,000–£25,000. Access control and CCTV:
-                £8,000–£15,000.
+                <strong>Primary school (1FE, ~1,200m²)</strong> — £120,000–£180,000. General power
+                and lighting: £60,000–£90,000. ICT infrastructure: £20,000–£35,000. Emergency
+                lighting and fire alarm: £15,000–£25,000. Access control and CCTV: £8,000–£15,000.
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -532,16 +534,16 @@ const sections = [
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Secondary school (1,500 pupils)</strong> — £380,000–£600,000+.
-                Includes specialist laboratory and DT workshop circuits, comprehensive PAVA
-                system, and full BMS/EMS integration.
+                <strong>Secondary school (1,500 pupils)</strong> — £380,000–£600,000+. Includes
+                specialist laboratory and DT workshop circuits, comprehensive PAVA system, and full
+                BMS/EMS integration.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Solar PV (50kWp)</strong> — £40,000–£65,000 additional. Strongly
-                recommended for all new-build schools with suitable roof orientation.
+                <strong>Solar PV (50kWp)</strong> — £40,000–£65,000 additional. Strongly recommended
+                for all new-build schools with suitable roof orientation.
               </span>
             </li>
           </ul>
@@ -555,34 +557,34 @@ const sections = [
     content: (
       <>
         <p>
-          School EICRs are among the most complex periodic inspections carried out in the
-          commercial sector. A large secondary school may have 40–80 distribution boards,
-          specialist laboratory circuits, DALI lighting control panels, UPS systems, and
-          extensive life-safety wiring — all of which must be inspected and tested.
+          School EICRs are among the most complex periodic inspections carried out in the commercial
+          sector. A large secondary school may have 40–80 distribution boards, specialist laboratory
+          circuits, DALI lighting control panels, UPS systems, and extensive life-safety wiring —
+          all of which must be inspected and tested.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Recommended interval</strong> — five years for educational buildings.
-                Many academy trusts and local authority estates teams use a 3-year cycle.
+                <strong>Recommended interval</strong> — five years for educational buildings. Many
+                academy trusts and local authority estates teams use a 3-year cycle.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Holiday scheduling</strong> — school EICRs must be carried out during
-                school holidays to avoid disruption to teaching. Electricians tendering for school
-                EICR work must plan programmes that fit within summer, Easter, or Christmas
-                holiday windows.
+                <strong>Holiday scheduling</strong> — school EICRs must be carried out during school
+                holidays to avoid disruption to teaching. Electricians tendering for school EICR
+                work must plan programmes that fit within summer, Easter, or Christmas holiday
+                windows.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>DBS clearance</strong> — electricians working in schools during term
-                time (for reactive maintenance) are required to hold a valid enhanced DBS check.
+                <strong>DBS clearance</strong> — electricians working in schools during term time
+                (for reactive maintenance) are required to hold a valid enhanced DBS check.
                 Holiday-period contractors may also be required to hold DBS clearance by the
                 school's safeguarding policy.
               </span>
@@ -592,8 +594,8 @@ const sections = [
               <span>
                 <strong>EICR cost</strong> — primary school: £600–£1,200. Secondary school:
                 £1,500–£3,500 depending on board count and system complexity. Multi-board
-                inspections are typically quoted on a per-board basis (£80–£150 per board plus
-                site visit charge).
+                inspections are typically quoted on a per-board basis (£80–£150 per board plus site
+                visit charge).
               </span>
             </li>
           </ul>
@@ -617,17 +619,17 @@ const sections = [
             <div className="flex items-start gap-4">
               <FileCheck2 className="w-6 h-6 text-yellow-400 mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-bold text-white mb-1">Quote and Certificate Complex Installations</h4>
+                <h4 className="font-bold text-white mb-1">
+                  Quote and Certificate Complex Installations
+                </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
                   <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   for detailed school project quotes with itemised labour and materials. Issue{' '}
-                  <SEOInternalLink href="/tools/eicr-certificate">
-                    EICRs
-                  </SEOInternalLink>{' '}
-                  for multi-board inspections, tracking each board separately and generating a
+                  <SEOInternalLink href="/tools/eicr-certificate">EICRs</SEOInternalLink> for
+                  multi-board inspections, tracking each board separately and generating a
                   consolidated report for the academy trust.
                 </p>
               </div>
@@ -654,7 +656,7 @@ export default function SchoolElectricalCostPage() {
       title="School Electrical Installation Cost UK 2025 | Educational Buildings"
       description="School electrical installation costs UK 2025. BB93 acoustic compliance, ICT infrastructure, emergency lighting to BS 5266-1, access control, solar PV, and energy management systems. Primary school £120,000–£250,000."
       datePublished="2025-01-01"
-      dateModified="2025-09-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Educational Electrical Guide"

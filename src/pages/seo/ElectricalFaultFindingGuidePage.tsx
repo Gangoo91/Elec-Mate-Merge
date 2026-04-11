@@ -2,14 +2,7 @@ import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
 import type { RelatedPage } from '@/components/seo/SEORelatedPages';
-import {
-  Zap,
-  AlertTriangle,
-  CheckCircle2,
-  FileCheck2,
-  Wrench,
-  ShieldCheck,
-} from 'lucide-react';
+import { Zap, AlertTriangle, CheckCircle2, FileCheck2, Wrench, ShieldCheck } from 'lucide-react';
 
 const breadcrumbs = [
   { label: 'Home', href: '/' },
@@ -146,45 +139,43 @@ const sections = [
     content: (
       <>
         <p>
-          Understanding the type of fault before picking up test equipment saves time and
-          reduces the risk of making the fault worse. The four main fault types are:
+          Understanding the type of fault before picking up test equipment saves time and reduces
+          the risk of making the fault worse. The four main fault types are:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Earth fault</strong> — live conductor (line or neutral) in contact
-                with earth. Causes RCD tripping or MCB operation. Can present an electric
-                shock hazard if the earth path is via metalwork rather than the CPC.
+                <strong>Earth fault</strong> — live conductor (line or neutral) in contact with
+                earth. Causes RCD tripping or MCB operation. Can present an electric shock hazard if
+                the earth path is via metalwork rather than the CPC.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Short circuit</strong> — line and neutral conductors in direct
-                contact. Creates very high fault currents, typically tripping the MCB
-                immediately. The MCB trip characteristic (Type B, C, or D) determines the
-                minimum short circuit current that must be present for instantaneous
-                magnetic operation.
+                <strong>Short circuit</strong> — line and neutral conductors in direct contact.
+                Creates very high fault currents, typically tripping the MCB immediately. The MCB
+                trip characteristic (Type B, C, or D) determines the minimum short circuit current
+                that must be present for instantaneous magnetic operation.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Open circuit</strong> — broken conductor or open connection.
-                The circuit does not trip but does not work. The fault appears as infinite
-                resistance on a continuity test. Common causes: broken conductor within a
-                flex, failed lamp holder contact, corroded socket terminal, or loose MCB
-                terminal.
+                <strong>Open circuit</strong> — broken conductor or open connection. The circuit
+                does not trip but does not work. The fault appears as infinite resistance on a
+                continuity test. Common causes: broken conductor within a flex, failed lamp holder
+                contact, corroded socket terminal, or loose MCB terminal.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High resistance fault</strong> — partial connection generating
-                heat. May not trip any protective device but can cause fire. Detected by
-                continuity resistance measurement or thermal imaging during operation.
+                <strong>High resistance fault</strong> — partial connection generating heat. May not
+                trip any protective device but can cause fire. Detected by continuity resistance
+                measurement or thermal imaging during operation.
               </span>
             </li>
           </ul>
@@ -198,48 +189,49 @@ const sections = [
     content: (
       <>
         <p>
-          The fault-finding test sequence follows a logical order that moves from safe
-          de-energised tests to energised tests, only progressing if previous tests are
-          satisfactory.
+          The fault-finding test sequence follows a logical order that moves from safe de-energised
+          tests to energised tests, only progressing if previous tests are satisfactory.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 1 — Continuity</strong> (de-energised): measures the
-                resistance of conductors. Identifies open circuits, high-resistance joints,
-                and broken CPCs. Safe to perform without energising the circuit.
+                <strong>Step 1 — Continuity</strong> (de-energised): measures the resistance of
+                conductors. Identifies open circuits, high-resistance joints, and broken CPCs. Safe
+                to perform without energising the circuit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 2 — Insulation resistance</strong> (de-energised): applies
-                500V DC to identify insulation breakdown between conductors and earth.
-                Identifies earth faults and short circuits between conductors.
+                <strong>Step 2 — Insulation resistance</strong> (de-energised): applies 500V DC to
+                identify insulation breakdown between conductors and earth. Identifies earth faults
+                and short circuits between conductors.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 3 — RCD test</strong> (energised): confirms the RCD trips
-                within the required time. The circuit must be energised for this test.
+                <strong>Step 3 — RCD test</strong> (energised): confirms the RCD trips within the
+                required time. The circuit must be energised for this test.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Step 4 — Loop impedance (Zs)</strong> (energised): confirms the
-                earth fault loop impedance is low enough to guarantee protective device
-                operation within the required disconnection time under BS 7671.
+                <strong>Step 4 — Loop impedance (Zs)</strong> (energised): confirms the earth fault
+                loop impedance is low enough to guarantee protective device operation within the
+                required disconnection time under BS 7671.
               </span>
             </li>
           </ul>
         </div>
         <p>
           See the{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained">EICR observation codes guide</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/eicr-observation-codes-explained">
+            EICR observation codes guide
+          </SEOInternalLink>{' '}
           for how these test results translate into EICR codes and required remedial actions.
         </p>
       </>
@@ -252,35 +244,34 @@ const sections = [
       <>
         <p>
           Earth faults are the most common cause of RCD tripping in domestic and commercial
-          installations. The fault diagnosis approach depends on whether the RCD trips
-          immediately on reset or only when a load is applied.
+          installations. The fault diagnosis approach depends on whether the RCD trips immediately
+          on reset or only when a load is applied.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD trips immediately on reset</strong> — disconnect all loads from
-                the circuit and retest. If the RCD holds with no loads, the fault is in an
-                appliance. If it still trips, carry out IR testing on the circuit wiring.
+                <strong>RCD trips immediately on reset</strong> — disconnect all loads from the
+                circuit and retest. If the RCD holds with no loads, the fault is in an appliance. If
+                it still trips, carry out IR testing on the circuit wiring.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>RCD trips only when a specific appliance is connected</strong>
-                — the fault is in the appliance (insulation breakdown between live
-                conductors and the appliance body). The appliance should be removed from
-                service and repaired or replaced.
+                <strong>RCD trips only when a specific appliance is connected</strong>— the fault is
+                in the appliance (insulation breakdown between live conductors and the appliance
+                body). The appliance should be removed from service and repaired or replaced.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Systematic IR testing</strong> — with the circuit de-energised and
-                all loads disconnected, test IR between line/earth at each socket outlet in
-                sequence. A socket that significantly reduces the IR reading compared to
-                adjacent sockets indicates the fault is downstream of that point.
+                <strong>Systematic IR testing</strong> — with the circuit de-energised and all loads
+                disconnected, test IR between line/earth at each socket outlet in sequence. A socket
+                that significantly reduces the IR reading compared to adjacent sockets indicates the
+                fault is downstream of that point.
               </span>
             </li>
           </ul>
@@ -294,36 +285,36 @@ const sections = [
     content: (
       <>
         <p>
-          An open circuit fault means part or all of the circuit has no continuity — the
-          conductor is broken, a terminal is disconnected, or a contact has failed. The
-          circuit does not trip but simply does not work.
+          An open circuit fault means part or all of the circuit has no continuity — the conductor
+          is broken, a terminal is disconnected, or a contact has failed. The circuit does not trip
+          but simply does not work.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Voltage testing at the point of use</strong> — with the circuit
-                energised, use a voltage indicator to test whether line, neutral, and earth
-                voltages are present at the socket or lighting outlet. Absence of neutral
-                with line present indicates an open neutral fault.
+                <strong>Voltage testing at the point of use</strong> — with the circuit energised,
+                use a voltage indicator to test whether line, neutral, and earth voltages are
+                present at the socket or lighting outlet. Absence of neutral with line present
+                indicates an open neutral fault.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Half-split method</strong> — for circuits with multiple outlets,
-                test at the mid-point first. If continuity is present at the mid-point,
-                the fault is in the second half. This binary search approach finds the
-                fault location in the minimum number of tests.
+                <strong>Half-split method</strong> — for circuits with multiple outlets, test at the
+                mid-point first. If continuity is present at the mid-point, the fault is in the
+                second half. This binary search approach finds the fault location in the minimum
+                number of tests.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Common causes</strong> — loose terminal screws (particularly in
-                WAGO connectors not fully inserted), broken cores within flexes subject
-                to repeated bending, corroded socket terminals, and failed MCB contacts.
+                <strong>Common causes</strong> — loose terminal screws (particularly in WAGO
+                connectors not fully inserted), broken cores within flexes subject to repeated
+                bending, corroded socket terminals, and failed MCB contacts.
               </span>
             </li>
           </ul>
@@ -346,10 +337,10 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>High resistance joints cause electrical fires.</strong> A 1\u03a9
-                joint in a 13A circuit dissipates 169W — enough to char insulation and
-                ignite surrounding materials. Any joint with resistance exceeding 50m\u03a9
-                should be investigated and re-terminated.
+                <strong>High resistance joints cause electrical fires.</strong> A 1\u03a9 joint in a
+                13A circuit dissipates 169W — enough to char insulation and ignite surrounding
+                materials. Any joint with resistance exceeding 50m\u03a9 should be investigated and
+                re-terminated.
               </span>
             </li>
           </ul>
@@ -359,19 +350,19 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Continuity resistance measurement</strong> — measure the resistance
-                of each section of the circuit. Expected values: 1.5mm\u00b2 copper conductor
-                = 12.1m\u03a9/m; 2.5mm\u00b2 = 7.41m\u03a9/m. Significantly higher readings at a
+                <strong>Continuity resistance measurement</strong> — measure the resistance of each
+                section of the circuit. Expected values: 1.5mm\u00b2 copper conductor =
+                12.1m\u03a9/m; 2.5mm\u00b2 = 7.41m\u03a9/m. Significantly higher readings at a
                 junction indicate a high resistance connection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Thermal imaging</strong> — a thermal imaging camera used on the
-                installation under normal load will show hot spots at high resistance
-                connections. Particularly effective for spotting deteriorating consumer
-                unit connections, socket back boxes, and overhead luminaire junction boxes.
+                <strong>Thermal imaging</strong> — a thermal imaging camera used on the installation
+                under normal load will show hot spots at high resistance connections. Particularly
+                effective for spotting deteriorating consumer unit connections, socket back boxes,
+                and overhead luminaire junction boxes.
               </span>
             </li>
           </ul>
@@ -385,41 +376,41 @@ const sections = [
     content: (
       <>
         <p>
-          Having the right test equipment and knowing how to use it correctly is the
-          foundation of effective fault finding.
+          Having the right test equipment and knowing how to use it correctly is the foundation of
+          effective fault finding.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Multifunction tester (MFT)</strong> — Megger MFT1741, Fluke 1664 FC,
-                or Metrel MI3102 are popular choices. Essential for IR testing, continuity
+                <strong>Multifunction tester (MFT)</strong> — Megger MFT1741, Fluke 1664 FC, or
+                Metrel MI3102 are popular choices. Essential for IR testing, continuity
                 (low-resistance ohmmeter), loop impedance, and RCD testing.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Approved voltage indicator (AVI)</strong> — must comply with GS38
-                guidance: fused leads, shrouded probes, maximum 4mm probe exposure. Brands
-                include Martindale and Kewtech.
+                <strong>Approved voltage indicator (AVI)</strong> — must comply with GS38 guidance:
+                fused leads, shrouded probes, maximum 4mm probe exposure. Brands include Martindale
+                and Kewtech.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Clamp meter</strong> — for measuring current on energised conductors
-                without interrupting the circuit. Useful for checking load balance and
-                identifying unexpected earth leakage currents.
+                <strong>Clamp meter</strong> — for measuring current on energised conductors without
+                interrupting the circuit. Useful for checking load balance and identifying
+                unexpected earth leakage currents.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Non-contact voltage tester (NCV)</strong> — for rapid cable detection
-                and initial live/dead indication. Not a substitute for an AVI but useful for
-                scanning walls for hidden cables before cutting or drilling.
+                <strong>Non-contact voltage tester (NCV)</strong> — for rapid cable detection and
+                initial live/dead indication. Not a substitute for an AVI but useful for scanning
+                walls for hidden cables before cutting or drilling.
               </span>
             </li>
           </ul>
@@ -440,7 +431,7 @@ export default function ElectricalFaultFindingGuidePage() {
       title="Electrical Fault Finding Guide — Systematic Approach for UK Electricians"
       description="A complete guide to electrical fault finding: earth faults, open circuits, short circuits, and high resistance faults. Test sequence, diagnostic tools, and safe isolation procedure under BS 7671."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

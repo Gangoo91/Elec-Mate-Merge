@@ -159,11 +159,10 @@ const sections = [
     content: (
       <>
         <p>
-          A fused connection unit (FCU) — commonly called a fused spur — is a wiring accessory
-          that provides a permanent, fused connection to a fixed electrical appliance. Unlike a
-          standard socket outlet, the FCU does not have a removable plug — the appliance is
-          hardwired to the load side of the FCU or connected via a short flex to a flex outlet
-          plate on the FCU face.
+          A fused connection unit (FCU) — commonly called a fused spur — is a wiring accessory that
+          provides a permanent, fused connection to a fixed electrical appliance. Unlike a standard
+          socket outlet, the FCU does not have a removable plug — the appliance is hardwired to the
+          load side of the FCU or connected via a short flex to a flex outlet plate on the FCU face.
         </p>
         <p>
           The FCU contains a cartridge fuse (BS 1362 type, identical to those used in 13A plugs)
@@ -178,18 +177,16 @@ const sections = [
               <span>
                 <strong>FCU vs fused spur outlet</strong> — these terms are often used
                 interchangeably. Strictly, an FCU is the wiring accessory (the plate with
-                terminals), while a fused spur describes the circuit arrangement (spur from
-                a ring main via a fuse). Both terms refer to the same physical accessory in
-                common usage.
+                terminals), while a fused spur describes the circuit arrangement (spur from a ring
+                main via a fuse). Both terms refer to the same physical accessory in common usage.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Not a replacement for a socket outlet</strong> — an FCU is for
-                permanently connected appliances only. If the appliance will occasionally
-                be moved or requires a removable connection, a standard 13A socket is more
-                appropriate.
+                <strong>Not a replacement for a socket outlet</strong> — an FCU is for permanently
+                connected appliances only. If the appliance will occasionally be moved or requires a
+                removable connection, a standard 13A socket is more appropriate.
               </span>
             </li>
           </ul>
@@ -203,8 +200,8 @@ const sections = [
     content: (
       <>
         <p>
-          FCUs are available in several configurations. Choosing the right type for the
-          application is important for compliance, safety, and usability.
+          FCUs are available in several configurations. Choosing the right type for the application
+          is important for compliance, safety, and usability.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
           <ul className="space-y-4 text-white">
@@ -212,45 +209,44 @@ const sections = [
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Switched FCU</strong> — incorporates a double-pole rocker switch.
-                Disconnects both line and neutral simultaneously. Provides a local means
-                of isolation per Regulation 537.2.1. Used for dishwashers, washing machines,
-                extractor fans, heated towel rails, and most kitchen appliances.
+                Disconnects both line and neutral simultaneously. Provides a local means of
+                isolation per Regulation 537.2.1. Used for dishwashers, washing machines, extractor
+                fans, heated towel rails, and most kitchen appliances.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Unswitched FCU</strong> — no switch, fuse only. Used where the
-                appliance has its own integral switch or where isolation is provided by
-                a separate DP switch. Less common in practice since switched FCUs cost
-                little more.
+                <strong>Unswitched FCU</strong> — no switch, fuse only. Used where the appliance has
+                its own integral switch or where isolation is provided by a separate DP switch. Less
+                common in practice since switched FCUs cost little more.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>FCU with neon indicator</strong> — includes an LED or neon lamp
-                that illuminates when the switch is on or when the supply is present. Useful
-                for appliances in concealed positions where it is important to know the
-                appliance is energised (e.g. immersion heater, frost protection heater).
+                <strong>FCU with neon indicator</strong> — includes an LED or neon lamp that
+                illuminates when the switch is on or when the supply is present. Useful for
+                appliances in concealed positions where it is important to know the appliance is
+                energised (e.g. immersion heater, frost protection heater).
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>FCU with flex outlet</strong> — has a small rectangular aperture in
-                the face plate through which the appliance flex emerges. The flex is connected
-                to the load terminals inside the back box. Commonly used for cooker hood
-                extractors and appliances where the flex routing is tight.
+                <strong>FCU with flex outlet</strong> — has a small rectangular aperture in the face
+                plate through which the appliance flex emerges. The flex is connected to the load
+                terminals inside the back box. Commonly used for cooker hood extractors and
+                appliances where the flex routing is tight.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>20A DP switch / connection unit</strong> — for higher-current
-                applications such as immersion heaters and some fixed heaters. Not a standard
-                FCU (no cartridge fuse), but a double-pole switch for fixed loads. The circuit
-                protection is provided by the MCB at the consumer unit.
+                <strong>20A DP switch / connection unit</strong> — for higher-current applications
+                such as immersion heaters and some fixed heaters. Not a standard FCU (no cartridge
+                fuse), but a double-pole switch for fixed loads. The circuit protection is provided
+                by the MCB at the consumer unit.
               </span>
             </li>
           </ul>
@@ -272,44 +268,42 @@ const sections = [
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Built-in dishwashers and washing machines</strong> — these appliances
-                are not moved in normal use. An FCU inside the adjacent cupboard provides
-                an accessible isolation point without requiring the appliance to be pulled
-                out to reach a socket. The 13A fuse matches the appliance flex rating.
+                <strong>Built-in dishwashers and washing machines</strong> — these appliances are
+                not moved in normal use. An FCU inside the adjacent cupboard provides an accessible
+                isolation point without requiring the appliance to be pulled out to reach a socket.
+                The 13A fuse matches the appliance flex rating.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Extractor fans (kitchen and bathroom)</strong> — wired as a 3A or 5A
-                fused spur from the lighting circuit or ring main. The FCU protects the fan
-                flex and provides isolation without entering the loft or void to access the
-                consumer unit.
+                <strong>Extractor fans (kitchen and bathroom)</strong> — wired as a 3A or 5A fused
+                spur from the lighting circuit or ring main. The FCU protects the fan flex and
+                provides isolation without entering the loft or void to access the consumer unit.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Fixed electric heaters and towel rails</strong> — panel heaters and
-                heated towel rails installed as fixed equipment require a means of isolation.
-                A switched FCU satisfies this requirement and provides flex protection.
+                <strong>Fixed electric heaters and towel rails</strong> — panel heaters and heated
+                towel rails installed as fixed equipment require a means of isolation. A switched
+                FCU satisfies this requirement and provides flex protection.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Outdoor socket spurs</strong> — where a weatherproof garden socket
-                is added as a spur from an indoor ring main, an FCU provides the fused
-                connection point. The garden socket (IP44 minimum) is then connected as
-                a load from the FCU.
+                <strong>Outdoor socket spurs</strong> — where a weatherproof garden socket is added
+                as a spur from an indoor ring main, an FCU provides the fused connection point. The
+                garden socket (IP44 minimum) is then connected as a load from the FCU.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Wrench className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Underfloor heating thermostats</strong> — electric underfloor heating
-                mats are commonly connected via a 13A FCU to a spur from the ring main.
-                The thermostat is then wired between the FCU and the heating mat.
+                <strong>Underfloor heating thermostats</strong> — electric underfloor heating mats
+                are commonly connected via a 13A FCU to a spur from the ring main. The thermostat is
+                then wired between the FCU and the heating mat.
               </span>
             </li>
           </ul>
@@ -323,33 +317,35 @@ const sections = [
     content: (
       <>
         <p>
-          One of the most common mistakes with FCUs is fitting the wrong fuse rating. The
-          fuse in an FCU protects the appliance flex — it should be rated as close as
-          possible to (but above) the rated current of the appliance, not automatically
-          set to 13A because that is the maximum.
+          One of the most common mistakes with FCUs is fitting the wrong fuse rating. The fuse in an
+          FCU protects the appliance flex — it should be rated as close as possible to (but above)
+          the rated current of the appliance, not automatically set to 13A because that is the
+          maximum.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
-          <h3 className="text-lg font-semibold text-white mb-3">BS 1362 Fuse Rating Quick Reference</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">
+            BS 1362 Fuse Rating Quick Reference
+          </h3>
           <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>3A fuse (red):</strong> appliances up to 720W — extractor fans,
-                lamps, clock radios, low-wattage appliances, doorbell transformers
+                <strong>3A fuse (red):</strong> appliances up to 720W — extractor fans, lamps, clock
+                radios, low-wattage appliances, doorbell transformers
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>5A fuse:</strong> appliances up to 1,150W — some extractor fans,
-                small fridges, low-wattage heaters
+                <strong>5A fuse:</strong> appliances up to 1,150W — some extractor fans, small
+                fridges, low-wattage heaters
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>13A fuse (brown):</strong> appliances up to 3,000W — dishwashers,
-                washing machines, tumble dryers, electric heaters, microwave ovens
+                <strong>13A fuse (brown):</strong> appliances up to 3,000W — dishwashers, washing
+                machines, tumble dryers, electric heaters, microwave ovens
               </span>
             </li>
           </ul>
@@ -359,11 +355,11 @@ const sections = [
             <li className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Always check the rating plate</strong> — do not assume a 13A fuse
-                is correct for all appliances. A kitchen extractor fan with a 13A fuse has
-                effectively no overcurrent protection for its flex (a 1A motor on a 13A fuse
-                means the fuse will not operate until the current is 13 times higher than
-                normal — well above the point at which the flex would be damaged).
+                <strong>Always check the rating plate</strong> — do not assume a 13A fuse is correct
+                for all appliances. A kitchen extractor fan with a 13A fuse has effectively no
+                overcurrent protection for its flex (a 1A motor on a 13A fuse means the fuse will
+                not operate until the current is 13 times higher than normal — well above the point
+                at which the flex would be damaged).
               </span>
             </li>
           </ul>
@@ -386,28 +382,27 @@ const sections = [
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 537.2.1 — Isolation:</strong> every fixed appliance must
-                have a means of isolation, preferably a local switch adjacent to the appliance.
-                A switched FCU satisfies this requirement.
+                <strong>Regulation 537.2.1 — Isolation:</strong> every fixed appliance must have a
+                means of isolation, preferably a local switch adjacent to the appliance. A switched
+                FCU satisfies this requirement.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 411.3.3 — RCD protection:</strong> circuits supplying
-                socket outlets and FCUs in domestic premises must have 30mA RCD protection.
-                The spur circuit feeding the FCU must be RCD-protected at the consumer unit
-                or via an inline 30mA RCD.
+                <strong>Regulation 411.3.3 — RCD protection:</strong> circuits supplying socket
+                outlets and FCUs in domestic premises must have 30mA RCD protection. The spur
+                circuit feeding the FCU must be RCD-protected at the consumer unit or via an inline
+                30mA RCD.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <Zap className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <strong>Regulation 314.1 — Spur limitation:</strong> a spur from a ring
-                circuit may not be connected to another spur. The number of spurs must not
-                exceed the number of socket outlets and FCUs on the ring itself (for
-                unfused spurs — fused spurs have no specified numerical limit per
-                BS 7671, but practical loading limits apply).
+                <strong>Regulation 314.1 — Spur limitation:</strong> a spur from a ring circuit may
+                not be connected to another spur. The number of spurs must not exceed the number of
+                socket outlets and FCUs on the ring itself (for unfused spurs — fused spurs have no
+                specified numerical limit per BS 7671, but practical loading limits apply).
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -423,7 +418,10 @@ const sections = [
         </div>
         <p>
           See the{' '}
-          <SEOInternalLink href="/guides/eicr-observation-codes-explained" label="EICR observation codes guide" />{' '}
+          <SEOInternalLink
+            href="/guides/eicr-observation-codes-explained"
+            label="EICR observation codes guide"
+          />{' '}
           for common FCU-related C2 findings that arise during inspection.
         </p>
       </>
@@ -435,8 +433,8 @@ const sections = [
     content: (
       <>
         <p>
-          Adding an FCU as a spur from an existing ring main requires a Minor Works Certificate.
-          If new cabling is installed that creates a new circuit, an Electrical Installation
+          Adding an FCU as a spur from an existing ring main requires a Minor Works Certificate. If
+          new cabling is installed that creates a new circuit, an Electrical Installation
           Certificate is required. Use Elec-Mate to generate compliant certificates on-site.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -444,22 +442,22 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" />{' '}
-                — issue an MWC for FCU additions to existing circuits on your phone.
+                <SEOAppBridge href="/tools/minor-works" label="Minor Works Certificate" /> — issue
+                an MWC for FCU additions to existing circuits on your phone.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate" />{' '}
-                — generate an EIC where a new dedicated circuit is installed for an appliance.
+                <SEOAppBridge href="/tools/eic-certificate" label="EIC Certificate" /> — generate an
+                EIC where a new dedicated circuit is installed for an appliance.
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" />{' '}
-                — record any existing installation deficiencies found during the work.
+                <SEOAppBridge href="/tools/eicr-certificate" label="EICR Certificate" /> — record
+                any existing installation deficiencies found during the work.
               </span>
             </li>
           </ul>
@@ -479,7 +477,7 @@ export default function FusedSpurInstallationGuidePage() {
       title="Fused Spur Installation Guide — UK FCU Wiring Guide 2024"
       description="Complete guide to installing fused connection units (FCUs): types, fuse ratings, when to use a fused spur, BS 7671 requirements, and step-by-step wiring for dishwashers, extractor fans, and fixed appliances."
       datePublished="2024-06-01"
-      dateModified="2024-11-01"
+      dateModified="2026-04-11"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"
