@@ -316,7 +316,17 @@ export const generateBulkPDFs = async (
           const { formatSmokeCOJson } = await import('./smokeCOJsonFormatter');
           dataForPdf = formatSmokeCOJson(validation.data);
         }
-        // Minor Works, G98/99, notices: edge function handles transform internally
+        // G99 Commissioning
+        else if (rtLower === 'g99-commissioning') {
+          const { formatG99Json } = await import('./g99JsonFormatter');
+          dataForPdf = formatG99Json(validation.data);
+        }
+        // G98 Commissioning
+        else if (rtLower === 'g98-commissioning') {
+          const { formatG98Json } = await import('./g98JsonFormatter');
+          dataForPdf = formatG98Json(validation.data);
+        }
+        // Minor Works, notices: edge function handles transform internally
       }
 
       // Optimise data before sending (use enriched data)
